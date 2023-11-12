@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The UnknownDataDeletionDetectionPolicy. </summary>
     internal partial class UnknownDataDeletionDetectionPolicy : DataDeletionDetectionPolicy

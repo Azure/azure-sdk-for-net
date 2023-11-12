@@ -777,10 +777,10 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
-        /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
-        /// <param name="column"> The ArrayOfGet5ItemsItem to use. </param>
-        /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
+        /// <param name="schema"> The IEnumerable{string} to use. </param>
+        /// <param name="table"> The IEnumerable{string} to use. </param>
+        /// <param name="column"> The IEnumerable{string} to use. </param>
+        /// <param name="orderBy"> The IEnumerable{string} to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
@@ -804,10 +804,10 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="schema"> The ArrayOfGet3ItemsItem to use. </param>
-        /// <param name="table"> The ArrayOfGet4ItemsItem to use. </param>
-        /// <param name="column"> The ArrayOfGet5ItemsItem to use. </param>
-        /// <param name="orderBy"> The ArrayOfGet6ItemsItem to use. </param>
+        /// <param name="schema"> The IEnumerable{string} to use. </param>
+        /// <param name="table"> The IEnumerable{string} to use. </param>
+        /// <param name="column"> The IEnumerable{string} to use. </param>
+        /// <param name="orderBy"> The IEnumerable{string} to use. </param>
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="count"> The Boolean to use. </param>
+        /// <param name="count"> The bool? to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.Sql
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The String to use. </param>
-        /// <param name="count"> The Boolean to use. </param>
+        /// <param name="count"> The bool? to use. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
