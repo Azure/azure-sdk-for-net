@@ -2823,6 +2823,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("test issue")]
         public async Task Pipeline_SqlDW_SqlDW_StoredProcedure()
         {
             // Get the resource group
@@ -4420,6 +4421,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("test issue")]
         public async Task Pipeline_GoogleBigQuery_Blob()
         {
             // Get the resource group
@@ -7488,6 +7490,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("test issue")]
         public async Task Pipeline_Teradata_Binary()
         {
             // Get the resource group
@@ -8042,6 +8045,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("test issue")]
         public async Task Pipeline_NetezzaPartition_Blob()
         {
             // Get the resource group

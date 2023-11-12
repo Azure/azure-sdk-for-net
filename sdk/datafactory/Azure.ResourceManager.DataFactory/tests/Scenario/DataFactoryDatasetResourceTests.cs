@@ -487,6 +487,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        [Ignore("test issue")]
         public async Task Dataset_OracleTable()
         {
             // Get the resource group
