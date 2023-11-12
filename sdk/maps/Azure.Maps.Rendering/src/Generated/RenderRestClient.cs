@@ -1160,11 +1160,11 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/copyright/bounding/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (boundingBox?.SouthWest != null && Optional.IsCollectionDefined(boundingBox?.SouthWest))
+            if (boundingBox.SouthWest != null && Optional.IsCollectionDefined(boundingBox.SouthWest))
             {
                 uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
             }
-            if (boundingBox?.NorthEast != null && Optional.IsCollectionDefined(boundingBox?.NorthEast))
+            if (boundingBox.NorthEast != null && Optional.IsCollectionDefined(boundingBox.NorthEast))
             {
                 uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
             }
