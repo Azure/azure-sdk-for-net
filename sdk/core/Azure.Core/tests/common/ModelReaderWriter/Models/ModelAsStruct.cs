@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ClientModel;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
 using System.Text.Json;
 

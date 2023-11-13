@@ -3,7 +3,7 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 
 namespace Maps;

@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 using System.IO;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;

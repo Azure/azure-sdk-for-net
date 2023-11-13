@@ -4,7 +4,7 @@
 using System.ClientModel.Internal;
 using System.Threading;
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 public class PipelineMessage : IDisposable
 {

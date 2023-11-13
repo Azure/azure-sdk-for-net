@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
 using System.Text.Json;
 using System.Buffers;

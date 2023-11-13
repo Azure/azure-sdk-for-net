@@ -8,7 +8,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Core
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// Provides an efficient way to write <see cref="IJsonModel{T}"/> into a <see cref="BinaryData"/> using multiple pooled buffers.

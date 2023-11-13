@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.IO;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 

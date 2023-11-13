@@ -6,7 +6,7 @@ using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.ClientModel;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using System.Threading;

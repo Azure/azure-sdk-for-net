@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Reflection;
 using System.Text.Json;
 

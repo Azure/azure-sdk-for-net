@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using System.ClientModel.Internal.Core;
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 public class ClientPipeline
 {

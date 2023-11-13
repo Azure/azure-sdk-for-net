@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 public abstract class MessageHeaders
 {

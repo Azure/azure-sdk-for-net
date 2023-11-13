@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
 using System.ClientModel.Internal.Core;
 using System.Net.Http;

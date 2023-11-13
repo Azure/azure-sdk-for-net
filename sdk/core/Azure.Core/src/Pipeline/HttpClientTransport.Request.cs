@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Internal.Core;
 using System.Net.Http;
 using System.Runtime.InteropServices;

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.Text.Json;
 

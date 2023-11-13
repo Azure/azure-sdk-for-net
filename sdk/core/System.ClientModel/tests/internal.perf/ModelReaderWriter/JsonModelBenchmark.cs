@@ -4,7 +4,7 @@
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using System.IO;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models;
 using System.Reflection;
 using System.Text.Json;

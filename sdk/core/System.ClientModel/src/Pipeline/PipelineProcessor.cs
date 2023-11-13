@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 // TODO: perf tradeoff between a struct you only ever call methods on through
 // the interface it implements vs. an abstract class you have to allocate every time?

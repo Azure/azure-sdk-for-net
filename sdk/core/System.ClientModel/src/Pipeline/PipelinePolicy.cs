@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 public abstract class PipelinePolicy
 {

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core

@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace System.ClientModel.Core
+namespace System.ClientModel.Primitives
 {
     /// <summary>
     /// Attribute class that indicates a proxy <see cref="Type"/> to use for reading.

@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 internal class MessageResponseHeaders : MessageHeaders
 {

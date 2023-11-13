@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Controls the creation of the pipeline.

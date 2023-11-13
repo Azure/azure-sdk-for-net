@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 
 namespace System.ClientModel.Internal

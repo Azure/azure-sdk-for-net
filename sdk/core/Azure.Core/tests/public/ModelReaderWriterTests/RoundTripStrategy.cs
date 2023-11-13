@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 using System.ClientModel;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.TestFramework;

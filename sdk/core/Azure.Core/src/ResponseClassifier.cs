@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 
 namespace Azure.Core
 {

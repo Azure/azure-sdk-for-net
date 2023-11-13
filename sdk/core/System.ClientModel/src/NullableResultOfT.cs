@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
 

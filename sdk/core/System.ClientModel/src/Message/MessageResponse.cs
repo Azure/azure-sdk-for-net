@@ -3,7 +3,7 @@
 
 using System.IO;
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 public abstract class MessageResponse : IDisposable
 {

@@ -3,7 +3,7 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
 using System.Text;
 using System.Threading;

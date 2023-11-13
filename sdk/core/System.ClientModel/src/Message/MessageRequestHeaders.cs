@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.ClientModel.Internal;
 
-namespace System.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 internal class MessageRequestHeaders : MessageHeaders
 {

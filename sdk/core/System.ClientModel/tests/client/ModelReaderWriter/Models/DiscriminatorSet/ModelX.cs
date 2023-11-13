@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
 using System.Text.Json;
 

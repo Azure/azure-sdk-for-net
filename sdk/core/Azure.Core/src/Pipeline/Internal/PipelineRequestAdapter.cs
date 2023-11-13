@@ -3,7 +3,7 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 
 namespace Azure.Core
 {

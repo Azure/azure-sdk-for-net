@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
 using NUnit.Framework;

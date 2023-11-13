@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 
 namespace OpenAI;

@@ -8,7 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization;
 using System.ClientModel;
-using System.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
