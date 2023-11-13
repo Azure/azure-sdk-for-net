@@ -171,7 +171,10 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
             message.Response.ContentStream = contentStream;
         }
 
-        message.Response.IsError = message.MessageClassifier.IsError(message);
+        if (message.MessageClassifier != null)
+        {
+            message.Response.IsError = message.MessageClassifier.IsError(message);
+        }
     }
 
     /// <summary>

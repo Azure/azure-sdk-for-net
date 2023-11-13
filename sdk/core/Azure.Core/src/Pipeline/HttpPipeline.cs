@@ -120,7 +120,10 @@ namespace Azure.Core.Pipeline
             // message.ApplyContext() will be applied.  This is a bit of a tangle, but
             // I think we can solve it with a little reworkd.
 
-            message.ApplyRequestContext(context, classifier);
+            if (context != null)
+            {
+                message.ApplyRequestContext(context, classifier);
+            }
 
             return message;
         }
@@ -138,8 +141,15 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
+            // TODO: The line below overwrites any cancellation token set by
+            // RequestOptions.Apply in ClientModel.  We should revisit this to ensure
+            // the correct functionality for Azure.Core-based clients.
             message.CancellationToken = cancellationToken;
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
+
+            // TODO: The line below puts properties in the message property bag,
+            // without any checks that they're already set.  Will this overwrite
+            // values set by callers and/or RequestOptions.Apply?
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
@@ -174,8 +184,15 @@ namespace Azure.Core.Pipeline
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
+            // TODO: The line below overwrites any cancellation token set by
+            // RequestOptions.Apply in ClientModel.  We should revisit this to ensure
+            // the correct functionality for Azure.Core-based clients.
             message.CancellationToken = cancellationToken;
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
+
+            // TODO: The line below puts properties in the message property bag,
+            // without any checks that they're already set.  Will this overwrite
+            // values set by callers and/or RequestOptions.Apply?
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)

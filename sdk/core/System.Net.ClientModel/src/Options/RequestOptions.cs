@@ -29,21 +29,32 @@ public class RequestOptions
         CancellationToken = CancellationToken.None;
     }
 
-    // Wire up options on message
+    // Set options on the message before sending it through the pipeline.
     public virtual void Apply(PipelineMessage message, MessageClassifier? messageClassifier = default)
     {
-        // TODO: is it possible that we could accidentally override a user-passed CT by doing this here?
+        // TODO: Even though we're overriding the message.CancellationToken, this
+        // works today because message.CancellationToken is overridden in Azure.Core
+        // clients in HttpPipeline.Send.  We will need to resolve this e2e story
+        // before merging the Azure.Core 2.0 PR.
         message.CancellationToken = CancellationToken;
 
-        // Don't overwrite the classifier on the message if it's already set.
+        // TODO: Is there a nicer way to encode precedence rules here?
+        // TODO: Do we want to use Azure.Core's classifier-chaining logic?
+
+        // We don't overwrite the classifier on the message if it's already set.
         // This is needed for Azure.Core so a ClientModel MessageClassifier
-        // doesn't overwrite an Azure.Core ResponseClassifier.
-        if (!message.HasMessageClassifier)
-        {
-			// TODO: Is there a nicer way to encode precedence rules here?
-            // TODO: Do we want to use Azure.Core's classifier-chaining logic?
-            message.MessageClassifier = MessageClassifier ?? messageClassifier ?? MessageClassifier.Default;
-        }
+        // doesn't overwrite an Azure.Core ResponseClassifier.  The classifier
+        // should never be pre-set on a ClientModel client.
+        message.MessageClassifier ??=
+
+            // The classifier passed by the client-user.
+            MessageClassifier ??
+
+            // The classifier passed by the client-author.
+            messageClassifier ??
+
+            // The internal global default classifier.
+            MessageClassifier.Default;
 
         // TODO: note that this is a lot of *ways* to set values on the
         // message, policy, etc.  Let's get clear on how many ways we need and why

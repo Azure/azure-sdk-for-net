@@ -155,9 +155,9 @@ namespace System.Net.ClientModel.Core
     public partial class PipelineMessage : System.IDisposable
     {
         protected internal PipelineMessage(System.Net.ClientModel.Core.MessageRequest request) { }
-        public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } protected internal set { } }
+        public System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.MessageRequest Request { get { throw null; } }
         public virtual System.Net.ClientModel.Core.MessageResponse Response { get { throw null; } protected internal set { } }
         public virtual void Dispose() { }

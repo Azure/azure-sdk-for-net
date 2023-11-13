@@ -74,12 +74,6 @@ namespace Azure
             => new RequestContext { ErrorOptions = options };
 
         /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        internal void Apply(HttpMessage message) => base.Apply(message);
-
-        /// <summary>
         /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.
         /// The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
         /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/>
