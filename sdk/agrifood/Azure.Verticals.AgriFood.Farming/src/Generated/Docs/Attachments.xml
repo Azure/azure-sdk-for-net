@@ -73,7 +73,7 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrUpdateAsync(string,string,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(string,string,RequestContent,ContentType,RequestContext)">
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
@@ -81,7 +81,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = null;
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content, new ContentType("multipart/form-data"));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -92,7 +92,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content, new ContentType("multipart/form-data"));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -111,7 +111,7 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrUpdate(string,string,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(string,string,RequestContent,ContentType,RequestContext)">
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
@@ -119,7 +119,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = null;
-Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
+Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content, new ContentType("multipart/form-data"));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -130,7 +130,7 @@ TokenCredential credential = new DefaultAzureCredential();
 Attachments client = new FarmBeatsClient(credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
+Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content, new ContentType("multipart/form-data"));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("resourceId").ToString());
