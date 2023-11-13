@@ -33,14 +33,14 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
 
-        public static implicit operator RequestBodyContent(ModelX modelX)
+        public static implicit operator InputContent(ModelX modelX)
         {
             if (modelX == null)
             {
                 return null;
             }
 
-            return RequestBodyContent.Create(modelX, ModelReaderWriterOptions.Wire);
+            return InputContent.Create(modelX, ModelReaderWriterOptions.Wire);
         }
 
         public static explicit operator ModelX(Result result)

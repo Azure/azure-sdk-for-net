@@ -19,7 +19,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents the content sent as part of the <see cref="Request"/>.
     /// </summary>
-    public abstract class RequestContent : RequestBodyContent
+    public abstract class RequestContent : InputContent
     {
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
@@ -90,7 +90,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IModel{T}"/>.</returns>
         public static new RequestContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
-            => new AzureRequestBodyContent(RequestBodyContent.Create(model, options ?? ModelReaderWriterOptions.Wire));
+            => new AzureRequestBodyContent(InputContent.Create(model, options ?? ModelReaderWriterOptions.Wire));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -152,9 +152,9 @@ namespace Azure.Core
 
         private sealed class AzureRequestBodyContent : RequestContent
         {
-            private readonly RequestBodyContent _content;
+            private readonly InputContent _content;
 
-            public AzureRequestBodyContent(RequestBodyContent content)
+            public AzureRequestBodyContent(InputContent content)
             {
                 _content = content;
             }

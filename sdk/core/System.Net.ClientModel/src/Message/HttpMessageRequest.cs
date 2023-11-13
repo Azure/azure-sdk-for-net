@@ -19,7 +19,7 @@ public class HttpMessageRequest : MessageRequest, IDisposable
     private const string AuthorizationHeaderName = "Authorization";
 
     private Uri? _uri;
-    private RequestBodyContent? _content;
+    private InputContent? _content;
 
     private readonly MessageRequestHeaders _headers;
 
@@ -44,7 +44,7 @@ public class HttpMessageRequest : MessageRequest, IDisposable
         set => _uri = value;
     }
 
-    public override RequestBodyContent? Content
+    public override InputContent? Content
     {
         get => _content;
         set => _content = value;
@@ -130,10 +130,10 @@ public class HttpMessageRequest : MessageRequest, IDisposable
 
     private sealed class MessageBodyAdapter : HttpContent
     {
-        private readonly RequestBodyContent _content;
+        private readonly InputContent _content;
         private readonly CancellationToken _cancellationToken;
 
-        public MessageBodyAdapter(RequestBodyContent content, CancellationToken cancellationToken)
+        public MessageBodyAdapter(InputContent content, CancellationToken cancellationToken)
         {
             ClientUtilities.AssertNotNull(content, nameof(content));
 
