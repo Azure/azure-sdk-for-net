@@ -15,6 +15,8 @@ namespace Azure.Messaging.EventGrid.Tests
     {
         public EventGridNamespaceClientLiveTests(bool isAsync) : base(isAsync)
         {
+            // TODO issue with JSON comparison in binary mode
+            CompareBodies = false;
         }
 
         [RecordedTest]
@@ -195,10 +197,92 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.IsEmpty(renewResult.FailedLockTokens);
         }
 
+        [RecordedTest]
+        public async Task ReleaseWithDelay()
+        {
+            var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
+            var namespaceKey = TestEnvironment.NamespaceKey;
+            var topicName = TestEnvironment.NamespaceTopicName;
+            var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
+
+            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridClientOptions())));
+
+            var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
+            {
+                Id = Recording.Random.NewGuid().ToString(),
+                Time = Recording.Now
+            };
+            await client.PublishCloudEventAsync(topicName, evt);
+
+            ReceiveResult result = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 1);
+            ReleaseResult releaseResult = await client.ReleaseCloudEventsAsync(topicName, subscriptionName,
+                new ReleaseOptions(new[] { result.Value.First().BrokerProperties.LockToken }),
+                releaseDelayInSeconds: ReleaseDelay.By10Seconds);
+            Assert.IsEmpty(releaseResult.FailedLockTokens);
+        }
+
+        [RecordedTest]
+        public async Task PublishBinaryModeEvent()
+        {
+            var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
+            var namespaceKey = TestEnvironment.NamespaceKey;
+            var topicName = TestEnvironment.NamespaceTopicName;
+            var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
+
+            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridClientOptions())));
+            var id = Recording.Random.NewGuid().ToString();
+            var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
+            {
+                Id = id,
+                Time = Recording.Now,
+                Subject = "subject",
+                DataContentType = "text/plain",
+                ExtensionAttributes =
+                {
+                    { "foo", "bar" }
+                }
+            };
+            await client.PublishCloudEventAsync(topicName, evt, binaryMode: true);
+
+            ReceiveResult result = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 100, maxWaitTime: TimeSpan.FromSeconds(10));
+            var receivedEvent = result.Value.Where(d => d.Event.Id == id).Single().Event;
+            Assert.IsNotNull(receivedEvent);
+            Assert.AreEqual("subject", receivedEvent.Subject);
+            Assert.AreEqual("text/plain", receivedEvent.DataContentType);
+            Assert.AreEqual("bar", receivedEvent.ExtensionAttributes["foo"]);
+        }
+
         public class TestModel
         {
             public string Name { get; set; }
             public int Age { get; set; }
+        }
+
+        [SetUp]
+        public async Task InitializeTest()
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
+            var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
+            var namespaceKey = TestEnvironment.NamespaceKey;
+            var topicName = TestEnvironment.NamespaceTopicName;
+            var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
+
+            var client = new EventGridClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey));
+
+            ReceiveResult results;
+            do
+            {
+                results = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 100, maxWaitTime: TimeSpan.FromSeconds(10));
+                await client.AcknowledgeCloudEventsAsync(topicName, subscriptionName, new AcknowledgeOptions(
+                    results.Value.Select(r => r.BrokerProperties.LockToken).ToList()));
+            } while (results.Value.Count > 0);
         }
     }
 }

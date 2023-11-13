@@ -18,10 +18,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
+            /// <summary> Service version "2023-11-01". </summary>
+            V2023_11_01 = 1,
             /// <summary> Service version "2023-06-01-preview". </summary>
-            V2023_06_01_Preview = 1,
+            V2023_06_01_Preview = 2,
             /// <summary> Service version "2023-10-01-preview". </summary>
-            V2023_10_01_Preview = 2,
+            V2023_10_01_Preview = 3,
         }
 
         internal string Version { get; }
@@ -31,6 +33,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         {
             Version = version switch
             {
+                ServiceVersion.V2023_11_01 => "2023-11-01",
                 ServiceVersion.V2023_06_01_Preview => "2023-06-01-preview",
                 ServiceVersion.V2023_10_01_Preview => "2023-10-01-preview",
                 _ => throw new NotSupportedException()

@@ -752,8 +752,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult> AcknowledgeCloudEvents(string topicName, string eventSubscriptionName, Azure.Messaging.EventGrid.Namespaces.AcknowledgeOptions acknowledgeOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AcknowledgeCloudEventsAsync(string topicName, string eventSubscriptionName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult>> AcknowledgeCloudEventsAsync(string topicName, string eventSubscriptionName, Azure.Messaging.EventGrid.Namespaces.AcknowledgeOptions acknowledgeOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.PublishResult> PublishCloudEvent(string topicName, Azure.Messaging.CloudEvent @event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.PublishResult>> PublishCloudEventAsync(string topicName, Azure.Messaging.CloudEvent @event, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.PublishResult> PublishCloudEvent(string topicName, Azure.Messaging.CloudEvent @event, bool binaryMode = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.PublishResult>> PublishCloudEventAsync(string topicName, Azure.Messaging.CloudEvent @event, bool binaryMode = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Messaging.EventGrid.Namespaces.PublishResult> PublishCloudEvents(string topicName, System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.EventGrid.Namespaces.PublishResult>> PublishCloudEventsAsync(string topicName, System.Collections.Generic.IEnumerable<Azure.Messaging.CloudEvent> events, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ReceiveCloudEvents(string topicName, string eventSubscriptionName, int? maxEvents, System.TimeSpan? maxWaitTime, Azure.RequestContext context) { throw null; }
@@ -778,8 +778,9 @@ namespace Azure.Messaging.EventGrid.Namespaces
         public EventGridClientOptions(Azure.Messaging.EventGrid.Namespaces.EventGridClientOptions.ServiceVersion version = Azure.Messaging.EventGrid.Namespaces.EventGridClientOptions.ServiceVersion.V2023_10_01_Preview) { }
         public enum ServiceVersion
         {
-            V2023_06_01_Preview = 1,
-            V2023_10_01_Preview = 2,
+            V2023_11_01 = 1,
+            V2023_06_01_Preview = 2,
+            V2023_10_01_Preview = 3,
         }
     }
     public partial class FailedLockToken

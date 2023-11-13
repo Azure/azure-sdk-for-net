@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -50,7 +50,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -98,7 +98,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -124,7 +124,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -198,7 +198,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -246,7 +246,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -272,7 +272,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -322,7 +322,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -346,7 +346,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -394,7 +394,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -420,7 +420,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -494,7 +494,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -542,7 +542,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {
@@ -568,7 +568,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 lockTokens = new object[]
             {

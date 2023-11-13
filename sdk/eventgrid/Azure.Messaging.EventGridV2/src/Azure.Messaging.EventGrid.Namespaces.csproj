@@ -6,6 +6,7 @@
     <PackageTags>Azure.Messaging.EventGrid.Namespaces</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 
   <ItemGroup>
