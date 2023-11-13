@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            systemData = JsonSerializer.Deserialize<SystemData>(property0.Value.GetRawText());
+                            systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property0.Value.GetRawText());
                             continue;
                         }
                     }
