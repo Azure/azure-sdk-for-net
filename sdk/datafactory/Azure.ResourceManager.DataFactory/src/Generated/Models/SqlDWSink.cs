@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sqlWriterUseTableLock"> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="writeBehavior"> Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum). </param>
         /// <param name="upsertSettings"> SQL DW upsert settings. </param>
-        internal SqlDWSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> preCopyScript, DataFactoryElement<bool> allowPolyBase, PolybaseSettings polyBaseSettings, DataFactoryElement<bool> allowCopyCommand, DWCopyCommandSettings copyCommandSettings, DataFactoryElement<string> tableOption, DataFactoryElement<bool> sqlWriterUseTableLock, BinaryData writeBehavior, SqlDWUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal SqlDWSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> preCopyScript, DataFactoryElement<bool> allowPolyBase, PolybaseSettings polyBaseSettings, DataFactoryElement<bool> allowCopyCommand, DWCopyCommandSettings copyCommandSettings, DataFactoryElement<string> tableOption, DataFactoryElement<bool> sqlWriterUseTableLock, DataFactoryElement<string> writeBehavior, SqlDWUpsertSettings upsertSettings) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             PreCopyScript = preCopyScript;
             AllowPolyBase = allowPolyBase;
@@ -66,37 +66,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> TableOption { get; set; }
         /// <summary> Whether to use table lock during bulk copy. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> SqlWriterUseTableLock { get; set; }
-        /// <summary>
-        /// Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum)
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData WriteBehavior { get; set; }
+        /// <summary> Write behavior when copying data into azure SQL DW. Type: SqlDWWriteBehaviorEnum (or Expression with resultType SqlDWWriteBehaviorEnum). </summary>
+        public DataFactoryElement<string> WriteBehavior { get; set; }
         /// <summary> SQL DW upsert settings. </summary>
         public SqlDWUpsertSettings UpsertSettings { get; set; }
     }

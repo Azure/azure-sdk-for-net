@@ -66,14 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Endpoint);
-#else
-            using (JsonDocument document = JsonDocument.Parse(Endpoint))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, Endpoint);
             writer.WritePropertyName("clientId"u8);
             JsonSerializer.Serialize(writer, ClientId);
             if (Optional.IsDefined(ClientSecret))
@@ -128,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData endpoint = default;
+            DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> clientId = default;
             Optional<DataFactorySecretBaseDefinition> clientSecret = default;
             Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
@@ -204,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("endpoint"u8))
                         {
-                            endpoint = BinaryData.FromString(property0.Value.GetRawText());
+                            endpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
