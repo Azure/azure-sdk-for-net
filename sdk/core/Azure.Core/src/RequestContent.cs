@@ -84,12 +84,12 @@ namespace Azure.Core
         public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
         /// <summary>
-        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="IModel{T}"/>.
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="IPersistableModel{T}"/>.
         /// </summary>
-        /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
+        /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IModel{T}"/>.</returns>
-        public static new RequestContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IPersistableModel{T}"/>.</returns>
+        public static new RequestContent Create(IPersistableModel<object> model, ModelReaderWriterOptions? options = default)
             => new AzureRequestBodyContent(InputContent.Create(model, options ?? ModelReaderWriterOptions.Wire));
 
         /// <summary>

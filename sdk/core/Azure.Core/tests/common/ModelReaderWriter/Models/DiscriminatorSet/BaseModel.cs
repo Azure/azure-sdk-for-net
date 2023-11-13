@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 {
-    [ModelReaderProxy(typeof(UnknownBaseModel))]
+    [PersistableModelProxy(typeof(UnknownBaseModel))]
     public abstract class BaseModel : IUtf8JsonSerializable, IJsonModel<BaseModel>
     {
         private Dictionary<string, BinaryData> _rawData;
@@ -128,7 +128,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return new UnknownBaseModel(kind, name, rawData);
         }
 
-        BaseModel IModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -143,13 +143,13 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return DeserializeBaseModel(doc.RootElement, options);
         }
 
-        BinaryData IModel<BaseModel>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<BaseModel>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BaseModel>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

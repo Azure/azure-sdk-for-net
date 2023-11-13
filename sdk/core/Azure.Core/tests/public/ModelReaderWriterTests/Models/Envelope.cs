@@ -161,7 +161,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return (T)serializer.Deserialize(m, typeof(T), default);
         }
 
-        Envelope<T> IModel<Envelope<T>>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Envelope<T> IPersistableModel<Envelope<T>>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -176,14 +176,14 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeEnvelope(doc.RootElement, options);
         }
 
-        BinaryData IModel<Envelope<T>>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Envelope<T>>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<Envelope<T>>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Envelope<T>>.GetWireFormat(ModelReaderWriterOptions options) => "J";
         #endregion
     }
 }

@@ -12,7 +12,7 @@ namespace System.ClientModel
     {
         protected InputContent() { }
         public static System.ClientModel.InputContent Create(System.BinaryData value) { throw null; }
-        public static System.ClientModel.InputContent Create(System.ClientModel.Primitives.IModel<object> model, System.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.ClientModel.InputContent Create(System.ClientModel.Primitives.IPersistableModel<object> model, System.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
@@ -27,9 +27,9 @@ namespace System.ClientModel
     public static partial class ModelReaderWriter
     {
         public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static T? Read<T>(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IModel<T> { throw null; }
+        public static T? Read<T>(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static System.BinaryData Write(object model, System.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static System.BinaryData Write<T>(T model, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IModel<T> { throw null; }
+        public static System.BinaryData Write<T>(T model, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
     }
     public partial class ModelReaderWriterOptions
     {
@@ -106,8 +106,8 @@ namespace System.ClientModel.Internal
     }
     public static partial class ModelReaderWriterHelper
     {
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat(System.ClientModel.Primitives.IModel<object> model, string format) { }
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat<T>(System.ClientModel.Primitives.IModel<T> model, string format) { }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat(System.ClientModel.Primitives.IPersistableModel<object> model, string format) { }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat<T>(System.ClientModel.Primitives.IPersistableModel<T> model, string format) { }
     }
     public partial class OptionalDictionary<TKey, TValue> : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IDictionary<TKey, TValue>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<TKey, TValue>>, System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>, System.Collections.IEnumerable where TKey : notnull
     {
@@ -249,12 +249,12 @@ namespace System.ClientModel.Primitives
         Default = 0,
         NoThrow = 1,
     }
-    public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IModel<T>
+    public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
         T Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.ModelReaderWriterOptions options);
         void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.ModelReaderWriterOptions options);
     }
-    public partial interface IModel<out T>
+    public partial interface IPersistableModel<out T>
     {
         T Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options);
         string GetWireFormat(System.ClientModel.ModelReaderWriterOptions options);
@@ -313,9 +313,9 @@ namespace System.ClientModel.Primitives
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
-    public sealed partial class ModelReaderProxyAttribute : System.Attribute
+    public sealed partial class PersistableModelProxyAttribute : System.Attribute
     {
-        public ModelReaderProxyAttribute(System.Type proxyType) { }
+        public PersistableModelProxyAttribute(System.Type proxyType) { }
         public System.Type ProxyType { get { throw null; } }
     }
     public partial class PipelineMessage : System.IDisposable

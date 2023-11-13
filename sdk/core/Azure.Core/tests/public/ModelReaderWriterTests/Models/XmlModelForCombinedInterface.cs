@@ -15,7 +15,7 @@ using System.Xml.Serialization;
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 {
     [XmlRoot("Tag")]
-    internal class XmlModelForCombinedInterface : IXmlSerializable, IModel<XmlModelForCombinedInterface>, IJsonModel<XmlModelForCombinedInterface>, IUtf8JsonSerializable
+    internal class XmlModelForCombinedInterface : IXmlSerializable, IPersistableModel<XmlModelForCombinedInterface>, IJsonModel<XmlModelForCombinedInterface>, IUtf8JsonSerializable
     {
         public XmlModelForCombinedInterface() { }
 
@@ -118,7 +118,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        BinaryData IModel<XmlModelForCombinedInterface>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<XmlModelForCombinedInterface>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -174,7 +174,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new XmlModelForCombinedInterface(key, value, readOnlyProperty);
         }
 
-        XmlModelForCombinedInterface IModel<XmlModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
+        XmlModelForCombinedInterface IPersistableModel<XmlModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -213,6 +213,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
             Serialize(writer, ModelReaderWriterOptions.Wire);
 
-        string IModel<XmlModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<XmlModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

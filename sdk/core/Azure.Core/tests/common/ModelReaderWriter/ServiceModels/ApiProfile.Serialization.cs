@@ -92,19 +92,19 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             reader.Skip();
         }
 
-        ApiProfile IModel<ApiProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiProfile IPersistableModel<ApiProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeApiProfile(doc.RootElement, options);
         }
 
-        BinaryData IModel<ApiProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiProfile>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ApiProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
