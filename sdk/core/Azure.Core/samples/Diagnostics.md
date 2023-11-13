@@ -221,6 +221,9 @@ To avoid double-collection you may either
 For example, you can do it with the following code snippet on .NET Core.
 
 ```csharp
+// Messaging libraries still require feature flag.
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true)
+
 builder.Services.AddOpenTelemetry()
     .WithTracing(tracerProviderBuilder => tracerProviderBuilder
         .AddSource("Azure.Storage.*")
