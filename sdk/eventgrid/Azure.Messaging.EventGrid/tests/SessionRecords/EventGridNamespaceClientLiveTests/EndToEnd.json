@@ -1,0 +1,176 @@
+{ 
+  "Entries": [
+    {
+      "RequestUri": "https://llawcentral3.centraluseuap-1.eventgrid.azure.net/topics/topic:publish?api-version=2023-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "180",
+        "Content-Type": "application/cloudevents\u002Bjson; charset=utf-8",
+        "traceparent": "00-c478e6a4a1610b37ef45170a23ce24f5-1efe3b6d2fee5fe1-00",
+        "User-Agent": "azsdk-net-Messaging.EventGrid/4.17.0-alpha.20230522.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0264531c67c292141f6d5d94935703a5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "3edae82c-47f0-6d2b-2f7d-0e71b276688e",
+        "source": "employee_source",
+        "type": "type",
+        "data": {
+          "Name": "Bob",
+          "Age": 18
+        },
+        "time": "2023-05-22T13:27:32.4767674-07:00",
+        "specversion": "1.0"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "Date": "Mon, 22 May 2023 20:27:32 GMT"
+      },
+      "ResponseBody": {}
+    },
+    {
+      "RequestUri": "https://llawcentral3.centraluseuap-1.eventgrid.azure.net/topics/topic:publish?api-version=2023-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "365",
+        "Content-Type": "application/cloudevents-batch\u002Bjson; charset=utf-8",
+        "traceparent": "00-34bd39de42da7ee5f45ed519992d300f-631e7d6a06903ebf-00",
+        "User-Agent": "azsdk-net-Messaging.EventGrid/4.17.0-alpha.20230522.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "693c69793a41d882b21b727a21735c12",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "[{\u0022id\u0022:\u00222e354934-440c-48a0-8f48-46a0350c6722\u0022,\u0022source\u0022:\u0022employee_source\u0022,\u0022type\u0022:\u0022type\u0022,\u0022data\u0022:{\u0022Name\u0022:\u0022Tom\u0022,\u0022Age\u0022:55},\u0022time\u0022:\u00222023-05-22T13:27:32.4767674-07:00\u0022,\u0022specversion\u0022:\u00221.0\u0022},{\u0022id\u0022:\u00223b88f4bd-4c8d-c425-d447-1f82e996dad8\u0022,\u0022source\u0022:\u0022employee_source\u0022,\u0022type\u0022:\u0022type\u0022,\u0022data\u0022:{\u0022Name\u0022:\u0022Alice\u0022,\u0022Age\u0022:25},\u0022time\u0022:\u00222023-05-22T13:27:32.4767674-07:00\u0022,\u0022specversion\u0022:\u00221.0\u0022}]",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "2",
+        "Content-Type": "application/json",
+        "Date": "Mon, 22 May 2023 20:27:32 GMT"
+      },
+      "ResponseBody": {}
+    },
+    {
+      "RequestUri": "https://llawcentral3.centraluseuap-1.eventgrid.azure.net/topics/topic/eventsubscriptions/eventsub:receive?api-version=2023-06-01-preview\u0026maxEvents=3",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-2846f5101281010b987123e120f2c21b-2233b0b02a739644-00",
+        "User-Agent": "azsdk-net-Messaging.EventGrid/4.17.0-alpha.20230522.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9ed73a06c7cee818237059c4241d5ef9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "973",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 22 May 2023 20:27:32 GMT"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "brokerProperties": {
+              "lockToken": "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChCbPSw1uu1Fv58vOSjuBCXj",
+              "deliveryCount": 24
+            },
+            "event": {
+              "type": "type",
+              "source": "employee_source",
+              "time": "2023-05-22T19:13:50.5569058Z",
+              "id": "edd287a3-bdee-4ec7-8ceb-e3791de58200",
+              "specversion": "1.0",
+              "data": {
+                "Age": 18,
+                "Name": "Bob"
+              }
+            }
+          },
+          {
+            "brokerProperties": {
+              "lockToken": "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChBjwxfOMZdIk7AnlFdjzC6z",
+              "deliveryCount": 22
+            },
+            "event": {
+              "type": "type",
+              "source": "employee_source",
+              "time": "2023-05-22T19:14:36.9613122Z",
+              "id": "d3488b22-5815-4fb0-8c0f-aee282f37c53",
+              "specversion": "1.0",
+              "data": {
+                "Age": 18,
+                "Name": "Bob"
+              }
+            }
+          },
+          {
+            "brokerProperties": {
+              "lockToken": "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChADtSApVE1Ip41HStpU3suP",
+              "deliveryCount": 20
+            },
+            "event": {
+              "type": "type",
+              "source": "employee_source",
+              "time": "2023-05-22T19:14:43.530415Z",
+              "id": "be22c378-315e-482c-9216-b4de3122f3b3",
+              "specversion": "1.0",
+              "data": {
+                "Age": 18,
+                "Name": "Bob"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://llawcentral3.centraluseuap-1.eventgrid.azure.net/topics/topic/eventsubscriptions/eventsub:release?api-version=2023-06-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "265",
+        "Content-Type": "application/json; charset=utf-8",
+        "traceparent": "00-a8e75b5122b9d3820c7dfef5d0099291-adf2fc6978364573-00",
+        "User-Agent": "azsdk-net-Messaging.EventGrid/4.17.0-alpha.20230522.1 (.NET 6.0.16; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cc266d6dfdcf83e172b08872d9aba260",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "lockTokens": [
+          "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChCbPSw1uu1Fv58vOSjuBCXj",
+          "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChBjwxfOMZdIk7AnlFdjzC6z",
+          "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChADtSApVE1Ip41HStpU3suP"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "296",
+        "Content-Type": "application/json",
+        "Date": "Mon, 22 May 2023 20:27:32 GMT"
+      },
+      "ResponseBody": {
+        "succeededLockTokens": [
+          "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChCbPSw1uu1Fv58vOSjuBCXj",
+          "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChBjwxfOMZdIk7AnlFdjzC6z",
+          "CiYKJDMzMkFEMDcwLUJCMUYtNDlBQS04NkMyLUZDQThDREE2MzVCQxISChADtSApVE1Ip41HStpU3suP"
+        ],
+        "failedLockTokens": []
+      }
+    }
+  ],
+  "Variables": {
+    "DateTimeOffsetNow": "2023-05-22T13:27:32.4767674-07:00",
+    "EVENT_GRID_NAMESPACE_KEY": "Kg==",
+    "EVENT_GRID_NAMESPACE_SUBSCRIPTION_NAME": "eventsub",
+    "EVENT_GRID_NAMESPACE_TOPIC_HOST": "https://llawcentral3.centraluseuap-1.eventgrid.azure.net/",
+    "EVENT_GRID_NAMESPACE_TOPIC_NAME": "topic",
+    "RandomSeed": "1751597292"
+  }
+}
