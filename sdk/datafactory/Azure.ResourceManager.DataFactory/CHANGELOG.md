@@ -1,12 +1,12 @@
 # Release History
 
-## 1.0.0-beta.5 (2023-11-07)
+## 1.0.0-beta.5 (2023-11-13)
 
 ### Features Added
 
 - Upgraded API version.
-- Added Some Properties on GoogleAds Connector 
-- Added Support LakeHouse Connector In ADF
+  - Added Some Properties on GoogleAds Connector.
+  - Added Support LakeHouse Connector In ADF.
 
 ## 1.0.0-beta.4 (2023-09-26)
 
