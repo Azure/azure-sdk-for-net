@@ -6,9 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The UnknownSearchIndexerSkill. </summary>
     internal partial class UnknownSearchIndexerSkill : SearchIndexerSkill
