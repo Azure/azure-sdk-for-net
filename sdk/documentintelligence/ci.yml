@@ -8,9 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/newprojecttypespec
-    - sdk/newprojecttypespec/ci.yml
-    - sdk/newprojecttypespec/Azure.NewProject.TypeSpec
+    - sdk/documentintelligence/
 
 pr:
   branches:
@@ -21,15 +19,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/newprojecttypespec
-    - sdk/newprojecttypespec/ci.yml
-    - sdk/newprojecttypespec/Azure.NewProject.TypeSpec
+    - sdk/documentintelligence/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: newprojecttypespec
+    ServiceDirectory: documentintelligence
     ArtifactName: packages
     Artifacts:
-    - name: Azure.NewProject.TypeSpec
-      safeName: AzureNewProjectTypeSpec
+    - name: Azure.AI.DocumentIntelligence
+      safeName: AzureAIDocumentIntelligence
