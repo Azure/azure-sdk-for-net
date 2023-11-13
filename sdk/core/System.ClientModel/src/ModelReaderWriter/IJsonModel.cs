@@ -9,7 +9,7 @@ namespace System.ClientModel.Primitives
     /// Allows an object to control its own JSON writing and reading.
     /// </summary>
     /// <typeparam name="T">The type the model can be converted into.</typeparam>
-    public interface IJsonModel<out T> : IModel<T>
+    public interface IJsonModel<out T> : IPersistableModel<T>
     {
         /// <summary>
         /// Writes the model to the provided <see cref="Utf8JsonWriter"/>.

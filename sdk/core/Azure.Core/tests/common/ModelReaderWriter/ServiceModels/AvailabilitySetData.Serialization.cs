@@ -238,7 +238,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return new AvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachines), proximityPlacementGroup, Optional.ToList(statuses));
         }
 
-        AvailabilitySetData IModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -273,13 +273,13 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return DeserializeAvailabilitySetData(doc.RootElement, options);
         }
 
-        BinaryData IModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

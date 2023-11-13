@@ -19,12 +19,12 @@ namespace System.ClientModel
         public static InputContent Create(BinaryData value) => new BinaryDataMessageBody(value.ToMemory());
 
         /// <summary>
-        /// Creates an instance of <see cref="InputContent"/> that wraps a <see cref="IModel{T}"/>.
+        /// Creates an instance of <see cref="InputContent"/> that wraps a <see cref="IPersistableModel{T}"/>.
         /// </summary>
-        /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
+        /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="InputContent"/> that wraps a <see cref="IModel{T}"/>.</returns>
-        public static InputContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
+        /// <returns>An instance of <see cref="InputContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
+        public static InputContent Create(IPersistableModel<object> model, ModelReaderWriterOptions? options = default)
             => new ModelMessageBody(model, options ?? ModelReaderWriterOptions.Wire);
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace System.ClientModel
 
         private sealed class ModelMessageBody : InputContent
         {
-            private readonly IModel<object> _model;
+            private readonly IPersistableModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
 
             // Used when _model is an IJsonModel
@@ -59,7 +59,7 @@ namespace System.ClientModel
             // Used when _model is an IModel
             private BinaryData? _data;
 
-            public ModelMessageBody(IModel<object> model, ModelReaderWriterOptions options)
+            public ModelMessageBody(IPersistableModel<object> model, ModelReaderWriterOptions options)
             {
                 _model = model;
                 _options = options;

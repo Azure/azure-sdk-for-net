@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -48,7 +48,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterFormatOverloadStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelReaderWriterFormatOverloadStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -63,7 +63,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelReaderWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -79,7 +79,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelInterfaceStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelInterfaceStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -91,23 +91,23 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IPersistableModel<T>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
-    public class ModelInterfaceAsObjectStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelInterfaceAsObjectStrategy<T> : RoundTripStrategy<T> where T : IPersistableModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ((IModel<object>)model).Write(options);
+            return ((IPersistableModel<object>)model).Write(options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return ((IModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IPersistableModel<object>)model).Create(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 

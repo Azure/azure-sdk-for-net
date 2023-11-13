@@ -265,19 +265,19 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return DeserializeProviderResourceType(doc.RootElement, options);
         }
 
-        ProviderResourceType IModel<ProviderResourceType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProviderResourceType IPersistableModel<ProviderResourceType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeProviderResourceType(doc.RootElement, options);
         }
 
-        BinaryData IModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ProviderResourceType>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProviderResourceType>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

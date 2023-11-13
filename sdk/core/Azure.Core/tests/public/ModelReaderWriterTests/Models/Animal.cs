@@ -126,7 +126,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         #region InterfaceImplementation
 
-        Animal IModel<Animal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Animal IPersistableModel<Animal>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeAnimal(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
@@ -137,14 +137,14 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeAnimal(doc.RootElement, options);
         }
 
-        BinaryData IModel<Animal>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Animal>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<Animal>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Animal>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         #endregion
     }

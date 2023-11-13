@@ -323,14 +323,14 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
         private class ExplodingModel : IJsonModel<ExplodingModel>
         {
-            string IModel<ExplodingModel>.GetWireFormat(ModelReaderWriterOptions options) => throw new NotImplementedException();
+            string IPersistableModel<ExplodingModel>.GetWireFormat(ModelReaderWriterOptions options) => throw new NotImplementedException();
 
             ExplodingModel IJsonModel<ExplodingModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 throw new NotImplementedException();
             }
 
-            ExplodingModel IModel<ExplodingModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            ExplodingModel IPersistableModel<ExplodingModel>.Create(BinaryData data, ModelReaderWriterOptions options)
             {
                 throw new NotImplementedException();
             }
@@ -340,7 +340,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
                 throw new NotImplementedException();
             }
 
-            BinaryData IModel<ExplodingModel>.Write(ModelReaderWriterOptions options)
+            BinaryData IPersistableModel<ExplodingModel>.Write(ModelReaderWriterOptions options)
             {
                 throw new NotImplementedException();
             }

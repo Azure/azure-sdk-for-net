@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
-    [ModelReaderProxy(typeof(UnknownBaseModel))]
+    [PersistableModelProxy(typeof(UnknownBaseModel))]
     public abstract class BaseModel : IJsonModel<BaseModel>
     {
         private Dictionary<string, BinaryData> _rawData;
@@ -124,7 +124,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new UnknownBaseModel(kind, name, rawData);
         }
 
-        BaseModel IModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -139,13 +139,13 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeBaseModel(doc.RootElement, options);
         }
 
-        BinaryData IModel<BaseModel>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<BaseModel>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BaseModel>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

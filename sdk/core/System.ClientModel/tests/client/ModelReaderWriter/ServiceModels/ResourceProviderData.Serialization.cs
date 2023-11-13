@@ -81,7 +81,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return new ResourceProviderData(id.Value, @namespace.Value, registrationState.Value, registrationPolicy.Value, OptionalProperty.ToList(resourceTypes), OptionalProperty.ToNullable(providerAuthorizationConsentState));
         }
 
-        ResourceProviderData IModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ResourceProviderData IPersistableModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -155,13 +155,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        BinaryData IModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

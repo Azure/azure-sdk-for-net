@@ -111,7 +111,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        JsonModelForCombinedInterface IModel<JsonModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
+        JsonModelForCombinedInterface IPersistableModel<JsonModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeJsonModelForCombinedInterface(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
@@ -122,13 +122,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);
         }
 
-        BinaryData IModel<JsonModelForCombinedInterface>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<JsonModelForCombinedInterface>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<JsonModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<JsonModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

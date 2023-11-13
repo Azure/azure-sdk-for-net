@@ -178,7 +178,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return new ModelX(kind, name, xProperty, OptionalProperty.ToNullable(nullProperty), OptionalProperty.ToList(fields), OptionalProperty.ToDictionary(keyValuePairs), rawData);
         }
 
-        ModelX IModel<ModelX>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ModelX IPersistableModel<ModelX>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -193,13 +193,13 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeModelX(doc.RootElement, options);
         }
 
-        BinaryData IModel<ModelX>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ModelX>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
