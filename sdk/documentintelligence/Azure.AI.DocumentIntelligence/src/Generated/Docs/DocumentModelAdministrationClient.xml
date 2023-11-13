@@ -202,7 +202,6 @@ DocumentModelAdministrationClient client = new DocumentModelAdministrationClient
 Response response = await client.GetModelAsync("<modelId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
@@ -215,6 +214,12 @@ DocumentModelAdministrationClient client = new DocumentModelAdministrationClient
 Response response = await client.GetModelAsync("<modelId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -229,12 +234,6 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="GetModel(string,RequestContext)">
@@ -248,7 +247,6 @@ DocumentModelAdministrationClient client = new DocumentModelAdministrationClient
 Response response = client.GetModel("<modelId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
@@ -261,6 +259,12 @@ DocumentModelAdministrationClient client = new DocumentModelAdministrationClient
 Response response = client.GetModel("<modelId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -275,12 +279,6 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="DeleteModelAsync(string,RequestContext)">
@@ -723,7 +721,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-await foreach (DocumentModelSummary item in client.GetModelsAsync())
+await foreach (DocumentModelDetails item in client.GetModelsAsync())
 {
 }
 ]]></code>
@@ -733,7 +731,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-await foreach (DocumentModelSummary item in client.GetModelsAsync())
+await foreach (DocumentModelDetails item in client.GetModelsAsync())
 {
 }
 ]]></code></example>
@@ -746,7 +744,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-foreach (DocumentModelSummary item in client.GetModels())
+foreach (DocumentModelDetails item in client.GetModels())
 {
 }
 ]]></code>
@@ -756,7 +754,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-foreach (DocumentModelSummary item in client.GetModels())
+foreach (DocumentModelDetails item in client.GetModels())
 {
 }
 ]]></code></example>
@@ -791,6 +789,20 @@ await foreach (BinaryData item in client.GetModelsAsync(null))
     Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
     Console.WriteLine(result.GetProperty("apiVersion").ToString());
     Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("buildMode").ToString());
+    Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+    Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+    Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+    Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
 }
 ]]></code></example>
     </member>
@@ -824,6 +836,20 @@ foreach (BinaryData item in client.GetModels(null))
     Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
     Console.WriteLine(result.GetProperty("apiVersion").ToString());
     Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("buildMode").ToString());
+    Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
+    Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
+    Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("containerUrl").ToString());
+    Console.WriteLine(result.GetProperty("azureBlobFileListSource").GetProperty("fileList").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("buildMode").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("example").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("type").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
+    Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
 }
 ]]></code></example>
     </member>
@@ -835,7 +861,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-await foreach (OperationSummary item in client.GetOperationsAsync())
+await foreach (OperationDetails item in client.GetOperationsAsync())
 {
 }
 ]]></code>
@@ -845,7 +871,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-await foreach (OperationSummary item in client.GetOperationsAsync())
+await foreach (OperationDetails item in client.GetOperationsAsync())
 {
 }
 ]]></code></example>
@@ -858,7 +884,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-foreach (OperationSummary item in client.GetOperations())
+foreach (OperationDetails item in client.GetOperations())
 {
 }
 ]]></code>
@@ -868,7 +894,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
-foreach (OperationSummary item in client.GetOperations())
+foreach (OperationDetails item in client.GetOperations())
 {
 }
 ]]></code></example>
@@ -910,6 +936,11 @@ await foreach (BinaryData item in client.GetOperationsAsync(null))
     Console.WriteLine(result.GetProperty("resourceLocation").ToString());
     Console.WriteLine(result.GetProperty("apiVersion").ToString());
     Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
 }
 ]]></code></example>
     </member>
@@ -950,6 +981,11 @@ foreach (BinaryData item in client.GetOperations(null))
     Console.WriteLine(result.GetProperty("resourceLocation").ToString());
     Console.WriteLine(result.GetProperty("apiVersion").ToString());
     Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
 }
 ]]></code></example>
     </member>
@@ -1077,19 +1113,19 @@ foreach (BinaryData item in client.GetClassifiers(null))
 }
 ]]></code></example>
     </member>
-    <member name="BuildDocumentAsync(WaitUntil,BuildDocumentModelRequest,CancellationToken)">
+    <member name="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelRequest,CancellationToken)">
       <example>
-This sample shows how to call BuildDocumentAsync.
+This sample shows how to call BuildDocumentModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
 BuildDocumentModelRequest buildRequest = new BuildDocumentModelRequest("<modelId>", DocumentBuildMode.Template);
-Operation<DocumentModelDetails> operation = await client.BuildDocumentAsync(WaitUntil.Completed, buildRequest);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code>
-This sample shows how to call BuildDocumentAsync with all parameters.
+This sample shows how to call BuildDocumentModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1108,23 +1144,23 @@ BuildDocumentModelRequest buildRequest = new BuildDocumentModelRequest("<modelId
         ["key"] = "<tags>"
     },
 };
-Operation<DocumentModelDetails> operation = await client.BuildDocumentAsync(WaitUntil.Completed, buildRequest);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, buildRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="BuildDocument(WaitUntil,BuildDocumentModelRequest,CancellationToken)">
+    <member name="BuildDocumentModel(WaitUntil,BuildDocumentModelRequest,CancellationToken)">
       <example>
-This sample shows how to call BuildDocument.
+This sample shows how to call BuildDocumentModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
 
 BuildDocumentModelRequest buildRequest = new BuildDocumentModelRequest("<modelId>", DocumentBuildMode.Template);
-Operation<DocumentModelDetails> operation = client.BuildDocument(WaitUntil.Completed, buildRequest);
+Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code>
-This sample shows how to call BuildDocument with all parameters.
+This sample shows how to call BuildDocumentModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1143,13 +1179,13 @@ BuildDocumentModelRequest buildRequest = new BuildDocumentModelRequest("<modelId
         ["key"] = "<tags>"
     },
 };
-Operation<DocumentModelDetails> operation = client.BuildDocument(WaitUntil.Completed, buildRequest);
+Operation<DocumentModelDetails> operation = client.BuildDocumentModel(WaitUntil.Completed, buildRequest);
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="BuildDocumentAsync(WaitUntil,RequestContent,RequestContext)">
+    <member name="BuildDocumentModelAsync(WaitUntil,RequestContent,RequestContext)">
       <example>
-This sample shows how to call BuildDocumentAsync and parse the result.
+This sample shows how to call BuildDocumentModelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1160,15 +1196,14 @@ using RequestContent content = RequestContent.Create(new
     modelId = "<modelId>",
     buildMode = "template",
 });
-Operation<BinaryData> operation = await client.BuildDocumentAsync(WaitUntil.Completed, content);
+Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
-This sample shows how to call BuildDocumentAsync with all parameters and request content and parse the result.
+This sample shows how to call BuildDocumentModelAsync with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1194,10 +1229,16 @@ using RequestContent content = RequestContent.Create(new
         key = "<tags>",
     },
 });
-Operation<BinaryData> operation = await client.BuildDocumentAsync(WaitUntil.Completed, content);
+Operation<BinaryData> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1212,17 +1253,11 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
-    <member name="BuildDocument(WaitUntil,RequestContent,RequestContext)">
+    <member name="BuildDocumentModel(WaitUntil,RequestContent,RequestContext)">
       <example>
-This sample shows how to call BuildDocument and parse the result.
+This sample shows how to call BuildDocumentModel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1233,15 +1268,14 @@ using RequestContent content = RequestContent.Create(new
     modelId = "<modelId>",
     buildMode = "template",
 });
-Operation<BinaryData> operation = client.BuildDocument(WaitUntil.Completed, content);
+Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
-This sample shows how to call BuildDocument with all parameters and request content and parse the result.
+This sample shows how to call BuildDocumentModel with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1267,10 +1301,16 @@ using RequestContent content = RequestContent.Create(new
         key = "<tags>",
     },
 });
-Operation<BinaryData> operation = client.BuildDocument(WaitUntil.Completed, content);
+Operation<BinaryData> operation = client.BuildDocumentModel(WaitUntil.Completed, content);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1285,12 +1325,6 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="ComposeModelAsync(WaitUntil,ComposeDocumentModelRequest,CancellationToken)">
@@ -1388,7 +1422,6 @@ Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Compl
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
@@ -1418,6 +1451,12 @@ Operation<BinaryData> operation = await client.ComposeModelAsync(WaitUntil.Compl
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1432,12 +1471,6 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="ComposeModel(WaitUntil,RequestContent,RequestContext)">
@@ -1463,7 +1496,6 @@ Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, conte
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
@@ -1493,6 +1525,12 @@ Operation<BinaryData> operation = client.ComposeModel(WaitUntil.Completed, conte
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1507,12 +1545,6 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)">
@@ -1582,7 +1614,6 @@ Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Comple
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
@@ -1605,6 +1636,12 @@ Operation<BinaryData> operation = await client.CopyModelToAsync(WaitUntil.Comple
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1619,12 +1656,6 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="CopyModelTo(WaitUntil,string,RequestContent,RequestContext)">
@@ -1648,7 +1679,6 @@ Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<mode
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code>
@@ -1671,6 +1701,12 @@ Operation<BinaryData> operation = client.CopyModelTo(WaitUntil.Completed, "<mode
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("apiVersion").ToString());
+Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("buildMode").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("containerUrl").ToString());
 Console.WriteLine(result.GetProperty("azureBlobSource").GetProperty("prefix").ToString());
@@ -1685,12 +1721,6 @@ Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetPropert
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldSchema").GetProperty("<key>").GetProperty("items").GetProperty("example").ToString());
 Console.WriteLine(result.GetProperty("docTypes").GetProperty("<key>").GetProperty("fieldConfidence").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("apiVersion").ToString());
-Console.WriteLine(result.GetProperty("tags").GetProperty("<key>").ToString());
 ]]></code></example>
     </member>
     <member name="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierRequest,CancellationToken)">

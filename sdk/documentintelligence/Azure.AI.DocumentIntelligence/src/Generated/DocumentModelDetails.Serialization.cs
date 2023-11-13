@@ -21,55 +21,18 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            DocumentBuildMode buildMode = default;
-            Optional<AzureBlobContentSource> azureBlobSource = default;
-            Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
-            Optional<IReadOnlyDictionary<string, DocumentTypeDetails>> docTypes = default;
             string modelId = default;
             Optional<string> description = default;
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Optional<string> apiVersion = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            Optional<DocumentBuildMode> buildMode = default;
+            Optional<AzureBlobContentSource> azureBlobSource = default;
+            Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
+            Optional<IReadOnlyDictionary<string, DocumentTypeDetails>> docTypes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("buildMode"u8))
-                {
-                    buildMode = new DocumentBuildMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("azureBlobSource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("azureBlobFileListSource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("docTypes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, DocumentTypeDetails> dictionary = new Dictionary<string, DocumentTypeDetails>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, DocumentTypeDetails.DeserializeDocumentTypeDetails(property0.Value));
-                    }
-                    docTypes = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("modelId"u8))
                 {
                     modelId = property.Value.GetString();
@@ -113,8 +76,49 @@ namespace Azure.AI.DocumentIntelligence
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("buildMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    buildMode = new DocumentBuildMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("azureBlobSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("azureBlobFileListSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("docTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, DocumentTypeDetails> dictionary = new Dictionary<string, DocumentTypeDetails>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, DocumentTypeDetails.DeserializeDocumentTypeDetails(property0.Value));
+                    }
+                    docTypes = dictionary;
+                    continue;
+                }
             }
-            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags), buildMode, azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(docTypes));
+            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, Optional.ToDictionary(tags), Optional.ToNullable(buildMode), azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(docTypes));
         }
     }
 }

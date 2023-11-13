@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentIntelligence
             Content = content;
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = spans.ToList();
-            Elements = new ChangeTrackingList<object>();
+            Elements = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of DocumentListItem. </summary>
@@ -38,7 +38,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the list item. </param>
         /// <param name="spans"> Location of the list item in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the list item. </param>
-        internal DocumentListItem(int level, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<object> elements)
+        internal DocumentListItem(int level, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, IReadOnlyList<string> elements)
         {
             Level = level;
             Content = content;
@@ -56,6 +56,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Location of the list item in the reading order concatenated content. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
         /// <summary> Child elements of the list item. </summary>
-        public IReadOnlyList<object> Elements { get; }
+        public IReadOnlyList<string> Elements { get; }
     }
 }

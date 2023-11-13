@@ -61,7 +61,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(analyzeResult.ModelId, Is.EqualTo(classifierId));
             Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
             Assert.That(analyzeResult.StringIndexType, Is.EqualTo(StringIndexType.TextElements));
-            Assert.That(analyzeResult.ContentFormat, Is.Null);
+            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(ContentFormat)));
 
             Assert.That(analyzeResult.Content, Is.Empty);
             Assert.That(analyzeResult.Paragraphs, Is.Empty);
@@ -117,6 +117,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             ValidateGenericClassifierResult(analyzeResult, classifierId);
 
+            Assert.That(analyzeResult.ContentFormat, Is.EqualTo(ContentFormat.Text));
+
             Assert.That(analyzeResult.Pages.Count, Is.EqualTo(4));
 
             foreach (var page in analyzeResult.Pages)
@@ -127,15 +129,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(page.Unit, Is.EqualTo(LengthUnit.Inch));
             }
 
-            Assert.That(analyzeResult.Documents.Count, Is.EqualTo(2));
+            Assert.That(analyzeResult.Documents.Count, Is.EqualTo(1));
 
-            var document0 = analyzeResult.Documents[0];
-            var document1 = analyzeResult.Documents[1];
+            var document = analyzeResult.Documents.Single();
 
-            Assert.That(document0.DocType, Is.EqualTo("IRS-1040-A"));
-            Assert.That(document1.DocType, Is.EqualTo("IRS-1040-C"));
-            Assert.That(document1.BoundingRegions.Count, Is.EqualTo(2));
-            Assert.That(document1.BoundingRegions.Count, Is.EqualTo(2));
+            Assert.That(document.DocType, Is.EqualTo("IRS-1040-A"));
+            Assert.That(document.BoundingRegions.Count, Is.EqualTo(4));
         }
 
         private void AssertSingleEmptySpan(IReadOnlyList<DocumentSpan> spans)

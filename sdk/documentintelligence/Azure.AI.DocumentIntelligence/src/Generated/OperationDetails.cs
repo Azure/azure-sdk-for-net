@@ -12,22 +12,24 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary>
-    /// Get Operation response object.
+    /// Operation info.
     /// Please note <see cref="OperationDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, <see cref="DocumentModelCopyToOperationDetails"/>, <see cref="DocumentClassifierBuildOperationDetails"/> and <see cref="ChatIndexBuildOperationDetails"/>.
+    /// The available derived classes include <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/>, <see cref="DocumentModelCopyToOperationDetails"/> and <see cref="DocumentClassifierBuildOperationDetails"/>.
     /// </summary>
     public abstract partial class OperationDetails
     {
         /// <summary> Initializes a new instance of OperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceLocation"/> is null. </exception>
-        protected OperationDetails(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation)
+        protected OperationDetails(Guid operationId, OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation)
         {
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 
+            OperationId = operationId;
             Status = status;
             CreatedDateTime = createdDateTime;
             LastUpdatedDateTime = lastUpdatedDateTime;

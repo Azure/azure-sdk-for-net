@@ -125,21 +125,21 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var operationId0 = new Guid(disposableModel0.Operation.Id);
             var operationId1 = new Guid(disposableModel1.Operation.Id);
 
-            OperationDetails operationDetails0 = await client.GetOperationAsync(operationId0);
-            OperationDetails operationDetails1 = await client.GetOperationAsync(operationId1);
+            OperationDetails expectedOperation0 = await client.GetOperationAsync(operationId0);
+            OperationDetails expectedOperation1 = await client.GetOperationAsync(operationId1);
 
             var expectedIdMapping = new Dictionary<Guid, OperationDetails>()
             {
-                { operationId0, operationDetails0 },
-                { operationId1, operationDetails1 }
+                { operationId0, expectedOperation0 },
+                { operationId1, expectedOperation1 }
             };
-            var idMapping = new Dictionary<Guid, OperationSummary>();
+            var idMapping = new Dictionary<Guid, OperationDetails>();
 
-            await foreach (OperationSummary operationSummary in client.GetOperationsAsync())
+            await foreach (OperationDetails operation in client.GetOperationsAsync())
             {
-                if (expectedIdMapping.ContainsKey(operationSummary.OperationId))
+                if (expectedIdMapping.ContainsKey(operation.OperationId))
                 {
-                    idMapping.Add(operationSummary.OperationId, operationSummary);
+                    idMapping.Add(operation.OperationId, operation);
                 }
 
                 if (idMapping.Count == expectedIdMapping.Count)
@@ -155,16 +155,18 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(idMapping, Contains.Key(id));
 
                 OperationDetails expected = expectedIdMapping[id];
-                OperationSummary operationSummary = idMapping[id];
+                OperationDetails operation = idMapping[id];
 
-                Assert.That(operationSummary.OperationId, Is.EqualTo(expected.OperationId));
-                Assert.That(operationSummary.ApiVersion, Is.EqualTo(expected.ApiVersion));
-                Assert.That(operationSummary.Status, Is.EqualTo(expected.Status));
-                Assert.That(operationSummary.PercentCompleted, Is.EqualTo(expected.PercentCompleted));
-                Assert.That(operationSummary.ResourceLocation.AbsoluteUri, Is.EqualTo(expected.ResourceLocation.AbsoluteUri));
-                Assert.That(operationSummary.CreatedDateTime, Is.EqualTo(expected.CreatedDateTime));
-                Assert.That(operationSummary.LastUpdatedDateTime, Is.EqualTo(expected.LastUpdatedDateTime));
-                Assert.That(operationSummary.Tags, Is.EquivalentTo(expected.Tags));
+                Assert.That(operation.OperationId, Is.EqualTo(expected.OperationId));
+                Assert.That(operation.ApiVersion, Is.EqualTo(expected.ApiVersion));
+                Assert.That(operation.Status, Is.EqualTo(expected.Status));
+                Assert.That(operation.PercentCompleted, Is.EqualTo(expected.PercentCompleted));
+                Assert.That(operation.ResourceLocation.AbsoluteUri, Is.EqualTo(expected.ResourceLocation.AbsoluteUri));
+                Assert.That(operation.CreatedDateTime, Is.EqualTo(expected.CreatedDateTime));
+                Assert.That(operation.LastUpdatedDateTime, Is.EqualTo(expected.LastUpdatedDateTime));
+                Assert.That(operation.Tags, Is.EquivalentTo(expected.Tags));
+
+                Assert.That(operation.Error, Is.Null);
             }
         }
 

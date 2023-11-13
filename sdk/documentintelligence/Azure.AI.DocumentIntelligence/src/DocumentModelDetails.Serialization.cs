@@ -7,7 +7,7 @@ namespace Azure.AI.DocumentIntelligence
     {
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new DocumentModelDetails FromResponse(Response response)
+        internal static DocumentModelDetails FromResponse(Response response)
         {
             return DeserializationHelpers.FromOperationResponse(response, DeserializeDocumentModelDetails, "result");
         }

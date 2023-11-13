@@ -15,12 +15,13 @@ namespace Azure.AI.DocumentIntelligence
     internal partial class UnknownOperationDetails : OperationDetails
     {
         /// <summary> Initializes a new instance of UnknownOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceLocation"/> is null. </exception>
-        internal UnknownOperationDetails(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation) : base(status, createdDateTime, lastUpdatedDateTime, resourceLocation)
+        internal UnknownOperationDetails(Guid operationId, OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation) : base(operationId, status, createdDateTime, lastUpdatedDateTime, resourceLocation)
         {
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
         }

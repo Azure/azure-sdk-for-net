@@ -5,40 +5,32 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.DocumentIntelligence
 {
-    /// <summary> Detailed error. </summary>
+    /// <summary> An object containing more specific information about the error. </summary>
     public partial class InnerError
     {
         /// <summary> Initializes a new instance of InnerError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
-        internal InnerError(string code)
+        internal InnerError()
         {
-            Argument.AssertNotNull(code, nameof(code));
-
-            Code = code;
         }
 
         /// <summary> Initializes a new instance of InnerError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="innererror"> Detailed error. </param>
-        internal InnerError(string code, string message, InnerError innererror)
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="innerErrorObject"> Inner error. </param>
+        internal InnerError(string code, string message, InnerError innerErrorObject)
         {
             Code = code;
             Message = message;
-            Innererror = innererror;
+            InnerErrorObject = innerErrorObject;
         }
 
-        /// <summary> Error code. </summary>
+        /// <summary> One of a server-defined set of error codes. </summary>
         public string Code { get; }
-        /// <summary> Error message. </summary>
+        /// <summary> A human-readable representation of the error. </summary>
         public string Message { get; }
-        /// <summary> Detailed error. </summary>
-        public InnerError Innererror { get; }
+        /// <summary> Inner error. </summary>
+        public InnerError InnerErrorObject { get; }
     }
 }

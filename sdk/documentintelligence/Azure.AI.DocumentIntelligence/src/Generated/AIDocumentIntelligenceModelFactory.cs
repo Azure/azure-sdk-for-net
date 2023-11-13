@@ -245,11 +245,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentTableCell"/> instance for mocking. </returns>
-        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = null, int rowIndex = default, int columnIndex = default, int? rowSpan = null, int? columnSpan = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = null, int rowIndex = default, int columnIndex = default, int? rowSpan = null, int? columnSpan = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
-            elements ??= new List<object>();
+            elements ??= new List<string>();
 
             return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
         }
@@ -260,11 +260,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the caption in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the caption. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentCaption"/> instance for mocking. </returns>
-        public static DocumentCaption DocumentCaption(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        public static DocumentCaption DocumentCaption(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
-            elements ??= new List<object>();
+            elements ??= new List<string>();
 
             return new DocumentCaption(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
         }
@@ -275,11 +275,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the footnote. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentFootnote"/> instance for mocking. </returns>
-        public static DocumentFootnote DocumentFootnote(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        public static DocumentFootnote DocumentFootnote(string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
-            elements ??= new List<object>();
+            elements ??= new List<string>();
 
             return new DocumentFootnote(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
         }
@@ -291,11 +291,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="caption"> Caption associated with the figure. </param>
         /// <param name="footnotes"> List of footnotes associated with the figure. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentFigure"/> instance for mocking. </returns>
-        public static DocumentFigure DocumentFigure(IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null)
+        public static DocumentFigure DocumentFigure(IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null, DocumentCaption caption = null, IEnumerable<DocumentFootnote> footnotes = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
-            elements ??= new List<object>();
+            elements ??= new List<string>();
             footnotes ??= new List<DocumentFootnote>();
 
             return new DocumentFigure(boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), caption, footnotes?.ToList());
@@ -320,11 +320,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the list item in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the list item. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentListItem"/> instance for mocking. </returns>
-        public static DocumentListItem DocumentListItem(int level = default, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        public static DocumentListItem DocumentListItem(int level = default, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null)
         {
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
-            elements ??= new List<object>();
+            elements ??= new List<string>();
 
             return new DocumentListItem(level, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
         }
@@ -333,10 +333,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the section in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the section. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentSection"/> instance for mocking. </returns>
-        public static DocumentSection DocumentSection(IEnumerable<DocumentSpan> spans = null, IEnumerable<object> elements = null)
+        public static DocumentSection DocumentSection(IEnumerable<DocumentSpan> spans = null, IEnumerable<string> elements = null)
         {
             spans ??= new List<DocumentSpan>();
-            elements ??= new List<object>();
+            elements ??= new List<string>();
 
             return new DocumentSection(spans?.ToList(), elements?.ToList());
         }
@@ -483,21 +483,6 @@ namespace Azure.AI.DocumentIntelligence
             return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level);
         }
 
-        /// <summary> Initializes a new instance of DocumentModelSummary. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="description"> Document model description. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the document model was created. </param>
-        /// <param name="expirationDateTime"> Date and time (UTC) when the document model will expire. </param>
-        /// <param name="apiVersion"> API version used to create this document model. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelSummary"/> instance for mocking. </returns>
-        public static DocumentModelSummary DocumentModelSummary(string modelId = null, string description = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new DocumentModelSummary(modelId, description, createdDateTime, expirationDateTime, apiVersion, tags);
-        }
-
         /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
@@ -516,7 +501,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="docTypes"> Supported document types. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelDetails"/> instance for mocking. </returns>
-        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentBuildMode buildMode = default, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = null)
+        public static DocumentModelDetails DocumentModelDetails(string modelId = null, string description = null, DateTimeOffset createdDateTime = default, DateTimeOffset? expirationDateTime = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentBuildMode? buildMode = null, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = null)
         {
             tags ??= new Dictionary<string, string>();
             docTypes ??= new Dictionary<string, DocumentTypeDetails>();
@@ -610,11 +595,11 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="target"> Target of the error. </param>
-        /// <param name="details"> List of detailed errors. </param>
-        /// <param name="innererror"> Detailed error. </param>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="target"> The target of the error. </param>
+        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
         public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, InnerError innererror = null)
         {
@@ -624,13 +609,13 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of InnerError. </summary>
-        /// <param name="code"> Error code. </param>
-        /// <param name="message"> Error message. </param>
-        /// <param name="innererror"> Detailed error. </param>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="innerErrorObject"> Inner error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string code = null, string message = null, InnerError innererror = null)
+        public static InnerError InnerError(string code = null, string message = null, InnerError innerErrorObject = null)
         {
-            return new InnerError(code, message, innererror);
+            return new InnerError(code, message, innerErrorObject);
         }
 
         /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
@@ -722,64 +707,6 @@ namespace Azure.AI.DocumentIntelligence
             docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
 
             return new DocumentClassifierDetails(classifierId, description, createdDateTime, expirationDateTime, apiVersion, docTypes);
-        }
-
-        /// <summary> Initializes a new instance of ChatIndexBuildOperationDetails. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="error"> Encountered error. </param>
-        /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ChatIndexBuildOperationDetails"/> instance for mocking. </returns>
-        public static ChatIndexBuildOperationDetails ChatIndexBuildOperationDetails(Guid operationId = default, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, ChatIndexDetails result = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ChatIndexBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.ChatBuild, resourceLocation, apiVersion, tags, error, result);
-        }
-
-        /// <summary> Initializes a new instance of ChatIndexDetails. </summary>
-        /// <param name="chatId"> Chat index ID. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the index was created. </param>
-        /// <param name="expirationDateTime"> Date and time (UTC) when the index will expire. </param>
-        /// <param name="apiVersion"> API version used to create this index. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatId"/> or <paramref name="apiVersion"/> is null. </exception>
-        /// <returns> A new <see cref="DocumentIntelligence.ChatIndexDetails"/> instance for mocking. </returns>
-        public static ChatIndexDetails ChatIndexDetails(string chatId = null, DateTimeOffset createdDateTime = default, DateTimeOffset expirationDateTime = default, string apiVersion = null)
-        {
-            if (chatId == null)
-            {
-                throw new ArgumentNullException(nameof(chatId));
-            }
-            if (apiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(apiVersion));
-            }
-
-            return new ChatIndexDetails(chatId, createdDateTime, expirationDateTime, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of OperationSummary. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.OperationSummary"/> instance for mocking. </returns>
-        public static OperationSummary OperationSummary(Guid operationId = default, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, OperationKind kind = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new OperationSummary(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags);
         }
     }
 }

@@ -15,12 +15,13 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentClassifierBuildOperationDetails : OperationDetails
     {
         /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
+        /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceLocation"/> is null. </exception>
-        internal DocumentClassifierBuildOperationDetails(OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation) : base(status, createdDateTime, lastUpdatedDateTime, resourceLocation)
+        internal DocumentClassifierBuildOperationDetails(Guid operationId, OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation) : base(operationId, status, createdDateTime, lastUpdatedDateTime, resourceLocation)
         {
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 

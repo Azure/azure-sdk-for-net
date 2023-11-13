@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Type of operation. </summary>
-    public readonly partial struct OperationKind : IEquatable<OperationKind>
+    internal readonly partial struct OperationKind : IEquatable<OperationKind>
     {
         private readonly string _value;
 
@@ -26,7 +26,6 @@ namespace Azure.AI.DocumentIntelligence
         private const string DocumentModelComposeValue = "documentModelCompose";
         private const string DocumentModelCopyToValue = "documentModelCopyTo";
         private const string DocumentClassifierBuildValue = "documentClassifierBuild";
-        private const string ChatBuildValue = "chatBuild";
 
         /// <summary> Build a new custom document model. </summary>
         public static OperationKind DocumentModelBuild { get; } = new OperationKind(DocumentModelBuildValue);
@@ -39,8 +38,6 @@ namespace Azure.AI.DocumentIntelligence
         public static OperationKind DocumentModelCopyTo { get; } = new OperationKind(DocumentModelCopyToValue);
         /// <summary> Build a new custom classifier model. </summary>
         public static OperationKind DocumentClassifierBuild { get; } = new OperationKind(DocumentClassifierBuildValue);
-        /// <summary> Build a new chat index. </summary>
-        public static OperationKind ChatBuild { get; } = new OperationKind(ChatBuildValue);
         /// <summary> Determines if two <see cref="OperationKind"/> values are the same. </summary>
         public static bool operator ==(OperationKind left, OperationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationKind"/> values are not the same. </summary>

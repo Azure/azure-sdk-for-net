@@ -19,7 +19,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            string code = default;
+            Optional<string> code = default;
             Optional<string> message = default;
             Optional<InnerError> innererror = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +44,7 @@ namespace Azure.AI.DocumentIntelligence
                     continue;
                 }
             }
-            return new InnerError(code, message.Value, innererror.Value);
+            return new InnerError(code.Value, message.Value, innererror.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
