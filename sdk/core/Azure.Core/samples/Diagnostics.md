@@ -267,19 +267,19 @@ Another approach would be to filter out generic HTTP client activities with the 
 
 Here we enabled all `Azure.*` sources, but added filter to drop HTTP client activities that would be duplicates of `Azure` activities.
 
-_Note: filtering does nto prevent new activity from being created and new [`traceparent`](https://www.w3.org/TR/trace-context/#traceparent-header) from being generated._
+_Note: filtering does not prevent new activity from being created and new [`traceparent`](https://www.w3.org/TR/trace-context/#traceparent-header) from being generated._
 
-### HTTP metrics
+## HTTP metrics
 
 Azure SDKs do not collect HTTP-level metrics. Please use metrics coming from .NET platform and/or generic HTTP client instrumentation.
 
-### ApplicationInsights with Azure Monitor
+## Azure Monitor
 
-Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
+Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app.
 
-If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0` ([Microsoft.ApplicationInsights on NuGet](https://www.nuget.org/packages/Microsoft.ApplicationInsights/)).
+To setup Azure Monitor for your application follow the [Start Monitoring Application](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore) guide.
 
-To setup ApplicationInsights for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
+If your application uses ApplicationInsights SDK (classic), automatic collection of Azure SDK traces is supported since version `2.12.0` ([Microsoft.ApplicationInsights on NuGet](https://www.nuget.org/packages/Microsoft.ApplicationInsights/)).
 
 ### Sample
 
