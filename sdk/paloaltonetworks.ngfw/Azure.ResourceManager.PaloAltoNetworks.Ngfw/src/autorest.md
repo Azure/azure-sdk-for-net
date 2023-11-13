@@ -176,7 +176,7 @@ directive:
             'modelAsString': true
           }
         };
-  # This change replaces pagination for List api's since operationName is incorrect https://github.com/Azure/azure-sdk-for-net/pull/39867    
+  # This change replaces pagination for List api's since operationName is incorrect
   - from: PaloAltoNetworks.Cloudngfw.json
     where: $.paths
     transform: >
