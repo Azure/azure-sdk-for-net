@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Models
         private const string NoneValue = "None";
         private const string SystemAssignedValue = "SystemAssigned";
         private const string UserAssignedValue = "UserAssigned";
-        private const string SystemAssignedUserAssignedValue = "SystemAssigned, UserAssigned";
+        private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
         /// <summary> None. </summary>
         public static ManagedServiceIdentityType None { get; } = new ManagedServiceIdentityType(NoneValue);
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Models
         public static ManagedServiceIdentityType SystemAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedValue);
         /// <summary> UserAssigned. </summary>
         public static ManagedServiceIdentityType UserAssigned { get; } = new ManagedServiceIdentityType(UserAssignedValue);
-        /// <summary> SystemAssigned, UserAssigned. </summary>
+        /// <summary> SystemAssigned,UserAssigned. </summary>
         public static ManagedServiceIdentityType SystemAssignedUserAssigned { get; } = new ManagedServiceIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="ManagedServiceIdentityType"/> values are the same. </summary>
         public static bool operator ==(ManagedServiceIdentityType left, ManagedServiceIdentityType right) => left.Equals(right);

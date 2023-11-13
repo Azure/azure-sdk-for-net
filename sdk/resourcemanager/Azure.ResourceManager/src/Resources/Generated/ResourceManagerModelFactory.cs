@@ -48,6 +48,176 @@ namespace Azure.ResourceManager.Models
             return new PolicyAssignmentData(id, name, resourceType, systemData, location, managedIdentity, displayName, policyDefinitionId, scope, excludedScopes?.ToList(), parameters, description, metadata, enforcementMode, nonComplianceMessages?.ToList(), resourceSelectors?.ToList(), overrides?.ToList());
         }
 
+        /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
+        /// <param name="displayName"> The display name of the policy definition. </param>
+        /// <param name="description"> The policy definition description. </param>
+        /// <param name="policyRule"> The policy rule. </param>
+        /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
+        /// <param name="version"> The policy definition version in #.#.# format. </param>
+        /// <param name="versions"> A list of available versions for this policy definition. </param>
+        /// <returns> A new <see cref="Resources.PolicyDefinitionData"/> instance for mocking. </returns>
+        public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string mode = null, string displayName = null, string description = null, BinaryData policyRule = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, string version = null, IEnumerable<string> versions = null)
+        {
+            parameters ??= new Dictionary<string, ArmPolicyParameter>();
+            versions ??= new List<string>();
+
+            return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters, version, versions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="policyType"> The type of policy set definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="displayName"> The display name of the policy set definition. </param>
+        /// <param name="description"> The policy set definition description. </param>
+        /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
+        /// <param name="policyDefinitions"> An array of policy definition references. </param>
+        /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
+        /// <param name="version"> The policy set definition version in #.#.# format. </param>
+        /// <param name="versions"> A list of available versions for this policy set definition. </param>
+        /// <returns> A new <see cref="Resources.PolicySetDefinitionData"/> instance for mocking. </returns>
+        public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string displayName = null, string description = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, IEnumerable<PolicyDefinitionReference> policyDefinitions = null, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = null, string version = null, IEnumerable<string> versions = null)
+        {
+            parameters ??= new Dictionary<string, ArmPolicyParameter>();
+            policyDefinitions ??= new List<PolicyDefinitionReference>();
+            policyDefinitionGroups ??= new List<PolicyDefinitionGroup>();
+            versions ??= new List<string>();
+
+            return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList(), version, versions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="namespaces"> The list of namespaces for the data policy manifest. </param>
+        /// <param name="policyMode"> The policy mode of the data policy manifest. </param>
+        /// <param name="isBuiltInOnly"> A value indicating whether policy mode is allowed only in built-in definitions. </param>
+        /// <param name="resourceTypeAliases"> An array of resource type aliases. </param>
+        /// <param name="effects"> The effect definition. </param>
+        /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
+        /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
+        /// <param name="customDefinitions"> An array of data manifest custom resource definition. </param>
+        /// <returns> A new <see cref="Resources.DataPolicyManifestData"/> instance for mocking. </returns>
+        public static DataPolicyManifestData DataPolicyManifestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> namespaces = null, string policyMode = null, bool? isBuiltInOnly = null, IEnumerable<ResourceTypeAliases> resourceTypeAliases = null, IEnumerable<DataPolicyManifestEffect> effects = null, IEnumerable<string> fieldValues = null, IEnumerable<string> standard = null, IEnumerable<DataManifestCustomResourceFunctionDefinition> customDefinitions = null)
+        {
+            namespaces ??= new List<string>();
+            resourceTypeAliases ??= new List<ResourceTypeAliases>();
+            effects ??= new List<DataPolicyManifestEffect>();
+            fieldValues ??= new List<string>();
+            standard ??= new List<string>();
+            customDefinitions ??= new List<DataManifestCustomResourceFunctionDefinition>();
+
+            return new DataPolicyManifestData(id, name, resourceType, systemData, namespaces?.ToList(), policyMode, isBuiltInOnly, resourceTypeAliases?.ToList(), effects?.ToList(), fieldValues?.ToList(), standard?.ToList(), customDefinitions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
+        /// <param name="resourceType"> The resource type name. </param>
+        /// <param name="aliases"> The aliases for property names. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliases"/> instance for mocking. </returns>
+        public static ResourceTypeAliases ResourceTypeAliases(string resourceType = null, IEnumerable<ResourceTypeAlias> aliases = null)
+        {
+            aliases ??= new List<ResourceTypeAlias>();
+
+            return new ResourceTypeAliases(resourceType, aliases?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
+        /// <param name="name"> The alias name. </param>
+        /// <param name="paths"> The paths for an alias. </param>
+        /// <param name="aliasType"> The type of the alias. </param>
+        /// <param name="defaultPath"> The default path for an alias. </param>
+        /// <param name="defaultPattern"> The default pattern for an alias. </param>
+        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAlias"/> instance for mocking. </returns>
+        public static ResourceTypeAlias ResourceTypeAlias(string name = null, IEnumerable<ResourceTypeAliasPath> paths = null, ResourceTypeAliasType? aliasType = null, string defaultPath = null, ResourceTypeAliasPattern defaultPattern = null, ResourceTypeAliasPathMetadata defaultMetadata = null)
+        {
+            paths ??= new List<ResourceTypeAliasPath>();
+
+            return new ResourceTypeAlias(name, paths?.ToList(), aliasType, defaultPath, defaultPattern, defaultMetadata);
+        }
+
+        /// <summary> Initializes a new instance of ResourceTypeAliasPath. </summary>
+        /// <param name="path"> The path of an alias. </param>
+        /// <param name="apiVersions"> The API versions. </param>
+        /// <param name="pattern"> The pattern for an alias path. </param>
+        /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPath"/> instance for mocking. </returns>
+        public static ResourceTypeAliasPath ResourceTypeAliasPath(string path = null, IEnumerable<string> apiVersions = null, ResourceTypeAliasPattern pattern = null, ResourceTypeAliasPathMetadata metadata = null)
+        {
+            apiVersions ??= new List<string>();
+
+            return new ResourceTypeAliasPath(path, apiVersions?.ToList(), pattern, metadata);
+        }
+
+        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
+        /// <param name="phrase"> The alias pattern phrase. </param>
+        /// <param name="variable"> The alias pattern variable. </param>
+        /// <param name="patternType"> The type of alias pattern. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPattern"/> instance for mocking. </returns>
+        public static ResourceTypeAliasPattern ResourceTypeAliasPattern(string phrase = null, string variable = null, ResourceTypeAliasPatternType? patternType = null)
+        {
+            return new ResourceTypeAliasPattern(phrase, variable, patternType);
+        }
+
+        /// <summary> Initializes a new instance of ResourceTypeAliasPathMetadata. </summary>
+        /// <param name="tokenType"> The type of the token that the alias path is referring to. </param>
+        /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/> instance for mocking. </returns>
+        public static ResourceTypeAliasPathMetadata ResourceTypeAliasPathMetadata(ResourceTypeAliasPathTokenType? tokenType = null, ResourceTypeAliasPathAttributes? attributes = null)
+        {
+            return new ResourceTypeAliasPathMetadata(tokenType, attributes);
+        }
+
+        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
+        /// <param name="name"> The data effect name. </param>
+        /// <param name="detailsSchema"> The data effect details schema. </param>
+        /// <returns> A new <see cref="Resources.Models.DataPolicyManifestEffect"/> instance for mocking. </returns>
+        public static DataPolicyManifestEffect DataPolicyManifestEffect(string name = null, BinaryData detailsSchema = null)
+        {
+            return new DataPolicyManifestEffect(name, detailsSchema);
+        }
+
+        /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
+        /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
+        /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
+        /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>
+        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </param>
+        /// <returns> A new <see cref="Resources.Models.DataManifestCustomResourceFunctionDefinition"/> instance for mocking. </returns>
+        public static DataManifestCustomResourceFunctionDefinition DataManifestCustomResourceFunctionDefinition(string name = null, ResourceType? fullyQualifiedResourceType = null, IEnumerable<string> defaultProperties = null, bool? allowCustomProperties = null)
+        {
+            defaultProperties ??= new List<string>();
+
+            return new DataManifestCustomResourceFunctionDefinition(name, fullyQualifiedResourceType, defaultProperties?.ToList(), allowCustomProperties);
+        }
+
+        /// <summary> Initializes a new instance of ManagementLockData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
+        /// <param name="notes"> Notes about the lock. Maximum of 512 characters. </param>
+        /// <param name="owners"> The owners of the lock. </param>
+        /// <returns> A new <see cref="Resources.ManagementLockData"/> instance for mocking. </returns>
+        public static ManagementLockData ManagementLockData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagementLockLevel level = default, string notes = null, IEnumerable<ManagementLockOwner> owners = null)
+        {
+            owners ??= new List<ManagementLockOwner>();
+
+            return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ResourceProviderData. </summary>
         /// <param name="id"> The provider ID. </param>
         /// <param name="namespace"> The namespace of the resource provider. </param>
@@ -98,53 +268,6 @@ namespace Azure.ResourceManager.Models
             extendedLocations ??= new List<string>();
 
             return new ProviderExtendedLocation(location, providerExtendedLocationType, extendedLocations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
-        /// <param name="name"> The alias name. </param>
-        /// <param name="paths"> The paths for an alias. </param>
-        /// <param name="aliasType"> The type of the alias. </param>
-        /// <param name="defaultPath"> The default path for an alias. </param>
-        /// <param name="defaultPattern"> The default pattern for an alias. </param>
-        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAlias"/> instance for mocking. </returns>
-        public static ResourceTypeAlias ResourceTypeAlias(string name = null, IEnumerable<ResourceTypeAliasPath> paths = null, ResourceTypeAliasType? aliasType = null, string defaultPath = null, ResourceTypeAliasPattern defaultPattern = null, ResourceTypeAliasPathMetadata defaultMetadata = null)
-        {
-            paths ??= new List<ResourceTypeAliasPath>();
-
-            return new ResourceTypeAlias(name, paths?.ToList(), aliasType, defaultPath, defaultPattern, defaultMetadata);
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAliasPath. </summary>
-        /// <param name="path"> The path of an alias. </param>
-        /// <param name="apiVersions"> The API versions. </param>
-        /// <param name="pattern"> The pattern for an alias path. </param>
-        /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPath"/> instance for mocking. </returns>
-        public static ResourceTypeAliasPath ResourceTypeAliasPath(string path = null, IEnumerable<string> apiVersions = null, ResourceTypeAliasPattern pattern = null, ResourceTypeAliasPathMetadata metadata = null)
-        {
-            apiVersions ??= new List<string>();
-
-            return new ResourceTypeAliasPath(path, apiVersions?.ToList(), pattern, metadata);
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
-        /// <param name="phrase"> The alias pattern phrase. </param>
-        /// <param name="variable"> The alias pattern variable. </param>
-        /// <param name="patternType"> The type of alias pattern. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPattern"/> instance for mocking. </returns>
-        public static ResourceTypeAliasPattern ResourceTypeAliasPattern(string phrase = null, string variable = null, ResourceTypeAliasPatternType? patternType = null)
-        {
-            return new ResourceTypeAliasPattern(phrase, variable, patternType);
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAliasPathMetadata. </summary>
-        /// <param name="tokenType"> The type of the token that the alias path is referring to. </param>
-        /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/> instance for mocking. </returns>
-        public static ResourceTypeAliasPathMetadata ResourceTypeAliasPathMetadata(ResourceTypeAliasPathTokenType? tokenType = null, ResourceTypeAliasPathAttributes? attributes = null)
-        {
-            return new ResourceTypeAliasPathMetadata(tokenType, attributes);
         }
 
         /// <summary> Initializes a new instance of ZoneMapping. </summary>
@@ -331,123 +454,6 @@ namespace Azure.ResourceManager.Models
             tagValues ??= new Dictionary<string, string>();
 
             return new TagResourceData(id, name, resourceType, systemData, tagValues != null ? new Tag(tagValues) : null);
-        }
-
-        /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
-        /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
-        /// <param name="displayName"> The display name of the policy definition. </param>
-        /// <param name="description"> The policy definition description. </param>
-        /// <param name="policyRule"> The policy rule. </param>
-        /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        /// <returns> A new <see cref="Resources.PolicyDefinitionData"/> instance for mocking. </returns>
-        public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string mode = null, string displayName = null, string description = null, BinaryData policyRule = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null)
-        {
-            parameters ??= new Dictionary<string, ArmPolicyParameter>();
-
-            return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters);
-        }
-
-        /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
-        /// <param name="displayName"> The display name of the policy set definition. </param>
-        /// <param name="description"> The policy set definition description. </param>
-        /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
-        /// <param name="policyDefinitions"> An array of policy definition references. </param>
-        /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
-        /// <returns> A new <see cref="Resources.PolicySetDefinitionData"/> instance for mocking. </returns>
-        public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string displayName = null, string description = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, IEnumerable<PolicyDefinitionReference> policyDefinitions = null, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = null)
-        {
-            parameters ??= new Dictionary<string, ArmPolicyParameter>();
-            policyDefinitions ??= new List<PolicyDefinitionReference>();
-            policyDefinitionGroups ??= new List<PolicyDefinitionGroup>();
-
-            return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="namespaces"> The list of namespaces for the data policy manifest. </param>
-        /// <param name="policyMode"> The policy mode of the data policy manifest. </param>
-        /// <param name="isBuiltInOnly"> A value indicating whether policy mode is allowed only in built-in definitions. </param>
-        /// <param name="resourceTypeAliases"> An array of resource type aliases. </param>
-        /// <param name="effects"> The effect definition. </param>
-        /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
-        /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
-        /// <param name="customDefinitions"> An array of data manifest custom resource definition. </param>
-        /// <returns> A new <see cref="Resources.DataPolicyManifestData"/> instance for mocking. </returns>
-        public static DataPolicyManifestData DataPolicyManifestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> namespaces = null, string policyMode = null, bool? isBuiltInOnly = null, IEnumerable<ResourceTypeAliases> resourceTypeAliases = null, IEnumerable<DataPolicyManifestEffect> effects = null, IEnumerable<string> fieldValues = null, IEnumerable<string> standard = null, IEnumerable<DataManifestCustomResourceFunctionDefinition> customDefinitions = null)
-        {
-            namespaces ??= new List<string>();
-            resourceTypeAliases ??= new List<ResourceTypeAliases>();
-            effects ??= new List<DataPolicyManifestEffect>();
-            fieldValues ??= new List<string>();
-            standard ??= new List<string>();
-            customDefinitions ??= new List<DataManifestCustomResourceFunctionDefinition>();
-
-            return new DataPolicyManifestData(id, name, resourceType, systemData, namespaces?.ToList(), policyMode, isBuiltInOnly, resourceTypeAliases?.ToList(), effects?.ToList(), fieldValues?.ToList(), standard?.ToList(), customDefinitions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
-        /// <param name="resourceType"> The resource type name. </param>
-        /// <param name="aliases"> The aliases for property names. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliases"/> instance for mocking. </returns>
-        public static ResourceTypeAliases ResourceTypeAliases(string resourceType = null, IEnumerable<ResourceTypeAlias> aliases = null)
-        {
-            aliases ??= new List<ResourceTypeAlias>();
-
-            return new ResourceTypeAliases(resourceType, aliases?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
-        /// <param name="name"> The data effect name. </param>
-        /// <param name="detailsSchema"> The data effect details schema. </param>
-        /// <returns> A new <see cref="Resources.Models.DataPolicyManifestEffect"/> instance for mocking. </returns>
-        public static DataPolicyManifestEffect DataPolicyManifestEffect(string name = null, BinaryData detailsSchema = null)
-        {
-            return new DataPolicyManifestEffect(name, detailsSchema);
-        }
-
-        /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
-        /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
-        /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
-        /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>
-        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </param>
-        /// <returns> A new <see cref="Resources.Models.DataManifestCustomResourceFunctionDefinition"/> instance for mocking. </returns>
-        public static DataManifestCustomResourceFunctionDefinition DataManifestCustomResourceFunctionDefinition(string name = null, ResourceType? fullyQualifiedResourceType = null, IEnumerable<string> defaultProperties = null, bool? allowCustomProperties = null)
-        {
-            defaultProperties ??= new List<string>();
-
-            return new DataManifestCustomResourceFunctionDefinition(name, fullyQualifiedResourceType, defaultProperties?.ToList(), allowCustomProperties);
-        }
-
-        /// <summary> Initializes a new instance of ManagementLockData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
-        /// <param name="notes"> Notes about the lock. Maximum of 512 characters. </param>
-        /// <param name="owners"> The owners of the lock. </param>
-        /// <returns> A new <see cref="Resources.ManagementLockData"/> instance for mocking. </returns>
-        public static ManagementLockData ManagementLockData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagementLockLevel level = default, string notes = null, IEnumerable<ManagementLockOwner> owners = null)
-        {
-            owners ??= new List<ManagementLockOwner>();
-
-            return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList());
         }
 
         /// <summary> Initializes a new instance of LocationExpanded. </summary>

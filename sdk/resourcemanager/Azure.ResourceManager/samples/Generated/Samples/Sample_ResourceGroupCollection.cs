@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAResourceGroup()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/CreateResourceGroup.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-07-01/examples/CreateResourceGroup.json
             // this example is just showing the usage of "ResourceGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -25,42 +25,6 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ResourceProviderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceProviderResource.CreateResourceIdentifier" /> to create a <see cref="ResourceProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceProviderResource" /> object. </returns>
-        public virtual ResourceProviderResource GetResourceProviderResource(ResourceIdentifier id)
-        {
-            ResourceProviderResource.ValidateResourceId(id);
-            return new ResourceProviderResource(this, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ResourceGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResourceGroupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceGroupResource" /> object. </returns>
-        public virtual ResourceGroupResource GetResourceGroupResource(ResourceIdentifier id)
-        {
-            ResourceGroupResource.ValidateResourceId(id);
-            return new ResourceGroupResource(this, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TagResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TagResource.CreateResourceIdentifier" /> to create a <see cref="TagResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TagResource" /> object. </returns>
-        public virtual TagResource GetTagResource(ResourceIdentifier id)
-        {
-            TagResource.ValidateResourceId(id);
-            return new TagResource(this, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SubscriptionPolicyDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SubscriptionPolicyDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPolicyDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
@@ -154,6 +118,42 @@ namespace Azure.ResourceManager
         {
             ManagementLockResource.ValidateResourceId(id);
             return new ManagementLockResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceProviderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceProviderResource.CreateResourceIdentifier" /> to create a <see cref="ResourceProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceProviderResource" /> object. </returns>
+        public virtual ResourceProviderResource GetResourceProviderResource(ResourceIdentifier id)
+        {
+            ResourceProviderResource.ValidateResourceId(id);
+            return new ResourceProviderResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ResourceGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceGroupResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceGroupResource" /> object. </returns>
+        public virtual ResourceGroupResource GetResourceGroupResource(ResourceIdentifier id)
+        {
+            ResourceGroupResource.ValidateResourceId(id);
+            return new ResourceGroupResource(this, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="TagResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TagResource.CreateResourceIdentifier" /> to create a <see cref="TagResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TagResource" /> object. </returns>
+        public virtual TagResource GetTagResource(ResourceIdentifier id)
+        {
+            TagResource.ValidateResourceId(id);
+            return new TagResource(this, id);
         }
 
         /// <summary>

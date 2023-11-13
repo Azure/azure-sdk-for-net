@@ -80,13 +80,6 @@ namespace Azure.ResourceManager.Resources
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
-        /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
-        public virtual GenericResourceCollection GetGenericResources()
-        {
-            return GetCachedClient(client => new GenericResourceCollection(client, Id));
-        }
-
         /// <summary> Gets a collection of TenantPolicyDefinitionResources in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicyDefinitionResources and their operations over a TenantPolicyDefinitionResource. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
@@ -246,6 +239,13 @@ namespace Azure.ResourceManager.Resources
             return GetDataPolicyManifests().Get(policyMode, cancellationToken);
         }
 
+        /// <summary> Gets a collection of GenericResources in the Tenant. </summary>
+        /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
+        public virtual GenericResourceCollection GetGenericResources()
+        {
+            return GetCachedClient(client => new GenericResourceCollection(client, Id));
+        }
+
         /// <summary> Gets a collection of SubscriptionResources in the Tenant. </summary>
         /// <returns> An object representing collection of SubscriptionResources and their operations over a SubscriptionResource. </returns>
         public virtual SubscriptionCollection GetSubscriptions()
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
