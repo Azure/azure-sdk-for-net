@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<ExceptionTrigger>))]
     public abstract partial class ExceptionTrigger : IUtf8JsonSerializable
     {
         /// <summary> The type discriminator describing a sub-type of ExceptionTrigger. </summary>
