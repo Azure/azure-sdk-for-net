@@ -176,4 +176,18 @@ directive:
             'modelAsString': true
           }
         };
+  # This change replaces pagination for List api's since operationName is incorrect https://github.com/Azure/azure-sdk-for-net/pull/39867    
+  - from: PaloAltoNetworks.Cloudngfw.json
+    where: $.paths
+    transform: >
+      for (const pathKey in $) {
+        const path = $[pathKey];
+        for (const methodKey in path) {
+          const method = path[methodKey];
+          if (method['x-ms-pageable'] && (method['x-ms-pageable']['operationName'] === 'LocalRulestacks_listAppIds' || method['x-ms-pageable']['operationName'] === 'LocalRulestacks_listCountries' || method['x-ms-pageable']['operationName'] === 'LocalRulestacks_listPredefinedUrlCategories')) {
+            delete method['x-ms-pageable'];
+          }
+        }
+      }
+
 ```
