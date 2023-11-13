@@ -182,11 +182,11 @@ More detailed distributed tracing convention can be found at [Azure SDK semantic
 ### OpenTelemetry configuration
 
 OpenTelemetry relies on `ActivitySource` to collect distributed traces. 
-Follow the [OpenTelemetry configuration guide](https://opentelemetry.io/docs/instrumentation/net/getting-started/#instrumentation) to configure collecting distributed traces collection using the OpenTelemetry library.
+Follow the [OpenTelemetry configuration guide](https://opentelemetry.io/docs/instrumentation/net/getting-started/#instrumentation) to configure collection and exporting pipeline.
 
-Your observability vendor may enable Azure SDK activities by default. For example, stable Azure SDK instrumentations are  enabled by [Azure Monitor OpenTelemetry Distro](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md#enable-azure-sdk-instrumentation).
+Your observability vendor may enable Azure SDK activities by default. For example, stable Azure SDK instrumentations are enabled by [Azure Monitor OpenTelemetry Distro](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/README.md#enable-azure-sdk-instrumentation).
 
-The following example shows how to enable Azure SDK traces manually:
+If your observability vendor does not enable Azure SDK instrumentation, your can enable it manually:
 
 ```csharp
 builder.Services.AddOpenTelemetry()
@@ -195,7 +195,7 @@ builder.Services.AddOpenTelemetry()
         .AddOtlpExporter())
 ```
 
-_Note: check out [Enable experimental tracing features](#enabling-experimental-tracing-features) in case you're using one of the messaging SDKs_
+_Note: check out [Enable experimental tracing features](#enabling-experimental-tracing-features) in case you're using one of the messaging SDKs._
 
 By calling into `AddSource("Azure.*")` we're telling OpenTelemetry SDK to listen to all sources which name starts with `Azure.`.
 
