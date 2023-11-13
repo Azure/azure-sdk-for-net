@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkGroupStaticMemberResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkGroupStaticMemberResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="networkGroupName"> The networkGroupName. </param>
+        /// <param name="staticMemberName"> The staticMemberName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName, string staticMemberName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}/staticMembers/{staticMemberName}";

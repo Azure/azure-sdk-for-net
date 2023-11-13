@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
                 EnableAutomaticUpgrade = true,
                 Settings =
 {
-["commandToExecute"] = BinaryData.FromString("powershell.exe -c \"Get-Process | Where-Object { $_.CPU -lt 100 }\""),
+["commandToExecute"] = BinaryData.FromString("\"powershell.exe -c \"Get-Process | Where-Object { $_.CPU -lt 100 }\"\""),
 },
             };
             ArmOperation<HybridComputeMachineExtensionResource> lro = await hybridComputeMachineExtension.UpdateAsync(WaitUntil.Completed, patch);

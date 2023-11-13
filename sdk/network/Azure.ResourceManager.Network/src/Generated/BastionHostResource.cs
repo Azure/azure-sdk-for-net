@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class BastionHostResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BastionHostResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="bastionHostName"> The bastionHostName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string bastionHostName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/bastionHosts/{bastionHostName}";

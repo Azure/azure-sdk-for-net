@@ -22,14 +22,14 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        protected internal override long MaxChunkSize { get; }
+        protected internal override long MaxSupportedChunkSize { get; }
 
         protected internal override long? Length { get; }
 
         private MockStorageResource(long? length, long maxChunkSize, Uri uri = default)
         {
             Length = length;
-            MaxChunkSize = maxChunkSize;
+            MaxSupportedChunkSize = maxChunkSize;
             if (length.HasValue)
             {
                 _readStream = new RepeatingStream((int)(1234567 % length.Value), length.Value, revealsLength: true);
@@ -87,12 +87,12 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceReadStreamResult(_readStream));
         }
 
-        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             return new MockResourceCheckpointData();
         }
 
-        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new MockResourceCheckpointData();
         }

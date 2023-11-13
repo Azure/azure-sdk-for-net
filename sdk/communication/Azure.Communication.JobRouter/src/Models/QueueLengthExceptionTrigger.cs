@@ -7,7 +7,6 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding queue length. </summary>
-    [CodeGenModel("QueueLengthExceptionTrigger")]
     public partial class QueueLengthExceptionTrigger : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>

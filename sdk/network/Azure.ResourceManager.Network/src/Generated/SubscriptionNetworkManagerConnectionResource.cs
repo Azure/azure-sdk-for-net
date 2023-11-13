@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Network
     public partial class SubscriptionNetworkManagerConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionNetworkManagerConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="networkManagerConnectionName"> The networkManagerConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string networkManagerConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}";

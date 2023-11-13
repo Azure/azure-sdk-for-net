@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudClusterMetricsConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudClusterMetricsConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="metricsConfigurationName"> The metricsConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string metricsConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/metricsConfigurations/{metricsConfigurationName}";

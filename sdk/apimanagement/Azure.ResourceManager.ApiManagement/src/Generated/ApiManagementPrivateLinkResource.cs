@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="privateLinkSubResourceName"> The privateLinkSubResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string privateLinkSubResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/privateLinkResources/{privateLinkSubResourceName}";

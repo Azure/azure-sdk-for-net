@@ -447,6 +447,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public void CanUpdateConcurrencyOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdateConcurrency(5, 2);
+            Assert.AreEqual(5, mockProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(2, mockProcessor.MaxConcurrentCallsPerSession);
+        }
+
+        [Test]
+        public void CanUpdatePrefetchOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdatePrefetchCount(10);
+            Assert.AreEqual(10, mockProcessor.PrefetchCount);
+        }
+
+        [Test]
         public async Task CloseRespectsCancellationToken()
         {
             var mockProcessor = new Mock<ServiceBusProcessor>() {CallBase = true};

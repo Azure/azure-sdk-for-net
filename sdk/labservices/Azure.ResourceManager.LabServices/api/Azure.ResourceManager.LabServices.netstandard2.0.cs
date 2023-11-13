@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.LabServices
     }
     public partial class LabData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LabData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LabData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabConnectionProfile ConnectionProfile { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LabServices
     }
     public partial class LabPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LabPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LabPlanData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> AllowedRegions { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile DefaultAutoShutdownProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
@@ -309,6 +309,41 @@ namespace Azure.ResourceManager.LabServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StopAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.LabServices.Mocking
+{
+    public partial class MockableLabServicesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableLabServicesArmClient() { }
+        public virtual Azure.ResourceManager.LabServices.LabPlanResource GetLabPlanResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.LabServices.LabResource GetLabResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.LabServices.LabServicesScheduleResource GetLabServicesScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.LabServices.LabUserResource GetLabUserResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.LabServices.LabVirtualMachineImageResource GetLabVirtualMachineImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.LabServices.LabVirtualMachineResource GetLabVirtualMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableLabServicesResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableLabServicesResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.LabServices.LabResource> GetLab(string labName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabResource>> GetLabAsync(string labName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LabServices.LabPlanResource> GetLabPlan(string labPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabPlanResource>> GetLabPlanAsync(string labPlanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.LabServices.LabPlanCollection GetLabPlans() { throw null; }
+        public virtual Azure.ResourceManager.LabServices.LabCollection GetLabs() { throw null; }
+    }
+    public partial class MockableLabServicesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableLabServicesSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.LabServices.LabPlanResource> GetLabPlans(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LabServices.LabPlanResource> GetLabPlansAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.LabServices.LabResource> GetLabs(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LabServices.LabResource> GetLabsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku> GetSkus(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku> GetSkusAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.LabServices.Models.LabServicesUsage> GetUsages(Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.LabServices.Models.LabServicesUsage> GetUsagesAsync(Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.LabServices.Models

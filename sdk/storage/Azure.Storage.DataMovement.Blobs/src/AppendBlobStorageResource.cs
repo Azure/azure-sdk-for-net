@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        protected override long MaxChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
+        protected override long MaxSupportedChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
@@ -283,12 +283,12 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             return new BlobSourceCheckpointData(BlobType.Append);
         }
 
-        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
                 BlobType.Append,

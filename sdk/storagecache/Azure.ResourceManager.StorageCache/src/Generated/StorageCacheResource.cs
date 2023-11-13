@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.StorageCache
     public partial class StorageCacheResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageCacheResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cacheName"> The cacheName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cacheName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}";
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> An object representing collection of StorageTargetResources and their operations over a StorageTargetResource. </returns>
         public virtual StorageTargetCollection GetStorageTargets()
         {
-            return GetCachedClient(Client => new StorageTargetCollection(Client, Id));
+            return GetCachedClient(client => new StorageTargetCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="storageTargetName"> Name of Storage Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageTargetResource>> GetStorageTargetAsync(string storageTargetName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.StorageCache
         /// </summary>
         /// <param name="storageTargetName"> Name of Storage Target. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageTargetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageTargetResource> GetStorageTarget(string storageTargetName, CancellationToken cancellationToken = default)
         {

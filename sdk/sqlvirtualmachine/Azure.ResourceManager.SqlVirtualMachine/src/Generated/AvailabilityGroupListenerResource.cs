@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     public partial class AvailabilityGroupListenerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvailabilityGroupListenerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sqlVmGroupName"> The sqlVmGroupName. </param>
+        /// <param name="availabilityGroupListenerName"> The availabilityGroupListenerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVmGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}";

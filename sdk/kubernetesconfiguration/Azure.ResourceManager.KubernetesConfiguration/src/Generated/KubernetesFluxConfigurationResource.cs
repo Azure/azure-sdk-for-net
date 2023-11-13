@@ -28,6 +28,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     public partial class KubernetesFluxConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KubernetesFluxConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterRp"> The clusterRp. </param>
+        /// <param name="clusterResourceName"> The clusterResourceName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="fluxConfigurationName"> The fluxConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}";

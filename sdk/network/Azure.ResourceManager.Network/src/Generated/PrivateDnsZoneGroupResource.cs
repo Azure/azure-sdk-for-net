@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateDnsZoneGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateDnsZoneGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateEndpointName"> The privateEndpointName. </param>
+        /// <param name="privateDnsZoneGroupName"> The privateDnsZoneGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}/privateDnsZoneGroups/{privateDnsZoneGroupName}";

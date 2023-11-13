@@ -7,14 +7,10 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("DistributionMode")]
-    [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<DistributionMode>))]
     public abstract partial class DistributionMode : IUtf8JsonSerializable
     {
-        internal DistributionMode(string kind)
-        {
-            Kind = kind;
-        }
+        /// <summary> The type discriminator describing a sub-type of DistributionMode. </summary>
+        public string Kind { get; protected set; }
 
         /// <summary>
         /// (Optional)
