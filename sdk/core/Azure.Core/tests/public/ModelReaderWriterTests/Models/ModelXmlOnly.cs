@@ -3,9 +3,9 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Internal;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;

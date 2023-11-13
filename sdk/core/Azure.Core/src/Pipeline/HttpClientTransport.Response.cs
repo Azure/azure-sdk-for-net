@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Internal;
-using System.Net.ClientModel.Internal.Core;
+using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
+using System.ClientModel.Internal.Primitives;
 using System.Net.Http;
 
 namespace Azure.Core.Pipeline

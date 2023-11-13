@@ -3,9 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Internal;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
 using System.Text.Json;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models

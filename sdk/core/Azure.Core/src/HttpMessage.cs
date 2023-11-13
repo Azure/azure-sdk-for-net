@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Primitives;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -87,7 +87,7 @@ namespace Azure.Core
         public override MessageClassifier MessageClassifier
         {
             get => base.MessageClassifier;
-            set => base.MessageClassifier = value;
+            protected set => base.MessageClassifier = value;
         }
 
         /// <summary>
