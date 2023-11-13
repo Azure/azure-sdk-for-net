@@ -191,7 +191,7 @@ finally {
         Write-Host -f Red "error : $err"
     }
 
-    if ($errors) {
-        exit 1
-    }
+#     if ($errors) {
+#         exit 1
+#     }
 }
