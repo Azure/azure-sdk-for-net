@@ -1,9 +1,14 @@
-# Azure EventGridV2 client library for .NET
+# Azure.Messaging.EventGrid.Namespaces client library for .NET
 
-This section should give out brief introduction of the client library.
+Azure.Messaging.EventGrid.Namespaces is a managed service that helps developers get secret simply and securely.
 
-* First sentence: **Describe the service** briefly. You can usually use the first line of the service's docs landing page for this (Example: [Cosmos DB docs landing page](https://docs.microsoft.com/azure/cosmos-db/)).
-* Next, add a **bulleted list** of the **most common tasks** supported by the package or library, prefaced with "Use the client library for [Product Name] to:". Then, provide code snippets for these tasks in the [Examples](#examples) section later in the document. Keep the task list short but include those tasks most developers need to perform with your package.
+Use the client library for to:
+
+* [Get secret](https://docs.microsoft.com/azure)
+
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
@@ -16,7 +21,7 @@ First, provide instruction for obtaining and installing the package or library. 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.EventGridV2 --prerelease
+dotnet add package Azure.Messaging.EventGrid.Namespaces --prerelease
 ```
 
 ### Prerequisites
@@ -54,9 +59,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-### <scenario>
-
-You can create a client and call the client's `<operation>` method.
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/samples).
 
 ## Troubleshooting
 
@@ -80,4 +83,4 @@ This is a template, but your SDK readme should include details on how to contrib
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/eventgrid/Azure.Messaging.EventGridV2/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/README.png)

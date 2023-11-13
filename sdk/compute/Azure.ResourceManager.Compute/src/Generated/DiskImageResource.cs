@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiskImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="imageName"> The imageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string imageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}";

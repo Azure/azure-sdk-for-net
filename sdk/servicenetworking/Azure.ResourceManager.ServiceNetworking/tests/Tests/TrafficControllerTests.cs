@@ -3,22 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.ServiceNetworking;
 using Azure.ResourceManager.Network;
 using Azure.Core;
 using NUnit.Framework;
-using Azure.ResourceManager.ServiceNetworking.Models;
-using System.IO.Pipelines;
-using Castle.Core.Resource;
-using System.Xml.Linq;
 using Azure.ResourceManager.Network.Models;
-using AssociationType = Azure.ResourceManager.ServiceNetworking.Models.AssociationType;
 using Azure.ResourceManager.ServiceNetworking.Tests;
 
 namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
@@ -81,7 +72,7 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Frontend Data object that is used to create the new frontend object.
             FrontendData fnd = new FrontendData(location)
             {
-                Location = location,
+                Location = location
             };
             //Performing the Create/PUT operation and returning the result.
             return await frontends.CreateOrUpdateAsync(WaitUntil.Completed, frontendName, fnd);

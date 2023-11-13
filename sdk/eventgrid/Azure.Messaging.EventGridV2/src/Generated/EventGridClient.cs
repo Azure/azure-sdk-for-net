@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -17,8 +19,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> Azure Messaging EventGrid Client. </summary>
     public partial class EventGridClient
     {
-        private const string AuthorizationHeader = "SharedAccessKey";
+        private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationApiKeyPrefix = "SharedAccessKey";
+        private static readonly string[] AuthorizationScopes = new string[] { "https://eventgrid.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -45,6 +50,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Initializes a new instance of EventGridClient. </summary>
         /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public EventGridClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new EventGridClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of EventGridClient. </summary>
+        /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public EventGridClient(Uri endpoint, AzureKeyCredential credential, EventGridClientOptions options)
@@ -55,17 +68,74 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, "Authorization", AuthorizationHeader) }, new ResponseClassifier());
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
+        /// <summary> Initializes a new instance of EventGridClient. </summary>
+        /// <param name="endpoint"> The host name of the namespace, e.g. namespaceName1.westus-1.eventgrid.azure.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public EventGridClient(Uri endpoint, TokenCredential credential, EventGridClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new EventGridClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="event"> Single Cloud Event being published. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<PublishResult>> PublishCloudEventAsync(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(@event, nameof(@event));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = @event.ToRequestContent();
+            Response response = await PublishCloudEventAsync(topicName, content, context).ConfigureAwait(false);
+            return Response.FromValue(PublishResult.FromResponse(response), response);
+        }
+
+        /// <summary> Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="event"> Single Cloud Event being published. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<PublishResult> PublishCloudEvent(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(@event, nameof(@event));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = @event.ToRequestContent();
+            Response response = PublishCloudEvent(topicName, content, context);
+            return Response.FromValue(PublishResult.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. 
+        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="PublishCloudEventAsync(string,CloudEvent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -97,11 +167,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary>
-        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. 
+        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="PublishCloudEvent(string,CloudEvent,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -132,12 +207,51 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <summary> Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="events"> Array of Cloud Events being published. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual async Task<Response<PublishResult>> PublishCloudEventsAsync(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(events, nameof(events));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = RequestContentHelper.FromEnumerable(events);
+            Response response = await PublishCloudEventsAsync(topicName, content, context).ConfigureAwait(false);
+            return Response.FromValue(PublishResult.FromResponse(response), response);
+        }
+
+        /// <summary> Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="events"> Array of Cloud Events being published. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        internal virtual Response<PublishResult> PublishCloudEvents(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(events, nameof(events));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = RequestContentHelper.FromEnumerable(events);
+            Response response = PublishCloudEvents(topicName, content, context);
+            return Response.FromValue(PublishResult.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. 
+        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="PublishCloudEventsAsync(string,IEnumerable{CloudEvent},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -149,7 +263,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PublishCloudEventsAsync(string topicName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> PublishCloudEventsAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(content, nameof(content));
@@ -169,11 +283,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary>
-        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. 
+        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="PublishCloudEvents(string,IEnumerable{CloudEvent},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -185,7 +304,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response PublishCloudEvents(string topicName, RequestContent content, RequestContext context = null)
+        internal virtual Response PublishCloudEvents(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(content, nameof(content));
@@ -204,88 +323,57 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <summary> Acknowledge batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully acknowledged lockTokens, along with other failed lockTokens with their corresponding error information. Successfully acknowledged events will no longer be available to any consumer. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="acknowledgeOptions"> AcknowledgeOptions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="acknowledgeOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='AcknowledgeCloudEventsAsync(string,string,AcknowledgeOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<AcknowledgeResult>> AcknowledgeCloudEventsAsync(string topicName, string eventSubscriptionName, AcknowledgeOptions acknowledgeOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(acknowledgeOptions, nameof(acknowledgeOptions));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = acknowledgeOptions.ToRequestContent();
+            Response response = await AcknowledgeCloudEventsAsync(topicName, eventSubscriptionName, content, context).ConfigureAwait(false);
+            return Response.FromValue(AcknowledgeResult.FromResponse(response), response);
+        }
+
+        /// <summary> Acknowledge batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully acknowledged lockTokens, along with other failed lockTokens with their corresponding error information. Successfully acknowledged events will no longer be available to any consumer. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="acknowledgeOptions"> AcknowledgeOptions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="acknowledgeOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='AcknowledgeCloudEvents(string,string,AcknowledgeOptions,CancellationToken)']/*" />
+        public virtual Response<AcknowledgeResult> AcknowledgeCloudEvents(string topicName, string eventSubscriptionName, AcknowledgeOptions acknowledgeOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(acknowledgeOptions, nameof(acknowledgeOptions));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = acknowledgeOptions.ToRequestContent();
+            Response response = AcknowledgeCloudEvents(topicName, eventSubscriptionName, content, context);
+            return Response.FromValue(AcknowledgeResult.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Receive Batch of Cloud Events from the Event Subscription.
+        /// [Protocol Method] Acknowledge batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully acknowledged lockTokens, along with other failed lockTokens with their corresponding error information. Successfully acknowledged events will no longer be available to any consumer.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
-        /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReceiveCloudEventsAsync(string topicName, string eventSubscriptionName, int? maxEvents, int? maxWaitTime, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridClient.ReceiveCloudEvents");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReceiveCloudEventsRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Receive Batch of Cloud Events from the Event Subscription.
-        /// <list type="bullet">
         /// <item>
         /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="topicName"> Topic Name. </param>
-        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
-        /// <param name="maxEvents"> Max Events count to be received. Minimum value is 1, while maximum value is 100 events. If not specified, the default value is 1. </param>
-        /// <param name="maxWaitTime"> Max wait time value for receive operation in Seconds. It is the time in seconds that the server approximately waits for the availability of an event and responds to the request. If an event is available, the broker responds immediately to the client. Minimum value is 10 seconds, while maximum value is 120 seconds. If not specified, the default value is 60 seconds. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response ReceiveCloudEvents(string topicName, string eventSubscriptionName, int? maxEvents, int? maxWaitTime, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            using var scope = ClientDiagnostics.CreateScope("EventGridClient.ReceiveCloudEvents");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateReceiveCloudEventsRequest(topicName, eventSubscriptionName, maxEvents, maxWaitTime, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Acknowledge batch of Cloud Events. The server responds with an HTTP 200 status code if at least one event is successfully acknowledged. The response body will include the set of successfully acknowledged lockTokens, along with other failed lockTokens with their corresponding error information. Successfully acknowledged events will no longer be available to any consumer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// Please try the simpler <see cref="AcknowledgeCloudEventsAsync(string,string,AcknowledgeOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -298,6 +386,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='AcknowledgeCloudEventsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AcknowledgeCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -319,11 +408,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary>
-        /// [Protocol Method] Acknowledge batch of Cloud Events. The server responds with an HTTP 200 status code if at least one event is successfully acknowledged. The response body will include the set of successfully acknowledged lockTokens, along with other failed lockTokens with their corresponding error information. Successfully acknowledged events will no longer be available to any consumer.
+        /// [Protocol Method] Acknowledge batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully acknowledged lockTokens, along with other failed lockTokens with their corresponding error information. Successfully acknowledged events will no longer be available to any consumer.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="AcknowledgeCloudEvents(string,string,AcknowledgeOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -336,6 +430,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='AcknowledgeCloudEvents(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response AcknowledgeCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -356,12 +451,59 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <summary> Release batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully released lockTokens, along with other failed lockTokens with their corresponding error information. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="releaseOptions"> ReleaseOptions. </param>
+        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="releaseOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReleaseCloudEventsAsync(string,string,ReleaseOptions,ReleaseDelay?,CancellationToken)']/*" />
+        public virtual async Task<Response<ReleaseResult>> ReleaseCloudEventsAsync(string topicName, string eventSubscriptionName, ReleaseOptions releaseOptions, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(releaseOptions, nameof(releaseOptions));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = releaseOptions.ToRequestContent();
+            Response response = await ReleaseCloudEventsAsync(topicName, eventSubscriptionName, content, releaseDelayInSeconds?.ToSerialInt32(), context).ConfigureAwait(false);
+            return Response.FromValue(ReleaseResult.FromResponse(response), response);
+        }
+
+        /// <summary> Release batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully released lockTokens, along with other failed lockTokens with their corresponding error information. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="releaseOptions"> ReleaseOptions. </param>
+        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="releaseOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReleaseCloudEvents(string,string,ReleaseOptions,ReleaseDelay?,CancellationToken)']/*" />
+        public virtual Response<ReleaseResult> ReleaseCloudEvents(string topicName, string eventSubscriptionName, ReleaseOptions releaseOptions, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(releaseOptions, nameof(releaseOptions));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = releaseOptions.ToRequestContent();
+            Response response = ReleaseCloudEvents(topicName, eventSubscriptionName, content, releaseDelayInSeconds?.ToSerialInt32(), context);
+            return Response.FromValue(ReleaseResult.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Release batch of Cloud Events. The server responds with an HTTP 200 status code if at least one event is successfully released. The response body will include the set of successfully released lockTokens, along with other failed lockTokens with their corresponding error information.
+        /// [Protocol Method] Release batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully released lockTokens, along with other failed lockTokens with their corresponding error information.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ReleaseCloudEventsAsync(string,string,ReleaseOptions,ReleaseDelay?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -369,12 +511,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. Allowed values: "0" | "10" | "60" | "600" | "3600". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReleaseCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReleaseCloudEventsAsync(string,string,RequestContent,int?,RequestContext)']/*" />
+        public virtual async Task<Response> ReleaseCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, int? releaseDelayInSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -384,7 +528,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReleaseCloudEventsRequest(topicName, eventSubscriptionName, content, context);
+                using HttpMessage message = CreateReleaseCloudEventsRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -395,11 +539,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary>
-        /// [Protocol Method] Release batch of Cloud Events. The server responds with an HTTP 200 status code if at least one event is successfully released. The response body will include the set of successfully released lockTokens, along with other failed lockTokens with their corresponding error information.
+        /// [Protocol Method] Release batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully released lockTokens, along with other failed lockTokens with their corresponding error information.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="ReleaseCloudEvents(string,string,ReleaseOptions,ReleaseDelay?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -407,12 +556,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="releaseDelayInSeconds"> Release cloud events with the specified delay in seconds. Allowed values: "0" | "10" | "60" | "600" | "3600". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ReleaseCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='ReleaseCloudEvents(string,string,RequestContent,int?,RequestContext)']/*" />
+        public virtual Response ReleaseCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, int? releaseDelayInSeconds = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
@@ -422,7 +573,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReleaseCloudEventsRequest(topicName, eventSubscriptionName, content, context);
+                using HttpMessage message = CreateReleaseCloudEventsRequest(topicName, eventSubscriptionName, content, releaseDelayInSeconds, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -432,12 +583,57 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
+        /// <summary> Reject batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully rejected lockTokens, along with other failed lockTokens with their corresponding error information. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="rejectOptions"> RejectOptions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="rejectOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RejectCloudEventsAsync(string,string,RejectOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<RejectResult>> RejectCloudEventsAsync(string topicName, string eventSubscriptionName, RejectOptions rejectOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(rejectOptions, nameof(rejectOptions));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = rejectOptions.ToRequestContent();
+            Response response = await RejectCloudEventsAsync(topicName, eventSubscriptionName, content, context).ConfigureAwait(false);
+            return Response.FromValue(RejectResult.FromResponse(response), response);
+        }
+
+        /// <summary> Reject batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully rejected lockTokens, along with other failed lockTokens with their corresponding error information. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="rejectOptions"> RejectOptions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="rejectOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RejectCloudEvents(string,string,RejectOptions,CancellationToken)']/*" />
+        public virtual Response<RejectResult> RejectCloudEvents(string topicName, string eventSubscriptionName, RejectOptions rejectOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(rejectOptions, nameof(rejectOptions));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = rejectOptions.ToRequestContent();
+            Response response = RejectCloudEvents(topicName, eventSubscriptionName, content, context);
+            return Response.FromValue(RejectResult.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Reject batch of Cloud Events.
+        /// [Protocol Method] Reject batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully rejected lockTokens, along with other failed lockTokens with their corresponding error information.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RejectCloudEventsAsync(string,string,RejectOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -450,6 +646,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RejectCloudEventsAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RejectCloudEventsAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -471,11 +668,16 @@ namespace Azure.Messaging.EventGrid.Namespaces
         }
 
         /// <summary>
-        /// [Protocol Method] Reject batch of Cloud Events.
+        /// [Protocol Method] Reject batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully rejected lockTokens, along with other failed lockTokens with their corresponding error information.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RejectCloudEvents(string,string,RejectOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -488,6 +690,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RejectCloudEvents(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response RejectCloudEvents(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -499,6 +702,134 @@ namespace Azure.Messaging.EventGrid.Namespaces
             try
             {
                 using HttpMessage message = CreateRejectCloudEventsRequest(topicName, eventSubscriptionName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Renew lock for batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully renewed lockTokens, along with other failed lockTokens with their corresponding error information. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="renewLockOptions"> RenewLockOptions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="renewLockOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RenewCloudEventLocksAsync(string,string,RenewLockOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<RenewCloudEventLocksResult>> RenewCloudEventLocksAsync(string topicName, string eventSubscriptionName, RenewLockOptions renewLockOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(renewLockOptions, nameof(renewLockOptions));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = renewLockOptions.ToRequestContent();
+            Response response = await RenewCloudEventLocksAsync(topicName, eventSubscriptionName, content, context).ConfigureAwait(false);
+            return Response.FromValue(RenewCloudEventLocksResult.FromResponse(response), response);
+        }
+
+        /// <summary> Renew lock for batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully renewed lockTokens, along with other failed lockTokens with their corresponding error information. </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="renewLockOptions"> RenewLockOptions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="renewLockOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RenewCloudEventLocks(string,string,RenewLockOptions,CancellationToken)']/*" />
+        public virtual Response<RenewCloudEventLocksResult> RenewCloudEventLocks(string topicName, string eventSubscriptionName, RenewLockOptions renewLockOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(renewLockOptions, nameof(renewLockOptions));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            using RequestContent content = renewLockOptions.ToRequestContent();
+            Response response = RenewCloudEventLocks(topicName, eventSubscriptionName, content, context);
+            return Response.FromValue(RenewCloudEventLocksResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Renew lock for batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully renewed lockTokens, along with other failed lockTokens with their corresponding error information.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RenewCloudEventLocksAsync(string,string,RenewLockOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RenewCloudEventLocksAsync(string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> RenewCloudEventLocksAsync(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EventGridClient.RenewCloudEventLocks");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRenewCloudEventLocksRequest(topicName, eventSubscriptionName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Renew lock for batch of Cloud Events. The server responds with an HTTP 200 status code if the request is successfully accepted. The response body will include the set of successfully renewed lockTokens, along with other failed lockTokens with their corresponding error information.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="RenewCloudEventLocks(string,string,RenewLockOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="eventSubscriptionName"> Event Subscription Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='RenewCloudEventLocks(string,string,RequestContent,RequestContext)']/*" />
+        public virtual Response RenewCloudEventLocks(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EventGridClient.RenewCloudEventLocks");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRenewCloudEventLocksRequest(topicName, eventSubscriptionName, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -544,7 +875,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             return message;
         }
 
-        internal HttpMessage CreateReceiveCloudEventsRequest(string topicName, string eventSubscriptionName, int? maxEvents, int? maxWaitTime, RequestContext context)
+        internal HttpMessage CreateReceiveCloudEventsRequest(string topicName, string eventSubscriptionName, int? maxEvents, TimeSpan? maxWaitTime, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -563,7 +894,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
             if (maxWaitTime != null)
             {
-                uri.AppendQuery("maxWaitTime", maxWaitTime.Value, true);
+                uri.AppendQuery("maxWaitTime", maxWaitTime.Value, "%s", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -585,12 +916,12 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/json; charset=utf-8");
+            request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateReleaseCloudEventsRequest(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReleaseCloudEventsRequest(string topicName, string eventSubscriptionName, RequestContent content, int? releaseDelayInSeconds, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -603,9 +934,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":release", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (releaseDelayInSeconds != null)
+            {
+                uri.AppendQuery("releaseDelayInSeconds", releaseDelayInSeconds.Value, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/json; charset=utf-8");
+            request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
@@ -625,9 +960,40 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", "application/json; charset=utf-8");
+            request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
+        }
+
+        internal HttpMessage CreateRenewCloudEventLocksRequest(string topicName, string eventSubscriptionName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventsubscriptions/", false);
+            uri.AppendPath(eventSubscriptionName, true);
+            uri.AppendPath(":renewLock", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Azure.Storage.DataMovement
@@ -105,15 +104,54 @@ namespace Azure.Storage.DataMovement
             return Interlocked.Exchange(ref _stateValue, (int)state) != (int)state;
         }
 
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns>Returns true if the current object is equal to the other parameter; otherwise, false.</returns>
+        /// <inheritdoc/>
         public bool Equals(DataTransferStatus other)
-            => State.Equals(other.State) &&
-            HasFailedItems.Equals(other.HasFailedItems) &&
-            HasSkippedItems.Equals(other.HasSkippedItems);
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return State.Equals(other.State) &&
+                HasFailedItems.Equals(other.HasFailedItems) &&
+                HasSkippedItems.Equals(other.HasSkippedItems);
+        }
+
+        /// <summary>
+        /// Equality operator.
+        /// </summary>
+        /// <param name="left">The left hand side.</param>
+        /// <param name="right">The right hand side.</param>
+        /// <returns>True, if the two values are equal; otherwise false.</returns>
+        public static bool operator ==(DataTransferStatus left, DataTransferStatus right)
+        {
+            if (left is null != right is null)
+            {
+                return false;
+            }
+            return left?.Equals(right) ?? true;
+        }
+
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="left">The left hand side.</param>
+        /// <param name="right">The right hand side.</param>
+        /// <returns>True, if the two values are not equal; otherwise false.</returns>
+        public static bool operator !=(DataTransferStatus left, DataTransferStatus right) => !(left == right);
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj) => Equals(obj as DataTransferStatus);
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            int hashCode = 1225395075;
+            hashCode = hashCode * -1521134295 + State.GetHashCode();
+            hashCode = hashCode * -1521134295 + HasFailedItems.GetHashCode();
+            hashCode = hashCode * -1521134295 + HasSkippedItems.GetHashCode();
+            return hashCode;
+        }
 
         /// <summary>
         /// Performs a Deep Copy of the <see cref="DataTransferStatus"/>.

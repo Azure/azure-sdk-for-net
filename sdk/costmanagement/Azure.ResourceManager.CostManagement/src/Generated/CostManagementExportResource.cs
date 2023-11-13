@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.CostManagement
     public partial class CostManagementExportResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CostManagementExportResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="exportName"> The exportName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string exportName)
         {
             var resourceId = $"{scope}/providers/Microsoft.CostManagement/exports/{exportName}";

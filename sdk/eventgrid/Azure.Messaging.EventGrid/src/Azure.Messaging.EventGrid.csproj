@@ -2,10 +2,11 @@
   <PropertyGroup>
     <Description>This library can be used to publish events to Azure Event Grid and to consume events delivered by EventGrid. It also defines the event schemas for the events published to EventGrid by various Azure services.</Description>
     <AssemblyTitle>Microsoft Azure.Messaging.EventGrid client library</AssemblyTitle>
-    <Version>4.19.0-beta.1</Version>
+    <Version>4.22.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>4.18.0</ApiCompatVersion>
+    <ApiCompatVersion>4.20.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure EventGrid;Event Grid;Event Grid Publishing;</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
@@ -22,12 +23,121 @@
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\BrokerProperties.cs">
+      <Link>Customization\Namespaces\BrokerProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\EventGridClient.cs">
+      <Link>Customization\Namespaces\EventGridClient.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\PublishResult.cs">
+      <Link>Customization\Namespaces\PublishResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\ReceiveDetails.cs">
+      <Link>Customization\Namespaces\ReceiveDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\ReceiveDetails.Serialization.cs">
+      <Link>Customization\Namespaces\ReceiveDetails.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\ReceiveDetailsInternal.cs">
+      <Link>Customization\Namespaces\ReceiveDetailsInternal.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\ReceiveResult.cs">
+      <Link>Customization\Namespaces\ReceiveResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\ReceiveResult.Serialization.cs">
+      <Link>Customization\Namespaces\ReceiveResult.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Customization\ReceiveResultInternal.cs">
+      <Link>Customization\Namespaces\ReceiveResultInternal.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\AcknowledgeOptions.cs">
+      <Link>Generated\AcknowledgeOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\AcknowledgeOptions.Serialization.cs">
+      <Link>Generated\AcknowledgeOptions.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\AcknowledgeResult.cs">
+      <Link>Generated\AcknowledgeResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\AcknowledgeResult.Serialization.cs">
+      <Link>Generated\AcknowledgeResult.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\BrokerProperties.cs">
+      <Link>Generated\BrokerProperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\BrokerProperties.Serialization.cs">
+      <Link>Generated\BrokerProperties.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\CloudEvent.cs">
+      <Link>Generated\CloudEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\CloudEvent.Serialization.cs">
+      <Link>Generated\CloudEvent.Serialization.cs</Link>
+    </Compile>
     <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\EventGridClient.cs">
-      <Link>Generated\Generated\EventGridClient.cs</Link>
+      <Link>Generated\EventGridClient.cs</Link>
     </Compile>
     <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\EventGridClientOptions.cs">
-      <Link>Generated\Generated\EventGridClientOptions.cs</Link>
+      <Link>Generated\EventGridClientOptions.cs</Link>
     </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\FailedLockToken.cs">
+      <Link>Generated\FailedLockToken.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\FailedLockToken.Serialization.cs">
+      <Link>Generated\FailedLockToken.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\MessagingEventGridNamespacesClientBuilderExtensions.cs">
+      <Link>Generated\MessagingEventGridNamespacesClientBuilderExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\MessagingEventGridNamespacesModelFactory.cs">
+      <Link>Generated\MessagingEventGridNamespacesModelFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\PublishResult.cs">
+      <Link>Generated\PublishResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\PublishResult.Serialization.cs">
+      <Link>Generated\PublishResult.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\RejectOptions.cs">
+      <Link>Generated\RejectOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\RejectOptions.Serialization.cs">
+      <Link>Generated\RejectOptions.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\RejectResult.cs">
+      <Link>Generated\RejectResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\RejectResult.Serialization.cs">
+      <Link>Generated\RejectResult.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\ReleaseDelay.cs">
+      <Link>Generated\ReleaseDelay.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\ReleaseOptions.cs">
+      <Link>Generated\ReleaseOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\ReleaseOptions.Serialization.cs">
+      <Link>Generated\ReleaseOptions.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\ReleaseResult.cs">
+      <Link>Generated\ReleaseResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\ReleaseResult.Serialization.cs">
+      <Link>Generated\ReleaseResult.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\RenewCloudEventLocksResult.cs">
+      <Link>Generated\RenewCloudEventLocksResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\RenewCloudEventLocksResult.Serialization.cs">
+      <Link>Generated\RenewCloudEventLocksResult.Serialization.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\RenewLockOptions.cs">
+      <Link>Generated\RenewLockOptions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Azure.Messaging.EventGridV2\src\Generated\RenewLockOptions.Serialization.cs">
+      <Link>Generated\RenewLockOptions.Serialization.cs</Link>
+    </Compile>
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventGridSourceGenerator\src\EventGridSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />

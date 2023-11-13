@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -54,16 +54,17 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 new(ChatRole.User, "What is the weather like in Boston?"),
             };
 
-            var chatCompletionsOptions = new ChatCompletionsOptions();
+            var chatCompletionsOptions = new ChatCompletionsOptions()
+            {
+                DeploymentName = "gpt-35-turbo-0613",
+            };
             foreach (ChatMessage chatMessage in conversationMessages)
             {
                 chatCompletionsOptions.Messages.Add(chatMessage);
             }
             chatCompletionsOptions.Functions.Add(getWeatherFuntionDefinition);
 
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-                "gpt-35-turbo-0613",
-                chatCompletionsOptions);
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
             #endregion
 
             #region Snippet:ChatFunctions:HandleFunctionCall
@@ -97,6 +98,37 @@ namespace Azure.AI.OpenAI.Tests.Samples
                     conversationMessages.Add(functionResponseMessage);
                     // Now make a new request using all three messages in conversationMessages
                 }
+            }
+            #endregion
+
+            #region Snippet::ChatFunctions::StreamingFunctions
+            string functionName = null;
+            StringBuilder contentBuilder = new();
+            StringBuilder functionArgumentsBuilder = new();
+            ChatRole streamedRole = default;
+            CompletionsFinishReason finishReason = default;
+
+            await foreach (StreamingChatCompletionsUpdate update
+                in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+            {
+                contentBuilder.Append(update.ContentUpdate);
+                functionName ??= update.FunctionName;
+                functionArgumentsBuilder.Append(update.FunctionArgumentsUpdate);
+                streamedRole = update.Role ?? default;
+                finishReason = update.FinishReason ?? default;
+            }
+
+            if (finishReason == CompletionsFinishReason.FunctionCall)
+            {
+                string lastContent = contentBuilder.ToString();
+                string unvalidatedArguments = functionArgumentsBuilder.ToString();
+                ChatMessage chatMessageForHistory = new(streamedRole, lastContent)
+                {
+                    FunctionCall = new(functionName, unvalidatedArguments),
+                };
+                conversationMessages.Add(chatMessageForHistory);
+
+                // Handle from here just like the non-streaming case
             }
             #endregion
         }

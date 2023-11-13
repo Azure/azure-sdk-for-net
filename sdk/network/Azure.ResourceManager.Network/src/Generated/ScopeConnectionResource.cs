@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class ScopeConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScopeConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="scopeConnectionName"> The scopeConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string scopeConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/scopeConnections/{scopeConnectionName}";

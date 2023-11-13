@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class CustomAssessmentAutomationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CustomAssessmentAutomationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="customAssessmentAutomationName"> The customAssessmentAutomationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customAssessmentAutomationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}";

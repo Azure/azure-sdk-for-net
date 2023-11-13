@@ -27,9 +27,9 @@ namespace Azure.Messaging.EventGrid.Tests
         public string PartnerNamespaceKey => GetRecordedVariable("EVENT_GRID_PARTNER_NAMESPACE_KEY", options => options.IsSecret(SanitizedValue.Base64));
         public string PartnerChannelName => GetRecordedVariable("EVENT_GRID_PARTNER_CHANNEL_NAME");
 
-        public string NamespaceKey => GetRecordedVariable("EVENT_GRID_NAMESPACE_KEY", options => options.IsSecret(SanitizedValue.Base64));
-        public string NamespaceTopicHost => GetRecordedVariable("EVENT_GRID_NAMESPACE_TOPIC_HOST");
-        public string NamespaceTopicName => GetRecordedVariable("EVENT_GRID_NAMESPACE_TOPIC_NAME");
-        public string NamespaceSubscriptionName => GetRecordedVariable("EVENT_GRID_NAMESPACE_SUBSCRIPTION_NAME");
+        public string NamespaceKey => GetRecordedVariable("EVENTGRID_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string NamespaceTopicHost => GetRecordedVariable("EVENTGRID_ENDPOINT");
+        public string NamespaceTopicName => GetRecordedVariable("EVENTGRID_TOPIC_NAME");
+        public string NamespaceSubscriptionName => GetRecordedVariable("EVENTGRID_EVENT_SUBSCRIPTION_NAME");
     }
 }

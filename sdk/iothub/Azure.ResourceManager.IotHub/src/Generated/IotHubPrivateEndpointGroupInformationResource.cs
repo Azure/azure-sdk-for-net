@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.IotHub
     public partial class IotHubPrivateEndpointGroupInformationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotHubPrivateEndpointGroupInformationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="groupId"> The groupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string groupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}";

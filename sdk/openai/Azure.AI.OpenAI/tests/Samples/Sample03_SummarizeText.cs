@@ -38,12 +38,11 @@ namespace Azure.AI.OpenAI.Tests.Samples
             Console.Write($"Input: {summarizationPrompt}");
             var completionsOptions = new CompletionsOptions()
             {
+                DeploymentName = "text-davinci-003",
                 Prompts = { summarizationPrompt },
             };
 
-            string deploymentName = "text-davinci-003";
-
-            Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
+            Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
             string completion = completionsResponse.Value.Choices[0].Text;
             Console.WriteLine($"Summarization: {completion}");
             #endregion

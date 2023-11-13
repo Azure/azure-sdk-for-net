@@ -538,8 +538,8 @@ namespace Azure.Storage.Files.DataLake.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public DataLakeAudience(string value) { throw null; }
-        public static Azure.Storage.Files.DataLake.Models.DataLakeAudience PublicAudience { get { throw null; } }
-        public static Azure.Storage.Files.DataLake.Models.DataLakeAudience DataLakeServiceAccountAudience(string storageAccountName) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeAudience DefaultAudience { get { throw null; } }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeAudience CreateDataLakeServiceAccountAudience(string storageAccountName) { throw null; }
         public bool Equals(Azure.Storage.Files.DataLake.Models.DataLakeAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

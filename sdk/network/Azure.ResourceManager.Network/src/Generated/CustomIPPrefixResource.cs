@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class CustomIPPrefixResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CustomIPPrefixResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="customIPPrefixName"> The customIPPrefixName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customIPPrefixName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/customIpPrefixes/{customIPPrefixName}";

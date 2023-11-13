@@ -71,6 +71,7 @@
     "dotnetcli",
     "dtmf",
     "eastus",
+    "entra",
     "epsg",
     "expando",
     "fhir",
@@ -114,6 +115,9 @@
     "unhold",
     "uninstrumented",
     "vcpus",
+    "Vectorizable",
+    "Vectorizer",
+    "Vectorizers",
     "vmss",
     "vnet",
     "westcentralus",
@@ -634,7 +638,9 @@
         "Ocsp",
         "Afri",
         "Apac",
-        "Latam"
+        "Latam",
+        "Fips",
+        "Diffie"
       ]
     },
     {
@@ -871,6 +877,14 @@
         "rehydrated",
         "mab",
         "dpm"
+      ]
+    },
+    {
+      "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
+      "words": [
+        "dras",
+        "nics",
+        "reprotect"
       ]
     },
     {
@@ -1215,6 +1229,21 @@
         "rpath",
         "runpath",
         "Cves"
+      ]
+    },
+    {
+      "filename": "**/sdk/monitor/**/*.cs",
+      "words": [
+        "resourceid"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridnetwork/**/*.cs",
+      "words": [
+        "Nfvi",
+        "nfvi",
+        "NFVIs",
+        "nfvis"
       ]
     }
   ],

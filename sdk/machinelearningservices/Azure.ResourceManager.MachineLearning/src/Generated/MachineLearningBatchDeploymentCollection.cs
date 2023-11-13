@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

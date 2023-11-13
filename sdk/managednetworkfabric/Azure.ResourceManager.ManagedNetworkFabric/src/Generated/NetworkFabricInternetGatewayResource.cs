@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricInternetGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricInternetGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="internetGatewayName"> The internetGatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string internetGatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}";

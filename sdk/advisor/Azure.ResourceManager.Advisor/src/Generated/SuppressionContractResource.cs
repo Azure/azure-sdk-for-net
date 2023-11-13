@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Advisor
     public partial class SuppressionContractResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SuppressionContractResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="recommendationId"> The recommendationId. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string recommendationId, string name)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}/suppressions/{name}";

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppCertificateData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProperties Properties { get { throw null; } set { } }
     }
     public partial class ContainerAppCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.ContainerAppResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.ContainerAppResource>, System.Collections.IEnumerable
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppConnectedEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppConnectedEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppConnectedEnvironmentData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get { throw null; } set { } }
         public string DaprAIConnectionString { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppConfiguration Configuration { get { throw null; } set { } }
         public string CustomDomainVerificationId { get { throw null; } }
         public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppJobData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppJobData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppJobData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppJobConfiguration Configuration { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public string EventStreamEndpoint { get { throw null; } }
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppManagedCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppManagedCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppManagedCertificateData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ManagedCertificateProperties Properties { get { throw null; } set { } }
     }
     public partial class ContainerAppManagedCertificateResource : Azure.ResourceManager.ArmResource
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppManagedEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppManagedEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppManagedEnvironmentData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get { throw null; } set { } }
         public string DaprAIConnectionString { get { throw null; } set { } }
@@ -897,6 +897,66 @@ namespace Azure.ResourceManager.AppContainers
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppContainers.ContainerAppSourceControlResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppContainers.ContainerAppSourceControlData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.AppContainers.Mocking
+{
+    public partial class MockableAppContainersArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppContainersArmClient() { }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource GetContainerAppConnectedEnvironmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentStorageResource GetContainerAppConnectedEnvironmentStorageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppDetectorResource GetContainerAppDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobExecutionResource GetContainerAppJobExecutionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobResource GetContainerAppJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResource GetContainerAppManagedEnvironmentDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource GetContainerAppManagedEnvironmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentStorageResource GetContainerAppManagedEnvironmentStorageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppReplicaResource GetContainerAppReplicaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppResource GetContainerAppResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppRevisionResource GetContainerAppRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppSourceControlResource GetContainerAppSourceControlResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableAppContainersResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppContainersResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppResource> GetContainerApp(string containerAppName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppResource>> GetContainerAppAsync(string containerAppName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironment(string connectedEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource>> GetContainerAppConnectedEnvironmentAsync(string connectedEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJob(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppJobResource>> GetContainerAppJobAsync(string jobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppJobCollection GetContainerAppJobs() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironment(string environmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource>> GetContainerAppManagedEnvironmentAsync(string environmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments() { throw null; }
+        public virtual Azure.ResourceManager.AppContainers.ContainerAppCollection GetContainerApps() { throw null; }
+    }
+    public partial class MockableAppContainersSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAppContainersSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.Models.ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.Models.ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeter> GetBillingMeters(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeter> GetBillingMetersAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJobs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppJobResource> GetContainerAppJobsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.ContainerAppResource> GetContainerApps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.ContainerAppResource> GetContainerAppsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.AppContainers.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1043,7 +1103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     }
     public partial class ContainerAppAuthToken : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppAuthToken(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppAuthToken(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string Token { get { throw null; } }
     }
@@ -1521,7 +1581,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     }
     public partial class ContainerAppEnvironmentAuthToken : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppEnvironmentAuthToken(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppEnvironmentAuthToken(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string Token { get { throw null; } }
     }

@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sparkPool"> SparkPool name. </param>
         /// <param name="parameters"> Run notebook parameters. </param>
         /// <param name="notebookContent"> Notebook resource type. </param>
-        internal RunNotebookSnapshot(string exitValue, string id, string notebook, RunNotebookSparkSessionOptions sessionOptions, bool? honorSessionTimeToLive, long? sessionId, string sparkPool, IReadOnlyDictionary<string, RunNotebookParameter> parameters, NotebookResource notebookContent)
+        internal RunNotebookSnapshot(string exitValue, string id, string notebook, RunNotebookSparkSessionOptions sessionOptions, bool? honorSessionTimeToLive, string sessionId, string sparkPool, IReadOnlyDictionary<string, RunNotebookParameter> parameters, NotebookResource notebookContent)
         {
             ExitValue = exitValue;
             Id = id;
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Whether session should run till time to live after run completes. </summary>
         public bool? HonorSessionTimeToLive { get; }
         /// <summary> Livy session id. </summary>
-        public long? SessionId { get; }
+        public string SessionId { get; }
         /// <summary> SparkPool name. </summary>
         public string SparkPool { get; }
         /// <summary> Run notebook parameters. </summary>

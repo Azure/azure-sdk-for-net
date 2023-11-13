@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Kusto
     public partial class KustoClusterPrincipalAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KustoClusterPrincipalAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="principalAssignmentName"> The principalAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string principalAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/principalAssignments/{principalAssignmentName}";

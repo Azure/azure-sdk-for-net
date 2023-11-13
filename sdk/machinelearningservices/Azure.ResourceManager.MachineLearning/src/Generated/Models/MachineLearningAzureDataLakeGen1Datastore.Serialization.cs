@@ -23,10 +23,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("storeName"u8);
             writer.WriteStringValue(StoreName);
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                if (ResourceGroup != null)
+                {
+                    writer.WritePropertyName("resourceGroup"u8);
+                    writer.WriteStringValue(ResourceGroup);
+                }
+                else
+                {
+                    writer.WriteNull("resourceGroup");
+                }
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                if (SubscriptionId != null)
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+                else
+                {
+                    writer.WriteNull("subscriptionId");
+                }
+            }
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
+            if (Optional.IsDefined(IntellectualProperty))
+            {
+                if (IntellectualProperty != null)
+                {
+                    writer.WritePropertyName("intellectualProperty"u8);
+                    writer.WriteObjectValue(IntellectualProperty);
+                }
+                else
+                {
+                    writer.WriteNull("intellectualProperty");
+                }
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -86,8 +122,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<MachineLearningServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
             string storeName = default;
+            Optional<string> resourceGroup = default;
+            Optional<string> subscriptionId = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
+            Optional<IntellectualProperty> intellectualProperty = default;
             Optional<bool> isDefault = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
@@ -108,6 +147,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storeName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("resourceGroup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        resourceGroup = null;
+                        continue;
+                    }
+                    resourceGroup = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subscriptionId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        subscriptionId = null;
+                        continue;
+                    }
+                    subscriptionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("credentials"u8))
                 {
                     credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value);
@@ -116,6 +175,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("datastoreType"u8))
                 {
                     datastoreType = new DatastoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("intellectualProperty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        intellectualProperty = null;
+                        continue;
+                    }
+                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isDefault"u8))
@@ -168,7 +237,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningAzureDataLakeGen1Datastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), Optional.ToNullable(serviceDataAccessAuthIdentity), storeName);
+            return new MachineLearningAzureDataLakeGen1Datastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault), Optional.ToNullable(serviceDataAccessAuthIdentity), storeName, resourceGroup.Value, subscriptionId.Value);
         }
     }
 }

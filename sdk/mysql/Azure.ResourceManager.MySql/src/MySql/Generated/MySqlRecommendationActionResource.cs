@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.MySql
     public partial class MySqlRecommendationActionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlRecommendationActionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="advisorName"> The advisorName. </param>
+        /// <param name="recommendedActionName"> The recommendedActionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string recommendedActionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/servers/{serverName}/advisors/{advisorName}/recommendedActions/{recommendedActionName}";

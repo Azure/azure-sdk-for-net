@@ -1,16 +1,20 @@
 # Release History
 
-## 4.4.0-beta.1 (Unreleased)
+## 4.4.0-beta.1 (2023-11-09)
 
 ### Features Added
 
-### Breaking Changes
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartBackup` and `StartBackupAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartRestore` and `StartRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
 
 ### Bugs Fixed
 
 - When a Key Vault is moved to another tenant, the client is reauthenticated.
 
 ### Other Changes
+
+- The default service version is now "7.5-preview.1".
 
 ## 4.3.0 (2023-03-14)
 
