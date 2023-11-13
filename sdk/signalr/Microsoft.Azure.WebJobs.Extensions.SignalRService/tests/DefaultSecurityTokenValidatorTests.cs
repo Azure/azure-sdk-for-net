@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
             }
         };
 
-        [Theory(Skip = "the valid case is failing on main")]
+        [Theory]
         [MemberData(nameof(TestData))]
         public void ValidateSecurityTokenFacts(string tokenString, SecurityTokenStatus expectedStatus)
         {
