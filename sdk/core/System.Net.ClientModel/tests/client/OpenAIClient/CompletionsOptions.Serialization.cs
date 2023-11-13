@@ -9,6 +9,7 @@ using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 using System.Buffers;
+using System.Net.ClientModel;
 
 namespace OpenAI;
 

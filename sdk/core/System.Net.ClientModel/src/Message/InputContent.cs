@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core
+namespace System.Net.ClientModel
 {
     public abstract class InputContent : IDisposable
     {

@@ -8,6 +8,16 @@ namespace System.Net.ClientModel
         public int Status { get { throw null; } }
         public virtual System.Net.ClientModel.Core.MessageResponse? GetRawResponse() { throw null; }
     }
+    public abstract partial class InputContent : System.IDisposable
+    {
+        protected InputContent() { }
+        public static System.Net.ClientModel.InputContent Create(System.BinaryData value) { throw null; }
+        public static System.Net.ClientModel.InputContent Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public abstract void Dispose();
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+    }
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
@@ -87,16 +97,6 @@ namespace System.Net.ClientModel.Core
         string GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options);
         System.BinaryData Write(System.Net.ClientModel.ModelReaderWriterOptions options);
     }
-    public abstract partial class InputContent : System.IDisposable
-    {
-        protected InputContent() { }
-        public static System.Net.ClientModel.Core.InputContent Create(System.BinaryData value) { throw null; }
-        public static System.Net.ClientModel.Core.InputContent Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public abstract void Dispose();
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-    }
     public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
         public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string headerName, string? keyPrefix = null) { }
@@ -123,7 +123,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageRequest : System.IDisposable
     {
         protected MessageRequest() { }
-        public abstract System.Net.ClientModel.Core.InputContent? Content { get; set; }
+        public abstract System.Net.ClientModel.InputContent? Content { get; set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
@@ -363,7 +363,7 @@ namespace System.Net.ClientModel.Internal.Core
     public partial class HttpMessageRequest : System.Net.ClientModel.Core.MessageRequest, System.IDisposable
     {
         protected internal HttpMessageRequest() { }
-        public override System.Net.ClientModel.Core.InputContent? Content { get { throw null; } set { } }
+        public override System.Net.ClientModel.InputContent? Content { get { throw null; } set { } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
