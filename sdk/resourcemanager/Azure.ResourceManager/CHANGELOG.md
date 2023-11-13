@@ -10,11 +10,11 @@
 
 ### Other Changes
 
-## 1.8.1 (2023-11-07)
+## 1.8.1 (2023-11-13)
 
 ### Other Changes
 
-- Refines the `JsonConverter` of `ManagedServiceIdentityType` to include only its string literal value.
+- Refined some customization code to make the library more maintainable.
 
 ## 1.8.0 (2023-11-02)
 
