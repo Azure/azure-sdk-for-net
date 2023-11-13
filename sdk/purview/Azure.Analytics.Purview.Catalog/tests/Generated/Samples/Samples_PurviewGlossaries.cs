@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -7349,7 +7348,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content);
+            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, new ContentType("multipart/form-data"));
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7365,7 +7364,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content);
+            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, new ContentType("multipart/form-data"));
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7381,7 +7380,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
+            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", content, new ContentType("multipart/form-data"), includeTermHierarchy: true);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7404,7 +7403,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, includeTermHierarchy: true);
+            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", content, new ContentType("multipart/form-data"), includeTermHierarchy: true);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7427,7 +7426,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content);
+            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, new ContentType("multipart/form-data"));
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7443,7 +7442,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content);
+            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, new ContentType("multipart/form-data"));
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7459,7 +7458,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
+            Operation<BinaryData> operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", content, new ContentType("multipart/form-data"), includeTermHierarchy: true);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -7482,7 +7481,7 @@ lastModifiedTS = "<lastModifiedTS>",
             PurviewGlossaries client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, includeTermHierarchy: true);
+            Operation<BinaryData> operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", content, new ContentType("multipart/form-data"), includeTermHierarchy: true);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -4295,7 +4294,7 @@ termGuid = "<termGuid>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             using RequestContent content = null;
-            Response response = client.ImportBusinessMetadata(content);
+            Response response = client.ImportBusinessMetadata(content, new ContentType("multipart/form-data"));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -4310,7 +4309,7 @@ termGuid = "<termGuid>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             using RequestContent content = null;
-            Response response = await client.ImportBusinessMetadataAsync(content);
+            Response response = await client.ImportBusinessMetadataAsync(content, new ContentType("multipart/form-data"));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -4325,7 +4324,7 @@ termGuid = "<termGuid>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = client.ImportBusinessMetadata(content);
+            Response response = client.ImportBusinessMetadata(content, new ContentType("multipart/form-data"));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -4347,7 +4346,7 @@ termGuid = "<termGuid>",
             PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = await client.ImportBusinessMetadataAsync(content);
+            Response response = await client.ImportBusinessMetadataAsync(content, new ContentType("multipart/form-data"));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
