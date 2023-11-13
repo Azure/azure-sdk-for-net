@@ -9,6 +9,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     [CodeGenSuppress("global::Azure.Core.IUtf8JsonSerializable.Write", typeof(Utf8JsonWriter))]
+    [CodeGenSuppress("ToRequestContent")]
     public partial class AzureCognitiveSearchChatExtensionConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -66,17 +67,6 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
 
             writer.WriteEndObject();
-        }
-
-        // CUSTOM CODE NOTE: This hides the AzureChatExtensionConfiguration.ToRequestContent method
-        //                      with the "override" keyword.
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

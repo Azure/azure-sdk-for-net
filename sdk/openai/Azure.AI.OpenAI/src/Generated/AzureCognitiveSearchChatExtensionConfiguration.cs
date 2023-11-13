@@ -45,5 +45,17 @@ namespace Azure.AI.OpenAI
             EmbeddingEndpoint = embeddingEndpoint;
             EmbeddingKey = embeddingKey;
         }
+        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
+        public AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
+        /// <summary> The configured top number of documents to feature for the configured query. </summary>
+        public int? DocumentCount { get; set; }
+        /// <summary> The query type to use with Azure Cognitive Search. </summary>
+        public AzureCognitiveSearchQueryType? QueryType { get; set; }
+        /// <summary> Whether queries should be restricted to use of indexed data. </summary>
+        public bool? ShouldRestrictResultScope { get; set; }
+        /// <summary> The additional semantic configuration for the query. </summary>
+        public string SemanticConfiguration { get; set; }
+        /// <summary> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </summary>
+        public Uri EmbeddingEndpoint { get; set; }
     }
 }
