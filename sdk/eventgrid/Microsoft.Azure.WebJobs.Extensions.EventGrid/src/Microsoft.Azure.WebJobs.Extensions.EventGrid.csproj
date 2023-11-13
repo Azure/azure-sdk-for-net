@@ -11,10 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-		<PackageReference Include="Microsoft.Azure.WebJobs" />
-		<PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.EventGrid" />
-		<PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
