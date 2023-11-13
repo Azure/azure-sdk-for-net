@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignment()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignment.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/createPolicyAssignment.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -83,7 +83,7 @@ new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithASystemAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/createPolicyAssignmentWithIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +123,7 @@ Value = BinaryData.FromString("-LC"),
                 {
                     ["assignedBy"] = "Foo Bar"
                 }),
-                EnforcementMode = new EnforcementMode("Default"),
+                EnforcementMode = EnforcementMode.Default,
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -140,7 +140,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithAUserAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithUserAssignedIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/createPolicyAssignmentWithUserAssignedIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +186,7 @@ Value = BinaryData.FromString("-LC"),
                 {
                     ["assignedBy"] = "Foo Bar"
                 }),
-                EnforcementMode = new EnforcementMode("Default"),
+                EnforcementMode = EnforcementMode.Default,
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -203,7 +203,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithMultipleNonComplianceMessages()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentNonComplianceMessages.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/createPolicyAssignmentNonComplianceMessages.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -251,7 +251,7 @@ PolicyDefinitionReferenceId = "8572513655450389710",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithOverrides()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithOverrides.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/createPolicyAssignmentWithOverrides.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -313,7 +313,7 @@ In =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithResourceSelectors()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithResourceSelectors.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/createPolicyAssignmentWithResourceSelectors.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -374,7 +374,7 @@ In =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicyAssignmentWithoutEnforcingPolicyEffectDuringResourceCreationOrUpdate()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/createPolicyAssignmentWithoutEnforcement.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/createPolicyAssignmentWithoutEnforcement.json
             // this example is just showing the usage of "PolicyAssignments_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -429,7 +429,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_RetrieveAPolicyAssignment()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignment.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -461,7 +461,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_RetrieveAPolicyAssignment()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignment.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -489,7 +489,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_RetrieveAPolicyAssignment()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignment.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -529,7 +529,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -561,7 +561,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -589,7 +589,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -629,7 +629,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -661,7 +661,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -689,7 +689,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -729,7 +729,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_RetrieveAPolicyAssignmentWithOverrides()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithOverrides.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -761,7 +761,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_RetrieveAPolicyAssignmentWithOverrides()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithOverrides.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -789,7 +789,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithOverrides()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithOverrides.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -829,7 +829,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithResourceSelectors.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -861,7 +861,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithResourceSelectors.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -889,7 +889,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_RetrieveAPolicyAssignmentWithResourceSelectors()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/getPolicyAssignmentWithResourceSelectors.json
             // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -929,7 +929,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListPolicyAssignmentsThatApplyToAResourceGroup()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForResourceGroup.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/listPolicyAssignmentsForResourceGroup.json
             // this example is just showing the usage of "PolicyAssignments_ListForResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -965,7 +965,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAllPolicyAssignmentsThatApplyToAResource()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForResource.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/listPolicyAssignmentsForResource.json
             // this example is just showing the usage of "PolicyAssignments_ListForResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1004,7 +1004,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListPolicyAssignmentsThatApplyToAManagementGroup()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForManagementGroup.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/listPolicyAssignmentsForManagementGroup.json
             // this example is just showing the usage of "PolicyAssignments_ListForManagementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1039,7 +1039,7 @@ Value = BinaryData.FromString("-LC"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListPolicyAssignmentsThatApplyToASubscription()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignments.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/examples/listPolicyAssignments.json
             // this example is just showing the usage of "PolicyAssignments_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -177,7 +177,7 @@ sample-gen:
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/policyAssignments.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/4a361fccb94e82da94a239d3563f1e3e3b9d007d/specification/resources/resource-manager/Microsoft.Authorization/stable/2023-04-01/policyAssignments.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policyDefinitions.json
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policySetDefinitions.json
@@ -660,10 +660,6 @@ directive:
     where: $.definitions.ExportTemplateRequest
     transform: >
       $["x-ms-client-name"] = "ExportTemplate"
-  - from: policyAssignments.json
-    where: $.definitions.PolicyAssignmentProperties.properties.enforcementMode["x-ms-enum"].values[0]
-    transform: >
-      $["value"] = "Enforced"
   - from: dataPolicyManifests.json
     where: $.definitions.DataManifestCustomResourceFunctionDefinition.properties.fullyQualifiedResourceType
     transform: >
