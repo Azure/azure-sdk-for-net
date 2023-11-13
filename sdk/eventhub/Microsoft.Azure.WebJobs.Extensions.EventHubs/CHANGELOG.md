@@ -1,14 +1,10 @@
 # Release History
 
-## 6.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 6.0.2 (2023-11-13)
 
 ### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.Identity`.
 
 ## 6.0.1 (2023-10-10)
 
