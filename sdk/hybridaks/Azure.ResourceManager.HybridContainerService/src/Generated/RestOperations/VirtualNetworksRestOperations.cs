@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
-        /// <param name="data"> The HybridContainerServiceVirtualNetwork to use. </param>
+        /// <param name="data"> The HybridContainerServiceVirtualNetworkData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworksName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
-        /// <param name="data"> The HybridContainerServiceVirtualNetwork to use. </param>
+        /// <param name="data"> The HybridContainerServiceVirtualNetworkData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworksName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
