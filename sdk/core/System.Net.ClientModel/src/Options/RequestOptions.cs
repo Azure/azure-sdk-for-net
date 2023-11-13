@@ -34,7 +34,7 @@ public class RequestOptions : PipelineOptions
 
     // TODO: handle duplication across message and options
 
-    public virtual CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
+    public virtual CancellationToken CancellationToken { get; set; } = CancellationToken.None;
 
     #region Transport options - TODO: move to a subtype type?
 
@@ -54,6 +54,4 @@ public class RequestOptions : PipelineOptions
     // work together to make it so people can't do the wrong thing.
 
     #endregion
-
-    public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
 }

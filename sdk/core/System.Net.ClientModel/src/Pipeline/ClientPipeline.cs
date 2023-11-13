@@ -11,7 +11,7 @@ public class ClientPipeline
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    public ClientPipeline(
+    internal ClientPipeline(
         PipelineTransport transport,
         ReadOnlyMemory<PipelinePolicy> policies)
     {

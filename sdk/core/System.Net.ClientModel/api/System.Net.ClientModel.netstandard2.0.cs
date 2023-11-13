@@ -50,7 +50,6 @@ namespace System.Net.ClientModel
     {
         public RequestOptions() { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
     }
@@ -74,7 +73,7 @@ namespace System.Net.ClientModel.Core
 {
     public partial class ClientPipeline
     {
-        public ClientPipeline(System.Net.ClientModel.Core.PipelineTransport transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
+        internal ClientPipeline() { }
         public static System.Net.ClientModel.Core.ClientPipeline Create(System.Net.ClientModel.Core.PipelineOptions options) { throw null; }
         public System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.Net.ClientModel.Core.PipelineMessage message) { }
@@ -160,7 +159,7 @@ namespace System.Net.ClientModel.Core
         protected internal PipelineMessage(System.Net.ClientModel.Core.MessageRequest request) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } protected internal set { } }
         public virtual System.Net.ClientModel.Core.MessageRequest Request { get { throw null; } }
         public virtual System.Net.ClientModel.Core.MessageResponse Response { get { throw null; } protected internal set { } }
         public virtual void Dispose() { }
