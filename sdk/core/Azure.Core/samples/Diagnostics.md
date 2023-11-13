@@ -200,15 +200,17 @@ _Note: check out [Enable experimental tracing features](#enabling-experimental-t
 By calling into `AddSource("Azure.*")` we're telling OpenTelemetry SDK to listen to all sources which name starts with `Azure.`.
 
 Azure SDK `ActivitySource` names match `{root library namespace}.{client name}` pattern. For example, Azure Blob Storage creates multiple `ActivitySource`s such as `Azure.Storage.Blobs.BlobContainerClient`, `Azure.Storage.Blobs.BlobClient`, or `Azure.Storage.Blobs.BlobServiceClient`.
-Even though you might be able them one-by-one, it's recommended to enable all clients in a specific namespace. 
+Even though you might enable them one-by-one, it's recommended to enable all clients in a specific namespace.
 
-For example, by calling `AddSource("Azure.Storage.Blobs.*")` we can enable distributed tracing for all clients in `Azure.Storage.Blobs` namespace and `"Azure.Storage.*"` would enable tracing for Queues, Files, and other Storage libraries.
+For example, by calling `AddSource("Azure.Storage.Blobs.*")` we can enable distributed tracing for all clients in `Azure.Storage.Blobs` namespace and `"Azure.Storage.*"` would enable tracing for `Azure.Storage.Queues`, `Azure.Storage.Files.Shares`, and other Azure Storage libraries.
 
 ### Avoiding double-collection of HTTP activities
 
-Azure SDK trace all HTTP calls with `Azure.Core.Http` source. In case you enable HTTP client instrumentation, it would lead to double-collection of HTTP calls originating from Azure SDKs: they will be traced by Azure SDK and also by HTTP client generic instrumentation.
+_Note: if you use Azure Monitor Distro for ASP.NET Core, you may skip this section. The distro configures telemetry collection preventing duplication._
 
-Unlike generic HTTP activities, Azure SDK HTTP activities include Azure-specific attributes such as request identifiers usually passed to and from Azure serices in `x-ms-client-request-id`, `x-ms-request-id` or other request and respose headers. These data may be important when correlating client and server telemetry or creating support tickets.
+Azure SDK traces all HTTP calls using `Azure.Core.Http` source. If you enable it along with generic HTTP client instrumentation such as `OpenTelemetry.Instrumentation.Http`, it would lead to double-collection of HTTP calls originating from Azure client libraries.
+
+Unlike generic HTTP activities, Azure SDK HTTP activities include Azure-specific attributes such as request identifiers usually passed to and from Azure serices in `x-ms-client-request-id`, `x-ms-request-id` or similar request and respose headers. This data may be important when correlating client and server telemetry or creating support tickets.
 
 To avoid double-collection you may either 
 - enrich generic HTTP client activities with Azure request identifiers and disable Azure SDK HTTP activities.
