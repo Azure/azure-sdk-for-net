@@ -74,15 +74,15 @@ foreach (ReceiveDetails detail in result.Value)
 
 if (toRelease.Count > 0)
 {
-    ReleaseResult releaseResult = await client.ReleaseCloudEventsAsync(topicName, subscriptionName, toRelease);
+    ReleaseResult releaseResult = await client.ReleaseCloudEventsAsync(topicName, subscriptionName, new ReleaseOptions(toRelease));
 
     // Inspect the Release result
     Console.WriteLine($"Failed count for Release: {releaseResult.FailedLockTokens.Count}");
     foreach (FailedLockToken failedLockToken in releaseResult.FailedLockTokens)
     {
         Console.WriteLine($"Lock Token: {failedLockToken.LockToken}");
-        Console.WriteLine($"Error Code: {failedLockToken.ErrorCode}");
-        Console.WriteLine($"Error Description: {failedLockToken.ErrorDescription}");
+        Console.WriteLine($"Error Code: {failedLockToken.Error.Code}");
+        Console.WriteLine($"Error Description: {failedLockToken.Error.Message}");
     }
 
     Console.WriteLine($"Success count for Release: {releaseResult.SucceededLockTokens.Count}");
@@ -94,15 +94,15 @@ if (toRelease.Count > 0)
 
 if (toAcknowledge.Count > 0)
 {
-    AcknowledgeResult acknowledgeResult = await client.AcknowledgeCloudEventsAsync(topicName, subscriptionName, toAcknowledge);
+    AcknowledgeResult acknowledgeResult = await client.AcknowledgeCloudEventsAsync(topicName, subscriptionName, new AcknowledgeOptions(toAcknowledge));
 
     // Inspect the Acknowledge result
     Console.WriteLine($"Failed count for Acknowledge: {acknowledgeResult.FailedLockTokens.Count}");
     foreach (FailedLockToken failedLockToken in acknowledgeResult.FailedLockTokens)
     {
         Console.WriteLine($"Lock Token: {failedLockToken.LockToken}");
-        Console.WriteLine($"Error Code: {failedLockToken.ErrorCode}");
-        Console.WriteLine($"Error Description: {failedLockToken.ErrorDescription}");
+        Console.WriteLine($"Error Code: {failedLockToken.Error.Code}");
+        Console.WriteLine($"Error Description: {failedLockToken.Error.Message}");
     }
 
     Console.WriteLine($"Success count for Acknowledge: {acknowledgeResult.SucceededLockTokens.Count}");
@@ -114,15 +114,15 @@ if (toAcknowledge.Count > 0)
 
 if (toReject.Count > 0)
 {
-    RejectResult rejectResult = await client.RejectCloudEventsAsync(topicName, subscriptionName, toReject);
+    RejectResult rejectResult = await client.RejectCloudEventsAsync(topicName, subscriptionName, new RejectOptions(toReject));
 
     // Inspect the Reject result
     Console.WriteLine($"Failed count for Reject: {rejectResult.FailedLockTokens.Count}");
     foreach (FailedLockToken failedLockToken in rejectResult.FailedLockTokens)
     {
         Console.WriteLine($"Lock Token: {failedLockToken.LockToken}");
-        Console.WriteLine($"Error Code: {failedLockToken.ErrorCode}");
-        Console.WriteLine($"Error Description: {failedLockToken.ErrorDescription}");
+        Console.WriteLine($"Error Code: {failedLockToken.Error.Code}");
+        Console.WriteLine($"Error Description: {failedLockToken.Error.Message}");
     }
 
     Console.WriteLine($"Success count for Reject: {rejectResult.SucceededLockTokens.Count}");
