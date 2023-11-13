@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareVmTemplateResource vmTemplate = lro.Value;
             Assert.IsNotNull(vmTemplate);
             VMwareVmTemplateData resourceData = vmTemplate.Data;
-            Assert.Equals(resourceData.Name, vmTemplateName);
+            Assert.AreEqual(resourceData.Name, vmTemplateName);
 
             // Get
             VMwareVmTemplateResource result = await collection.GetAsync(vmTemplateName);

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareClusterResource cluster = lro.Value;
             Assert.IsNotNull(cluster);
             VMwareClusterData resourceData = cluster.Data;
-            Assert.Equals(resourceData.Name, clusterName);
+            Assert.AreEqual(resourceData.Name, clusterName);
 
             // Get
             VMwareClusterResource result = await collection.GetAsync(clusterName);

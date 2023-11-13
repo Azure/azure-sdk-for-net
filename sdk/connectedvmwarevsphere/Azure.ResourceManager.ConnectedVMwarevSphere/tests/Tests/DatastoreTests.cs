@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareDatastoreResource datastore = lro.Value;
             Assert.IsNotNull(datastore);
             VMwareDatastoreData resourceData = datastore.Data;
-            Assert.Equals(resourceData.Name, datastoreName);
+            Assert.AreEqual(resourceData.Name, datastoreName);
 
             // Get
             VMwareDatastoreResource result = await collection.GetAsync(datastoreName);

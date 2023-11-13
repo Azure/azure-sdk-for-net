@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareHostResource host = lro.Value;
             Assert.IsNotNull(host);
             VMwareHostData resourceData = host.Data;
-            Assert.Equals(resourceData.Name, hostName);
+            Assert.AreEqual(resourceData.Name, hostName);
 
             // Get
             VMwareHostResource result = await collection.GetAsync(hostName);

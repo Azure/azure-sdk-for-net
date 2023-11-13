@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareVirtualNetworkResource virtualNetwork = lro.Value;
             Assert.IsNotNull(virtualNetwork);
             VMwareVirtualNetworkData resourceData = virtualNetwork.Data;
-            Assert.Equals(resourceData.Name, virtualNetworkName);
+            Assert.AreEqual(resourceData.Name, virtualNetworkName);
 
             // Get
             VMwareVirtualNetworkResource result = await collection.GetAsync(virtualNetworkName);

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareResourcePoolResource resourcePool = lro.Value;
             Assert.IsNotNull(resourcePool);
             VMwareResourcePoolData resourceData = resourcePool.Data;
-            Assert.Equals(resourceData.Name, resourcePoolName);
+            Assert.AreEqual(resourceData.Name, resourcePoolName);
 
             // Get
             VMwareResourcePoolResource result = await collection.GetAsync(resourcePoolName);

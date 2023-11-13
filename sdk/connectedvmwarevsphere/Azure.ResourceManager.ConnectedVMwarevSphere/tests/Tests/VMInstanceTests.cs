@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
         public async Task VMInstance_Create_Update_Start_Stop_Delete()
         {
             // Create
-            string resourceUri = $"/subscriptions/{DefaultSubscriptionId}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.HybridCompute/machines/test-machine-dotnet-sdk";
+            string resourceUri = $"/subscriptions/{DefaultSubscriptionId}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.HybridCompute/machines/test-machine-dotnet_sdk2";
             ResourceIdentifier virtualMachineInstanceResourceId = VMwareVmInstanceResource.CreateResourceIdentifier(resourceUri);
             VMwareVmInstanceResource vMwareVmInstance = Client.GetVMwareVmInstanceResource(virtualMachineInstanceResourceId);
 
@@ -34,19 +34,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
                     Name = $"/subscriptions/{DefaultSubscriptionId}/resourcegroups/{DefaultResourceGroupName}/providers/microsoft.extendedlocation/customlocations/azcli-test-cl",
                     ExtendedLocationType = "CustomLocation",
                 },
-                PlacementProfile = new PlacementProfile()
-                {
-                    ResourcePoolId = $"/subscriptions/{DefaultSubscriptionId}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/ResourcePools/azcli-test-rp",
-                },
-                HardwareProfile = new VmInstanceHardwareProfile()
-                {
-                    MemorySizeMB = 2048,
-                    NumCpus = 2,
-                },
                 InfrastructureProfile = new VCenterInfrastructureProfile()
                 {
-                    TemplateId = $"/subscriptions/{DefaultSubscriptionId}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/VirtualMachineTemplates/azcli-test-linux-tmpl",
-                    VCenterId = $"/subscriptions/{DefaultSubscriptionId}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/VCenters/azcli-test-vc",
+                    InventoryItemId= $"/subscriptions/{DefaultSubscriptionId}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/VCenters/azcli-test-vc/InventoryItems/vm-1532417",
                 },
             };
             ArmOperation<VMwareVmInstanceResource> lro = await vMwareVmInstance.CreateOrUpdateAsync(WaitUntil.Completed, data);
@@ -66,8 +56,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
             VMwareVmInstanceResource result = lro.Value;
             Assert.IsNotNull(result);
             VMwareVmInstanceData resourceData = result.Data;
-            Assert.Equals(resourceData.HardwareProfile.MemorySizeMB, patch.HardwareProfile.MemorySizeMB);
-            Assert.Equals(resourceData.HardwareProfile.NumCpus, patch.HardwareProfile.NumCpus);
+            Assert.AreEqual(resourceData.HardwareProfile.MemorySizeMB, patch.HardwareProfile.MemorySizeMB);
+            Assert.AreEqual(resourceData.HardwareProfile.NumCpus, patch.HardwareProfile.NumCpus);
 
             // Start
             await vmInstance.StartAsync(WaitUntil.Completed);
