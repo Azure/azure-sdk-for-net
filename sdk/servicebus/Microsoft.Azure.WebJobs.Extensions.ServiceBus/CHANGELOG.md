@@ -19,19 +19,6 @@
 
 ### Other Changes
 
-<<<<<<< HEAD
-## 5.13.3 (2023-10-20)
-
-### Bugs Fixed
-
-- Fixed issue where deadlettering a message without specifying properties to modify could throw 
-  an exception from out of proc extension.
-- Include underlying exception details in RpcException when a failure occurs.
-
-## 5.13.2 (2023-10-18)
-
-### Other Changes
-
 - Updated proto service definition to use StringValue rather than string for deadletter error reason and description.
 
 ## 5.13.1 (2023-10-17)
