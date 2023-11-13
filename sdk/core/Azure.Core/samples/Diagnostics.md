@@ -164,7 +164,7 @@ If your are using Azure SDK libraries in ASP.NET Core application consider using
 
 ## Distributed tracing
 
-Azure SDKs are instrumented for distributed tracing using OpenTelemetry or ApplicationsInsights SDK.
+Azure SDKs are instrumented for distributed tracing using OpenTelemetry or ApplicationInsights SDK.
 
 Distributed tracing relies on `ActivitySource` and `Activity` primitives defined in .NET. Check out [Adding distributed tracing instrumentation](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing-instrumentation-walkthroughs) guide for more details.
 
