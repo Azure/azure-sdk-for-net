@@ -21,7 +21,7 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            Kind = "pass-through";
+            Kind = WorkerSelectorAttachmentKind.PassThrough;
             Key = key;
             LabelOperator = labelOperator;
         }
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <param name="expiresAfterSeconds"> Describes how long the attached label selector is valid in seconds. </param>
-        internal PassThroughWorkerSelectorAttachment(string kind, string key, LabelOperator labelOperator, double? expiresAfterSeconds) : base(kind)
+        internal PassThroughWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, string key, LabelOperator labelOperator, double? expiresAfterSeconds) : base(kind)
         {
             Key = key;
             LabelOperator = labelOperator;

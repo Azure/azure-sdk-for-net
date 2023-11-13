@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNull(condition, nameof(condition));
             Argument.AssertNotNull(queueSelectors, nameof(queueSelectors));
 
-            Kind = "conditional";
+            Kind = QueueSelectorAttachmentKind.Conditional;
             Condition = condition;
             QueueSelectors = queueSelectors.ToList();
         }
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="condition"> The condition that must be true for the queue selectors to be attached. </param>
         /// <param name="queueSelectors"> The queue selectors to attach. </param>
-        internal ConditionalQueueSelectorAttachment(string kind, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind)
+        internal ConditionalQueueSelectorAttachment(QueueSelectorAttachmentKind kind, RouterRule condition, IList<RouterQueueSelector> queueSelectors) : base(kind)
         {
             Condition = condition;
             QueueSelectors = queueSelectors;

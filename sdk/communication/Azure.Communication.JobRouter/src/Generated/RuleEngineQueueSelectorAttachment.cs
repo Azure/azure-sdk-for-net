@@ -16,7 +16,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="rule"> A RouterRule that resolves a collection of queue selectors to attach. </param>
-        internal RuleEngineQueueSelectorAttachment(string kind, RouterRule rule) : base(kind)
+        internal RuleEngineQueueSelectorAttachment(QueueSelectorAttachmentKind kind, RouterRule rule) : base(kind)
         {
             Rule = rule;
         }
