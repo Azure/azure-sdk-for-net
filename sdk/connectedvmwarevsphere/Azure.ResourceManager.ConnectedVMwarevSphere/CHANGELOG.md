@@ -7,6 +7,7 @@ This release is the first stable release of the Microsoft Azure Arc-enabled VMwa
 ### Features Added
 
 - Updated to API version `2023-10-01`.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
