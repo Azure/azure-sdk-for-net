@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    public abstract class ModelTests<T> where T : IModel<T>
+    public abstract class ModelTests<T> where T : IPersistableModel<T>
     {
         private T? _modelInstance;
         private T ModelInstance => _modelInstance ??= GetModelInstance();

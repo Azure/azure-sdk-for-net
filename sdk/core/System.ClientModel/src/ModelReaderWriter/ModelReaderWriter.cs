@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 namespace System.ClientModel
 {
     /// <summary>
-    /// Provides functionality to read and write <see cref="IModel{T}"/> and <see cref="IJsonModel{T}"/>.
+    /// Provides functionality to read and write <see cref="IPersistableModel{T}"/> and <see cref="IJsonModel{T}"/>.
     /// </summary>
     public static class ModelReaderWriter
     {
@@ -20,7 +20,7 @@ namespace System.ClientModel
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
-        public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default) where T : IModel<T>
+        public static BinaryData Write<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
         {
             if (model is null)
             {
@@ -53,7 +53,7 @@ namespace System.ClientModel
         /// <param name="model">The model to convert.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
-        /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModel{T}"/>.</exception>
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
         public static BinaryData Write(object model, ModelReaderWriterOptions? options = default)
@@ -65,10 +65,10 @@ namespace System.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            var iModel = model as IModel<object>;
+            var iModel = model as IPersistableModel<object>;
             if (iModel is null)
             {
-                throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModel<object>)}");
+                throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
             }
 
             if (options.Format == "J" || (options.Format == "W" && iModel.GetWireFormat(options) == "J"))
@@ -98,7 +98,7 @@ namespace System.ClientModel
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
-        public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default) where T : IModel<T>
+        public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
         {
             if (data is null)
             {
@@ -117,7 +117,7 @@ namespace System.ClientModel
         /// <param name="returnType">The type of the objec to convert and return.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
-        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModel{T}"/>.</exception>
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
@@ -138,34 +138,34 @@ namespace System.ClientModel
             return GetInstance(returnType).Create(data, options);
         }
 
-        private static IModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
+        private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
-            var model = GetObjectInstance(returnType) as IModel<object>;
+            var model = GetObjectInstance(returnType) as IPersistableModel<object>;
             if (model is null)
             {
-                throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IModel<object>)}");
+                throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
             }
             return model;
         }
 
-        private static IModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : IModel<T>
+        private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : IPersistableModel<T>
         {
-            var model = GetObjectInstance(typeof(T)) as IModel<T>;
+            var model = GetObjectInstance(typeof(T)) as IPersistableModel<T>;
             if (model is null)
             {
-                throw new InvalidOperationException($"{typeof(T).Name} does not implement {nameof(IModel<T>)}");
+                throw new InvalidOperationException($"{typeof(T).Name} does not implement {nameof(IPersistableModel<T>)}");
             }
             return model;
         }
 
         private static object GetObjectInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
-            ModelReaderProxyAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(ModelReaderProxyAttribute), false) as ModelReaderProxyAttribute;
+            PersistableModelProxyAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(PersistableModelProxyAttribute), false) as PersistableModelProxyAttribute;
             Type typeToActivate = attribute is null ? returnType : attribute.ProxyType;
 
             if (returnType.IsAbstract && attribute is null)
             {
-                throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(ModelReaderProxyAttribute)} to be used with {nameof(ModelReaderWriter)}");
+                throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(PersistableModelProxyAttribute)} to be used with {nameof(ModelReaderWriter)}");
             }
 
             var obj = Activator.CreateInstance(typeToActivate, true);

@@ -58,7 +58,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
         [Test]
         public void ValidatePrivateClassType()
         {
-            IModel<ModelX> modelX = _modelX;
+            IPersistableModel<ModelX> modelX = _modelX;
 
             RequestContent content = RequestContent.Create(modelX);
             AssertContentType(content, "ModelMessageBody");

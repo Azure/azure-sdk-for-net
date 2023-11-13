@@ -234,7 +234,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return new AvailabilitySetData(id, name, type, systemData.Value, OptionalProperty.ToDictionary(tags), location, sku.Value, OptionalProperty.ToNullable(platformUpdateDomainCount), OptionalProperty.ToNullable(platformFaultDomainCount), OptionalProperty.ToList(virtualMachines), proximityPlacementGroup, OptionalProperty.ToList(statuses));
         }
 
-        AvailabilitySetData IModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -266,13 +266,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return DeserializeAvailabilitySetData(doc.RootElement, options);
         }
 
-        BinaryData IModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

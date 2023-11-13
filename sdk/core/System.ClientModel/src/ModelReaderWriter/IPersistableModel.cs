@@ -8,7 +8,7 @@ namespace System.ClientModel.Primitives
     /// The format is determined by the implementer.
     /// </summary>
     /// <typeparam name="T">The type the model can be converted into.</typeparam>
-    public interface IModel<out T>
+    public interface IPersistableModel<out T>
     {
         /// <summary>
         /// Writes the model into a <see cref="BinaryData"/>.

@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 {
     [XmlRoot("Tag")]
-    public class ModelXmlOnly : IXmlSerializable, IModel<ModelXmlOnly>
+    public class ModelXmlOnly : IXmlSerializable, IPersistableModel<ModelXmlOnly>
     {
         internal ModelXmlOnly() { }
 
@@ -111,7 +111,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return new ModelXmlOnly(key, value, readonlyProperty, childModelXml);
         }
 
-        BinaryData IModel<ModelXmlOnly>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ModelXmlOnly>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -129,13 +129,13 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
         }
 
-        ModelXmlOnly IModel<ModelXmlOnly>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ModelXmlOnly IPersistableModel<ModelXmlOnly>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeModelXmlOnly(XElement.Load(data.ToStream()), options);
         }
 
-        string IModel<ModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

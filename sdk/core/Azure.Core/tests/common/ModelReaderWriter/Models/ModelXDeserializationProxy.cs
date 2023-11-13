@@ -5,7 +5,7 @@ using System.ClientModel.Primitives;
 
 namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 {
-    [ModelReaderProxy(typeof(ModelX))]
+    [PersistableModelProxy(typeof(ModelX))]
     public class ModelXDeserializationProxy
     {
     }

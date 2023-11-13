@@ -54,7 +54,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        BinaryData IModel<ModelAsStruct>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ModelAsStruct>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -66,7 +66,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return InputContent.Create(model, ModelReaderWriterOptions.Wire);
         }
 
-        ModelAsStruct IModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ModelAsStruct IPersistableModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -122,14 +122,14 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        BinaryData IModel<object>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        object IModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
+        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
@@ -137,8 +137,8 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        string IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
-        string IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<object>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
