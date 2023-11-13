@@ -25,10 +25,6 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("embedding"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     int index0 = 0;
                     float[] array = new float[property.Value.GetArrayLength()];
                     foreach (var item in property.Value.EnumerateArray())

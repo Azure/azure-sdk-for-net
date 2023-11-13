@@ -640,6 +640,9 @@ senderPath = "<senderPath>",
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -661,6 +664,9 @@ senderPath = "<senderPath>",
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -712,6 +718,9 @@ senderPath = "<senderPath>",
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -733,6 +742,9 @@ senderPath = "<senderPath>",
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("endTime").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
