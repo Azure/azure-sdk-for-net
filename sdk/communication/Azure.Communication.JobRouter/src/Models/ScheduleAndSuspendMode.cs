@@ -12,7 +12,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
         /// <param name="scheduleAt">The time at which the job will be scheduled.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleAt"/> is null. </exception>
-        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt) : this("schedule-and-suspend", scheduleAt)
+        public ScheduleAndSuspendMode(DateTimeOffset scheduleAt) : this(JobMatchingModeKind.ScheduleAndSuspend, scheduleAt)
         {
             Argument.AssertNotNull(scheduleAt, nameof(scheduleAt));
         }
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
 
             writer.WriteEndObject();
         }

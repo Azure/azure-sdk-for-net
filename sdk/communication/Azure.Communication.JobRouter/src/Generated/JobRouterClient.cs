@@ -1580,7 +1580,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<RouterJob> GetJobsAsync(int? maxpagesize = null, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<RouterJob> GetJobsAsync(int? maxpagesize = null, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
@@ -1597,7 +1597,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
         /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<RouterJob> GetJobs(int? maxpagesize = null, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<RouterJob> GetJobs(int? maxpagesize = null, RouterJobStatusSelector? status = null, string queueId = null, string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
@@ -1630,7 +1630,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetJobsAsync(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetJobsAsync(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
@@ -1662,7 +1662,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetJobs(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
+        internal virtual Pageable<BinaryData> GetJobs(int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(maxpagesize, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, maxpagesize, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
@@ -1676,7 +1676,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<RouterWorker> GetWorkersAsync(int? maxpagesize = null, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<RouterWorker> GetWorkersAsync(int? maxpagesize = null, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
@@ -1691,7 +1691,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
         /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<RouterWorker> GetWorkers(int? maxpagesize = null, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<RouterWorker> GetWorkers(int? maxpagesize = null, RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state?.ToString(), channelId, queueId, hasCapacity, context);
@@ -1722,7 +1722,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual AsyncPageable<BinaryData> GetWorkersAsync(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetWorkersAsync(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state, channelId, queueId, hasCapacity, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, maxpagesize, state, channelId, queueId, hasCapacity, context);
@@ -1752,7 +1752,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        public virtual Pageable<BinaryData> GetWorkers(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
+        internal virtual Pageable<BinaryData> GetWorkers(int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(maxpagesize, state, channelId, queueId, hasCapacity, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, maxpagesize, state, channelId, queueId, hasCapacity, context);

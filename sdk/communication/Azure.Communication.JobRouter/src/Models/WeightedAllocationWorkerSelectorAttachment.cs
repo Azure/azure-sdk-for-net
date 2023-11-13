@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(allocations, nameof(allocations));
 
-            Kind = "weighted-allocation-worker-selector";
+            Kind = WorkerSelectorAttachmentKind.WeightedAllocation;
             Allocations = allocations.ToList();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

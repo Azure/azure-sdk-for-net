@@ -16,7 +16,7 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
         /// <param name="threshold"> Threshold for wait time for this trigger. </param>
-        public WaitTimeExceptionTrigger(TimeSpan threshold) : this("wait-time", threshold.TotalSeconds)
+        public WaitTimeExceptionTrigger(TimeSpan threshold) : this(ExceptionTriggerKind.WaitTime, threshold.TotalSeconds)
         {
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("thresholdSeconds"u8);
             writer.WriteNumberValue(_thresholdSeconds);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

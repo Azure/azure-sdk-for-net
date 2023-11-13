@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        internal WeightedAllocationQueueSelectorAttachment(string kind, IReadOnlyList<QueueWeightedAllocation> allocations) : base(kind)
+        internal WeightedAllocationQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IReadOnlyList<QueueWeightedAllocation> allocations) : base(kind)
         {
             Allocations = allocations;
         }
