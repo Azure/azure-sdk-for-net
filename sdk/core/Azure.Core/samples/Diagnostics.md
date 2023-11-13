@@ -256,18 +256,9 @@ Another approach would be to filter out generic HTTP client activities with the 
 .WithTracing(tracerProviderBuilder => tracerProviderBuilder
     .AddSource("Azure.*")
     .AddHttpClientInstrumentation(o => {
-        o.EnrichWithHttpResponseMessage = (activity, response) =>
-        {
-            if (response.RequestMessage.Headers.TryGetValues("x-ms-client-request-id", out var clientRequestId))
-            {
-                activity.SetTag("az.client_request_id", clientRequestId);
-            }
-            if (response.Headers.TryGetValues("x-ms-request-id", out var requestId))
-            {
-                activity.SetTag("az.service_request_id", requestId);
-            }
-        };
+        o => o.FilterHttpRequestMessage = (_) => Activity.Current?.Parent?.Source?.Name != "Azure.Core.Http";
     })
+    ...)
 ```
 
 Here we enabled all `Azure.*` sources, but added filter to drop HTTP client activities that would be duplicates of `Azure` activities.
