@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.ClientModel.Core;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 
 namespace Azure.Core
 {
@@ -26,7 +27,7 @@ namespace Azure.Core
             set => _request.Uri.Reset(value);
         }
 
-        public override RequestBodyContent? Content
+        public override InputContent? Content
         {
             get => _request.Content;
             set

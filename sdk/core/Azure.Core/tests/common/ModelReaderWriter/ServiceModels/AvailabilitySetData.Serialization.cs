@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Internal;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
 using System.Text.Json;
 using Azure.Core.Tests.Models.ResourceManager.Resources;
 

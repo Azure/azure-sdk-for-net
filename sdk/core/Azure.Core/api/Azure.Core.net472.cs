@@ -208,7 +208,7 @@ namespace Azure
         public System.DateTimeOffset? IfModifiedSince { get { throw null; } set { } }
         public System.DateTimeOffset? IfUnmodifiedSince { get { throw null; } set { } }
     }
-    public partial class RequestContext : System.Net.ClientModel.RequestOptions
+    public partial class RequestContext : System.ClientModel.RequestOptions
     {
         public RequestContext() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -218,20 +218,20 @@ namespace Azure
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.Net.ClientModel.ClientRequestException, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.ClientModel.ClientRequestException, System.Runtime.Serialization.ISerializable
     {
-        public RequestFailedException(Azure.Response response) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
+        public RequestFailedException(Azure.Response response) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
+        public RequestFailedException(int status, string message) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
+        public RequestFailedException(int status, string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
-        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
-        public RequestFailedException(string message) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
-        public RequestFailedException(string message, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.MessageResponse)) { }
+        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        public RequestFailedException(string message) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
         public string? ErrorCode { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public new Azure.Response? GetRawResponse() { throw null; }
@@ -480,9 +480,9 @@ namespace Azure.Core
             public static string XMsRequestId { get { throw null; } }
         }
     }
-    public sealed partial class HttpMessage : System.Net.ClientModel.Core.PipelineMessage
+    public sealed partial class HttpMessage : System.ClientModel.Primitives.PipelineMessage
     {
-        public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.Net.ClientModel.Core.MessageRequest)) { }
+        public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.ClientModel.Primitives.MessageRequest)) { }
         public bool BufferResponse { get { throw null; } set { } }
         public new bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
@@ -531,7 +531,7 @@ namespace Azure.Core
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class RequestContent : System.Net.ClientModel.Core.RequestBodyContent
+    public abstract partial class RequestContent : System.ClientModel.InputContent
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
@@ -539,8 +539,8 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
+        public static new Azure.Core.RequestContent Create(System.ClientModel.Primitives.IModel<object> model, System.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
-        public static new Azure.Core.RequestContent Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
@@ -672,11 +672,11 @@ namespace Azure.Core
         protected ResponseClassificationHandler() { }
         public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
     }
-    public partial class ResponseClassifier : System.Net.ClientModel.Core.MessageClassifier
+    public partial class ResponseClassifier : System.ClientModel.Primitives.MessageClassifier
     {
         public ResponseClassifier() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool IsError(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
+        public override bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableException(System.Exception exception) { throw null; }

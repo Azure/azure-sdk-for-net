@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Internal;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
