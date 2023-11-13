@@ -14,4 +14,7 @@
     <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0-rc.2.23479.6" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.AspNetCore" Version="1.0.0-beta.8" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\" />
+  </ItemGroup>
 </Project>

@@ -46,5 +46,6 @@ To run the sample set the following configuration properties using manage user s
 ```
 
 # Azure Monitor
+
 You can view an end-to-end transaction in the portal by going to your App. Click on the Search icon, and then click See all data.
 After selecting a grouped result, you will be able to see a timeline of the grouped requests: ![Monitor](assets/monitor.PNG).

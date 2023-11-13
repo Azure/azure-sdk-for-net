@@ -24,11 +24,10 @@ builder.Services.AddAzureClients(
     });
 
 builder.Services.AddSingleton<IHostedService, LineCounterService>();
-builder.Services.AddOpenTelemetry()
-    .UseAzureMonitor();
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+
 
 var app = builder.Build();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
