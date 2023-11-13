@@ -21,26 +21,12 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        /// <param name="etag"> Concurrency Token. </param>
+        /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
         /// <param name="queueSelectorAttachments"> The queue selector attachments used to resolve a queue for a given job. </param>
-        /// <param name="prioritizationRule">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
-        /// </param>
+        /// <param name="prioritizationRule"> The rule to determine a priority score for a given job. </param>
         /// <param name="workerSelectorAttachments"> The worker selector attachments used to attach worker selectors to a given job. </param>
         internal ClassificationPolicy(string etag, string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectorAttachments, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectorAttachments)
         {

@@ -1,10 +1,20 @@
 # Release History
 
-## 1.8.1 (2023-11-07)
+## 1.9.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
 
-- Refines the `JsonConverter` of `ManagedServiceIdentityType` to include only its string literal value.
+## 1.8.1 (2023-11-13)
+
+### Other Changes
+
+- Refined some customization code to make the library more maintainable.
 
 ## 1.8.0 (2023-11-02)
 

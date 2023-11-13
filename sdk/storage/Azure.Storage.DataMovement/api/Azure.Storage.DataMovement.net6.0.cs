@@ -142,9 +142,10 @@ namespace Azure.Storage.DataMovement
     }
     public enum StorageResourceCreationPreference
     {
-        FailIfExists = 0,
-        OverwriteIfExists = 1,
-        SkipIfExists = 2,
+        Default = 0,
+        FailIfExists = 1,
+        OverwriteIfExists = 2,
+        SkipIfExists = 3,
     }
     public abstract partial class StorageResourceItem : Azure.Storage.DataMovement.StorageResource
     {

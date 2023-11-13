@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Models
         internal void Write(Utf8JsonWriter writer, JsonSerializerOptions options = default)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
             JsonSerializer.Serialize(writer, ManagedServiceIdentityType, options);
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>(property.Value.GetRawText(), options);
+                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", options);
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))

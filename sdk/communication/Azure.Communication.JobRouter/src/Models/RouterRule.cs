@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<RouterRule>))]
     public abstract partial class RouterRule : IUtf8JsonSerializable
     {
         /// <summary> The type discriminator describing a sub-type of RouterRule. </summary>
