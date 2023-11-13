@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
-using Azure.ResourceManager.Resources.Models;
 using Azure.Core;
-using Azure.Identity;
-using Azure.ResourceManager.Resources;
-using System;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
@@ -22,187 +19,51 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
         // CreateVirtualNetwork
         [TestCase]
         [RecordedTest]
-        public async Task CreateOrUpdate_CreateVirtualNetwork()
+        public async Task VirtualNetwork_Create_Get_Exists_GetIfExists_List_Delete()
         {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/CreateVirtualNetwork.json
-            // this example is just showing the usage of "VirtualNetworks_Create" operation, for the dependent resources, they will have to be created separately.
+            VMwareVirtualNetworkCollection collection = DefaultResourceGroup.GetVMwareVirtualNetworks();
 
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
-            string resourceGroupName = "azcli-test-rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VMwareVirtualNetworkResource
-            VMwareVirtualNetworkCollection collection = resourceGroupResource.GetVMwareVirtualNetworks();
-
-            // invoke the operation
-            string virtualNetworkName = "VM-Network";
+            // Create
+            string virtualNetworkName = Recording.GenerateAssetName("vmnetwork");
             VMwareVirtualNetworkData data = new VMwareVirtualNetworkData(new AzureLocation("East US"))
             {
                 ExtendedLocation = new ExtendedLocation()
                 {
                     ExtendedLocationType = "CustomLocation",
-                    Name = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourcegroups/azcli-test-rg/providers/microsoft.extendedlocation/customlocations/azcli-test-cl",
+                    Name = $"/subscriptions/{DefaultSubscriptionId}/resourcegroups/{DefaultResourceGroupName}/providers/microsoft.extendedlocation/customlocations/azcli-test-cl",
                 },
-                InventoryItemId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.ConnectedVMwarevSphere/VCenters/azcli-test-vc/InventoryItems/network-563661",
+                InventoryItemId = $"/subscriptions/{DefaultSubscriptionId}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/VCenters/azcli-test-vc/InventoryItems/network-563661",
             };
             ArmOperation<VMwareVirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
-            VMwareVirtualNetworkResource result = lro.Value;
+            VMwareVirtualNetworkResource virtualNetwork = lro.Value;
+            Assert.IsNotNull(virtualNetwork);
+            VMwareVirtualNetworkData resourceData = virtualNetwork.Data;
+            Assert.Equals(resourceData.Name, virtualNetworkName);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VMwareVirtualNetworkData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GetVirtualNetwork
-        [TestCase]
-        [RecordedTest]
-        public async Task Get_GetVirtualNetwork()
-        {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetVirtualNetwork.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
-            string resourceGroupName = "azcli-test-rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VMwareVirtualNetworkResource
-            VMwareVirtualNetworkCollection collection = resourceGroupResource.GetVMwareVirtualNetworks();
-
-            // invoke the operation
-            string virtualNetworkName = "VM-Network";
+            // Get
             VMwareVirtualNetworkResource result = await collection.GetAsync(virtualNetworkName);
+            Assert.IsNotNull(result);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            VMwareVirtualNetworkData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
+            // Check exists
+            bool isExist = await collection.ExistsAsync(virtualNetworkName);
+            Assert.IsTrue(isExist);
 
-        // GetVirtualNetwork
-        [TestCase]
-        [RecordedTest]
-        public async Task Exists_GetVirtualNetwork()
-        {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetVirtualNetwork.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
-            string resourceGroupName = "azcli-test-rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VMwareVirtualNetworkResource
-            VMwareVirtualNetworkCollection collection = resourceGroupResource.GetVMwareVirtualNetworks();
-
-            // invoke the operation
-            string virtualNetworkName = "VM-Network";
-            bool result = await collection.ExistsAsync(virtualNetworkName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetVirtualNetwork
-        [TestCase]
-        [RecordedTest]
-        public async Task GetIfExists_GetVirtualNetwork()
-        {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetVirtualNetwork.json
-            // this example is just showing the usage of "VirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
-            string resourceGroupName = "azcli-test-rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VMwareVirtualNetworkResource
-            VMwareVirtualNetworkCollection collection = resourceGroupResource.GetVMwareVirtualNetworks();
-
-            // invoke the operation
-            string virtualNetworkName = "VM-Network";
+            // Get if exists
             NullableResponse<VMwareVirtualNetworkResource> response = await collection.GetIfExistsAsync(virtualNetworkName);
-            VMwareVirtualNetworkResource result = response.HasValue ? response.Value : null;
+            result = response.HasValue ? response.Value : null;
+            Assert.IsNotNull(result);
 
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VMwareVirtualNetworkData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // ListVirtualNetworksByResourceGroup
-        [TestCase]
-        [RecordedTest]
-        public async Task GetAll_ListVirtualNetworksByResourceGroup()
-        {
-            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/ListVirtualNetworksByResourceGroup.json
-            // this example is just showing the usage of "VirtualNetworks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
-            string resourceGroupName = "azcli-test-rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this VMwareVirtualNetworkResource
-            VMwareVirtualNetworkCollection collection = resourceGroupResource.GetVMwareVirtualNetworks();
-
-            // invoke the operation and iterate over the result
+            // List
+            isExist = false;
             await foreach (VMwareVirtualNetworkResource item in collection.GetAllAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                VMwareVirtualNetworkData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                if (item.Data.Name == virtualNetworkName)
+                    isExist = true;
             }
+            Assert.IsTrue(isExist);
 
-            Console.WriteLine($"Succeeded");
+            // Delete
+            await virtualNetwork.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

@@ -1,34 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.TestFramework;
-using Azure.Core.TestFramework;
-using NUnit.Framework;
 using Azure.Core;
-using System.Linq;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
 {
     [ClientTestFixture]
     public class ConnectedVMwareTestBase : ManagementRecordedTestBase<ConnectedVMwarevSphereManagementTestEnvironment>
     {
-        public const string DefaultLocation = "eastus";
+        protected AzureLocation DefaultLocation = AzureLocation.EastUS;
+        protected const string DefaultSubscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
+        protected const string DefaultResourceGroupName = "azcli-test-rg";
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-        public const string EXTENDED_LOCATION_TYPE = "CustomLocation";
-        public const string CustomLocationId  = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.ExtendedLocation/customLocations/azcli-test-cl";
-        public const string VcenterId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.ConnectedVMwarevSphere/VCenters/azcli-test-vc";
-
-        public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
-        {
-            {"key1","value1"},
-            {"key2","value2"}
-        };
+        protected ResourceGroupResource DefaultResourceGroup { get; private set; }
 
         protected ConnectedVMwareTestBase(bool isAsync) : base(isAsync)
         {
@@ -38,27 +27,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
         {
         }
 
-        [SetUp]
-        public async Task CreateCommonClients()
+        protected ConnectedVMwareTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
         {
-            Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        [SetUp]
+        public void CreateCommonClients()
         {
-            var resourceGroupName = Recording.GenerateAssetName("azcli-test-rg");
-            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
-                WaitUntil.Completed,
-                resourceGroupName,
-                new ResourceGroupData(DefaultLocation)
-                {
-                    Tags =
-                    {
-                        { "test", "env" }
-                    }
-                });
-            return rgOp.Value;
+            Client = GetArmClient();
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            ResourceIdentifier subscriptionId = SubscriptionResource.CreateResourceIdentifier(DefaultSubscriptionId);
+            DefaultSubscription = Client.GetSubscriptionResource(subscriptionId);
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(DefaultSubscriptionId, DefaultResourceGroupName);
+            DefaultResourceGroup = Client.GetResourceGroupResource(resourceGroupResourceId);
         }
     }
 }
