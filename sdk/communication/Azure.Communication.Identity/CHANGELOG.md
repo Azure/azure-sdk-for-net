@@ -4,9 +4,9 @@
 
 ### Features Added
 - Introduction of new scopes for token generation.
-    - `chat.join` (Access to Chat APIs but without the authorization to create, delete or update chat threads)
-    - `chat.join.limited` (A more limited version of `chat.join` that doesn't allow to add or remove participants)
-    - `voip.join` (Access to Calling APIs but without the authorization to start new calls)
+    - `ChatJoin` (Access to Chat APIs but without the authorization to create, delete or update chat threads)
+    - `ChatJoinLimited` (A more limited version of `ChatJoin` that doesn't allow to add or remove participants)
+    - `VoIPJoin` (Access to Calling APIs but without the authorization to start new calls)
 - Added a new API version `ServiceVersion.V2023_10_01` that is now the default API version.
 
 ### Breaking Changes
