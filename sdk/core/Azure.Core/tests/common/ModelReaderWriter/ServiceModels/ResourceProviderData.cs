@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Net.ClientModel;
+using System.ClientModel;
 using System.Text.Json;
 
 namespace Azure.Core.Tests.Models.ResourceManager.Resources

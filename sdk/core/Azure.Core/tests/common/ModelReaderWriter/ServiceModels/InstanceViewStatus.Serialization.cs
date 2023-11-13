@@ -7,9 +7,9 @@
 
 using System;
 using System.Globalization;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Internal;
+using System.ClientModel;
+using System.ClientModel.Core;
+using System.ClientModel.Internal;
 using System.Text.Json;
 
 namespace Azure.Core.Tests.Models.ResourceManager.Compute

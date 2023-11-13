@@ -3,7 +3,7 @@
 
 using System;
 using System.Diagnostics;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Core;
 using System.Text;
 
 namespace Azure.Core

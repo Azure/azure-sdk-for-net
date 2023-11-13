@@ -3,8 +3,8 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
+using System.ClientModel;
+using System.ClientModel.Core;
 using Azure.Core.Tests.Common;
 using Azure.Core.Tests.Models.ResourceManager.Resources;
 using NUnit.Framework;

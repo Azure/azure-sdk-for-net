@@ -5,7 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
-using System.Net.ClientModel;
+using System.ClientModel;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;

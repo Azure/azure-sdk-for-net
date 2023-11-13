@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core

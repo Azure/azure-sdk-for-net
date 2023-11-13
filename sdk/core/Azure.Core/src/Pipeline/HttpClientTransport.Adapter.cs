@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Internal.Core;
+using System.ClientModel.Core;
+using System.ClientModel.Internal.Core;
 using System.Net.Http;
 
 namespace Azure.Core.Pipeline

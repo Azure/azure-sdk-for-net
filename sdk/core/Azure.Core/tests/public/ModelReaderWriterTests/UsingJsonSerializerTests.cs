@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
+using System.ClientModel;
+using System.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
 using NUnit.Framework;
