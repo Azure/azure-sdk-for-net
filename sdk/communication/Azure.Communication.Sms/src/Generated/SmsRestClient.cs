@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,12 +52,25 @@ namespace Azure.Communication.Sms
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SendMessageRequest(@from, smsRecipients.ToList(), message)
-            {
-                SmsSendOptions = smsSendOptions
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("from"u8);
+            content.JsonWriter.WriteStringValue(@from);
+            content.JsonWriter.WritePropertyName("smsRecipients"u8);
+            content.JsonWriter.WriteStartArray();
+            foreach (var item in smsRecipients)
+            {
+                content.JsonWriter.WriteObjectValue(item);
+            }
+            content.JsonWriter.WriteEndArray();
+            content.JsonWriter.WritePropertyName("message"u8);
+            content.JsonWriter.WriteStringValue(message);
+            if (Optional.IsDefined(smsSendOptions))
+            {
+                content.JsonWriter.WritePropertyName("smsSendOptions"u8);
+                content.JsonWriter.WriteObjectValue(smsSendOptions);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message0;
         }
