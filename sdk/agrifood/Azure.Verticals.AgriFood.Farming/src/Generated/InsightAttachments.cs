@@ -71,7 +71,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="insightAttachmentId"> Id of the insight resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/>, <paramref name="insightAttachmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -83,6 +83,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.CreateOrUpdate");
             scope.Start();
@@ -118,7 +119,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <param name="insightAttachmentId"> Id of the insight resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/>, <paramref name="insightAttachmentId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="partyId"/>, <paramref name="modelId"/>, <paramref name="resourceType"/>, <paramref name="resourceId"/> or <paramref name="insightAttachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -130,6 +131,7 @@ namespace Azure.Verticals.AgriFood.Farming
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(insightAttachmentId, nameof(insightAttachmentId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("InsightAttachments.CreateOrUpdate");
             scope.Start();
@@ -620,7 +622,6 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = content;
             return message;
         }

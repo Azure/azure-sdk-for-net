@@ -556,7 +556,6 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
             request.Content = content;
             return message;
         }
