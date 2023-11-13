@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Internal.Core;
+namespace System.ClientModel.Internal.Primitives;
 
 // Introduces the dependency on System.Net.Http;
 

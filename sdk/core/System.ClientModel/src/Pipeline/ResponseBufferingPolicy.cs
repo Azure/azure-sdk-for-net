@@ -4,7 +4,7 @@
 using System.Buffers;
 using System.IO;
 using System.ClientModel.Internal;
-using System.ClientModel.Internal.Core;
+using System.ClientModel.Internal.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 

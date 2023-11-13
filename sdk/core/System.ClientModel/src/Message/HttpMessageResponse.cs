@@ -5,7 +5,7 @@ using System.IO;
 using System.ClientModel.Primitives;
 using System.Net.Http;
 
-namespace System.ClientModel.Internal.Core;
+namespace System.ClientModel.Internal.Primitives;
 
 public class HttpMessageResponse : MessageResponse, IDisposable
 {

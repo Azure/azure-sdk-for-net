@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using System.ClientModel.Internal.Core;
+using System.ClientModel.Internal.Primitives;
 
 namespace System.ClientModel.Primitives;
 

@@ -198,7 +198,7 @@ namespace System.ClientModel.Internal
         public void Write(System.ClientModel.Internal.IUtf8JsonContentWriteable content) { }
     }
 }
-namespace System.ClientModel.Internal.Core
+namespace System.ClientModel.Internal.Primitives
 {
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {

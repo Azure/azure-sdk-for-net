@@ -3,7 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.ClientModel.Internal.Core;
+using System.ClientModel.Internal.Primitives;
 using System.Net.Http;
 
 namespace Azure.Core.Pipeline
