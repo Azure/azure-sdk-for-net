@@ -1,4 +1,4 @@
-# Azure.Messaging.EventGrid.Namespaces client library for .NET
+# Azure Event Grid client library for .NET
 
 Azure.Messaging.EventGrid.Namespaces is a managed service that helps developers get secret simply and securely.
 
