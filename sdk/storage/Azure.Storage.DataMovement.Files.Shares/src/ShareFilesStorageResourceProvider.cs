@@ -236,7 +236,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
         {
             ShareFileDestinationCheckpointData checkpointData;
-            using (MemoryStream stream = new(properties.SourceCheckpointData))
+            using (MemoryStream stream = new(properties.DestinationCheckpointData))
             {
                 checkpointData = ShareFileDestinationCheckpointData.Deserialize(stream);
             }
@@ -250,8 +250,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
 
             return Task.FromResult(properties.IsContainer
-                ? FromDirectory(properties.SourceUri.AbsoluteUri, options)
-                : FromFile(properties.SourceUri.AbsoluteUri, options));
+                ? FromDirectory(properties.DestinationUri.AbsoluteUri, options)
+                : FromFile(properties.DestinationUri.AbsoluteUri, options));
         }
 
         /// <summary>
