@@ -1,5 +1,21 @@
 # Release History
 
+## 4.6.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.6.0-beta.2 (2023-11-13)
+
+### Other Changes
+
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
 ## 4.6.0-beta.1 (2023-11-09)
 
 ### Features Added

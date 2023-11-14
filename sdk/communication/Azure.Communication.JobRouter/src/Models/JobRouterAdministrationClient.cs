@@ -7,6 +7,7 @@ using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Autorest.CSharp.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -321,6 +322,20 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Retrieves existing classification policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetClassificationPoliciesAsync(null, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing classification policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ClassificationPolicy> GetClassificationPolicies(CancellationToken cancellationToken = default)
+        {
+            return GetClassificationPolicies(null, cancellationToken);
+        }
+
         #endregion ClassificationPolicy
 
         #region DistributionPolicy
@@ -525,6 +540,20 @@ namespace Azure.Communication.JobRouter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Retrieves existing distribution policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetDistributionPoliciesAsync(null, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing distribution policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<DistributionPolicy> GetDistributionPolicies(CancellationToken cancellationToken = default)
+        {
+            return GetDistributionPolicies(null, cancellationToken);
         }
 
         #endregion DistributionPolicy
@@ -735,6 +764,20 @@ namespace Azure.Communication.JobRouter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Retrieves existing exception policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetExceptionPoliciesAsync(null, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing exception policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ExceptionPolicy> GetExceptionPolicies(CancellationToken cancellationToken = default)
+        {
+            return GetExceptionPolicies(null, cancellationToken);
         }
 
         #endregion ExceptionPolicy
@@ -956,6 +999,20 @@ namespace Azure.Communication.JobRouter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Retrieves existing queues. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<RouterQueue> GetQueuesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetQueuesAsync(null, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing exception policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<RouterQueue> GetQueues(CancellationToken cancellationToken = default)
+        {
+            return GetQueues(null, cancellationToken);
         }
 
         #endregion Queue

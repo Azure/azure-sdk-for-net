@@ -26,7 +26,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of RouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
-        internal RouterRule(string kind)
+        internal RouterRule(RouterRuleKind kind)
         {
             Kind = kind;
         }

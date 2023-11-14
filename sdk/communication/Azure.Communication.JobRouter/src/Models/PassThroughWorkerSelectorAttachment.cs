@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="expiresAfter"> Describes how long the attached label selector is valid. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughWorkerSelectorAttachment(string key, LabelOperator labelOperator, TimeSpan? expiresAfter = default)
-            : this("pass-through", key, labelOperator, expiresAfter?.TotalSeconds)
+            : this(WorkerSelectorAttachmentKind.PassThrough, key, labelOperator, expiresAfter?.TotalSeconds)
         {
             Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
         }
@@ -52,7 +52,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteNumberValue(_expiresAfterSeconds.Value);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

@@ -48,7 +48,7 @@ namespace Azure.Communication.JobRouter
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

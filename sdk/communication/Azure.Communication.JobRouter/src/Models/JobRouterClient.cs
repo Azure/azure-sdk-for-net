@@ -674,6 +674,39 @@ namespace Azure.Communication.JobRouter
                 cancellationToken: cancellationToken);
         }
 
+        /// <summary> Retrieves list of jobs based on filter parameters. </summary>
+        /// <param name="status"> If specified, filter jobs by status. </param>
+        /// <param name="queueId"> If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> If specified, filter jobs by channel. </param>
+        /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<RouterJob> GetJobsAsync(RouterJobStatusSelector? status = null,
+            string queueId = null, string channelId = null, string classificationPolicyId = null,
+            DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null,
+            CancellationToken cancellationToken = default)
+        {
+            return GetJobsAsync(null, status, queueId, channelId, classificationPolicyId, scheduledBefore,
+                scheduledAfter, cancellationToken);
+        }
+
+        /// <summary> Retrieves list of jobs based on filter parameters. </summary>
+        /// <param name="status"> If specified, filter jobs by status. </param>
+        /// <param name="queueId"> If specified, filter jobs by queue. </param>
+        /// <param name="channelId"> If specified, filter jobs by channel. </param>
+        /// <param name="classificationPolicyId"> If specified, filter jobs by classificationPolicy. </param>
+        /// <param name="scheduledBefore"> If specified, filter on jobs that was scheduled before or at given timestamp. Range: (-Inf, scheduledBefore]. </param>
+        /// <param name="scheduledAfter"> If specified, filter on jobs that was scheduled at or after given value. Range: [scheduledAfter, +Inf). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<RouterJob> GetJobs(RouterJobStatusSelector? status = null, string queueId = null,
+            string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null,
+            DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)
+        {
+            return GetJobs(null, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter,
+                cancellationToken);
+        }
+
         #endregion Job
 
         #region Worker
@@ -906,6 +939,28 @@ namespace Azure.Communication.JobRouter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Retrieves existing workers. </summary>
+        /// <param name="state"> If specified, select workers by worker state. </param>
+        /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
+        /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
+        /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<RouterWorker> GetWorkersAsync(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
+        {
+            return GetWorkersAsync(null, state, channelId, queueId, hasCapacity, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing workers. </summary>
+        /// <param name="state"> If specified, select workers by worker state. </param>
+        /// <param name="channelId"> If specified, select workers who have a channel configuration with this channel. </param>
+        /// <param name="queueId"> If specified, select workers who are assigned to this queue. </param>
+        /// <param name="hasCapacity"> If set to true, select only workers who have capacity for the channel specified by `channelId` or for any channel if `channelId` not specified. If set to false, then will return all workers including workers without any capacity for jobs. Defaults to false. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<RouterWorker> GetWorkers(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
+        {
+            return GetWorkers(null, state, channelId, queueId, hasCapacity, cancellationToken);
         }
 
         #endregion Worker

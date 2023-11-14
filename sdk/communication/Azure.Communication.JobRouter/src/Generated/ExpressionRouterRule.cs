@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="language"> The expression language to compile to and execute. </param>
         /// <param name="expression"> The string containing the expression to evaluate. Should contain return statement with calculated values. </param>
-        internal ExpressionRouterRule(string kind, string language, string expression) : base(kind)
+        internal ExpressionRouterRule(RouterRuleKind kind, string language, string expression) : base(kind)
         {
             Language = language;
             Expression = expression;

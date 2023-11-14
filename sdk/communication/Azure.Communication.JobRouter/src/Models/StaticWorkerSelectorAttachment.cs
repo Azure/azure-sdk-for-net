@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(workerSelector, nameof(workerSelector));
 
-            Kind = "static";
+            Kind = WorkerSelectorAttachmentKind.Static;
             WorkerSelector = workerSelector;
         }
 
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("workerSelector"u8);
             writer.WriteObjectValue(WorkerSelector);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }
