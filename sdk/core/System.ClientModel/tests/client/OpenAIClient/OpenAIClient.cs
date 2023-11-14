@@ -45,14 +45,14 @@ public class OpenAIClient
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-        RequestOptions context = FromCancellationToken(cancellationToken);
-        Result result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
-        MessageResponse response = result.GetRawResponse();
+        InputOptions context = FromCancellationToken(cancellationToken);
+        OutputMessage result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
+        PipelineResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
-        return Result.FromValue(completions, response);
+        return OutputMessage.FromValue(completions, response);
     }
 
-    public virtual Result GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
+    public virtual OutputMessage GetCompletions(string deploymentId, InputContent content, InputOptions options = null)
     {
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
@@ -62,17 +62,17 @@ public class OpenAIClient
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.MessageClassifier = MessageClassifier200;
 
-        MessageResponse response = _pipeline.ProcessMessage(message, options);
-        Result result = Result.FromResponse(response);
+        PipelineResponse response = _pipeline.ProcessMessage(message, options);
+        OutputMessage result = OutputMessage.FromResponse(response);
         return result;
     }
 
-    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)
+    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, InputOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
-        MessageRequest request = message.Request;
+        PipelineRequest request = message.Request;
         request.Method = "POST";
 
         UriBuilder uriBuilder = new(_endpoint.ToString());
@@ -90,15 +90,15 @@ public class OpenAIClient
         return message;
     }
 
-    private static RequestOptions DefaultRequestContext = new RequestOptions();
-    internal static RequestOptions FromCancellationToken(CancellationToken cancellationToken = default)
+    private static InputOptions DefaultRequestContext = new InputOptions();
+    internal static InputOptions FromCancellationToken(CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.CanBeCanceled)
         {
             return DefaultRequestContext;
         }
 
-        return new RequestOptions() { CancellationToken = cancellationToken };
+        return new InputOptions() { CancellationToken = cancellationToken };
     }
 
     private static MessageClassifier _messageClassifier200;

@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal class PipelineResponseAdapter : MessageResponse
+    internal class PipelineResponseAdapter : PipelineResponse
     {
         private readonly Response _response;
 
@@ -22,7 +22,7 @@ namespace Azure.Core
         public override string ReasonPhrase => _response.ReasonPhrase;
 
         // TODO: implement
-        public override MessageHeaders Headers => throw new NotSupportedException();
+        public override PipelineMessageHeaders Headers => throw new NotSupportedException();
 
         public override Stream? ContentStream
         {

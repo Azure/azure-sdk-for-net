@@ -47,45 +47,45 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        RequestOptions options = cancellationToken.CanBeCanceled ?
-            new RequestOptions() { CancellationToken = cancellationToken } :
-            new RequestOptions();
+        InputOptions options = cancellationToken.CanBeCanceled ?
+            new InputOptions() { CancellationToken = cancellationToken } :
+            new InputOptions();
 
-        Result result = GetCountryCode(ipAddress.ToString(), options);
+        OutputMessage result = GetCountryCode(ipAddress.ToString(), options);
 
-        MessageResponse response = result.GetRawResponse();
+        PipelineResponse response = result.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
-        return Result.FromValue(value, response);
+        return OutputMessage.FromValue(value, response);
     }
 
-    public virtual Result GetCountryCode(string ipAddress, RequestOptions options = null)
+    public virtual OutputMessage GetCountryCode(string ipAddress, InputOptions options = null)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        options ??= new RequestOptions();
+        options ??= new InputOptions();
         options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
         using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
         _pipeline.Send(message);
 
-        MessageResponse response = message.Response;
+        PipelineResponse response = message.Response;
 
         if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
         {
             throw new ClientRequestException(response);
         }
 
-        return Result.FromResponse(response);
+        return OutputMessage.FromResponse(response);
     }
 
-    private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
+    private PipelineMessage CreateGetLocationRequest(string ipAddress, InputOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
-        MessageRequest request = message.Request;
+        PipelineRequest request = message.Request;
         request.Method = "GET";
 
         UriBuilder uriBuilder = new(_endpoint.ToString());

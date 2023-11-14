@@ -7,7 +7,7 @@ using System.ClientModel.Internal;
 
 namespace System.ClientModel.Primitives;
 
-internal class MessageRequestHeaders : MessageHeaders
+internal class PipelineRequestHeaders : PipelineMessageHeaders
 {
     private ArrayBackedPropertyBag<IgnoreCaseString, object> _headers;
 

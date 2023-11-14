@@ -78,7 +78,7 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        private class ErrorPipelineResult : MessageResponse
+        private class ErrorPipelineResult : PipelineResponse
         {
             private readonly int _status;
 
@@ -97,7 +97,7 @@ namespace Azure
 
             public override string ReasonPhrase => throw new NotSupportedException();
 
-            public override MessageHeaders Headers => throw new NotSupportedException();
+            public override PipelineMessageHeaders Headers => throw new NotSupportedException();
 
             public override void Dispose() => throw new NotSupportedException();
         }

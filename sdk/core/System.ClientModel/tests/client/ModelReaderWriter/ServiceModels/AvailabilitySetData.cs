@@ -32,7 +32,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return InputContent.Create(availabilitySetData, ModelReaderWriterOptions.Wire);
         }
 
-        public static explicit operator AvailabilitySetData(Result result)
+        public static explicit operator AvailabilitySetData(OutputMessage result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 

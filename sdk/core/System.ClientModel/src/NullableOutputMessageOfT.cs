@@ -6,12 +6,12 @@ using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
 
-public class NullableResult<T> : Result
+public class NullableResult<T> : OutputMessage
 {
     private T? _value;
-    private MessageResponse _response;
+    private PipelineResponse _response;
 
-    internal NullableResult(T? value, MessageResponse response)
+    internal NullableResult(T? value, PipelineResponse response)
     {
         Debug.Assert(response != null);
         _response = response!;
@@ -22,5 +22,5 @@ public class NullableResult<T> : Result
 
     public virtual bool HasValue => _value != null;
 
-    public override MessageResponse GetRawResponse() => _response;
+    public override PipelineResponse GetRawResponse() => _response;
 }

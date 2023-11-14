@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace System.ClientModel.Internal.Primitives;
 
-public class HttpMessageResponse : MessageResponse, IDisposable
+public class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
 
@@ -22,7 +22,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
 
     private bool _disposed;
 
-    protected internal HttpMessageResponse(HttpResponseMessage httpResponse)
+    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _httpResponseContent = _httpResponse.Content;
@@ -33,8 +33,8 @@ public class HttpMessageResponse : MessageResponse, IDisposable
     public override string ReasonPhrase
         => _httpResponse.ReasonPhrase ?? string.Empty;
 
-    public override MessageHeaders Headers
-        => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
+    public override PipelineMessageHeaders Headers
+        => new PipelineResponseHeaders(_httpResponse, _httpResponseContent);
 
     //public override MessageBody? Body
     //{

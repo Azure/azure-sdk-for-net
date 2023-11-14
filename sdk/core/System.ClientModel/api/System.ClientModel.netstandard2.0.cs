@@ -2,11 +2,11 @@ namespace System.ClientModel
 {
     public partial class ClientRequestException : System.Exception
     {
-        public ClientRequestException(System.ClientModel.Primitives.MessageResponse response) { }
-        protected ClientRequestException(System.ClientModel.Primitives.MessageResponse response, string message, System.Exception? innerException) { }
+        public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response) { }
+        protected ClientRequestException(System.ClientModel.Primitives.PipelineResponse response, string message, System.Exception? innerException) { }
         protected ClientRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public int Status { get { throw null; } }
-        public virtual System.ClientModel.Primitives.MessageResponse? GetRawResponse() { throw null; }
+        public virtual System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
     public abstract partial class InputContent : System.IDisposable
     {
@@ -17,6 +17,13 @@ namespace System.ClientModel
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+    }
+    public partial class InputOptions : System.ClientModel.Primitives.PipelineOptions
+    {
+        public InputOptions() { }
+        public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public virtual System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
+        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
     }
     public partial class KeyCredential
     {
@@ -39,27 +46,20 @@ namespace System.ClientModel
         public static System.ClientModel.ModelReaderWriterOptions Wire { get { throw null; } }
         public static System.ClientModel.ModelReaderWriterOptions Xml { get { throw null; } }
     }
-    public partial class NullableResult<T> : System.ClientModel.Result
+    public partial class NullableResult<T> : System.ClientModel.OutputMessage
     {
         internal NullableResult() { }
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
-        public override System.ClientModel.Primitives.MessageResponse GetRawResponse() { throw null; }
+        public override System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
     }
-    public partial class RequestOptions : System.ClientModel.Primitives.PipelineOptions
+    public abstract partial class OutputMessage
     {
-        public RequestOptions() { }
-        public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public virtual System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
-    }
-    public abstract partial class Result
-    {
-        protected Result() { }
-        public static System.ClientModel.NullableResult<T> FromNullableValue<T>(T? value, System.ClientModel.Primitives.MessageResponse response) { throw null; }
-        public static System.ClientModel.Result FromResponse(System.ClientModel.Primitives.MessageResponse response) { throw null; }
-        public static System.ClientModel.Result<T> FromValue<T>(T value, System.ClientModel.Primitives.MessageResponse response) { throw null; }
-        public abstract System.ClientModel.Primitives.MessageResponse GetRawResponse();
+        protected OutputMessage() { }
+        public static System.ClientModel.NullableResult<T> FromNullableValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.OutputMessage FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.Result<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public abstract System.ClientModel.Primitives.PipelineResponse GetRawResponse();
     }
     public partial class Result<T> : System.ClientModel.NullableResult<T>
     {
@@ -184,10 +184,10 @@ namespace System.ClientModel.Internal
     }
     public static partial class PipelineProtocolExtensions
     {
-        public static System.ClientModel.NullableResult<bool> ProcessHeadAsBoolMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ClientModel.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext) { throw null; }
-        public static System.ClientModel.Primitives.MessageResponse ProcessMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.MessageResponse> ProcessMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.NullableResult<bool> ProcessHeadAsBoolMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.InputOptions requestContext) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ClientModel.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.InputOptions requestContext) { throw null; }
+        public static System.ClientModel.Primitives.PipelineResponse ProcessMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.InputOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> ProcessMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.InputOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class Utf8JsonContentWriter : System.IDisposable
     {
@@ -212,21 +212,21 @@ namespace System.ClientModel.Internal.Primitives
         public override void Process(System.ClientModel.Primitives.PipelineMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    public partial class HttpMessageRequest : System.ClientModel.Primitives.MessageRequest, System.IDisposable
+    public partial class HttpPipelineRequest : System.ClientModel.Primitives.PipelineRequest, System.IDisposable
     {
-        protected internal HttpMessageRequest() { }
+        protected internal HttpPipelineRequest() { }
         public override System.ClientModel.InputContent? Content { get { throw null; } set { } }
-        public override System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
+        public override System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
         public override void Dispose() { }
         public override string ToString() { throw null; }
     }
-    public partial class HttpMessageResponse : System.ClientModel.Primitives.MessageResponse, System.IDisposable
+    public partial class HttpPipelineResponse : System.ClientModel.Primitives.PipelineResponse, System.IDisposable
     {
-        protected internal HttpMessageResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
+        protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
         public override System.IO.Stream? ContentStream { get { throw null; } protected internal set { } }
-        public override System.ClientModel.Primitives.MessageHeaders Headers { get { throw null; } }
+        public override System.ClientModel.Primitives.PipelineMessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
         public override void Dispose() { }
@@ -271,38 +271,6 @@ namespace System.ClientModel.Primitives
         protected internal MessageClassifier() { }
         public virtual bool IsError(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
-    public abstract partial class MessageHeaders
-    {
-        protected MessageHeaders() { }
-        public abstract int Count { get; }
-        public abstract void Add(string name, string value);
-        public abstract bool Remove(string name);
-        public abstract void Set(string name, string value);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
-        public abstract bool TryGetValue(string name, out string? value);
-        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
-    }
-    public abstract partial class MessageRequest : System.IDisposable
-    {
-        protected MessageRequest() { }
-        public abstract System.ClientModel.InputContent? Content { get; set; }
-        public abstract System.ClientModel.Primitives.MessageHeaders Headers { get; }
-        public abstract string Method { get; set; }
-        public abstract System.Uri Uri { get; set; }
-        public abstract void Dispose();
-    }
-    public abstract partial class MessageResponse : System.IDisposable
-    {
-        protected MessageResponse() { }
-        public System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; protected internal set; }
-        public abstract System.ClientModel.Primitives.MessageHeaders Headers { get; }
-        public bool IsError { get { throw null; } }
-        public abstract string ReasonPhrase { get; }
-        public abstract int Status { get; }
-        public abstract void Dispose();
-    }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
     {
         public ModelJsonConverter() { }
@@ -320,16 +288,28 @@ namespace System.ClientModel.Primitives
     }
     public partial class PipelineMessage : System.IDisposable
     {
-        protected internal PipelineMessage(System.ClientModel.Primitives.MessageRequest request) { }
+        protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
         public virtual System.ClientModel.Primitives.MessageClassifier MessageClassifier { get { throw null; } protected internal set { } }
-        public virtual System.ClientModel.Primitives.MessageRequest Request { get { throw null; } }
-        public virtual System.ClientModel.Primitives.MessageResponse Response { get { throw null; } protected internal set { } }
+        public virtual System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
+        public virtual System.ClientModel.Primitives.PipelineResponse Response { get { throw null; } protected internal set { } }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
+    }
+    public abstract partial class PipelineMessageHeaders
+    {
+        protected PipelineMessageHeaders() { }
+        public abstract int Count { get; }
+        public abstract void Add(string name, string value);
+        public abstract bool Remove(string name);
+        public abstract void Set(string name, string value);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public partial class PipelineOptions
     {
@@ -354,6 +334,26 @@ namespace System.ClientModel.Primitives
         public abstract int Length { get; }
         public abstract bool ProcessNext();
         public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
+    }
+    public abstract partial class PipelineRequest : System.IDisposable
+    {
+        protected PipelineRequest() { }
+        public abstract System.ClientModel.InputContent? Content { get; set; }
+        public abstract System.ClientModel.Primitives.PipelineMessageHeaders Headers { get; }
+        public abstract string Method { get; set; }
+        public abstract System.Uri Uri { get; set; }
+        public abstract void Dispose();
+    }
+    public abstract partial class PipelineResponse : System.IDisposable
+    {
+        protected PipelineResponse() { }
+        public System.BinaryData Content { get { throw null; } }
+        public abstract System.IO.Stream? ContentStream { get; protected internal set; }
+        public abstract System.ClientModel.Primitives.PipelineMessageHeaders Headers { get; }
+        public bool IsError { get { throw null; } }
+        public abstract string ReasonPhrase { get; }
+        public abstract int Status { get; }
+        public abstract void Dispose();
     }
     public abstract partial class PipelineTransport : System.ClientModel.Primitives.PipelinePolicy
     {

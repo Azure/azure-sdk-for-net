@@ -6,14 +6,14 @@ using System.ClientModel.Internal;
 
 namespace System.ClientModel;
 
-public abstract class Result
+public abstract class OutputMessage
 {
-    public abstract MessageResponse GetRawResponse();
+    public abstract PipelineResponse GetRawResponse();
 
-    public static Result FromResponse(MessageResponse response)
+    public static OutputMessage FromResponse(PipelineResponse response)
         => new NoModelResult(response);
 
-    public static Result<T> FromValue<T>(T value, MessageResponse response)
+    public static Result<T> FromValue<T>(T value, PipelineResponse response)
     {
         // Null values are required to use NullableResult<T>
         if (value is null)
@@ -26,20 +26,20 @@ public abstract class Result
         return new Result<T>(value, response);
     }
 
-    public static NullableResult<T> FromNullableValue<T>(T? value, MessageResponse response)
+    public static NullableResult<T> FromNullableValue<T>(T? value, PipelineResponse response)
     {
         ClientUtilities.AssertNotNull(response, nameof(response));
 
         return new NullableResult<T>(value, response);
     }
 
-    private class NoModelResult : Result
+    private class NoModelResult : OutputMessage
     {
-        public readonly MessageResponse _response;
+        public readonly PipelineResponse _response;
 
-        public NoModelResult(MessageResponse response)
+        public NoModelResult(PipelineResponse response)
             => _response = response;
 
-        public override MessageResponse GetRawResponse() => _response;
+        public override PipelineResponse GetRawResponse() => _response;
     }
 }

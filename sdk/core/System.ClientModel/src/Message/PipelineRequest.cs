@@ -3,7 +3,7 @@
 
 namespace System.ClientModel.Primitives;
 
-public abstract class MessageRequest : IDisposable
+public abstract class PipelineRequest : IDisposable
 {
     public abstract string Method { get; set; }
 
@@ -11,7 +11,7 @@ public abstract class MessageRequest : IDisposable
 
     public abstract InputContent? Content { get; set; }
 
-    public abstract MessageHeaders Headers { get; }
+    public abstract PipelineMessageHeaders Headers { get; }
 
     // TODO: this is required by Azure.Core RequestAdapter constraint.  Revisit?
     public abstract void Dispose();

@@ -266,11 +266,11 @@ namespace Azure.Core
         /// </summary>
         private class MessagePropertyKey { }
 
-        private static MessageRequest ToPipelineRequest(Request request)
+        private static PipelineRequest ToPipelineRequest(Request request)
         {
             Argument.AssertNotNull(request, nameof(request));
 
-            if (HttpClientTransport.TryGetPipelineRequest(request, out MessageRequest? pipelineRequest))
+            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
             {
                 return pipelineRequest!;
             }
@@ -279,14 +279,14 @@ namespace Azure.Core
             return new PipelineRequestAdapter(request);
         }
 
-        private static MessageResponse? ToPipelineResponse(Response response)
+        private static PipelineResponse? ToPipelineResponse(Response response)
         {
             if (response is null)
             {
                 return null;
             }
 
-            if (HttpClientTransport.TryGetPipelineResponse(response, out MessageResponse? pipelineResponse))
+            if (HttpClientTransport.TryGetPipelineResponse(response, out PipelineResponse? pipelineResponse))
             {
                 return pipelineResponse!;
             }

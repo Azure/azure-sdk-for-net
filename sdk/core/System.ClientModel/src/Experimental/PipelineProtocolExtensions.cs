@@ -9,7 +9,7 @@ namespace System.ClientModel.Internal;
 
 public static class PipelineProtocolExtensions
 {
-    public static async ValueTask<MessageResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
+    public static async ValueTask<PipelineResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, InputOptions requestContext, CancellationToken cancellationToken = default)
     {
         await pipeline.SendAsync(message).ConfigureAwait(false);
 
@@ -26,7 +26,7 @@ public static class PipelineProtocolExtensions
         throw new ClientRequestException(message.Response);
     }
 
-    public static MessageResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
+    public static PipelineResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, InputOptions requestContext, CancellationToken cancellationToken = default)
     {
         pipeline.Send(message);
 
@@ -43,29 +43,29 @@ public static class PipelineProtocolExtensions
         throw new ClientRequestException(message.Response);
     }
 
-    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
+    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, InputOptions requestContext)
     {
-        MessageResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
+        PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
         switch (response.Status)
         {
             case >= 200 and < 300:
-                return Result.FromValue(true, response);
+                return OutputMessage.FromValue(true, response);
             case >= 400 and < 500:
-                return Result.FromValue(false, response);
+                return OutputMessage.FromValue(false, response);
             default:
                 return new ErrorResult<bool>(response, new ClientRequestException(response));
         }
     }
 
-    public static NullableResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
+    public static NullableResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, InputOptions requestContext)
     {
-        MessageResponse response = pipeline.ProcessMessage(message, requestContext);
+        PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
         switch (response.Status)
         {
             case >= 200 and < 300:
-                return Result.FromValue(true, response);
+                return OutputMessage.FromValue(true, response);
             case >= 400 and < 500:
-                return Result.FromValue(false, response);
+                return OutputMessage.FromValue(false, response);
             default:
                 return new ErrorResult<bool>(response, new ClientRequestException(response));
         }
@@ -73,10 +73,10 @@ public static class PipelineProtocolExtensions
 
     internal class ErrorResult<T> : NullableResult<T>
     {
-        private readonly MessageResponse _response;
+        private readonly PipelineResponse _response;
         private readonly ClientRequestException _exception;
 
-        public ErrorResult(MessageResponse response, ClientRequestException exception)
+        public ErrorResult(PipelineResponse response, ClientRequestException exception)
             : base(default, response)
         {
             _response = response;
@@ -87,6 +87,6 @@ public static class PipelineProtocolExtensions
 
         public override bool HasValue => false;
 
-        public override MessageResponse GetRawResponse() => _response;
+        public override PipelineResponse GetRawResponse() => _response;
     }
 }

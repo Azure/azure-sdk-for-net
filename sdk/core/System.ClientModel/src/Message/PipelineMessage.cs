@@ -8,18 +8,18 @@ namespace System.ClientModel.Primitives;
 
 public class PipelineMessage : IDisposable
 {
-    private MessageResponse? _response;
+    private PipelineResponse? _response;
     private bool _disposed;
 
-    protected internal PipelineMessage(MessageRequest request)
+    protected internal PipelineMessage(PipelineRequest request)
     {
         Request = request;
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
     }
 
-    public virtual MessageRequest Request { get; }
+    public virtual PipelineRequest Request { get; }
 
-    public virtual MessageResponse Response
+    public virtual PipelineResponse Response
     {
         get
         {

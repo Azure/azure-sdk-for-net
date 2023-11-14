@@ -17,7 +17,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport
     {
-        internal static bool TryGetPipelineResponse(Response response, out MessageResponse? pipelineResponse)
+        internal static bool TryGetPipelineResponse(Response response, out PipelineResponse? pipelineResponse)
         {
             if (response is ResponseAdapter responseAdapter)
             {
@@ -29,7 +29,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        private sealed class HttpClientTransportResponse : HttpMessageResponse
+        private sealed class HttpClientTransportResponse : HttpPipelineResponse
         {
             public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse)
                 : base(httpResponse)
@@ -54,7 +54,7 @@ namespace Azure.Core.Pipeline
                 _pipelineResponse = pipelineResponse;
             }
 
-            internal MessageResponse PipelineResponse => _pipelineResponse;
+            internal PipelineResponse PipelineResponse => _pipelineResponse;
 
             public override int Status => _pipelineResponse.Status;
 

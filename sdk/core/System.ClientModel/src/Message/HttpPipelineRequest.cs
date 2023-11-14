@@ -15,19 +15,19 @@ namespace System.ClientModel.Internal.Primitives;
 
 // This adds the Http dependency, and some implementation
 
-public class HttpMessageRequest : MessageRequest, IDisposable
+public class HttpPipelineRequest : PipelineRequest, IDisposable
 {
     private const string AuthorizationHeaderName = "Authorization";
 
     private Uri? _uri;
     private InputContent? _content;
 
-    private readonly MessageRequestHeaders _headers;
+    private readonly PipelineRequestHeaders _headers;
 
-    protected internal HttpMessageRequest()
+    protected internal HttpPipelineRequest()
     {
         Method = HttpMethod.Get.Method;
-        _headers = new MessageRequestHeaders();
+        _headers = new PipelineRequestHeaders();
     }
 
     public override Uri Uri
@@ -57,7 +57,7 @@ public class HttpMessageRequest : MessageRequest, IDisposable
         set;
     }
 
-    public override MessageHeaders Headers => _headers;
+    public override PipelineMessageHeaders Headers => _headers;
 
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");

@@ -23,7 +23,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return InputContent.Create(baseModel, ModelReaderWriterOptions.Wire);
         }
 
-        public static explicit operator BaseModel(Result result)
+        public static explicit operator BaseModel(OutputMessage result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 

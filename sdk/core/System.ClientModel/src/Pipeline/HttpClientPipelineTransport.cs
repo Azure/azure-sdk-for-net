@@ -61,7 +61,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
 
     public override PipelineMessage CreateMessage()
     {
-        MessageRequest request = new HttpMessageRequest();
+        PipelineRequest request = new HttpPipelineRequest();
         PipelineMessage message = new PipelineMessage(request);
 
         return message;
@@ -187,11 +187,11 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     /// <param name="message"></param>
     /// <param name="httpResponse"></param>
     protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        => message.Response = new HttpMessageResponse(httpResponse);
+        => message.Response = new HttpPipelineResponse(httpResponse);
 
     private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
     {
-        if (message.Request is not HttpMessageRequest messageRequest)
+        if (message.Request is not HttpPipelineRequest messageRequest)
         {
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
