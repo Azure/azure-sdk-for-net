@@ -86,7 +86,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(events.FailedEvents, Is.Not.Empty);
-            Assert.That(events.FailedEvents[0], Is.Not.Null);
             Assert.That(events.FailedEvents[0].Exception.Message, Does.Contain("Intentionally failing"));
         }
 
@@ -127,7 +126,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(events.FailedEvents, Is.Not.Empty);
-            Assert.That(events.FailedEvents[0], Is.Not.Null);
             Assert.That(events.FailedEvents[0].Exception.Message, Does.Contain("Intentionally failing"));
         }
     }
