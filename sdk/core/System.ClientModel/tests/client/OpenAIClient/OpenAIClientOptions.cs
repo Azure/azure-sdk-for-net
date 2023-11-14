@@ -5,6 +5,6 @@ using System.ClientModel;
 
 namespace OpenAI;
 
-public class OpenAIClientOptions : InputOptions
+public class OpenAIClientOptions : RequestOptions
 {
 }

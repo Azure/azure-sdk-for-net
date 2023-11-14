@@ -45,14 +45,14 @@ public class OpenAIClient
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-        InputOptions context = FromCancellationToken(cancellationToken);
+        RequestOptions context = FromCancellationToken(cancellationToken);
         OutputMessage result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
         PipelineResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
         return OutputMessage.FromValue(completions, response);
     }
 
-    public virtual OutputMessage GetCompletions(string deploymentId, InputContent content, InputOptions options = null)
+    public virtual OutputMessage GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
     {
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
@@ -67,7 +67,7 @@ public class OpenAIClient
         return result;
     }
 
-    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, InputOptions options)
+    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
@@ -90,15 +90,15 @@ public class OpenAIClient
         return message;
     }
 
-    private static InputOptions DefaultRequestContext = new InputOptions();
-    internal static InputOptions FromCancellationToken(CancellationToken cancellationToken = default)
+    private static RequestOptions DefaultRequestContext = new RequestOptions();
+    internal static RequestOptions FromCancellationToken(CancellationToken cancellationToken = default)
     {
         if (!cancellationToken.CanBeCanceled)
         {
             return DefaultRequestContext;
         }
 
-        return new InputOptions() { CancellationToken = cancellationToken };
+        return new RequestOptions() { CancellationToken = cancellationToken };
     }
 
     private static MessageClassifier _messageClassifier200;

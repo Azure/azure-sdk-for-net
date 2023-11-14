@@ -9,7 +9,7 @@ namespace System.ClientModel.Internal;
 
 public static class PipelineProtocolExtensions
 {
-    public static async ValueTask<PipelineResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, InputOptions requestContext, CancellationToken cancellationToken = default)
+    public static async ValueTask<PipelineResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
     {
         await pipeline.SendAsync(message).ConfigureAwait(false);
 
@@ -26,7 +26,7 @@ public static class PipelineProtocolExtensions
         throw new ClientRequestException(message.Response);
     }
 
-    public static PipelineResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, InputOptions requestContext, CancellationToken cancellationToken = default)
+    public static PipelineResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
     {
         pipeline.Send(message);
 
@@ -43,7 +43,7 @@ public static class PipelineProtocolExtensions
         throw new ClientRequestException(message.Response);
     }
 
-    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, InputOptions requestContext)
+    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
     {
         PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
         switch (response.Status)
@@ -57,7 +57,7 @@ public static class PipelineProtocolExtensions
         }
     }
 
-    public static NullableResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, InputOptions requestContext)
+    public static NullableResult<bool> ProcessHeadAsBoolMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions requestContext)
     {
         PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
         switch (response.Status)

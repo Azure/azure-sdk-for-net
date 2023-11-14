@@ -18,13 +18,6 @@ namespace System.ClientModel
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
-    public partial class InputOptions : System.ClientModel.Primitives.PipelineOptions
-    {
-        public InputOptions() { }
-        public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
-        public virtual System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
-    }
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
@@ -60,6 +53,13 @@ namespace System.ClientModel
         public static System.ClientModel.OutputMessage FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.Result<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public abstract System.ClientModel.Primitives.PipelineResponse GetRawResponse();
+    }
+    public partial class RequestOptions : System.ClientModel.Primitives.PipelineOptions
+    {
+        public RequestOptions() { }
+        public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public virtual System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
+        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
     }
     public partial class Result<T> : System.ClientModel.NullableResult<T>
     {
@@ -184,10 +184,10 @@ namespace System.ClientModel.Internal
     }
     public static partial class PipelineProtocolExtensions
     {
-        public static System.ClientModel.NullableResult<bool> ProcessHeadAsBoolMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.InputOptions requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ClientModel.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.InputOptions requestContext) { throw null; }
-        public static System.ClientModel.Primitives.PipelineResponse ProcessMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.InputOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> ProcessMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.InputOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.NullableResult<bool> ProcessHeadAsBoolMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ClientModel.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext) { throw null; }
+        public static System.ClientModel.Primitives.PipelineResponse ProcessMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> ProcessMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class Utf8JsonContentWriter : System.IDisposable
     {

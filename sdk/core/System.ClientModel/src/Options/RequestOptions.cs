@@ -13,7 +13,7 @@ namespace System.ClientModel;
 /// </summary>
 // TODO: Make options freezable
 // Note: I was calling this RequestOptions, but I'm changing it back to RequestOptions.
-public class InputOptions : PipelineOptions
+public class RequestOptions : PipelineOptions
 {
     public virtual void Apply(PipelineMessage message)
     {

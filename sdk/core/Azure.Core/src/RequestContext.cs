@@ -14,7 +14,7 @@ namespace Azure
     /// <summary>
     /// Options that can be used to control the behavior of a request sent by a client.
     /// </summary>
-    public class RequestContext : InputOptions
+    public class RequestContext : RequestOptions
     {
         private bool _frozen;
 

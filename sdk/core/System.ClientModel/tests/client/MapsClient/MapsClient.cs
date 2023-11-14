@@ -47,9 +47,9 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        InputOptions options = cancellationToken.CanBeCanceled ?
-            new InputOptions() { CancellationToken = cancellationToken } :
-            new InputOptions();
+        RequestOptions options = cancellationToken.CanBeCanceled ?
+            new RequestOptions() { CancellationToken = cancellationToken } :
+            new RequestOptions();
 
         OutputMessage result = GetCountryCode(ipAddress.ToString(), options);
 
@@ -59,11 +59,11 @@ public class MapsClient
         return OutputMessage.FromValue(value, response);
     }
 
-    public virtual OutputMessage GetCountryCode(string ipAddress, InputOptions options = null)
+    public virtual OutputMessage GetCountryCode(string ipAddress, RequestOptions options = null)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        options ??= new InputOptions();
+        options ??= new RequestOptions();
         options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
         using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
@@ -80,7 +80,7 @@ public class MapsClient
         return OutputMessage.FromResponse(response);
     }
 
-    private PipelineMessage CreateGetLocationRequest(string ipAddress, InputOptions options)
+    private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
