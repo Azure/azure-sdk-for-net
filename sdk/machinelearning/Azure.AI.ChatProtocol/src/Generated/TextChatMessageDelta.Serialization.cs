@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
-    internal partial class TextChatMessageDelta
+    public partial class TextChatMessageDelta
     {
         internal static TextChatMessageDelta DeserializeTextChatMessageDelta(JsonElement element)
         {

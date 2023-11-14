@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.ChatProtocol
 {
     /// <summary> A single, role-attributed text message within a chat completion interaction. </summary>
-    internal partial class TextChatMessage : ChatMessage
+    public partial class TextChatMessage : ChatMessage
     {
         /// <summary> Initializes a new instance of TextChatMessage. </summary>
         /// <param name="role"> The role associated with the message. </param>

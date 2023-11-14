@@ -10,7 +10,7 @@ using System;
 namespace Azure.AI.ChatProtocol
 {
     /// <summary> The representation of a delta text message received in a streaming completion. </summary>
-    internal partial class TextChatMessageDelta : ChatMessageDelta
+    public partial class TextChatMessageDelta : ChatMessageDelta
     {
         /// <summary> Initializes a new instance of TextChatMessageDelta. </summary>
         internal TextChatMessageDelta()

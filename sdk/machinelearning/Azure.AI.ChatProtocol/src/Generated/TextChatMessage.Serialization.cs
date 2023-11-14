@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol
 {
-    internal partial class TextChatMessage : IUtf8JsonSerializable
+    public partial class TextChatMessage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
