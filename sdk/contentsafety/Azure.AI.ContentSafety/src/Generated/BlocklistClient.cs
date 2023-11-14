@@ -45,7 +45,7 @@ namespace Azure.AI.ContentSafety
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BlocklistClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIContentSafetyClientOptions())
+        public BlocklistClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
         {
         }
 
@@ -56,7 +56,7 @@ namespace Azure.AI.ContentSafety
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BlocklistClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIContentSafetyClientOptions())
+        public BlocklistClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContentSafetyClientOptions())
         {
         }
 
@@ -68,11 +68,11 @@ namespace Azure.AI.ContentSafety
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BlocklistClient(Uri endpoint, AzureKeyCredential credential, AzureAIContentSafetyClientOptions options)
+        public BlocklistClient(Uri endpoint, AzureKeyCredential credential, ContentSafetyClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureAIContentSafetyClientOptions();
+            options ??= new ContentSafetyClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -89,11 +89,11 @@ namespace Azure.AI.ContentSafety
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public BlocklistClient(Uri endpoint, TokenCredential credential, AzureAIContentSafetyClientOptions options)
+        public BlocklistClient(Uri endpoint, TokenCredential credential, ContentSafetyClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureAIContentSafetyClientOptions();
+            options ??= new ContentSafetyClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

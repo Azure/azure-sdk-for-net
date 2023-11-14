@@ -302,11 +302,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData
-            {
-                Content = BinaryData.FromObjectAsJson(new object()),
-                BlobUri = new Uri("http://localhost:3000"),
-            })
+            AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData())
             {
                 Categories = { ImageCategory.Hate },
                 OutputType = AnalyzeImageOutputType.FourSeverityLevels,
@@ -322,11 +318,7 @@ namespace Azure.AI.ContentSafety.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-            AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData
-            {
-                Content = BinaryData.FromObjectAsJson(new object()),
-                BlobUri = new Uri("http://localhost:3000"),
-            })
+            AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData())
             {
                 Categories = { ImageCategory.Hate },
                 OutputType = AnalyzeImageOutputType.FourSeverityLevels,
