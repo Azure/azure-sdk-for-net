@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Resources
         public PolicyDefinitionData()
         {
             Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameter>();
-            Versions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
@@ -38,9 +37,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        /// <param name="version"> The policy definition version in #.#.# format. </param>
-        /// <param name="versions"> A list of available versions for this policy definition. </param>
-        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, string version, IList<string> versions) : base(id, name, resourceType, systemData)
+        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters) : base(id, name, resourceType, systemData)
         {
             PolicyType = policyType;
             Mode = mode;
@@ -49,8 +46,6 @@ namespace Azure.ResourceManager.Resources
             PolicyRule = policyRule;
             Metadata = metadata;
             Parameters = parameters;
-            Version = version;
-            Versions = versions;
         }
 
         /// <summary> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </summary>
@@ -125,9 +120,5 @@ namespace Azure.ResourceManager.Resources
         public BinaryData Metadata { get; set; }
         /// <summary> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </summary>
         public IDictionary<string, ArmPolicyParameter> Parameters { get; }
-        /// <summary> The policy definition version in #.#.# format. </summary>
-        public string Version { get; set; }
-        /// <summary> A list of available versions for this policy definition. </summary>
-        public IList<string> Versions { get; }
     }
 }

@@ -60,15 +60,12 @@ namespace Azure.ResourceManager.Models
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        /// <param name="version"> The policy definition version in #.#.# format. </param>
-        /// <param name="versions"> A list of available versions for this policy definition. </param>
         /// <returns> A new <see cref="Resources.PolicyDefinitionData"/> instance for mocking. </returns>
-        public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string mode = null, string displayName = null, string description = null, BinaryData policyRule = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, string version = null, IEnumerable<string> versions = null)
+        public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string mode = null, string displayName = null, string description = null, BinaryData policyRule = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null)
         {
             parameters ??= new Dictionary<string, ArmPolicyParameter>();
-            versions ??= new List<string>();
 
-            return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters, version, versions?.ToList());
+            return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters);
         }
 
         /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
@@ -76,24 +73,21 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyType"> The type of policy set definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
         /// <param name="displayName"> The display name of the policy set definition. </param>
         /// <param name="description"> The policy set definition description. </param>
         /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
         /// <param name="policyDefinitions"> An array of policy definition references. </param>
         /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
-        /// <param name="version"> The policy set definition version in #.#.# format. </param>
-        /// <param name="versions"> A list of available versions for this policy set definition. </param>
         /// <returns> A new <see cref="Resources.PolicySetDefinitionData"/> instance for mocking. </returns>
-        public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string displayName = null, string description = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, IEnumerable<PolicyDefinitionReference> policyDefinitions = null, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = null, string version = null, IEnumerable<string> versions = null)
+        public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PolicyType? policyType = null, string displayName = null, string description = null, BinaryData metadata = null, IDictionary<string, ArmPolicyParameter> parameters = null, IEnumerable<PolicyDefinitionReference> policyDefinitions = null, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = null)
         {
             parameters ??= new Dictionary<string, ArmPolicyParameter>();
             policyDefinitions ??= new List<PolicyDefinitionReference>();
             policyDefinitionGroups ??= new List<PolicyDefinitionGroup>();
-            versions ??= new List<string>();
 
-            return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList(), version, versions?.ToList());
+            return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList());
         }
 
         /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>

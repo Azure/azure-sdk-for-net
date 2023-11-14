@@ -76,21 +76,6 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (Optional.IsCollectionDefined(Versions))
-            {
-                writer.WritePropertyName("versions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Versions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -112,8 +97,6 @@ namespace Azure.ResourceManager.Resources
             Optional<BinaryData> policyRule = default;
             Optional<BinaryData> metadata = default;
             Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
-            Optional<string> version = default;
-            Optional<IList<string>> versions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -205,30 +188,11 @@ namespace Azure.ResourceManager.Resources
                             parameters = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("versions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            versions = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new PolicyDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), mode.Value, displayName.Value, description.Value, policyRule.Value, metadata.Value, Optional.ToDictionary(parameters), version.Value, Optional.ToList(versions));
+            return new PolicyDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), mode.Value, displayName.Value, description.Value, policyRule.Value, metadata.Value, Optional.ToDictionary(parameters));
         }
     }
 }

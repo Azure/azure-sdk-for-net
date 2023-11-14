@@ -79,21 +79,6 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (Optional.IsCollectionDefined(Versions))
-            {
-                writer.WritePropertyName("versions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Versions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -115,8 +100,6 @@ namespace Azure.ResourceManager.Resources
             Optional<IDictionary<string, ArmPolicyParameter>> parameters = default;
             Optional<IList<PolicyDefinitionReference>> policyDefinitions = default;
             Optional<IList<PolicyDefinitionGroup>> policyDefinitionGroups = default;
-            Optional<string> version = default;
-            Optional<IList<string>> versions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -222,30 +205,11 @@ namespace Azure.ResourceManager.Resources
                             policyDefinitionGroups = array;
                             continue;
                         }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("versions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            versions = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups), version.Value, Optional.ToList(versions));
+            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, Optional.ToDictionary(parameters), Optional.ToList(policyDefinitions), Optional.ToList(policyDefinitionGroups));
         }
     }
 }

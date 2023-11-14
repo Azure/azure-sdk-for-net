@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ProviderPermissions_GetProviderResourceTypes()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-07-01/examples/GetProviderPermissions.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/GetProviderPermissions.json
             // this example is just showing the usage of "Providers_ProviderPermissions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetProvider()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-07-01/examples/GetProvider.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/GetProvider.json
             // this example is just showing the usage of "Providers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetProviderResourceTypes_GetProviderResourceTypes()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2023-07-01/examples/GetProviderResourceTypes.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/GetProviderResourceTypes.json
             // this example is just showing the usage of "ProviderResourceTypes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
