@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The StartTranscriptionRequest. </summary>
     internal partial class StartTranscriptionRequestInternal
     {
-        /// <summary> Initializes a new instance of StartTranscriptionRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequestInternal"/>. </summary>
         public StartTranscriptionRequestInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequestInternal"/>. </summary>
+        /// <param name="locale"> Defines Locale for the transcription e,g en-US. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StartTranscriptionRequestInternal(string locale, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Locale = locale;
+            OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>

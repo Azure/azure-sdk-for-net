@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </summary>
     internal partial class DiffDiskSettings
     {
-        /// <summary> Initializes a new instance of DiffDiskSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiffDiskSettings"/>. </summary>
         public DiffDiskSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DiffDiskSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiffDiskSettings"/>. </summary>
         /// <param name="placement"> This property can be used by user in the request to choose which location the operating system should be in. e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </param>
-        internal DiffDiskSettings(BatchDiffDiskPlacement? placement)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiffDiskSettings(BatchDiffDiskPlacement? placement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Placement = placement;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property can be used by user in the request to choose which location the operating system should be in. e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </summary>

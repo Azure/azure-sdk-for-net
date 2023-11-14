@@ -14,21 +14,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Error record of the config server settings. </summary>
     public partial class ConfigServerSettingsErrorRecord
     {
-        /// <summary> Initializes a new instance of ConfigServerSettingsErrorRecord. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigServerSettingsErrorRecord"/>. </summary>
         internal ConfigServerSettingsErrorRecord()
         {
             Messages = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConfigServerSettingsErrorRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerSettingsErrorRecord"/>. </summary>
         /// <param name="name"> The name of the config server settings error record. </param>
         /// <param name="uri"> The uri of the config server settings error record. </param>
         /// <param name="messages"> The detail error messages of the record. </param>
-        internal ConfigServerSettingsErrorRecord(string name, Uri uri, IReadOnlyList<string> messages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigServerSettingsErrorRecord(string name, Uri uri, IReadOnlyList<string> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Uri = uri;
             Messages = messages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the config server settings error record. </summary>

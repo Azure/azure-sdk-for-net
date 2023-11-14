@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> The detected change. </summary>
     public partial class DetectedChangeData : ResourceData
     {
-        /// <summary> Initializes a new instance of DetectedChangeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectedChangeData"/>. </summary>
         internal DetectedChangeData()
         {
         }
 
-        /// <summary> Initializes a new instance of DetectedChangeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectedChangeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a change. </param>
-        internal DetectedChangeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChangeProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectedChangeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChangeProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The properties of a change. </summary>

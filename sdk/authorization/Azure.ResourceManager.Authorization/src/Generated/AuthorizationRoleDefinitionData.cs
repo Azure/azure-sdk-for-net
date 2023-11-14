@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class AuthorizationRoleDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AuthorizationRoleDefinitionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRoleDefinitionData"/>. </summary>
         public AuthorizationRoleDefinitionData()
         {
             Permissions = new ChangeTrackingList<RoleDefinitionPermission>();
             AssignableScopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationRoleDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationRoleDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,13 +39,15 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="roleType"> The role type. </param>
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
-        internal AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IList<RoleDefinitionPermission> permissions, IList<string> assignableScopes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IList<RoleDefinitionPermission> permissions, IList<string> assignableScopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RoleName = roleName;
             Description = description;
             RoleType = roleType;
             Permissions = permissions;
             AssignableScopes = assignableScopes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role name. </summary>

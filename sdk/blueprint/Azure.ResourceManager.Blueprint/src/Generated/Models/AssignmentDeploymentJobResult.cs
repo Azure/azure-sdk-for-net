@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Result of each individual deployment in a blueprint assignment. </summary>
     public partial class AssignmentDeploymentJobResult
     {
-        /// <summary> Initializes a new instance of AssignmentDeploymentJobResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentDeploymentJobResult"/>. </summary>
         public AssignmentDeploymentJobResult()
         {
             Resources = new ChangeTrackingList<AssignmentJobCreatedResult>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentDeploymentJobResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentDeploymentJobResult"/>. </summary>
         /// <param name="error"> Contains error details if deployment job failed. </param>
         /// <param name="resources"> Resources created as result of the deployment job. </param>
-        internal AssignmentDeploymentJobResult(AzureResourceManagerError error, IList<AssignmentJobCreatedResult> resources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentDeploymentJobResult(AzureResourceManagerError error, IList<AssignmentJobCreatedResult> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
             Resources = resources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contains error details if deployment job failed. </summary>

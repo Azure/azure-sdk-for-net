@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,13 +18,16 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class TargetTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of TargetTypeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetTypeData"/>. </summary>
         public TargetTypeData()
         {
             ResourceTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TargetTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,13 +37,15 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="description"> Localized string of the description. </param>
         /// <param name="propertiesSchema"> URL to retrieve JSON schema of the Target Type properties. </param>
         /// <param name="resourceTypes"> List of resource types this Target Type can extend. </param>
-        internal TargetTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayName, string description, string propertiesSchema, IReadOnlyList<string> resourceTypes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayName, string description, string propertiesSchema, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DisplayName = displayName;
             Description = description;
             PropertiesSchema = propertiesSchema;
             ResourceTypes = resourceTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the Target Type resource. </summary>

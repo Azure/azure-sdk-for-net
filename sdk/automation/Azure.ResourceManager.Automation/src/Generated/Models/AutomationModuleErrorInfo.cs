@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the module error info type. </summary>
     public partial class AutomationModuleErrorInfo
     {
-        /// <summary> Initializes a new instance of AutomationModuleErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleErrorInfo"/>. </summary>
         public AutomationModuleErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationModuleErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleErrorInfo"/>. </summary>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="message"> Gets or sets the error message. </param>
-        internal AutomationModuleErrorInfo(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationModuleErrorInfo(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the error code. </summary>

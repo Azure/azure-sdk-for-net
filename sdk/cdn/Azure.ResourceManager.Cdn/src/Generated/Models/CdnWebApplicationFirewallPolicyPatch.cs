@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to update a CdnWebApplicationFirewallPolicy. </summary>
     public partial class CdnWebApplicationFirewallPolicyPatch
     {
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyPatch"/>. </summary>
         public CdnWebApplicationFirewallPolicyPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyPatch"/>. </summary>
+        /// <param name="tags"> CdnWebApplicationFirewallPolicy tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnWebApplicationFirewallPolicyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> CdnWebApplicationFirewallPolicy tags. </summary>

@@ -16,7 +16,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for muting participants from the call. </summary>
     internal partial class MuteParticipantsRequestInternal
     {
-        /// <summary> Initializes a new instance of MuteParticipantsRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MuteParticipantsRequestInternal"/>. </summary>
         /// <param name="targetParticipants">
         /// Participants to be muted from the call.
         /// Only ACS Users are supported.
@@ -27,6 +30,25 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipants, nameof(targetParticipants));
 
             TargetParticipants = targetParticipants.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MuteParticipantsRequestInternal"/>. </summary>
+        /// <param name="targetParticipants">
+        /// Participants to be muted from the call.
+        /// Only ACS Users are supported.
+        /// </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MuteParticipantsRequestInternal(IList<CommunicationIdentifierModel> targetParticipants, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetParticipants = targetParticipants;
+            OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MuteParticipantsRequestInternal"/> for deserialization. </summary>
+        internal MuteParticipantsRequestInternal()
+        {
         }
 
         /// <summary>

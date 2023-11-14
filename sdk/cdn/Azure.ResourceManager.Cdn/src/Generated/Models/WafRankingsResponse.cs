@@ -14,24 +14,29 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Waf Rankings Response. </summary>
     public partial class WafRankingsResponse
     {
-        /// <summary> Initializes a new instance of WafRankingsResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WafRankingsResponse"/>. </summary>
         internal WafRankingsResponse()
         {
             Groups = new ChangeTrackingList<string>();
             Data = new ChangeTrackingList<WafRankingsResponseDataItem>();
         }
 
-        /// <summary> Initializes a new instance of WafRankingsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafRankingsResponse"/>. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
         /// <param name="groups"></param>
         /// <param name="data"></param>
-        internal WafRankingsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, IReadOnlyList<string> groups, IReadOnlyList<WafRankingsResponseDataItem> data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WafRankingsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, IReadOnlyList<string> groups, IReadOnlyList<WafRankingsResponseDataItem> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             Groups = groups;
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the date time begin. </summary>

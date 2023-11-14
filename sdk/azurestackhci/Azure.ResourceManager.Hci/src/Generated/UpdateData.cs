@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class UpdateData : ResourceData
     {
-        /// <summary> Initializes a new instance of UpdateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateData"/>. </summary>
         public UpdateData()
         {
             Prerequisites = new ChangeTrackingList<UpdatePrerequisite>();
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Hci
             HealthCheckResult = new ChangeTrackingList<HciPrecheckResult>();
         }
 
-        /// <summary> Initializes a new instance of UpdateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +57,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="additionalProperties"> Extensible KV pairs serialized as a string. This is currently used to report the stamp OEM family and hardware model information when an update is flagged as Invalid for the stamp based on OEM type. </param>
         /// <param name="progressPercentage"> Progress percentage of ongoing operation. Currently this property is only valid when the update is in the Downloading state, where it maps to how much of the update content has been downloaded. </param>
         /// <param name="notifyMessage"> Brief message with instructions for updates of AvailabilityType Notify. </param>
-        internal UpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, HciUpdateState? state, IList<UpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, HciProvisioningState? provisioningState, DateTimeOffset? installedOn, string description, HciUpdateState? state, IList<UpdatePrerequisite> prerequisites, IList<HciPackageVersionInfo> componentVersions, HciNodeRebootRequirement? rebootRequired, HciHealthState? healthState, IList<HciPrecheckResult> healthCheckResult, DateTimeOffset? healthCheckOn, string packagePath, float? packageSizeInMb, string displayName, string version, string publisher, string releaseLink, HciAvailabilityType? availabilityType, string packageType, string additionalProperties, float? progressPercentage, string notifyMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -78,6 +82,7 @@ namespace Azure.ResourceManager.Hci
             AdditionalProperties = additionalProperties;
             ProgressPercentage = progressPercentage;
             NotifyMessage = notifyMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The geo-location where the resource lives. </summary>

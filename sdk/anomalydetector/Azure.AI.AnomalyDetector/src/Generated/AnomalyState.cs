@@ -14,23 +14,34 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Anomaly status and information. </summary>
     public partial class AnomalyState
     {
-        /// <summary> Initializes a new instance of AnomalyState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
         /// <param name="timestamp"> Time stamp for this anomaly. </param>
         internal AnomalyState(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
             Errors = new ChangeTrackingList<ErrorResponse>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AnomalyState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
         /// <param name="timestamp"> Time stamp for this anomaly. </param>
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
-        internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IReadOnlyList<ErrorResponse> errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IReadOnlyList<ErrorResponse> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             Value = value;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyState"/> for deserialization. </summary>
+        internal AnomalyState()
+        {
         }
 
         /// <summary> Time stamp for this anomaly. </summary>

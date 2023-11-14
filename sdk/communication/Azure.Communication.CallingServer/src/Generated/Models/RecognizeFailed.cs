@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecognizeFailed. </summary>
     public partial class RecognizeFailed
     {
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeFailed"/>. </summary>
         internal RecognizeFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeFailed"/>. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
@@ -23,7 +29,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
-        internal RecognizeFailed(string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecognizeFailed(string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationContext = operationContext;
             ResultInformation = resultInformation;
@@ -32,6 +39,7 @@ namespace Azure.Communication.CallingServer
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             PublicEventType = publicEventType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the operation context. </summary>

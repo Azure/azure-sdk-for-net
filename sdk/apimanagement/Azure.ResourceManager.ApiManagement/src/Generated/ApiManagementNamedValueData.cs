@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementNamedValueData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueData"/>. </summary>
         public ApiManagementNamedValueData()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementNamedValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +38,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
         /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
-        internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             IsSecret = isSecret;
             DisplayName = displayName;
             Value = value;
             KeyVaultDetails = keyVaultDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Optional tags that when provided can be used to filter the NamedValue list. </summary>

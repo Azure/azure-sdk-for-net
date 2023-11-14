@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents the Experiment action target details error model. </summary>
     public partial class ExperimentExecutionActionTargetDetailsError
     {
-        /// <summary> Initializes a new instance of ExperimentExecutionActionTargetDetailsError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsError"/>. </summary>
         internal ExperimentExecutionActionTargetDetailsError()
         {
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionActionTargetDetailsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionActionTargetDetailsError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
-        internal ExperimentExecutionActionTargetDetailsError(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentExecutionActionTargetDetailsError(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error code. </summary>

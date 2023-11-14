@@ -5,16 +5,103 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class DownloadResponse
+    public partial class DownloadResponse : IUtf8JsonSerializable, IJsonModel<DownloadResponse>
     {
-        internal static DownloadResponse DeserializeDownloadResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DownloadResponse>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DownloadResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DownloadResponse>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DownloadResponse>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ResourceList))
+                {
+                    writer.WritePropertyName("resourceList"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ResourceList)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ComplianceReport))
+                {
+                    writer.WritePropertyName("complianceReport"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ComplianceReport)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CompliancePdfReport))
+                {
+                    writer.WritePropertyName("compliancePdfReport"u8);
+                    writer.WriteObjectValue(CompliancePdfReport);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ComplianceDetailedPdfReport))
+                {
+                    writer.WritePropertyName("complianceDetailedPdfReport"u8);
+                    writer.WriteObjectValue(ComplianceDetailedPdfReport);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DownloadResponse IJsonModel<DownloadResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DownloadResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDownloadResponse(document.RootElement, options);
+        }
+
+        internal static DownloadResponse DeserializeDownloadResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +110,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<IReadOnlyList<ComplianceReportItem>> complianceReport = default;
             Optional<DownloadResponseCompliancePdfReport> compliancePdfReport = default;
             Optional<DownloadResponseComplianceDetailedPdfReport> complianceDetailedPdfReport = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceList"u8))
@@ -71,8 +160,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     complianceDetailedPdfReport = DownloadResponseComplianceDetailedPdfReport.DeserializeDownloadResponseComplianceDetailedPdfReport(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DownloadResponse(Optional.ToList(resourceList), Optional.ToList(complianceReport), compliancePdfReport.Value, complianceDetailedPdfReport.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DownloadResponse(Optional.ToList(resourceList), Optional.ToList(complianceReport), compliancePdfReport.Value, complianceDetailedPdfReport.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DownloadResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DownloadResponse)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DownloadResponse IPersistableModel<DownloadResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DownloadResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDownloadResponse(document.RootElement, options);
+        }
+
+        string IPersistableModel<DownloadResponse>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

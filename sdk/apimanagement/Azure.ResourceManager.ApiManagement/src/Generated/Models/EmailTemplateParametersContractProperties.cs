@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Email Template Parameter contract. </summary>
     public partial class EmailTemplateParametersContractProperties
     {
-        /// <summary> Initializes a new instance of EmailTemplateParametersContractProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmailTemplateParametersContractProperties"/>. </summary>
         public EmailTemplateParametersContractProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EmailTemplateParametersContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailTemplateParametersContractProperties"/>. </summary>
         /// <param name="name"> Template parameter name. </param>
         /// <param name="title"> Template parameter title. </param>
         /// <param name="description"> Template parameter description. </param>
-        internal EmailTemplateParametersContractProperties(string name, string title, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailTemplateParametersContractProperties(string name, string title, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Title = title;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Template parameter name. </summary>

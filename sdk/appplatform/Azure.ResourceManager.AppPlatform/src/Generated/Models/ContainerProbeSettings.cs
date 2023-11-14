@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Container liveness and readiness probe settings. </summary>
     internal partial class ContainerProbeSettings
     {
-        /// <summary> Initializes a new instance of ContainerProbeSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerProbeSettings"/>. </summary>
         public ContainerProbeSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerProbeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerProbeSettings"/>. </summary>
         /// <param name="isProbeDisabled"> Indicates whether disable the liveness and readiness probe. </param>
-        internal ContainerProbeSettings(bool? isProbeDisabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerProbeSettings(bool? isProbeDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsProbeDisabled = isProbeDisabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether disable the liveness and readiness probe. </summary>

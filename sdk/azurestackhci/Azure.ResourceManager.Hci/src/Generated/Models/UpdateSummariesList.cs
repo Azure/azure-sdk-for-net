@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Hci;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of Update Summaries. </summary>
     internal partial class UpdateSummariesList
     {
-        /// <summary> Initializes a new instance of UpdateSummariesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSummariesList"/>. </summary>
         internal UpdateSummariesList()
         {
             Value = new ChangeTrackingList<UpdateSummaryData>();
         }
 
-        /// <summary> Initializes a new instance of UpdateSummariesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateSummariesList"/>. </summary>
         /// <param name="value"> List of Update Summaries. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal UpdateSummariesList(IReadOnlyList<UpdateSummaryData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateSummariesList(IReadOnlyList<UpdateSummaryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Update Summaries. </summary>

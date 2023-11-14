@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationRunbookData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomationRunbookData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomationRunbookData(AzureLocation location) : base(location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Automation
             OutputTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRunbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +54,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRunbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, AutomationRunbookType? runbookType, AutomationContentLink publishContentLink, RunbookState? state, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, int? jobCount, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, AutomationRunbookDraft draft, RunbookProvisioningState? provisioningState, string lastModifiedBy, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             RunbookType = runbookType;
@@ -69,6 +73,12 @@ namespace Azure.ResourceManager.Automation
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookData"/> for deserialization. </summary>
+        internal AutomationRunbookData()
+        {
         }
 
         /// <summary> Gets or sets the etag of the resource. </summary>

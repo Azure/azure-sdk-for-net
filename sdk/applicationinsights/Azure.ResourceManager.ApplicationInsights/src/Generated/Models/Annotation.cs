@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Annotation associated with an application insights resource. </summary>
     public partial class Annotation
     {
-        /// <summary> Initializes a new instance of Annotation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Annotation"/>. </summary>
         public Annotation()
         {
         }
 
-        /// <summary> Initializes a new instance of Annotation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Annotation"/>. </summary>
         /// <param name="annotationName"> Name of annotation. </param>
         /// <param name="category"> Category of annotation, free form. </param>
         /// <param name="eventOn"> Time when event occurred. </param>
         /// <param name="id"> Unique Id for annotation. </param>
         /// <param name="properties"> Serialized JSON object for detailed properties. </param>
         /// <param name="relatedAnnotation"> Related parent annotation if any. </param>
-        internal Annotation(string annotationName, string category, DateTimeOffset? eventOn, string id, string properties, string relatedAnnotation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Annotation(string annotationName, string category, DateTimeOffset? eventOn, string id, string properties, string relatedAnnotation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AnnotationName = annotationName;
             Category = category;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Id = id;
             Properties = properties;
             RelatedAnnotation = relatedAnnotation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of annotation. </summary>

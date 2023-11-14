@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The ProductGroupData. </summary>
     public partial class ProductGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProductGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductGroupData"/>. </summary>
         public ProductGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,13 +33,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
         /// <param name="groupType"> Group type. </param>
         /// <param name="externalId"> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
-        internal ProductGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? groupType, string externalId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? groupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
             IsBuiltIn = isBuiltIn;
             GroupType = groupType;
             ExternalId = externalId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Group name. </summary>

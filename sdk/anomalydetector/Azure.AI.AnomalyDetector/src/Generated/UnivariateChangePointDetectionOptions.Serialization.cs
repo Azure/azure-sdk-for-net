@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    public partial class UnivariateChangePointDetectionOptions : IUtf8JsonSerializable
+    public partial class UnivariateChangePointDetectionOptions : IUtf8JsonSerializable, IJsonModel<UnivariateChangePointDetectionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UnivariateChangePointDetectionOptions>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<UnivariateChangePointDetectionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UnivariateChangePointDetectionOptions>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UnivariateChangePointDetectionOptions>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("series"u8);
             writer.WriteStartArray();
@@ -44,7 +56,145 @@ namespace Azure.AI.AnomalyDetector
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
+        }
+
+        UnivariateChangePointDetectionOptions IJsonModel<UnivariateChangePointDetectionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnivariateChangePointDetectionOptions(document.RootElement, options);
+        }
+
+        internal static UnivariateChangePointDetectionOptions DeserializeUnivariateChangePointDetectionOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<TimeSeriesPoint> series = default;
+            TimeGranularity granularity = default;
+            Optional<int> customInterval = default;
+            Optional<int> period = default;
+            Optional<int> stableTrendWindow = default;
+            Optional<float> threshold = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("series"u8))
+                {
+                    List<TimeSeriesPoint> array = new List<TimeSeriesPoint>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item));
+                    }
+                    series = array;
+                    continue;
+                }
+                if (property.NameEquals("granularity"u8))
+                {
+                    granularity = new TimeGranularity(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("customInterval"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customInterval = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("period"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    period = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("stableTrendWindow"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stableTrendWindow = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("threshold"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    threshold = property.Value.GetSingle();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnivariateChangePointDetectionOptions(series, granularity, Optional.ToNullable(customInterval), Optional.ToNullable(period), Optional.ToNullable(stableTrendWindow), Optional.ToNullable(threshold), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<UnivariateChangePointDetectionOptions>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UnivariateChangePointDetectionOptions IPersistableModel<UnivariateChangePointDetectionOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionOptions)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnivariateChangePointDetectionOptions(document.RootElement, options);
+        }
+
+        string IPersistableModel<UnivariateChangePointDetectionOptions>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static UnivariateChangePointDetectionOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnivariateChangePointDetectionOptions(document.RootElement, ModelReaderWriterOptions.Wire);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

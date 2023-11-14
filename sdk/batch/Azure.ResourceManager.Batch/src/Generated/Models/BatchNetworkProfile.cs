@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Network profile for Batch account, which contains network rule settings for each endpoint. </summary>
     public partial class BatchNetworkProfile
     {
-        /// <summary> Initializes a new instance of BatchNetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchNetworkProfile"/>. </summary>
         public BatchNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNetworkProfile"/>. </summary>
         /// <param name="accountAccess"> Network access profile for batchAccount endpoint (Batch account data plane API). </param>
         /// <param name="nodeManagementAccess"> Network access profile for nodeManagement endpoint (Batch service managing compute nodes for Batch pools). </param>
-        internal BatchNetworkProfile(BatchEndpointAccessProfile accountAccess, BatchEndpointAccessProfile nodeManagementAccess)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNetworkProfile(BatchEndpointAccessProfile accountAccess, BatchEndpointAccessProfile nodeManagementAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountAccess = accountAccess;
             NodeManagementAccess = nodeManagementAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Network access profile for batchAccount endpoint (Batch account data plane API). </summary>

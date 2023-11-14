@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Test keys payload. </summary>
     public partial class AppPlatformServiceTestKeys
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceTestKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceTestKeys"/>. </summary>
         internal AppPlatformServiceTestKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceTestKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceTestKeys"/>. </summary>
         /// <param name="primaryKey"> Primary key. </param>
         /// <param name="secondaryKey"> Secondary key. </param>
         /// <param name="primaryTestEndpoint"> Primary test endpoint. </param>
         /// <param name="secondaryTestEndpoint"> Secondary test endpoint. </param>
         /// <param name="isEnabled"> Indicates whether the test endpoint feature enabled or not. </param>
-        internal AppPlatformServiceTestKeys(string primaryKey, string secondaryKey, string primaryTestEndpoint, string secondaryTestEndpoint, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceTestKeys(string primaryKey, string secondaryKey, string primaryTestEndpoint, string secondaryTestEndpoint, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             PrimaryTestEndpoint = primaryTestEndpoint;
             SecondaryTestEndpoint = secondaryTestEndpoint;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Primary key. </summary>

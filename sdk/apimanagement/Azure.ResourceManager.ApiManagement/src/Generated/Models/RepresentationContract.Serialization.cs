@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RepresentationContract : IUtf8JsonSerializable
+    public partial class RepresentationContract : IUtf8JsonSerializable, IJsonModel<RepresentationContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RepresentationContract>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RepresentationContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RepresentationContract>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RepresentationContract>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
@@ -49,11 +59,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RepresentationContract DeserializeRepresentationContract(JsonElement element)
+        RepresentationContract IJsonModel<RepresentationContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RepresentationContract)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRepresentationContract(document.RootElement, options);
+        }
+
+        internal static RepresentationContract DeserializeRepresentationContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +102,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> typeName = default;
             Optional<IList<ParameterContract>> formParameters = default;
             Optional<IDictionary<string, ParameterExampleContract>> examples = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentType"u8))
@@ -108,8 +149,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     examples = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RepresentationContract(contentType, schemaId.Value, typeName.Value, Optional.ToList(formParameters), Optional.ToDictionary(examples));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RepresentationContract(contentType, schemaId.Value, typeName.Value, Optional.ToList(formParameters), Optional.ToDictionary(examples), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RepresentationContract>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RepresentationContract)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RepresentationContract IPersistableModel<RepresentationContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RepresentationContract)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRepresentationContract(document.RootElement, options);
+        }
+
+        string IPersistableModel<RepresentationContract>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

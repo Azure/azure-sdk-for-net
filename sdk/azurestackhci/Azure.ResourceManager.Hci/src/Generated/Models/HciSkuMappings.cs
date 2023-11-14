@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> SKU Mapping details. </summary>
     public partial class HciSkuMappings
     {
-        /// <summary> Initializes a new instance of HciSkuMappings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciSkuMappings"/>. </summary>
         public HciSkuMappings()
         {
             MarketplaceSkuVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HciSkuMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciSkuMappings"/>. </summary>
         /// <param name="catalogPlanId"> Identifier of the CatalogPlan for the sku. </param>
         /// <param name="marketplaceSkuId"> Identifier for the sku. </param>
         /// <param name="marketplaceSkuVersions"> Array of SKU versions available. </param>
-        internal HciSkuMappings(string catalogPlanId, string marketplaceSkuId, IList<string> marketplaceSkuVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciSkuMappings(string catalogPlanId, string marketplaceSkuId, IList<string> marketplaceSkuVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CatalogPlanId = catalogPlanId;
             MarketplaceSkuId = marketplaceSkuId;
             MarketplaceSkuVersions = marketplaceSkuVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identifier of the CatalogPlan for the sku. </summary>

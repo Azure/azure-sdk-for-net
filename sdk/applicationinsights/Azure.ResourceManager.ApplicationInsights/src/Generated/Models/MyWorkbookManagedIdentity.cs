@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Customer Managed Identity. </summary>
     public partial class MyWorkbookManagedIdentity
     {
-        /// <summary> Initializes a new instance of MyWorkbookManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookManagedIdentity"/>. </summary>
         public MyWorkbookManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookManagedIdentity"/>. </summary>
         /// <param name="userAssignedIdentities"> Customer Managed Identity. </param>
         /// <param name="identityType"> The identity type. </param>
-        internal MyWorkbookManagedIdentity(MyWorkbookUserAssignedIdentities userAssignedIdentities, MyWorkbookManagedIdentityType? identityType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MyWorkbookManagedIdentity(MyWorkbookUserAssignedIdentities userAssignedIdentities, MyWorkbookManagedIdentityType? identityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserAssignedIdentities = userAssignedIdentities;
             IdentityType = identityType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Customer Managed Identity. </summary>

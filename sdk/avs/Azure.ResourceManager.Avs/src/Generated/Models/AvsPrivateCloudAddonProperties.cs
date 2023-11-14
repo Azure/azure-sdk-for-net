@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.Avs.Models
     /// </summary>
     public abstract partial class AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudAddonProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonProperties"/>. </summary>
         protected AvsPrivateCloudAddonProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsPrivateCloudAddonProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudAddonProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
-        internal AvsPrivateCloudAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudAddonProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddonType = addonType;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of private cloud addon. </summary>

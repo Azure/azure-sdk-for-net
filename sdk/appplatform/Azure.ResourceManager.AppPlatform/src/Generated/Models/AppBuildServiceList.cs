@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Build service resources and a possible link for next set. </summary>
     internal partial class AppBuildServiceList
     {
-        /// <summary> Initializes a new instance of AppBuildServiceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppBuildServiceList"/>. </summary>
         internal AppBuildServiceList()
         {
             Value = new ChangeTrackingList<AppPlatformBuildServiceData>();
         }
 
-        /// <summary> Initializes a new instance of AppBuildServiceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppBuildServiceList"/>. </summary>
         /// <param name="value"> Collection of Build service resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal AppBuildServiceList(IReadOnlyList<AppPlatformBuildServiceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppBuildServiceList(IReadOnlyList<AppPlatformBuildServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of Build service resources. </summary>

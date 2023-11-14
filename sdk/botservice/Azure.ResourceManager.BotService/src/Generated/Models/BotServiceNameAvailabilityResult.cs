@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The response body returned for a request to Bot Service Management to check availability of a bot name. </summary>
     public partial class BotServiceNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of BotServiceNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceNameAvailabilityResult"/>. </summary>
         internal BotServiceNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BotServiceNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceNameAvailabilityResult"/>. </summary>
         /// <param name="isValid"> indicates if the bot name is valid. </param>
         /// <param name="message"> additional message from the bot management api showing why a bot name is not available. </param>
         /// <param name="absCode"> response code from ABS. </param>
-        internal BotServiceNameAvailabilityResult(bool? isValid, string message, string absCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotServiceNameAvailabilityResult(bool? isValid, string message, string absCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsValid = isValid;
             Message = message;
             AbsCode = absCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> indicates if the bot name is valid. </summary>

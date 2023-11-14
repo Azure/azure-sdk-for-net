@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the regenerate keys operation. </summary>
     public partial class AgentRegistrationRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of AgentRegistrationRegenerateKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentRegistrationRegenerateKeyContent"/>. </summary>
         /// <param name="keyName"> Gets or sets the agent registration key name - primary or secondary. </param>
         public AgentRegistrationRegenerateKeyContent(AgentRegistrationKeyName keyName)
         {
             KeyName = keyName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AgentRegistrationRegenerateKeyContent"/>. </summary>
+        /// <param name="keyName"> Gets or sets the agent registration key name - primary or secondary. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentRegistrationRegenerateKeyContent(AgentRegistrationKeyName keyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyName = keyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AgentRegistrationRegenerateKeyContent"/> for deserialization. </summary>
+        internal AgentRegistrationRegenerateKeyContent()
+        {
         }
 
         /// <summary> Gets or sets the agent registration key name - primary or secondary. </summary>

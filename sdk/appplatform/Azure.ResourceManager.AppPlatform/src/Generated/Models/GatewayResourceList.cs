@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of gateway resources and a possible link for next set. </summary>
     internal partial class GatewayResourceList
     {
-        /// <summary> Initializes a new instance of GatewayResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayResourceList"/>. </summary>
         internal GatewayResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of GatewayResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayResourceList"/>. </summary>
         /// <param name="value"> Collection of gateway resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal GatewayResourceList(IReadOnlyList<AppPlatformGatewayData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayResourceList(IReadOnlyList<AppPlatformGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of gateway resources. </summary>

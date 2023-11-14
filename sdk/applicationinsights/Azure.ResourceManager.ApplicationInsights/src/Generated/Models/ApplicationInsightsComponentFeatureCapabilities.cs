@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An Application Insights component feature capabilities. </summary>
     public partial class ApplicationInsightsComponentFeatureCapabilities
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapabilities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeatureCapabilities"/>. </summary>
         internal ApplicationInsightsComponentFeatureCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeatureCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeatureCapabilities"/>. </summary>
         /// <param name="supportExportData"> Whether allow to use continuous export feature. </param>
         /// <param name="burstThrottlePolicy"> Reserved, not used now. </param>
         /// <param name="metadataClass"> Reserved, not used now. </param>
@@ -32,7 +38,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="dailyCap"> Daily data volume cap in GB. </param>
         /// <param name="dailyCapResetTime"> Daily data volume cap UTC reset hour. </param>
         /// <param name="throttleRate"> Reserved, not used now. </param>
-        internal ApplicationInsightsComponentFeatureCapabilities(bool? supportExportData, string burstThrottlePolicy, string metadataClass, bool? liveStreamMetrics, bool? applicationMap, bool? workItemIntegration, bool? powerBIIntegration, bool? openSchema, bool? proactiveDetection, bool? analyticsIntegration, bool? multipleStepWebTest, string apiAccessLevel, string trackingType, float? dailyCap, float? dailyCapResetTime, float? throttleRate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentFeatureCapabilities(bool? supportExportData, string burstThrottlePolicy, string metadataClass, bool? liveStreamMetrics, bool? applicationMap, bool? workItemIntegration, bool? powerBIIntegration, bool? openSchema, bool? proactiveDetection, bool? analyticsIntegration, bool? multipleStepWebTest, string apiAccessLevel, string trackingType, float? dailyCap, float? dailyCapResetTime, float? throttleRate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SupportExportData = supportExportData;
             BurstThrottlePolicy = burstThrottlePolicy;
@@ -50,6 +57,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             DailyCap = dailyCap;
             DailyCapResetTime = dailyCapResetTime;
             ThrottleRate = throttleRate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether allow to use continuous export feature. </summary>

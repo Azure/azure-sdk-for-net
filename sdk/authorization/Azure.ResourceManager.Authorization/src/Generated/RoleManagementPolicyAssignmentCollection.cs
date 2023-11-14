@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleManagementPolicyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleManagementPolicyAssignmentResource(Client, RoleManagementPolicyAssignmentData.DeserializeRoleManagementPolicyAssignmentData(e)), _roleManagementPolicyAssignmentClientDiagnostics, Pipeline, "RoleManagementPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

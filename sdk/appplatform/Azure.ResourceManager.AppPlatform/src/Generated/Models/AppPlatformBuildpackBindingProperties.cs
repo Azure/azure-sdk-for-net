@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Properties of a buildpack binding. </summary>
     public partial class AppPlatformBuildpackBindingProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildpackBindingProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildpackBindingProperties"/>. </summary>
         public AppPlatformBuildpackBindingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildpackBindingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildpackBindingProperties"/>. </summary>
         /// <param name="bindingType"> Buildpack Binding Type. </param>
         /// <param name="provisioningState"> State of the Buildpack Binding. </param>
         /// <param name="launchProperties"> The object describes the buildpack binding launch properties. </param>
-        internal AppPlatformBuildpackBindingProperties(BuildpackBindingType? bindingType, BuildpackBindingProvisioningState? provisioningState, BuildpackBindingLaunchProperties launchProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildpackBindingProperties(BuildpackBindingType? bindingType, BuildpackBindingProvisioningState? provisioningState, BuildpackBindingLaunchProperties launchProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BindingType = bindingType;
             ProvisioningState = provisioningState;
             LaunchProperties = launchProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Buildpack Binding Type. </summary>

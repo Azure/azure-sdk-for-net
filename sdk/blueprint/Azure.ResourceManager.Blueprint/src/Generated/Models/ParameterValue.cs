@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
     /// <summary> Value for the specified parameter. Can be either 'value' or 'reference' but not both. </summary>
     public partial class ParameterValue
     {
-        /// <summary> Initializes a new instance of ParameterValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParameterValue"/>. </summary>
         public ParameterValue()
         {
         }
 
-        /// <summary> Initializes a new instance of ParameterValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterValue"/>. </summary>
         /// <param name="value"> Parameter value. Any valid JSON value is allowed including objects, arrays, strings, numbers and booleans. </param>
         /// <param name="reference"> Parameter value as reference type. </param>
-        internal ParameterValue(BinaryData value, SecretValueReference reference)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParameterValue(BinaryData value, SecretValueReference reference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Reference = reference;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

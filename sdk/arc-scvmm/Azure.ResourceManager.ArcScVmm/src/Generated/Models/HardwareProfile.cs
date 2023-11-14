@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class HardwareProfile
     {
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
         public HardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
         /// <param name="memoryMB"> MemoryMB is the size of a virtual machine's memory, in MB. </param>
         /// <param name="cpuCount"> Gets or sets the number of vCPUs for the vm. </param>
         /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
         /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
         /// <param name="isHighlyAvailable"> Gets highly available property. </param>
-        internal HardwareProfile(int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, string isHighlyAvailable)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardwareProfile(int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, string isHighlyAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MemoryMB = memoryMB;
             CpuCount = cpuCount;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             DynamicMemoryMaxMB = dynamicMemoryMaxMB;
             DynamicMemoryMinMB = dynamicMemoryMinMB;
             IsHighlyAvailable = isHighlyAvailable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> MemoryMB is the size of a virtual machine's memory, in MB. </summary>

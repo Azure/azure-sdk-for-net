@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Logger list representation. </summary>
     internal partial class LoggerListResult
     {
-        /// <summary> Initializes a new instance of LoggerListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoggerListResult"/>. </summary>
         internal LoggerListResult()
         {
             Value = new ChangeTrackingList<ApiManagementLoggerData>();
         }
 
-        /// <summary> Initializes a new instance of LoggerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggerListResult"/>. </summary>
         /// <param name="value"> Logger values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal LoggerListResult(IReadOnlyList<ApiManagementLoggerData> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoggerListResult(IReadOnlyList<ApiManagementLoggerData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Logger values. </summary>

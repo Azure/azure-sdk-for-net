@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Git repository property payload for config server. </summary>
     public partial class ConfigServerGitPatternRepository
     {
-        /// <summary> Initializes a new instance of ConfigServerGitPatternRepository. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigServerGitPatternRepository"/>. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="uri"/> is null. </exception>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             SearchPaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConfigServerGitPatternRepository. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigServerGitPatternRepository"/>. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="pattern"> Collection of pattern of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
         /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
         /// <param name="isHostKeyCheckingStrict"> Strict host key checking or not. </param>
-        internal ConfigServerGitPatternRepository(string name, IList<string> pattern, Uri uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? isHostKeyCheckingStrict)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigServerGitPatternRepository(string name, IList<string> pattern, Uri uri, string label, IList<string> searchPaths, string username, string password, string hostKey, string hostKeyAlgorithm, string privateKey, bool? isHostKeyCheckingStrict, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Pattern = pattern;
@@ -54,6 +58,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             HostKeyAlgorithm = hostKeyAlgorithm;
             PrivateKey = privateKey;
             IsHostKeyCheckingStrict = isHostKeyCheckingStrict;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigServerGitPatternRepository"/> for deserialization. </summary>
+        internal ConfigServerGitPatternRepository()
+        {
         }
 
         /// <summary> Name of the repository. </summary>

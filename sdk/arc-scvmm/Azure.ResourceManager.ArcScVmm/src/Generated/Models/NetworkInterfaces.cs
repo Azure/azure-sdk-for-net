@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     /// <summary> Network Interface model. </summary>
     public partial class NetworkInterfaces
     {
-        /// <summary> Initializes a new instance of NetworkInterfaces. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaces"/>. </summary>
         public NetworkInterfaces()
         {
             IPv4Addresses = new ChangeTrackingList<string>();
             IPv6Addresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterfaces. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaces"/>. </summary>
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="displayName"> Gets the display name of the network interface as shown in the vmmServer. This is the fallback label for a NIC when the name is not set. </param>
         /// <param name="ipv4Addresses"> Gets or sets the nic ipv4 addresses. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="ipv6AddressType"> Gets or sets the ipv6 address type. </param>
         /// <param name="macAddressType"> Gets or sets the mac address type. </param>
         /// <param name="nicId"> Gets or sets the nic id. </param>
-        internal NetworkInterfaces(string name, string displayName, IReadOnlyList<string> ipv4Addresses, IReadOnlyList<string> ipv6Addresses, string macAddress, string virtualNetworkId, string networkName, AllocationMethod? ipv4AddressType, AllocationMethod? ipv6AddressType, AllocationMethod? macAddressType, string nicId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkInterfaces(string name, string displayName, IReadOnlyList<string> ipv4Addresses, IReadOnlyList<string> ipv6Addresses, string macAddress, string virtualNetworkId, string networkName, AllocationMethod? ipv4AddressType, AllocationMethod? ipv6AddressType, AllocationMethod? macAddressType, string nicId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             IPv6AddressType = ipv6AddressType;
             MacAddressType = macAddressType;
             NicId = nicId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the network interface. </summary>

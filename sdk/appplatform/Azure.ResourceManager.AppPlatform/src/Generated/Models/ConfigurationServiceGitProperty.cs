@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Property of git environment. </summary>
     internal partial class ConfigurationServiceGitProperty
     {
-        /// <summary> Initializes a new instance of ConfigurationServiceGitProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationServiceGitProperty"/>. </summary>
         public ConfigurationServiceGitProperty()
         {
             ConfigurationServiceGitRepositories = new ChangeTrackingList<AppPlatformConfigurationServiceGitRepository>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceGitProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationServiceGitProperty"/>. </summary>
         /// <param name="configurationServiceGitRepositories"> Repositories of Application Configuration Service git property. </param>
-        internal ConfigurationServiceGitProperty(IList<AppPlatformConfigurationServiceGitRepository> configurationServiceGitRepositories)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationServiceGitProperty(IList<AppPlatformConfigurationServiceGitRepository> configurationServiceGitRepositories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationServiceGitRepositories = configurationServiceGitRepositories;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Repositories of Application Configuration Service git property. </summary>

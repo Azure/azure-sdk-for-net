@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> List the alerts. </summary>
     internal partial class ServiceAlertListResult
     {
-        /// <summary> Initializes a new instance of ServiceAlertListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertListResult"/>. </summary>
         internal ServiceAlertListResult()
         {
             Value = new ChangeTrackingList<ServiceAlertData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertListResult"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of alerts. </param>
         /// <param name="value"> List of alerts. </param>
-        internal ServiceAlertListResult(string nextLink, IReadOnlyList<ServiceAlertData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertListResult(string nextLink, IReadOnlyList<ServiceAlertData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> URL to fetch the next set of alerts. </summary>

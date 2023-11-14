@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// </summary>
     public partial class FarmBeatData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FarmBeatData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FarmBeatData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FarmBeatData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of FarmBeatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FarmBeatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <param name="sensorIntegration"> Sensor integration request model. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block public traffic for an Azure FarmBeats resource. </param>
         /// <param name="privateEndpointConnections"> The Private Endpoint Connection resource. </param>
-        internal FarmBeatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Uri instanceUri, ProvisioningState? provisioningState, SensorIntegration sensorIntegration, PublicNetworkAccess? publicNetworkAccess, AgFoodPlatformPrivateEndpointConnectionData privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FarmBeatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Uri instanceUri, ProvisioningState? provisioningState, SensorIntegration sensorIntegration, PublicNetworkAccess? publicNetworkAccess, AgFoodPlatformPrivateEndpointConnectionData privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             InstanceUri = instanceUri;
@@ -46,6 +50,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
             SensorIntegration = sensorIntegration;
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FarmBeatData"/> for deserialization. </summary>
+        internal FarmBeatData()
+        {
         }
 
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>

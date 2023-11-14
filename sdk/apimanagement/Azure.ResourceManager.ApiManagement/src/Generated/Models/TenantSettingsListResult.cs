@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged AccessInformation list representation. </summary>
     internal partial class TenantSettingsListResult
     {
-        /// <summary> Initializes a new instance of TenantSettingsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TenantSettingsListResult"/>. </summary>
         internal TenantSettingsListResult()
         {
             Value = new ChangeTrackingList<ApiManagementTenantSettingData>();
         }
 
-        /// <summary> Initializes a new instance of TenantSettingsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantSettingsListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal TenantSettingsListResult(IReadOnlyList<ApiManagementTenantSettingData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TenantSettingsListResult(IReadOnlyList<ApiManagementTenantSettingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page values. </summary>

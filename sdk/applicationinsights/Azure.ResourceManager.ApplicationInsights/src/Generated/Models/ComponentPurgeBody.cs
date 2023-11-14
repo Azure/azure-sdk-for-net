@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Describes the body of a purge request for an App Insights component. </summary>
     public partial class ComponentPurgeBody
     {
-        /// <summary> Initializes a new instance of ComponentPurgeBody. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBody"/>. </summary>
         /// <param name="table"> Table from which to purge data. </param>
         /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> or <paramref name="filters"/> is null. </exception>
@@ -26,6 +29,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
             Table = table;
             Filters = filters.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBody"/>. </summary>
+        /// <param name="table"> Table from which to purge data. </param>
+        /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentPurgeBody(string table, IList<ComponentPurgeBodyFilters> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Table = table;
+            Filters = filters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComponentPurgeBody"/> for deserialization. </summary>
+        internal ComponentPurgeBody()
+        {
         }
 
         /// <summary> Table from which to purge data. </summary>

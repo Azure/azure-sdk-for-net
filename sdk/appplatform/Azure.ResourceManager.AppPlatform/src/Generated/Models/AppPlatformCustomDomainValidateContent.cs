@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Custom domain validate payload. </summary>
     public partial class AppPlatformCustomDomainValidateContent
     {
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainValidateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainValidateContent"/>. </summary>
         /// <param name="name"> Name to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppPlatformCustomDomainValidateContent(string name)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainValidateContent"/>. </summary>
+        /// <param name="name"> Name to be validated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformCustomDomainValidateContent(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainValidateContent"/> for deserialization. </summary>
+        internal AppPlatformCustomDomainValidateContent()
+        {
         }
 
         /// <summary> Name to be validated. </summary>

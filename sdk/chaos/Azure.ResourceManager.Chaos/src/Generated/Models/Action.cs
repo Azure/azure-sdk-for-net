@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -17,7 +18,10 @@ namespace Azure.ResourceManager.Chaos.Models
     /// </summary>
     public abstract partial class Action
     {
-        /// <summary> Initializes a new instance of Action. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Action"/>. </summary>
         /// <param name="name"> String that represents a Capability URN. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected Action(string name)
@@ -27,13 +31,20 @@ namespace Azure.ResourceManager.Chaos.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of Action. </summary>
+        /// <summary> Initializes a new instance of <see cref="Action"/>. </summary>
         /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
-        internal Action(string actionType, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Action(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Action"/> for deserialization. </summary>
+        internal Action()
+        {
         }
 
         /// <summary> Enum that discriminates between action models. </summary>

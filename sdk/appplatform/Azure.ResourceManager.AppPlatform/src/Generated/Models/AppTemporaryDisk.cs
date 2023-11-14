@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Temporary disk payload. </summary>
     public partial class AppTemporaryDisk
     {
-        /// <summary> Initializes a new instance of AppTemporaryDisk. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppTemporaryDisk"/>. </summary>
         public AppTemporaryDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of AppTemporaryDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppTemporaryDisk"/>. </summary>
         /// <param name="sizeInGB"> Size of the temporary disk in GB. </param>
         /// <param name="mountPath"> Mount path of the temporary disk. </param>
-        internal AppTemporaryDisk(int? sizeInGB, string mountPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppTemporaryDisk(int? sizeInGB, string mountPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SizeInGB = sizeInGB;
             MountPath = mountPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Size of the temporary disk in GB. </summary>

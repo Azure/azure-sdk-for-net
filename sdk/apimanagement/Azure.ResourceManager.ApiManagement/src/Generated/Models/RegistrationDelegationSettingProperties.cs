@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> User registration delegation settings properties. </summary>
     internal partial class RegistrationDelegationSettingProperties
     {
-        /// <summary> Initializes a new instance of RegistrationDelegationSettingProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegistrationDelegationSettingProperties"/>. </summary>
         public RegistrationDelegationSettingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RegistrationDelegationSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationDelegationSettingProperties"/>. </summary>
         /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
-        internal RegistrationDelegationSettingProperties(bool? isUserRegistrationDelegationEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegistrationDelegationSettingProperties(bool? isUserRegistrationDelegationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsUserRegistrationDelegationEnabled = isUserRegistrationDelegationEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>

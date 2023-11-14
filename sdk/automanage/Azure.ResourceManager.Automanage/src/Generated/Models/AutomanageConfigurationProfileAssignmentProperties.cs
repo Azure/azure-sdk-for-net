@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automanage.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> Automanage configuration profile assignment properties. </summary>
     public partial class AutomanageConfigurationProfileAssignmentProperties
     {
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileAssignmentProperties"/>. </summary>
         public AutomanageConfigurationProfileAssignmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileAssignmentProperties"/>. </summary>
         /// <param name="configurationProfile"> The Automanage configurationProfile ARM Resource URI. </param>
         /// <param name="targetId"> The target VM resource URI. </param>
         /// <param name="status"> The status of onboarding, which only appears in the response. </param>
-        internal AutomanageConfigurationProfileAssignmentProperties(ResourceIdentifier configurationProfile, ResourceIdentifier targetId, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomanageConfigurationProfileAssignmentProperties(ResourceIdentifier configurationProfile, ResourceIdentifier targetId, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationProfile = configurationProfile;
             TargetId = targetId;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Automanage configurationProfile ARM Resource URI. </summary>

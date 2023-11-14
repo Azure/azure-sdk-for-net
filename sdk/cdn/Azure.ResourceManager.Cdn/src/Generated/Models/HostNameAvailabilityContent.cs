@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Input of CheckHostNameAvailability API. </summary>
     public partial class HostNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of HostNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostNameAvailabilityContent"/>. </summary>
         /// <param name="hostName"> The host name to validate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public HostNameAvailabilityContent(string hostName)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Cdn.Models
             Argument.AssertNotNull(hostName, nameof(hostName));
 
             HostName = hostName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HostNameAvailabilityContent"/>. </summary>
+        /// <param name="hostName"> The host name to validate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostNameAvailabilityContent(string hostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HostName = hostName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HostNameAvailabilityContent"/> for deserialization. </summary>
+        internal HostNameAvailabilityContent()
+        {
         }
 
         /// <summary> The host name to validate. </summary>

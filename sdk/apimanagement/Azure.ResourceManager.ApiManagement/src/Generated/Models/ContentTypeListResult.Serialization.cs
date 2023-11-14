@@ -5,22 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class ContentTypeListResult
+    internal partial class ContentTypeListResult : IUtf8JsonSerializable, IJsonModel<ContentTypeListResult>
     {
-        internal static ContentTypeListResult DeserializeContentTypeListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentTypeListResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContentTypeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContentTypeListResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContentTypeListResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Value))
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Value)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NextLink))
+                {
+                    writer.WritePropertyName("nextLink"u8);
+                    writer.WriteStringValue(NextLink);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContentTypeListResult IJsonModel<ContentTypeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentTypeListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentTypeListResult(document.RootElement, options);
+        }
+
+        internal static ContentTypeListResult DeserializeContentTypeListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<ApiManagementContentType>> value = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +110,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentTypeListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContentTypeListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContentTypeListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentTypeListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContentTypeListResult IPersistableModel<ContentTypeListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContentTypeListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContentTypeListResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContentTypeListResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

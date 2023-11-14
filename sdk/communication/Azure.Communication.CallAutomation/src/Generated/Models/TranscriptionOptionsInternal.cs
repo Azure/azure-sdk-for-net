@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Configuration of live transcription. </summary>
     internal partial class TranscriptionOptionsInternal
     {
-        /// <summary> Initializes a new instance of TranscriptionOptionsInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
         /// <param name="transportUrl"> Transport URL for live transcription. </param>
         /// <param name="transportType"> The type of transport to be used for live transcription, eg. Websocket. </param>
         /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
@@ -28,6 +32,26 @@ namespace Azure.Communication.CallAutomation
             TransportType = transportType;
             Locale = locale;
             StartTranscription = startTranscription;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/>. </summary>
+        /// <param name="transportUrl"> Transport URL for live transcription. </param>
+        /// <param name="transportType"> The type of transport to be used for live transcription, eg. Websocket. </param>
+        /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
+        /// <param name="startTranscription"> Determines if the transcription should be started immediately after call is answered or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranscriptionOptionsInternal(string transportUrl, TranscriptionTransport transportType, string locale, bool startTranscription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TransportUrl = transportUrl;
+            TransportType = transportType;
+            Locale = locale;
+            StartTranscription = startTranscription;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptionsInternal"/> for deserialization. </summary>
+        internal TranscriptionOptionsInternal()
+        {
         }
 
         /// <summary> Transport URL for live transcription. </summary>

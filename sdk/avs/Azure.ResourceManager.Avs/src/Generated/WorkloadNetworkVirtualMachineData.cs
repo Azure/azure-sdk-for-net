@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkVirtualMachineData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachineData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachineData"/>. </summary>
         public WorkloadNetworkVirtualMachineData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkVirtualMachineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkVirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Display name of the VM. </param>
         /// <param name="vmType"> Virtual machine type. </param>
-        internal WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             VmType = vmType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name of the VM. </summary>

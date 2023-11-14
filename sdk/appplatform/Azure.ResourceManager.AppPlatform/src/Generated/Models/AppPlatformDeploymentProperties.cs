@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Deployment resource properties payload. </summary>
     public partial class AppPlatformDeploymentProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformDeploymentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformDeploymentProperties"/>. </summary>
         public AppPlatformDeploymentProperties()
         {
             Instances = new ChangeTrackingList<AppPlatformDeploymentInstance>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformDeploymentProperties"/>. </summary>
         /// <param name="source">
         /// Uploaded source information of the deployment.
         /// Please note <see cref="AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="status"> Status of the Deployment. </param>
         /// <param name="isActive"> Indicates whether the Deployment is active. </param>
         /// <param name="instances"> Collection of instances belong to the Deployment. </param>
-        internal AppPlatformDeploymentProperties(AppPlatformUserSourceInfo source, AppPlatformDeploymentSettings deploymentSettings, AppPlatformDeploymentProvisioningState? provisioningState, AppPlatformDeploymentStatus? status, bool? isActive, IReadOnlyList<AppPlatformDeploymentInstance> instances)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformDeploymentProperties(AppPlatformUserSourceInfo source, AppPlatformDeploymentSettings deploymentSettings, AppPlatformDeploymentProvisioningState? provisioningState, AppPlatformDeploymentStatus? status, bool? isActive, IReadOnlyList<AppPlatformDeploymentInstance> instances, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             DeploymentSettings = deploymentSettings;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Status = status;
             IsActive = isActive;
             Instances = instances;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

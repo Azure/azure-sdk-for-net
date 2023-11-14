@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for HttpVersion match conditions. </summary>
     public partial class HttpVersionMatchCondition
     {
-        /// <summary> Initializes a new instance of HttpVersionMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
         public HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator httpVersionOperator)
@@ -24,19 +28,26 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of HttpVersionMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="httpVersionOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator httpVersionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HttpVersionMatchCondition(HttpVersionMatchConditionType conditionType, HttpVersionOperator httpVersionOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionType = conditionType;
             HttpVersionOperator = httpVersionOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HttpVersionMatchCondition"/> for deserialization. </summary>
+        internal HttpVersionMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

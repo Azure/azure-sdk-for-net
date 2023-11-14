@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallTransferAcceptedEvent. </summary>
     public partial class CallTransferAccepted
     {
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CallTransferAccepted"/>. </summary>
         internal CallTransferAccepted()
         {
         }
 
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferAccepted"/>. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
@@ -24,7 +30,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
-        internal CallTransferAccepted(string eventSource, string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CallTransferAccepted(string eventSource, string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventSource = eventSource;
             OperationContext = operationContext;
@@ -34,6 +41,7 @@ namespace Azure.Communication.CallingServer
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             PublicEventType = publicEventType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the event source. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Linux specific update configuration. </summary>
     public partial class LinuxUpdateConfigurationProperties
     {
-        /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinuxUpdateConfigurationProperties"/>. </summary>
         public LinuxUpdateConfigurationProperties()
         {
             ExcludedPackageNameMasks = new ChangeTrackingList<string>();
             IncludedPackageNameMasks = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LinuxUpdateConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxUpdateConfigurationProperties"/>. </summary>
         /// <param name="includedPackageClassifications"> Update classifications included in the software update configuration. </param>
         /// <param name="excludedPackageNameMasks"> packages excluded from the software update configuration. </param>
         /// <param name="includedPackageNameMasks"> packages included from the software update configuration. </param>
         /// <param name="rebootSetting"> Reboot setting for the software update configuration. </param>
-        internal LinuxUpdateConfigurationProperties(LinuxUpdateClassification? includedPackageClassifications, IList<string> excludedPackageNameMasks, IList<string> includedPackageNameMasks, string rebootSetting)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxUpdateConfigurationProperties(LinuxUpdateClassification? includedPackageClassifications, IList<string> excludedPackageNameMasks, IList<string> includedPackageNameMasks, string rebootSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IncludedPackageClassifications = includedPackageClassifications;
             ExcludedPackageNameMasks = excludedPackageNameMasks;
             IncludedPackageNameMasks = includedPackageNameMasks;
             RebootSetting = rebootSetting;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Update classifications included in the software update configuration. </summary>

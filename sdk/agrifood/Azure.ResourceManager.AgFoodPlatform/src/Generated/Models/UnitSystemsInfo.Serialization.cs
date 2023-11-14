@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
-    public partial class UnitSystemsInfo
+    public partial class UnitSystemsInfo : IUtf8JsonSerializable, IJsonModel<UnitSystemsInfo>
     {
-        internal static UnitSystemsInfo DeserializeUnitSystemsInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UnitSystemsInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<UnitSystemsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UnitSystemsInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UnitSystemsInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(Key);
+            writer.WritePropertyName("values"u8);
+            writer.WriteStartArray();
+            foreach (var item in Values)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UnitSystemsInfo IJsonModel<UnitSystemsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnitSystemsInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnitSystemsInfo(document.RootElement, options);
+        }
+
+        internal static UnitSystemsInfo DeserializeUnitSystemsInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string key = default;
             IReadOnlyList<string> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -37,8 +94,38 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     values = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnitSystemsInfo(key, values);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnitSystemsInfo(key, values, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UnitSystemsInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnitSystemsInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UnitSystemsInfo IPersistableModel<UnitSystemsInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UnitSystemsInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnitSystemsInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<UnitSystemsInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

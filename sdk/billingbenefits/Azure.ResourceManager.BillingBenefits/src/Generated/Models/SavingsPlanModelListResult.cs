@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> The SavingsPlanModelListResult. </summary>
     internal partial class SavingsPlanModelListResult
     {
-        /// <summary> Initializes a new instance of SavingsPlanModelListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
         internal SavingsPlanModelListResult()
         {
             Value = new ChangeTrackingList<BillingBenefitsSavingsPlanData>();
             AdditionalProperties = new ChangeTrackingList<SavingsPlanSummary>();
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanModelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanModelListResult"/>. </summary>
         /// <param name="value"> The list of savings plans. </param>
         /// <param name="nextLink"> Url to get the next page. </param>
         /// <param name="additionalProperties"> The roll out count summary of the savings plans. </param>
-        internal SavingsPlanModelListResult(IReadOnlyList<BillingBenefitsSavingsPlanData> value, string nextLink, IReadOnlyList<SavingsPlanSummary> additionalProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanModelListResult(IReadOnlyList<BillingBenefitsSavingsPlanData> value, string nextLink, IReadOnlyList<SavingsPlanSummary> additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             AdditionalProperties = additionalProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of savings plans. </summary>

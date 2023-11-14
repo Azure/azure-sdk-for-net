@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Automation key which is used to register a DSC Node. </summary>
     public partial class AutomationKey
     {
-        /// <summary> Initializes a new instance of AutomationKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationKey"/>. </summary>
         internal AutomationKey()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationKey"/>. </summary>
         /// <param name="keyName"> Automation key name. </param>
         /// <param name="permissions"> Automation key permissions. </param>
         /// <param name="value"> Value of the Automation Key used for registration. </param>
-        internal AutomationKey(AutomationKeyName? keyName, AutomationKeyPermission? permissions, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationKey(AutomationKeyName? keyName, AutomationKeyPermission? permissions, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyName = keyName;
             Permissions = permissions;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Automation key name. </summary>

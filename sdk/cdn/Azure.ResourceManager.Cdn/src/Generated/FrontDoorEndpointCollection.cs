@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorEndpointRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorEndpointRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorEndpointResource(Client, FrontDoorEndpointData.DeserializeFrontDoorEndpointData(e)), _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorEndpointResource(Client, FrontDoorEndpointData.DeserializeFrontDoorEndpointData(e)), _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorEndpointRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorEndpointRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorEndpointResource(Client, FrontDoorEndpointData.DeserializeFrontDoorEndpointData(e)), _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorEndpointResource(Client, FrontDoorEndpointData.DeserializeFrontDoorEndpointData(e)), _frontDoorEndpointClientDiagnostics, Pipeline, "FrontDoorEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

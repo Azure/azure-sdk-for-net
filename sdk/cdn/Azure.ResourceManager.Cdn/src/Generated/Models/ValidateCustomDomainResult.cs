@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Output of custom domain validation. </summary>
     public partial class ValidateCustomDomainResult
     {
-        /// <summary> Initializes a new instance of ValidateCustomDomainResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateCustomDomainResult"/>. </summary>
         internal ValidateCustomDomainResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ValidateCustomDomainResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateCustomDomainResult"/>. </summary>
         /// <param name="isCustomDomainValid"> Indicates whether the custom domain is valid or not. </param>
         /// <param name="reason"> The reason why the custom domain is not valid. </param>
         /// <param name="message"> Error message describing why the custom domain is not valid. </param>
-        internal ValidateCustomDomainResult(bool? isCustomDomainValid, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateCustomDomainResult(bool? isCustomDomainValid, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsCustomDomainValid = isCustomDomainValid;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the custom domain is valid or not. </summary>

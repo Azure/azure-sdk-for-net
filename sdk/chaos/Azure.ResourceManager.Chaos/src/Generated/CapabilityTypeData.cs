@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Chaos.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class CapabilityTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeData"/>. </summary>
         public CapabilityTypeData()
         {
             AzureRbacActions = new ChangeTrackingList<string>();
             AzureRbacDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
         /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
         /// <param name="runtimeProperties"> Runtime properties of this Capability Type. </param>
-        internal CapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IList<string> azureRbacActions, IList<string> azureRbacDataActions, CapabilityTypePropertiesRuntimeProperties runtimeProperties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IList<string> azureRbacActions, IList<string> azureRbacDataActions, CapabilityTypePropertiesRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Publisher = publisher;
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.Chaos
             AzureRbacActions = azureRbacActions;
             AzureRbacDataActions = azureRbacDataActions;
             RuntimeProperties = runtimeProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the Capability Type resource. </summary>

@@ -5,20 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class PortalSettingValidationKeyContract
+    public partial class PortalSettingValidationKeyContract : IUtf8JsonSerializable, IJsonModel<PortalSettingValidationKeyContract>
     {
-        internal static PortalSettingValidationKeyContract DeserializePortalSettingValidationKeyContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortalSettingValidationKeyContract>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PortalSettingValidationKeyContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PortalSettingValidationKeyContract>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PortalSettingValidationKeyContract>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ValidationKey))
+            {
+                writer.WritePropertyName("validationKey"u8);
+                writer.WriteStringValue(ValidationKey);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PortalSettingValidationKeyContract IJsonModel<PortalSettingValidationKeyContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PortalSettingValidationKeyContract)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePortalSettingValidationKeyContract(document.RootElement, options);
+        }
+
+        internal static PortalSettingValidationKeyContract DeserializePortalSettingValidationKeyContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> validationKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationKey"u8))
@@ -26,8 +79,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     validationKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PortalSettingValidationKeyContract(validationKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PortalSettingValidationKeyContract(validationKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PortalSettingValidationKeyContract>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PortalSettingValidationKeyContract)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PortalSettingValidationKeyContract IPersistableModel<PortalSettingValidationKeyContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PortalSettingValidationKeyContract)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePortalSettingValidationKeyContract(document.RootElement, options);
+        }
+
+        string IPersistableModel<PortalSettingValidationKeyContract>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

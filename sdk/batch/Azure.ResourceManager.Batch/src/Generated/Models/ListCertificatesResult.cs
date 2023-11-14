@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Batch;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Values returned by the List operation. </summary>
     internal partial class ListCertificatesResult
     {
-        /// <summary> Initializes a new instance of ListCertificatesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListCertificatesResult"/>. </summary>
         internal ListCertificatesResult()
         {
             Value = new ChangeTrackingList<BatchAccountCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of ListCertificatesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListCertificatesResult"/>. </summary>
         /// <param name="value"> The collection of returned certificates. </param>
         /// <param name="nextLink"> The continuation token. </param>
-        internal ListCertificatesResult(IReadOnlyList<BatchAccountCertificateData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListCertificatesResult(IReadOnlyList<BatchAccountCertificateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of returned certificates. </summary>

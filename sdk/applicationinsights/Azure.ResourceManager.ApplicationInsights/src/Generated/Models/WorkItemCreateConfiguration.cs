@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,28 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Work item configuration creation payload. </summary>
     public partial class WorkItemCreateConfiguration
     {
-        /// <summary> Initializes a new instance of WorkItemCreateConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkItemCreateConfiguration"/>. </summary>
         public WorkItemCreateConfiguration()
         {
             WorkItemProperties = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkItemCreateConfiguration"/>. </summary>
+        /// <param name="connectorId"> Unique connector id. </param>
+        /// <param name="connectorDataConfiguration"> Serialized JSON object for detailed properties. </param>
+        /// <param name="isValidateOnly"> Boolean indicating validate only. </param>
+        /// <param name="workItemProperties"> Custom work item properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkItemCreateConfiguration(string connectorId, string connectorDataConfiguration, bool? isValidateOnly, IDictionary<string, string> workItemProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConnectorId = connectorId;
+            ConnectorDataConfiguration = connectorDataConfiguration;
+            IsValidateOnly = isValidateOnly;
+            WorkItemProperties = workItemProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique connector id. </summary>

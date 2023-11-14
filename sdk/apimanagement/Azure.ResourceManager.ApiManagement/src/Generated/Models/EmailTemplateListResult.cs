@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged email template list representation. </summary>
     internal partial class EmailTemplateListResult
     {
-        /// <summary> Initializes a new instance of EmailTemplateListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmailTemplateListResult"/>. </summary>
         internal EmailTemplateListResult()
         {
             Value = new ChangeTrackingList<ApiManagementEmailTemplateData>();
         }
 
-        /// <summary> Initializes a new instance of EmailTemplateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailTemplateListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal EmailTemplateListResult(IReadOnlyList<ApiManagementEmailTemplateData> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailTemplateListResult(IReadOnlyList<ApiManagementEmailTemplateData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page values. </summary>

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
     /// <summary> The response of a Service list operation. </summary>
     internal partial class ApiCenterServiceListResult
     {
-        /// <summary> Initializes a new instance of ApiCenterServiceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
         /// <param name="value"> The Service items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiCenterServiceListResult(IEnumerable<ApiCenterServiceData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ApiCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApiCenterServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
         /// <param name="value"> The Service items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal ApiCenterServiceListResult(IReadOnlyList<ApiCenterServiceData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiCenterServiceListResult(IReadOnlyList<ApiCenterServiceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/> for deserialization. </summary>
+        internal ApiCenterServiceListResult()
+        {
         }
 
         /// <summary> The Service items on this page. </summary>

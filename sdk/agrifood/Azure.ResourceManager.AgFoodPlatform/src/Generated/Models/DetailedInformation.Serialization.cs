@@ -5,16 +5,101 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
-    public partial class DetailedInformation
+    public partial class DetailedInformation : IUtf8JsonSerializable, IJsonModel<DetailedInformation>
     {
-        internal static DetailedInformation DeserializeDetailedInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetailedInformation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DetailedInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DetailedInformation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DetailedInformation>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ApiName))
+            {
+                writer.WritePropertyName("apiName"u8);
+                writer.WriteStringValue(ApiName);
+            }
+            if (Optional.IsCollectionDefined(CustomParameters))
+            {
+                writer.WritePropertyName("customParameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomParameters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PlatformParameters))
+            {
+                writer.WritePropertyName("platformParameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in PlatformParameters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(UnitsSupported))
+            {
+                writer.WritePropertyName("unitsSupported"u8);
+                writer.WriteObjectValue(UnitsSupported);
+            }
+            if (Optional.IsCollectionDefined(ApiInputParameters))
+            {
+                writer.WritePropertyName("apiInputParameters"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApiInputParameters)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DetailedInformation IJsonModel<DetailedInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DetailedInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDetailedInformation(document.RootElement, options);
+        }
+
+        internal static DetailedInformation DeserializeDetailedInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +109,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             Optional<IReadOnlyList<string>> platformParameters = default;
             Optional<UnitSystemsInfo> unitsSupported = default;
             Optional<IReadOnlyList<string>> apiInputParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiName"u8))
@@ -82,8 +169,38 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     apiInputParameters = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DetailedInformation(apiName.Value, Optional.ToList(customParameters), Optional.ToList(platformParameters), unitsSupported.Value, Optional.ToList(apiInputParameters));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DetailedInformation(apiName.Value, Optional.ToList(customParameters), Optional.ToList(platformParameters), unitsSupported.Value, Optional.ToList(apiInputParameters), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DetailedInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DetailedInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DetailedInformation IPersistableModel<DetailedInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DetailedInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDetailedInformation(document.RootElement, options);
+        }
+
+        string IPersistableModel<DetailedInformation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

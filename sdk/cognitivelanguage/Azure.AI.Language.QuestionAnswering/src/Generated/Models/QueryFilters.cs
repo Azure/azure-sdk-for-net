@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> filters over knowledge base. </summary>
     public partial class QueryFilters
     {
-        /// <summary> Initializes a new instance of QueryFilters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryFilters"/>. </summary>
         public QueryFilters()
         {
             SourceFilter = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryFilters"/>. </summary>
+        /// <param name="metadataFilter"> Find QnAs that are associated with the given list of metadata. </param>
+        /// <param name="sourceFilter"> Find QnAs that are associated with any of the given list of sources in knowledge base. </param>
+        /// <param name="logicalOperation"> Logical operation used to join metadata filter with source filter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryFilters(MetadataFilter metadataFilter, IList<string> sourceFilter, LogicalOperationKind? logicalOperation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MetadataFilter = metadataFilter;
+            SourceFilter = sourceFilter;
+            LogicalOperation = logicalOperation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Find QnAs that are associated with the given list of metadata. </summary>

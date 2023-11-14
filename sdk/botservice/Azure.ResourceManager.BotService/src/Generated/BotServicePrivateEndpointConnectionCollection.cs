@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.BotService
         public virtual AsyncPageable<BotServicePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new BotServicePrivateEndpointConnectionResource(Client, BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(e)), _botServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "BotServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new BotServicePrivateEndpointConnectionResource(Client, BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(e)), _botServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "BotServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.BotService
         public virtual Pageable<BotServicePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new BotServicePrivateEndpointConnectionResource(Client, BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(e)), _botServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "BotServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new BotServicePrivateEndpointConnectionResource(Client, BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(e)), _botServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "BotServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

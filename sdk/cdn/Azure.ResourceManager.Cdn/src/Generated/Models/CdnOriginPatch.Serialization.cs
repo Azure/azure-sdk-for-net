@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnOriginPatch : IUtf8JsonSerializable
+    public partial class CdnOriginPatch : IUtf8JsonSerializable, IJsonModel<CdnOriginPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnOriginPatch>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CdnOriginPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CdnOriginPatch>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CdnOriginPatch>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -108,7 +119,187 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(PrivateLinkApprovalMessage);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CdnOriginPatch IJsonModel<CdnOriginPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnOriginPatch(document.RootElement, options);
+        }
+
+        internal static CdnOriginPatch DeserializeCdnOriginPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> hostName = default;
+            Optional<int?> httpPort = default;
+            Optional<int?> httpsPort = default;
+            Optional<string> originHostHeader = default;
+            Optional<int?> priority = default;
+            Optional<int?> weight = default;
+            Optional<bool> enabled = default;
+            Optional<string> privateLinkAlias = default;
+            Optional<ResourceIdentifier> privateLinkResourceId = default;
+            Optional<string> privateLinkLocation = default;
+            Optional<string> privateLinkApprovalMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("hostName"u8))
+                        {
+                            hostName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("httpPort"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                httpPort = null;
+                                continue;
+                            }
+                            httpPort = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("httpsPort"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                httpsPort = null;
+                                continue;
+                            }
+                            httpsPort = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("originHostHeader"u8))
+                        {
+                            originHostHeader = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("priority"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                priority = null;
+                                continue;
+                            }
+                            priority = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("weight"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                weight = null;
+                                continue;
+                            }
+                            weight = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("enabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkAlias"u8))
+                        {
+                            privateLinkAlias = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privateLinkResourceId = null;
+                                continue;
+                            }
+                            privateLinkResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkLocation"u8))
+                        {
+                            privateLinkLocation = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkApprovalMessage"u8))
+                        {
+                            privateLinkApprovalMessage = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CdnOriginPatch(hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<CdnOriginPatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CdnOriginPatch IPersistableModel<CdnOriginPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CdnOriginPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCdnOriginPatch(document.RootElement, options);
+        }
+
+        string IPersistableModel<CdnOriginPatch>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

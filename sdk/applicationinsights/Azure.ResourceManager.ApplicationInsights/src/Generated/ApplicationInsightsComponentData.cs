@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class ApplicationInsightsComponentData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceContent>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +69,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
         /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
         /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
-        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? etag, string applicationId, string appId, string namePropertiesName, ApplicationType? applicationType, FlowType? flowType, RequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, string workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceContent> privateLinkScopedResources, PublicNetworkAccessType? publicNetworkAccessForIngestion, PublicNetworkAccessType? publicNetworkAccessForQuery, IngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? etag, string applicationId, string appId, string namePropertiesName, ApplicationType? applicationType, FlowType? flowType, RequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, string workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceContent> privateLinkScopedResources, PublicNetworkAccessType? publicNetworkAccessForIngestion, PublicNetworkAccessType? publicNetworkAccessForQuery, IngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ETag = etag;
@@ -95,6 +99,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             IngestionMode = ingestionMode;
             IsDisableLocalAuth = isDisableLocalAuth;
             IsForceCustomerStorageForProfiler = isForceCustomerStorageForProfiler;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/> for deserialization. </summary>
+        internal ApplicationInsightsComponentData()
+        {
         }
 
         /// <summary> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </summary>

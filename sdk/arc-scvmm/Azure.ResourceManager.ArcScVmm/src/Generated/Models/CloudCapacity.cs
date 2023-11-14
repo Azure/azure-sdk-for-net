@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Cloud Capacity model. </summary>
     public partial class CloudCapacity
     {
-        /// <summary> Initializes a new instance of CloudCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudCapacity"/>. </summary>
         internal CloudCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudCapacity"/>. </summary>
         /// <param name="cpuCount"> CPUCount specifies the maximum number of CPUs that can be allocated in the cloud. </param>
         /// <param name="memoryMB"> MemoryMB specifies a memory usage limit in megabytes. </param>
         /// <param name="vmCount"> VMCount gives the max number of VMs that can be deployed in the cloud. </param>
-        internal CloudCapacity(long? cpuCount, long? memoryMB, long? vmCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudCapacity(long? cpuCount, long? memoryMB, long? vmCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CpuCount = cpuCount;
             MemoryMB = memoryMB;
             VmCount = vmCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> CPUCount specifies the maximum number of CPUs that can be allocated in the cloud. </summary>

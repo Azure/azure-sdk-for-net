@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the get usage operation. </summary>
     internal partial class AutomationUsageListResult
     {
-        /// <summary> Initializes a new instance of AutomationUsageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationUsageListResult"/>. </summary>
         internal AutomationUsageListResult()
         {
             Value = new ChangeTrackingList<AutomationUsage>();
         }
 
-        /// <summary> Initializes a new instance of AutomationUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationUsageListResult"/>. </summary>
         /// <param name="value"> Gets or sets usage. </param>
-        internal AutomationUsageListResult(IReadOnlyList<AutomationUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationUsageListResult(IReadOnlyList<AutomationUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets usage. </summary>

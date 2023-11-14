@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Properties required to create or update an endpoint. </summary>
     public partial class FrontDoorEndpointPatch
     {
-        /// <summary> Initializes a new instance of FrontDoorEndpointPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPatch"/>. </summary>
         public FrontDoorEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPatch"/>. </summary>
+        /// <param name="tags"> Endpoint tags. </param>
+        /// <param name="profileName"> The name of the profile which holds the endpoint. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorEndpointPatch(IDictionary<string, string> tags, string profileName, EnabledState? enabledState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            ProfileName = profileName;
+            EnabledState = enabledState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Endpoint tags. </summary>

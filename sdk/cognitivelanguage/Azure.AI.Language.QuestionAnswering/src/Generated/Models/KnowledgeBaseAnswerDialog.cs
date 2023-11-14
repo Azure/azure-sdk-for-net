@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Dialog associated with Answer. </summary>
     public partial class KnowledgeBaseAnswerDialog
     {
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerDialog"/>. </summary>
         internal KnowledgeBaseAnswerDialog()
         {
             Prompts = new ChangeTrackingList<KnowledgeBaseAnswerPrompt>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerDialog. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerDialog"/>. </summary>
         /// <param name="isContextOnly"> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </param>
         /// <param name="prompts"> List of prompts associated with the answer. </param>
-        internal KnowledgeBaseAnswerDialog(bool? isContextOnly, IReadOnlyList<KnowledgeBaseAnswerPrompt> prompts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBaseAnswerDialog(bool? isContextOnly, IReadOnlyList<KnowledgeBaseAnswerPrompt> prompts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsContextOnly = isContextOnly;
             Prompts = prompts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result. </summary>

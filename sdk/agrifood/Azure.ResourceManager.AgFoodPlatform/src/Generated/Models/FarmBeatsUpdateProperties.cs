@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     /// <summary> FarmBeats ARM Resource properties. </summary>
     public partial class FarmBeatsUpdateProperties
     {
-        /// <summary> Initializes a new instance of FarmBeatsUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FarmBeatsUpdateProperties"/>. </summary>
         public FarmBeatsUpdateProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FarmBeatsUpdateProperties"/>. </summary>
+        /// <param name="sensorIntegration"> Sensor integration request model. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block public traffic for an Azure FarmBeats resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FarmBeatsUpdateProperties(SensorIntegration sensorIntegration, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SensorIntegration = sensorIntegration;
+            PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sensor integration request model. </summary>

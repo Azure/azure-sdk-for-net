@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The ServiceAccountThrottlingMatchPattern. </summary>
     public partial class ServiceAccountThrottlingMatchPattern
     {
-        /// <summary> Initializes a new instance of ServiceAccountThrottlingMatchPattern. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingMatchPattern"/>. </summary>
         internal ServiceAccountThrottlingMatchPattern()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountThrottlingMatchPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingMatchPattern"/>. </summary>
         /// <param name="path"></param>
         /// <param name="method"></param>
-        internal ServiceAccountThrottlingMatchPattern(string path, string method)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountThrottlingMatchPattern(string path, string method, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             Method = method;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the path. </summary>

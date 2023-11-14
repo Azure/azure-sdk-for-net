@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class RoleEligibilityScheduleInstanceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleInstanceData"/>. </summary>
         internal RoleEligibilityScheduleInstanceData()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role eligibility schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleEligibilityScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleEligibilityScheduleId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.Authorization
             ConditionVersion = conditionVersion;
             CreatedOn = createdOn;
             ExpandedProperties = expandedProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role eligibility schedule scope. </summary>

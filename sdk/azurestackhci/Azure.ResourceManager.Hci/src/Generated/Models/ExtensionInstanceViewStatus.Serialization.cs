@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ExtensionInstanceViewStatus
+    public partial class ExtensionInstanceViewStatus : IUtf8JsonSerializable, IJsonModel<ExtensionInstanceViewStatus>
     {
-        internal static ExtensionInstanceViewStatus DeserializeExtensionInstanceViewStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtensionInstanceViewStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ExtensionInstanceViewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExtensionInstanceViewStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExtensionInstanceViewStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Level))
+            {
+                writer.WritePropertyName("level"u8);
+                writer.WriteStringValue(Level.Value.ToString());
+            }
+            if (Optional.IsDefined(DisplayStatus))
+            {
+                writer.WritePropertyName("displayStatus"u8);
+                writer.WriteStringValue(DisplayStatus);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(Time))
+            {
+                writer.WritePropertyName("time"u8);
+                writer.WriteStringValue(Time.Value, "O");
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExtensionInstanceViewStatus IJsonModel<ExtensionInstanceViewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtensionInstanceViewStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtensionInstanceViewStatus(document.RootElement, options);
+        }
+
+        internal static ExtensionInstanceViewStatus DeserializeExtensionInstanceViewStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +94,8 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -59,8 +131,38 @@ namespace Azure.ResourceManager.Hci.Models
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtensionInstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExtensionInstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExtensionInstanceViewStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtensionInstanceViewStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExtensionInstanceViewStatus IPersistableModel<ExtensionInstanceViewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExtensionInstanceViewStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExtensionInstanceViewStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExtensionInstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

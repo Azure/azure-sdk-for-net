@@ -6,15 +6,44 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Backend update parameters. </summary>
     public partial class ApiManagementBackendPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementBackendPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
         public ApiManagementBackendPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementBackendPatch"/>. </summary>
+        /// <param name="title"> Backend Title. </param>
+        /// <param name="description"> Backend Description. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="properties"> Backend Properties contract. </param>
+        /// <param name="credentials"> Backend Credentials Contract Properties. </param>
+        /// <param name="proxy"> Backend Proxy Contract Properties. </param>
+        /// <param name="tls"> Backend TLS Properties. </param>
+        /// <param name="uri"> Runtime Url of the Backend. </param>
+        /// <param name="protocol"> Backend communication protocol. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Title = title;
+            Description = description;
+            ResourceUri = resourceUri;
+            Properties = properties;
+            Credentials = credentials;
+            Proxy = proxy;
+            Tls = tls;
+            Uri = uri;
+            Protocol = protocol;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Backend Title. </summary>

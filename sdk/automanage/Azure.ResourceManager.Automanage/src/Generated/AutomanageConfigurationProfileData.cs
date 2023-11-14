@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Automanage
     /// </summary>
     public partial class AutomanageConfigurationProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
         public AutomanageConfigurationProfileData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,9 +36,16 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the configuration profile. </param>
-        internal AutomanageConfigurationProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationProfileProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomanageConfigurationProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationProfileProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileData"/> for deserialization. </summary>
+        internal AutomanageConfigurationProfileData()
+        {
         }
 
         /// <summary> Properties of the configuration profile. </summary>

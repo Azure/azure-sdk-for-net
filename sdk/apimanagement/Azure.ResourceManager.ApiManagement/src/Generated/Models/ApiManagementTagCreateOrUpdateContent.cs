@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameters supplied to Create/Update Tag operations. </summary>
     public partial class ApiManagementTagCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementTagCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementTagCreateOrUpdateContent"/>. </summary>
         public ApiManagementTagCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementTagCreateOrUpdateContent"/>. </summary>
+        /// <param name="displayName"> Tag name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementTagCreateOrUpdateContent(string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tag name. </summary>

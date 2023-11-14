@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Tag list representation. </summary>
     internal partial class TagListResult
     {
-        /// <summary> Initializes a new instance of TagListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TagListResult"/>. </summary>
         internal TagListResult()
         {
             Value = new ChangeTrackingList<TagContractData>();
         }
 
-        /// <summary> Initializes a new instance of TagListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal TagListResult(IReadOnlyList<TagContractData> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TagListResult(IReadOnlyList<TagContractData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page values. </summary>

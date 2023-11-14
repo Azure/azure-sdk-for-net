@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Web Chat channel. </summary>
     public partial class WebChatChannelProperties
     {
-        /// <summary> Initializes a new instance of WebChatChannelProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebChatChannelProperties"/>. </summary>
         public WebChatChannelProperties()
         {
             Sites = new ChangeTrackingList<WebChatSite>();
         }
 
-        /// <summary> Initializes a new instance of WebChatChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebChatChannelProperties"/>. </summary>
         /// <param name="webChatEmbedCode"> Web chat control embed code. </param>
         /// <param name="sites"> The list of Web Chat sites. </param>
-        internal WebChatChannelProperties(string webChatEmbedCode, IList<WebChatSite> sites)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebChatChannelProperties(string webChatEmbedCode, IList<WebChatSite> sites, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebChatEmbedCode = webChatEmbedCode;
             Sites = sites;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Web chat control embed code. </summary>

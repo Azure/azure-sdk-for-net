@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Customer Managed Identity. </summary>
     public partial class MyWorkbookUserAssignedIdentities
     {
-        /// <summary> Initializes a new instance of MyWorkbookUserAssignedIdentities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookUserAssignedIdentities"/>. </summary>
         public MyWorkbookUserAssignedIdentities()
         {
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookUserAssignedIdentities. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookUserAssignedIdentities"/>. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
-        internal MyWorkbookUserAssignedIdentities(string principalId, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MyWorkbookUserAssignedIdentities(string principalId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The principal ID of resource identity. </summary>

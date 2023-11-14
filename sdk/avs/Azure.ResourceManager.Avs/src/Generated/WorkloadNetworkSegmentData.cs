@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkSegmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/>. </summary>
         public WorkloadNetworkSegmentData()
         {
             PortVif = new ChangeTrackingList<WorkloadNetworkSegmentPortVif>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkSegmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkSegmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="status"> Segment status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, WorkloadNetworkSegmentStatus? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkSegmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string connectedGateway, WorkloadNetworkSegmentSubnet subnet, IReadOnlyList<WorkloadNetworkSegmentPortVif> portVif, WorkloadNetworkSegmentStatus? status, WorkloadNetworkSegmentProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ConnectedGateway = connectedGateway;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.Avs
             Status = status;
             ProvisioningState = provisioningState;
             Revision = revision;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name of the segment. </summary>

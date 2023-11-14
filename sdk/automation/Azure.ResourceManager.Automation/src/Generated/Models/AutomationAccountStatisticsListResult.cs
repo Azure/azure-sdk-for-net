@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list statistics operation. </summary>
     internal partial class AutomationAccountStatisticsListResult
     {
-        /// <summary> Initializes a new instance of AutomationAccountStatisticsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatisticsListResult"/>. </summary>
         internal AutomationAccountStatisticsListResult()
         {
             Value = new ChangeTrackingList<AutomationAccountStatistics>();
         }
 
-        /// <summary> Initializes a new instance of AutomationAccountStatisticsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatisticsListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of statistics. </param>
-        internal AutomationAccountStatisticsListResult(IReadOnlyList<AutomationAccountStatistics> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountStatisticsListResult(IReadOnlyList<AutomationAccountStatistics> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of statistics. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,12 +16,15 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Contains information about a certificate. </summary>
     public partial class BatchAccountCertificateCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchAccountCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
         public BatchAccountCertificateCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchAccountCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="data"> The maximum size is 10KB. </param>
         /// <param name="password"> This must not be specified if the certificate format is Cer. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprintString, BatchAccountCertificateFormat? format, BinaryData data, string password, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string thumbprintAlgorithm, string thumbprintString, BatchAccountCertificateFormat? format, BinaryData data, string password, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ThumbprintAlgorithm = thumbprintAlgorithm;
             ThumbprintString = thumbprintString;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
             Data = data;
             Password = password;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This must match the first portion of the certificate name. Currently required to be 'SHA1'. </summary>

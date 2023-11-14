@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The RecordingStateChanged. </summary>
     public partial class RecordingStateChanged
     {
-        /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecordingStateChanged"/>. </summary>
         internal RecordingStateChanged()
         {
         }
 
-        /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecordingStateChanged"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        internal RecordingStateChanged(string callConnectionId, string serverCallId, string correlationId, string recordingId, RecordingState state, DateTimeOffset? startDateTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecordingStateChanged(string callConnectionId, string serverCallId, string correlationId, string recordingId, RecordingState state, DateTimeOffset? startDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -32,6 +37,7 @@ namespace Azure.Communication.CallAutomation
             RecordingId = recordingId;
             State = state;
             StartDateTime = startDateTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The call recording id. </summary>
         public string RecordingId { get; }

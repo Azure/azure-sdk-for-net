@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Describes the parameters for Extension upgrade. </summary>
     public partial class ExtensionUpgradeContent
     {
-        /// <summary> Initializes a new instance of ExtensionUpgradeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionUpgradeContent"/>. </summary>
         public ExtensionUpgradeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionUpgradeContent"/>. </summary>
+        /// <param name="targetVersion"> Extension Upgrade Target Version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtensionUpgradeContent(string targetVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetVersion = targetVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Extension Upgrade Target Version. </summary>

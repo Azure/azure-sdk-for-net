@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Ingress configuration payload for Azure Spring Apps resource. </summary>
     internal partial class IngressConfig
     {
-        /// <summary> Initializes a new instance of IngressConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngressConfig"/>. </summary>
         public IngressConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of IngressConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressConfig"/>. </summary>
         /// <param name="readTimeoutInSeconds"> Ingress read time out in seconds. </param>
-        internal IngressConfig(int? readTimeoutInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngressConfig(int? readTimeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReadTimeoutInSeconds = readTimeoutInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Ingress read time out in seconds. </summary>

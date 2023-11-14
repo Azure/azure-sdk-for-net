@@ -5,26 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ChoiceResult. </summary>
     public partial class ChoiceResult
     {
-        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChoiceResult"/>. </summary>
         internal ChoiceResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChoiceResult"/>. </summary>
         /// <param name="label"> Label is the primary identifier for the choice detected. </param>
         /// <param name="recognizedPhrase">
         /// Phrases are set to the value if choice is selected via phrase detection.
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
-        internal ChoiceResult(string label, string recognizedPhrase)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChoiceResult(string label, string recognizedPhrase, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Label = label;
             RecognizedPhrase = recognizedPhrase;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Label is the primary identifier for the choice detected. </summary>

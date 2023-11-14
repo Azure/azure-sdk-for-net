@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class SlackChannelProperties : IUtf8JsonSerializable
+    public partial class SlackChannelProperties : IUtf8JsonSerializable, IJsonModel<SlackChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlackChannelProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SlackChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SlackChannelProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SlackChannelProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
@@ -41,10 +51,34 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("landingPageUrl"u8);
                 writer.WriteStringValue(LandingPageUri.AbsoluteUri);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RedirectAction))
+                {
+                    writer.WritePropertyName("redirectAction"u8);
+                    writer.WriteStringValue(RedirectAction);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastSubmissionId))
+                {
+                    writer.WritePropertyName("lastSubmissionId"u8);
+                    writer.WriteStringValue(LastSubmissionId);
+                }
+            }
             if (Optional.IsDefined(RegisterBeforeOAuthFlow))
             {
                 writer.WritePropertyName("registerBeforeOAuthFlow"u8);
                 writer.WriteBooleanValue(RegisterBeforeOAuthFlow.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsValidated))
+                {
+                    writer.WritePropertyName("IsValidated"u8);
+                    writer.WriteBooleanValue(IsValidated.Value);
+                }
             }
             if (Optional.IsDefined(SigningSecret))
             {
@@ -53,11 +87,40 @@ namespace Azure.ResourceManager.BotService.Models
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SlackChannelProperties DeserializeSlackChannelProperties(JsonElement element)
+        SlackChannelProperties IJsonModel<SlackChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSlackChannelProperties(document.RootElement, options);
+        }
+
+        internal static SlackChannelProperties DeserializeSlackChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +136,8 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> isValidated = default;
             Optional<string> signingSecret = default;
             bool isEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -142,8 +207,38 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SlackChannelProperties(clientId.Value, clientSecret.Value, verificationToken.Value, scopes.Value, landingPageUrl.Value, redirectAction.Value, lastSubmissionId.Value, Optional.ToNullable(registerBeforeOAuthFlow), Optional.ToNullable(isValidated), signingSecret.Value, isEnabled);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SlackChannelProperties(clientId.Value, clientSecret.Value, verificationToken.Value, scopes.Value, landingPageUrl.Value, redirectAction.Value, lastSubmissionId.Value, Optional.ToNullable(registerBeforeOAuthFlow), Optional.ToNullable(isValidated), signingSecret.Value, isEnabled, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SlackChannelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SlackChannelProperties IPersistableModel<SlackChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSlackChannelProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<SlackChannelProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> Azure resource created from deployment job. </summary>
     public partial class AssignmentJobCreatedResult : ResourceData
     {
-        /// <summary> Initializes a new instance of AssignmentJobCreatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentJobCreatedResult"/>. </summary>
         public AssignmentJobCreatedResult()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentJobCreatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentJobCreatedResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Additional properties in a dictionary. </param>
-        internal AssignmentJobCreatedResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentJobCreatedResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Additional properties in a dictionary. </summary>

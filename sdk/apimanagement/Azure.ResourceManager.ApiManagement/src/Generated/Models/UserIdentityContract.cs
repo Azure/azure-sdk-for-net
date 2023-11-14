@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> User identity details. </summary>
     public partial class UserIdentityContract
     {
-        /// <summary> Initializes a new instance of UserIdentityContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserIdentityContract"/>. </summary>
         public UserIdentityContract()
         {
         }
 
-        /// <summary> Initializes a new instance of UserIdentityContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserIdentityContract"/>. </summary>
         /// <param name="provider"> Identity provider name. </param>
         /// <param name="id"> Identifier value within provider. </param>
-        internal UserIdentityContract(string provider, string id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserIdentityContract(string provider, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Provider = provider;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identity provider name. </summary>

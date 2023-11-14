@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for holding participant from the call. </summary>
     internal partial class StartHoldMusicRequestInternal
     {
-        /// <summary> Initializes a new instance of StartHoldMusicRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StartHoldMusicRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> Participant to be held from the call. </param>
         /// <param name="playSourceInfo"> Prompt to play while in hold. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> or <paramref name="playSourceInfo"/> is null. </exception>
@@ -25,6 +29,26 @@ namespace Azure.Communication.CallAutomation
 
             TargetParticipant = targetParticipant;
             PlaySourceInfo = playSourceInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartHoldMusicRequestInternal"/>. </summary>
+        /// <param name="targetParticipant"> Participant to be held from the call. </param>
+        /// <param name="playSourceInfo"> Prompt to play while in hold. </param>
+        /// <param name="loop"> If the prompt will be looped or not. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StartHoldMusicRequestInternal(CommunicationIdentifierModel targetParticipant, PlaySourceInternal playSourceInfo, bool? loop, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetParticipant = targetParticipant;
+            PlaySourceInfo = playSourceInfo;
+            Loop = loop;
+            OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartHoldMusicRequestInternal"/> for deserialization. </summary>
+        internal StartHoldMusicRequestInternal()
+        {
         }
 
         /// <summary> Participant to be held from the call. </summary>

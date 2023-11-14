@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RequestHeader match conditions. </summary>
     public partial class RequestHeaderMatchCondition
     {
-        /// <summary> Initializes a new instance of RequestHeaderMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
         public RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, RequestHeaderOperator requestHeaderOperator)
@@ -24,14 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of RequestHeaderMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="selector"> Name of Header to be matched. </param>
         /// <param name="requestHeaderOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequestHeaderMatchCondition(RequestHeaderMatchConditionType conditionType, string selector, RequestHeaderOperator requestHeaderOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionType = conditionType;
             Selector = selector;
@@ -39,6 +44,12 @@ namespace Azure.ResourceManager.Cdn.Models
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestHeaderMatchCondition"/> for deserialization. </summary>
+        internal RequestHeaderMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

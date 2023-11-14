@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the runbook parameter type. </summary>
     public partial class RunbookParameterDefinition
     {
-        /// <summary> Initializes a new instance of RunbookParameterDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunbookParameterDefinition"/>. </summary>
         public RunbookParameterDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of RunbookParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookParameterDefinition"/>. </summary>
         /// <param name="runbookParameterType"> Gets or sets the type of the parameter. </param>
         /// <param name="isMandatory"> Gets or sets a Boolean value to indicate whether the parameter is mandatory or not. </param>
         /// <param name="position"> Get or sets the position of the parameter. </param>
         /// <param name="defaultValue"> Gets or sets the default value of parameter. </param>
-        internal RunbookParameterDefinition(string runbookParameterType, bool? isMandatory, int? position, string defaultValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunbookParameterDefinition(string runbookParameterType, bool? isMandatory, int? position, string defaultValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RunbookParameterType = runbookParameterType;
             IsMandatory = isMandatory;
             Position = position;
             DefaultValue = defaultValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the type of the parameter. </summary>

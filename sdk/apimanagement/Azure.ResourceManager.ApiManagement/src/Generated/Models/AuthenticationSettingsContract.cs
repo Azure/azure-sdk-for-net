@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API Authentication Settings. </summary>
     public partial class AuthenticationSettingsContract
     {
-        /// <summary> Initializes a new instance of AuthenticationSettingsContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
         public AuthenticationSettingsContract()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthenticationSettingsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationSettingsContract"/>. </summary>
         /// <param name="oAuth2"> OAuth2 Authentication settings. </param>
         /// <param name="openId"> OpenID Connect Authentication Settings. </param>
-        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthenticationSettingsContract(OAuth2AuthenticationSettingsContract oAuth2, OpenIdAuthenticationSettingsContract openId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OAuth2 = oAuth2;
             OpenId = openId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> OAuth2 Authentication settings. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Credentials to connect to VMMServer. </summary>
     public partial class VmmServerPropertiesCredentials
     {
-        /// <summary> Initializes a new instance of VmmServerPropertiesCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmmServerPropertiesCredentials"/>. </summary>
         public VmmServerPropertiesCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of VmmServerPropertiesCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmmServerPropertiesCredentials"/>. </summary>
         /// <param name="username"> Username to use to connect to VMMServer. </param>
         /// <param name="password"> Credentials to use to connect to VMMServer. </param>
-        internal VmmServerPropertiesCredentials(string username, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmmServerPropertiesCredentials(string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Username to use to connect to VMMServer. </summary>

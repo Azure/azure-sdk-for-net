@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ProfileResourceGetLogAnalyticsRankingsOptions. </summary>
     public partial class ProfileResourceGetLogAnalyticsRankingsOptions
     {
-        /// <summary> Initializes a new instance of ProfileResourceGetLogAnalyticsRankingsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/>. </summary>
         /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
         /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
         /// <param name="maxRanking"> The Integer to use. </param>
@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.Cdn.Models
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             CustomDomains = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsRankingsOptions()
+        {
         }
 
         /// <summary> The ArrayOfLogRanking to use. </summary>

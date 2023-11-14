@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Savings plan utilization. </summary>
     public partial class BillingBenefitsSavingsPlanUtilization
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilization"/>. </summary>
         internal BillingBenefitsSavingsPlanUtilization()
         {
             Aggregates = new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>();
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilization"/>. </summary>
         /// <param name="trend"> The number of days trend for a savings plan. </param>
         /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>
-        internal BillingBenefitsSavingsPlanUtilization(string trend, IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanUtilization(string trend, IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Trend = trend;
             Aggregates = aggregates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of days trend for a savings plan. </summary>

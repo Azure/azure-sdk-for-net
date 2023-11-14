@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for Cookies match conditions. </summary>
     public partial class CookiesMatchCondition
     {
-        /// <summary> Initializes a new instance of CookiesMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="cookiesOperator"> Describes operator to be matched. </param>
         public CookiesMatchCondition(CookiesMatchConditionType conditionType, CookiesOperator cookiesOperator)
@@ -24,14 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of CookiesMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="selector"> Name of Cookies to be matched. </param>
         /// <param name="cookiesOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal CookiesMatchCondition(CookiesMatchConditionType conditionType, string selector, CookiesOperator cookiesOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CookiesMatchCondition(CookiesMatchConditionType conditionType, string selector, CookiesOperator cookiesOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionType = conditionType;
             Selector = selector;
@@ -39,6 +44,12 @@ namespace Azure.ResourceManager.Cdn.Models
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CookiesMatchCondition"/> for deserialization. </summary>
+        internal CookiesMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

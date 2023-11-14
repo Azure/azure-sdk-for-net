@@ -5,15 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnUsage
+    public partial class CdnUsage : IUtf8JsonSerializable, IJsonModel<CdnUsage>
     {
-        internal static CdnUsage DeserializeCdnUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnUsage>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CdnUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CdnUsage>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CdnUsage>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    writer.WritePropertyName("resourceType"u8);
+                    writer.WriteStringValue(ResourceType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    writer.WritePropertyName("unit"u8);
+                    writer.WriteStringValue(Unit.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentValue))
+                {
+                    writer.WritePropertyName("currentValue"u8);
+                    writer.WriteNumberValue(CurrentValue.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Limit))
+                {
+                    writer.WritePropertyName("limit"u8);
+                    writer.WriteNumberValue(Limit.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CdnUsage IJsonModel<CdnUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CdnUsage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnUsage(document.RootElement, options);
+        }
+
+        internal static CdnUsage DeserializeCdnUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +100,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<CdnUsageUnit> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -56,8 +136,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     limit = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CdnUsage(resourceType.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CdnUsage(resourceType.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CdnUsage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CdnUsage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CdnUsage IPersistableModel<CdnUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CdnUsage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCdnUsage(document.RootElement, options);
+        }
+
+        string IPersistableModel<CdnUsage>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

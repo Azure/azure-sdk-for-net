@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The ResourcesResponseEndpointsPropertiesItemsItem. </summary>
     public partial class ResourcesResponseEndpointsPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of ResourcesResponseEndpointsPropertiesItemsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
         internal ResourcesResponseEndpointsPropertiesItemsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourcesResponseEndpointsPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="endpointId"></param>
         /// <param name="history"></param>
-        internal ResourcesResponseEndpointsPropertiesItemsItem(string id, string name, string endpointId, bool? history)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesResponseEndpointsPropertiesItemsItem(string id, string name, string endpointId, bool? history, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             EndpointId = endpointId;
             History = history;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the id. </summary>

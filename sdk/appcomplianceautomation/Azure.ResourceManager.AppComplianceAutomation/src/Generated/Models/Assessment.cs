@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the assessment. </summary>
     public partial class Assessment
     {
-        /// <summary> Initializes a new instance of Assessment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Assessment"/>. </summary>
         internal Assessment()
         {
             ResourceList = new ChangeTrackingList<AssessmentResourceContent>();
         }
 
-        /// <summary> Initializes a new instance of Assessment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Assessment"/>. </summary>
         /// <param name="name"> The name of the assessment. </param>
         /// <param name="severity"> The severity level of this assessment. </param>
         /// <param name="description"> The description of the assessment. </param>
@@ -27,7 +31,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="isPass"> Indicates whether all the resource(s) are compliant. </param>
         /// <param name="policyId"> The policy id mapping to this assessment. </param>
         /// <param name="resourceList"> List of resource assessments. </param>
-        internal Assessment(string name, AssessmentSeverity? severity, string description, string remediation, IsPass? isPass, string policyId, IReadOnlyList<AssessmentResourceContent> resourceList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Assessment(string name, AssessmentSeverity? severity, string description, string remediation, IsPass? isPass, string policyId, IReadOnlyList<AssessmentResourceContent> resourceList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Severity = severity;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             IsPass = isPass;
             PolicyId = policyId;
             ResourceList = resourceList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the assessment. </summary>

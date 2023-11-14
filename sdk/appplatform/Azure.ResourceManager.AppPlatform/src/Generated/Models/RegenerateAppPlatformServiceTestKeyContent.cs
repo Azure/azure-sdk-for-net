@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Regenerate test key request payload. </summary>
     public partial class RegenerateAppPlatformServiceTestKeyContent
     {
-        /// <summary> Initializes a new instance of RegenerateAppPlatformServiceTestKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegenerateAppPlatformServiceTestKeyContent"/>. </summary>
         /// <param name="keyType"> Type of the test key. </param>
         public RegenerateAppPlatformServiceTestKeyContent(AppPlatformServiceTestKeyType keyType)
         {
             KeyType = keyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegenerateAppPlatformServiceTestKeyContent"/>. </summary>
+        /// <param name="keyType"> Type of the test key. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegenerateAppPlatformServiceTestKeyContent(AppPlatformServiceTestKeyType keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyType = keyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegenerateAppPlatformServiceTestKeyContent"/> for deserialization. </summary>
+        internal RegenerateAppPlatformServiceTestKeyContent()
+        {
         }
 
         /// <summary> Type of the test key. </summary>

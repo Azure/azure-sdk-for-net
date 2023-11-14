@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class ArcExtensionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArcExtensionData"/>. </summary>
         public ArcExtensionData()
         {
             PerNodeExtensionDetails = new ChangeTrackingList<PerNodeExtensionState>();
         }
 
-        /// <summary> Initializes a new instance of ArcExtensionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcExtensionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> Protected settings (may contain secrets). </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
-        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArcExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, ArcExtensionAggregateState? aggregateState, IReadOnlyList<PerNodeExtensionState> perNodeExtensionDetails, string forceUpdateTag, string publisher, string arcExtensionType, string typeHandlerVersion, bool? shouldAutoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AggregateState = aggregateState;
@@ -54,6 +58,7 @@ namespace Azure.ResourceManager.Hci
             Settings = settings;
             ProtectedSettings = protectedSettings;
             EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the Extension proxy resource. </summary>

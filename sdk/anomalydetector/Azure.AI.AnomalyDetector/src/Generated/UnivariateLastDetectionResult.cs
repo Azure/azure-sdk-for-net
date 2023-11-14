@@ -5,12 +5,19 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Response of the last anomaly detection. </summary>
     public partial class UnivariateLastDetectionResult
     {
-        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -50,9 +57,10 @@ namespace Azure.AI.AnomalyDetector
             IsAnomaly = isAnomaly;
             IsNegativeAnomaly = isNegativeAnomaly;
             IsPositiveAnomaly = isPositiveAnomaly;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of UnivariateLastDetectionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
         /// found.
@@ -86,7 +94,8 @@ namespace Azure.AI.AnomalyDetector
         /// Severity score for the last input point. The larger the value is, the more
         /// severe the anomaly is. For normal points, the severity is always 0.
         /// </param>
-        internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnivariateLastDetectionResult(int period, int suggestedWindow, float expectedValue, float upperMargin, float lowerMargin, bool isAnomaly, bool isNegativeAnomaly, bool isPositiveAnomaly, float? severity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Period = period;
             SuggestedWindow = suggestedWindow;
@@ -97,6 +106,12 @@ namespace Azure.AI.AnomalyDetector
             IsNegativeAnomaly = isNegativeAnomaly;
             IsPositiveAnomaly = isPositiveAnomaly;
             Severity = severity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnivariateLastDetectionResult"/> for deserialization. </summary>
+        internal UnivariateLastDetectionResult()
+        {
         }
 
         /// <summary>

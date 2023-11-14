@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class DiagnosticContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticContractData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticContractData"/>. </summary>
         public DiagnosticContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of DiagnosticContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +42,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
         /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
-        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AlwaysLog = alwaysLog;
             LoggerId = loggerId;
@@ -49,6 +55,7 @@ namespace Azure.ResourceManager.ApiManagement
             Verbosity = verbosity;
             OperationNameFormat = operationNameFormat;
             Metrics = metrics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies for what type of messages sampling settings should not apply. </summary>

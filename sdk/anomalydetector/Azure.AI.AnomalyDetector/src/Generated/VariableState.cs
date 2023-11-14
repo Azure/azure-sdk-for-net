@@ -6,30 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Variable status. </summary>
     public partial class VariableState
     {
-        /// <summary> Initializes a new instance of VariableState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VariableState"/>. </summary>
         public VariableState()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of VariableState. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableState"/>. </summary>
         /// <param name="variable"> Variable name in variable states. </param>
         /// <param name="filledNARatio"> Proportion of missing values that need to be filled by fillNAMethod. </param>
         /// <param name="effectiveCount"> Number of effective data points before fillNAMethod is applied. </param>
         /// <param name="firstTimestamp"> First valid time stamp with a value of input data. </param>
         /// <param name="lastTimestamp"> Last valid time stamp with a value of input data. </param>
-        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Variable = variable;
             FilledNARatio = filledNARatio;
             EffectiveCount = effectiveCount;
             FirstTimestamp = firstTimestamp;
             LastTimestamp = lastTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Variable name in variable states. </summary>

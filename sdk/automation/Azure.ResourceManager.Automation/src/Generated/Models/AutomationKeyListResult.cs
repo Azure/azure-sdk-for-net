@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The AutomationKeyListResult. </summary>
     internal partial class AutomationKeyListResult
     {
-        /// <summary> Initializes a new instance of AutomationKeyListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationKeyListResult"/>. </summary>
         internal AutomationKeyListResult()
         {
             Keys = new ChangeTrackingList<AutomationKey>();
         }
 
-        /// <summary> Initializes a new instance of AutomationKeyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationKeyListResult"/>. </summary>
         /// <param name="keys"> Lists the automation keys. </param>
-        internal AutomationKeyListResult(IReadOnlyList<AutomationKey> keys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationKeyListResult(IReadOnlyList<AutomationKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keys = keys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Lists the automation keys. </summary>

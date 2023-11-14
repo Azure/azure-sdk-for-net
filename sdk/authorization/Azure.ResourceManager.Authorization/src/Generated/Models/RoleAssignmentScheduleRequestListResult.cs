@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role assignment schedule request list operation result. </summary>
     internal partial class RoleAssignmentScheduleRequestListResult
     {
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleRequestListResult"/>. </summary>
         internal RoleAssignmentScheduleRequestListResult()
         {
             Value = new ChangeTrackingList<RoleAssignmentScheduleRequestData>();
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentScheduleRequestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleRequestListResult"/>. </summary>
         /// <param name="value"> Role assignment schedule request list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal RoleAssignmentScheduleRequestListResult(IReadOnlyList<RoleAssignmentScheduleRequestData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentScheduleRequestListResult(IReadOnlyList<RoleAssignmentScheduleRequestData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Role assignment schedule request list. </summary>

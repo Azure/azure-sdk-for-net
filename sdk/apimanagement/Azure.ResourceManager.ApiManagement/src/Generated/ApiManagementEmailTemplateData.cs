@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementEmailTemplateData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementEmailTemplateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateData"/>. </summary>
         public ApiManagementEmailTemplateData()
         {
             Parameters = new ChangeTrackingList<EmailTemplateParametersContractProperties>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementEmailTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementEmailTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="description"> Description of the Email Template. </param>
         /// <param name="isDefault"> Whether the template is the default template provided by API Management or has been edited. </param>
         /// <param name="parameters"> Email Template Parameter values. </param>
-        internal ApiManagementEmailTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string body, string title, string description, bool? isDefault, IList<EmailTemplateParametersContractProperties> parameters) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementEmailTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subject, string body, string title, string description, bool? isDefault, IList<EmailTemplateParametersContractProperties> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Subject = subject;
             Body = body;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.ApiManagement
             Description = description;
             IsDefault = isDefault;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Subject of the Template. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Collection compose of certificate resources list and a possible link for next page. </summary>
     internal partial class CertificateResourceList
     {
-        /// <summary> Initializes a new instance of CertificateResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertificateResourceList"/>. </summary>
         internal CertificateResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformCertificateData>();
         }
 
-        /// <summary> Initializes a new instance of CertificateResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateResourceList"/>. </summary>
         /// <param name="value"> The certificate resources list. </param>
         /// <param name="nextLink"> The link to next page of certificate list. </param>
-        internal CertificateResourceList(IReadOnlyList<AppPlatformCertificateData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateResourceList(IReadOnlyList<AppPlatformCertificateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The certificate resources list. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Resource request payload of Spring Cloud Gateway. </summary>
     public partial class AppPlatformGatewayResourceRequirements
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayResourceRequirements. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayResourceRequirements"/>. </summary>
         public AppPlatformGatewayResourceRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayResourceRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayResourceRequirements"/>. </summary>
         /// <param name="cpu"> Cpu allocated to each Spring Cloud Gateway instance. </param>
         /// <param name="memory"> Memory allocated to each Spring Cloud Gateway instance. </param>
-        internal AppPlatformGatewayResourceRequirements(string cpu, string memory)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayResourceRequirements(string cpu, string memory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cpu = cpu;
             Memory = memory;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Cpu allocated to each Spring Cloud Gateway instance. </summary>
