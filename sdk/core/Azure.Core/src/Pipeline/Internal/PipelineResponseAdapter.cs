@@ -22,7 +22,7 @@ namespace Azure.Core
         public override string ReasonPhrase => _response.ReasonPhrase;
 
         // TODO: implement
-        public override PipelineMessageHeaders Headers => throw new NotSupportedException();
+        public override MessageHeaders Headers => throw new NotSupportedException();
 
         public override Stream? ContentStream
         {

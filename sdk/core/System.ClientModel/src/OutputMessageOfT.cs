@@ -1,23 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
-using System.Diagnostics;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 
 namespace System.ClientModel;
 
-public class Result<T> : NullableResult<T>
+public class OutputMessage<T> : NullableOutputMessage<T>
 {
-    internal Result(T value, PipelineResponse response) : base(value, response)
+    internal OutputMessage(T value, PipelineResponse response) : base(value, response)
     {
-        Debug.Assert(value != null);
-        Debug.Assert(response != null);
+        if (value is null) throw new ArgumentNullException(nameof(value));
+        if (response is null) throw new ArgumentNullException(nameof(response));
 
-        // Null values are required to use NullableResult<T>
+        // Null values are required to use NullableOutputMessage<T>
         if (value is null)
         {
-            throw new ArgumentException("Result<T> contract guarantees that Result<T>.Value is non-null.", nameof(value));
+            throw new ArgumentException("OutputMessage<T> contract guarantees that OutputMessage<T>.Value is non-null.", nameof(value));
         }
     }
 

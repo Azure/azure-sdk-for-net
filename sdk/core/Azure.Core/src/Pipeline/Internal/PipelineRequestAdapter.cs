@@ -43,7 +43,7 @@ namespace Azure.Core
         }
 
         // TODO: implement this, will need a new adapter for headers
-        public override PipelineMessageHeaders Headers => throw new NotSupportedException();
+        public override MessageHeaders Headers => throw new NotSupportedException();
 
         public override void Dispose()
         {

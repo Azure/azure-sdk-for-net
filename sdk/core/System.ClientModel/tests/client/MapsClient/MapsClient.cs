@@ -43,7 +43,7 @@ public class MapsClient
         _pipeline = ClientPipeline.Create(options);
     }
 
-    public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
+    public virtual OutputMessage<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
@@ -51,9 +51,9 @@ public class MapsClient
             new RequestOptions() { CancellationToken = cancellationToken } :
             new RequestOptions();
 
-        OutputMessage result = GetCountryCode(ipAddress.ToString(), options);
+        OutputMessage output = GetCountryCode(ipAddress.ToString(), options);
 
-        PipelineResponse response = result.GetRawResponse();
+        PipelineResponse response = output.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
         return OutputMessage.FromValue(value, response);

@@ -24,7 +24,7 @@ public class OpenAIClientTests
             InternalNonAzureModelName = "text-davinci-003"
         };
 
-        Result<Completions> result = client.GetCompletions(
+        OutputMessage<Completions> result = client.GetCompletions(
             "<unused in public service>",
             input);
         Choice choice = result.Value.Choices[0];

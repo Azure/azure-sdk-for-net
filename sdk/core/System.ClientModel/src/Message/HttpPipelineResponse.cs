@@ -33,7 +33,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override string ReasonPhrase
         => _httpResponse.ReasonPhrase ?? string.Empty;
 
-    public override PipelineMessageHeaders Headers
+    public override MessageHeaders Headers
         => new PipelineResponseHeaders(_httpResponse, _httpResponseContent);
 
     //public override MessageBody? Body
@@ -89,7 +89,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
             //
             // 1. If the content is buffered, we want it to remain available to the
             // client for model deserialization and in case the end user of the
-            // client calls Result.GetRawResponse. So, we don't dispose it.
+            // client calls OutputMessage.GetRawResponse. So, we don't dispose it.
             //
             // If the content is buffered, we assume that the entity that did the
             // buffering took responsibility for disposing the network stream.

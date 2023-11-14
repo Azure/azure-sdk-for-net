@@ -40,7 +40,7 @@ public class OpenAIClient
         _pipeline = ClientPipeline.Create(options);
     }
 
-    public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+    public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
     {
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
