@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SSIS package execution log location. </summary>
     public partial class SsisLogLocation
     {
-        /// <summary> Initializes a new instance of SsisLogLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisLogLocation"/>. </summary>
         /// <param name="logPath"> The SSIS package execution log path. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of SSIS log location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logPath"/> is null. </exception>
@@ -25,17 +29,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of SsisLogLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisLogLocation"/>. </summary>
         /// <param name="logPath"> The SSIS package execution log path. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of SSIS log location. </param>
         /// <param name="accessCredential"> The package execution log access credential. </param>
         /// <param name="logRefreshInterval"> Specifies the interval to refresh log. The default interval is 5 minutes. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
-        internal SsisLogLocation(object logPath, SsisLogLocationType type, SsisAccessCredential accessCredential, object logRefreshInterval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisLogLocation(object logPath, SsisLogLocationType type, SsisAccessCredential accessCredential, object logRefreshInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogPath = logPath;
             Type = type;
             AccessCredential = accessCredential;
             LogRefreshInterval = logRefreshInterval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisLogLocation"/> for deserialization. </summary>
+        internal SsisLogLocation()
+        {
         }
 
         /// <summary> The SSIS package execution log path. Type: string (or Expression with resultType string). </summary>

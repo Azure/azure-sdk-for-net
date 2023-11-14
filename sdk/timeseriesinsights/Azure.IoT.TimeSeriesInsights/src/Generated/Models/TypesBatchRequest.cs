@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to perform a single operation on a batch of time series types. Exactly one of "get", "put" or "delete" must be set. </summary>
     internal partial class TypesBatchRequest
     {
-        /// <summary> Initializes a new instance of TypesBatchRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TypesBatchRequest"/>. </summary>
         public TypesBatchRequest()
         {
             Put = new ChangeTrackingList<TimeSeriesType>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TypesBatchRequest"/>. </summary>
+        /// <param name="get"> Definition of what time series types to return. </param>
+        /// <param name="put"> Definition of what time series types to update or create. </param>
+        /// <param name="delete"> Definition of what time series types to delete. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TypesBatchRequest(TypesRequestBatchGetOrDelete @get, IList<TimeSeriesType> put, TypesRequestBatchGetOrDelete delete, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Get = @get;
+            Put = put;
+            Delete = delete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Definition of what time series types to return. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SSIS execution parameter. </summary>
     public partial class SsisExecutionParameter
     {
-        /// <summary> Initializes a new instance of SsisExecutionParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionParameter"/>. </summary>
         /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SsisExecutionParameter(object value)
@@ -21,6 +25,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionParameter"/>. </summary>
+        /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisExecutionParameter(object value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionParameter"/> for deserialization. </summary>
+        internal SsisExecutionParameter()
+        {
         }
 
         /// <summary> SSIS package execution parameter value. Type: string (or Expression with resultType string). </summary>

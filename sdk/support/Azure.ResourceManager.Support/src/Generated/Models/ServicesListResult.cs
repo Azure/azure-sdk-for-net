@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Support;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Collection of Service resources. </summary>
     internal partial class ServicesListResult
     {
-        /// <summary> Initializes a new instance of ServicesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServicesListResult"/>. </summary>
         internal ServicesListResult()
         {
             Value = new ChangeTrackingList<SupportAzureServiceData>();
         }
 
-        /// <summary> Initializes a new instance of ServicesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicesListResult"/>. </summary>
         /// <param name="value"> List of Service resources. </param>
-        internal ServicesListResult(IReadOnlyList<SupportAzureServiceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicesListResult(IReadOnlyList<SupportAzureServiceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Service resources. </summary>

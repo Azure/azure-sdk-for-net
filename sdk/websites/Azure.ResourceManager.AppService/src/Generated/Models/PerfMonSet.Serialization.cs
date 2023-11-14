@@ -7,15 +7,89 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class PerfMonSet
+    public partial class PerfMonSet : IUtf8JsonSerializable, IJsonModel<PerfMonSet>
     {
-        internal static PerfMonSet DeserializePerfMonSet(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerfMonSet>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PerfMonSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PerfMonSet>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PerfMonSet>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsDefined(TimeGrain))
+            {
+                writer.WritePropertyName("timeGrain"u8);
+                writer.WriteStringValue(TimeGrain);
+            }
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PerfMonSet IJsonModel<PerfMonSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PerfMonSet)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePerfMonSet(document.RootElement, options);
+        }
+
+        internal static PerfMonSet DeserializePerfMonSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +99,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<string> timeGrain = default;
             Optional<IReadOnlyList<PerfMonSample>> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -69,8 +145,38 @@ namespace Azure.ResourceManager.AppService.Models
                     values = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PerfMonSet(name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToList(values));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PerfMonSet(name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToList(values), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PerfMonSet>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PerfMonSet)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PerfMonSet IPersistableModel<PerfMonSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PerfMonSet)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePerfMonSet(document.RootElement, options);
+        }
+
+        string IPersistableModel<PerfMonSet>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Defines the response of a provision trigger dependency operation. </summary>
     public partial class TriggerDependencyProvisioningStatus
     {
-        /// <summary> Initializes a new instance of TriggerDependencyProvisioningStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyProvisioningStatus"/>. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="provisioningStatus"> Provisioning status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="provisioningStatus"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             TriggerName = triggerName;
             ProvisioningStatus = provisioningStatus;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyProvisioningStatus"/>. </summary>
+        /// <param name="triggerName"> Trigger name. </param>
+        /// <param name="provisioningStatus"> Provisioning status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerDependencyProvisioningStatus(string triggerName, string provisioningStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TriggerName = triggerName;
+            ProvisioningStatus = provisioningStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyProvisioningStatus"/> for deserialization. </summary>
+        internal TriggerDependencyProvisioningStatus()
+        {
         }
 
         /// <summary> Trigger name. </summary>

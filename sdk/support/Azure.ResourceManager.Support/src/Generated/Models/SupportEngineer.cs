@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Support engineer information. </summary>
     internal partial class SupportEngineer
     {
-        /// <summary> Initializes a new instance of SupportEngineer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportEngineer"/>. </summary>
         public SupportEngineer()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportEngineer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportEngineer"/>. </summary>
         /// <param name="emailAddress"> Email address of the Azure Support engineer assigned to the support ticket. </param>
-        internal SupportEngineer(string emailAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportEngineer(string emailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EmailAddress = emailAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Email address of the Azure Support engineer assigned to the support ticket. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Information that enables communication between the IoT Hub and the IoT device - allowing this edge module to act as a transparent gateway between the two. </summary>
     public partial class IotHubDeviceConnection
     {
-        /// <summary> Initializes a new instance of IotHubDeviceConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubDeviceConnection"/>. </summary>
         /// <param name="deviceId"> The name of the IoT device configured and managed in IoT Hub. (case-sensitive). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> is null. </exception>
         public IotHubDeviceConnection(string deviceId)
@@ -23,17 +27,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             DeviceId = deviceId;
         }
 
-        /// <summary> Initializes a new instance of IotHubDeviceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDeviceConnection"/>. </summary>
         /// <param name="deviceId"> The name of the IoT device configured and managed in IoT Hub. (case-sensitive). </param>
         /// <param name="credentials">
         /// IoT device connection credentials. Currently IoT device symmetric key credentials are supported.
         /// Please note <see cref="CredentialsBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HttpHeaderCredentials"/>, <see cref="SymmetricKeyCredentials"/> and <see cref="UsernamePasswordCredentials"/>.
         /// </param>
-        internal IotHubDeviceConnection(string deviceId, CredentialsBase credentials)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDeviceConnection(string deviceId, CredentialsBase credentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceId = deviceId;
             Credentials = credentials;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubDeviceConnection"/> for deserialization. </summary>
+        internal IotHubDeviceConnection()
+        {
         }
 
         /// <summary> The name of the IoT device configured and managed in IoT Hub. (case-sensitive). </summary>

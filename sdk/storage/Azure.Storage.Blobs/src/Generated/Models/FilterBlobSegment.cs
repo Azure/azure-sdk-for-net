@@ -15,7 +15,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The result of a Filter Blobs API call. </summary>
     internal partial class FilterBlobSegment
     {
-        /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="where"></param>
         /// <param name="blobs"></param>
@@ -31,17 +34,24 @@ namespace Azure.Storage.Blobs.Models
             Blobs = blobs.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="where"></param>
         /// <param name="blobs"></param>
         /// <param name="nextMarker"></param>
-        internal FilterBlobSegment(string serviceEndpoint, string @where, IReadOnlyList<FilterBlobItem> blobs, string nextMarker)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilterBlobSegment(string serviceEndpoint, string @where, IReadOnlyList<FilterBlobItem> blobs, string nextMarker, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
             Blobs = blobs;
             NextMarker = nextMarker;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/> for deserialization. </summary>
+        internal FilterBlobSegment()
+        {
         }
 
         /// <summary> Gets the service endpoint. </summary>

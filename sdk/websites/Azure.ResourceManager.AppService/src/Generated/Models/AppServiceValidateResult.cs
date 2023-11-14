@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Describes the result of resource validation. </summary>
     public partial class AppServiceValidateResult
     {
-        /// <summary> Initializes a new instance of AppServiceValidateResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceValidateResult"/>. </summary>
         internal AppServiceValidateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceValidateResult"/>. </summary>
         /// <param name="status"> Result of validation. </param>
         /// <param name="error"> Error details for the case when validation fails. </param>
-        internal AppServiceValidateResult(string status, ValidateResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceValidateResult(string status, ValidateResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of validation. </summary>

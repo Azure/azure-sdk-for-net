@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Virtual Network Profile. </summary>
     internal partial class VirtualNetworkProfile
     {
-        /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProfile"/>. </summary>
         public VirtualNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkProfile"/>. </summary>
         /// <param name="computeSubnetId"> Subnet ID used for computes in workspace. </param>
-        internal VirtualNetworkProfile(string computeSubnetId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkProfile(string computeSubnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputeSubnetId = computeSubnetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Subnet ID used for computes in workspace. </summary>

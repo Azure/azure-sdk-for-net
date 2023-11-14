@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Sync Session status object. </summary>
     public partial class ServerEndpointSyncSessionStatus
     {
-        /// <summary> Initializes a new instance of ServerEndpointSyncSessionStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncSessionStatus"/>. </summary>
         internal ServerEndpointSyncSessionStatus()
         {
             FilesNotSyncingErrors = new ChangeTrackingList<ServerEndpointFilesNotSyncingError>();
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointSyncSessionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncSessionStatus"/>. </summary>
         /// <param name="lastSyncResult"> Last sync result (HResult). </param>
         /// <param name="lastSyncTimestamp"> Last sync timestamp. </param>
         /// <param name="lastSyncSuccessTimestamp"> Last sync success timestamp. </param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="transientFilesNotSyncingCount"> Count of transient files not syncing. </param>
         /// <param name="filesNotSyncingErrors"> Array of per-item errors coming from the last sync session. </param>
         /// <param name="lastSyncMode"> Sync mode. </param>
-        internal ServerEndpointSyncSessionStatus(int? lastSyncResult, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastSyncSuccessTimestamp, long? lastSyncPerItemErrorCount, long? persistentFilesNotSyncingCount, long? transientFilesNotSyncingCount, IReadOnlyList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors, ServerEndpointSyncMode? lastSyncMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEndpointSyncSessionStatus(int? lastSyncResult, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastSyncSuccessTimestamp, long? lastSyncPerItemErrorCount, long? persistentFilesNotSyncingCount, long? transientFilesNotSyncingCount, IReadOnlyList<ServerEndpointFilesNotSyncingError> filesNotSyncingErrors, ServerEndpointSyncMode? lastSyncMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastSyncResult = lastSyncResult;
             LastSyncTimestamp = lastSyncTimestamp;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             TransientFilesNotSyncingCount = transientFilesNotSyncingCount;
             FilesNotSyncingErrors = filesNotSyncingErrors;
             LastSyncMode = lastSyncMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Last sync result (HResult). </summary>

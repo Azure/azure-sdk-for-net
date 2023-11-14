@@ -5,28 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class LivePipelineSetRequest : IUtf8JsonSerializable
+    public partial class LivePipelineSetRequest : IUtf8JsonSerializable, IJsonModel<LivePipelineSetRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LivePipelineSetRequest>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LivePipelineSetRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LivePipelineSetRequest>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LivePipelineSetRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("livePipeline"u8);
             writer.WriteObjectValue(LivePipeline);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("methodName"u8);
+                writer.WriteStringValue(MethodName);
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LivePipelineSetRequest DeserializeLivePipelineSetRequest(JsonElement element)
+        LivePipelineSetRequest IJsonModel<LivePipelineSetRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LivePipelineSetRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLivePipelineSetRequest(document.RootElement, options);
+        }
+
+        internal static LivePipelineSetRequest DeserializeLivePipelineSetRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +79,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             LivePipeline livePipeline = default;
             string methodName = default;
             Optional<string> apiVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livePipeline"u8))
@@ -51,8 +98,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LivePipelineSetRequest(methodName, apiVersion.Value, livePipeline);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LivePipelineSetRequest(methodName, apiVersion.Value, serializedAdditionalRawData, livePipeline);
         }
+
+        BinaryData IPersistableModel<LivePipelineSetRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LivePipelineSetRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LivePipelineSetRequest IPersistableModel<LivePipelineSetRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LivePipelineSetRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLivePipelineSetRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<LivePipelineSetRequest>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

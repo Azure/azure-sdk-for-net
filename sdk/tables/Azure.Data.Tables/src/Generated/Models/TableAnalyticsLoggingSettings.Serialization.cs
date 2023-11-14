@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
@@ -12,7 +16,7 @@ using Azure.Data.Tables;
 
 namespace Azure.Data.Tables.Models
 {
-    public partial class TableAnalyticsLoggingSettings : IXmlSerializable
+    public partial class TableAnalyticsLoggingSettings : IXmlSerializable, IPersistableModel<TableAnalyticsLoggingSettings>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -33,7 +37,7 @@ namespace Azure.Data.Tables.Models
             writer.WriteEndElement();
         }
 
-        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element)
+        internal static TableAnalyticsLoggingSettings DeserializeTableAnalyticsLoggingSettings(XElement element, ModelReaderWriterOptions options = null)
         {
             string version = default;
             bool delete = default;
@@ -60,7 +64,43 @@ namespace Azure.Data.Tables.Models
             {
                 retentionPolicy = TableRetentionPolicy.DeserializeTableRetentionPolicy(retentionPolicyElement);
             }
-            return new TableAnalyticsLoggingSettings(version, delete, read, write, retentionPolicy);
+            return new TableAnalyticsLoggingSettings(version, delete, read, write, retentionPolicy, default);
         }
+
+        BinaryData IPersistableModel<TableAnalyticsLoggingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<TableAnalyticsLoggingSettings>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableAnalyticsLoggingSettings IPersistableModel<TableAnalyticsLoggingSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableAnalyticsLoggingSettings)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeTableAnalyticsLoggingSettings(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<TableAnalyticsLoggingSettings>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

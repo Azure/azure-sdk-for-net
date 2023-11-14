@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Options for controlling the validation of TLS endpoints. </summary>
     public partial class TlsValidationOptions
     {
-        /// <summary> Initializes a new instance of TlsValidationOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TlsValidationOptions"/>. </summary>
         public TlsValidationOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of TlsValidationOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TlsValidationOptions"/>. </summary>
         /// <param name="ignoreHostname"> When set to 'true' causes the certificate subject name validation to be skipped. Default is 'false'. </param>
         /// <param name="ignoreSignature"> When set to 'true' causes the certificate chain trust validation to be skipped. Default is 'false'. </param>
-        internal TlsValidationOptions(string ignoreHostname, string ignoreSignature)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TlsValidationOptions(string ignoreHostname, string ignoreSignature, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IgnoreHostname = ignoreHostname;
             IgnoreSignature = ignoreSignature;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> When set to 'true' causes the certificate subject name validation to be skipped. Default is 'false'. </summary>

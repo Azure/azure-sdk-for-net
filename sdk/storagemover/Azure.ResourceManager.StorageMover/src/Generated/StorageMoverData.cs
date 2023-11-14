@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class StorageMoverData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageMoverData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageMoverData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of StorageMoverData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="location"> The location. </param>
         /// <param name="description"> A description for the Storage Mover. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal StorageMoverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMoverData"/> for deserialization. </summary>
+        internal StorageMoverData()
+        {
         }
 
         /// <summary> A description for the Storage Mover. </summary>

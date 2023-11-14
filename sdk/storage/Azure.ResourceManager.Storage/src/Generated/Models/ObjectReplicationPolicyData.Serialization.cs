@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +16,59 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    public partial class ObjectReplicationPolicyData : IUtf8JsonSerializable
+    public partial class ObjectReplicationPolicyData : IUtf8JsonSerializable, IJsonModel<ObjectReplicationPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObjectReplicationPolicyData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ObjectReplicationPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ObjectReplicationPolicyData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ObjectReplicationPolicyData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PolicyId))
+                {
+                    writer.WritePropertyName("policyId"u8);
+                    writer.WriteStringValue(PolicyId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EnabledOn))
+                {
+                    writer.WritePropertyName("enabledTime"u8);
+                    writer.WriteStringValue(EnabledOn.Value, "O");
+                }
+            }
             if (Optional.IsDefined(SourceAccount))
             {
                 writer.WritePropertyName("sourceAccount"u8);
@@ -42,11 +90,40 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ObjectReplicationPolicyData DeserializeObjectReplicationPolicyData(JsonElement element)
+        ObjectReplicationPolicyData IJsonModel<ObjectReplicationPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeObjectReplicationPolicyData(document.RootElement, options);
+        }
+
+        internal static ObjectReplicationPolicyData DeserializeObjectReplicationPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -60,6 +137,8 @@ namespace Azure.ResourceManager.Storage
             Optional<string> sourceAccount = default;
             Optional<string> destinationAccount = default;
             Optional<IList<ObjectReplicationPolicyRule>> rules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,8 +215,38 @@ namespace Azure.ResourceManager.Storage
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, Optional.ToList(rules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, Optional.ToList(rules), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ObjectReplicationPolicyData IPersistableModel<ObjectReplicationPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ObjectReplicationPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeObjectReplicationPolicyData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ObjectReplicationPolicyData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App stack major version. </summary>
     public partial class FunctionAppMajorVersion
     {
-        /// <summary> Initializes a new instance of FunctionAppMajorVersion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMajorVersion"/>. </summary>
         internal FunctionAppMajorVersion()
         {
             MinorVersions = new ChangeTrackingList<FunctionAppMinorVersion>();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppMajorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMajorVersion"/>. </summary>
         /// <param name="displayText"> Function App stack major version (display only). </param>
         /// <param name="value"> Function App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
-        internal FunctionAppMajorVersion(string displayText, string value, IReadOnlyList<FunctionAppMinorVersion> minorVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppMajorVersion(string displayText, string value, IReadOnlyList<FunctionAppMinorVersion> minorVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayText = displayText;
             Value = value;
             MinorVersions = minorVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Function App stack major version (display only). </summary>

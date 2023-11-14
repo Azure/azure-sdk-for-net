@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectRegistration
     {
-        /// <summary> Initializes a new instance of OpenIdConnectRegistration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectRegistration"/>. </summary>
         public OpenIdConnectRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of OpenIdConnectRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIdConnectRegistration"/>. </summary>
         /// <param name="clientId"> The client id of the custom Open ID Connect provider. </param>
         /// <param name="clientCredential"> The authentication credentials of the custom Open ID Connect provider. </param>
         /// <param name="openIdConnectConfiguration"> The configuration settings of the endpoints used for the custom Open ID Connect provider. </param>
-        internal OpenIdConnectRegistration(string clientId, OpenIdConnectClientCredential clientCredential, OpenIdConnectConfig openIdConnectConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OpenIdConnectRegistration(string clientId, OpenIdConnectClientCredential clientCredential, OpenIdConnectConfig openIdConnectConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientCredential = clientCredential;
             OpenIdConnectConfiguration = openIdConnectConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The client id of the custom Open ID Connect provider. </summary>

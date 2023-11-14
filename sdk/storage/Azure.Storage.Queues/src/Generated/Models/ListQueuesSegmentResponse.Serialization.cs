@@ -5,14 +5,53 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
+using System.Xml;
 using System.Xml.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
-    internal partial class ListQueuesSegmentResponse
+    internal partial class ListQueuesSegmentResponse : IXmlSerializable, IPersistableModel<ListQueuesSegmentResponse>
     {
-        internal static ListQueuesSegmentResponse DeserializeListQueuesSegmentResponse(XElement element)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
+        {
+            writer.WriteStartElement(nameHint ?? "EnumerationResults");
+            writer.WriteStartAttribute("ServiceEndpoint");
+            writer.WriteValue(ServiceEndpoint);
+            writer.WriteEndAttribute();
+            writer.WriteStartElement("Prefix");
+            writer.WriteValue(Prefix);
+            writer.WriteEndElement();
+            if (Optional.IsDefined(Marker))
+            {
+                writer.WriteStartElement("Marker");
+                writer.WriteValue(Marker);
+                writer.WriteEndElement();
+            }
+            writer.WriteStartElement("MaxResults");
+            writer.WriteValue(MaxResults);
+            writer.WriteEndElement();
+            writer.WriteStartElement("NextMarker");
+            writer.WriteValue(NextMarker);
+            writer.WriteEndElement();
+            if (Optional.IsCollectionDefined(QueueItems))
+            {
+                writer.WriteStartElement("Queues");
+                foreach (var item in QueueItems)
+                {
+                    writer.WriteObjectValue(item, "Queue");
+                }
+                writer.WriteEndElement();
+            }
+            writer.WriteEndElement();
+        }
+
+        internal static ListQueuesSegmentResponse DeserializeListQueuesSegmentResponse(XElement element, ModelReaderWriterOptions options = null)
         {
             string serviceEndpoint = default;
             string prefix = default;
@@ -49,7 +88,43 @@ namespace Azure.Storage.Queues.Models
                 }
                 queueItems = array;
             }
-            return new ListQueuesSegmentResponse(serviceEndpoint, prefix, marker, maxResults, queueItems, nextMarker);
+            return new ListQueuesSegmentResponse(serviceEndpoint, prefix, marker, maxResults, queueItems, nextMarker, default);
         }
+
+        BinaryData IPersistableModel<ListQueuesSegmentResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ListQueuesSegmentResponse>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ListQueuesSegmentResponse IPersistableModel<ListQueuesSegmentResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ListQueuesSegmentResponse)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeListQueuesSegmentResponse(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<ListQueuesSegmentResponse>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

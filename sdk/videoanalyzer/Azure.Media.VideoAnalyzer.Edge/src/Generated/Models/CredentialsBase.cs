@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class CredentialsBase
     {
-        /// <summary> Initializes a new instance of CredentialsBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CredentialsBase"/>. </summary>
         protected CredentialsBase()
         {
         }
 
-        /// <summary> Initializes a new instance of CredentialsBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="CredentialsBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
-        internal CredentialsBase(string type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CredentialsBase(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type discriminator for the derived types. </summary>

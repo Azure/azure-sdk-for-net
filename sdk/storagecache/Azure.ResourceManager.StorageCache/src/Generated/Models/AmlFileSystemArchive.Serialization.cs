@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemArchive
+    public partial class AmlFileSystemArchive : IUtf8JsonSerializable, IJsonModel<AmlFileSystemArchive>
     {
-        internal static AmlFileSystemArchive DeserializeAmlFileSystemArchive(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemArchive>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AmlFileSystemArchive>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AmlFileSystemArchive>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AmlFileSystemArchive>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FilesystemPath))
+                {
+                    writer.WritePropertyName("filesystemPath"u8);
+                    writer.WriteStringValue(FilesystemPath);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteObjectValue(Status);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AmlFileSystemArchive IJsonModel<AmlFileSystemArchive>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmlFileSystemArchive(document.RootElement, options);
+        }
+
+        internal static AmlFileSystemArchive DeserializeAmlFileSystemArchive(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> filesystemPath = default;
             Optional<AmlFileSystemArchiveStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filesystemPath"u8))
@@ -36,8 +100,38 @@ namespace Azure.ResourceManager.StorageCache.Models
                     status = AmlFileSystemArchiveStatus.DeserializeAmlFileSystemArchiveStatus(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AmlFileSystemArchive(filesystemPath.Value, status.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AmlFileSystemArchive(filesystemPath.Value, status.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AmlFileSystemArchive>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AmlFileSystemArchive IPersistableModel<AmlFileSystemArchive>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmlFileSystemArchive)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAmlFileSystemArchive(document.RootElement, options);
+        }
+
+        string IPersistableModel<AmlFileSystemArchive>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

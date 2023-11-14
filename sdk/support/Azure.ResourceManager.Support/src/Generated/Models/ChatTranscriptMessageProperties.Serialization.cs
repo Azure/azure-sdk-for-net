@@ -6,16 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class ChatTranscriptMessageProperties : IUtf8JsonSerializable
+    public partial class ChatTranscriptMessageProperties : IUtf8JsonSerializable, IJsonModel<ChatTranscriptMessageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatTranscriptMessageProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ChatTranscriptMessageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ChatTranscriptMessageProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ChatTranscriptMessageProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ContentType))
+                {
+                    writer.WritePropertyName("contentType"u8);
+                    writer.WriteStringValue(ContentType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CommunicationDirection))
+                {
+                    writer.WritePropertyName("communicationDirection"u8);
+                    writer.WriteStringValue(CommunicationDirection.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(Sender))
             {
                 writer.WritePropertyName("sender"u8);
@@ -23,11 +49,48 @@ namespace Azure.ResourceManager.Support.Models
             }
             writer.WritePropertyName("body"u8);
             writer.WriteStringValue(Body);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdDate"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ChatTranscriptMessageProperties DeserializeChatTranscriptMessageProperties(JsonElement element)
+        ChatTranscriptMessageProperties IJsonModel<ChatTranscriptMessageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatTranscriptMessageProperties(document.RootElement, options);
+        }
+
+        internal static ChatTranscriptMessageProperties DeserializeChatTranscriptMessageProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +100,8 @@ namespace Azure.ResourceManager.Support.Models
             Optional<string> sender = default;
             string body = default;
             Optional<DateTimeOffset> createdDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentType"u8))
@@ -76,8 +141,38 @@ namespace Azure.ResourceManager.Support.Models
                     createdDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ChatTranscriptMessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ChatTranscriptMessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ChatTranscriptMessageProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ChatTranscriptMessageProperties IPersistableModel<ChatTranscriptMessageProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeChatTranscriptMessageProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ChatTranscriptMessageProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

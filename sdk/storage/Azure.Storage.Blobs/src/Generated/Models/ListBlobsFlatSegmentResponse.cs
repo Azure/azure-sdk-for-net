@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An enumeration of blobs. </summary>
     internal partial class ListBlobsFlatSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListBlobsFlatSegmentResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="segment"></param>
@@ -29,7 +33,7 @@ namespace Azure.Storage.Blobs.Models
             Segment = segment;
         }
 
-        /// <summary> Initializes a new instance of ListBlobsFlatSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="prefix"></param>
@@ -37,7 +41,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="maxResults"></param>
         /// <param name="segment"></param>
         /// <param name="nextMarker"></param>
-        internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, BlobFlatListSegment segment, string nextMarker)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, BlobFlatListSegment segment, string nextMarker, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
@@ -46,6 +51,12 @@ namespace Azure.Storage.Blobs.Models
             MaxResults = maxResults;
             Segment = segment;
             NextMarker = nextMarker;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/> for deserialization. </summary>
+        internal ListBlobsFlatSegmentResponse()
+        {
         }
 
         /// <summary> Gets the service endpoint. </summary>

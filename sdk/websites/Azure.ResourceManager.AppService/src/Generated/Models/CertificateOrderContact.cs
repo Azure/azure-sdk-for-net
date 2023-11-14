@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The CertificateOrderContact. </summary>
     public partial class CertificateOrderContact
     {
-        /// <summary> Initializes a new instance of CertificateOrderContact. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertificateOrderContact"/>. </summary>
         internal CertificateOrderContact()
         {
         }
 
-        /// <summary> Initializes a new instance of CertificateOrderContact. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateOrderContact"/>. </summary>
         /// <param name="email"></param>
         /// <param name="nameFirst"></param>
         /// <param name="nameLast"></param>
         /// <param name="phone"></param>
-        internal CertificateOrderContact(string email, string nameFirst, string nameLast, string phone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateOrderContact(string email, string nameFirst, string nameLast, string phone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Email = email;
             NameFirst = nameFirst;
             NameLast = nameLast;
             Phone = phone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the email. </summary>

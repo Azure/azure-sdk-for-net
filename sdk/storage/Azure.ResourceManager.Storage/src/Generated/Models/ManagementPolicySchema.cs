@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>
     internal partial class ManagementPolicySchema
     {
-        /// <summary> Initializes a new instance of ManagementPolicySchema. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicySchema"/>. </summary>
         /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
         public ManagementPolicySchema(IEnumerable<ManagementPolicyRule> rules)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.Storage.Models
             Rules = rules.ToList();
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicySchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicySchema"/>. </summary>
         /// <param name="rules"> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </param>
-        internal ManagementPolicySchema(IList<ManagementPolicyRule> rules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicySchema(IList<ManagementPolicyRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicySchema"/> for deserialization. </summary>
+        internal ManagementPolicySchema()
+        {
         }
 
         /// <summary> The Storage Account ManagementPolicies Rules. See more details in: https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts. </summary>

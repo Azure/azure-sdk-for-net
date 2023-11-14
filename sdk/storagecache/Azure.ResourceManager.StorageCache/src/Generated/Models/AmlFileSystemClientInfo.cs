@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> AML file system client information. </summary>
     public partial class AmlFileSystemClientInfo
     {
-        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemClientInfo"/>. </summary>
         internal AmlFileSystemClientInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemClientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemClientInfo"/>. </summary>
         /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
         /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
         /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
         /// <param name="containerStorageInterface"> Container Storage Interface information for the AML file system. </param>
-        internal AmlFileSystemClientInfo(string mgsAddress, string mountCommand, string lustreVersion, AmlFileSystemContainerStorageInterface containerStorageInterface)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemClientInfo(string mgsAddress, string mountCommand, string lustreVersion, AmlFileSystemContainerStorageInterface containerStorageInterface, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MgsAddress = mgsAddress;
             MountCommand = mountCommand;
             LustreVersion = lustreVersion;
             ContainerStorageInterface = containerStorageInterface;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </summary>

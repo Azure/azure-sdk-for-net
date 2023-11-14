@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> An error response from the Virtual Instance for SAP Workload service. </summary>
     internal partial class SapVirtualInstanceError
     {
-        /// <summary> Initializes a new instance of SapVirtualInstanceError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceError"/>. </summary>
         internal SapVirtualInstanceError()
         {
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceError"/>. </summary>
         /// <param name="properties"> The Virtual Instance for SAP error body. </param>
-        internal SapVirtualInstanceError(SapVirtualInstanceErrorDetail properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapVirtualInstanceError(SapVirtualInstanceErrorDetail properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Virtual Instance for SAP error body. </summary>

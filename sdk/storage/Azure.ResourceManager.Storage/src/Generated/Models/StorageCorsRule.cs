@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Specifies a CORS rule for the Blob service. </summary>
     public partial class StorageCorsRule
     {
-        /// <summary> Initializes a new instance of StorageCorsRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCorsRule"/>. </summary>
         /// <param name="allowedOrigins"> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </param>
         /// <param name="allowedMethods"> Required if CorsRule element is present. A list of HTTP methods that are allowed to be executed by the origin. </param>
         /// <param name="maxAgeInSeconds"> Required if CorsRule element is present. The number of seconds that the client/browser should cache a preflight response. </param>
@@ -36,19 +39,26 @@ namespace Azure.ResourceManager.Storage.Models
             AllowedHeaders = allowedHeaders.ToList();
         }
 
-        /// <summary> Initializes a new instance of StorageCorsRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCorsRule"/>. </summary>
         /// <param name="allowedOrigins"> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </param>
         /// <param name="allowedMethods"> Required if CorsRule element is present. A list of HTTP methods that are allowed to be executed by the origin. </param>
         /// <param name="maxAgeInSeconds"> Required if CorsRule element is present. The number of seconds that the client/browser should cache a preflight response. </param>
         /// <param name="exposedHeaders"> Required if CorsRule element is present. A list of response headers to expose to CORS clients. </param>
         /// <param name="allowedHeaders"> Required if CorsRule element is present. A list of headers allowed to be part of the cross-origin request. </param>
-        internal StorageCorsRule(IList<string> allowedOrigins, IList<CorsRuleAllowedMethod> allowedMethods, int maxAgeInSeconds, IList<string> exposedHeaders, IList<string> allowedHeaders)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCorsRule(IList<string> allowedOrigins, IList<CorsRuleAllowedMethod> allowedMethods, int maxAgeInSeconds, IList<string> exposedHeaders, IList<string> allowedHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowedOrigins = allowedOrigins;
             AllowedMethods = allowedMethods;
             MaxAgeInSeconds = maxAgeInSeconds;
             ExposedHeaders = exposedHeaders;
             AllowedHeaders = allowedHeaders;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageCorsRule"/> for deserialization. </summary>
+        internal StorageCorsRule()
+        {
         }
 
         /// <summary> Required if CorsRule element is present. A list of origin domains that will be allowed via CORS, or "*" to allow all domains. </summary>

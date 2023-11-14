@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The usage names that can be used; currently limited to StorageAccount. </summary>
     public partial class StorageUsageName
     {
-        /// <summary> Initializes a new instance of StorageUsageName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageUsageName"/>. </summary>
         internal StorageUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageUsageName"/>. </summary>
         /// <param name="value"> Gets a string describing the resource name. </param>
         /// <param name="localizedValue"> Gets a localized string describing the resource name. </param>
-        internal StorageUsageName(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageUsageName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets a string describing the resource name. </summary>

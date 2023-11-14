@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of snapshots which can be used to revert an app to a previous time. </summary>
     internal partial class AppSnapshotListResult
     {
-        /// <summary> Initializes a new instance of AppSnapshotListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppSnapshotListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AppSnapshotListResult(IEnumerable<AppSnapshot> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AppSnapshotListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppSnapshotListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal AppSnapshotListResult(IReadOnlyList<AppSnapshot> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppSnapshotListResult(IReadOnlyList<AppSnapshot> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppSnapshotListResult"/> for deserialization. </summary>
+        internal AppSnapshotListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

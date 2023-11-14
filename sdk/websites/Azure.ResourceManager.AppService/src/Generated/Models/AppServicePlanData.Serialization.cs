@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -15,10 +17,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServicePlanData : IUtf8JsonSerializable
+    public partial class AppServicePlanData : IUtf8JsonSerializable, IJsonModel<AppServicePlanData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServicePlanData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppServicePlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppServicePlanData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppServicePlanData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -48,12 +57,51 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(WorkerTierName))
             {
                 writer.WritePropertyName("workerTierName"u8);
                 writer.WriteStringValue(WorkerTierName);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToSerialString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Subscription))
+                {
+                    writer.WritePropertyName("subscription"u8);
+                    writer.WriteStringValue(Subscription);
+                }
             }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
@@ -65,6 +113,22 @@ namespace Azure.ResourceManager.AppService
                 else
                 {
                     writer.WriteNull("hostingEnvironmentProfile");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MaximumNumberOfWorkers))
+                {
+                    writer.WritePropertyName("maximumNumberOfWorkers"u8);
+                    writer.WriteNumberValue(MaximumNumberOfWorkers.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(GeoRegion))
+                {
+                    writer.WritePropertyName("geoRegion"u8);
+                    writer.WriteStringValue(GeoRegion);
                 }
             }
             if (Optional.IsDefined(IsPerSiteScaling))
@@ -81,6 +145,14 @@ namespace Azure.ResourceManager.AppService
             {
                 writer.WritePropertyName("maximumElasticWorkerCount"u8);
                 writer.WriteNumberValue(MaximumElasticWorkerCount.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfSites))
+                {
+                    writer.WritePropertyName("numberOfSites"u8);
+                    writer.WriteNumberValue(NumberOfSites.Value);
+                }
             }
             if (Optional.IsDefined(IsSpot))
             {
@@ -111,6 +183,14 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("freeOfferExpirationTime");
                 }
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceGroup))
+                {
+                    writer.WritePropertyName("resourceGroup"u8);
+                    writer.WriteStringValue(ResourceGroup);
+                }
+            }
             if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved"u8);
@@ -136,6 +216,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("targetWorkerSizeId"u8);
                 writer.WriteNumberValue(TargetWorkerSizeId.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                }
+            }
             if (Optional.IsDefined(KubeEnvironmentProfile))
             {
                 if (KubeEnvironmentProfile != null)
@@ -154,11 +242,40 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServicePlanData DeserializeAppServicePlanData(JsonElement element)
+        AppServicePlanData IJsonModel<AppServicePlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServicePlanData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServicePlanData(document.RootElement, options);
+        }
+
+        internal static AppServicePlanData DeserializeAppServicePlanData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -194,6 +311,8 @@ namespace Azure.ResourceManager.AppService
             Optional<ProvisioningState> provisioningState = default;
             Optional<KubeEnvironmentProfile> kubeEnvironmentProfile = default;
             Optional<bool> zoneRedundant = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -460,8 +579,38 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServicePlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServicePlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServicePlanData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServicePlanData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServicePlanData IPersistableModel<AppServicePlanData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServicePlanData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServicePlanData(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppServicePlanData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

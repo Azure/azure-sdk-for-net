@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Parameter group. </summary>
     public partial class ShareFileRequestConditions
     {
-        /// <summary> Initializes a new instance of ShareFileRequestConditions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareFileRequestConditions"/>. </summary>
         public ShareFileRequestConditions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShareFileRequestConditions"/>. </summary>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareFileRequestConditions(string leaseId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LeaseId = leaseId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

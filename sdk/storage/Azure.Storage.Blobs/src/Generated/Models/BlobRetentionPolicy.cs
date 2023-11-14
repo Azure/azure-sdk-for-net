@@ -5,20 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> the retention policy which determines how long the associated data should persist. </summary>
     public partial class BlobRetentionPolicy
     {
-        /// <summary> Initializes a new instance of BlobRetentionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobRetentionPolicy"/>. </summary>
         /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
         /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
         /// <param name="allowPermanentDelete"> Indicates whether permanent delete is allowed on this storage account. </param>
-        internal BlobRetentionPolicy(bool enabled, int? days, bool? allowPermanentDelete)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobRetentionPolicy(bool enabled, int? days, bool? allowPermanentDelete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Days = days;
             AllowPermanentDelete = allowPermanentDelete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether a retention policy is enabled for the storage service. </summary>

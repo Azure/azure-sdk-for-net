@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Support;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Collection of ProblemClassification resources. </summary>
     internal partial class ProblemClassificationsListResult
     {
-        /// <summary> Initializes a new instance of ProblemClassificationsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationsListResult"/>. </summary>
         internal ProblemClassificationsListResult()
         {
             Value = new ChangeTrackingList<ProblemClassificationData>();
         }
 
-        /// <summary> Initializes a new instance of ProblemClassificationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationsListResult"/>. </summary>
         /// <param name="value"> List of ProblemClassification resources. </param>
-        internal ProblemClassificationsListResult(IReadOnlyList<ProblemClassificationData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProblemClassificationsListResult(IReadOnlyList<ProblemClassificationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of ProblemClassification resources. </summary>

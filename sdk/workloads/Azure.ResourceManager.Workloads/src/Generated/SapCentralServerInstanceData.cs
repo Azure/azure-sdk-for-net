@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,14 +20,17 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapCentralServerInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapCentralServerInstanceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapCentralServerInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SapCentralServerInstanceData(AzureLocation location) : base(location)
         {
             VmDetails = new ChangeTrackingList<CentralServerVmDetails>();
         }
 
-        /// <summary> Initializes a new instance of SapCentralServerInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCentralServerInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +51,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the errors related to SAP Central Services Instance resource. </param>
-        internal SapCentralServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, MessageServerProperties messageServerProperties, EnqueueServerProperties enqueueServerProperties, GatewayServerProperties gatewayServerProperties, EnqueueReplicationServerProperties enqueueReplicationServerProperties, string kernelVersion, string kernelPatch, SubResource loadBalancerDetails, IReadOnlyList<CentralServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapCentralServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, MessageServerProperties messageServerProperties, EnqueueServerProperties enqueueServerProperties, GatewayServerProperties gatewayServerProperties, EnqueueReplicationServerProperties enqueueReplicationServerProperties, string kernelVersion, string kernelPatch, SubResource loadBalancerDetails, IReadOnlyList<CentralServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceNo = instanceNo;
             SubnetId = subnetId;
@@ -63,6 +68,12 @@ namespace Azure.ResourceManager.Workloads
             Health = health;
             ProvisioningState = provisioningState;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapCentralServerInstanceData"/> for deserialization. </summary>
+        internal SapCentralServerInstanceData()
+        {
         }
 
         /// <summary> The central services instance number. </summary>

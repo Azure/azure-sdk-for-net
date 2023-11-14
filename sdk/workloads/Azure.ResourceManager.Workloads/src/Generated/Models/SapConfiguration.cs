@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class SapConfiguration
     {
-        /// <summary> Initializes a new instance of SapConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapConfiguration"/>. </summary>
         protected SapConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SapConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
-        internal SapConfiguration(SapConfigurationType configurationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapConfiguration(SapConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The configuration Type. </summary>

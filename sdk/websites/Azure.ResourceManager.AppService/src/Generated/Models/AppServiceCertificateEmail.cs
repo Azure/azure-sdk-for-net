@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> SSL certificate email. </summary>
     public partial class AppServiceCertificateEmail : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceCertificateEmail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateEmail"/>. </summary>
         public AppServiceCertificateEmail()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceCertificateEmail. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceCertificateEmail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,11 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="emailId"> Email id. </param>
         /// <param name="timeStamp"> Time stamp. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceCertificateEmail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailId, DateTimeOffset? timeStamp, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceCertificateEmail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string emailId, DateTimeOffset? timeStamp, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             EmailId = emailId;
             TimeStamp = timeStamp;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Email id. </summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Azure Active directory provider. </summary>
     public partial class AppServiceAadProvider
     {
-        /// <summary> Initializes a new instance of AppServiceAadProvider. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceAadProvider"/>. </summary>
         public AppServiceAadProvider()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceAadProvider. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceAadProvider"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Azure Active Directory app registration. </param>
         /// <param name="login"> The configuration settings of the Azure Active Directory login flow. </param>
@@ -25,13 +31,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// This is an internal flag primarily intended to support the Azure Management Portal. Users should not
         /// read or write to this property.
         /// </param>
-        internal AppServiceAadProvider(bool? isEnabled, AppServiceAadRegistration registration, AppServiceAadLoginFlow login, AppServiceAadValidation validation, bool? isAutoProvisioned)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceAadProvider(bool? isEnabled, AppServiceAadRegistration registration, AppServiceAadLoginFlow login, AppServiceAadValidation validation, bool? isAutoProvisioned, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
             Validation = validation;
             IsAutoProvisioned = isAutoProvisioned;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

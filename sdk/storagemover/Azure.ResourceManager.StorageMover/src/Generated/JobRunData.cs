@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.StorageMover
     /// </summary>
     public partial class JobRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of JobRunData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobRunData"/>. </summary>
         public JobRunData()
         {
         }
 
-        /// <summary> Initializes a new instance of JobRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +60,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="jobDefinitionProperties"> Copy of parent Job Definition's properties at time of Job Run creation. </param>
         /// <param name="error"> Error details. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             ScanStatus = scanStatus;
@@ -86,6 +91,7 @@ namespace Azure.ResourceManager.StorageMover
             JobDefinitionProperties = jobDefinitionProperties;
             Error = error;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the job execution. </summary>

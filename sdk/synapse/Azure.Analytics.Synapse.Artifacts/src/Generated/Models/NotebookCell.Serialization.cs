@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(NotebookCellConverter))]
-    public partial class NotebookCell : IUtf8JsonSerializable
+    public partial class NotebookCell : IUtf8JsonSerializable, IJsonModel<NotebookCell>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotebookCell>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NotebookCell>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NotebookCell>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NotebookCell>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("cell_type"u8);
             writer.WriteStringValue(CellType);
@@ -60,8 +69,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static NotebookCell DeserializeNotebookCell(JsonElement element)
+        NotebookCell IJsonModel<NotebookCell>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotebookCell)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotebookCell(document.RootElement, options);
+        }
+
+        internal static NotebookCell DeserializeNotebookCell(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -124,6 +147,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new NotebookCell(cellType, metadata, source, attachments.Value, Optional.ToList(outputs), additionalProperties);
         }
+
+        BinaryData IPersistableModel<NotebookCell>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotebookCell)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NotebookCell IPersistableModel<NotebookCell>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotebookCell)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNotebookCell(document.RootElement, options);
+        }
+
+        string IPersistableModel<NotebookCell>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class NotebookCellConverter : JsonConverter<NotebookCell>
         {

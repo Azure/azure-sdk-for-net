@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class PipelineTopologyProperties : IUtf8JsonSerializable
+    public partial class PipelineTopologyProperties : IUtf8JsonSerializable, IJsonModel<PipelineTopologyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineTopologyProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PipelineTopologyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PipelineTopologyProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PipelineTopologyProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
@@ -61,11 +71,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PipelineTopologyProperties DeserializePipelineTopologyProperties(JsonElement element)
+        PipelineTopologyProperties IJsonModel<PipelineTopologyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineTopologyProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePipelineTopologyProperties(document.RootElement, options);
+        }
+
+        internal static PipelineTopologyProperties DeserializePipelineTopologyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +114,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<IList<SourceNodeBase>> sources = default;
             Optional<IList<ProcessorNodeBase>> processors = default;
             Optional<IList<SinkNodeBase>> sinks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -138,8 +179,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     sinks = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PipelineTopologyProperties(description.Value, Optional.ToList(parameters), Optional.ToList(sources), Optional.ToList(processors), Optional.ToList(sinks));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PipelineTopologyProperties(description.Value, Optional.ToList(parameters), Optional.ToList(sources), Optional.ToList(processors), Optional.ToList(sinks), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PipelineTopologyProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineTopologyProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PipelineTopologyProperties IPersistableModel<PipelineTopologyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PipelineTopologyProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePipelineTopologyProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<PipelineTopologyProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

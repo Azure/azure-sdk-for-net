@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(TarReadSettingsConverter))]
-    public partial class TarReadSettings : IUtf8JsonSerializable
+    public partial class TarReadSettings : IUtf8JsonSerializable, IJsonModel<TarReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TarReadSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TarReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TarReadSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TarReadSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
@@ -34,8 +43,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static TarReadSettings DeserializeTarReadSettings(JsonElement element)
+        TarReadSettings IJsonModel<TarReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TarReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTarReadSettings(document.RootElement, options);
+        }
+
+        internal static TarReadSettings DeserializeTarReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +88,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new TarReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder.Value);
         }
+
+        BinaryData IPersistableModel<TarReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TarReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TarReadSettings IPersistableModel<TarReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TarReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTarReadSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<TarReadSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class TarReadSettingsConverter : JsonConverter<TarReadSettings>
         {

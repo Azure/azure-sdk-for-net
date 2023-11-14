@@ -5,20 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
-    public partial class CanceledSubscriptionId
+    public partial class CanceledSubscriptionId : IUtf8JsonSerializable, IJsonModel<CanceledSubscriptionId>
     {
-        internal static CanceledSubscriptionId DeserializeCanceledSubscriptionId(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CanceledSubscriptionId>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CanceledSubscriptionId>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CanceledSubscriptionId>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CanceledSubscriptionId>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CanceledSubscriptionId IJsonModel<CanceledSubscriptionId>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCanceledSubscriptionId(document.RootElement, options);
+        }
+
+        internal static CanceledSubscriptionId DeserializeCanceledSubscriptionId(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> subscriptionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -26,8 +82,38 @@ namespace Azure.ResourceManager.Subscription.Models
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CanceledSubscriptionId(subscriptionId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CanceledSubscriptionId(subscriptionId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CanceledSubscriptionId>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CanceledSubscriptionId IPersistableModel<CanceledSubscriptionId>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CanceledSubscriptionId)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCanceledSubscriptionId(document.RootElement, options);
+        }
+
+        string IPersistableModel<CanceledSubscriptionId>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

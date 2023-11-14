@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Properties of a container. </summary>
     internal partial class ContainerPropertiesInternal
     {
-        /// <summary> Initializes a new instance of ContainerPropertiesInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
@@ -25,7 +29,7 @@ namespace Azure.Storage.Blobs.Models
             Etag = etag;
         }
 
-        /// <summary> Initializes a new instance of ContainerPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <param name="leaseStatus"></param>
@@ -39,7 +43,8 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="deletedTime"></param>
         /// <param name="remainingRetentionDays"></param>
         /// <param name="isImmutableStorageWithVersioningEnabled"> Indicates if version level worm is enabled on this container. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -54,6 +59,12 @@ namespace Azure.Storage.Blobs.Models
             DeletedTime = deletedTime;
             RemainingRetentionDays = remainingRetentionDays;
             IsImmutableStorageWithVersioningEnabled = isImmutableStorageWithVersioningEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/> for deserialization. </summary>
+        internal ContainerPropertiesInternal()
+        {
         }
 
         /// <summary> Gets the last modified. </summary>

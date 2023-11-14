@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.StoragePool
     /// </summary>
     public partial class DiskPoolIscsiTargetData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetData"/>. </summary>
         /// <param name="aclMode"> Mode for Target connectivity. </param>
         /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.StoragePool
             Sessions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +59,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="endpoints"> List of private IPv4 addresses to connect to the iSCSI Target. </param>
         /// <param name="port"> The port used by iSCSI Target portal group. </param>
         /// <param name="sessions"> List of identifiers for active sessions on the iSCSI target. </param>
-        internal DiskPoolIscsiTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IReadOnlyList<string> managedByExtended, DiskPoolIscsiTargetAclMode aclMode, IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls, IList<ManagedDiskIscsiLun> luns, string targetIqn, DiskPoolIscsiTargetProvisioningState provisioningState, StoragePoolOperationalStatus status, IList<string> endpoints, int? port, IReadOnlyList<string> sessions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolIscsiTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IReadOnlyList<string> managedByExtended, DiskPoolIscsiTargetAclMode aclMode, IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls, IList<ManagedDiskIscsiLun> luns, string targetIqn, DiskPoolIscsiTargetProvisioningState provisioningState, StoragePoolOperationalStatus status, IList<string> endpoints, int? port, IReadOnlyList<string> sessions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -69,6 +73,12 @@ namespace Azure.ResourceManager.StoragePool
             Endpoints = endpoints;
             Port = port;
             Sessions = sessions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetData"/> for deserialization. </summary>
+        internal DiskPoolIscsiTargetData()
+        {
         }
 
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>

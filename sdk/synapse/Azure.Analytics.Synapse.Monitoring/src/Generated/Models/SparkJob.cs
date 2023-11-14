@@ -14,14 +14,17 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
     /// <summary> The SparkJob. </summary>
     public partial class SparkJob
     {
-        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         internal SparkJob()
         {
             Timing = new ChangeTrackingList<string>();
             Pipeline = new ChangeTrackingList<SparkJob>();
         }
 
-        /// <summary> Initializes a new instance of SparkJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJob"/>. </summary>
         /// <param name="state"></param>
         /// <param name="name"></param>
         /// <param name="submitter"></param>
@@ -37,7 +40,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
         /// <param name="queuedDuration"></param>
         /// <param name="runningDuration"></param>
         /// <param name="totalDuration"></param>
-        internal SparkJob(string state, string name, string submitter, string compute, string sparkApplicationId, string livyId, IReadOnlyList<string> timing, string sparkJobDefinition, IReadOnlyList<SparkJob> pipeline, string jobType, DateTimeOffset? submitTime, DateTimeOffset? endTime, string queuedDuration, string runningDuration, string totalDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkJob(string state, string name, string submitter, string compute, string sparkApplicationId, string livyId, IReadOnlyList<string> timing, string sparkJobDefinition, IReadOnlyList<SparkJob> pipeline, string jobType, DateTimeOffset? submitTime, DateTimeOffset? endTime, string queuedDuration, string runningDuration, string totalDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Name = name;
@@ -54,6 +58,7 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             QueuedDuration = queuedDuration;
             RunningDuration = runningDuration;
             TotalDuration = totalDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the state. </summary>

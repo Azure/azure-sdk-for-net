@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Details of the encryption associated with the workspace. </summary>
     public partial class EncryptionDetails
     {
-        /// <summary> Initializes a new instance of EncryptionDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionDetails"/>. </summary>
         public EncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionDetails"/>. </summary>
         /// <param name="doubleEncryptionEnabled"> Double Encryption enabled. </param>
         /// <param name="cmk"> Customer Managed Key Details. </param>
-        internal EncryptionDetails(bool? doubleEncryptionEnabled, CustomerManagedKeyDetails cmk)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionDetails(bool? doubleEncryptionEnabled, CustomerManagedKeyDetails cmk, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DoubleEncryptionEnabled = doubleEncryptionEnabled;
             Cmk = cmk;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Double Encryption enabled. </summary>

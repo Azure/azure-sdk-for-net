@@ -14,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The object that defines the structure of an Azure Synapse error response. </summary>
     public partial class CloudError
     {
-        /// <summary> Initializes a new instance of CloudError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,17 +31,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Details = new ChangeTrackingList<CloudError>();
         }
 
-        /// <summary> Initializes a new instance of CloudError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Property name/path in request associated with error. </param>
         /// <param name="details"> Array with additional error details. </param>
-        internal CloudError(string code, string message, string target, IReadOnlyList<CloudError> details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudError(string code, string message, string target, IReadOnlyList<CloudError> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudError"/> for deserialization. </summary>
+        internal CloudError()
+        {
         }
 
         /// <summary> Error code. </summary>

@@ -15,7 +15,10 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Abstract for entries that can be listed from Directory. </summary>
     internal partial class FilesAndDirectoriesListSegment
     {
-        /// <summary> Initializes a new instance of FilesAndDirectoriesListSegment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"></param>
         /// <param name="fileItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="directoryItems"/> or <paramref name="fileItems"/> is null. </exception>
@@ -28,13 +31,20 @@ namespace Azure.Storage.Files.Shares.Models
             FileItems = fileItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilesAndDirectoriesListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"></param>
         /// <param name="fileItems"></param>
-        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DirectoryItems = directoryItems;
             FileItems = fileItems;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/> for deserialization. </summary>
+        internal FilesAndDirectoriesListSegment()
+        {
         }
 
         /// <summary> Gets the directory items. </summary>

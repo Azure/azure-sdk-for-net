@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class SearchHierarchyNodesResponse
+    internal partial class SearchHierarchyNodesResponse : IUtf8JsonSerializable, IJsonModel<SearchHierarchyNodesResponse>
     {
-        internal static SearchHierarchyNodesResponse DeserializeSearchHierarchyNodesResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchHierarchyNodesResponse>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SearchHierarchyNodesResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SearchHierarchyNodesResponse>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SearchHierarchyNodesResponse>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Hits))
+                {
+                    writer.WritePropertyName("hits"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Hits)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HitCount))
+                {
+                    writer.WritePropertyName("hitCount"u8);
+                    writer.WriteNumberValue(HitCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ContinuationToken))
+                {
+                    writer.WritePropertyName("continuationToken"u8);
+                    writer.WriteStringValue(ContinuationToken);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SearchHierarchyNodesResponse IJsonModel<SearchHierarchyNodesResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchHierarchyNodesResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchHierarchyNodesResponse(document.RootElement, options);
+        }
+
+        internal static SearchHierarchyNodesResponse DeserializeSearchHierarchyNodesResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +96,8 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<IReadOnlyList<HierarchyHit>> hits = default;
             Optional<int> hitCount = default;
             Optional<string> continuationToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hits"u8))
@@ -52,8 +128,38 @@ namespace Azure.IoT.TimeSeriesInsights
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchHierarchyNodesResponse(Optional.ToList(hits), Optional.ToNullable(hitCount), continuationToken.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SearchHierarchyNodesResponse(Optional.ToList(hits), Optional.ToNullable(hitCount), continuationToken.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SearchHierarchyNodesResponse>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchHierarchyNodesResponse)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SearchHierarchyNodesResponse IPersistableModel<SearchHierarchyNodesResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SearchHierarchyNodesResponse)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSearchHierarchyNodesResponse(document.RootElement, options);
+        }
+
+        string IPersistableModel<SearchHierarchyNodesResponse>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

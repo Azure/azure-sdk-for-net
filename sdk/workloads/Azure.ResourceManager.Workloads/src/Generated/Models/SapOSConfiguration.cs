@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class SapOSConfiguration
     {
-        /// <summary> Initializes a new instance of SapOSConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapOSConfiguration"/>. </summary>
         protected SapOSConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SapOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOSConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
-        internal SapOSConfiguration(SapOSType osType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapOSConfiguration(SapOSType osType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSType = osType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The OS Type. </summary>

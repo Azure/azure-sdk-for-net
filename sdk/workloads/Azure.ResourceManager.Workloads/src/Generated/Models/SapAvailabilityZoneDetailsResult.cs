@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The list of supported availability zone pairs which are part of SAP HA deployment. </summary>
     public partial class SapAvailabilityZoneDetailsResult
     {
-        /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsResult"/>. </summary>
         internal SapAvailabilityZoneDetailsResult()
         {
             AvailabilityZonePairs = new ChangeTrackingList<SapAvailabilityZonePair>();
         }
 
-        /// <summary> Initializes a new instance of SapAvailabilityZoneDetailsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZoneDetailsResult"/>. </summary>
         /// <param name="availabilityZonePairs"> Gets the list of availability zone pairs. </param>
-        internal SapAvailabilityZoneDetailsResult(IReadOnlyList<SapAvailabilityZonePair> availabilityZonePairs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapAvailabilityZoneDetailsResult(IReadOnlyList<SapAvailabilityZonePair> availabilityZonePairs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AvailabilityZonePairs = availabilityZonePairs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the list of availability zone pairs. </summary>

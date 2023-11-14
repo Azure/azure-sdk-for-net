@@ -14,7 +14,10 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The object returned when calling List Queues on a Queue Service. </summary>
     internal partial class ListQueuesSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListQueuesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="maxResults"></param>
@@ -33,14 +36,15 @@ namespace Azure.Storage.Queues.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueuesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="marker"></param>
         /// <param name="maxResults"></param>
         /// <param name="queueItems"></param>
         /// <param name="nextMarker"></param>
-        internal ListQueuesSegmentResponse(string serviceEndpoint, string prefix, string marker, int maxResults, IReadOnlyList<QueueItem> queueItems, string nextMarker)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListQueuesSegmentResponse(string serviceEndpoint, string prefix, string marker, int maxResults, IReadOnlyList<QueueItem> queueItems, string nextMarker, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -48,6 +52,12 @@ namespace Azure.Storage.Queues.Models
             MaxResults = maxResults;
             QueueItems = queueItems;
             NextMarker = nextMarker;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListQueuesSegmentResponse"/> for deserialization. </summary>
+        internal ListQueuesSegmentResponse()
+        {
         }
 
         /// <summary> Gets the service endpoint. </summary>

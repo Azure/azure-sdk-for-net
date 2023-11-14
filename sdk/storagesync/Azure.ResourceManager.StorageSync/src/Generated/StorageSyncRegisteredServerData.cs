@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.StorageSync
     /// </summary>
     public partial class StorageSyncRegisteredServerData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerData"/>. </summary>
         public StorageSyncRegisteredServerData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncRegisteredServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncRegisteredServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +55,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="monitoringEndpointUri"> Telemetry Endpoint Uri. </param>
         /// <param name="monitoringConfiguration"> Monitoring Configuration. </param>
         /// <param name="serverName"> Server name. </param>
-        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncRegisteredServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData serverCertificate, string agentVersion, RegisteredServerAgentVersionStatus? agentVersionStatus, DateTimeOffset? agentVersionExpireOn, string serverOSVersion, int? serverManagementErrorCode, string lastHeartbeat, string provisioningState, string serverRole, Guid? clusterId, string clusterName, Guid? serverId, Guid? storageSyncServiceUid, string lastWorkflowId, string lastOperationName, Uri discoveryEndpointUri, AzureLocation? resourceLocation, AzureLocation? serviceLocation, string friendlyName, Uri managementEndpointUri, Uri monitoringEndpointUri, string monitoringConfiguration, string serverName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerCertificate = serverCertificate;
             AgentVersion = agentVersion;
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.StorageSync
             MonitoringEndpointUri = monitoringEndpointUri;
             MonitoringConfiguration = monitoringConfiguration;
             ServerName = serverName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

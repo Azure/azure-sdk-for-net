@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
     public partial class AppServiceForwardProxy
     {
-        /// <summary> Initializes a new instance of AppServiceForwardProxy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceForwardProxy"/>. </summary>
         public AppServiceForwardProxy()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceForwardProxy. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceForwardProxy"/>. </summary>
         /// <param name="convention"> The convention used to determine the url of the request made. </param>
         /// <param name="customHostHeaderName"> The name of the header containing the host of the request. </param>
         /// <param name="customProtoHeaderName"> The name of the header containing the scheme of the request. </param>
-        internal AppServiceForwardProxy(ForwardProxyConvention? convention, string customHostHeaderName, string customProtoHeaderName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceForwardProxy(ForwardProxyConvention? convention, string customHostHeaderName, string customProtoHeaderName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Convention = convention;
             CustomHostHeaderName = customHostHeaderName;
             CustomProtoHeaderName = customProtoHeaderName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The convention used to determine the url of the request made. </summary>

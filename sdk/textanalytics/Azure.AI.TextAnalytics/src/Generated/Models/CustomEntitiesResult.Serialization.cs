@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class CustomEntitiesResult : IUtf8JsonSerializable
+    internal partial class CustomEntitiesResult : IUtf8JsonSerializable, IJsonModel<CustomEntitiesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEntitiesResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CustomEntitiesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CustomEntitiesResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CustomEntitiesResult>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
@@ -40,11 +50,40 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(ProjectName);
             writer.WritePropertyName("deploymentName"u8);
             writer.WriteStringValue(DeploymentName);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element)
+        CustomEntitiesResult IJsonModel<CustomEntitiesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomEntitiesResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomEntitiesResult(document.RootElement, options);
+        }
+
+        internal static CustomEntitiesResult DeserializeCustomEntitiesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +93,8 @@ namespace Azure.AI.TextAnalytics.Models
             Optional<TextDocumentBatchStatistics> statistics = default;
             string projectName = default;
             string deploymentName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("documents"u8))
@@ -95,8 +136,38 @@ namespace Azure.AI.TextAnalytics.Models
                     deploymentName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomEntitiesResult(errors, statistics.Value, projectName, deploymentName, documents);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomEntitiesResult(errors, statistics.Value, projectName, deploymentName, serializedAdditionalRawData, documents);
         }
+
+        BinaryData IPersistableModel<CustomEntitiesResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomEntitiesResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomEntitiesResult IPersistableModel<CustomEntitiesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomEntitiesResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomEntitiesResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<CustomEntitiesResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

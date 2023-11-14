@@ -15,7 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list pipeline runs. </summary>
     public partial class PipelineRunsQueryResponse
     {
-        /// <summary> Initializes a new instance of PipelineRunsQueryResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineRunsQueryResponse"/>. </summary>
         /// <param name="value"> List of pipeline runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PipelineRunsQueryResponse(IEnumerable<PipelineRun> value)
@@ -25,13 +28,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PipelineRunsQueryResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineRunsQueryResponse"/>. </summary>
         /// <param name="value"> List of pipeline runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        internal PipelineRunsQueryResponse(IReadOnlyList<PipelineRun> value, string continuationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineRunsQueryResponse(IReadOnlyList<PipelineRun> value, string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineRunsQueryResponse"/> for deserialization. </summary>
+        internal PipelineRunsQueryResponse()
+        {
         }
 
         /// <summary> List of pipeline runs. </summary>

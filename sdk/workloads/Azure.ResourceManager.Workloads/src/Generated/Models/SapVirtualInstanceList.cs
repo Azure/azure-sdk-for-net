@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Workloads;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Defines the collection of Virtual Instance for SAP solutions resources. </summary>
     internal partial class SapVirtualInstanceList
     {
-        /// <summary> Initializes a new instance of SapVirtualInstanceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceList"/>. </summary>
         internal SapVirtualInstanceList()
         {
             Value = new ChangeTrackingList<SapVirtualInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of SapVirtualInstanceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceList"/>. </summary>
         /// <param name="value"> Gets the list of Virtual Instances for SAP solutions resources. </param>
         /// <param name="nextLink"> Gets the value of next link. </param>
-        internal SapVirtualInstanceList(IReadOnlyList<SapVirtualInstanceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapVirtualInstanceList(IReadOnlyList<SapVirtualInstanceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the list of Virtual Instances for SAP solutions resources. </summary>

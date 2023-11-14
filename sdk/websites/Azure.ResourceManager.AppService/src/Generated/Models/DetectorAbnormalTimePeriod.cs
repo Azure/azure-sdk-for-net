@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing Abnormal Time Period detected. </summary>
     public partial class DetectorAbnormalTimePeriod
     {
-        /// <summary> Initializes a new instance of DetectorAbnormalTimePeriod. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectorAbnormalTimePeriod"/>. </summary>
         public DetectorAbnormalTimePeriod()
         {
             MetaData = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
             Solutions = new ChangeTrackingList<DiagnosticSolution>();
         }
 
-        /// <summary> Initializes a new instance of DetectorAbnormalTimePeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorAbnormalTimePeriod"/>. </summary>
         /// <param name="startOn"> Start time of the correlated event. </param>
         /// <param name="endOn"> End time of the correlated event. </param>
         /// <param name="message"> Message describing the event. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="metaData"> Downtime metadata. </param>
         /// <param name="issueType"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
-        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<AppServiceNameValuePair>> metaData, DetectorIssueType? issueType, IList<DiagnosticSolution> solutions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<AppServiceNameValuePair>> metaData, DetectorIssueType? issueType, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -40,6 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             MetaData = metaData;
             IssueType = issueType;
             Solutions = solutions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Start time of the correlated event. </summary>

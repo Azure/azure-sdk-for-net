@@ -14,7 +14,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The SpatialAnalysisPersonDistanceZoneEvents. </summary>
     public partial class SpatialAnalysisPersonDistanceZoneEvents
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonDistanceZoneEvents. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonDistanceZoneEvents"/>. </summary>
         /// <param name="zone">
         /// The named zone.
         /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -29,17 +32,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = new ChangeTrackingList<SpatialAnalysisPersonDistanceEvent>();
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonDistanceZoneEvents. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonDistanceZoneEvents"/>. </summary>
         /// <param name="zone">
         /// The named zone.
         /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPolygonString"/>.
         /// </param>
         /// <param name="events"> The event configuration. </param>
-        internal SpatialAnalysisPersonDistanceZoneEvents(NamedPolygonBase zone, IList<SpatialAnalysisPersonDistanceEvent> events)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpatialAnalysisPersonDistanceZoneEvents(NamedPolygonBase zone, IList<SpatialAnalysisPersonDistanceEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zone = zone;
             Events = events;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonDistanceZoneEvents"/> for deserialization. </summary>
+        internal SpatialAnalysisPersonDistanceZoneEvents()
+        {
         }
 
         /// <summary>

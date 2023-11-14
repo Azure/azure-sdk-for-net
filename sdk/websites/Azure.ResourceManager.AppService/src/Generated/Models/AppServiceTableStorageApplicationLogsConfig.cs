@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Application logs to Azure table storage configuration. </summary>
     public partial class AppServiceTableStorageApplicationLogsConfig
     {
-        /// <summary> Initializes a new instance of AppServiceTableStorageApplicationLogsConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/>. </summary>
         /// <param name="sasUriString"> SAS URL to an Azure table with add/query/delete permissions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriString"/> is null. </exception>
         public AppServiceTableStorageApplicationLogsConfig(string sasUriString)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.AppService.Models
             SasUriString = sasUriString;
         }
 
-        /// <summary> Initializes a new instance of AppServiceTableStorageApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/>. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="sasUriString"> SAS URL to an Azure table with add/query/delete permissions. </param>
-        internal AppServiceTableStorageApplicationLogsConfig(WebAppLogLevel? level, string sasUriString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceTableStorageApplicationLogsConfig(WebAppLogLevel? level, string sasUriString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Level = level;
             SasUriString = sasUriString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/> for deserialization. </summary>
+        internal AppServiceTableStorageApplicationLogsConfig()
+        {
         }
 
         /// <summary> Log level. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.StorageCache
     /// </summary>
     public partial class StorageTargetData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageTargetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageTargetData"/>. </summary>
         public StorageTargetData()
         {
             Junctions = new ChangeTrackingList<NamespaceJunction>();
         }
 
-        /// <summary> Initializes a new instance of StorageTargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="blobNfs"> Properties when targetType is blobNfs. </param>
         /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
         /// <param name="location"> Region name string. </param>
-        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<NamespaceJunction> junctions, StorageTargetType? targetType, StorageCacheProvisioningStateType? provisioningState, StorageTargetOperationalStateType? state, Nfs3Target nfs3, ClfsTarget clfs, UnknownTarget unknown, BlobNfsTarget blobNfs, int? allocationPercentage, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<NamespaceJunction> junctions, StorageTargetType? targetType, StorageCacheProvisioningStateType? provisioningState, StorageTargetOperationalStateType? state, Nfs3Target nfs3, ClfsTarget clfs, UnknownTarget unknown, BlobNfsTarget blobNfs, int? allocationPercentage, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Junctions = junctions;
             TargetType = targetType;
@@ -51,6 +56,7 @@ namespace Azure.ResourceManager.StorageCache
             BlobNfs = blobNfs;
             AllocationPercentage = allocationPercentage;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of cache namespace junctions to target for namespace associations. </summary>

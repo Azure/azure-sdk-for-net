@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,7 +14,10 @@ namespace Azure.AI.Translation.Text
     /// <summary> Translation result. </summary>
     public partial class Translation
     {
-        /// <summary> Initializes a new instance of Translation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Translation"/>. </summary>
         /// <param name="to"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="text"/> is null. </exception>
@@ -24,21 +28,29 @@ namespace Azure.AI.Translation.Text
 
             To = to;
             Text = text;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of Translation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Translation"/>. </summary>
         /// <param name="to"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
         /// <param name="alignment"> Alignment information. </param>
         /// <param name="sentLen"> Sentence boundaries in the input and output texts. </param>
-        internal Translation(string to, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceLength sentLen)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Translation(string to, string text, TransliteratedText transliteration, TranslatedTextAlignment alignment, SentenceLength sentLen, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             To = to;
             Text = text;
             Transliteration = transliteration;
             Alignment = alignment;
             SentLen = sentLen;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Translation"/> for deserialization. </summary>
+        internal Translation()
+        {
         }
 
         /// <summary> A string representing the language code of the target language. </summary>

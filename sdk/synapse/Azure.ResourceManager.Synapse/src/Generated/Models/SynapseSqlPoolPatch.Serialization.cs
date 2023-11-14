@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSqlPoolPatch : IUtf8JsonSerializable
+    public partial class SynapseSqlPoolPatch : IUtf8JsonSerializable, IJsonModel<SynapseSqlPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSqlPoolPatch>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SynapseSqlPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SynapseSqlPoolPatch>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SynapseSqlPoolPatch>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -63,6 +74,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+            }
             if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
@@ -72,6 +91,14 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationDate"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
             }
             if (Optional.IsDefined(StorageAccountType))
             {
@@ -84,7 +111,217 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SynapseSqlPoolPatch IJsonModel<SynapseSqlPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSqlPoolPatch(document.RootElement, options);
+        }
+
+        internal static SynapseSqlPoolPatch DeserializeSynapseSqlPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<AzureLocation> location = default;
+            Optional<SynapseSku> sku = default;
+            Optional<long> maxSizeBytes = default;
+            Optional<string> collation = default;
+            Optional<string> sourceDatabaseId = default;
+            Optional<string> recoverableDatabaseId = default;
+            Optional<string> provisioningState = default;
+            Optional<string> status = default;
+            Optional<DateTimeOffset> restorePointInTime = default;
+            Optional<SqlPoolCreateMode> createMode = default;
+            Optional<DateTimeOffset> creationDate = default;
+            Optional<SqlPoolStorageAccountType> storageAccountType = default;
+            Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = SynapseSku.DeserializeSynapseSku(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("maxSizeBytes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxSizeBytes = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("collation"u8))
+                        {
+                            collation = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceDatabaseId"u8))
+                        {
+                            sourceDatabaseId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("recoverableDatabaseId"u8))
+                        {
+                            recoverableDatabaseId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            status = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("restorePointInTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restorePointInTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("createMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createMode = new SqlPoolCreateMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("creationDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            creationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("storageAccountType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageAccountType = new SqlPoolStorageAccountType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceDatabaseDeletionDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceDatabaseDeletionDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseSqlPoolPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(createMode), Optional.ToNullable(creationDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(sourceDatabaseDeletionDate), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SynapseSqlPoolPatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseSqlPoolPatch IPersistableModel<SynapseSqlPoolPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseSqlPoolPatch(document.RootElement, options);
+        }
+
+        string IPersistableModel<SynapseSqlPoolPatch>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

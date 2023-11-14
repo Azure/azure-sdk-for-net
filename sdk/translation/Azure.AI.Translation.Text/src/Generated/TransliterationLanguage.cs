@@ -19,7 +19,10 @@ namespace Azure.AI.Translation.Text
     /// </summary>
     public partial class TransliterationLanguage
     {
-        /// <summary> Initializes a new instance of TransliterationLanguage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransliterationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="scripts"> List of scripts to convert from. </param>
@@ -33,17 +36,25 @@ namespace Azure.AI.Translation.Text
             Name = name;
             NativeName = nativeName;
             Scripts = scripts.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TransliterationLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransliterationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="scripts"> List of scripts to convert from. </param>
-        internal TransliterationLanguage(string name, string nativeName, IReadOnlyList<TransliterableScript> scripts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransliterationLanguage(string name, string nativeName, IReadOnlyList<TransliterableScript> scripts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             NativeName = nativeName;
             Scripts = scripts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransliterationLanguage"/> for deserialization. </summary>
+        internal TransliterationLanguage()
+        {
         }
 
         /// <summary> Display name of the language in the locale requested via Accept-Language header. </summary>

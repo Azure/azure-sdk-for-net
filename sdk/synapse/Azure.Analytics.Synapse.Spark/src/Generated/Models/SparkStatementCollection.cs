@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkStatementCollection. </summary>
     public partial class SparkStatementCollection
     {
-        /// <summary> Initializes a new instance of SparkStatementCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCollection"/>. </summary>
         /// <param name="total"></param>
         internal SparkStatementCollection(int total)
         {
@@ -21,13 +25,20 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Statements = new ChangeTrackingList<SparkStatement>();
         }
 
-        /// <summary> Initializes a new instance of SparkStatementCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCollection"/>. </summary>
         /// <param name="total"></param>
         /// <param name="statements"></param>
-        internal SparkStatementCollection(int total, IReadOnlyList<SparkStatement> statements)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkStatementCollection(int total, IReadOnlyList<SparkStatement> statements, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Total = total;
             Statements = statements;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCollection"/> for deserialization. </summary>
+        internal SparkStatementCollection()
+        {
         }
 
         /// <summary> Gets the total. </summary>

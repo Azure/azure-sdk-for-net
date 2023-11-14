@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the SAP Gateway Server properties. </summary>
     public partial class GatewayServerProperties
     {
-        /// <summary> Initializes a new instance of GatewayServerProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayServerProperties"/>. </summary>
         public GatewayServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayServerProperties"/>. </summary>
         /// <param name="port"> Gateway Port. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
-        internal GatewayServerProperties(long? port, SapHealthState? health)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayServerProperties(long? port, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             Health = health;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gateway Port. </summary>

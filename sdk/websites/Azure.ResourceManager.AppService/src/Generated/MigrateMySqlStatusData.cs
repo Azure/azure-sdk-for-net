@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class MigrateMySqlStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of MigrateMySqlStatusData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlStatusData"/>. </summary>
         public MigrateMySqlStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +36,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="operationId"> Operation ID for the migration task. </param>
         /// <param name="isLocalMySqlEnabled"> True if the web app has in app MySql enabled. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceOperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceOperationStatus? migrationOperationStatus, string operationId, bool? isLocalMySqlEnabled, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MigrationOperationStatus = migrationOperationStatus;
             OperationId = operationId;
             IsLocalMySqlEnabled = isLocalMySqlEnabled;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status of the migration task. </summary>

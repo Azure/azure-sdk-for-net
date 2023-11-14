@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class LoginFlowNonceSettings : IUtf8JsonSerializable
+    public partial class LoginFlowNonceSettings : IUtf8JsonSerializable, IJsonModel<LoginFlowNonceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoginFlowNonceSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LoginFlowNonceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LoginFlowNonceSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LoginFlowNonceSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ValidateNonce))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("nonceExpirationInterval"u8);
                 writer.WriteStringValue(NonceExpirationInterval);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoginFlowNonceSettings DeserializeLoginFlowNonceSettings(JsonElement element)
+        LoginFlowNonceSettings IJsonModel<LoginFlowNonceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoginFlowNonceSettings(document.RootElement, options);
+        }
+
+        internal static LoginFlowNonceSettings DeserializeLoginFlowNonceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> validateNonce = default;
             Optional<string> nonceExpirationInterval = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validateNonce"u8))
@@ -52,8 +94,38 @@ namespace Azure.ResourceManager.AppService.Models
                     nonceExpirationInterval = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoginFlowNonceSettings(Optional.ToNullable(validateNonce), nonceExpirationInterval.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LoginFlowNonceSettings(Optional.ToNullable(validateNonce), nonceExpirationInterval.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoginFlowNonceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LoginFlowNonceSettings IPersistableModel<LoginFlowNonceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoginFlowNonceSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLoginFlowNonceSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<LoginFlowNonceSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

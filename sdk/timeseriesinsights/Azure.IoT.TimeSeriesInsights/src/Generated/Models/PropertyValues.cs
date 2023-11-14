@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -12,16 +14,17 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </summary>
     public partial class PropertyValues : TimeSeriesInsightsEventProperty
     {
-        /// <summary> Initializes a new instance of PropertyValues. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyValues"/>. </summary>
         public PropertyValues()
         {
         }
 
-        /// <summary> Initializes a new instance of PropertyValues. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyValues"/>. </summary>
         /// <param name="name"> The name of the property. </param>
         /// <param name="propertyValueType"> The type of the property. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valuesInternal"> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </param>
-        internal PropertyValues(string name, TimeSeriesPropertyType? propertyValueType, JsonElement valuesInternal) : base(name, propertyValueType)
+        internal PropertyValues(string name, TimeSeriesPropertyType? propertyValueType, IDictionary<string, BinaryData> serializedAdditionalRawData, JsonElement valuesInternal) : base(name, propertyValueType, serializedAdditionalRawData)
         {
             ValuesInternal = valuesInternal;
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Managed Virtual Network Settings. </summary>
     public partial class SynapseManagedVirtualNetworkSettings
     {
-        /// <summary> Initializes a new instance of SynapseManagedVirtualNetworkSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedVirtualNetworkSettings"/>. </summary>
         public SynapseManagedVirtualNetworkSettings()
         {
             AllowedAadTenantIdsForLinking = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedVirtualNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseManagedVirtualNetworkSettings"/>. </summary>
         /// <param name="preventDataExfiltration"> Prevent Data Exfiltration. </param>
         /// <param name="enableLinkedAccessCheckOnTargetResource"> Linked Access Check On Target Resource. </param>
         /// <param name="allowedAadTenantIdsForLinking"> Allowed Aad Tenant Ids For Linking. </param>
-        internal SynapseManagedVirtualNetworkSettings(bool? preventDataExfiltration, bool? enableLinkedAccessCheckOnTargetResource, IList<string> allowedAadTenantIdsForLinking)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseManagedVirtualNetworkSettings(bool? preventDataExfiltration, bool? enableLinkedAccessCheckOnTargetResource, IList<string> allowedAadTenantIdsForLinking, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreventDataExfiltration = preventDataExfiltration;
             EnableLinkedAccessCheckOnTargetResource = enableLinkedAccessCheckOnTargetResource;
             AllowedAadTenantIdsForLinking = allowedAadTenantIdsForLinking;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Prevent Data Exfiltration. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The KeyPhraseTaskResult. </summary>
     internal partial class KeyPhraseTaskResult
     {
-        /// <summary> Initializes a new instance of KeyPhraseTaskResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskResult"/>. </summary>
         internal KeyPhraseTaskResult()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyPhraseTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyPhraseTaskResult"/>. </summary>
         /// <param name="results"></param>
-        internal KeyPhraseTaskResult(KeyPhraseResult results)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyPhraseTaskResult(KeyPhraseResult results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the results. </summary>

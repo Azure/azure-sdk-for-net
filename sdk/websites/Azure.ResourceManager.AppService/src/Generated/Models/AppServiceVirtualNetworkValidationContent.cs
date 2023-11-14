@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The required set of inputs to validate a VNET. </summary>
     public partial class AppServiceVirtualNetworkValidationContent : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkValidationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkValidationContent"/>. </summary>
         public AppServiceVirtualNetworkValidationContent()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkValidationContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,13 +33,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetSubnetName"> The subnet name to be validated. </param>
         /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceVirtualNetworkValidationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, ResourceIdentifier subnetResourceId, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceVirtualNetworkValidationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, ResourceIdentifier subnetResourceId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             VnetResourceGroup = vnetResourceGroup;
             VnetName = vnetName;
             VnetSubnetName = vnetSubnetName;
             SubnetResourceId = subnetResourceId;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Resource Group of the VNET to be validated. </summary>

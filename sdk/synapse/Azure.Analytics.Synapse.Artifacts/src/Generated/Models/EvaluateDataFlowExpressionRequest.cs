@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for data flow expression preview. </summary>
     public partial class EvaluateDataFlowExpressionRequest
     {
-        /// <summary> Initializes a new instance of EvaluateDataFlowExpressionRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EvaluateDataFlowExpressionRequest"/>. </summary>
         public EvaluateDataFlowExpressionRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of EvaluateDataFlowExpressionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluateDataFlowExpressionRequest"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="dataFlowName"> The data flow which contains the debug session. </param>
         /// <param name="streamName"> The output stream name. </param>
         /// <param name="rowLimits"> The row limit for preview request. </param>
         /// <param name="expression"> The expression for preview. </param>
-        internal EvaluateDataFlowExpressionRequest(string sessionId, string dataFlowName, string streamName, int? rowLimits, string expression)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EvaluateDataFlowExpressionRequest(string sessionId, string dataFlowName, string streamName, int? rowLimits, string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             DataFlowName = dataFlowName;
             StreamName = streamName;
             RowLimits = rowLimits;
             Expression = expression;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

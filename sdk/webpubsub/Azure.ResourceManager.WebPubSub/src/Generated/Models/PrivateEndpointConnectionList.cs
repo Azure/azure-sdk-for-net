@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class PrivateEndpointConnectionList
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionList"/>. </summary>
         internal PrivateEndpointConnectionList()
         {
             Value = new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionList"/>. </summary>
         /// <param name="value"> The list of the private endpoint connections. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
-        internal PrivateEndpointConnectionList(IReadOnlyList<WebPubSubPrivateEndpointConnectionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointConnectionList(IReadOnlyList<WebPubSubPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of the private endpoint connections. </summary>

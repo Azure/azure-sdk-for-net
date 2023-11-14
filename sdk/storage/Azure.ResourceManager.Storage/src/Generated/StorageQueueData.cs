@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,23 +15,28 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class representing the StorageQueue data model. </summary>
     public partial class StorageQueueData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageQueueData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageQueueData"/>. </summary>
         public StorageQueueData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StorageQueueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageQueueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="metadata"> A name-value pair that represents queue metadata. </param>
         /// <param name="approximateMessageCount"> Integer indicating an approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher. </param>
-        internal StorageQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> metadata, int? approximateMessageCount) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageQueueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> metadata, int? approximateMessageCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Metadata = metadata;
             ApproximateMessageCount = approximateMessageCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A name-value pair that represents queue metadata. </summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
     public partial class AuthPlatform
     {
-        /// <summary> Initializes a new instance of AuthPlatform. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthPlatform"/>. </summary>
         public AuthPlatform()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthPlatform"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
@@ -25,11 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// The path of the config file containing auth settings if they come from a file.
         /// If the path is relative, base will the site's root directory.
         /// </param>
-        internal AuthPlatform(bool? isEnabled, string runtimeVersion, string configFilePath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthPlatform(bool? isEnabled, string runtimeVersion, string configFilePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             RuntimeVersion = runtimeVersion;
             ConfigFilePath = configFilePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

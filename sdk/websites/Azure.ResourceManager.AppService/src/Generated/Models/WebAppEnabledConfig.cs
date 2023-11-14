@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Enabled configuration. </summary>
     internal partial class WebAppEnabledConfig
     {
-        /// <summary> Initializes a new instance of WebAppEnabledConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppEnabledConfig"/>. </summary>
         public WebAppEnabledConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppEnabledConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppEnabledConfig"/>. </summary>
         /// <param name="enabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal WebAppEnabledConfig(bool? enabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppEnabledConfig(bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>

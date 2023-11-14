@@ -5,14 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Parameter group. </summary>
     internal partial class CopyFileSmbInfo
     {
-        /// <summary> Initializes a new instance of CopyFileSmbInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyFileSmbInfo"/>. </summary>
         public CopyFileSmbInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyFileSmbInfo"/>. </summary>
+        /// <param name="fileAttributes"> Specifies either the option to copy file attributes from a source file(source) to a target file or a list of attributes to set on a target file. </param>
+        /// <param name="fileCreationTime"> Specifies either the option to copy file creation time from a source file(source) to a target file or a time value in ISO 8601 format to set as creation time on a target file. </param>
+        /// <param name="fileLastWriteTime"> Specifies either the option to copy file last write time from a source file(source) to a target file or a time value in ISO 8601 format to set as last write time on a target file. </param>
+        /// <param name="fileChangeTime"> Specifies either the option to copy file last write time from a source file(source) to a target file or a time value in ISO 8601 format to set as last write time on a target file. </param>
+        /// <param name="filePermissionCopyMode"> Specifies the option to copy file security descriptor from source file or to set it using the value which is defined by the header value of x-ms-file-permission or x-ms-file-permission-key. </param>
+        /// <param name="ignoreReadOnly"> Specifies the option to overwrite the target file if it already exists and has read-only attribute set. </param>
+        /// <param name="setArchiveAttribute"> Specifies the option to set archive attribute on a target file. True means archive attribute will be set on a target file despite attribute overrides or a source file state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyFileSmbInfo(string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, PermissionCopyMode? filePermissionCopyMode, bool? ignoreReadOnly, bool? setArchiveAttribute, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FileAttributes = fileAttributes;
+            FileCreationTime = fileCreationTime;
+            FileLastWriteTime = fileLastWriteTime;
+            FileChangeTime = fileChangeTime;
+            FilePermissionCopyMode = filePermissionCopyMode;
+            IgnoreReadOnly = ignoreReadOnly;
+            SetArchiveAttribute = setArchiveAttribute;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies either the option to copy file attributes from a source file(source) to a target file or a list of attributes to set on a target file. </summary>

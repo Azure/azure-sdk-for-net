@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A permission (a security descriptor) at the share level. </summary>
     internal partial class SharePermission
     {
-        /// <summary> Initializes a new instance of SharePermission. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharePermission"/>. </summary>
         /// <param name="permission"> The permission in the Security Descriptor Definition Language (SDDL). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public SharePermission(string permission)
@@ -21,6 +25,20 @@ namespace Azure.Storage.Files.Shares.Models
             Argument.AssertNotNull(permission, nameof(permission));
 
             Permission = permission;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharePermission"/>. </summary>
+        /// <param name="permission"> The permission in the Security Descriptor Definition Language (SDDL). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharePermission(string permission, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Permission = permission;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharePermission"/> for deserialization. </summary>
+        internal SharePermission()
+        {
         }
 
         /// <summary> The permission in the Security Descriptor Definition Language (SDDL). </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,30 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Updates severity, ticket status, and contact details in the support ticket. </summary>
     public partial class UpdateSupportTicket
     {
-        /// <summary> Initializes a new instance of UpdateSupportTicket. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSupportTicket"/>. </summary>
         public UpdateSupportTicket()
         {
             SecondaryConsent = new ChangeTrackingList<SecondaryConsent>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateSupportTicket"/>. </summary>
+        /// <param name="severity"> Severity level. </param>
+        /// <param name="status"> Status to be updated on the ticket. </param>
+        /// <param name="contactDetails"> Contact details to be updated on the support ticket. </param>
+        /// <param name="advancedDiagnosticConsent"> Advanced diagnostic consent to be updated on the support ticket. </param>
+        /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateSupportTicket(SupportSeverityLevel? severity, SupportTicketStatus? status, SupportContactProfileContent contactDetails, AdvancedDiagnosticConsent? advancedDiagnosticConsent, IList<SecondaryConsent> secondaryConsent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Severity = severity;
+            Status = status;
+            ContactDetails = contactDetails;
+            AdvancedDiagnosticConsent = advancedDiagnosticConsent;
+            SecondaryConsent = secondaryConsent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Severity level. </summary>

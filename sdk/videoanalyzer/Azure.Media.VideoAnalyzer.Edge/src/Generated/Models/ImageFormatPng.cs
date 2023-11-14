@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> PNG image encoding. </summary>
     public partial class ImageFormatPng : ImageFormatProperties
     {
-        /// <summary> Initializes a new instance of ImageFormatPng. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatPng"/>. </summary>
         public ImageFormatPng()
         {
             Type = "#Microsoft.VideoAnalyzer.ImageFormatPng";
         }
 
-        /// <summary> Initializes a new instance of ImageFormatPng. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageFormatPng"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
-        internal ImageFormatPng(string type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageFormatPng(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
             Type = type ?? "#Microsoft.VideoAnalyzer.ImageFormatPng";
         }

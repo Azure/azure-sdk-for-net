@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Database connection string value to type pair. </summary>
     public partial class ConnStringValueTypePair
     {
-        /// <summary> Initializes a new instance of ConnStringValueTypePair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
         /// <param name="value"> Value of pair. </param>
         /// <param name="connectionStringType"> Type of database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.AppService.Models
 
             Value = value;
             ConnectionStringType = connectionStringType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
+        /// <param name="value"> Value of pair. </param>
+        /// <param name="connectionStringType"> Type of database. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnStringValueTypePair(string value, ConnectionStringType connectionStringType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            ConnectionStringType = connectionStringType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/> for deserialization. </summary>
+        internal ConnStringValueTypePair()
+        {
         }
 
         /// <summary> Value of pair. </summary>

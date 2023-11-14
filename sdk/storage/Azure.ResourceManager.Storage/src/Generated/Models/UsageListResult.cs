@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The response from the List Usages operation. </summary>
     internal partial class UsageListResult
     {
-        /// <summary> Initializes a new instance of UsageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UsageListResult"/>. </summary>
         internal UsageListResult()
         {
             Value = new ChangeTrackingList<StorageUsage>();
         }
 
-        /// <summary> Initializes a new instance of UsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of Storage Resource Usages. </param>
-        internal UsageListResult(IReadOnlyList<StorageUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UsageListResult(IReadOnlyList<StorageUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of Storage Resource Usages. </summary>

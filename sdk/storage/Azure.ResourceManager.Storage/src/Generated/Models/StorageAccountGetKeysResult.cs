@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> The response from the ListKeys operation. </summary>
     internal partial class StorageAccountGetKeysResult
     {
-        /// <summary> Initializes a new instance of StorageAccountGetKeysResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountGetKeysResult"/>. </summary>
         internal StorageAccountGetKeysResult()
         {
             Keys = new ChangeTrackingList<StorageAccountKey>();
         }
 
-        /// <summary> Initializes a new instance of StorageAccountGetKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountGetKeysResult"/>. </summary>
         /// <param name="keys"> Gets the list of storage account keys and their properties for the specified storage account. </param>
-        internal StorageAccountGetKeysResult(IReadOnlyList<StorageAccountKey> keys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountGetKeysResult(IReadOnlyList<StorageAccountKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keys = keys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the list of storage account keys and their properties for the specified storage account. </summary>

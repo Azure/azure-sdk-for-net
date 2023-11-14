@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkSessionCollection. </summary>
     public partial class SparkSessionCollection
     {
-        /// <summary> Initializes a new instance of SparkSessionCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkSessionCollection"/>. </summary>
         /// <param name="from"></param>
         /// <param name="total"></param>
         internal SparkSessionCollection(int @from, int total)
@@ -23,15 +27,22 @@ namespace Azure.Analytics.Synapse.Spark.Models
             Sessions = new ChangeTrackingList<SparkSession>();
         }
 
-        /// <summary> Initializes a new instance of SparkSessionCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSessionCollection"/>. </summary>
         /// <param name="from"></param>
         /// <param name="total"></param>
         /// <param name="sessions"></param>
-        internal SparkSessionCollection(int @from, int total, IReadOnlyList<SparkSession> sessions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkSessionCollection(int @from, int total, IReadOnlyList<SparkSession> sessions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             From = @from;
             Total = total;
             Sessions = sessions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkSessionCollection"/> for deserialization. </summary>
+        internal SparkSessionCollection()
+        {
         }
 
         /// <summary> Gets the from. </summary>

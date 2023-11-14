@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Allows for the selection of particular streams from another node. </summary>
     public partial class OutputSelector
     {
-        /// <summary> Initializes a new instance of OutputSelector. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OutputSelector"/>. </summary>
         public OutputSelector()
         {
         }
 
-        /// <summary> Initializes a new instance of OutputSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutputSelector"/>. </summary>
         /// <param name="property"> The property of the data stream to be used as the selection criteria. </param>
         /// <param name="operator"> The operator to compare properties by. </param>
         /// <param name="value"> Value to compare against. </param>
-        internal OutputSelector(OutputSelectorProperty? property, OutputSelectorOperator? @operator, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OutputSelector(OutputSelectorProperty? property, OutputSelectorOperator? @operator, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Property = property;
             Operator = @operator;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The property of the data stream to be used as the selection criteria. </summary>

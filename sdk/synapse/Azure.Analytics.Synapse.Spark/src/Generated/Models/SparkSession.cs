@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkSession. </summary>
     public partial class SparkSession
     {
-        /// <summary> Initializes a new instance of SparkSession. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkSession"/>. </summary>
         /// <param name="id"></param>
         internal SparkSession(int id)
         {
@@ -24,7 +28,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             LogLines = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SparkSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkSession"/>. </summary>
         /// <param name="livyInfo"></param>
         /// <param name="name"></param>
         /// <param name="workspaceName"></param>
@@ -43,7 +47,8 @@ namespace Azure.Analytics.Synapse.Spark.Models
         /// <param name="appInfo"> Dictionary of &lt;string&gt;. </param>
         /// <param name="state"> The session state. </param>
         /// <param name="logLines"></param>
-        internal SparkSession(SparkSessionState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkSessionResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, LivyStates? state, IReadOnlyList<string> logLines)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkSession(SparkSessionState livyInfo, string name, string workspaceName, string sparkPoolName, string submitterName, string submitterId, string artifactId, SparkJobType? jobType, SparkSessionResultType? result, SparkScheduler scheduler, SparkServicePlugin plugin, IReadOnlyList<SparkServiceError> errors, IReadOnlyDictionary<string, string> tags, int id, string appId, IReadOnlyDictionary<string, string> appInfo, LivyStates? state, IReadOnlyList<string> logLines, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LivyInfo = livyInfo;
             Name = name;
@@ -63,6 +68,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             AppInfo = appInfo;
             State = state;
             LogLines = logLines;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkSession"/> for deserialization. </summary>
+        internal SparkSession()
+        {
         }
 
         /// <summary> Gets the livy info. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application logs configuration. </summary>
     public partial class ApplicationLogsConfig
     {
-        /// <summary> Initializes a new instance of ApplicationLogsConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationLogsConfig"/>. </summary>
         public ApplicationLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationLogsConfig"/>. </summary>
         /// <param name="fileSystem"> Application logs to file system configuration. </param>
         /// <param name="azureTableStorage"> Application logs to azure table storage configuration. </param>
         /// <param name="azureBlobStorage"> Application logs to blob storage configuration. </param>
-        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AppServiceTableStorageApplicationLogsConfig azureTableStorage, AppServiceBlobStorageApplicationLogsConfig azureBlobStorage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AppServiceTableStorageApplicationLogsConfig azureTableStorage, AppServiceBlobStorageApplicationLogsConfig azureBlobStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileSystem = fileSystem;
             AzureTableStorage = azureTableStorage;
             AzureBlobStorage = azureBlobStorage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application logs to file system configuration. </summary>

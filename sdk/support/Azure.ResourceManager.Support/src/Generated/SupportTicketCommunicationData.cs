@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Support.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportTicketCommunicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SupportTicketCommunicationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
         public SupportTicketCommunicationData()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportTicketCommunicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportTicketCommunicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.Support
         /// <param name="subject"> Subject of the communication. </param>
         /// <param name="body"> Body of the communication. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
-        internal SupportTicketCommunicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportTicketCommunicationType? communicationType, SupportTicketCommunicationDirection? communicationDirection, string sender, string subject, string body, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportTicketCommunicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SupportTicketCommunicationType? communicationType, SupportTicketCommunicationDirection? communicationDirection, string sender, string subject, string body, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CommunicationType = communicationType;
             CommunicationDirection = communicationDirection;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.Support
             Subject = subject;
             Body = body;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Communication type. </summary>

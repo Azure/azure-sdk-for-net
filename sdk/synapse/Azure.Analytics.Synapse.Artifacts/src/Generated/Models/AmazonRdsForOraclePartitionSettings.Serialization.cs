@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AmazonRdsForOraclePartitionSettingsConverter))]
-    public partial class AmazonRdsForOraclePartitionSettings : IUtf8JsonSerializable
+    public partial class AmazonRdsForOraclePartitionSettings : IUtf8JsonSerializable, IJsonModel<AmazonRdsForOraclePartitionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonRdsForOraclePartitionSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AmazonRdsForOraclePartitionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AmazonRdsForOraclePartitionSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AmazonRdsForOraclePartitionSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionNames))
             {
@@ -38,11 +48,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("partitionLowerBound"u8);
                 writer.WriteObjectValue(PartitionLowerBound);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AmazonRdsForOraclePartitionSettings DeserializeAmazonRdsForOraclePartitionSettings(JsonElement element)
+        AmazonRdsForOraclePartitionSettings IJsonModel<AmazonRdsForOraclePartitionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmazonRdsForOraclePartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonRdsForOraclePartitionSettings(document.RootElement, options);
+        }
+
+        internal static AmazonRdsForOraclePartitionSettings DeserializeAmazonRdsForOraclePartitionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +90,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> partitionColumnName = default;
             Optional<object> partitionUpperBound = default;
             Optional<object> partitionLowerBound = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionNames"u8))
@@ -89,9 +130,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     partitionLowerBound = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AmazonRdsForOraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AmazonRdsForOraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AmazonRdsForOraclePartitionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmazonRdsForOraclePartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AmazonRdsForOraclePartitionSettings IPersistableModel<AmazonRdsForOraclePartitionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AmazonRdsForOraclePartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAmazonRdsForOraclePartitionSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<AmazonRdsForOraclePartitionSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class AmazonRdsForOraclePartitionSettingsConverter : JsonConverter<AmazonRdsForOraclePartitionSettings>
         {

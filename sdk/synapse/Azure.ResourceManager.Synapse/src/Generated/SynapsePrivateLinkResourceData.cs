@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapsePrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapsePrivateLinkResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkResourceData"/>. </summary>
         public SynapsePrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource properties. </param>
-        internal SynapsePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapsePrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapsePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapsePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private link resource properties. </summary>

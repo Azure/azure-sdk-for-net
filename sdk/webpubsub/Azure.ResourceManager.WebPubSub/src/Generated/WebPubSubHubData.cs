@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WebPubSub.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.WebPubSub
     /// </summary>
     public partial class WebPubSubHubData : ResourceData
     {
-        /// <summary> Initializes a new instance of WebPubSubHubData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubData"/>. </summary>
         /// <param name="properties"> Properties of a hub. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public WebPubSubHubData(WebPubSubHubProperties properties)
@@ -28,15 +32,22 @@ namespace Azure.ResourceManager.WebPubSub
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of WebPubSubHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a hub. </param>
-        internal WebPubSubHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebPubSubHubProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebPubSubHubProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubData"/> for deserialization. </summary>
+        internal WebPubSubHubData()
+        {
         }
 
         /// <summary> Properties of a hub. </summary>

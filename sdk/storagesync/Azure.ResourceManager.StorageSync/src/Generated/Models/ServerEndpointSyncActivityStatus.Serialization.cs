@@ -6,15 +6,124 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointSyncActivityStatus
+    public partial class ServerEndpointSyncActivityStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointSyncActivityStatus>
     {
-        internal static ServerEndpointSyncActivityStatus DeserializeServerEndpointSyncActivityStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointSyncActivityStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ServerEndpointSyncActivityStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServerEndpointSyncActivityStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServerEndpointSyncActivityStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("timestamp"u8);
+                    writer.WriteStringValue(Timestamp.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PerItemErrorCount))
+                {
+                    writer.WritePropertyName("perItemErrorCount"u8);
+                    writer.WriteNumberValue(PerItemErrorCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AppliedItemCount))
+                {
+                    writer.WritePropertyName("appliedItemCount"u8);
+                    writer.WriteNumberValue(AppliedItemCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalItemCount))
+                {
+                    writer.WritePropertyName("totalItemCount"u8);
+                    writer.WriteNumberValue(TotalItemCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AppliedBytes))
+                {
+                    writer.WritePropertyName("appliedBytes"u8);
+                    writer.WriteNumberValue(AppliedBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalBytes))
+                {
+                    writer.WritePropertyName("totalBytes"u8);
+                    writer.WriteNumberValue(TotalBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SyncMode))
+                {
+                    writer.WritePropertyName("syncMode"u8);
+                    writer.WriteStringValue(SyncMode.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SessionMinutesRemaining))
+                {
+                    writer.WritePropertyName("sessionMinutesRemaining"u8);
+                    writer.WriteNumberValue(SessionMinutesRemaining.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServerEndpointSyncActivityStatus IJsonModel<ServerEndpointSyncActivityStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerEndpointSyncActivityStatus(document.RootElement, options);
+        }
+
+        internal static ServerEndpointSyncActivityStatus DeserializeServerEndpointSyncActivityStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +136,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<long> totalBytes = default;
             Optional<ServerEndpointSyncMode> syncMode = default;
             Optional<int> sessionMinutesRemaining = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -101,8 +212,38 @@ namespace Azure.ResourceManager.StorageSync.Models
                     sessionMinutesRemaining = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServerEndpointSyncActivityStatus(Optional.ToNullable(timestamp), Optional.ToNullable(perItemErrorCount), Optional.ToNullable(appliedItemCount), Optional.ToNullable(totalItemCount), Optional.ToNullable(appliedBytes), Optional.ToNullable(totalBytes), Optional.ToNullable(syncMode), Optional.ToNullable(sessionMinutesRemaining));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServerEndpointSyncActivityStatus(Optional.ToNullable(timestamp), Optional.ToNullable(perItemErrorCount), Optional.ToNullable(appliedItemCount), Optional.ToNullable(totalItemCount), Optional.ToNullable(appliedBytes), Optional.ToNullable(totalBytes), Optional.ToNullable(syncMode), Optional.ToNullable(sessionMinutesRemaining), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServerEndpointSyncActivityStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServerEndpointSyncActivityStatus IPersistableModel<ServerEndpointSyncActivityStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServerEndpointSyncActivityStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServerEndpointSyncActivityStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

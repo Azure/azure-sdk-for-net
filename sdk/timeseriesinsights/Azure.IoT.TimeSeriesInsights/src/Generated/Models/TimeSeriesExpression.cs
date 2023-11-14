@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -13,7 +14,10 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series expression (TSX) written as a single string. Examples: "$event.Status.String='Good'", "avg($event.Temperature)". Refer to the documentation on how to write time series expressions. </summary>
     public partial class TimeSeriesExpression
     {
-        /// <summary> Initializes a new instance of TimeSeriesExpression. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesExpression"/>. </summary>
         /// <param name="expression"> Time series expression (TSX) written as a single string. Examples: "$event.Status.String='Good'", "avg($event.Temperature)". Refer to the documentation on how to write time series expressions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public TimeSeriesExpression(string expression)
@@ -21,6 +25,20 @@ namespace Azure.IoT.TimeSeriesInsights
             Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesExpression"/>. </summary>
+        /// <param name="expression"> Time series expression (TSX) written as a single string. Examples: "$event.Status.String='Good'", "avg($event.Temperature)". Refer to the documentation on how to write time series expressions. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TimeSeriesExpression(string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Expression = expression;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TimeSeriesExpression"/> for deserialization. </summary>
+        internal TimeSeriesExpression()
+        {
         }
     }
 }

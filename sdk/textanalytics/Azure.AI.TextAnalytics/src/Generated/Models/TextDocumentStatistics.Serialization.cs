@@ -5,27 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial struct TextDocumentStatistics : IUtf8JsonSerializable
+    public partial struct TextDocumentStatistics : IUtf8JsonSerializable, IJsonModel<TextDocumentStatistics>, IJsonModel<object>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextDocumentStatistics>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TextDocumentStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TextDocumentStatistics>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TextDocumentStatistics>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("charactersCount"u8);
             writer.WriteNumberValue(CharacterCount);
             writer.WritePropertyName("transactionsCount"u8);
             writer.WriteNumberValue(TransactionCount);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TextDocumentStatistics DeserializeTextDocumentStatistics(JsonElement element)
+        TextDocumentStatistics IJsonModel<TextDocumentStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextDocumentStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextDocumentStatistics(document.RootElement, options);
+        }
+
+        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TextDocumentStatistics>)this).Write(writer, options);
+
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TextDocumentStatistics>)this).Create(ref reader, options);
+
+        internal static TextDocumentStatistics DeserializeTextDocumentStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             int charactersCount = default;
             int transactionsCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("charactersCount"u8))
@@ -38,8 +84,44 @@ namespace Azure.AI.TextAnalytics
                     transactionsCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TextDocumentStatistics(charactersCount, transactionsCount);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TextDocumentStatistics(charactersCount, transactionsCount, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TextDocumentStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextDocumentStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TextDocumentStatistics IPersistableModel<TextDocumentStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextDocumentStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTextDocumentStatistics(document.RootElement, options);
+        }
+
+        string IPersistableModel<TextDocumentStatistics>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options) => ((IPersistableModel<TextDocumentStatistics>)this).Write(options);
+
+        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options) => ((IPersistableModel<TextDocumentStatistics>)this).Create(data, options);
+
+        string IPersistableModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ((IPersistableModel<TextDocumentStatistics>)this).GetWireFormat(options);
     }
 }

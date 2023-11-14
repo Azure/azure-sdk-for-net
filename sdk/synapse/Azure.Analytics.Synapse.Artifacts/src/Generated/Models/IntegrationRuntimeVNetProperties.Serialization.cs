@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(IntegrationRuntimeVNetPropertiesConverter))]
-    public partial class IntegrationRuntimeVNetProperties : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeVNetProperties : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeVNetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeVNetProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<IntegrationRuntimeVNetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IntegrationRuntimeVNetProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IntegrationRuntimeVNetProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VNetId))
             {
@@ -47,8 +56,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeVNetProperties DeserializeIntegrationRuntimeVNetProperties(JsonElement element)
+        IntegrationRuntimeVNetProperties IJsonModel<IntegrationRuntimeVNetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeVNetProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeVNetProperties(document.RootElement, options);
+        }
+
+        internal static IntegrationRuntimeVNetProperties DeserializeIntegrationRuntimeVNetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +112,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeVNetProperties(vNetId.Value, subnet.Value, Optional.ToList(publicIPs), additionalProperties);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntimeVNetProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeVNetProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IntegrationRuntimeVNetProperties IPersistableModel<IntegrationRuntimeVNetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeVNetProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIntegrationRuntimeVNetProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<IntegrationRuntimeVNetProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class IntegrationRuntimeVNetPropertiesConverter : JsonConverter<IntegrationRuntimeVNetProperties>
         {

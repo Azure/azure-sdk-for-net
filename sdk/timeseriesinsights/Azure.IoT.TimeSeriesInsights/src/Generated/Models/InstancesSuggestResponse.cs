@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response of getting suggestions for search for time series instances. </summary>
     internal partial class InstancesSuggestResponse
     {
-        /// <summary> Initializes a new instance of InstancesSuggestResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestResponse"/>. </summary>
         internal InstancesSuggestResponse()
         {
             Suggestions = new ChangeTrackingList<InstancesSearchStringSuggestion>();
         }
 
-        /// <summary> Initializes a new instance of InstancesSuggestResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestResponse"/>. </summary>
         /// <param name="suggestions"> List of instance suggestions for searching time series models. </param>
-        internal InstancesSuggestResponse(IReadOnlyList<InstancesSearchStringSuggestion> suggestions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancesSuggestResponse(IReadOnlyList<InstancesSearchStringSuggestion> suggestions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Suggestions = suggestions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of instance suggestions for searching time series models. </summary>

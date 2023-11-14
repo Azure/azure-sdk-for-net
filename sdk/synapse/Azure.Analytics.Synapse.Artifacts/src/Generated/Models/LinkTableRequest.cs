@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkTableRequest. </summary>
     public partial class LinkTableRequest
     {
-        /// <summary> Initializes a new instance of LinkTableRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequest"/>. </summary>
         public LinkTableRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkTableRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkTableRequest"/>. </summary>
         /// <param name="id"> Link table id. </param>
         /// <param name="source"> Source table properties for link table request. </param>
         /// <param name="target"> Target table properties for link table request. </param>
         /// <param name="operationType"> Link table operation type. </param>
-        internal LinkTableRequest(string id, LinkTableRequestSource source, LinkTableRequestTarget target, string operationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkTableRequest(string id, LinkTableRequestSource source, LinkTableRequestTarget target, string operationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Source = source;
             Target = target;
             OperationType = operationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Link table id. </summary>

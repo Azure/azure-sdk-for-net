@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a cloud endpoint. </summary>
     public partial class CloudEndpointCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudEndpointCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointCreateOrUpdateContent"/>. </summary>
         public CloudEndpointCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudEndpointCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,12 +32,14 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="azureFileShareName"> Azure file share name. </param>
         /// <param name="storageAccountTenantId"> Storage Account Tenant Id. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
-        internal CloudEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string friendlyName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, string azureFileShareName, Guid? storageAccountTenantId, string friendlyName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             AzureFileShareName = azureFileShareName;
             StorageAccountTenantId = storageAccountTenantId;
             FriendlyName = friendlyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage Account Resource Id. </summary>
