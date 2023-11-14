@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 

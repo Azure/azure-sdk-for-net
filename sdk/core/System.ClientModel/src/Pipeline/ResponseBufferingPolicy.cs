@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Buffers;
-using System.IO;
 using System.ClientModel.Internal;
-using System.ClientModel.Internal.Primitives;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 

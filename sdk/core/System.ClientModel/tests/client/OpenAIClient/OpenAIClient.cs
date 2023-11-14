@@ -3,10 +3,8 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Text;
-using System.Threading;
 
 namespace OpenAI;
 

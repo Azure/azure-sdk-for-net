@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Primitives;
 
 namespace System.Net.ClientModel.Tests;
 
