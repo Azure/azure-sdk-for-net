@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines a managed rule set. </summary>
     public partial class ManagedRuleSet
     {
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
@@ -29,19 +32,26 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RuleGroupOverrides = new ChangeTrackingList<ManagedRuleGroupOverride>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/>. </summary>
         /// <param name="ruleSetType"> Defines the rule set type to use. </param>
         /// <param name="ruleSetVersion"> Defines the version of the rule set to use. </param>
         /// <param name="ruleSetAction"> Defines the rule set action. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to all rules in the set. </param>
         /// <param name="ruleGroupOverrides"> Defines the rule group overrides to apply to the rule set. </param>
-        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, ManagedRuleSetActionType? ruleSetAction, IList<ManagedRuleExclusion> exclusions, IList<ManagedRuleGroupOverride> ruleGroupOverrides)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleSet(string ruleSetType, string ruleSetVersion, ManagedRuleSetActionType? ruleSetAction, IList<ManagedRuleExclusion> exclusions, IList<ManagedRuleGroupOverride> ruleGroupOverrides, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleSetAction = ruleSetAction;
             Exclusions = exclusions;
             RuleGroupOverrides = ruleGroupOverrides;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSet"/> for deserialization. </summary>
+        internal ManagedRuleSet()
+        {
         }
 
         /// <summary> Defines the rule set type to use. </summary>

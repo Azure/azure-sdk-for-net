@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Describes product display information. </summary>
     public partial class ProductDisplayInfo
     {
-        /// <summary> Initializes a new instance of ProductDisplayInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductDisplayInfo"/>. </summary>
         public ProductDisplayInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ProductDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDisplayInfo"/>. </summary>
         /// <param name="productFamilyDisplayName"> Product family display name. </param>
         /// <param name="configurationDisplayName"> Configuration display name. </param>
-        internal ProductDisplayInfo(string productFamilyDisplayName, string configurationDisplayName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductDisplayInfo(string productFamilyDisplayName, string configurationDisplayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductFamilyDisplayName = productFamilyDisplayName;
             ConfigurationDisplayName = configurationDisplayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Product family display name. </summary>

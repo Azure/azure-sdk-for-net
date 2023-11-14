@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The script action profile. </summary>
     public partial class ScriptActionProfile
     {
-        /// <summary> Initializes a new instance of ScriptActionProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActionProfile"/>. </summary>
         /// <param name="scriptActionProfileType"> Type of the script action. Supported type is bash scripts. </param>
         /// <param name="name"> Script name. </param>
         /// <param name="uriString"> Url of the script file. </param>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Services = services.ToList();
         }
 
-        /// <summary> Initializes a new instance of ScriptActionProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActionProfile"/>. </summary>
         /// <param name="scriptActionProfileType"> Type of the script action. Supported type is bash scripts. </param>
         /// <param name="name"> Script name. </param>
         /// <param name="uriString"> Url of the script file. </param>
@@ -42,7 +45,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="services"> List of services to apply the script action. </param>
         /// <param name="timeoutInMinutes"> Timeout duration for the script action in minutes. </param>
         /// <param name="shouldPersist"> Specify if the script should persist on the cluster. </param>
-        internal ScriptActionProfile(string scriptActionProfileType, string name, string uriString, string parameters, IList<string> services, int? timeoutInMinutes, bool? shouldPersist)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActionProfile(string scriptActionProfileType, string name, string uriString, string parameters, IList<string> services, int? timeoutInMinutes, bool? shouldPersist, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScriptActionProfileType = scriptActionProfileType;
             Name = name;
@@ -51,6 +55,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Services = services;
             TimeoutInMinutes = timeoutInMinutes;
             ShouldPersist = shouldPersist;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActionProfile"/> for deserialization. </summary>
+        internal ScriptActionProfile()
+        {
         }
 
         /// <summary> Type of the script action. Supported type is bash scripts. </summary>

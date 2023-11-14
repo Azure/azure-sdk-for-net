@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
@@ -19,20 +21,25 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareSynchronizationSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataShareSynchronizationSettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareSynchronizationSettingData"/>. </summary>
         public DataShareSynchronizationSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareSynchronizationSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareSynchronizationSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of synchronization setting. </param>
-        internal DataShareSynchronizationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynchronizationSettingKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareSynchronizationSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynchronizationSettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of synchronization setting. </summary>

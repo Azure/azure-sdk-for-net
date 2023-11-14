@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
@@ -12,9 +14,29 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Private endpoint update details. </summary>
     public partial class PrivateEndpointUpdate
     {
-        /// <summary> Initializes a new instance of PrivateEndpointUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointUpdate"/>. </summary>
         public PrivateEndpointUpdate()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointUpdate"/>. </summary>
+        /// <param name="id"> Remote endpoint resource ID. </param>
+        /// <param name="location"> ARM location of the remote private endpoint. </param>
+        /// <param name="immutableSubscriptionId"> Original subscription ID needed by Microsoft.Network. </param>
+        /// <param name="immutableResourceId"> Original resource ID needed by Microsoft.Network. </param>
+        /// <param name="vnetTrafficTag"> Virtual network traffic tag. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointUpdate(string id, AzureLocation? location, string immutableSubscriptionId, string immutableResourceId, string vnetTrafficTag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Location = location;
+            ImmutableSubscriptionId = immutableSubscriptionId;
+            ImmutableResourceId = immutableResourceId;
+            VnetTrafficTag = vnetTrafficTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Remote endpoint resource ID. </summary>

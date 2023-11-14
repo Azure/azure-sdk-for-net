@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A selection mark object representing check boxes, radio buttons, and other elements indicating a selection. </summary>
     public partial class DocumentSelectionMark
     {
-        /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/>. </summary>
         /// <param name="statePrivate"> State of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
@@ -25,17 +29,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentSelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/>. </summary>
         /// <param name="statePrivate"> State of the selection mark. </param>
         /// <param name="polygon"> Bounding polygon of the selection mark. </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
-        internal DocumentSelectionMark(V3SelectionMarkState statePrivate, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentSelectionMark(V3SelectionMarkState statePrivate, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StatePrivate = statePrivate;
             Polygon = polygon;
             Span = span;
             Confidence = confidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentSelectionMark"/> for deserialization. </summary>
+        internal DocumentSelectionMark()
+        {
         }
         /// <summary> Location of the selection mark in the reading order concatenated content. </summary>
         public DocumentSpan Span { get; }

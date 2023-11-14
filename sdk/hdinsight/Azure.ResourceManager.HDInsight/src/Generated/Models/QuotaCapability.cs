@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The regional quota capability. </summary>
     public partial class QuotaCapability
     {
-        /// <summary> Initializes a new instance of QuotaCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCapability"/>. </summary>
         internal QuotaCapability()
         {
             RegionalQuotas = new ChangeTrackingList<RegionalQuotaCapability>();
         }
 
-        /// <summary> Initializes a new instance of QuotaCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaCapability"/>. </summary>
         /// <param name="coresUsed"> The number of cores used in the subscription. </param>
         /// <param name="maxCoresAllowed"> The number of cores that the subscription allowed. </param>
         /// <param name="regionalQuotas"> The list of region quota capabilities. </param>
-        internal QuotaCapability(long? coresUsed, long? maxCoresAllowed, IReadOnlyList<RegionalQuotaCapability> regionalQuotas)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaCapability(long? coresUsed, long? maxCoresAllowed, IReadOnlyList<RegionalQuotaCapability> regionalQuotas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CoresUsed = coresUsed;
             MaxCoresAllowed = maxCoresAllowed;
             RegionalQuotas = regionalQuotas;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of cores used in the subscription. </summary>

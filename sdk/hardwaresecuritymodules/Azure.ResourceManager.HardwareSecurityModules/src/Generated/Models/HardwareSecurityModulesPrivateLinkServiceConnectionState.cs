@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
     public partial class HardwareSecurityModulesPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkServiceConnectionState"/>. </summary>
         public HardwareSecurityModulesPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareSecurityModulesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareSecurityModulesPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal HardwareSecurityModulesPrivateLinkServiceConnectionState(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardwareSecurityModulesPrivateLinkServiceConnectionState(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>

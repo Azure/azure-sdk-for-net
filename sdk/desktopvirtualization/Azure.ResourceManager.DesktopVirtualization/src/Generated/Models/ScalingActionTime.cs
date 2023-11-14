@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> The time for a scaling action to occur. </summary>
     public partial class ScalingActionTime
     {
-        /// <summary> Initializes a new instance of ScalingActionTime. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScalingActionTime"/>. </summary>
         /// <param name="hour"> The hour. </param>
         /// <param name="minute"> The minute. </param>
         public ScalingActionTime(int hour, int minute)
         {
             Hour = hour;
             Minute = minute;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScalingActionTime"/>. </summary>
+        /// <param name="hour"> The hour. </param>
+        /// <param name="minute"> The minute. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScalingActionTime(int hour, int minute, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Hour = hour;
+            Minute = minute;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScalingActionTime"/> for deserialization. </summary>
+        internal ScalingActionTime()
+        {
         }
 
         /// <summary> The hour. </summary>

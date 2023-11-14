@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Describes Provisioning issue for given NetworkSecurityPerimeterConfiguration. </summary>
     public partial class EventHubsProvisioningIssue
     {
-        /// <summary> Initializes a new instance of EventHubsProvisioningIssue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsProvisioningIssue"/>. </summary>
         public EventHubsProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsProvisioningIssue. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Properties of Provisioning Issue. </param>
-        internal EventHubsProvisioningIssue(string name, EventHubsProvisioningIssueProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsProvisioningIssue(string name, EventHubsProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the issue. </summary>

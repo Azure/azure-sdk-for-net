@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceAccountCredentialsInfo
+    public partial class DynatraceAccountCredentialsInfo : IUtf8JsonSerializable, IJsonModel<DynatraceAccountCredentialsInfo>
     {
-        internal static DynatraceAccountCredentialsInfo DeserializeDynatraceAccountCredentialsInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceAccountCredentialsInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DynatraceAccountCredentialsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DynatraceAccountCredentialsInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DynatraceAccountCredentialsInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AccountId))
+                {
+                    writer.WritePropertyName("accountId"u8);
+                    writer.WriteStringValue(AccountId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ApiKey))
+                {
+                    writer.WritePropertyName("apiKey"u8);
+                    writer.WriteStringValue(ApiKey);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RegionId))
+                {
+                    writer.WritePropertyName("regionId"u8);
+                    writer.WriteStringValue(RegionId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DynatraceAccountCredentialsInfo IJsonModel<DynatraceAccountCredentialsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceAccountCredentialsInfo(document.RootElement, options);
+        }
+
+        internal static DynatraceAccountCredentialsInfo DeserializeDynatraceAccountCredentialsInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> accountId = default;
             Optional<string> apiKey = default;
             Optional<string> regionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))
@@ -38,8 +110,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     regionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DynatraceAccountCredentialsInfo(accountId.Value, apiKey.Value, regionId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DynatraceAccountCredentialsInfo(accountId.Value, apiKey.Value, regionId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DynatraceAccountCredentialsInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DynatraceAccountCredentialsInfo IPersistableModel<DynatraceAccountCredentialsInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDynatraceAccountCredentialsInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<DynatraceAccountCredentialsInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

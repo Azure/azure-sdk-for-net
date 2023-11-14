@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Private link service connection details. </summary>
     public partial class PrivateLinkServiceConnection
     {
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnection"/>. </summary>
         public PrivateLinkServiceConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServiceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceConnection"/>. </summary>
         /// <param name="name"> Private link service connection name. </param>
         /// <param name="groupIds"> List of group IDs. </param>
         /// <param name="requestMessage"> Request message. </param>
-        internal PrivateLinkServiceConnection(string name, IList<string> groupIds, string requestMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkServiceConnection(string name, IList<string> groupIds, string requestMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             GroupIds = groupIds;
             RequestMessage = requestMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Private link service connection name. </summary>

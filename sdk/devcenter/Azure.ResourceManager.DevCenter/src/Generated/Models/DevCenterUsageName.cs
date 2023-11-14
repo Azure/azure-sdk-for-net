@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The Usage Names. </summary>
     public partial class DevCenterUsageName
     {
-        /// <summary> Initializes a new instance of DevCenterUsageName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterUsageName"/>. </summary>
         internal DevCenterUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUsageName"/>. </summary>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="value"> The name of the resource. </param>
-        internal DevCenterUsageName(string localizedValue, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterUsageName(string localizedValue, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocalizedValue = localizedValue;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The localized name of the resource. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster job. </summary>
     public partial class ClusterJob : ResourceData
     {
-        /// <summary> Initializes a new instance of ClusterJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterJob"/>. </summary>
         /// <param name="properties">
         /// Properties of cluster job.
         /// Please note <see cref="ClusterJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of ClusterJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterJob"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,9 +42,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// Please note <see cref="ClusterJobProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FlinkJobProperties"/>.
         /// </param>
-        internal ClusterJob(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterJobProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterJob(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ClusterJobProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterJob"/> for deserialization. </summary>
+        internal ClusterJob()
+        {
         }
 
         /// <summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunStatusChanged event. </summary>
     public partial class MachineLearningServicesRunStatusChangedEventData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesRunStatusChangedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>
         internal MachineLearningServicesRunStatusChangedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesRunStatusChangedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>
         /// <param name="experimentId"> The ID of the experiment that the Machine Learning Run belongs to. </param>
         /// <param name="experimentName"> The name of the experiment that the Machine Learning Run belongs to. </param>
         /// <param name="runId"> The ID of the Machine Learning Run. </param>
@@ -23,7 +29,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runTags"> The tags of the Machine Learning Run. </param>
         /// <param name="runProperties"> The properties of the Machine Learning Run. </param>
         /// <param name="runStatus"> The status of the Machine Learning Run. </param>
-        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties, string runStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties, string runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExperimentId = experimentId;
             ExperimentName = experimentName;
@@ -32,6 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             RunTags = runTags;
             RunProperties = runProperties;
             RunStatus = runStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the experiment that the Machine Learning Run belongs to. </summary>

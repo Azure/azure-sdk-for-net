@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -20,7 +21,10 @@ namespace Azure.ResourceManager.FrontDoor
     /// </summary>
     public partial class FrontDoorWebApplicationFirewallPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorWebApplicationFirewallPolicyData(AzureLocation location) : base(location)
         {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.FrontDoor
             SecurityPolicyLinks = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +50,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="securityPolicyLinks"> Describes Security Policy associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the policy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSku sku, FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSku sku, FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Sku = sku;
@@ -58,6 +63,12 @@ namespace Azure.ResourceManager.FrontDoor
             SecurityPolicyLinks = securityPolicyLinks;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyData"/> for deserialization. </summary>
+        internal FrontDoorWebApplicationFirewallPolicyData()
+        {
         }
 
         /// <summary> Gets a unique read-only string that changes whenever the resource is updated. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The StaticRoutingEnrichment. </summary>
     public partial class StaticRoutingEnrichment
     {
-        /// <summary> Initializes a new instance of StaticRoutingEnrichment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticRoutingEnrichment"/>. </summary>
         public StaticRoutingEnrichment()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticRoutingEnrichment. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRoutingEnrichment"/>. </summary>
         /// <param name="key"> Static routing enrichment key. </param>
         /// <param name="valueType"> Static routing enrichment value type. For e.g. this property value can be 'String'. </param>
-        internal StaticRoutingEnrichment(string key, StaticRoutingEnrichmentType? valueType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticRoutingEnrichment(string key, StaticRoutingEnrichmentType? valueType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             ValueType = valueType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Static routing enrichment key. </summary>

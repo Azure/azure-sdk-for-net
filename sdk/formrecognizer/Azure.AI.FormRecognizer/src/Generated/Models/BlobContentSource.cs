@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -13,6 +14,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Azure Blob Storage content. </summary>
     public partial class BlobContentSource
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobContentSource"/>. </summary>
+        /// <param name="containerUri"> Azure Blob Storage container URL. </param>
+        /// <param name="prefix"> Blob name prefix. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobContentSource(Uri containerUri, string prefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContainerUri = containerUri;
+            Prefix = prefix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobContentSource"/> for deserialization. </summary>
+        internal BlobContentSource()
+        {
+        }
         /// <summary> Blob name prefix. </summary>
         public string Prefix { get; set; }
     }

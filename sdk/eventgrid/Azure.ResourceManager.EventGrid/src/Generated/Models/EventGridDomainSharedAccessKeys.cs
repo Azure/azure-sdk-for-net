@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Shared access keys of the Domain. </summary>
     public partial class EventGridDomainSharedAccessKeys
     {
-        /// <summary> Initializes a new instance of EventGridDomainSharedAccessKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainSharedAccessKeys"/>. </summary>
         internal EventGridDomainSharedAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridDomainSharedAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainSharedAccessKeys"/>. </summary>
         /// <param name="key1"> Shared access key1 for the domain. </param>
         /// <param name="key2"> Shared access key2 for the domain. </param>
-        internal EventGridDomainSharedAccessKeys(string key1, string key2)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridDomainSharedAccessKeys(string key1, string key2, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key1 = key1;
             Key2 = key2;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Shared access key1 for the domain. </summary>

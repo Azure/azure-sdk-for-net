@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,87 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsRecordingFileStatusUpdatedEventDataConverter))]
-    public partial class AcsRecordingFileStatusUpdatedEventData
+    public partial class AcsRecordingFileStatusUpdatedEventData : IUtf8JsonSerializable, IJsonModel<AcsRecordingFileStatusUpdatedEventData>
     {
-        internal static AcsRecordingFileStatusUpdatedEventData DeserializeAcsRecordingFileStatusUpdatedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRecordingFileStatusUpdatedEventData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AcsRecordingFileStatusUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AcsRecordingFileStatusUpdatedEventData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AcsRecordingFileStatusUpdatedEventData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RecordingStorageInfo))
+            {
+                writer.WritePropertyName("recordingStorageInfo"u8);
+                writer.WriteObjectValue(RecordingStorageInfo);
+            }
+            if (Optional.IsDefined(RecordingStartTime))
+            {
+                writer.WritePropertyName("recordingStartTime"u8);
+                writer.WriteStringValue(RecordingStartTime.Value, "O");
+            }
+            if (Optional.IsDefined(RecordingDurationMs))
+            {
+                writer.WritePropertyName("recordingDurationMs"u8);
+                writer.WriteNumberValue(RecordingDurationMs.Value);
+            }
+            if (Optional.IsDefined(ContentType))
+            {
+                writer.WritePropertyName("recordingContentType"u8);
+                writer.WriteStringValue(ContentType.Value.ToString());
+            }
+            if (Optional.IsDefined(ChannelType))
+            {
+                writer.WritePropertyName("recordingChannelType"u8);
+                writer.WriteStringValue(ChannelType.Value.ToString());
+            }
+            if (Optional.IsDefined(FormatType))
+            {
+                writer.WritePropertyName("recordingFormatType"u8);
+                writer.WriteStringValue(FormatType.Value.ToString());
+            }
+            if (Optional.IsDefined(SessionEndReason))
+            {
+                writer.WritePropertyName("sessionEndReason"u8);
+                writer.WriteStringValue(SessionEndReason);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsRecordingFileStatusUpdatedEventData IJsonModel<AcsRecordingFileStatusUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRecordingFileStatusUpdatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, options);
+        }
+
+        internal static AcsRecordingFileStatusUpdatedEventData DeserializeAcsRecordingFileStatusUpdatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +108,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<AcsRecordingChannelType> recordingChannelType = default;
             Optional<AcsRecordingFormatType> recordingFormatType = default;
             Optional<string> sessionEndReason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingStorageInfo"u8))
@@ -89,15 +171,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     sessionEndReason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Optional.ToNullable(recordingStartTime), Optional.ToNullable(recordingDurationMs), Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), sessionEndReason.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsRecordingFileStatusUpdatedEventData(recordingStorageInfo.Value, Optional.ToNullable(recordingStartTime), Optional.ToNullable(recordingDurationMs), Optional.ToNullable(recordingContentType), Optional.ToNullable(recordingChannelType), Optional.ToNullable(recordingFormatType), sessionEndReason.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsRecordingFileStatusUpdatedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRecordingFileStatusUpdatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsRecordingFileStatusUpdatedEventData IPersistableModel<AcsRecordingFileStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsRecordingFileStatusUpdatedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement, options);
+        }
+
+        string IPersistableModel<AcsRecordingFileStatusUpdatedEventData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRecordingFileStatusUpdatedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsRecordingFileStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

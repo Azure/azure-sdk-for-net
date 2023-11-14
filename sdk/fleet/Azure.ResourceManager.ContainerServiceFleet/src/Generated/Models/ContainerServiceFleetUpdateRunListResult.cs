@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The response of a UpdateRun list operation. </summary>
     internal partial class ContainerServiceFleetUpdateRunListResult
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunListResult"/>. </summary>
         /// <param name="value"> The UpdateRun items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContainerServiceFleetUpdateRunListResult(IEnumerable<ContainerServiceFleetUpdateRunData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunListResult"/>. </summary>
         /// <param name="value"> The UpdateRun items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal ContainerServiceFleetUpdateRunListResult(IReadOnlyList<ContainerServiceFleetUpdateRunData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateRunListResult(IReadOnlyList<ContainerServiceFleetUpdateRunData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunListResult"/> for deserialization. </summary>
+        internal ContainerServiceFleetUpdateRunListResult()
+        {
         }
 
         /// <summary> The UpdateRun items on this page. </summary>

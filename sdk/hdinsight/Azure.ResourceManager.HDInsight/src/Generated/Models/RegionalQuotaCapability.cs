@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The regional quota capacity. </summary>
     public partial class RegionalQuotaCapability
     {
-        /// <summary> Initializes a new instance of RegionalQuotaCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegionalQuotaCapability"/>. </summary>
         internal RegionalQuotaCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of RegionalQuotaCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalQuotaCapability"/>. </summary>
         /// <param name="region"> The region name. </param>
         /// <param name="coresUsed"> The number of cores used in the region. </param>
         /// <param name="coresAvailable"> The number of cores available in the region. </param>
-        internal RegionalQuotaCapability(AzureLocation? region, long? coresUsed, long? coresAvailable)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegionalQuotaCapability(AzureLocation? region, long? coresUsed, long? coresAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Region = region;
             CoresUsed = coresUsed;
             CoresAvailable = coresAvailable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The region name. </summary>

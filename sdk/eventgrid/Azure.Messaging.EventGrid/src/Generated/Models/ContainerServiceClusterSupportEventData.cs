@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of cluster support events. </summary>
     public partial class ContainerServiceClusterSupportEventData
     {
-        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEventData"/>. </summary>
         internal ContainerServiceClusterSupportEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceClusterSupportEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
-        internal ContainerServiceClusterSupportEventData(string kubernetesVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceClusterSupportEventData(string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KubernetesVersion = kubernetesVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Kubernetes version of the ManagedCluster resource. </summary>

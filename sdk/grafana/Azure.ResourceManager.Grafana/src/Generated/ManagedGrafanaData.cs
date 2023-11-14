@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Grafana.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class ManagedGrafanaData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedGrafanaData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedGrafanaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +38,18 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="sku"> The Sku of the grafana resource. </param>
         /// <param name="properties"> Properties specific to the grafana resource. </param>
         /// <param name="identity"> The managed identity of the grafana resource. </param>
-        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedGrafanaSku sku, ManagedGrafanaProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedGrafanaSku sku, ManagedGrafanaProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Properties = properties;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaData"/> for deserialization. </summary>
+        internal ManagedGrafanaData()
+        {
         }
 
         /// <summary> The Sku of the grafana resource. </summary>

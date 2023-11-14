@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> The report for session host information. </summary>
     public partial class SessionHostHealthCheckReport
     {
-        /// <summary> Initializes a new instance of SessionHostHealthCheckReport. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SessionHostHealthCheckReport"/>. </summary>
         internal SessionHostHealthCheckReport()
         {
         }
 
-        /// <summary> Initializes a new instance of SessionHostHealthCheckReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostHealthCheckReport"/>. </summary>
         /// <param name="healthCheckName"> Represents the name of the health check operation performed. </param>
         /// <param name="healthCheckResult"> Represents the Health state of the health check we performed. </param>
         /// <param name="additionalFailureDetails"> Additional detailed information on the failure. </param>
-        internal SessionHostHealthCheckReport(SessionHostHealthCheckName? healthCheckName, SessionHostHealthCheckResult? healthCheckResult, SessionHostHealthCheckFailureDetails additionalFailureDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SessionHostHealthCheckReport(SessionHostHealthCheckName? healthCheckName, SessionHostHealthCheckResult? healthCheckResult, SessionHostHealthCheckFailureDetails additionalFailureDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HealthCheckName = healthCheckName;
             HealthCheckResult = healthCheckResult;
             AdditionalFailureDetails = additionalFailureDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents the name of the health check operation performed. </summary>

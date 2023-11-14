@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> List of guest configuration assignment reports. </summary>
     internal partial class GuestConfigurationAssignmentReportList
     {
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportList"/>. </summary>
         internal GuestConfigurationAssignmentReportList()
         {
             Value = new ChangeTrackingList<GuestConfigurationAssignmentReport>();
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportList"/>. </summary>
         /// <param name="value"> List of reports for the guest configuration. Report contains information such as compliance status, reason and more. </param>
-        internal GuestConfigurationAssignmentReportList(IReadOnlyList<GuestConfigurationAssignmentReport> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationAssignmentReportList(IReadOnlyList<GuestConfigurationAssignmentReport> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of reports for the guest configuration. Report contains information such as compliance status, reason and more. </summary>

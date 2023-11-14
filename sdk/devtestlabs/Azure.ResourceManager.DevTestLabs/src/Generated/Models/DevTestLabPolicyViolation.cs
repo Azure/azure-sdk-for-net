@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Policy violation. </summary>
     public partial class DevTestLabPolicyViolation
     {
-        /// <summary> Initializes a new instance of DevTestLabPolicyViolation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyViolation"/>. </summary>
         internal DevTestLabPolicyViolation()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabPolicyViolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyViolation"/>. </summary>
         /// <param name="code"> The code of the policy violation. </param>
         /// <param name="message"> The message of the policy violation. </param>
-        internal DevTestLabPolicyViolation(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabPolicyViolation(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The code of the policy violation. </summary>

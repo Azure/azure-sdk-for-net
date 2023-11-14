@@ -5,10 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Classifier document type info. </summary>
     public partial class ClassifierDocumentTypeDetails
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClassifierDocumentTypeDetails"/>. </summary>
+        /// <param name="azureBlobSource"> Azure Blob Storage location containing the training data for a classifier document type.  Either azureBlobSource or azureBlobFileListSource must be specified. </param>
+        /// <param name="azureBlobFileListSource"> Azure Blob Storage file list specifying the training data for a classifier document type.  Either azureBlobSource or azureBlobFileListSource must be specified. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClassifierDocumentTypeDetails(BlobContentSource azureBlobSource, BlobFileListContentSource azureBlobFileListSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AzureBlobSource = azureBlobSource;
+            AzureBlobFileListSource = azureBlobFileListSource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }

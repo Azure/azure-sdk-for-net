@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Results of the catalog list operation. </summary>
     internal partial class DevCenterCatalogListResult
     {
-        /// <summary> Initializes a new instance of DevCenterCatalogListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogListResult"/>. </summary>
         internal DevCenterCatalogListResult()
         {
             Value = new ChangeTrackingList<DevCenterCatalogData>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterCatalogListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterCatalogListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
-        internal DevCenterCatalogListResult(IReadOnlyList<DevCenterCatalogData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterCatalogListResult(IReadOnlyList<DevCenterCatalogData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Current page of results. </summary>

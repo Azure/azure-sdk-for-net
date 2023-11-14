@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="properties"> The properties of a private endpoint connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeviceProvisioningServicesPrivateEndpointConnectionData(DeviceProvisioningServicesPrivateEndpointConnectionProperties properties)
@@ -28,15 +32,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a private endpoint connection. </param>
-        internal DeviceProvisioningServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceProvisioningServicesPrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServicesPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeviceProvisioningServicesPrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionData"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesPrivateEndpointConnectionData()
+        {
         }
 
         /// <summary> The properties of a private endpoint connection. </summary>

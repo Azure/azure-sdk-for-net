@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The result returned from a check name availability request. </summary>
     public partial class DigitalTwinsNameResult
     {
-        /// <summary> Initializes a new instance of DigitalTwinsNameResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsNameResult"/>. </summary>
         internal DigitalTwinsNameResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsNameResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsNameResult"/>. </summary>
         /// <param name="isNameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
         /// <param name="reason"> Message providing the reason why the given name is invalid. </param>
-        internal DigitalTwinsNameResult(bool? isNameAvailable, string message, DigitalTwinsNameUnavailableReason? reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsNameResult(bool? isNameAvailable, string message, DigitalTwinsNameUnavailableReason? reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Message = message;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies a Boolean value that indicates if the name is available. </summary>

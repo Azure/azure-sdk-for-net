@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Notification settings for a schedule. </summary>
     public partial class DevTestLabNotificationSettings
     {
-        /// <summary> Initializes a new instance of DevTestLabNotificationSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationSettings"/>. </summary>
         public DevTestLabNotificationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabNotificationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationSettings"/>. </summary>
         /// <param name="status"> If notifications are enabled for this schedule (i.e. Enabled, Disabled). </param>
         /// <param name="timeInMinutes"> Time in minutes before event at which notification will be sent. </param>
         /// <param name="webhookUri"> The webhook URL to which the notification will be sent. </param>
         /// <param name="emailRecipient"> The email recipient to send notifications to (can be a list of semi-colon separated email addresses). </param>
         /// <param name="notificationLocale"> The locale to use when sending a notification (fallback for unsupported languages is EN). </param>
-        internal DevTestLabNotificationSettings(DevTestLabEnableStatus? status, int? timeInMinutes, Uri webhookUri, string emailRecipient, string notificationLocale)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabNotificationSettings(DevTestLabEnableStatus? status, int? timeInMinutes, Uri webhookUri, string emailRecipient, string notificationLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             TimeInMinutes = timeInMinutes;
             WebhookUri = webhookUri;
             EmailRecipient = emailRecipient;
             NotificationLocale = notificationLocale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If notifications are enabled for this schedule (i.e. Enabled, Disabled). </summary>

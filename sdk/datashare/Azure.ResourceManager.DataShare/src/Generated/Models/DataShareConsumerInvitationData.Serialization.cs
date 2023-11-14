@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
@@ -13,21 +16,192 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class DataShareConsumerInvitationData : IUtf8JsonSerializable
+    public partial class DataShareConsumerInvitationData : IUtf8JsonSerializable, IJsonModel<DataShareConsumerInvitationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareConsumerInvitationData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataShareConsumerInvitationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataShareConsumerInvitationData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataShareConsumerInvitationData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataSetCount))
+                {
+                    writer.WritePropertyName("dataSetCount"u8);
+                    writer.WriteNumberValue(DataSetCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExpireOn))
+                {
+                    writer.WritePropertyName("expirationDate"u8);
+                    writer.WriteStringValue(ExpireOn.Value, "O");
+                }
+            }
             writer.WritePropertyName("invitationId"u8);
             writer.WriteStringValue(InvitationId);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InvitationStatus))
+                {
+                    writer.WritePropertyName("invitationStatus"u8);
+                    writer.WriteStringValue(InvitationStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProviderEmail))
+                {
+                    writer.WritePropertyName("providerEmail"u8);
+                    writer.WriteStringValue(ProviderEmail);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProviderName))
+                {
+                    writer.WritePropertyName("providerName"u8);
+                    writer.WriteStringValue(ProviderName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProviderTenantName))
+                {
+                    writer.WritePropertyName("providerTenantName"u8);
+                    writer.WriteStringValue(ProviderTenantName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RespondedOn))
+                {
+                    writer.WritePropertyName("respondedAt"u8);
+                    writer.WriteStringValue(RespondedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SentOn))
+                {
+                    writer.WritePropertyName("sentAt"u8);
+                    writer.WriteStringValue(SentOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ShareName))
+                {
+                    writer.WritePropertyName("shareName"u8);
+                    writer.WriteStringValue(ShareName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TermsOfUse))
+                {
+                    writer.WritePropertyName("termsOfUse"u8);
+                    writer.WriteStringValue(TermsOfUse);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UserEmail))
+                {
+                    writer.WritePropertyName("userEmail"u8);
+                    writer.WriteStringValue(UserEmail);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UserName))
+                {
+                    writer.WritePropertyName("userName"u8);
+                    writer.WriteStringValue(UserName);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataShareConsumerInvitationData DeserializeDataShareConsumerInvitationData(JsonElement element)
+        DataShareConsumerInvitationData IJsonModel<DataShareConsumerInvitationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataShareConsumerInvitationData(document.RootElement, options);
+        }
+
+        internal static DataShareConsumerInvitationData DeserializeDataShareConsumerInvitationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +225,8 @@ namespace Azure.ResourceManager.DataShare
             Optional<string> termsOfUse = default;
             Optional<string> userEmail = default;
             Optional<string> userName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -188,8 +364,38 @@ namespace Azure.ResourceManager.DataShare
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataShareConsumerInvitationData(id, name, type, systemData.Value, Optional.ToNullable(dataSetCount), description.Value, Optional.ToNullable(expirationDate), invitationId, Optional.ToNullable(invitationStatus), Optional.ToNullable(location), providerEmail.Value, providerName.Value, providerTenantName.Value, Optional.ToNullable(respondedAt), Optional.ToNullable(sentAt), shareName.Value, termsOfUse.Value, userEmail.Value, userName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataShareConsumerInvitationData(id, name, type, systemData.Value, Optional.ToNullable(dataSetCount), description.Value, Optional.ToNullable(expirationDate), invitationId, Optional.ToNullable(invitationStatus), Optional.ToNullable(location), providerEmail.Value, providerName.Value, providerTenantName.Value, Optional.ToNullable(respondedAt), Optional.ToNullable(sentAt), shareName.Value, termsOfUse.Value, userEmail.Value, userName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataShareConsumerInvitationData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataShareConsumerInvitationData IPersistableModel<DataShareConsumerInvitationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataShareConsumerInvitationData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataShareConsumerInvitationData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

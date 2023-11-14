@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Information about VMSS VM. </summary>
     public partial class GuestConfigurationVmssVmInfo
     {
-        /// <summary> Initializes a new instance of GuestConfigurationVmssVmInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmssVmInfo"/>. </summary>
         public GuestConfigurationVmssVmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationVmssVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmssVmInfo"/>. </summary>
         /// <param name="vmId"> UUID of the VM. </param>
         /// <param name="vmResourceId"> Azure resource Id of the VM. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
         /// <param name="lastComplianceCheckedOn"> Date and time when last compliance status was checked. </param>
-        internal GuestConfigurationVmssVmInfo(Guid? vmId, ResourceIdentifier vmResourceId, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, Guid? latestReportId, DateTimeOffset? lastComplianceCheckedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationVmssVmInfo(Guid? vmId, ResourceIdentifier vmResourceId, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, Guid? latestReportId, DateTimeOffset? lastComplianceCheckedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmId = vmId;
             VmResourceId = vmResourceId;
             ComplianceStatus = complianceStatus;
             LatestReportId = latestReportId;
             LastComplianceCheckedOn = lastComplianceCheckedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> UUID of the VM. </summary>

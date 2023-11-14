@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Information about the partner. </summary>
     public partial class EventGridPartnerContent
     {
-        /// <summary> Initializes a new instance of EventGridPartnerContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridPartnerContent"/>. </summary>
         public EventGridPartnerContent()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridPartnerContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridPartnerContent"/>. </summary>
         /// <param name="partnerRegistrationImmutableId"> The immutableId of the corresponding partner registration. </param>
         /// <param name="partnerName"> The partner name. </param>
         /// <param name="authorizationExpireOn">
@@ -25,11 +29,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// context will fail. If specified, the allowed values are between 1 to the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration.
         /// If not specified, the default value will be the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration or 7 if this value is not specified.
         /// </param>
-        internal EventGridPartnerContent(Guid? partnerRegistrationImmutableId, string partnerName, DateTimeOffset? authorizationExpireOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridPartnerContent(Guid? partnerRegistrationImmutableId, string partnerName, DateTimeOffset? authorizationExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             PartnerName = partnerName;
             AuthorizationExpireOn = authorizationExpireOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The immutableId of the corresponding partner registration. </summary>

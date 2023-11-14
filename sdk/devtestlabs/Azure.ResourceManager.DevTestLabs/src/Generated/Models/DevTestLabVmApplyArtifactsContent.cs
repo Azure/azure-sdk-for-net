@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Request body for applying artifacts to a virtual machine. </summary>
     public partial class DevTestLabVmApplyArtifactsContent
     {
-        /// <summary> Initializes a new instance of DevTestLabVmApplyArtifactsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmApplyArtifactsContent"/>. </summary>
         public DevTestLabVmApplyArtifactsContent()
         {
             Artifacts = new ChangeTrackingList<DevTestLabArtifactInstallInfo>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVmApplyArtifactsContent"/>. </summary>
+        /// <param name="artifacts"> The list of artifacts to apply. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabVmApplyArtifactsContent(IList<DevTestLabArtifactInstallInfo> artifacts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Artifacts = artifacts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of artifacts to apply. </summary>

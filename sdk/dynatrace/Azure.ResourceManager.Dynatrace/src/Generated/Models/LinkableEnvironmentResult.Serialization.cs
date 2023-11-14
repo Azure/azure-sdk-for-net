@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class LinkableEnvironmentResult
+    public partial class LinkableEnvironmentResult : IUtf8JsonSerializable, IJsonModel<LinkableEnvironmentResult>
     {
-        internal static LinkableEnvironmentResult DeserializeLinkableEnvironmentResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkableEnvironmentResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LinkableEnvironmentResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LinkableEnvironmentResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LinkableEnvironmentResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                writer.WritePropertyName("environmentId"u8);
+                writer.WriteStringValue(EnvironmentId);
+            }
+            if (Optional.IsDefined(EnvironmentName))
+            {
+                writer.WritePropertyName("environmentName"u8);
+                writer.WriteStringValue(EnvironmentName);
+            }
+            if (Optional.IsDefined(PlanData))
+            {
+                writer.WritePropertyName("planData"u8);
+                writer.WriteObjectValue(PlanData);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinkableEnvironmentResult IJsonModel<LinkableEnvironmentResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkableEnvironmentResult(document.RootElement, options);
+        }
+
+        internal static LinkableEnvironmentResult DeserializeLinkableEnvironmentResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> environmentId = default;
             Optional<string> environmentName = default;
             Optional<DynatraceBillingPlanInfo> planData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentId"u8))
@@ -42,8 +105,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkableEnvironmentResult(environmentId.Value, environmentName.Value, planData.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkableEnvironmentResult(environmentId.Value, environmentName.Value, planData.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkableEnvironmentResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkableEnvironmentResult IPersistableModel<LinkableEnvironmentResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkableEnvironmentResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<LinkableEnvironmentResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

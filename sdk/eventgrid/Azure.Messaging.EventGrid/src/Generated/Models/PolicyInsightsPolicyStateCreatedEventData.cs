@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateCreated event. </summary>
     public partial class PolicyInsightsPolicyStateCreatedEventData
     {
-        /// <summary> Initializes a new instance of PolicyInsightsPolicyStateCreatedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
         internal PolicyInsightsPolicyStateCreatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyInsightsPolicyStateCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
         /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>
@@ -25,7 +29,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="complianceState"> The compliance state of the resource with respect to the policy assignment. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
-        internal PolicyInsightsPolicyStateCreatedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyInsightsPolicyStateCreatedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             PolicyAssignmentId = policyAssignmentId;
@@ -34,6 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ComplianceState = complianceState;
             SubscriptionId = subscriptionId;
             ComplianceReasonCode = complianceReasonCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </summary>

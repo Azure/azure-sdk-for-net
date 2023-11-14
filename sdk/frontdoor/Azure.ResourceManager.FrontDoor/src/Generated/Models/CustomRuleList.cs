@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines contents of custom rules. </summary>
     internal partial class CustomRuleList
     {
-        /// <summary> Initializes a new instance of CustomRuleList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomRuleList"/>. </summary>
         public CustomRuleList()
         {
             Rules = new ChangeTrackingList<WebApplicationCustomRule>();
         }
 
-        /// <summary> Initializes a new instance of CustomRuleList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRuleList"/>. </summary>
         /// <param name="rules"> List of rules. </param>
-        internal CustomRuleList(IList<WebApplicationCustomRule> rules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomRuleList(IList<WebApplicationCustomRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of rules. </summary>

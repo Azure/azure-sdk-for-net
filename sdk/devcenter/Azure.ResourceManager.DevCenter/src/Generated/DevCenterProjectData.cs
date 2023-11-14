@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterProjectData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevCenterProjectData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevCenterProjectData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterProjectData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,13 +40,20 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="maxDevBoxesPerUser"> When specified, limits the maximum number of Dev Boxes a single user can create across all pools in the project. This will have no effect on existing Dev Boxes when reduced. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="devCenterUri"> The URI of the Dev Center resource this project is associated with. </param>
-        internal DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, DevCenterProvisioningState? provisioningState, Uri devCenterUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier devCenterId, string description, int? maxDevBoxesPerUser, DevCenterProvisioningState? provisioningState, Uri devCenterUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DevCenterId = devCenterId;
             Description = description;
             MaxDevBoxesPerUser = maxDevBoxesPerUser;
             ProvisioningState = provisioningState;
             DevCenterUri = devCenterUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectData"/> for deserialization. </summary>
+        internal DevCenterProjectData()
+        {
         }
 
         /// <summary> Resource Id of an associated DevCenter. </summary>

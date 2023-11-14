@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The details of the HTTP request. </summary>
     public partial class ResourceHttpRequest
     {
-        /// <summary> Initializes a new instance of ResourceHttpRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHttpRequest"/>. </summary>
         internal ResourceHttpRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHttpRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHttpRequest"/>. </summary>
         /// <param name="clientRequestId"> The client request ID. </param>
         /// <param name="clientIpAddress"> The client IP address. </param>
         /// <param name="methodString"> The request method. </param>
         /// <param name="url"> The url used in the request. </param>
-        internal ResourceHttpRequest(string clientRequestId, string clientIpAddress, string methodString, string url)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHttpRequest(string clientRequestId, string clientIpAddress, string methodString, string url, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientRequestId = clientRequestId;
             ClientIpAddress = clientIpAddress;
             MethodString = methodString;
             Url = url;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The client request ID. </summary>

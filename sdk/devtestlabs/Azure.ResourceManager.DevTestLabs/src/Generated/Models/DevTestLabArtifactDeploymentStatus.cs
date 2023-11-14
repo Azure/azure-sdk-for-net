@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of an artifact deployment. </summary>
     public partial class DevTestLabArtifactDeploymentStatus
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactDeploymentStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactDeploymentStatus"/>. </summary>
         internal DevTestLabArtifactDeploymentStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactDeploymentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactDeploymentStatus"/>. </summary>
         /// <param name="deploymentStatus"> The deployment status of the artifact. </param>
         /// <param name="artifactsApplied"> The total count of the artifacts that were successfully applied. </param>
         /// <param name="totalArtifacts"> The total count of the artifacts that were tentatively applied. </param>
-        internal DevTestLabArtifactDeploymentStatus(string deploymentStatus, int? artifactsApplied, int? totalArtifacts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArtifactDeploymentStatus(string deploymentStatus, int? artifactsApplied, int? totalArtifacts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentStatus = deploymentStatus;
             ArtifactsApplied = artifactsApplied;
             TotalArtifacts = totalArtifacts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The deployment status of the artifact. </summary>

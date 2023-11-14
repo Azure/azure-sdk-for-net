@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightClusterDefinition : IUtf8JsonSerializable
+    public partial class HDInsightClusterDefinition : IUtf8JsonSerializable, IJsonModel<HDInsightClusterDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterDefinition>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HDInsightClusterDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HDInsightClusterDefinition>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HDInsightClusterDefinition>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Blueprint))
             {
@@ -50,11 +59,40 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
 #endif
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightClusterDefinition DeserializeHDInsightClusterDefinition(JsonElement element)
+        HDInsightClusterDefinition IJsonModel<HDInsightClusterDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightClusterDefinition(document.RootElement, options);
+        }
+
+        internal static HDInsightClusterDefinition DeserializeHDInsightClusterDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +101,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> componentVersion = default;
             Optional<BinaryData> configurations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blueprint"u8))
@@ -98,8 +138,38 @@ namespace Azure.ResourceManager.HDInsight.Models
                     configurations = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightClusterDefinition(blueprint.Value, kind.Value, Optional.ToDictionary(componentVersion), configurations.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightClusterDefinition(blueprint.Value, kind.Value, Optional.ToDictionary(componentVersion), configurations.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightClusterDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HDInsightClusterDefinition IPersistableModel<HDInsightClusterDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHDInsightClusterDefinition(document.RootElement, options);
+        }
+
+        string IPersistableModel<HDInsightClusterDefinition>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,15 +16,64 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsUserDisconnectedEventDataConverter))]
-    public partial class AcsUserDisconnectedEventData
+    public partial class AcsUserDisconnectedEventData : IUtf8JsonSerializable, IJsonModel<AcsUserDisconnectedEventData>
     {
-        internal static AcsUserDisconnectedEventData DeserializeAcsUserDisconnectedEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsUserDisconnectedEventData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AcsUserDisconnectedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AcsUserDisconnectedEventData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AcsUserDisconnectedEventData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UserCommunicationIdentifier))
+            {
+                writer.WritePropertyName("userCommunicationIdentifier"u8);
+                writer.WriteObjectValue(UserCommunicationIdentifier);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsUserDisconnectedEventData IJsonModel<AcsUserDisconnectedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsUserDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsUserDisconnectedEventData(document.RootElement, options);
+        }
+
+        internal static AcsUserDisconnectedEventData DeserializeAcsUserDisconnectedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CommunicationIdentifierModel> userCommunicationIdentifier = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userCommunicationIdentifier"u8))
@@ -33,15 +85,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     userCommunicationIdentifier = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsUserDisconnectedEventData(userCommunicationIdentifier.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsUserDisconnectedEventData(userCommunicationIdentifier.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsUserDisconnectedEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsUserDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsUserDisconnectedEventData IPersistableModel<AcsUserDisconnectedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsUserDisconnectedEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsUserDisconnectedEventData(document.RootElement, options);
+        }
+
+        string IPersistableModel<AcsUserDisconnectedEventData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsUserDisconnectedEventDataConverter : JsonConverter<AcsUserDisconnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsUserDisconnectedEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsUserDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

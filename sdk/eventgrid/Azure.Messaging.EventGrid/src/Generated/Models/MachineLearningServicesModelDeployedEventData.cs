@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelDeployed event. </summary>
     public partial class MachineLearningServicesModelDeployedEventData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesModelDeployedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>
         internal MachineLearningServicesModelDeployedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesModelDeployedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>
         /// <param name="serviceName"> The name of the deployed service. </param>
         /// <param name="serviceComputeType"> The compute type (e.g. ACI, AKS) of the deployed service. </param>
         /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>
         /// <param name="serviceTags"> The tags of the deployed service. </param>
         /// <param name="serviceProperties"> The properties of the deployed service. </param>
-        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds, object serviceTags, object serviceProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds, object serviceTags, object serviceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceName = serviceName;
             ServiceComputeType = serviceComputeType;
             ModelIds = modelIds;
             ServiceTags = serviceTags;
             ServiceProperties = serviceProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the deployed service. </summary>

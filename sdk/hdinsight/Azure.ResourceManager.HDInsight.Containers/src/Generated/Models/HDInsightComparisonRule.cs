@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The comparison rule. </summary>
     public partial class HDInsightComparisonRule
     {
-        /// <summary> Initializes a new instance of HDInsightComparisonRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightComparisonRule"/>. </summary>
         /// <param name="operator"> The comparison operator. </param>
         /// <param name="threshold"> Threshold setting. </param>
         public HDInsightComparisonRule(HDInsightComparisonOperator @operator, float threshold)
         {
             Operator = @operator;
             Threshold = threshold;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightComparisonRule"/>. </summary>
+        /// <param name="operator"> The comparison operator. </param>
+        /// <param name="threshold"> Threshold setting. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightComparisonRule(HDInsightComparisonOperator @operator, float threshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Operator = @operator;
+            Threshold = threshold;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightComparisonRule"/> for deserialization. </summary>
+        internal HDInsightComparisonRule()
+        {
         }
 
         /// <summary> The comparison operator. </summary>

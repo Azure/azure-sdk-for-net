@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Describes an EventGrid Resource Sku. </summary>
     internal partial class ResourceSku
     {
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         public ResourceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceSku"/>. </summary>
         /// <param name="name"> The Sku name of the resource. The possible values are: Basic or Premium. </param>
-        internal ResourceSku(EventGridSku? name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceSku(EventGridSku? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>

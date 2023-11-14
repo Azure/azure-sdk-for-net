@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> Parameters for listing connection details of an Azure Dev Spaces Controller. </summary>
     public partial class ListConnectionDetailsContent
     {
-        /// <summary> Initializes a new instance of ListConnectionDetailsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListConnectionDetailsContent"/>. </summary>
         /// <param name="targetContainerHostResourceId"> Resource ID of the target container host mapped to the Azure Dev Spaces Controller. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetContainerHostResourceId"/> is null. </exception>
         public ListConnectionDetailsContent(string targetContainerHostResourceId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.DevSpaces.Models
             Argument.AssertNotNull(targetContainerHostResourceId, nameof(targetContainerHostResourceId));
 
             TargetContainerHostResourceId = targetContainerHostResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListConnectionDetailsContent"/>. </summary>
+        /// <param name="targetContainerHostResourceId"> Resource ID of the target container host mapped to the Azure Dev Spaces Controller. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListConnectionDetailsContent(string targetContainerHostResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetContainerHostResourceId = targetContainerHostResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListConnectionDetailsContent"/> for deserialization. </summary>
+        internal ListConnectionDetailsContent()
+        {
         }
 
         /// <summary> Resource ID of the target container host mapped to the Azure Dev Spaces Controller. </summary>

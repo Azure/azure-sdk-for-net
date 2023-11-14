@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabCostData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabCostData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabCostData(AzureLocation location) : base(location)
         {
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceCosts = new ChangeTrackingList<DevTestLabResourceCost>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +47,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="createdOn"> The creation date of the cost. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, LabCostSummaryProperties labCostSummary, IReadOnlyList<DevTestLabCostDetails> labCostDetails, IReadOnlyList<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, LabCostSummaryProperties labCostSummary, IReadOnlyList<DevTestLabCostDetails> labCostDetails, IReadOnlyList<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TargetCost = targetCost;
             LabCostSummary = labCostSummary;
@@ -56,6 +60,12 @@ namespace Azure.ResourceManager.DevTestLabs
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostData"/> for deserialization. </summary>
+        internal DevTestLabCostData()
+        {
         }
 
         /// <summary> The target cost properties. </summary>

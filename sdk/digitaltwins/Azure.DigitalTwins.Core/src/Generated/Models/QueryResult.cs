@@ -15,7 +15,10 @@ namespace Azure.DigitalTwins.Core
     /// <summary> The results of a query operation and an optional continuation token. </summary>
     internal partial class QueryResult
     {
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         /// <param name="value"> The query results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal QueryResult(IEnumerable<object> value)
@@ -25,13 +28,20 @@ namespace Azure.DigitalTwins.Core
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/>. </summary>
         /// <param name="value"> The query results. </param>
         /// <param name="continuationToken"> A token which can be used to construct a new QuerySpecification to retrieve the next set of results. </param>
-        internal QueryResult(IReadOnlyList<object> value, string continuationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryResult(IReadOnlyList<object> value, string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryResult"/> for deserialization. </summary>
+        internal QueryResult()
+        {
         }
 
         /// <summary> The query results. </summary>

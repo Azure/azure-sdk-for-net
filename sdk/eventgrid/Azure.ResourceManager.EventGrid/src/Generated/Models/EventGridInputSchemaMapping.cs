@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class EventGridInputSchemaMapping
     {
-        /// <summary> Initializes a new instance of EventGridInputSchemaMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridInputSchemaMapping"/>. </summary>
         protected EventGridInputSchemaMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridInputSchemaMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridInputSchemaMapping"/>. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
-        internal EventGridInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InputSchemaMappingType = inputSchemaMappingType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the custom mapping. </summary>

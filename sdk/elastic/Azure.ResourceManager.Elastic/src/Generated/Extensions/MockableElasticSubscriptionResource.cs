@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), ElasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitorResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), ElasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitorResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), ElasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitorResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), ElasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitorResources", "value", "nextLink", cancellationToken);
         }
     }
 }

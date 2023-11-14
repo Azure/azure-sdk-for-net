@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The collection of Dicom Services. </summary>
     internal partial class DicomServiceCollection
     {
-        /// <summary> Initializes a new instance of DicomServiceCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DicomServiceCollection"/>. </summary>
         internal DicomServiceCollection()
         {
             Value = new ChangeTrackingList<DicomServiceData>();
         }
 
-        /// <summary> Initializes a new instance of DicomServiceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DicomServiceCollection"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Dicom Services. </param>
         /// <param name="value"> The list of Dicom Services. </param>
-        internal DicomServiceCollection(string nextLink, IReadOnlyList<DicomServiceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DicomServiceCollection(string nextLink, IReadOnlyList<DicomServiceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of Dicom Services. </summary>

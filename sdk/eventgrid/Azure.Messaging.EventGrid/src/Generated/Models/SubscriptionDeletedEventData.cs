@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventGrid.SubscriptionDeletedEvent event. </summary>
     public partial class SubscriptionDeletedEventData
     {
-        /// <summary> Initializes a new instance of SubscriptionDeletedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
         internal SubscriptionDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
         /// <param name="eventSubscriptionId"> The Azure resource ID of the deleted event subscription. </param>
-        internal SubscriptionDeletedEventData(string eventSubscriptionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionDeletedEventData(string eventSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventSubscriptionId = eventSubscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource ID of the deleted event subscription. </summary>

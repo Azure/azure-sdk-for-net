@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of an artifact parameter. </summary>
     public partial class DevTestLabArtifactParameter
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactParameter"/>. </summary>
         public DevTestLabArtifactParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactParameter"/>. </summary>
         /// <param name="name"> The name of the artifact parameter. </param>
         /// <param name="value"> The value of the artifact parameter. </param>
-        internal DevTestLabArtifactParameter(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArtifactParameter(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the artifact parameter. </summary>

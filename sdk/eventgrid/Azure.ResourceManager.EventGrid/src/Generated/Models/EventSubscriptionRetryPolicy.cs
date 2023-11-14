@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Information about the retry policy for an event subscription. </summary>
     public partial class EventSubscriptionRetryPolicy
     {
-        /// <summary> Initializes a new instance of EventSubscriptionRetryPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionRetryPolicy"/>. </summary>
         public EventSubscriptionRetryPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionRetryPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionRetryPolicy"/>. </summary>
         /// <param name="maxDeliveryAttempts"> Maximum number of delivery retry attempts for events. </param>
         /// <param name="eventTimeToLiveInMinutes"> Time To Live (in minutes) for events. </param>
-        internal EventSubscriptionRetryPolicy(int? maxDeliveryAttempts, int? eventTimeToLiveInMinutes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventSubscriptionRetryPolicy(int? maxDeliveryAttempts, int? eventTimeToLiveInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxDeliveryAttempts = maxDeliveryAttempts;
             EventTimeToLiveInMinutes = eventTimeToLiveInMinutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Maximum number of delivery retry attempts for events. </summary>

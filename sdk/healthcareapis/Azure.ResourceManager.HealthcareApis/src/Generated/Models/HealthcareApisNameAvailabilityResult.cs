@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> The properties indicating whether a given service name is available. </summary>
     public partial class HealthcareApisNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of HealthcareApisNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisNameAvailabilityResult"/>. </summary>
         internal HealthcareApisNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> The value which indicates whether the provided name is available. </param>
         /// <param name="reason"> The reason for unavailability. </param>
         /// <param name="message"> The detailed reason message. </param>
-        internal HealthcareApisNameAvailabilityResult(bool? isNameAvailable, HealthcareApisNameUnavailableReason? reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisNameAvailabilityResult(bool? isNameAvailable, HealthcareApisNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value which indicates whether the provided name is available. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines a list of Experiments. It contains a list of Experiment objects and a URL link to get the next set of results. </summary>
     internal partial class ExperimentList
     {
-        /// <summary> Initializes a new instance of ExperimentList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentList"/>. </summary>
         internal ExperimentList()
         {
             Value = new ChangeTrackingList<FrontDoorExperimentData>();
         }
 
-        /// <summary> Initializes a new instance of ExperimentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentList"/>. </summary>
         /// <param name="value"> List of Experiments within a resource group. </param>
         /// <param name="nextLink"> URL to get the next set of Experiment objects if there are any. </param>
-        internal ExperimentList(IReadOnlyList<FrontDoorExperimentData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentList(IReadOnlyList<FrontDoorExperimentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Experiments within a resource group. </summary>

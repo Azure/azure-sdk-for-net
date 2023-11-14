@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Describes the compute profile. </summary>
     internal partial class ComputeProfile
     {
-        /// <summary> Initializes a new instance of ComputeProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         public ComputeProfile()
         {
             Roles = new ChangeTrackingList<HDInsightClusterRole>();
         }
 
-        /// <summary> Initializes a new instance of ComputeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeProfile"/>. </summary>
         /// <param name="roles"> The list of roles in the cluster. </param>
-        internal ComputeProfile(IList<HDInsightClusterRole> roles)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeProfile(IList<HDInsightClusterRole> roles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Roles = roles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of roles in the cluster. </summary>

@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The core usage details. </summary>
     public partial class DevCenterUsage
     {
-        /// <summary> Initializes a new instance of DevCenterUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterUsage"/>. </summary>
         internal DevCenterUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of DevCenterUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUsage"/>. </summary>
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The limit integer. </param>
         /// <param name="unit"> The unit details. </param>
         /// <param name="name"> The name. </param>
-        internal DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterUsage(long? currentValue, long? limit, DevCenterUsageUnit? unit, DevCenterUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current usage. </summary>

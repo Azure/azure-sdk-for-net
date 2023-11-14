@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document model info. </summary>
     public partial class DocumentModelDetails
     {
-        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -28,7 +31,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DocumentTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
         }
 
-        /// <summary> Initializes a new instance of DocumentModelDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
@@ -36,7 +39,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="serviceVersion"> API version used to create this document model. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="documentTypes"> Supported document types. </param>
-        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, string> tags, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, string> tags, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             Description = description;
@@ -45,6 +49,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ServiceVersion = serviceVersion;
             Tags = tags;
             DocumentTypes = documentTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/> for deserialization. </summary>
+        internal DocumentModelDetails()
+        {
         }
 
         /// <summary> Unique document model name. </summary>

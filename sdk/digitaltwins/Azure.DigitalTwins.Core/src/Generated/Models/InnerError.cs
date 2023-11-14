@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A more specific error description than was provided by the containing error. </summary>
     internal partial class InnerError
     {
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         public InnerError()
         {
         }
 
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> A more specific error code than was provided by the containing error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal InnerError(string code, InnerError innererror)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InnerError(string code, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Innererror = innererror;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A more specific error code than was provided by the containing error. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Egress endpoints which dedicated hsm service connects to for common purpose. </summary>
     public partial class OutboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         internal OutboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<EndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The category of endpoints accessed by the dedicated hsm service, e.g. azure-resource-management, apiserver, etc. </param>
         /// <param name="endpoints"> The endpoints that dedicated hsm service connects to. </param>
-        internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<EndpointDependency> endpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<EndpointDependency> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Endpoints = endpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The category of endpoints accessed by the dedicated hsm service, e.g. azure-resource-management, apiserver, etc. </summary>

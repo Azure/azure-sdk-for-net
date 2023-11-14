@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DefenderEasm;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> The list of workspaces. </summary>
     internal partial class EasmWorkspaceListResult
     {
-        /// <summary> Initializes a new instance of EasmWorkspaceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspaceListResult"/>. </summary>
         internal EasmWorkspaceListResult()
         {
             Value = new ChangeTrackingList<EasmWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of EasmWorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspaceListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Workspace list. </param>
         /// <param name="value"> The list of workspaces. </param>
-        internal EasmWorkspaceListResult(string nextLink, IReadOnlyList<EasmWorkspaceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EasmWorkspaceListResult(string nextLink, IReadOnlyList<EasmWorkspaceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of Workspace list. </summary>

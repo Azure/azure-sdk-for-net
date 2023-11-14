@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes an inbound endpoint for a DNS resolver for PATCH operation. </summary>
     public partial class DnsResolverInboundEndpointPatch
     {
-        /// <summary> Initializes a new instance of DnsResolverInboundEndpointPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointPatch"/>. </summary>
         public DnsResolverInboundEndpointPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolverInboundEndpointPatch"/>. </summary>
+        /// <param name="tags"> Tags for inbound endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsResolverInboundEndpointPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tags for inbound endpoint. </summary>

@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema for all properties of  Recording Chunk Information. </summary>
     public partial class AcsRecordingChunkInfoProperties
     {
-        /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingChunkInfoProperties"/>. </summary>
         internal AcsRecordingChunkInfoProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRecordingChunkInfoProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingChunkInfoProperties"/>. </summary>
         /// <param name="documentId"> The documentId of the recording chunk. </param>
         /// <param name="index"> The index of the recording chunk. </param>
         /// <param name="endReason"> The reason for ending the recording chunk. </param>
         /// <param name="metadataLocation"> The location of the metadata for this chunk. </param>
         /// <param name="contentLocation"> The location of the content for this chunk. </param>
         /// <param name="deleteLocation"> The location to delete all chunk storage. </param>
-        internal AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation, string deleteLocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRecordingChunkInfoProperties(string documentId, long? index, string endReason, string metadataLocation, string contentLocation, string deleteLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DocumentId = documentId;
             Index = index;
@@ -30,6 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             MetadataLocation = metadataLocation;
             ContentLocation = contentLocation;
             DeleteLocation = deleteLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The documentId of the recording chunk. </summary>

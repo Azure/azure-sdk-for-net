@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Configuration request object. </summary>
     public partial class ConfigurationsContent
     {
-        /// <summary> Initializes a new instance of ConfigurationsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
         /// <param name="configurationFilters"> Holds details about product hierarchy information and filterable property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationFilters"/> is null. </exception>
         public ConfigurationsContent(IEnumerable<ConfigurationFilters> configurationFilters)
@@ -23,6 +26,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Argument.AssertNotNull(configurationFilters, nameof(configurationFilters));
 
             ConfigurationFilters = configurationFilters.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/>. </summary>
+        /// <param name="configurationFilters"> Holds details about product hierarchy information and filterable property. </param>
+        /// <param name="customerSubscriptionDetails"> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationsContent(IList<ConfigurationFilters> configurationFilters, CustomerSubscriptionDetails customerSubscriptionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConfigurationFilters = configurationFilters;
+            CustomerSubscriptionDetails = customerSubscriptionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationsContent"/> for deserialization. </summary>
+        internal ConfigurationsContent()
+        {
         }
 
         /// <summary> Holds details about product hierarchy information and filterable property. </summary>

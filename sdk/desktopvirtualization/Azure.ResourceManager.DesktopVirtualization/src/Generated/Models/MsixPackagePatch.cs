@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> MSIX Package properties that can be patched. </summary>
     public partial class MsixPackagePatch : ResourceData
     {
-        /// <summary> Initializes a new instance of MsixPackagePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MsixPackagePatch"/>. </summary>
         public MsixPackagePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of MsixPackagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackagePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,11 +31,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isActive"> Set a version of the package to be active across hostpool. </param>
         /// <param name="isRegularRegistration"> Set Registration mode. Regular or Delayed. </param>
         /// <param name="displayName"> Display name for MSIX Package. </param>
-        internal MsixPackagePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isActive, bool? isRegularRegistration, string displayName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MsixPackagePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isActive, bool? isRegularRegistration, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsActive = isActive;
             IsRegularRegistration = isRegularRegistration;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Set a version of the package to be active across hostpool. </summary>

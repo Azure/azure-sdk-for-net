@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The validation error information. </summary>
     public partial class HDInsightClusterValidationErrorInfo
     {
-        /// <summary> Initializes a new instance of HDInsightClusterValidationErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterValidationErrorInfo"/>. </summary>
         internal HDInsightClusterValidationErrorInfo()
         {
             MessageArguments = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterValidationErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterValidationErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="errorResource"> The error resource. </param>
         /// <param name="messageArguments"> The message arguments. </param>
-        internal HDInsightClusterValidationErrorInfo(string code, string message, string errorResource, IReadOnlyList<string> messageArguments)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterValidationErrorInfo(string code, string message, string errorResource, IReadOnlyList<string> messageArguments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             ErrorResource = errorResource;
             MessageArguments = messageArguments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error code. </summary>

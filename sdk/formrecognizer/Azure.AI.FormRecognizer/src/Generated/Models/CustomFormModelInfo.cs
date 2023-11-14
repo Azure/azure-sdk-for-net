@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
@@ -13,7 +14,10 @@ namespace Azure.AI.FormRecognizer.Training
     /// <summary> Basic custom model information. </summary>
     public partial class CustomFormModelInfo
     {
-        /// <summary> Initializes a new instance of CustomFormModelInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomFormModelInfo"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="status"> Status of the model. </param>
         /// <param name="trainingStartedOn"> Date and time (UTC) when the model was created. </param>
@@ -27,6 +31,30 @@ namespace Azure.AI.FormRecognizer.Training
             Status = status;
             TrainingStartedOn = trainingStartedOn;
             TrainingCompletedOn = trainingCompletedOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomFormModelInfo"/>. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="status"> Status of the model. </param>
+        /// <param name="trainingStartedOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="trainingCompletedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="modelName"> Optional user defined model name (max length: 1024). </param>
+        /// <param name="properties"> Optional model attributes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomFormModelInfo(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, string modelName, CustomFormModelProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ModelId = modelId;
+            Status = status;
+            TrainingStartedOn = trainingStartedOn;
+            TrainingCompletedOn = trainingCompletedOn;
+            ModelName = modelName;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomFormModelInfo"/> for deserialization. </summary>
+        internal CustomFormModelInfo()
+        {
         }
     }
 }

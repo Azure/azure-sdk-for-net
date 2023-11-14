@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Holds details about product family metadata. </summary>
     internal partial class ProductFamiliesMetadataListResult
     {
-        /// <summary> Initializes a new instance of ProductFamiliesMetadataListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadataListResult"/>. </summary>
         internal ProductFamiliesMetadataListResult()
         {
             Value = new ChangeTrackingList<ProductFamiliesMetadata>();
         }
 
-        /// <summary> Initializes a new instance of ProductFamiliesMetadataListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductFamiliesMetadataListResult"/>. </summary>
         /// <param name="value"> List of product family metadata details. </param>
         /// <param name="nextLink"> Link for the next set of product families. </param>
-        internal ProductFamiliesMetadataListResult(IReadOnlyList<ProductFamiliesMetadata> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductFamiliesMetadataListResult(IReadOnlyList<ProductFamiliesMetadata> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of product family metadata details. </summary>

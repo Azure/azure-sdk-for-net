@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> The list of configurations. </summary>
     internal partial class ProductConfigurations
     {
-        /// <summary> Initializes a new instance of ProductConfigurations. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProductConfigurations"/>. </summary>
         internal ProductConfigurations()
         {
             Value = new ChangeTrackingList<ProductConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of ProductConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductConfigurations"/>. </summary>
         /// <param name="value"> List of configurations. </param>
         /// <param name="nextLink"> Link for the next set of configurations. </param>
-        internal ProductConfigurations(IReadOnlyList<ProductConfiguration> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProductConfigurations(IReadOnlyList<ProductConfiguration> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of configurations. </summary>

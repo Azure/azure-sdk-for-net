@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryEventTarget
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEventTarget. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
         internal ContainerRegistryEventTarget()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEventTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="size"> The number of bytes of the content. Same as Length field. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>
@@ -23,7 +29,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="repository"> The repository name. </param>
         /// <param name="url"> The direct URL to the content. </param>
         /// <param name="tag"> The tag name. </param>
-        internal ContainerRegistryEventTarget(string mediaType, long? size, string digest, long? length, string repository, string url, string tag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryEventTarget(string mediaType, long? size, string digest, long? length, string repository, string url, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MediaType = mediaType;
             Size = size;
@@ -32,6 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Repository = repository;
             Url = url;
             Tag = tag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The MIME type of the referenced object. </summary>

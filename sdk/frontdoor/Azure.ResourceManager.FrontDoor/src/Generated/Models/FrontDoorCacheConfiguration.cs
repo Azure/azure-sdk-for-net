@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Caching settings for a caching-type route. To disable caching, do not provide a cacheConfiguration object. </summary>
     public partial class FrontDoorCacheConfiguration
     {
-        /// <summary> Initializes a new instance of FrontDoorCacheConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCacheConfiguration"/>. </summary>
         public FrontDoorCacheConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorCacheConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCacheConfiguration"/>. </summary>
         /// <param name="queryParameterStripDirective"> Treatment of URL query terms when forming the cache key. </param>
         /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
         /// <param name="dynamicCompression"> Whether to use dynamic compression for cached content. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). HTTP requires the value to be no more than a year. </param>
-        internal FrontDoorCacheConfiguration(FrontDoorQuery? queryParameterStripDirective, string queryParameters, DynamicCompressionEnabled? dynamicCompression, TimeSpan? cacheDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorCacheConfiguration(FrontDoorQuery? queryParameterStripDirective, string queryParameters, DynamicCompressionEnabled? dynamicCompression, TimeSpan? cacheDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QueryParameterStripDirective = queryParameterStripDirective;
             QueryParameters = queryParameters;
             DynamicCompression = dynamicCompression;
             CacheDuration = cacheDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Treatment of URL query terms when forming the cache key. </summary>

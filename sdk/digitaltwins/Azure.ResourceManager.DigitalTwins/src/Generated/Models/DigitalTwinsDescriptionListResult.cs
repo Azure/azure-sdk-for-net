@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DigitalTwins;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> A list of DigitalTwins description objects with a next link. </summary>
     internal partial class DigitalTwinsDescriptionListResult
     {
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionListResult"/>. </summary>
         internal DigitalTwinsDescriptionListResult()
         {
             Value = new ChangeTrackingList<DigitalTwinsDescriptionData>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsDescriptionListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of DigitalTwins description objects. </param>
         /// <param name="value"> A list of DigitalTwins description objects. </param>
-        internal DigitalTwinsDescriptionListResult(string nextLink, IReadOnlyList<DigitalTwinsDescriptionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsDescriptionListResult(string nextLink, IReadOnlyList<DigitalTwinsDescriptionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of DigitalTwins description objects. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Grafana.Models
@@ -12,9 +13,29 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The properties parameters for a PATCH request to a grafana resource. </summary>
     public partial class ManagedGrafanaPatchProperties
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaPatchProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatchProperties"/>. </summary>
         public ManagedGrafanaPatchProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatchProperties"/>. </summary>
+        /// <param name="zoneRedundancy"> The zone redundancy setting of the Grafana instance. </param>
+        /// <param name="apiKey"> The api key setting of the Grafana instance. </param>
+        /// <param name="deterministicOutboundIP"> Whether a Grafana instance uses deterministic outbound IPs. </param>
+        /// <param name="publicNetworkAccess"> Indicate the state for enable or disable traffic over the public interface. </param>
+        /// <param name="grafanaIntegrations"> GrafanaIntegrations is a bundled observability experience (e.g. pre-configured data source, tailored Grafana dashboards, alerting defaults) for common monitoring scenarios. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedGrafanaPatchProperties(GrafanaZoneRedundancy? zoneRedundancy, GrafanaApiKey? apiKey, DeterministicOutboundIP? deterministicOutboundIP, GrafanaPublicNetworkAccess? publicNetworkAccess, GrafanaIntegrations grafanaIntegrations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ZoneRedundancy = zoneRedundancy;
+            ApiKey = apiKey;
+            DeterministicOutboundIP = deterministicOutboundIP;
+            PublicNetworkAccess = publicNetworkAccess;
+            GrafanaIntegrations = grafanaIntegrations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The zone redundancy setting of the Grafana instance. </summary>

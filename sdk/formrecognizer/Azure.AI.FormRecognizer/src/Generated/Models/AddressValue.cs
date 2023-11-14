@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Address field value. </summary>
     public partial class AddressValue
     {
-        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AddressValue"/>. </summary>
         internal AddressValue()
         {
         }
 
-        /// <summary> Initializes a new instance of AddressValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddressValue"/>. </summary>
         /// <param name="houseNumber"> House or building number. </param>
         /// <param name="poBox"> Post office box number. </param>
         /// <param name="road"> Street name. </param>
@@ -30,7 +36,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="suburb"> Unofficial neighborhood name, like Chinatown. </param>
         /// <param name="house"> Build name, such as World Trade Center. </param>
         /// <param name="level"> Floor number, such as 3F. </param>
-        internal AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress, string unit, string cityDistrict, string stateDistrict, string suburb, string house, string level)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AddressValue(string houseNumber, string poBox, string road, string city, string state, string postalCode, string countryRegion, string streetAddress, string unit, string cityDistrict, string stateDistrict, string suburb, string house, string level, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HouseNumber = houseNumber;
             PoBox = poBox;
@@ -46,6 +53,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Suburb = suburb;
             House = house;
             Level = level;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> House or building number. </summary>

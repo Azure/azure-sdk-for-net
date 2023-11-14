@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Authentication configuration information. </summary>
     public partial class FhirServiceAuthenticationConfiguration
     {
-        /// <summary> Initializes a new instance of FhirServiceAuthenticationConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FhirServiceAuthenticationConfiguration"/>. </summary>
         public FhirServiceAuthenticationConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FhirServiceAuthenticationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FhirServiceAuthenticationConfiguration"/>. </summary>
         /// <param name="authority"> The authority url for the service. </param>
         /// <param name="audience"> The audience url for the service. </param>
         /// <param name="isSmartProxyEnabled"> If the SMART on FHIR proxy is enabled. </param>
-        internal FhirServiceAuthenticationConfiguration(string authority, string audience, bool? isSmartProxyEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FhirServiceAuthenticationConfiguration(string authority, string audience, bool? isSmartProxyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authority = authority;
             Audience = audience;
             IsSmartProxyEnabled = isSmartProxyEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The authority url for the service. </summary>

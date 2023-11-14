@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The response spec of checking name availability. </summary>
     public partial class HDInsightNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityResult"/>. </summary>
         internal HDInsightNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> This indicates whether the name is available. </param>
         /// <param name="reason"> The reason of the result. </param>
         /// <param name="message"> The related message. </param>
-        internal HDInsightNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This indicates whether the name is available. </summary>

@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Ingest heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIngestHeartbeat event. </summary>
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIngestHeartbeatEventData"/>. </summary>
         internal MediaLiveEventIngestHeartbeatEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIngestHeartbeatEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIngestHeartbeatEventData"/>. </summary>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="trackName"> Gets the track name. </param>
         /// <param name="transcriptionLanguage"> Gets the Live Transcription language. </param>
@@ -34,7 +38,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="unexpectedBitrate"> Gets a value indicating whether unexpected bitrate is present or not. </param>
         /// <param name="state"> Gets the state of the live event. </param>
         /// <param name="healthy"> Gets a value indicating whether preview is healthy or not. </param>
-        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, string transcriptionLanguage, string transcriptionState, long? bitrate, long? incomingBitrate, string ingestDriftValueInternal, DateTimeOffset? lastFragmentArrivalTime, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventIngestHeartbeatEventData(string trackType, string trackName, string transcriptionLanguage, string transcriptionState, long? bitrate, long? incomingBitrate, string ingestDriftValueInternal, DateTimeOffset? lastFragmentArrivalTime, string lastTimestamp, string timescale, long? overlapCount, long? discontinuityCount, long? nonincreasingCount, bool? unexpectedBitrate, string state, bool? healthy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrackType = trackType;
             TrackName = trackName;
@@ -52,6 +57,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             UnexpectedBitrate = unexpectedBitrate;
             State = state;
             Healthy = healthy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the type of the track (Audio / Video). </summary>

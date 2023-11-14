@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The properties of a DigitalTwinsInstance. </summary>
     internal partial class DigitalTwinsPatchProperties
     {
-        /// <summary> Initializes a new instance of DigitalTwinsPatchProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPatchProperties"/>. </summary>
         public DigitalTwinsPatchProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsPatchProperties"/>. </summary>
+        /// <param name="publicNetworkAccess"> Public network access for the DigitalTwinsInstance. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsPatchProperties(DigitalTwinsPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public network access for the DigitalTwinsInstance. </summary>

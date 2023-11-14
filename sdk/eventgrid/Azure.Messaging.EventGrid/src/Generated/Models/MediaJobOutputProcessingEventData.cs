@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -12,12 +13,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Job output processing event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobOutputProcessing event. </summary>
     public partial class MediaJobOutputProcessingEventData : MediaJobOutputStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobOutputProcessingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputProcessingEventData"/>. </summary>
         internal MediaJobOutputProcessingEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputProcessingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputProcessingEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.
@@ -25,7 +26,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
         /// </param>
         /// <param name="jobCorrelationData"> Gets the Job correlation data. </param>
-        internal MediaJobOutputProcessingEventData(MediaJobState? previousState, MediaJobOutput output, IReadOnlyDictionary<string, string> jobCorrelationData) : base(previousState, output, jobCorrelationData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobOutputProcessingEventData(MediaJobState? previousState, MediaJobOutput output, IReadOnlyDictionary<string, string> jobCorrelationData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(previousState, output, jobCorrelationData, serializedAdditionalRawData)
         {
         }
     }

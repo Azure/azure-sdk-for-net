@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Reverse shipment details. </summary>
     public partial class ReverseShippingDetails
     {
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReverseShippingDetails"/>. </summary>
         internal ReverseShippingDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseShippingDetails"/>. </summary>
         /// <param name="sasKeyForLabel"> SAS key to download the reverse shipment label of the package. </param>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
         /// <param name="trackingId"> TrackingId of the package. </param>
         /// <param name="trackingUri"> TrackingUrl of the package. </param>
-        internal ReverseShippingDetails(string sasKeyForLabel, string carrierName, string carrierDisplayName, string trackingId, Uri trackingUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReverseShippingDetails(string sasKeyForLabel, string carrierName, string carrierDisplayName, string trackingId, Uri trackingUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SasKeyForLabel = sasKeyForLabel;
             CarrierName = carrierName;
             CarrierDisplayName = carrierDisplayName;
             TrackingId = trackingId;
             TrackingUri = trackingUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SAS key to download the reverse shipment label of the package. </summary>

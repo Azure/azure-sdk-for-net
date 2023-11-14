@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class EventSubscriptionDestination
     {
-        /// <summary> Initializes a new instance of EventSubscriptionDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionDestination"/>. </summary>
         protected EventSubscriptionDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of EventSubscriptionDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        internal EventSubscriptionDestination(EndpointType endpointType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the endpoint for the event subscription destination. </summary>
