@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element);
                     case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element);
                     case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element);
+                    case "LakeHouseLocation": return LakeHouseLocation.DeserializeLakeHouseLocation(element);
                     case "OracleCloudStorageLocation": return OracleCloudStorageLocation.DeserializeOracleCloudStorageLocation(element);
                     case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
                 }

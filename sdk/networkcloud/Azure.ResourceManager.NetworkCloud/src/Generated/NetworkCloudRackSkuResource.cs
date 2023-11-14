@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudRackSkuResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudRackSkuResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="rackSkuName"> The rackSkuName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string rackSkuName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/rackSkus/{rackSkuName}";

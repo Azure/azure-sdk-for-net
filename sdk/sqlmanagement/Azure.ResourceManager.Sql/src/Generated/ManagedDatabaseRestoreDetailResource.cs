@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Sql
     public partial class ManagedDatabaseRestoreDetailResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseRestoreDetailResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="restoreDetailsName"> The restoreDetailsName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, RestoreDetailsName restoreDetailsName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}";

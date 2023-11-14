@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
     public partial class DataProductsCatalogResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataProductsCatalogResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkAnalytics/dataProductsCatalogs/default";

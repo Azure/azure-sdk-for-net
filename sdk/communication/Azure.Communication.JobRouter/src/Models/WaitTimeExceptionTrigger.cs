@@ -12,18 +12,16 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding wait time. </summary>
-    [CodeGenModel("WaitTimeExceptionTrigger")]
-    [CodeGenSuppress("WaitTimeExceptionTrigger", typeof(double))]
     public partial class WaitTimeExceptionTrigger : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of WaitTimeExceptionTrigger. </summary>
         /// <param name="threshold"> Threshold for wait time for this trigger. </param>
-        public WaitTimeExceptionTrigger(TimeSpan threshold) : this("wait-time", threshold.TotalSeconds)
+        public WaitTimeExceptionTrigger(TimeSpan threshold) : this(ExceptionTriggerKind.WaitTime, threshold.TotalSeconds)
         {
         }
 
         /// <summary> Threshold for wait time for this trigger. </summary>
-        public TimeSpan Threshold { get; set; }
+        public TimeSpan Threshold { get; internal set; }
 
         /// <summary> Threshold for wait time for this trigger. </summary>
         [CodeGenMember("ThresholdSeconds")]
@@ -44,7 +42,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("thresholdSeconds"u8);
             writer.WriteNumberValue(_thresholdSeconds);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService
     public partial class WebSiteTriggeredwebJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteTriggeredwebJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="webJobName"> The webJobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}";
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteTriggeredWebJobHistoryResources and their operations over a WebSiteTriggeredWebJobHistoryResource. </returns>
         public virtual WebSiteTriggeredWebJobHistoryCollection GetWebSiteTriggeredWebJobHistories()
         {
-            return GetCachedClient(Client => new WebSiteTriggeredWebJobHistoryCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteTriggeredWebJobHistoryCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteTriggeredWebJobHistoryResource>> GetWebSiteTriggeredWebJobHistoryAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteTriggeredWebJobHistoryResource> GetWebSiteTriggeredWebJobHistory(string id, CancellationToken cancellationToken = default)
         {

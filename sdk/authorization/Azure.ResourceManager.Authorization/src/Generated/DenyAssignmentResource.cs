@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Authorization
     public partial class DenyAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DenyAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="denyAssignmentId"> The denyAssignmentId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string denyAssignmentId)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}";

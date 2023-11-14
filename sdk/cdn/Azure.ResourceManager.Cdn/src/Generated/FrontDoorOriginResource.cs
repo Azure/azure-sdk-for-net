@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Cdn
     public partial class FrontDoorOriginResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FrontDoorOriginResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="originGroupName"> The originGroupName. </param>
+        /// <param name="originName"> The originName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string originGroupName, string originName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/originGroups/{originGroupName}/origins/{originName}";

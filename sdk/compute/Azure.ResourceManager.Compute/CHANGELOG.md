@@ -19,6 +19,12 @@
   - Added new parameter `TimeCreated` to VMSS VM properties.
   - Added new parameters `AuxiliaryMode` and `AuxiliarySku` to VM and VMSS Network Configuration Properties.
 
+## 1.2.0-beta.3 (2023-08-14)
+
+### Features Added
+
+- Make `ComputeArmClientMockingExtension`, `ComputeResourceGroupMockingExtension`, `ComputeSubscriptionMockingExtension` public for mocking the extension methods.
+
 ## 1.2.0-beta.2 (2023-07-28)
 
 ### Features Added

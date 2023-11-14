@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -21,8 +22,9 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             Optional<string> classificationPolicyId = default;
-            Optional<IDictionary<string, object>> labelsToUpsert = default;
-            string kind = default;
+            Optional<IDictionary<string, BinaryData>> labelsToUpsert = default;
+            Optional<string> id = default;
+            ExceptionActionKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationPolicyId"u8))
@@ -36,7 +38,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -45,19 +47,24 @@ namespace Azure.Communication.JobRouter
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                         }
                     }
                     labelsToUpsert = dictionary;
                     continue;
                 }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new ExceptionActionKind(property.Value.GetString());
                     continue;
                 }
             }
-            return new ReclassifyExceptionAction(kind, classificationPolicyId.Value, Optional.ToDictionary(labelsToUpsert));
+            return new ReclassifyExceptionAction(id.Value, kind, classificationPolicyId.Value, Optional.ToDictionary(labelsToUpsert));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

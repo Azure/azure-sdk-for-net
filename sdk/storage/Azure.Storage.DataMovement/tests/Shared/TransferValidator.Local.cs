@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal partial class TransferValidator
+    public partial class TransferValidator
     {
         public class LocalFileResourceEnumerationItem : IResourceEnumerationItem
         {
@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Tests
                     }
                     foreach (string filePath in Directory.GetFiles(workingDir))
                     {
-                        result.Add(new LocalFileResourceEnumerationItem(filePath, filePath.Substring(workingDir.Length)));
+                        result.Add(new LocalFileResourceEnumerationItem(filePath, filePath.Substring(directoryPath.Length + 1)));
                     }
                 }
                 return Task.FromResult(result);

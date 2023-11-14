@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class IngestionSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IngestionSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="ingestionSettingName"> The ingestionSettingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ingestionSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/ingestionSettings/{ingestionSettingName}";

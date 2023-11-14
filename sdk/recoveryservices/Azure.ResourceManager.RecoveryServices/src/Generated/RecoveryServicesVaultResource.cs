@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.RecoveryServices
     public partial class RecoveryServicesVaultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RecoveryServicesVaultResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}";
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> An object representing collection of RecoveryServicesPrivateLinkResources and their operations over a RecoveryServicesPrivateLinkResource. </returns>
         public virtual RecoveryServicesPrivateLinkResourceCollection GetRecoveryServicesPrivateLinkResources()
         {
-            return GetCachedClient(Client => new RecoveryServicesPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new RecoveryServicesPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -128,8 +131,8 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="privateLinkResourceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RecoveryServicesPrivateLinkResource>> GetRecoveryServicesPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -151,8 +154,8 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="privateLinkResourceName"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RecoveryServicesPrivateLinkResource> GetRecoveryServicesPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {

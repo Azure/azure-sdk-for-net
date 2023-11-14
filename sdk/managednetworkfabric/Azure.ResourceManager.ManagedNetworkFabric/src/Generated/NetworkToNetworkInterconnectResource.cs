@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkToNetworkInterconnectResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkToNetworkInterconnectResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFabricName"> The networkFabricName. </param>
+        /// <param name="networkToNetworkInterconnectName"> The networkToNetworkInterconnectName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFabricName, string networkToNetworkInterconnectName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}/networkToNetworkInterconnects/{networkToNetworkInterconnectName}";
