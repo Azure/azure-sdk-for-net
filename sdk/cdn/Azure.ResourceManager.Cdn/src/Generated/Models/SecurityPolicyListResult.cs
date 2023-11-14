@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list security policies. It contains a list of security policy objects and a URL link to get the next set of results. </summary>
     internal partial class SecurityPolicyListResult
     {
-        /// <summary> Initializes a new instance of SecurityPolicyListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
         internal SecurityPolicyListResult()
         {
             Value = new ChangeTrackingList<FrontDoorSecurityPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
         /// <param name="value"> List of Security policies within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of security policy objects if there is any. </param>
-        internal SecurityPolicyListResult(IReadOnlyList<FrontDoorSecurityPolicyData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityPolicyListResult(IReadOnlyList<FrontDoorSecurityPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Security policies within a profile. </summary>

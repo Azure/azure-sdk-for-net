@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Round-Robin load balancing settings for a backend pool. </summary>
     public partial class LoadBalancingSettings
     {
-        /// <summary> Initializes a new instance of LoadBalancingSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingSettings"/>. </summary>
         public LoadBalancingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancingSettings"/>. </summary>
         /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
         /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
         /// <param name="additionalLatencyInMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
-        internal LoadBalancingSettings(int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyInMilliseconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancingSettings(int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyInMilliseconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SampleSize = sampleSize;
             SuccessfulSamplesRequired = successfulSamplesRequired;
             AdditionalLatencyInMilliseconds = additionalLatencyInMilliseconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of samples to consider for load balancing decisions. </summary>

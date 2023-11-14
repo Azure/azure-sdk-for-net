@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Blueprint.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class AssignmentOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of AssignmentOperationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentOperationData"/>. </summary>
         public AssignmentOperationData()
         {
             Deployments = new ChangeTrackingList<AssignmentDeploymentJob>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.Blueprint
         /// <param name="timeStarted"> Start time of the underlying deployment. </param>
         /// <param name="timeFinished"> Finish time of the overall underlying deployments. </param>
         /// <param name="deployments"> List of jobs in this blueprint assignment operation. </param>
-        internal AssignmentOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string blueprintVersion, string assignmentState, string timeCreated, string timeStarted, string timeFinished, IList<AssignmentDeploymentJob> deployments) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string blueprintVersion, string assignmentState, string timeCreated, string timeStarted, string timeFinished, IList<AssignmentDeploymentJob> deployments, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BlueprintVersion = blueprintVersion;
             AssignmentState = assignmentState;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.Blueprint
             TimeStarted = timeStarted;
             TimeFinished = timeFinished;
             Deployments = deployments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The published version of the blueprint definition used for the blueprint assignment operation. </summary>

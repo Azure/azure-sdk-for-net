@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The CollectTonesResult. </summary>
     public partial class CollectTonesResult
     {
-        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectTonesResult"/>. </summary>
         internal CollectTonesResult()
         {
             Tones = new ChangeTrackingList<DtmfTone>();
         }
 
-        /// <summary> Initializes a new instance of CollectTonesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectTonesResult"/>. </summary>
         /// <param name="tones"></param>
-        internal CollectTonesResult(IReadOnlyList<DtmfTone> tones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectTonesResult(IReadOnlyList<DtmfTone> tones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tones = tones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

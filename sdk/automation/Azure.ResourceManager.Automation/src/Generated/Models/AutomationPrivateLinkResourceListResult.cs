@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class AutomationPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of AutomationPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkResourceListResult"/>. </summary>
         internal AutomationPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<AutomationPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of AutomationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal AutomationPrivateLinkResourceListResult(IReadOnlyList<AutomationPrivateLinkResource> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationPrivateLinkResourceListResult(IReadOnlyList<AutomationPrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>

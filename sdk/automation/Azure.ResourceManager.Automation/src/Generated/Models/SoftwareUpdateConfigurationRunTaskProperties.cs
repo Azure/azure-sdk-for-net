@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Task properties of the software update configuration. </summary>
     public partial class SoftwareUpdateConfigurationRunTaskProperties
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTaskProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunTaskProperties"/>. </summary>
         internal SoftwareUpdateConfigurationRunTaskProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunTaskProperties"/>. </summary>
         /// <param name="status"> The status of the task. </param>
         /// <param name="source"> The name of the source of the task. </param>
         /// <param name="jobId"> The job id of the task. </param>
-        internal SoftwareUpdateConfigurationRunTaskProperties(string status, string source, Guid? jobId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationRunTaskProperties(string status, string source, Guid? jobId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Source = source;
             JobId = jobId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the task. </summary>

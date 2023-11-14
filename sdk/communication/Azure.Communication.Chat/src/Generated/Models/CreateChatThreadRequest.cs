@@ -14,7 +14,10 @@ namespace Azure.Communication.Chat
     /// <summary> Request payload for creating a chat thread. </summary>
     internal partial class CreateChatThreadRequest
     {
-        /// <summary> Initializes a new instance of CreateChatThreadRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadRequest"/>. </summary>
         /// <param name="topic"> The chat thread topic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
         public CreateChatThreadRequest(string topic)
@@ -23,6 +26,22 @@ namespace Azure.Communication.Chat
 
             Topic = topic;
             Participants = new ChangeTrackingList<ChatParticipantInternal>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadRequest"/>. </summary>
+        /// <param name="topic"> The chat thread topic. </param>
+        /// <param name="participants"> Participants to be added to the chat thread. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateChatThreadRequest(string topic, IList<ChatParticipantInternal> participants, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Topic = topic;
+            Participants = participants;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadRequest"/> for deserialization. </summary>
+        internal CreateChatThreadRequest()
+        {
         }
 
         /// <summary> The chat thread topic. </summary>

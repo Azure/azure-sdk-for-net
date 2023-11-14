@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The list of cognitive services accounts operation response. </summary>
     internal partial class CognitiveServicesAccountModelListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountModelListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountModelListResult"/>. </summary>
         internal CognitiveServicesAccountModelListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesAccountModel>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountModelListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountModelListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Model. </param>
         /// <param name="value"> Gets the list of Cognitive Services accounts Model and their properties. </param>
-        internal CognitiveServicesAccountModelListResult(string nextLink, IReadOnlyList<CognitiveServicesAccountModel> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccountModelListResult(string nextLink, IReadOnlyList<CognitiveServicesAccountModel> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of Model. </summary>

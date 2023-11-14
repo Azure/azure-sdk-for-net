@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Validation result for custom domain. </summary>
     public partial class AppPlatformCustomDomainValidateResult
     {
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainValidateResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainValidateResult"/>. </summary>
         internal AppPlatformCustomDomainValidateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformCustomDomainValidateResult"/>. </summary>
         /// <param name="isValid"> Indicates if domain name is valid. </param>
         /// <param name="message"> Message of why domain name is invalid. </param>
-        internal AppPlatformCustomDomainValidateResult(bool? isValid, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformCustomDomainValidateResult(bool? isValid, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsValid = isValid;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates if domain name is valid. </summary>

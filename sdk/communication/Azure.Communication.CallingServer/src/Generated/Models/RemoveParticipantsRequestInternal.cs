@@ -16,7 +16,10 @@ namespace Azure.Communication.CallingServer
     /// <summary> The remove participant by identifier request. </summary>
     internal partial class RemoveParticipantsRequestInternal
     {
-        /// <summary> Initializes a new instance of RemoveParticipantsRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsRequestInternal"/>. </summary>
         /// <param name="participantsToRemove"> The participants to invite. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantsToRemove"/> is null. </exception>
         public RemoveParticipantsRequestInternal(IEnumerable<CommunicationIdentifierModel> participantsToRemove)
@@ -24,6 +27,22 @@ namespace Azure.Communication.CallingServer
             Argument.AssertNotNull(participantsToRemove, nameof(participantsToRemove));
 
             ParticipantsToRemove = participantsToRemove.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsRequestInternal"/>. </summary>
+        /// <param name="participantsToRemove"> The participants to invite. </param>
+        /// <param name="operationContext"> The operation context. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoveParticipantsRequestInternal(IList<CommunicationIdentifierModel> participantsToRemove, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ParticipantsToRemove = participantsToRemove;
+            OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsRequestInternal"/> for deserialization. </summary>
+        internal RemoveParticipantsRequestInternal()
+        {
         }
 
         /// <summary> The participants to invite. </summary>

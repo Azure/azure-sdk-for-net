@@ -6,26 +6,95 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertProperties : IUtf8JsonSerializable
+    public partial class ServiceAlertProperties : IUtf8JsonSerializable, IJsonModel<ServiceAlertProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ServiceAlertProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServiceAlertProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServiceAlertProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
                 writer.WriteObjectValue(Essentials);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Context))
+                {
+                    writer.WritePropertyName("context"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Context);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Context))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EgressConfig))
+                {
+                    writer.WritePropertyName("egressConfig"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(EgressConfig);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(EgressConfig))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceAlertProperties DeserializeServiceAlertProperties(JsonElement element)
+        ServiceAlertProperties IJsonModel<ServiceAlertProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAlertProperties(document.RootElement, options);
+        }
+
+        internal static ServiceAlertProperties DeserializeServiceAlertProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +102,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Optional<ServiceAlertEssentials> essentials = default;
             Optional<BinaryData> context = default;
             Optional<BinaryData> egressConfig = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("essentials"u8))
@@ -62,8 +133,38 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     egressConfig = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceAlertProperties(essentials.Value, context.Value, egressConfig.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceAlertProperties(essentials.Value, context.Value, egressConfig.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceAlertProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceAlertProperties IPersistableModel<ServiceAlertProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceAlertProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServiceAlertProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

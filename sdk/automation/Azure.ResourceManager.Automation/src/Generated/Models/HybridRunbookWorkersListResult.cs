@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list hybrid runbook workers. </summary>
     internal partial class HybridRunbookWorkersListResult
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkersListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkersListResult"/>. </summary>
         internal HybridRunbookWorkersListResult()
         {
             Value = new ChangeTrackingList<HybridRunbookWorkerData>();
         }
 
-        /// <summary> Initializes a new instance of HybridRunbookWorkersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkersListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of hybrid runbook workers. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal HybridRunbookWorkersListResult(IReadOnlyList<HybridRunbookWorkerData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridRunbookWorkersListResult(IReadOnlyList<HybridRunbookWorkerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of hybrid runbook workers. </summary>

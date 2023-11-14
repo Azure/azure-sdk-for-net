@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The SourceControlSecurityTokenProperties. </summary>
     public partial class SourceControlSecurityTokenProperties
     {
-        /// <summary> Initializes a new instance of SourceControlSecurityTokenProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlSecurityTokenProperties"/>. </summary>
         public SourceControlSecurityTokenProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlSecurityTokenProperties"/>. </summary>
+        /// <param name="accessToken"> The access token. </param>
+        /// <param name="refreshToken"> The refresh token. </param>
+        /// <param name="tokenType"> The token type. Must be either PersonalAccessToken or Oauth. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlSecurityTokenProperties(string accessToken, string refreshToken, SourceControlTokenType? tokenType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
+            TokenType = tokenType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The access token. </summary>

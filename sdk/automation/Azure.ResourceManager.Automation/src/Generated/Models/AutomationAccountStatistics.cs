@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the statistic. </summary>
     public partial class AutomationAccountStatistics
     {
-        /// <summary> Initializes a new instance of AutomationAccountStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatistics"/>. </summary>
         internal AutomationAccountStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationAccountStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountStatistics"/>. </summary>
         /// <param name="counterProperty"> Gets the property value of the statistic. </param>
         /// <param name="counterValue"> Gets the value of the statistic. </param>
         /// <param name="startOn"> Gets the startTime of the statistic. </param>
         /// <param name="endOn"> Gets the endTime of the statistic. </param>
         /// <param name="id"> Gets the id. </param>
-        internal AutomationAccountStatistics(string counterProperty, long? counterValue, DateTimeOffset? startOn, DateTimeOffset? endOn, string id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountStatistics(string counterProperty, long? counterValue, DateTimeOffset? startOn, DateTimeOffset? endOn, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CounterProperty = counterProperty;
             CounterValue = counterValue;
             StartOn = startOn;
             EndOn = endOn;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the property value of the statistic. </summary>

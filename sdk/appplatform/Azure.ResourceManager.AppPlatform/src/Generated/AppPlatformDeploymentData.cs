@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformDeploymentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformDeploymentData"/>. </summary>
         public AppPlatformDeploymentData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the Deployment resource. </param>
         /// <param name="sku"> Sku of the Deployment resource. </param>
-        internal AppPlatformDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformDeploymentProperties properties, AppPlatformSku sku) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformDeploymentProperties properties, AppPlatformSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of the Deployment resource. </summary>

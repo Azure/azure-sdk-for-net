@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
@@ -19,12 +20,15 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchApplicationPackageData : ResourceData
     {
-        /// <summary> Initializes a new instance of BatchApplicationPackageData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageData"/>. </summary>
         public BatchApplicationPackageData()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchApplicationPackageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
         /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        internal BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             State = state;
             Format = format;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.Batch
             StorageUriExpireOn = storageUriExpireOn;
             LastActivatedOn = lastActivatedOn;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current state of the application package. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Chat
 {
     /// <summary> Request payload for updating a chat thread. </summary>
     internal partial class UpdateChatThreadRequest
     {
-        /// <summary> Initializes a new instance of UpdateChatThreadRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateChatThreadRequest"/>. </summary>
         public UpdateChatThreadRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateChatThreadRequest"/>. </summary>
+        /// <param name="topic"> Chat thread topic. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateChatThreadRequest(string topic, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Topic = topic;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Chat thread topic. </summary>

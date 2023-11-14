@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Operation response details. </summary>
     public partial class ResponseContract
     {
-        /// <summary> Initializes a new instance of ResponseContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResponseContract"/>. </summary>
         /// <param name="statusCode"> Operation response HTTP status code. </param>
         public ResponseContract(int statusCode)
         {
@@ -22,17 +26,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Headers = new ChangeTrackingList<ParameterContract>();
         }
 
-        /// <summary> Initializes a new instance of ResponseContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseContract"/>. </summary>
         /// <param name="statusCode"> Operation response HTTP status code. </param>
         /// <param name="description"> Operation response description. </param>
         /// <param name="representations"> Collection of operation response representations. </param>
         /// <param name="headers"> Collection of operation response headers. </param>
-        internal ResponseContract(int statusCode, string description, IList<RepresentationContract> representations, IList<ParameterContract> headers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseContract(int statusCode, string description, IList<RepresentationContract> representations, IList<ParameterContract> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StatusCode = statusCode;
             Description = description;
             Representations = representations;
             Headers = headers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResponseContract"/> for deserialization. </summary>
+        internal ResponseContract()
+        {
         }
 
         /// <summary> Operation response HTTP status code. </summary>

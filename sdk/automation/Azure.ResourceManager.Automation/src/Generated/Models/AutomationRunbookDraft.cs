@@ -14,21 +14,25 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The AutomationRunbookDraft. </summary>
     public partial class AutomationRunbookDraft
     {
-        /// <summary> Initializes a new instance of AutomationRunbookDraft. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookDraft"/>. </summary>
         public AutomationRunbookDraft()
         {
             Parameters = new ChangeTrackingDictionary<string, RunbookParameterDefinition>();
             OutputTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRunbookDraft. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookDraft"/>. </summary>
         /// <param name="isInEditMode"> Gets or sets whether runbook is in edit mode. </param>
         /// <param name="draftContentLink"> Gets or sets the draft runbook content link. </param>
         /// <param name="createdOn"> Gets or sets the creation time of the runbook draft. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time of the runbook draft. </param>
         /// <param name="parameters"> Gets or sets the runbook draft parameters. </param>
         /// <param name="outputTypes"> Gets or sets the runbook output types. </param>
-        internal AutomationRunbookDraft(bool? isInEditMode, AutomationContentLink draftContentLink, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRunbookDraft(bool? isInEditMode, AutomationContentLink draftContentLink, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, RunbookParameterDefinition> parameters, IList<string> outputTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsInEditMode = isInEditMode;
             DraftContentLink = draftContentLink;
@@ -36,6 +40,7 @@ namespace Azure.ResourceManager.Automation.Models
             LastModifiedOn = lastModifiedOn;
             Parameters = parameters;
             OutputTypes = outputTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets whether runbook is in edit mode. </summary>

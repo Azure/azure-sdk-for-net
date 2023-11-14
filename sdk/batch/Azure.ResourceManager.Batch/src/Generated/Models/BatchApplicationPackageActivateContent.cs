@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters for an activating an application package. </summary>
     public partial class BatchApplicationPackageActivateContent
     {
-        /// <summary> Initializes a new instance of BatchApplicationPackageActivateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageActivateContent"/>. </summary>
         /// <param name="format"> The format of the application package binary file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public BatchApplicationPackageActivateContent(string format)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Batch.Models
             Argument.AssertNotNull(format, nameof(format));
 
             Format = format;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageActivateContent"/>. </summary>
+        /// <param name="format"> The format of the application package binary file. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchApplicationPackageActivateContent(string format, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Format = format;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchApplicationPackageActivateContent"/> for deserialization. </summary>
+        internal BatchApplicationPackageActivateContent()
+        {
         }
 
         /// <summary> The format of the application package binary file. </summary>

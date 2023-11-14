@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AgFoodPlatform;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class AgFoodPlatformPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateLinkResourceListResult"/>. </summary>
         internal AgFoodPlatformPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<AgFoodPlatformPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal AgFoodPlatformPrivateLinkResourceListResult(IReadOnlyList<AgFoodPlatformPrivateLinkResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgFoodPlatformPrivateLinkResourceListResult(IReadOnlyList<AgFoodPlatformPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>

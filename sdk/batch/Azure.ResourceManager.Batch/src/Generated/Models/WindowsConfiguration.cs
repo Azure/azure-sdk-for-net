@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Windows operating system settings to apply to the virtual machine. </summary>
     internal partial class WindowsConfiguration
     {
-        /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
         public WindowsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
         /// <param name="isAutomaticUpdateEnabled"> If omitted, the default value is true. </param>
-        internal WindowsConfiguration(bool? isAutomaticUpdateEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsConfiguration(bool? isAutomaticUpdateEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsAutomaticUpdateEnabled = isAutomaticUpdateEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If omitted, the default value is true. </summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogLanguageChange. </summary>
     internal partial class DialogLanguageChangeInternal
     {
-        /// <summary> Initializes a new instance of DialogLanguageChangeInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DialogLanguageChangeInternal"/>. </summary>
         internal DialogLanguageChangeInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogLanguageChangeInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogLanguageChangeInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -25,7 +31,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialogId"> Dialog ID. </param>
         /// <param name="selectedLanguage"> Selected Language. </param>
         /// <param name="ivrContext"> Ivr Context. </param>
-        internal DialogLanguageChangeInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, string selectedLanguage, object ivrContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DialogLanguageChangeInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, string dialogId, string selectedLanguage, object ivrContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -36,6 +43,7 @@ namespace Azure.Communication.CallAutomation
             DialogId = dialogId;
             SelectedLanguage = selectedLanguage;
             IvrContext = ivrContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Call connection ID. </summary>

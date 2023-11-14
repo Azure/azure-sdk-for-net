@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Certificate create or update details. </summary>
     public partial class ApiManagementCertificateCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementCertificateCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateCreateOrUpdateContent"/>. </summary>
         public ApiManagementCertificateCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateCreateOrUpdateContent"/>. </summary>
+        /// <param name="data"> Base 64 encoded certificate using the application/x-pkcs12 representation. </param>
+        /// <param name="password"> Password for the Certificate. </param>
+        /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementCertificateCreateOrUpdateContent(string data, string password, KeyVaultContractCreateProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Data = data;
+            Password = password;
+            KeyVaultDetails = keyVaultDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Base 64 encoded certificate using the application/x-pkcs12 representation. </summary>

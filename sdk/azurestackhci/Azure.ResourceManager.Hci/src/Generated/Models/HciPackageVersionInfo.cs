@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Current version of each updatable component. </summary>
     public partial class HciPackageVersionInfo
     {
-        /// <summary> Initializes a new instance of HciPackageVersionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciPackageVersionInfo"/>. </summary>
         public HciPackageVersionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HciPackageVersionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciPackageVersionInfo"/>. </summary>
         /// <param name="packageType"> Package type. </param>
         /// <param name="version"> Package version. </param>
         /// <param name="lastUpdated"> Last time this component was updated. </param>
-        internal HciPackageVersionInfo(string packageType, string version, DateTimeOffset? lastUpdated)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciPackageVersionInfo(string packageType, string version, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackageType = packageType;
             Version = version;
             LastUpdated = lastUpdated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Package type. </summary>

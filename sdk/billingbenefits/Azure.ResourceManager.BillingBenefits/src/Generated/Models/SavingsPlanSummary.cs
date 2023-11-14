@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Savings plans list summary. </summary>
     internal partial class SavingsPlanSummary
     {
-        /// <summary> Initializes a new instance of SavingsPlanSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanSummary"/>. </summary>
         internal SavingsPlanSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanSummary"/>. </summary>
         /// <param name="name"> This property has value 'summary'. </param>
         /// <param name="value"> The roll up count summary of savings plans in each state. </param>
-        internal SavingsPlanSummary(string name, SavingsPlanSummaryCount value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanSummary(string name, SavingsPlanSummaryCount value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property has value 'summary'. </summary>

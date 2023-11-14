@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The information about the tone. </summary>
     public partial class ToneInfo
     {
-        /// <summary> Initializes a new instance of ToneInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ToneInfo"/>. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
         internal ToneInfo(int sequenceId, DtmfTone tone)
         {
             SequenceId = sequenceId;
             Tone = tone;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ToneInfo"/>. </summary>
+        /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
+        /// <param name="tone"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ToneInfo(int sequenceId, DtmfTone tone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SequenceId = sequenceId;
+            Tone = tone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ToneInfo"/> for deserialization. </summary>
+        internal ToneInfo()
+        {
         }
 
         /// <summary> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </summary>

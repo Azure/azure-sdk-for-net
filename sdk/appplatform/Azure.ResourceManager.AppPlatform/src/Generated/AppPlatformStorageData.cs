@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformStorageData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformStorageData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageData"/>. </summary>
         public AppPlatformStorageData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformStorageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +37,11 @@ namespace Azure.ResourceManager.AppPlatform
         /// Please note <see cref="AppPlatformStorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AppPlatformStorageAccount"/>.
         /// </param>
-        internal AppPlatformStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformStorageProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformStorageProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

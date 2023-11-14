@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Collection of instances belong to the Service Registry. </summary>
     public partial class AppPlatformServiceRegistryInstance
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceRegistryInstance. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceRegistryInstance"/>. </summary>
         internal AppPlatformServiceRegistryInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceRegistryInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceRegistryInstance"/>. </summary>
         /// <param name="name"> Name of the Service Registry instance. </param>
         /// <param name="status"> Status of the Service Registry instance. </param>
-        internal AppPlatformServiceRegistryInstance(string name, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceRegistryInstance(string name, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Service Registry instance. </summary>

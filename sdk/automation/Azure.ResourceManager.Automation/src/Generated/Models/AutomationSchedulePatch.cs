@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the update schedule operation. </summary>
     public partial class AutomationSchedulePatch
     {
-        /// <summary> Initializes a new instance of AutomationSchedulePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSchedulePatch"/>. </summary>
         public AutomationSchedulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationSchedulePatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the Schedule. </param>
+        /// <param name="description"> Gets or sets the description of the schedule. </param>
+        /// <param name="isEnabled"> Gets or sets a value indicating whether this schedule is enabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationSchedulePatch(string name, string description, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Description = description;
+            IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the Schedule. </summary>

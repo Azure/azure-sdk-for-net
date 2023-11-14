@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Non Azure query for the update configuration. </summary>
     public partial class NonAzureQueryProperties
     {
-        /// <summary> Initializes a new instance of NonAzureQueryProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NonAzureQueryProperties"/>. </summary>
         public NonAzureQueryProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NonAzureQueryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NonAzureQueryProperties"/>. </summary>
         /// <param name="functionAlias"> Log Analytics Saved Search name. </param>
         /// <param name="workspaceId"> Workspace Id for Log Analytics in which the saved Search is resided. </param>
-        internal NonAzureQueryProperties(string functionAlias, string workspaceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NonAzureQueryProperties(string functionAlias, string workspaceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FunctionAlias = functionAlias;
             WorkspaceId = workspaceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Log Analytics Saved Search name. </summary>

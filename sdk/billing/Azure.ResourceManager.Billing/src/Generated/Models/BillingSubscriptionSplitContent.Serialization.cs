@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingSubscriptionSplitContent : IUtf8JsonSerializable
+    public partial class BillingSubscriptionSplitContent : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionSplitContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionSplitContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BillingSubscriptionSplitContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BillingSubscriptionSplitContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BillingSubscriptionSplitContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BillingFrequency))
             {
@@ -40,7 +51,118 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        BillingSubscriptionSplitContent IJsonModel<BillingSubscriptionSplitContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBillingSubscriptionSplitContent(document.RootElement, options);
+        }
+
+        internal static BillingSubscriptionSplitContent DeserializeBillingSubscriptionSplitContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> billingFrequency = default;
+            Optional<int> quantity = default;
+            Optional<string> targetProductTypeId = default;
+            Optional<string> targetSkuId = default;
+            Optional<TimeSpan> termDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("billingFrequency"u8))
+                {
+                    billingFrequency = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("quantity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quantity = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("targetProductTypeId"u8))
+                {
+                    targetProductTypeId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetSkuId"u8))
+                {
+                    targetSkuId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("termDuration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termDuration = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BillingSubscriptionSplitContent(billingFrequency.Value, Optional.ToNullable(quantity), targetProductTypeId.Value, targetSkuId.Value, Optional.ToNullable(termDuration), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<BillingSubscriptionSplitContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BillingSubscriptionSplitContent IPersistableModel<BillingSubscriptionSplitContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBillingSubscriptionSplitContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<BillingSubscriptionSplitContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

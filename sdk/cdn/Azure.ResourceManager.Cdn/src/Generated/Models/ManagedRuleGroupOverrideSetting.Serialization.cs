@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ManagedRuleGroupOverrideSetting : IUtf8JsonSerializable
+    public partial class ManagedRuleGroupOverrideSetting : IUtf8JsonSerializable, IJsonModel<ManagedRuleGroupOverrideSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleGroupOverrideSetting>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedRuleGroupOverrideSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedRuleGroupOverrideSetting>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedRuleGroupOverrideSetting>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
@@ -28,17 +38,48 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedRuleGroupOverrideSetting DeserializeManagedRuleGroupOverrideSetting(JsonElement element)
+        ManagedRuleGroupOverrideSetting IJsonModel<ManagedRuleGroupOverrideSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleGroupOverrideSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedRuleGroupOverrideSetting(document.RootElement, options);
+        }
+
+        internal static ManagedRuleGroupOverrideSetting DeserializeManagedRuleGroupOverrideSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string ruleGroupName = default;
             Optional<IList<ManagedRuleOverrideSetting>> rules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleGroupName"u8))
@@ -60,8 +101,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     rules = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedRuleGroupOverrideSetting(ruleGroupName, Optional.ToList(rules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedRuleGroupOverrideSetting(ruleGroupName, Optional.ToList(rules), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedRuleGroupOverrideSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleGroupOverrideSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedRuleGroupOverrideSetting IPersistableModel<ManagedRuleGroupOverrideSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleGroupOverrideSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedRuleGroupOverrideSetting(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedRuleGroupOverrideSetting>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

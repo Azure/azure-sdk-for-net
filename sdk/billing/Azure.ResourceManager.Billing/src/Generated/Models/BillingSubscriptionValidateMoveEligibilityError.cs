@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Error details of the transfer eligibility validation. </summary>
     public partial class BillingSubscriptionValidateMoveEligibilityError
     {
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityError"/>. </summary>
         internal BillingSubscriptionValidateMoveEligibilityError()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingSubscriptionValidateMoveEligibilityError. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityError"/>. </summary>
         /// <param name="code"> Error code for the billing subscription move validation. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> Detailed error message explaining the error. </param>
-        internal BillingSubscriptionValidateMoveEligibilityError(SubscriptionTransferValidationErrorCode? code, string message, string details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingSubscriptionValidateMoveEligibilityError(SubscriptionTransferValidationErrorCode? code, string message, string details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code for the billing subscription move validation. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Status of gateway is live. </summary>
     public partial class AnalysisGatewayStatus
     {
-        /// <summary> Initializes a new instance of AnalysisGatewayStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisGatewayStatus"/>. </summary>
         internal AnalysisGatewayStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisGatewayStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisGatewayStatus"/>. </summary>
         /// <param name="status"> Live message of list gateway. Status: 0 - Live. </param>
-        internal AnalysisGatewayStatus(AnalysisStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisGatewayStatus(AnalysisStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Live message of list gateway. Status: 0 - Live. </summary>

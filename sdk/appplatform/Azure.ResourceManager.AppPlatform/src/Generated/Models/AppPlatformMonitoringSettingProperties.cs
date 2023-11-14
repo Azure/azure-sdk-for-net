@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Monitoring Setting properties payload. </summary>
     public partial class AppPlatformMonitoringSettingProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformMonitoringSettingProperties"/>. </summary>
         public AppPlatformMonitoringSettingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformMonitoringSettingProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Monitoring Setting. </param>
         /// <param name="error"> Error when apply Monitoring Setting changes. </param>
         /// <param name="isTraceEnabled"> Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not. </param>
         /// <param name="appInsightsInstrumentationKey"> Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings. </param>
         /// <param name="appInsightsSamplingRate"> Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]. </param>
         /// <param name="appInsightsAgentVersions"> Indicates the versions of application insight agent. </param>
-        internal AppPlatformMonitoringSettingProperties(AppPlatformMonitoringSettingState? provisioningState, AppPlatformErrorInfo error, bool? isTraceEnabled, string appInsightsInstrumentationKey, double? appInsightsSamplingRate, ApplicationInsightsAgentVersions appInsightsAgentVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformMonitoringSettingProperties(AppPlatformMonitoringSettingState? provisioningState, AppPlatformErrorInfo error, bool? isTraceEnabled, string appInsightsInstrumentationKey, double? appInsightsSamplingRate, ApplicationInsightsAgentVersions appInsightsAgentVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Error = error;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             AppInsightsInstrumentationKey = appInsightsInstrumentationKey;
             AppInsightsSamplingRate = appInsightsSamplingRate;
             AppInsightsAgentVersions = appInsightsAgentVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of the Monitoring Setting. </summary>

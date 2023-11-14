@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> The response to a live token query. </summary>
     public partial class LiveTokenResponse
     {
-        /// <summary> Initializes a new instance of LiveTokenResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveTokenResponse"/>. </summary>
         internal LiveTokenResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveTokenResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveTokenResponse"/>. </summary>
         /// <param name="liveToken"> JWT token for accessing live metrics stream data. </param>
-        internal LiveTokenResponse(string liveToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveTokenResponse(string liveToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LiveToken = liveToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> JWT token for accessing live metrics stream data. </summary>

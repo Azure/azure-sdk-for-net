@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Communication.CallingServer
     /// <summary> The GetParticipantsResponse. </summary>
     internal partial class GetParticipantsResponseInternal
     {
-        /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
         internal GetParticipantsResponseInternal()
         {
             Values = new ChangeTrackingList<AcsCallParticipantInternal>();
         }
 
-        /// <summary> Initializes a new instance of GetParticipantsResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetParticipantsResponseInternal"/>. </summary>
         /// <param name="values"></param>
         /// <param name="nextLink"></param>
-        internal GetParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> values, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetParticipantsResponseInternal(IReadOnlyList<AcsCallParticipantInternal> values, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Values = values;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the values. </summary>

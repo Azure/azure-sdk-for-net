@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Describes an available API Management service SKU. </summary>
     public partial class AvailableApiManagementServiceSkuResult
     {
-        /// <summary> Initializes a new instance of AvailableApiManagementServiceSkuResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableApiManagementServiceSkuResult"/>. </summary>
         internal AvailableApiManagementServiceSkuResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableApiManagementServiceSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableApiManagementServiceSkuResult"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="sku"> Specifies API Management SKU. </param>
         /// <param name="capacity"> Specifies the number of API Management units. </param>
-        internal AvailableApiManagementServiceSkuResult(ResourceType? resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableApiManagementServiceSkuResult(ResourceType? resourceType, ResourceSku sku, ApiManagementResourceSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>

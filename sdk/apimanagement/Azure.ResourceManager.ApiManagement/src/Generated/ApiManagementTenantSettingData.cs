@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,21 +18,26 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementTenantSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementTenantSettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementTenantSettingData"/>. </summary>
         public ApiManagementTenantSettingData()
         {
             Settings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementTenantSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementTenantSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="settings"> Tenant settings. </param>
-        internal ApiManagementTenantSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> settings) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementTenantSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Settings = settings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tenant settings. </summary>

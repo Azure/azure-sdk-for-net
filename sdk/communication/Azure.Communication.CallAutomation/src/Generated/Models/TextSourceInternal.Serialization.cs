@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class TextSourceInternal : IUtf8JsonSerializable
+    internal partial class TextSourceInternal : IUtf8JsonSerializable, IJsonModel<TextSourceInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextSourceInternal>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TextSourceInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TextSourceInternal>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TextSourceInternal>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
@@ -37,7 +48,114 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("customVoiceEndpointId"u8);
                 writer.WriteStringValue(CustomVoiceEndpointId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        TextSourceInternal IJsonModel<TextSourceInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextSourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextSourceInternal(document.RootElement, options);
+        }
+
+        internal static TextSourceInternal DeserializeTextSourceInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string text = default;
+            Optional<string> sourceLocale = default;
+            Optional<GenderType> voiceGender = default;
+            Optional<string> voiceName = default;
+            Optional<string> customVoiceEndpointId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("text"u8))
+                {
+                    text = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceLocale"u8))
+                {
+                    sourceLocale = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("voiceGender"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    voiceGender = new GenderType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("voiceName"u8))
+                {
+                    voiceName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customVoiceEndpointId"u8))
+                {
+                    customVoiceEndpointId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TextSourceInternal(text, sourceLocale.Value, Optional.ToNullable(voiceGender), voiceName.Value, customVoiceEndpointId.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<TextSourceInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextSourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TextSourceInternal IPersistableModel<TextSourceInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextSourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTextSourceInternal(document.RootElement, options);
+        }
+
+        string IPersistableModel<TextSourceInternal>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

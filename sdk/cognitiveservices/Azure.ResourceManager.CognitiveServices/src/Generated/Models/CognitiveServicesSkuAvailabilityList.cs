@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> SKU availability. </summary>
     public partial class CognitiveServicesSkuAvailabilityList
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityList"/>. </summary>
         internal CognitiveServicesSkuAvailabilityList()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuAvailabilityList"/>. </summary>
         /// <param name="kind"> The Kind of the resource. </param>
         /// <param name="skuAvailabilityType"> The Type of the resource. </param>
         /// <param name="skuName"> The SKU of Cognitive Services account. </param>
         /// <param name="isSkuAvailable"> Indicates the given SKU is available or not. </param>
         /// <param name="reason"> Reason why the SKU is not available. </param>
         /// <param name="message"> Additional error message. </param>
-        internal CognitiveServicesSkuAvailabilityList(string kind, string skuAvailabilityType, string skuName, bool? isSkuAvailable, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesSkuAvailabilityList(string kind, string skuAvailabilityType, string skuName, bool? isSkuAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             SkuAvailabilityType = skuAvailabilityType;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IsSkuAvailable = isSkuAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Kind of the resource. </summary>

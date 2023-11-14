@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Describes the list of Application Insights Resources. </summary>
     internal partial class ApplicationInsightsComponentListResult
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentListResult"/>. </summary>
         /// <param name="value"> List of Application Insights component definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApplicationInsightsComponentListResult(IEnumerable<ApplicationInsightsComponentData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentListResult"/>. </summary>
         /// <param name="value"> List of Application Insights component definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Application Insights component definitions if too many components where returned in the result set. </param>
-        internal ApplicationInsightsComponentListResult(IReadOnlyList<ApplicationInsightsComponentData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentListResult(IReadOnlyList<ApplicationInsightsComponentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentListResult"/> for deserialization. </summary>
+        internal ApplicationInsightsComponentListResult()
+        {
         }
 
         /// <summary> List of Application Insights component definitions. </summary>

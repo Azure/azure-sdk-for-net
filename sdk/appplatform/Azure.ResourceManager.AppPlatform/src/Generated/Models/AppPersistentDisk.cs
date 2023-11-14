@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Persistent disk payload. </summary>
     public partial class AppPersistentDisk
     {
-        /// <summary> Initializes a new instance of AppPersistentDisk. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPersistentDisk"/>. </summary>
         public AppPersistentDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPersistentDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPersistentDisk"/>. </summary>
         /// <param name="sizeInGB"> Size of the persistent disk in GB. </param>
         /// <param name="usedInGB"> Size of the used persistent disk in GB. </param>
         /// <param name="mountPath"> Mount path of the persistent disk. </param>
-        internal AppPersistentDisk(int? sizeInGB, int? usedInGB, string mountPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPersistentDisk(int? sizeInGB, int? usedInGB, string mountPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SizeInGB = sizeInGB;
             UsedInGB = usedInGB;
             MountPath = mountPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Size of the persistent disk in GB. </summary>

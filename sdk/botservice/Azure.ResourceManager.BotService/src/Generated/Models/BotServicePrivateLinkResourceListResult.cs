@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class BotServicePrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of BotServicePrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotServicePrivateLinkResourceListResult"/>. </summary>
         internal BotServicePrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<BotServicePrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of BotServicePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServicePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal BotServicePrivateLinkResourceListResult(IReadOnlyList<BotServicePrivateLinkResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotServicePrivateLinkResourceListResult(IReadOnlyList<BotServicePrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>

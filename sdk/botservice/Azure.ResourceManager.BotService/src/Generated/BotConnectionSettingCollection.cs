@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.BotService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingBotConnectionClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingBotConnectionClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.BotService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingBotConnectionClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingBotConnectionClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

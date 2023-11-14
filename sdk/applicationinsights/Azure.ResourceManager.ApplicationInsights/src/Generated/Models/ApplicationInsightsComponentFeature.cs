@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> An Application Insights component daily data volume cap status. </summary>
     public partial class ApplicationInsightsComponentFeature
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeature"/>. </summary>
         internal ApplicationInsightsComponentFeature()
         {
             Capabilities = new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeature"/>. </summary>
         /// <param name="featureName"> The pricing feature name. </param>
         /// <param name="meterId"> The meter id used for the feature. </param>
         /// <param name="meterRateFrequency"> The meter rate for the feature's meter. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="title"> Display name of the feature. </param>
         /// <param name="isMainFeature"> Whether can apply addon feature on to it. </param>
         /// <param name="supportedAddonFeatures"> The add on features on main feature. </param>
-        internal ApplicationInsightsComponentFeature(string featureName, string meterId, string meterRateFrequency, string resourceId, bool? isHidden, IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities, string title, bool? isMainFeature, string supportedAddonFeatures)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentFeature(string featureName, string meterId, string meterRateFrequency, string resourceId, bool? isHidden, IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities, string title, bool? isMainFeature, string supportedAddonFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FeatureName = featureName;
             MeterId = meterId;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Title = title;
             IsMainFeature = isMainFeature;
             SupportedAddonFeatures = supportedAddonFeatures;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The pricing feature name. </summary>

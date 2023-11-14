@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the list of managed rule sets for the policy. </summary>
     internal partial class ManagedRuleSetList
     {
-        /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetList"/>. </summary>
         public ManagedRuleSetList()
         {
             ManagedRuleSets = new ChangeTrackingList<WafPolicyManagedRuleSet>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleSetList"/>. </summary>
         /// <param name="managedRuleSets"> List of rule sets. </param>
-        internal ManagedRuleSetList(IList<WafPolicyManagedRuleSet> managedRuleSets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleSetList(IList<WafPolicyManagedRuleSet> managedRuleSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagedRuleSets = managedRuleSets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of rule sets. </summary>

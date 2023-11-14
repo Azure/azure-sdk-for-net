@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Result of the request to list origin groups. It contains a list of origin groups objects and a URL link to get the next set of results. </summary>
     internal partial class OriginGroupListResult
     {
-        /// <summary> Initializes a new instance of OriginGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OriginGroupListResult"/>. </summary>
         internal OriginGroupListResult()
         {
             Value = new ChangeTrackingList<CdnOriginGroupData>();
         }
 
-        /// <summary> Initializes a new instance of OriginGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OriginGroupListResult"/>. </summary>
         /// <param name="value"> List of CDN origin groups within an endpoint. </param>
         /// <param name="nextLink"> URL to get the next set of origin objects if there are any. </param>
-        internal OriginGroupListResult(IReadOnlyList<CdnOriginGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OriginGroupListResult(IReadOnlyList<CdnOriginGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of CDN origin groups within an endpoint. </summary>

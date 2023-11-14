@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SsmlSource. </summary>
     internal partial class SsmlSourceInternal
     {
-        /// <summary> Initializes a new instance of SsmlSourceInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsmlSourceInternal"/>. </summary>
         /// <param name="ssmlText"> Ssml string for the cognitive service to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ssmlText"/> is null. </exception>
         public SsmlSourceInternal(string ssmlText)
@@ -21,6 +25,22 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(ssmlText, nameof(ssmlText));
 
             SsmlText = ssmlText;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsmlSourceInternal"/>. </summary>
+        /// <param name="ssmlText"> Ssml string for the cognitive service to be played. </param>
+        /// <param name="customVoiceEndpointId"> Endpoint where the custom voice was deployed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsmlSourceInternal(string ssmlText, string customVoiceEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SsmlText = ssmlText;
+            CustomVoiceEndpointId = customVoiceEndpointId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsmlSourceInternal"/> for deserialization. </summary>
+        internal SsmlSourceInternal()
+        {
         }
 
         /// <summary> Ssml string for the cognitive service to be played. </summary>

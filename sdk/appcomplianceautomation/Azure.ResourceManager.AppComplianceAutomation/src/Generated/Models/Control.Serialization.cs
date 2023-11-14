@@ -5,16 +5,130 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class Control
+    public partial class Control : IUtf8JsonSerializable, IJsonModel<Control>
     {
-        internal static Control DeserializeControl(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Control>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<Control>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<Control>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<Control>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ControlId))
+                {
+                    writer.WritePropertyName("controlId"u8);
+                    writer.WriteStringValue(ControlId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ControlShortName))
+                {
+                    writer.WritePropertyName("controlShortName"u8);
+                    writer.WriteStringValue(ControlShortName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ControlFullName))
+                {
+                    writer.WritePropertyName("controlFullName"u8);
+                    writer.WriteStringValue(ControlFullName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ControlType))
+                {
+                    writer.WritePropertyName("controlType"u8);
+                    writer.WriteStringValue(ControlType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ControlDescription))
+                {
+                    writer.WritePropertyName("controlDescription"u8);
+                    writer.WriteStringValue(ControlDescription);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ControlDescriptionHyperLink))
+                {
+                    writer.WritePropertyName("controlDescriptionHyperLink"u8);
+                    writer.WriteStringValue(ControlDescriptionHyperLink);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ControlStatus))
+                {
+                    writer.WritePropertyName("controlStatus"u8);
+                    writer.WriteStringValue(ControlStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Assessments))
+                {
+                    writer.WritePropertyName("assessments"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Assessments)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        Control IJsonModel<Control>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeControl(document.RootElement, options);
+        }
+
+        internal static Control DeserializeControl(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +141,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> controlDescriptionHyperLink = default;
             Optional<ControlStatus> controlStatus = default;
             Optional<IReadOnlyList<Assessment>> assessments = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("controlId"u8))
@@ -86,8 +202,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     assessments = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Optional.ToNullable(controlStatus), Optional.ToList(assessments));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Control(controlId.Value, controlShortName.Value, controlFullName.Value, Optional.ToNullable(controlType), controlDescription.Value, controlDescriptionHyperLink.Value, Optional.ToNullable(controlStatus), Optional.ToList(assessments), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Control>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        Control IPersistableModel<Control>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Control)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeControl(document.RootElement, options);
+        }
+
+        string IPersistableModel<Control>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

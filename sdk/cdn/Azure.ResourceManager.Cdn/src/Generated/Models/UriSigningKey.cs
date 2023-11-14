@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Url signing key. </summary>
     public partial class UriSigningKey
     {
-        /// <summary> Initializes a new instance of UriSigningKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UriSigningKey"/>. </summary>
         /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
         /// <param name="keySourceParameters"> Defines the parameters for using customer key vault for Url Signing Key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyId"/> or <paramref name="keySourceParameters"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
             KeyId = keyId;
             KeySourceParameters = keySourceParameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UriSigningKey"/>. </summary>
+        /// <param name="keyId"> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </param>
+        /// <param name="keySourceParameters"> Defines the parameters for using customer key vault for Url Signing Key. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UriSigningKey(string keyId, KeyVaultSigningKey keySourceParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyId = keyId;
+            KeySourceParameters = keySourceParameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UriSigningKey"/> for deserialization. </summary>
+        internal UriSigningKey()
+        {
         }
 
         /// <summary> Defines the customer defined key Id. This id will exist in the incoming request to indicate the key used to form the hash. </summary>

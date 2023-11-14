@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The parameters used to regenerate an API key. </summary>
     public partial class AppConfigurationRegenerateKeyContent
     {
-        /// <summary> Initializes a new instance of AppConfigurationRegenerateKeyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationRegenerateKeyContent"/>. </summary>
         public AppConfigurationRegenerateKeyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationRegenerateKeyContent"/>. </summary>
+        /// <param name="id"> The id of the key to regenerate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationRegenerateKeyContent(string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of the key to regenerate. </summary>

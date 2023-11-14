@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The UserConsent. </summary>
     public partial class UserConsent
     {
-        /// <summary> Initializes a new instance of UserConsent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserConsent"/>. </summary>
         internal UserConsent()
         {
         }
 
-        /// <summary> Initializes a new instance of UserConsent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserConsent"/>. </summary>
         /// <param name="recording"></param>
-        internal UserConsent(int? recording)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserConsent(int? recording, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Recording = recording;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

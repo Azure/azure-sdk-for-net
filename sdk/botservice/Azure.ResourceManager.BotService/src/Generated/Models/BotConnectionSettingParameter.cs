@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Extra Parameter in a Connection Setting Properties to indicate service provider specific properties. </summary>
     public partial class BotConnectionSettingParameter
     {
-        /// <summary> Initializes a new instance of BotConnectionSettingParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingParameter"/>. </summary>
         public BotConnectionSettingParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of BotConnectionSettingParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingParameter"/>. </summary>
         /// <param name="key"> Key for the Connection Setting Parameter. </param>
         /// <param name="value"> Value associated with the Connection Setting Parameter. </param>
-        internal BotConnectionSettingParameter(string key, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotConnectionSettingParameter(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key for the Connection Setting Parameter. </summary>

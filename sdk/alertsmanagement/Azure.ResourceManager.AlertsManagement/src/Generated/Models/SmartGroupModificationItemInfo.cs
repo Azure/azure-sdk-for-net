@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> smartGroup modification item. </summary>
     public partial class SmartGroupModificationItemInfo
     {
-        /// <summary> Initializes a new instance of SmartGroupModificationItemInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationItemInfo"/>. </summary>
         public SmartGroupModificationItemInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SmartGroupModificationItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupModificationItemInfo"/>. </summary>
         /// <param name="modificationEvent"> Reason for the modification. </param>
         /// <param name="oldValue"> Old value. </param>
         /// <param name="newValue"> New value. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
         /// <param name="comments"> Modification comments. </param>
         /// <param name="description"> Description of the modification. </param>
-        internal SmartGroupModificationItemInfo(SmartGroupModificationEvent? modificationEvent, string oldValue, string newValue, DateTimeOffset? modifiedOn, string modifiedBy, string comments, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmartGroupModificationItemInfo(SmartGroupModificationEvent? modificationEvent, string oldValue, string newValue, DateTimeOffset? modifiedOn, string modifiedBy, string comments, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModificationEvent = modificationEvent;
             OldValue = oldValue;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             ModifiedBy = modifiedBy;
             Comments = comments;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Reason for the modification. </summary>

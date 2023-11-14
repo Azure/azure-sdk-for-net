@@ -14,7 +14,10 @@ namespace Azure.Security.Attestation
     /// <summary> The JsonWebKey. </summary>
     internal partial class JsonWebKey
     {
-        /// <summary> Initializes a new instance of JsonWebKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
         /// <param name="kty">
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as "RSA" or "EC". "kty" values should
@@ -31,7 +34,7 @@ namespace Azure.Security.Attestation
             X5C = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of JsonWebKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -84,7 +87,8 @@ namespace Azure.Security.Attestation
         /// certificate.
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
-        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5C, string y)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5C, string y, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Alg = alg;
             Crv = crv;
@@ -103,6 +107,12 @@ namespace Azure.Security.Attestation
             X = x;
             X5C = x5C;
             Y = y;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/> for deserialization. </summary>
+        internal JsonWebKey()
+        {
         }
 
         /// <summary>

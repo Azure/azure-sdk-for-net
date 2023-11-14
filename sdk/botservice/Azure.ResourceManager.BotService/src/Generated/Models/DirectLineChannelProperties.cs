@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Direct Line channel. </summary>
     public partial class DirectLineChannelProperties
     {
-        /// <summary> Initializes a new instance of DirectLineChannelProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DirectLineChannelProperties"/>. </summary>
         public DirectLineChannelProperties()
         {
             Sites = new ChangeTrackingList<DirectLineSite>();
         }
 
-        /// <summary> Initializes a new instance of DirectLineChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectLineChannelProperties"/>. </summary>
         /// <param name="sites"> The list of Direct Line sites. </param>
         /// <param name="extensionKey1"> The extensionKey1. </param>
         /// <param name="extensionKey2"> The extensionKey2. </param>
         /// <param name="directLineEmbedCode"> Direct Line embed code of the resource. </param>
-        internal DirectLineChannelProperties(IList<DirectLineSite> sites, string extensionKey1, string extensionKey2, string directLineEmbedCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DirectLineChannelProperties(IList<DirectLineSite> sites, string extensionKey1, string extensionKey2, string directLineEmbedCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sites = sites;
             ExtensionKey1 = extensionKey1;
             ExtensionKey2 = extensionKey2;
             DirectLineEmbedCode = directLineEmbedCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Direct Line sites. </summary>

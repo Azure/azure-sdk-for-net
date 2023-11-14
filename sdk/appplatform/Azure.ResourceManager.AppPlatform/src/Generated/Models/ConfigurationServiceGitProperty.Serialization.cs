@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    internal partial class ConfigurationServiceGitProperty : IUtf8JsonSerializable
+    internal partial class ConfigurationServiceGitProperty : IUtf8JsonSerializable, IJsonModel<ConfigurationServiceGitProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationServiceGitProperty>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConfigurationServiceGitProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConfigurationServiceGitProperty>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConfigurationServiceGitProperty>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ConfigurationServiceGitRepositories))
             {
@@ -26,16 +36,47 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationServiceGitProperty DeserializeConfigurationServiceGitProperty(JsonElement element)
+        ConfigurationServiceGitProperty IJsonModel<ConfigurationServiceGitProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigurationServiceGitProperty(document.RootElement, options);
+        }
+
+        internal static ConfigurationServiceGitProperty DeserializeConfigurationServiceGitProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<AppPlatformConfigurationServiceGitRepository>> repositories = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("repositories"u8))
@@ -52,8 +93,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     repositories = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfigurationServiceGitProperty(Optional.ToList(repositories));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConfigurationServiceGitProperty(Optional.ToList(repositories), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfigurationServiceGitProperty>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConfigurationServiceGitProperty IPersistableModel<ConfigurationServiceGitProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationServiceGitProperty)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConfigurationServiceGitProperty(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConfigurationServiceGitProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

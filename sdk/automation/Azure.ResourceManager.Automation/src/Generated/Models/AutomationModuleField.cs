@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Information about a field of a type. </summary>
     public partial class AutomationModuleField
     {
-        /// <summary> Initializes a new instance of AutomationModuleField. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleField"/>. </summary>
         internal AutomationModuleField()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationModuleField. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationModuleField"/>. </summary>
         /// <param name="name"> Gets or sets the name of the field. </param>
         /// <param name="fieldType"> Gets or sets the type of the field. </param>
-        internal AutomationModuleField(string name, string fieldType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationModuleField(string name, string fieldType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FieldType = fieldType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the field. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list job stream operation. </summary>
     internal partial class AutomationJobStreamListResult
     {
-        /// <summary> Initializes a new instance of AutomationJobStreamListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationJobStreamListResult"/>. </summary>
         internal AutomationJobStreamListResult()
         {
             Value = new ChangeTrackingList<AutomationJobStream>();
         }
 
-        /// <summary> Initializes a new instance of AutomationJobStreamListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationJobStreamListResult"/>. </summary>
         /// <param name="value"> A list of job streams. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal AutomationJobStreamListResult(IReadOnlyList<AutomationJobStream> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationJobStreamListResult(IReadOnlyList<AutomationJobStream> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of job streams. </summary>

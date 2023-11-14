@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Used to specify Blob container url to recording storage. </summary>
     internal partial class BlobStorageInternal
     {
-        /// <summary> Initializes a new instance of BlobStorageInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobStorageInternal"/>. </summary>
         /// <param name="containerUri"> Url of a container or a location within a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
         public BlobStorageInternal(string containerUri)
@@ -21,6 +25,20 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(containerUri, nameof(containerUri));
 
             ContainerUri = containerUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobStorageInternal"/>. </summary>
+        /// <param name="containerUri"> Url of a container or a location within a container. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobStorageInternal(string containerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContainerUri = containerUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobStorageInternal"/> for deserialization. </summary>
+        internal BlobStorageInternal()
+        {
         }
 
         /// <summary> Url of a container or a location within a container. </summary>

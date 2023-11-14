@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a step in the Experiment resource. </summary>
     public partial class Step
     {
-        /// <summary> Initializes a new instance of Step. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Step"/>. </summary>
         /// <param name="name"> String of the step name. </param>
         /// <param name="branches"> List of branches. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="branches"/> is null. </exception>
@@ -28,13 +31,20 @@ namespace Azure.ResourceManager.Chaos.Models
             Branches = branches.ToList();
         }
 
-        /// <summary> Initializes a new instance of Step. </summary>
+        /// <summary> Initializes a new instance of <see cref="Step"/>. </summary>
         /// <param name="name"> String of the step name. </param>
         /// <param name="branches"> List of branches. </param>
-        internal Step(string name, IList<Branch> branches)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Step(string name, IList<Branch> branches, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Branches = branches;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Step"/> for deserialization. </summary>
+        internal Step()
+        {
         }
 
         /// <summary> String of the step name. </summary>

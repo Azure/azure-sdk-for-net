@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The set of properties specific to sign in url. </summary>
     internal partial class CreateEmailSignInUrlResponseProperties
     {
-        /// <summary> Initializes a new instance of CreateEmailSignInUrlResponseProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateEmailSignInUrlResponseProperties"/>. </summary>
         internal CreateEmailSignInUrlResponseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CreateEmailSignInUrlResponseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateEmailSignInUrlResponseProperties"/>. </summary>
         /// <param name="uri"> Sign in url. </param>
-        internal CreateEmailSignInUrlResponseProperties(Uri uri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateEmailSignInUrlResponseProperties(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sign in url. </summary>

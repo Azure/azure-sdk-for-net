@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class OverviewStatus
+    public partial class OverviewStatus : IUtf8JsonSerializable, IJsonModel<OverviewStatus>
     {
-        internal static OverviewStatus DeserializeOverviewStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OverviewStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OverviewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OverviewStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OverviewStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PassedCount))
+            {
+                writer.WritePropertyName("passedCount"u8);
+                writer.WriteNumberValue(PassedCount.Value);
+            }
+            if (Optional.IsDefined(FailedCount))
+            {
+                writer.WritePropertyName("failedCount"u8);
+                writer.WriteNumberValue(FailedCount.Value);
+            }
+            if (Optional.IsDefined(ManualCount))
+            {
+                writer.WritePropertyName("manualCount"u8);
+                writer.WriteNumberValue(ManualCount.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OverviewStatus IJsonModel<OverviewStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOverviewStatus(document.RootElement, options);
+        }
+
+        internal static OverviewStatus DeserializeOverviewStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<int> passedCount = default;
             Optional<int> failedCount = default;
             Optional<int> manualCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passedCount"u8))
@@ -50,8 +113,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     manualCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OverviewStatus(Optional.ToNullable(passedCount), Optional.ToNullable(failedCount), Optional.ToNullable(manualCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OverviewStatus(Optional.ToNullable(passedCount), Optional.ToNullable(failedCount), Optional.ToNullable(manualCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OverviewStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OverviewStatus IPersistableModel<OverviewStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOverviewStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<OverviewStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

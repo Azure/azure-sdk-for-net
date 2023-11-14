@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.AppConfiguration
     /// </summary>
     public partial class AppConfigurationKeyValueData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueData"/>. </summary>
         public AppConfigurationKeyValueData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +53,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// A locked key-value may not be modified until it is unlocked.
         /// </param>
         /// <param name="tags"> A dictionary of tags that can help identify what a key-value may be applicable for. </param>
-        internal AppConfigurationKeyValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string key, string label, string value, string contentType, ETag? eTag, DateTimeOffset? lastModifiedOn, bool? isLocked, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationKeyValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string key, string label, string value, string contentType, ETag? eTag, DateTimeOffset? lastModifiedOn, bool? isLocked, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Key = key;
             Label = label;
@@ -60,6 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration
             LastModifiedOn = lastModifiedOn;
             IsLocked = isLocked;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

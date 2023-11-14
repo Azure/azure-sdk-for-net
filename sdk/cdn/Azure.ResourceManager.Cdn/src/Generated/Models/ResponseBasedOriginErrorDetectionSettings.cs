@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The JSON object that contains the properties to determine origin health using real requests/responses. </summary>
     public partial class ResponseBasedOriginErrorDetectionSettings
     {
-        /// <summary> Initializes a new instance of ResponseBasedOriginErrorDetectionSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResponseBasedOriginErrorDetectionSettings"/>. </summary>
         public ResponseBasedOriginErrorDetectionSettings()
         {
             HttpErrorRanges = new ChangeTrackingList<HttpErrorRange>();
         }
 
-        /// <summary> Initializes a new instance of ResponseBasedOriginErrorDetectionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseBasedOriginErrorDetectionSettings"/>. </summary>
         /// <param name="responseBasedDetectedErrorType"> Type of response errors for real user requests for which origin will be deemed unhealthy. </param>
         /// <param name="responseBasedFailoverThresholdPercentage"> The percentage of failed requests in the sample where failover should trigger. </param>
         /// <param name="httpErrorRanges"> The list of Http status code ranges that are considered as server errors for origin and it is marked as unhealthy. </param>
-        internal ResponseBasedOriginErrorDetectionSettings(ResponseBasedDetectedErrorType? responseBasedDetectedErrorType, int? responseBasedFailoverThresholdPercentage, IList<HttpErrorRange> httpErrorRanges)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseBasedOriginErrorDetectionSettings(ResponseBasedDetectedErrorType? responseBasedDetectedErrorType, int? responseBasedFailoverThresholdPercentage, IList<HttpErrorRange> httpErrorRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResponseBasedDetectedErrorType = responseBasedDetectedErrorType;
             ResponseBasedFailoverThresholdPercentage = responseBasedFailoverThresholdPercentage;
             HttpErrorRanges = httpErrorRanges;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of response errors for real user requests for which origin will be deemed unhealthy. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> List of all the Identity Providers configured on the service instance. </summary>
     internal partial class IdentityProviderList
     {
-        /// <summary> Initializes a new instance of IdentityProviderList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderList"/>. </summary>
         internal IdentityProviderList()
         {
             Value = new ChangeTrackingList<ApiManagementIdentityProviderData>();
         }
 
-        /// <summary> Initializes a new instance of IdentityProviderList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderList"/>. </summary>
         /// <param name="value"> Identity Provider configuration values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal IdentityProviderList(IReadOnlyList<ApiManagementIdentityProviderData> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdentityProviderList(IReadOnlyList<ApiManagementIdentityProviderData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identity Provider configuration values. </summary>

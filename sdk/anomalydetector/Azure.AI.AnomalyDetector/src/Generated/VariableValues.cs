@@ -15,7 +15,10 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Variable values. </summary>
     public partial class VariableValues
     {
-        /// <summary> Initializes a new instance of VariableValues. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VariableValues"/>. </summary>
         /// <param name="variable"> Variable name of the last detection request. </param>
         /// <param name="timestamps"> Time stamps of the last detection request. </param>
         /// <param name="values"> Values of variables. </param>
@@ -29,17 +32,25 @@ namespace Azure.AI.AnomalyDetector
             Variable = variable;
             Timestamps = timestamps.ToList();
             Values = values.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of VariableValues. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableValues"/>. </summary>
         /// <param name="variable"> Variable name of the last detection request. </param>
         /// <param name="timestamps"> Time stamps of the last detection request. </param>
         /// <param name="values"> Values of variables. </param>
-        internal VariableValues(string variable, IList<string> timestamps, IList<float> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VariableValues(string variable, IList<string> timestamps, IList<float> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Variable = variable;
             Timestamps = timestamps;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VariableValues"/> for deserialization. </summary>
+        internal VariableValues()
+        {
         }
 
         /// <summary> Variable name of the last detection request. </summary>

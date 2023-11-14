@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AppConfigurationStoreConfigurationStoresRestClient.CreateListRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AppConfigurationStoreConfigurationStoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new AppConfigurationStoreResource(Client, AppConfigurationStoreData.DeserializeAppConfigurationStoreData(e)), AppConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

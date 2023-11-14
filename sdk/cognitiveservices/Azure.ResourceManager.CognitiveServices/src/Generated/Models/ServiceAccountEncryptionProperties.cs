@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties to configure Encryption. </summary>
     public partial class ServiceAccountEncryptionProperties
     {
-        /// <summary> Initializes a new instance of ServiceAccountEncryptionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionProperties"/>. </summary>
         public ServiceAccountEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        internal ServiceAccountEncryptionProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountEncryptionProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of KeyVault. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciPrecheckResultTags : IUtf8JsonSerializable
+    public partial class HciPrecheckResultTags : IUtf8JsonSerializable, IJsonModel<HciPrecheckResultTags>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciPrecheckResultTags>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HciPrecheckResultTags>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HciPrecheckResultTags>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HciPrecheckResultTags>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HciPrecheckResultTags DeserializeHciPrecheckResultTags(JsonElement element)
+        HciPrecheckResultTags IJsonModel<HciPrecheckResultTags>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciPrecheckResultTags(document.RootElement, options);
+        }
+
+        internal static HciPrecheckResultTags DeserializeHciPrecheckResultTags(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> key = default;
             Optional<string> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -48,8 +90,38 @@ namespace Azure.ResourceManager.Hci.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HciPrecheckResultTags(key.Value, value.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HciPrecheckResultTags(key.Value, value.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HciPrecheckResultTags>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HciPrecheckResultTags IPersistableModel<HciPrecheckResultTags>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHciPrecheckResultTags(document.RootElement, options);
+        }
+
+        string IPersistableModel<HciPrecheckResultTags>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

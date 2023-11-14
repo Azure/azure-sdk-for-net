@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The AppPlatformSkuCapabilities. </summary>
     public partial class AppPlatformSkuCapabilities
     {
-        /// <summary> Initializes a new instance of AppPlatformSkuCapabilities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuCapabilities"/>. </summary>
         internal AppPlatformSkuCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuCapabilities"/>. </summary>
         /// <param name="name"> Gets an invariant to describe the feature. </param>
         /// <param name="value"> Gets an invariant if the feature is measured by quantity. </param>
-        internal AppPlatformSkuCapabilities(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSkuCapabilities(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets an invariant to describe the feature. </summary>

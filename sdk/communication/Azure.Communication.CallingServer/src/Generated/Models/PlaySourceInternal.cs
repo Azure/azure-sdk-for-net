@@ -5,16 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The PlaySource. </summary>
     internal partial class PlaySourceInternal
     {
-        /// <summary> Initializes a new instance of PlaySourceInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
         /// <param name="sourceType"> Defines the type of the play source. </param>
         public PlaySourceInternal(PlaySourceTypeInternal sourceType)
         {
             SourceType = sourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/>. </summary>
+        /// <param name="sourceType"> Defines the type of the play source. </param>
+        /// <param name="playSourceId"> Defines the identifier to be used for caching related media. </param>
+        /// <param name="fileSource"> Defines the file source info to be used for play. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlaySourceInternal(PlaySourceTypeInternal sourceType, string playSourceId, FileSourceInternal fileSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceType = sourceType;
+            PlaySourceId = playSourceId;
+            FileSource = fileSource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlaySourceInternal"/> for deserialization. </summary>
+        internal PlaySourceInternal()
+        {
         }
 
         /// <summary> Defines the type of the play source. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Validation result for configuration service settings. </summary>
     public partial class AppPlatformConfigurationServiceGitValidateResult
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitValidateResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitValidateResult"/>. </summary>
         internal AppPlatformConfigurationServiceGitValidateResult()
         {
             GitReposValidationResult = new ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceGitValidateResult"/>. </summary>
         /// <param name="isValid"> Indicate if the configuration service settings are valid. </param>
         /// <param name="gitReposValidationResult"> The detail validation results. </param>
-        internal AppPlatformConfigurationServiceGitValidateResult(bool? isValid, IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigurationServiceGitValidateResult(bool? isValid, IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsValid = isValid;
             GitReposValidationResult = gitReposValidationResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicate if the configuration service settings are valid. </summary>

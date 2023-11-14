@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Group the result set. </summary>
     public partial class ServiceAlertSummaryGroup
     {
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroup"/>. </summary>
         public ServiceAlertSummaryGroup()
         {
             Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroup"/>. </summary>
         /// <param name="total"> Total count of the result set. </param>
         /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
         /// <param name="groupedBy"> Name of the field aggregated. </param>
         /// <param name="values"> List of the items. </param>
-        internal ServiceAlertSummaryGroup(long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertSummaryGroup(long? total, long? smartGroupsCount, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Total = total;
             SmartGroupsCount = smartGroupsCount;
             GroupedBy = groupedBy;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Total count of the result set. </summary>

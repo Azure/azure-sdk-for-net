@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -13,7 +14,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The CancelAddParticipantRequest. </summary>
     internal partial class CancelAddParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of CancelAddParticipantRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantRequestInternal"/>. </summary>
         /// <param name="invitationId"> Invitation ID used to add a participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
         public CancelAddParticipantRequestInternal(string invitationId)
@@ -21,6 +25,24 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(invitationId, nameof(invitationId));
 
             InvitationId = invitationId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantRequestInternal"/>. </summary>
+        /// <param name="invitationId"> Invitation ID used to add a participant. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CancelAddParticipantRequestInternal(string invitationId, string operationContext, string callbackUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InvitationId = invitationId;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantRequestInternal"/> for deserialization. </summary>
+        internal CancelAddParticipantRequestInternal()
+        {
         }
 
         /// <summary> Invitation ID used to add a participant. </summary>

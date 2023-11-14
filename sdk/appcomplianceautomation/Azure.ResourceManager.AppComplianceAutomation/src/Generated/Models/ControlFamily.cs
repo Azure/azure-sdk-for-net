@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the control family. </summary>
     public partial class ControlFamily
     {
-        /// <summary> Initializes a new instance of ControlFamily. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ControlFamily"/>. </summary>
         internal ControlFamily()
         {
             Controls = new ChangeTrackingList<Control>();
         }
 
-        /// <summary> Initializes a new instance of ControlFamily. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControlFamily"/>. </summary>
         /// <param name="familyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
         /// <param name="familyType"> The control family type. </param>
         /// <param name="familyStatus"> Control family status. </param>
         /// <param name="controls"> List of controls. </param>
-        internal ControlFamily(string familyName, ControlFamilyType? familyType, ControlFamilyStatus? familyStatus, IReadOnlyList<Control> controls)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ControlFamily(string familyName, ControlFamilyType? familyType, ControlFamilyStatus? familyStatus, IReadOnlyList<Control> controls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FamilyName = familyName;
             FamilyType = familyType;
             FamilyStatus = familyStatus;
             Controls = controls;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the control family. e.g. "Malware Protection - Anti-Virus". </summary>

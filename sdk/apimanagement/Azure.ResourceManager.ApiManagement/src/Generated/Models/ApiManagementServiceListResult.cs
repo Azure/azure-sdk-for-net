@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The response of the List API Management services operation. </summary>
     internal partial class ApiManagementServiceListResult
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceListResult"/>. </summary>
         /// <param name="value"> Result of the List API Management services operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ApiManagementServiceListResult(IEnumerable<ApiManagementServiceData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceListResult"/>. </summary>
         /// <param name="value"> Result of the List API Management services operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
-        internal ApiManagementServiceListResult(IReadOnlyList<ApiManagementServiceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementServiceListResult(IReadOnlyList<ApiManagementServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceListResult"/> for deserialization. </summary>
+        internal ApiManagementServiceListResult()
+        {
         }
 
         /// <summary> Result of the List API Management services operation. </summary>

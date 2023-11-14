@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> OAuth Server Secrets Contract. </summary>
     public partial class AuthorizationServerSecretsContract
     {
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
         internal AuthorizationServerSecretsContract()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
         /// <param name="clientSecret"> oAuth Authorization Server Secrets. </param>
         /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
         /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
-        internal AuthorizationServerSecretsContract(string clientSecret, string resourceOwnerUsername, string resourceOwnerPassword)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationServerSecretsContract(string clientSecret, string resourceOwnerUsername, string resourceOwnerPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientSecret = clientSecret;
             ResourceOwnerUsername = resourceOwnerUsername;
             ResourceOwnerPassword = resourceOwnerPassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> oAuth Authorization Server Secrets. </summary>

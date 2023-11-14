@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for ServerPort match conditions. </summary>
     public partial class ServerPortMatchCondition
     {
-        /// <summary> Initializes a new instance of ServerPortMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="serverPortOperator"> Describes operator to be matched. </param>
         public ServerPortMatchCondition(ServerPortMatchConditionType conditionType, ServerPortOperator serverPortOperator)
@@ -24,19 +28,26 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of ServerPortMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="serverPortOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal ServerPortMatchCondition(ServerPortMatchConditionType conditionType, ServerPortOperator serverPortOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerPortMatchCondition(ServerPortMatchConditionType conditionType, ServerPortOperator serverPortOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionType = conditionType;
             ServerPortOperator = serverPortOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerPortMatchCondition"/> for deserialization. </summary>
+        internal ServerPortMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Continents Response. </summary>
     public partial class ContinentsResponse
     {
-        /// <summary> Initializes a new instance of ContinentsResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContinentsResponse"/>. </summary>
         internal ContinentsResponse()
         {
             Continents = new ChangeTrackingList<ContinentsResponseContinentsItem>();
             CountryOrRegions = new ChangeTrackingList<ContinentsResponseCountryOrRegionsItem>();
         }
 
-        /// <summary> Initializes a new instance of ContinentsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinentsResponse"/>. </summary>
         /// <param name="continents"></param>
         /// <param name="countryOrRegions"></param>
-        internal ContinentsResponse(IReadOnlyList<ContinentsResponseContinentsItem> continents, IReadOnlyList<ContinentsResponseCountryOrRegionsItem> countryOrRegions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinentsResponse(IReadOnlyList<ContinentsResponseContinentsItem> continents, IReadOnlyList<ContinentsResponseCountryOrRegionsItem> countryOrRegions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Continents = continents;
             CountryOrRegions = countryOrRegions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the continents. </summary>

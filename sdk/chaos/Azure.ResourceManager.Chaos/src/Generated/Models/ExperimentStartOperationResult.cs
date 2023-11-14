@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents the result of a start Experiment operation. </summary>
     public partial class ExperimentStartOperationResult
     {
-        /// <summary> Initializes a new instance of ExperimentStartOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentStartOperationResult"/>. </summary>
         internal ExperimentStartOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ExperimentStartOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentStartOperationResult"/>. </summary>
         /// <param name="name"> String of the Experiment name. </param>
         /// <param name="statusUri"> URL to retrieve the Experiment status. </param>
-        internal ExperimentStartOperationResult(string name, string statusUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentStartOperationResult(string name, string statusUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             StatusUri = statusUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> String of the Experiment name. </summary>

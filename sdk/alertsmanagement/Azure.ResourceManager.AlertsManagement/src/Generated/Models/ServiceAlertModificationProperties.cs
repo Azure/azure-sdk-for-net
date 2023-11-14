@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Properties of the alert modification item. </summary>
     public partial class ServiceAlertModificationProperties
     {
-        /// <summary> Initializes a new instance of ServiceAlertModificationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationProperties"/>. </summary>
         public ServiceAlertModificationProperties()
         {
             Modifications = new ChangeTrackingList<ServiceAlertModificationItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationProperties"/>. </summary>
         /// <param name="alertId"> Unique Id of the alert for which the history is being retrieved. </param>
         /// <param name="modifications"> Modification details. </param>
-        internal ServiceAlertModificationProperties(Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertModificationProperties(Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertId = alertId;
             Modifications = modifications;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique Id of the alert for which the history is being retrieved. </summary>

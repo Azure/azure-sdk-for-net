@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of Deployment resource name and set them as active. </summary>
     public partial class ActiveAppPlatformDeploymentsContent
     {
-        /// <summary> Initializes a new instance of ActiveAppPlatformDeploymentsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActiveAppPlatformDeploymentsContent"/>. </summary>
         public ActiveAppPlatformDeploymentsContent()
         {
             ActiveDeploymentNames = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ActiveAppPlatformDeploymentsContent"/>. </summary>
+        /// <param name="activeDeploymentNames"> Collection of Deployment name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActiveAppPlatformDeploymentsContent(IList<string> activeDeploymentNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ActiveDeploymentNames = activeDeploymentNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of Deployment name. </summary>

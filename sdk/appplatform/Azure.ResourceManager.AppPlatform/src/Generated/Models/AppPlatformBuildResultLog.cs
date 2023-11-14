@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Build result log resource properties payload. </summary>
     public partial class AppPlatformBuildResultLog
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildResultLog. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultLog"/>. </summary>
         internal AppPlatformBuildResultLog()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildResultLog. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildResultLog"/>. </summary>
         /// <param name="blobUri"> The public download URL of this build result log. </param>
-        internal AppPlatformBuildResultLog(Uri blobUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildResultLog(Uri blobUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The public download URL of this build result log. </summary>

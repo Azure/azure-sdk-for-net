@@ -14,21 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Rankings Response. </summary>
     public partial class RankingsResponse
     {
-        /// <summary> Initializes a new instance of RankingsResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RankingsResponse"/>. </summary>
         internal RankingsResponse()
         {
             Tables = new ChangeTrackingList<RankingsResponseTablesItem>();
         }
 
-        /// <summary> Initializes a new instance of RankingsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponse"/>. </summary>
         /// <param name="dateTimeBegin"></param>
         /// <param name="dateTimeEnd"></param>
         /// <param name="tables"></param>
-        internal RankingsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, IReadOnlyList<RankingsResponseTablesItem> tables)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RankingsResponse(DateTimeOffset? dateTimeBegin, DateTimeOffset? dateTimeEnd, IReadOnlyList<RankingsResponseTablesItem> tables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             Tables = tables;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the date time begin. </summary>

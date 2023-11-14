@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Details of a monitor service. </summary>
     public partial class MonitorServiceDetails
     {
-        /// <summary> Initializes a new instance of MonitorServiceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorServiceDetails"/>. </summary>
         internal MonitorServiceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorServiceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorServiceDetails"/>. </summary>
         /// <param name="name"> Monitor service name. </param>
         /// <param name="displayName"> Monitor service display name. </param>
-        internal MonitorServiceDetails(string name, string displayName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorServiceDetails(string name, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Monitor service name. </summary>

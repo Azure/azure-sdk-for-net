@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformServiceNetworkProfile : IUtf8JsonSerializable
+    public partial class AppPlatformServiceNetworkProfile : IUtf8JsonSerializable, IJsonModel<AppPlatformServiceNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformServiceNetworkProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppPlatformServiceNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppPlatformServiceNetworkProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppPlatformServiceNetworkProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceRuntimeSubnetId))
             {
@@ -41,6 +51,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("appNetworkResourceGroup"u8);
                 writer.WriteStringValue(AppNetworkResourceGroup);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OutboundIPs))
+                {
+                    writer.WritePropertyName("outboundIPs"u8);
+                    writer.WriteObjectValue(OutboundIPs);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(RequiredTraffics))
+                {
+                    writer.WritePropertyName("requiredTraffics"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in RequiredTraffics)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsDefined(IngressConfig))
             {
                 writer.WritePropertyName("ingressConfig"u8);
@@ -51,11 +82,40 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("outboundType"u8);
                 writer.WriteStringValue(OutboundType);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformServiceNetworkProfile DeserializeAppPlatformServiceNetworkProfile(JsonElement element)
+        AppPlatformServiceNetworkProfile IJsonModel<AppPlatformServiceNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformServiceNetworkProfile(document.RootElement, options);
+        }
+
+        internal static AppPlatformServiceNetworkProfile DeserializeAppPlatformServiceNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +129,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<IReadOnlyList<AppPlatformServiceRequiredTraffic>> requiredTraffics = default;
             Optional<IngressConfig> ingressConfig = default;
             Optional<string> outboundType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceRuntimeSubnetId"u8))
@@ -141,8 +203,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     outboundType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId.Value, appSubnetId.Value, serviceCidr.Value, serviceRuntimeNetworkResourceGroup.Value, appNetworkResourceGroup.Value, outboundIPs.Value, Optional.ToList(requiredTraffics), ingressConfig.Value, outboundType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId.Value, appSubnetId.Value, serviceCidr.Value, serviceRuntimeNetworkResourceGroup.Value, appNetworkResourceGroup.Value, outboundIPs.Value, Optional.ToList(requiredTraffics), ingressConfig.Value, outboundType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformServiceNetworkProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppPlatformServiceNetworkProfile IPersistableModel<AppPlatformServiceNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformServiceNetworkProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppPlatformServiceNetworkProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppPlatformServiceNetworkProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

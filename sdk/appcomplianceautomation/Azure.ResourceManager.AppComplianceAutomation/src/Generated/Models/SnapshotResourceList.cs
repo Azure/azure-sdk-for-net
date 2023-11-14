@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppComplianceAutomation;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Object that includes an array of resources and a possible link for next set. </summary>
     internal partial class SnapshotResourceList
     {
-        /// <summary> Initializes a new instance of SnapshotResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceList"/>. </summary>
         internal SnapshotResourceList()
         {
             Value = new ChangeTrackingList<SnapshotResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotResourceList"/>. </summary>
         /// <param name="value"> List of the snapshots. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal SnapshotResourceList(IReadOnlyList<SnapshotResourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotResourceList(IReadOnlyList<SnapshotResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of the snapshots. </summary>

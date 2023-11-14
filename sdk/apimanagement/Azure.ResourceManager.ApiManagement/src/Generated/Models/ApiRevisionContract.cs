@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Summary of revision metadata. </summary>
     public partial class ApiRevisionContract
     {
-        /// <summary> Initializes a new instance of ApiRevisionContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiRevisionContract"/>. </summary>
         internal ApiRevisionContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiRevisionContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiRevisionContract"/>. </summary>
         /// <param name="apiId"> Identifier of the API Revision. </param>
         /// <param name="apiRevision"> Revision number of API. </param>
         /// <param name="createdOn"> The time the API Revision was created. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="privateUriString"> Gateway URL for accessing the non-current API Revision. </param>
         /// <param name="isOnline"> Indicates if API revision is the current api revision. </param>
         /// <param name="isCurrent"> Indicates if API revision is accessible via the gateway. </param>
-        internal ApiRevisionContract(string apiId, string apiRevision, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string description, string privateUriString, bool? isOnline, bool? isCurrent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiRevisionContract(string apiId, string apiRevision, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string description, string privateUriString, bool? isOnline, bool? isCurrent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApiId = apiId;
             ApiRevision = apiRevision;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             PrivateUriString = privateUriString;
             IsOnline = isOnline;
             IsCurrent = isCurrent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identifier of the API Revision. </summary>

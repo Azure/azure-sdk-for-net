@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class DscNodeData : ResourceData
     {
-        /// <summary> Initializes a new instance of DscNodeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeData"/>. </summary>
         public DscNodeData()
         {
             ExtensionHandler = new ChangeTrackingList<DscNodeExtensionHandlerAssociationProperty>();
         }
 
-        /// <summary> Initializes a new instance of DscNodeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="totalCount"> Gets the total number of records matching filter criteria. </param>
         /// <param name="extensionHandler"> Gets or sets the list of extensionHandler properties for a Node. </param>
         /// <param name="namePropertiesNodeConfigurationName"> Gets or sets the name of the dsc node configuration. </param>
-        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeenOn, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeenOn, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LastSeenOn = lastSeenOn;
             RegistrationOn = registrationOn;
@@ -53,6 +57,7 @@ namespace Azure.ResourceManager.Automation
             TotalCount = totalCount;
             ExtensionHandler = extensionHandler;
             NamePropertiesNodeConfigurationName = namePropertiesNodeConfigurationName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the last seen time of the node. </summary>

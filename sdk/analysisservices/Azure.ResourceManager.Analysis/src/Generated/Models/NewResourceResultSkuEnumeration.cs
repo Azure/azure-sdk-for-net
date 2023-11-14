@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An object that represents enumerating SKUs for new resources. </summary>
     internal partial class NewResourceResultSkuEnumeration
     {
-        /// <summary> Initializes a new instance of NewResourceResultSkuEnumeration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewResourceResultSkuEnumeration"/>. </summary>
         internal NewResourceResultSkuEnumeration()
         {
             Value = new ChangeTrackingList<AnalysisResourceSku>();
         }
 
-        /// <summary> Initializes a new instance of NewResourceResultSkuEnumeration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewResourceResultSkuEnumeration"/>. </summary>
         /// <param name="value"> The collection of available SKUs for new resources. </param>
-        internal NewResourceResultSkuEnumeration(IReadOnlyList<AnalysisResourceSku> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewResourceResultSkuEnumeration(IReadOnlyList<AnalysisResourceSku> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of available SKUs for new resources. </summary>

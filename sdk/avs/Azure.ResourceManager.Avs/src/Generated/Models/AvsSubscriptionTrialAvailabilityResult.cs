@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Subscription trial availability. </summary>
     public partial class AvsSubscriptionTrialAvailabilityResult
     {
-        /// <summary> Initializes a new instance of AvsSubscriptionTrialAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsSubscriptionTrialAvailabilityResult"/>. </summary>
         internal AvsSubscriptionTrialAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsSubscriptionTrialAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsSubscriptionTrialAvailabilityResult"/>. </summary>
         /// <param name="status"> Trial status. </param>
         /// <param name="availableHosts"> Number of trial hosts available. </param>
-        internal AvsSubscriptionTrialAvailabilityResult(AvsSubscriptionTrialStatus? status, int? availableHosts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsSubscriptionTrialAvailabilityResult(AvsSubscriptionTrialStatus? status, int? availableHosts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             AvailableHosts = availableHosts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Trial status. </summary>

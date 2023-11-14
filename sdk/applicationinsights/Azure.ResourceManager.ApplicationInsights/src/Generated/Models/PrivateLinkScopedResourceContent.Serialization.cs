@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class PrivateLinkScopedResourceContent
+    public partial class PrivateLinkScopedResourceContent : IUtf8JsonSerializable, IJsonModel<PrivateLinkScopedResourceContent>
     {
-        internal static PrivateLinkScopedResourceContent DeserializePrivateLinkScopedResourceContent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkScopedResourceContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PrivateLinkScopedResourceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PrivateLinkScopedResourceContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PrivateLinkScopedResourceContent>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("ResourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("ScopeId"u8);
+                writer.WriteStringValue(ScopeId);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PrivateLinkScopedResourceContent IJsonModel<PrivateLinkScopedResourceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkScopedResourceContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateLinkScopedResourceContent(document.RootElement, options);
+        }
+
+        internal static PrivateLinkScopedResourceContent DeserializePrivateLinkScopedResourceContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> resourceId = default;
             Optional<string> scopeId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ResourceId"u8))
@@ -32,8 +90,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     scopeId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateLinkScopedResourceContent(resourceId.Value, scopeId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrivateLinkScopedResourceContent(resourceId.Value, scopeId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateLinkScopedResourceContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkScopedResourceContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PrivateLinkScopedResourceContent IPersistableModel<PrivateLinkScopedResourceContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkScopedResourceContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePrivateLinkScopedResourceContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<PrivateLinkScopedResourceContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

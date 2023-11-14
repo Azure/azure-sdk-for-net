@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,22 +15,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Policy description details. </summary>
     public partial class PolicyDescriptionContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyDescriptionContractData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyDescriptionContractData"/>. </summary>
         public PolicyDescriptionContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyDescriptionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDescriptionContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Policy description. </param>
         /// <param name="scope"> Binary OR value of the Snippet scope. </param>
-        internal PolicyDescriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, long? scope) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyDescriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, long? scope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Policy description. </summary>

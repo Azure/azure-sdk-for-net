@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Hci
     /// </summary>
     public partial class HciSkuData : ResourceData
     {
-        /// <summary> Initializes a new instance of HciSkuData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciSkuData"/>. </summary>
         public HciSkuData()
         {
             SkuMappings = new ChangeTrackingList<HciSkuMappings>();
         }
 
-        /// <summary> Initializes a new instance of HciSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.Hci
         /// <param name="content"> JSON serialized catalog content of the sku offer. </param>
         /// <param name="contentVersion"> The API version of the catalog service used to serve the catalog content. </param>
         /// <param name="skuMappings"> Array of SKU mappings. </param>
-        internal HciSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string publisherId, string offerId, string content, string contentVersion, IList<HciSkuMappings> skuMappings) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, string publisherId, string offerId, string content, string contentVersion, IList<HciSkuMappings> skuMappings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PublisherId = publisherId;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.Hci
             Content = content;
             ContentVersion = contentVersion;
             SkuMappings = skuMappings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning State. </summary>

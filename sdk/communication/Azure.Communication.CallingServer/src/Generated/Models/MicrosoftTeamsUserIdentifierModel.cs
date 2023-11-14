@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -13,7 +14,10 @@ namespace Azure.Communication
     /// <summary> The MicrosoftTeamsUserIdentifierModel. </summary>
     internal partial class MicrosoftTeamsUserIdentifierModel
     {
-        /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
         /// <param name="userId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         public MicrosoftTeamsUserIdentifierModel(string userId)
@@ -23,15 +27,22 @@ namespace Azure.Communication
             UserId = userId;
         }
 
-        /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/>. </summary>
         /// <param name="userId"></param>
         /// <param name="isAnonymous"></param>
         /// <param name="cloud"></param>
-        internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserId = userId;
             IsAnonymous = isAnonymous;
             Cloud = cloud;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifierModel"/> for deserialization. </summary>
+        internal MicrosoftTeamsUserIdentifierModel()
+        {
         }
 
         /// <summary> Gets or sets the user id. </summary>

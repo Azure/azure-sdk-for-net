@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class AssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of AssignmentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentData"/>. </summary>
         /// <param name="identity"> Managed identity for this blueprint assignment. </param>
         /// <param name="parameters"> Blueprint assignment parameter values. </param>
         /// <param name="resourceGroups"> Names and locations of resource group placeholders. </param>
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of AssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,7 +56,8 @@ namespace Azure.ResourceManager.Blueprint
         /// <param name="locks"> Defines how resources deployed by a blueprint assignment are locked. </param>
         /// <param name="provisioningState"> State of the blueprint assignment. </param>
         /// <param name="location"> The location of this blueprint assignment. </param>
-        internal AssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.ManagedServiceIdentity identity, string displayName, string description, string blueprintId, string scope, IDictionary<string, ParameterValue> parameters, IDictionary<string, ResourceGroupValue> resourceGroups, AssignmentStatus status, AssignmentLockSettings locks, AssignmentProvisioningState? provisioningState, AzureLocation location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.ManagedServiceIdentity identity, string displayName, string description, string blueprintId, string scope, IDictionary<string, ParameterValue> parameters, IDictionary<string, ResourceGroupValue> resourceGroups, AssignmentStatus status, AssignmentLockSettings locks, AssignmentProvisioningState? provisioningState, AzureLocation location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             DisplayName = displayName;
@@ -66,6 +70,12 @@ namespace Azure.ResourceManager.Blueprint
             Locks = locks;
             ProvisioningState = provisioningState;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentData"/> for deserialization. </summary>
+        internal AssignmentData()
+        {
         }
 
         /// <summary> Managed identity for this blueprint assignment. </summary>

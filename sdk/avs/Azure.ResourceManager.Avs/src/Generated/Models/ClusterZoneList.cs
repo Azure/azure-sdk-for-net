@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> List of all zones and associated hosts for a cluster. </summary>
     internal partial class ClusterZoneList
     {
-        /// <summary> Initializes a new instance of ClusterZoneList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
         internal ClusterZoneList()
         {
             Zones = new ChangeTrackingList<AvsClusterZone>();
         }
 
-        /// <summary> Initializes a new instance of ClusterZoneList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterZoneList"/>. </summary>
         /// <param name="zones"> Zone and associated hosts info. </param>
-        internal ClusterZoneList(IReadOnlyList<AvsClusterZone> zones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterZoneList(IReadOnlyList<AvsClusterZone> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Zone and associated hosts info. </summary>

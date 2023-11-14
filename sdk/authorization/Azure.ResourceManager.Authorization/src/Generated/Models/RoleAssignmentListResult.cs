@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role assignment list operation result. </summary>
     internal partial class RoleAssignmentListResult
     {
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         internal RoleAssignmentListResult()
         {
             Value = new ChangeTrackingList<RoleAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         /// <param name="value"> Role assignment list. </param>
         /// <param name="nextLink"> The skipToken to use for getting the next set of results. </param>
-        internal RoleAssignmentListResult(IReadOnlyList<RoleAssignmentData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentListResult(IReadOnlyList<RoleAssignmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Role assignment list. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Options for continuous speech recognition. </summary>
     internal partial class SpeechOptionsInternal
     {
-        /// <summary> Initializes a new instance of SpeechOptionsInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SpeechOptionsInternal"/>. </summary>
         public SpeechOptionsInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpeechOptionsInternal"/>. </summary>
+        /// <param name="endSilenceTimeoutInMs"> The length of end silence when user stops speaking and cogservice send response. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpeechOptionsInternal(long? endSilenceTimeoutInMs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EndSilenceTimeoutInMs = endSilenceTimeoutInMs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The length of end silence when user stops speaking and cogservice send response. </summary>

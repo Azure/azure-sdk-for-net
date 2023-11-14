@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> The aggregate values of savings plan utilization. </summary>
     public partial class BillingBenefitsSavingsPlanUtilizationAggregate
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilizationAggregate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilizationAggregate"/>. </summary>
         internal BillingBenefitsSavingsPlanUtilizationAggregate()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilizationAggregate. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilizationAggregate"/>. </summary>
         /// <param name="grain"> The grain of the aggregate. </param>
         /// <param name="grainUnit"> The grain unit of the aggregate. </param>
         /// <param name="value"> The aggregate value. </param>
         /// <param name="valueUnit"> The aggregate value unit. </param>
-        internal BillingBenefitsSavingsPlanUtilizationAggregate(float? grain, string grainUnit, float? value, string valueUnit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanUtilizationAggregate(float? grain, string grainUnit, float? value, string valueUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Grain = grain;
             GrainUnit = grainUnit;
             Value = value;
             ValueUnit = valueUnit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The grain of the aggregate. </summary>

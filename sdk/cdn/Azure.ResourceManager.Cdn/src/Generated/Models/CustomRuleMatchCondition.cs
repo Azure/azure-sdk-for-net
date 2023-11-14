@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Define match conditions. </summary>
     public partial class CustomRuleMatchCondition
     {
-        /// <summary> Initializes a new instance of CustomRuleMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomRuleMatchCondition"/>. </summary>
         /// <param name="matchVariable"> Match variable to compare against. </param>
         /// <param name="matchOperator"> Describes operator to be matched. </param>
         /// <param name="matchValue"> List of possible match values. </param>
@@ -30,14 +33,15 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<TransformType>();
         }
 
-        /// <summary> Initializes a new instance of CustomRuleMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRuleMatchCondition"/>. </summary>
         /// <param name="matchVariable"> Match variable to compare against. </param>
         /// <param name="selector"> Selector can used to match a specific key for QueryString, Cookies, RequestHeader or PostArgs. </param>
         /// <param name="matchOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if the result of this condition should be negated. </param>
         /// <param name="matchValue"> List of possible match values. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal CustomRuleMatchCondition(WafMatchVariable matchVariable, string selector, MatchOperator matchOperator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomRuleMatchCondition(WafMatchVariable matchVariable, string selector, MatchOperator matchOperator, bool? negateCondition, IList<string> matchValue, IList<TransformType> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MatchVariable = matchVariable;
             Selector = selector;
@@ -45,6 +49,12 @@ namespace Azure.ResourceManager.Cdn.Models
             NegateCondition = negateCondition;
             MatchValue = matchValue;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomRuleMatchCondition"/> for deserialization. </summary>
+        internal CustomRuleMatchCondition()
+        {
         }
 
         /// <summary> Match variable to compare against. </summary>

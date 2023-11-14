@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Resources Response. </summary>
     public partial class ResourcesResponse
     {
-        /// <summary> Initializes a new instance of ResourcesResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponse"/>. </summary>
         internal ResourcesResponse()
         {
             Endpoints = new ChangeTrackingList<ResourcesResponseEndpointsItem>();
             CustomDomains = new ChangeTrackingList<ResourcesResponseCustomDomainsItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourcesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourcesResponse"/>. </summary>
         /// <param name="endpoints"></param>
         /// <param name="customDomains"></param>
-        internal ResourcesResponse(IReadOnlyList<ResourcesResponseEndpointsItem> endpoints, IReadOnlyList<ResourcesResponseCustomDomainsItem> customDomains)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourcesResponse(IReadOnlyList<ResourcesResponseEndpointsItem> endpoints, IReadOnlyList<ResourcesResponseCustomDomainsItem> customDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Endpoints = endpoints;
             CustomDomains = customDomains;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the endpoints. </summary>

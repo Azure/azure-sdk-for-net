@@ -14,25 +14,30 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> API route config of the Spring Cloud Gateway. </summary>
     public partial class AppPlatformGatewayRouteConfigProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayRouteConfigProperties"/>. </summary>
         public AppPlatformGatewayRouteConfigProperties()
         {
             Routes = new ChangeTrackingList<AppPlatformGatewayApiRoute>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayRouteConfigProperties"/>. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway route config. </param>
         /// <param name="appResourceId"> The resource Id of the Azure Spring Apps app, required unless route defines `uri`. </param>
         /// <param name="openApi"> OpenAPI properties of Spring Cloud Gateway route config. </param>
         /// <param name="protocol"> Protocol of routed Azure Spring Apps applications. </param>
         /// <param name="routes"> Array of API routes, each route contains properties such as `title`, `uri`, `ssoEnabled`, `predicates`, `filters`. </param>
-        internal AppPlatformGatewayRouteConfigProperties(AppPlatformGatewayProvisioningState? provisioningState, ResourceIdentifier appResourceId, GatewayRouteConfigOpenApiProperties openApi, AppPlatformGatewayRouteConfigProtocol? protocol, IList<AppPlatformGatewayApiRoute> routes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayRouteConfigProperties(AppPlatformGatewayProvisioningState? provisioningState, ResourceIdentifier appResourceId, GatewayRouteConfigOpenApiProperties openApi, AppPlatformGatewayRouteConfigProtocol? protocol, IList<AppPlatformGatewayApiRoute> routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AppResourceId = appResourceId;
             OpenApi = openApi;
             Protocol = protocol;
             Routes = routes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of the Spring Cloud Gateway route config. </summary>

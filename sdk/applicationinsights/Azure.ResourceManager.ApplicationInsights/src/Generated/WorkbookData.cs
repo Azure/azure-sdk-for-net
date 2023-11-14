@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class WorkbookData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WorkbookData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WorkbookData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of WorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkbookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="identity"> Identity used for BYOS. </param>
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
         /// <param name="etag"> Resource etag. </param>
-        internal WorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, string userId, string sourceId, Uri storageUri, string description, string revision, ManagedServiceIdentity identity, WorkbookSharedTypeKind? kind, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, string userId, string sourceId, Uri storageUri, string description, string revision, ManagedServiceIdentity identity, WorkbookSharedTypeKind? kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             SerializedData = serializedData;
@@ -61,6 +65,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             Identity = identity;
             Kind = kind;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookData"/> for deserialization. </summary>
+        internal WorkbookData()
+        {
         }
 
         /// <summary> The user-defined name (display name) of the workbook. </summary>

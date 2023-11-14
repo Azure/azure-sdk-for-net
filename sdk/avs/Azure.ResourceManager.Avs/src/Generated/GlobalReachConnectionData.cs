@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class GlobalReachConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of GlobalReachConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GlobalReachConnectionData"/>. </summary>
         public GlobalReachConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of GlobalReachConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalReachConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +38,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="circuitConnectionStatus"> The connection status of the global reach connection. </param>
         /// <param name="peerExpressRouteCircuit"> Identifier of the ExpressRoute Circuit to peer with in the global reach connection. </param>
         /// <param name="expressRouteId"> The ID of the Private Cloud's ExpressRoute Circuit that is participating in the global reach connection. </param>
-        internal GlobalReachConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GlobalReachConnectionProvisioningState? provisioningState, string addressPrefix, string authorizationKey, GlobalReachConnectionStatus? circuitConnectionStatus, ResourceIdentifier peerExpressRouteCircuit, ResourceIdentifier expressRouteId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GlobalReachConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GlobalReachConnectionProvisioningState? provisioningState, string addressPrefix, string authorizationKey, GlobalReachConnectionStatus? circuitConnectionStatus, ResourceIdentifier peerExpressRouteCircuit, ResourceIdentifier expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AddressPrefix = addressPrefix;
@@ -41,6 +47,7 @@ namespace Azure.ResourceManager.Avs
             CircuitConnectionStatus = circuitConnectionStatus;
             PeerExpressRouteCircuit = peerExpressRouteCircuit;
             ExpressRouteId = expressRouteId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the  ExpressRoute Circuit Authorization provisioning. </summary>
