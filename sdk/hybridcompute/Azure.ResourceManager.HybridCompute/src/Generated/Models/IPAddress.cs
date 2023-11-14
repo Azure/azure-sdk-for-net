@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes properties of the IP address. </summary>
     public partial class IPAddress
     {
-        /// <summary> Initializes a new instance of IPAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPAddress"/>. </summary>
         internal IPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of IPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddress"/>. </summary>
         /// <param name="address"> Represents the IP Address. </param>
         /// <param name="ipAddressVersion"> Represents the Ip Address Version. </param>
         /// <param name="subnet"> The subnet to which this IP address belongs. </param>
-        internal IPAddress(string address, string ipAddressVersion, Subnet subnet)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPAddress(string address, string ipAddressVersion, Subnet subnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             IPAddressVersion = ipAddressVersion;
             Subnet = subnet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents the IP Address. </summary>

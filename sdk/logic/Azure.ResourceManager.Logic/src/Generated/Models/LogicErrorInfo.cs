@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The error info. </summary>
     public partial class LogicErrorInfo
     {
-        /// <summary> Initializes a new instance of LogicErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal LogicErrorInfo(string code)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Logic.Models
             Argument.AssertNotNull(code, nameof(code));
 
             Code = code;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicErrorInfo"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicErrorInfo(string code, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Code = code;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicErrorInfo"/> for deserialization. </summary>
+        internal LogicErrorInfo()
+        {
         }
 
         /// <summary> The error code. </summary>

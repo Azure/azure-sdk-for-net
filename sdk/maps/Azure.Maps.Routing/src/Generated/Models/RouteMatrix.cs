@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Matrix result object. </summary>
     public partial class RouteMatrix
     {
-        /// <summary> Initializes a new instance of RouteMatrix. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteMatrix"/>. </summary>
         internal RouteMatrix()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouteMatrix"/>. </summary>
+        /// <param name="statusCode"> StatusCode property for the current cell in the input matrix. </param>
+        /// <param name="response"> Response object of the current cell in the input matrix. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteMatrix(int? statusCode, RouteMatrixResultResponse response, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StatusCode = statusCode;
+            Response = response;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> StatusCode property for the current cell in the input matrix. </summary>

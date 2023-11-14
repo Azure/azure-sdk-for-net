@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SqlSourceParameter. </summary>
     internal partial class SqlSourceParameter
     {
-        /// <summary> Initializes a new instance of SqlSourceParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlSourceParameter"/>. </summary>
         /// <param name="query"> The script to query this database. </param>
         public SqlSourceParameter(string query)
         {
             Query = query;
         }
 
-        /// <summary> Initializes a new instance of SqlSourceParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSourceParameter"/>. </summary>
         /// <param name="connectionString"> The connection string of this database. </param>
         /// <param name="query"> The script to query this database. </param>
-        internal SqlSourceParameter(string connectionString, string query)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlSourceParameter(string connectionString, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
             Query = query;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlSourceParameter"/> for deserialization. </summary>
+        internal SqlSourceParameter()
+        {
         }
 
         /// <summary> The connection string of this database. </summary>

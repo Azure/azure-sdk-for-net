@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MonitoringWorkspaceConnection : IUtf8JsonSerializable
+    public partial class MonitoringWorkspaceConnection : IUtf8JsonSerializable, IJsonModel<MonitoringWorkspaceConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringWorkspaceConnection>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MonitoringWorkspaceConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MonitoringWorkspaceConnection>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MonitoringWorkspaceConnection>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -52,17 +62,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("secrets");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitoringWorkspaceConnection DeserializeMonitoringWorkspaceConnection(JsonElement element)
+        MonitoringWorkspaceConnection IJsonModel<MonitoringWorkspaceConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringWorkspaceConnection(document.RootElement, options);
+        }
+
+        internal static MonitoringWorkspaceConnection DeserializeMonitoringWorkspaceConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, string>> secrets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentVariables"u8))
@@ -95,8 +136,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     secrets = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitoringWorkspaceConnection(Optional.ToDictionary(environmentVariables), Optional.ToDictionary(secrets));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitoringWorkspaceConnection(Optional.ToDictionary(environmentVariables), Optional.ToDictionary(secrets), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitoringWorkspaceConnection>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitoringWorkspaceConnection IPersistableModel<MonitoringWorkspaceConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringWorkspaceConnection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMonitoringWorkspaceConnection(document.RootElement, options);
+        }
+
+        string IPersistableModel<MonitoringWorkspaceConnection>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

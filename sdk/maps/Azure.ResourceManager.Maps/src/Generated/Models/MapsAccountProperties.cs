@@ -14,25 +14,30 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> Additional Map account properties. </summary>
     public partial class MapsAccountProperties
     {
-        /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsAccountProperties"/>. </summary>
         public MapsAccountProperties()
         {
             LinkedResources = new ChangeTrackingList<MapsLinkedResource>();
         }
 
-        /// <summary> Initializes a new instance of MapsAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccountProperties"/>. </summary>
         /// <param name="uniqueId"> A unique identifier for the maps account. </param>
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys authentication from any usage. </param>
         /// <param name="provisioningState"> The provisioning state of the Map account resource. </param>
         /// <param name="linkedResources"> Sets the resources to be used for Managed Identities based operations for the Map account resource. </param>
         /// <param name="cors"> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </param>
-        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, CorsRules cors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, CorsRules cors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UniqueId = uniqueId;
             DisableLocalAuth = disableLocalAuth;
             ProvisioningState = provisioningState;
             LinkedResources = linkedResources;
             Cors = cors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A unique identifier for the maps account. </summary>

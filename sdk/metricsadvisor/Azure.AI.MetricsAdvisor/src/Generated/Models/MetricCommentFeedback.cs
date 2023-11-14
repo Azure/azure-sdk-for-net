@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
@@ -14,22 +15,28 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary> The CommentFeedback. </summary>
     public partial class MetricCommentFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of MetricCommentFeedback. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricCommentFeedback"/>. </summary>
         /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
         /// <param name="createdOn"> feedback created time. </param>
         /// <param name="userPrincipal"> user who gives this feedback. </param>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimensionFilter"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startsOn"> the start timestamp of feedback time range. </param>
         /// <param name="endsOn"> the end timestamp of feedback time range, when equals to startTime means only one timestamp. </param>
         /// <param name="valueInternal"></param>
-        internal MetricCommentFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, DateTimeOffset? startsOn, DateTimeOffset? endsOn, CommentFeedbackValue valueInternal) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter)
+        internal MetricCommentFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startsOn, DateTimeOffset? endsOn, CommentFeedbackValue valueInternal) : base(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter, serializedAdditionalRawData)
         {
             StartsOn = startsOn;
             EndsOn = endsOn;
             ValueInternal = valueInternal;
             FeedbackKind = feedbackKind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricCommentFeedback"/> for deserialization. </summary>
+        internal MetricCommentFeedback()
+        {
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
@@ -12,16 +13,21 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The IP access control for live event input. </summary>
     internal partial class LiveEventInputAccessControl
     {
-        /// <summary> Initializes a new instance of LiveEventInputAccessControl. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventInputAccessControl"/>. </summary>
         public LiveEventInputAccessControl()
         {
         }
 
-        /// <summary> Initializes a new instance of LiveEventInputAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventInputAccessControl"/>. </summary>
         /// <param name="ip"> The IP access control properties. </param>
-        internal LiveEventInputAccessControl(IPAccessControl ip)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveEventInputAccessControl(IPAccessControl ip, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IP = ip;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IP access control properties. </summary>

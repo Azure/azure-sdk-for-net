@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KustomizationUpdateContent : IUtf8JsonSerializable
+    public partial class KustomizationUpdateContent : IUtf8JsonSerializable, IJsonModel<KustomizationUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustomizationUpdateContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<KustomizationUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<KustomizationUpdateContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<KustomizationUpdateContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
@@ -104,7 +115,162 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("force");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        KustomizationUpdateContent IJsonModel<KustomizationUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustomizationUpdateContent(document.RootElement, options);
+        }
+
+        internal static KustomizationUpdateContent DeserializeKustomizationUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> path = default;
+            Optional<IList<string>> dependsOn = default;
+            Optional<long?> timeoutInSeconds = default;
+            Optional<long?> syncIntervalInSeconds = default;
+            Optional<long?> retryIntervalInSeconds = default;
+            Optional<bool?> prune = default;
+            Optional<bool?> force = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("path"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        path = null;
+                        continue;
+                    }
+                    path = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dependsOn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dependsOn = null;
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    dependsOn = array;
+                    continue;
+                }
+                if (property.NameEquals("timeoutInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        timeoutInSeconds = null;
+                        continue;
+                    }
+                    timeoutInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("syncIntervalInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        syncIntervalInSeconds = null;
+                        continue;
+                    }
+                    syncIntervalInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("retryIntervalInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        retryIntervalInSeconds = null;
+                        continue;
+                    }
+                    retryIntervalInSeconds = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("prune"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        prune = null;
+                        continue;
+                    }
+                    prune = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("force"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        force = null;
+                        continue;
+                    }
+                    force = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KustomizationUpdateContent(path.Value, Optional.ToList(dependsOn), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(prune), Optional.ToNullable(force), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<KustomizationUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KustomizationUpdateContent IPersistableModel<KustomizationUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KustomizationUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKustomizationUpdateContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<KustomizationUpdateContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

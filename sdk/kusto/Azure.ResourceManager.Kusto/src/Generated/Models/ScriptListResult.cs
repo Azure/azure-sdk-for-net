@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto database script operation response. </summary>
     internal partial class ScriptListResult
     {
-        /// <summary> Initializes a new instance of ScriptListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptListResult"/>. </summary>
         internal ScriptListResult()
         {
             Value = new ChangeTrackingList<KustoScriptData>();
         }
 
-        /// <summary> Initializes a new instance of ScriptListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptListResult"/>. </summary>
         /// <param name="value"> The list of Kusto scripts. </param>
-        internal ScriptListResult(IReadOnlyList<KustoScriptData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptListResult(IReadOnlyList<KustoScriptData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Kusto scripts. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> IP Rule to be applied as part of Network Rule Set. </summary>
     public partial class IotHubNetworkRuleSetIPRule
     {
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetIPRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetIPRule"/>. </summary>
         /// <param name="filterName"> Name of the IP filter rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
@@ -26,15 +30,22 @@ namespace Azure.ResourceManager.IotHub.Models
             IPMask = ipMask;
         }
 
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetIPRule"/>. </summary>
         /// <param name="filterName"> Name of the IP filter rule. </param>
         /// <param name="action"> IP Filter Action. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
-        internal IotHubNetworkRuleSetIPRule(string filterName, IotHubNetworkRuleIPAction? action, string ipMask)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubNetworkRuleSetIPRule(string filterName, IotHubNetworkRuleIPAction? action, string ipMask, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FilterName = filterName;
             Action = action;
             IPMask = ipMask;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetIPRule"/> for deserialization. </summary>
+        internal IotHubNetworkRuleSetIPRule()
+        {
         }
 
         /// <summary> Name of the IP filter rule. </summary>

@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The info w.r.t Agent Upgrade. </summary>
     public partial class AgentUpgrade
     {
-        /// <summary> Initializes a new instance of AgentUpgrade. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         public AgentUpgrade()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentUpgrade. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
         /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
         /// <param name="enableAutomaticUpgrade"> Specifies if RSM should try to upgrade this machine. </param>
         /// <param name="lastAttemptTimestamp"> Timestamp of last upgrade attempt. </param>
         /// <param name="lastAttemptStatus"> Specifies the status of Agent Upgrade. </param>
         /// <param name="lastAttemptMessage"> Failure message of last upgrade attempt if any. </param>
-        internal AgentUpgrade(string desiredVersion, Guid? correlationId, bool? enableAutomaticUpgrade, DateTimeOffset? lastAttemptTimestamp, LastAttemptStatusEnum? lastAttemptStatus, string lastAttemptMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentUpgrade(string desiredVersion, Guid? correlationId, bool? enableAutomaticUpgrade, DateTimeOffset? lastAttemptTimestamp, LastAttemptStatusEnum? lastAttemptStatus, string lastAttemptMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DesiredVersion = desiredVersion;
             CorrelationId = correlationId;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             LastAttemptTimestamp = lastAttemptTimestamp;
             LastAttemptStatus = lastAttemptStatus;
             LastAttemptMessage = lastAttemptMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the version info w.r.t AgentUpgrade for the machine. </summary>

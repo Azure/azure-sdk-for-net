@@ -5,32 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabSecurityProfile : IUtf8JsonSerializable
+    public partial class LabSecurityProfile : IUtf8JsonSerializable, IJsonModel<LabSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabSecurityProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LabSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LabSecurityProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LabSecurityProfile>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RegistrationCode))
+                {
+                    writer.WritePropertyName("registrationCode"u8);
+                    writer.WriteStringValue(RegistrationCode);
+                }
+            }
             if (Optional.IsDefined(OpenAccess))
             {
                 writer.WritePropertyName("openAccess"u8);
                 writer.WriteStringValue(OpenAccess.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabSecurityProfile DeserializeLabSecurityProfile(JsonElement element)
+        LabSecurityProfile IJsonModel<LabSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabSecurityProfile(document.RootElement, options);
+        }
+
+        internal static LabSecurityProfile DeserializeLabSecurityProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> registrationCode = default;
             Optional<LabServicesEnableState> openAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationCode"u8))
@@ -47,8 +97,38 @@ namespace Azure.ResourceManager.LabServices.Models
                     openAccess = property.Value.GetString().ToLabServicesEnableState();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LabSecurityProfile(registrationCode.Value, Optional.ToNullable(openAccess));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LabSecurityProfile(registrationCode.Value, Optional.ToNullable(openAccess), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LabSecurityProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LabSecurityProfile IPersistableModel<LabSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLabSecurityProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<LabSecurityProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

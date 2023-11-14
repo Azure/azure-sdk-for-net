@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> POI category. </summary>
     public partial class PointOfInterestCategorySet
     {
-        /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategorySet"/>. </summary>
         internal PointOfInterestCategorySet()
         {
         }
 
-        /// <summary> Initializes a new instance of PointOfInterestCategorySet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategorySet"/>. </summary>
         /// <param name="id"> Category ID. </param>
-        internal PointOfInterestCategorySet(int? id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PointOfInterestCategorySet(int? id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Category ID. </summary>

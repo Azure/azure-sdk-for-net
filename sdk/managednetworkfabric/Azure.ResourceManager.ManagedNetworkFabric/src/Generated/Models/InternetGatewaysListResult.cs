@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of InternetGateways. </summary>
     internal partial class InternetGatewaysListResult
     {
-        /// <summary> Initializes a new instance of InternetGatewaysListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InternetGatewaysListResult"/>. </summary>
         internal InternetGatewaysListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricInternetGatewayData>();
         }
 
-        /// <summary> Initializes a new instance of InternetGatewaysListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternetGatewaysListResult"/>. </summary>
         /// <param name="value"> Displays list of Internet Gateway resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal InternetGatewaysListResult(IReadOnlyList<NetworkFabricInternetGatewayData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InternetGatewaysListResult(IReadOnlyList<NetworkFabricInternetGatewayData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Displays list of Internet Gateway resources. </summary>

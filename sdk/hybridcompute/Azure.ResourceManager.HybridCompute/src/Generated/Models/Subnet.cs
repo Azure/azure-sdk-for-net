@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the subnet. </summary>
     internal partial class Subnet
     {
-        /// <summary> Initializes a new instance of Subnet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Subnet"/>. </summary>
         internal Subnet()
         {
         }
 
-        /// <summary> Initializes a new instance of Subnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="Subnet"/>. </summary>
         /// <param name="addressPrefix"> Represents address prefix. </param>
-        internal Subnet(string addressPrefix)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Subnet(string addressPrefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressPrefix = addressPrefix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents address prefix. </summary>

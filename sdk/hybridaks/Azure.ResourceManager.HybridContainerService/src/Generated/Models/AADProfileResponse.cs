@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
     public partial class AADProfileResponse
     {
-        /// <summary> Initializes a new instance of AADProfileResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AADProfileResponse"/>. </summary>
         public AADProfileResponse()
         {
             AdminGroupObjectIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AADProfileResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AADProfileResponse"/>. </summary>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
         /// <param name="clientAppId"> The client AAD application ID. </param>
         /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="managed"> Whether to enable managed AAD. </param>
         /// <param name="serverAppId"> The server AAD application ID. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        internal AADProfileResponse(IList<string> adminGroupObjectIds, string clientAppId, bool? enableAzureRbac, bool? managed, string serverAppId, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AADProfileResponse(IList<string> adminGroupObjectIds, string clientAppId, bool? enableAzureRbac, bool? managed, string serverAppId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminGroupObjectIds = adminGroupObjectIds;
             ClientAppId = clientAppId;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Managed = managed;
             ServerAppId = serverAppId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of AAD group object IDs that will have admin role of the cluster. </summary>

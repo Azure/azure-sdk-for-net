@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The list of versions for supported orchestrators. </summary>
     public partial class OrchestratorVersionProfileListResult : ResourceData
     {
-        /// <summary> Initializes a new instance of OrchestratorVersionProfileListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrchestratorVersionProfileListResult"/>. </summary>
         internal OrchestratorVersionProfileListResult()
         {
             Orchestrators = new ChangeTrackingList<OrchestratorVersionProfile>();
         }
 
-        /// <summary> Initializes a new instance of OrchestratorVersionProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestratorVersionProfileListResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="orchestrators"> Profile of the orchestrator versions. </param>
-        internal OrchestratorVersionProfileListResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<OrchestratorVersionProfile> orchestrators) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrchestratorVersionProfileListResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<OrchestratorVersionProfile> orchestrators, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Orchestrators = orchestrators;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Profile of the orchestrator versions. </summary>

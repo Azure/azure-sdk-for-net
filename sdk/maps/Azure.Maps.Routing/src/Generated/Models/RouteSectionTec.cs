@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Details of the traffic event, using definitions in the [TPEG2-TEC](https://www.iso.org/standard/63116.html) standard. Can contain effectCode and causes elements. </summary>
     public partial class RouteSectionTec
     {
-        /// <summary> Initializes a new instance of RouteSectionTec. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteSectionTec"/>. </summary>
         internal RouteSectionTec()
         {
             Causes = new ChangeTrackingList<RouteSectionTecCause>();
         }
 
-        /// <summary> Initializes a new instance of RouteSectionTec. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteSectionTec"/>. </summary>
         /// <param name="effectCode"> The effect on the traffic flow. Contains a value in the tec001:EffectCode table, as defined in the [TPEG2-TEC](https://www.iso.org/standard/63116.html) standard. Can be used to color-code traffic events according to severity. </param>
         /// <param name="causes"> Causes array. </param>
-        internal RouteSectionTec(int? effectCode, IReadOnlyList<RouteSectionTecCause> causes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteSectionTec(int? effectCode, IReadOnlyList<RouteSectionTecCause> causes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EffectCode = effectCode;
             Causes = causes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The effect on the traffic flow. Contains a value in the tec001:EffectCode table, as defined in the [TPEG2-TEC](https://www.iso.org/standard/63116.html) standard. Can be used to color-code traffic events according to severity. </summary>

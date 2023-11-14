@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of workflow trigger histories. </summary>
     internal partial class LogicWorkflowTriggerHistoryListResult
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerHistoryListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerHistoryListResult"/>. </summary>
         internal LogicWorkflowTriggerHistoryListResult()
         {
             Value = new ChangeTrackingList<LogicWorkflowTriggerHistoryData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerHistoryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerHistoryListResult"/>. </summary>
         /// <param name="value"> A list of workflow trigger histories. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LogicWorkflowTriggerHistoryListResult(IReadOnlyList<LogicWorkflowTriggerHistoryData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowTriggerHistoryListResult(IReadOnlyList<LogicWorkflowTriggerHistoryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of workflow trigger histories. </summary>

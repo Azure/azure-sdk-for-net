@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Akamai access control. </summary>
     internal partial class AkamaiAccessControl
     {
-        /// <summary> Initializes a new instance of AkamaiAccessControl. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AkamaiAccessControl"/>. </summary>
         public AkamaiAccessControl()
         {
             AkamaiSignatureHeaderAuthenticationKeyList = new ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey>();
         }
 
-        /// <summary> Initializes a new instance of AkamaiAccessControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="AkamaiAccessControl"/>. </summary>
         /// <param name="akamaiSignatureHeaderAuthenticationKeyList"> authentication key list. </param>
-        internal AkamaiAccessControl(IList<AkamaiSignatureHeaderAuthenticationKey> akamaiSignatureHeaderAuthenticationKeyList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AkamaiAccessControl(IList<AkamaiSignatureHeaderAuthenticationKey> akamaiSignatureHeaderAuthenticationKeyList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AkamaiSignatureHeaderAuthenticationKeyList = akamaiSignatureHeaderAuthenticationKeyList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> authentication key list. </summary>

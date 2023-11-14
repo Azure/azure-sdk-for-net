@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The Device. </summary>
     public partial class DeviceIdentity
     {
-        /// <summary> Initializes a new instance of DeviceIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceIdentity"/>. </summary>
         public DeviceIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceIdentity"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="generationId"> The IoT Hub-generated, case-sensitive string up to 128 characters long. This value is used to distinguish devices with the same deviceId, when they have been deleted and re-created. </param>
         /// <param name="etag"> The string representing a weak ETag for the device identity, as per RFC7232. </param>
@@ -31,7 +35,8 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="authentication"> The authentication mechanism used by the device. </param>
         /// <param name="capabilities"> The set of capabilities of the device. For example, if this device is an edge device or not. </param>
         /// <param name="deviceScope"> The scope of the device. Auto generated and immutable for edge devices and modifiable in leaf devices to create child/parent relationship. </param>
-        internal DeviceIdentity(string deviceId, string generationId, string etag, DeviceConnectionState? connectionState, DeviceStatus? status, string statusReason, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? statusUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication, DeviceCapabilities capabilities, string deviceScope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceIdentity(string deviceId, string generationId, string etag, DeviceConnectionState? connectionState, DeviceStatus? status, string statusReason, DateTimeOffset? connectionStateUpdatedTime, DateTimeOffset? statusUpdatedTime, DateTimeOffset? lastActivityTime, int? cloudToDeviceMessageCount, AuthenticationMechanism authentication, DeviceCapabilities capabilities, string deviceScope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceId = deviceId;
             GenerationId = generationId;
@@ -46,6 +51,7 @@ namespace Azure.IoT.Hub.Service.Models
             Authentication = authentication;
             Capabilities = capabilities;
             DeviceScope = deviceScope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the device. </summary>

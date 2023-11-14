@@ -14,22 +14,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Column transformer parameters. </summary>
     public partial class ColumnTransformer
     {
-        /// <summary> Initializes a new instance of ColumnTransformer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ColumnTransformer"/>. </summary>
         public ColumnTransformer()
         {
             Fields = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ColumnTransformer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ColumnTransformer"/>. </summary>
         /// <param name="fields"> Fields to apply transformer logic on. </param>
         /// <param name="parameters">
         /// Different properties to be passed to transformer.
         /// Input expected is dictionary of key,value pairs in JSON format.
         /// </param>
-        internal ColumnTransformer(IList<string> fields, BinaryData parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ColumnTransformer(IList<string> fields, BinaryData parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fields = fields;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fields to apply transformer logic on. </summary>

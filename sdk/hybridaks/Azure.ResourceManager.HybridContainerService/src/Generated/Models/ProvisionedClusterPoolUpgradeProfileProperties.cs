@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The upgrade properties. </summary>
     public partial class ProvisionedClusterPoolUpgradeProfileProperties
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfileProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPoolUpgradeProfileProperties"/>. </summary>
         public ProvisionedClusterPoolUpgradeProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterPoolUpgradeProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterPoolUpgradeProfileProperties"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
-        internal ProvisionedClusterPoolUpgradeProfileProperties(string kubernetesVersion, bool? isPreview)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterPoolUpgradeProfileProperties(string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>

@@ -5,20 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class VirtualNetworkFunctionDefinitionVersion : IUtf8JsonSerializable
+    public partial class VirtualNetworkFunctionDefinitionVersion : IUtf8JsonSerializable, IJsonModel<VirtualNetworkFunctionDefinitionVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkFunctionDefinitionVersion>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualNetworkFunctionDefinitionVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualNetworkFunctionDefinitionVersion>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualNetworkFunctionDefinitionVersion>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkFunctionTemplate))
             {
                 writer.WritePropertyName("networkFunctionTemplate"u8);
                 writer.WriteObjectValue(NetworkFunctionTemplate);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VersionState))
+                {
+                    writer.WritePropertyName("versionState"u8);
+                    writer.WriteStringValue(VersionState.Value.ToString());
+                }
             }
             if (Optional.IsDefined(Description))
             {
@@ -32,11 +59,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             writer.WritePropertyName("networkFunctionType"u8);
             writer.WriteStringValue(NetworkFunctionType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkFunctionDefinitionVersion DeserializeVirtualNetworkFunctionDefinitionVersion(JsonElement element)
+        VirtualNetworkFunctionDefinitionVersion IJsonModel<VirtualNetworkFunctionDefinitionVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkFunctionDefinitionVersion(document.RootElement, options);
+        }
+
+        internal static VirtualNetworkFunctionDefinitionVersion DeserializeVirtualNetworkFunctionDefinitionVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +103,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> description = default;
             Optional<string> deployParameters = default;
             NetworkFunctionType networkFunctionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkFunctionTemplate"u8))
@@ -91,8 +149,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     networkFunctionType = new NetworkFunctionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, networkFunctionTemplate.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, serializedAdditionalRawData, networkFunctionTemplate.Value);
         }
+
+        BinaryData IPersistableModel<VirtualNetworkFunctionDefinitionVersion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualNetworkFunctionDefinitionVersion IPersistableModel<VirtualNetworkFunctionDefinitionVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkFunctionDefinitionVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworkFunctionDefinitionVersion(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualNetworkFunctionDefinitionVersion>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

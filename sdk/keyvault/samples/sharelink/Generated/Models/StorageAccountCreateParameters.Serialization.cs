@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    internal partial class StorageAccountCreateParameters : IUtf8JsonSerializable
+    internal partial class StorageAccountCreateParameters : IUtf8JsonSerializable, IJsonModel<StorageAccountCreateParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountCreateParameters>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StorageAccountCreateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StorageAccountCreateParameters>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StorageAccountCreateParameters>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
@@ -42,7 +53,129 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        StorageAccountCreateParameters IJsonModel<StorageAccountCreateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageAccountCreateParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountCreateParameters(document.RootElement, options);
+        }
+
+        internal static StorageAccountCreateParameters DeserializeStorageAccountCreateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string resourceId = default;
+            string activeKeyName = default;
+            bool autoRegenerateKey = default;
+            Optional<string> regenerationPeriod = default;
+            Optional<StorageAccountAttributes> attributes = default;
+            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceId"u8))
+                {
+                    resourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("activeKeyName"u8))
+                {
+                    activeKeyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoRegenerateKey"u8))
+                {
+                    autoRegenerateKey = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("regenerationPeriod"u8))
+                {
+                    regenerationPeriod = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("attributes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageAccountCreateParameters(resourceId, activeKeyName, autoRegenerateKey, regenerationPeriod.Value, attributes.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<StorageAccountCreateParameters>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageAccountCreateParameters)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StorageAccountCreateParameters IPersistableModel<StorageAccountCreateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StorageAccountCreateParameters)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStorageAccountCreateParameters(document.RootElement, options);
+        }
+
+        string IPersistableModel<StorageAccountCreateParameters>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The VolumeDefinition. </summary>
     public partial class VolumeDefinition
     {
-        /// <summary> Initializes a new instance of VolumeDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
         public VolumeDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of VolumeDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
         /// <param name="definitionType"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
         /// <param name="readOnly"> Indicate whether to mount volume as readOnly. Default value for this is false. </param>
         /// <param name="source"> Source of the mount. For bind mounts this is the host path. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="bind"> Bind Options of the mount. </param>
         /// <param name="volume"> Volume Options of the mount. </param>
         /// <param name="tmpfs"> tmpfs option of the mount. </param>
-        internal VolumeDefinition(VolumeDefinitionType? definitionType, bool? readOnly, string source, string target, string consistency, MountBindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VolumeDefinition(VolumeDefinitionType? definitionType, bool? readOnly, string source, string target, string consistency, MountBindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefinitionType = definitionType;
             ReadOnly = readOnly;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Bind = bind;
             Volume = volume;
             Tmpfs = tmpfs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </summary>

@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowVersionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LogicWorkflowVersionData(AzureLocation location) : base(location)
         {
             Parameters = new ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +48,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="integrationAccount"> The integration account. </param>
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
-        internal LogicWorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, LogicWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicSku sku, LogicResourceReference integrationAccount, BinaryData definition, IDictionary<string, LogicWorkflowParameterInfo> parameters) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, LogicWorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, LogicWorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, LogicSku sku, LogicResourceReference integrationAccount, BinaryData definition, IDictionary<string, LogicWorkflowParameterInfo> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -59,6 +63,12 @@ namespace Azure.ResourceManager.Logic
             IntegrationAccount = integrationAccount;
             Definition = definition;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionData"/> for deserialization. </summary>
+        internal LogicWorkflowVersionData()
+        {
         }
 
         /// <summary> The provisioning state. </summary>

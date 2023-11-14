@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Rules for the InternetGateways. </summary>
     public partial class InternetGatewayRules
     {
-        /// <summary> Initializes a new instance of InternetGatewayRules. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressList"/> is null. </exception>
@@ -27,13 +30,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             AddressList = addressList.ToList();
         }
 
-        /// <summary> Initializes a new instance of InternetGatewayRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
-        internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             AddressList = addressList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/> for deserialization. </summary>
+        internal InternetGatewayRules()
+        {
         }
 
         /// <summary> Specify action. </summary>

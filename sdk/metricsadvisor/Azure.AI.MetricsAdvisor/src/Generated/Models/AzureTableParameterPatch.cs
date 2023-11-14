@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureTableParameterPatch. </summary>
     internal partial class AzureTableParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureTableParameterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureTableParameterPatch"/>. </summary>
         public AzureTableParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureTableParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this Azure Table. </param>
+        /// <param name="table"> A table name in this Azure Table. </param>
+        /// <param name="query"> The statement to query this table. Please find syntax and details from Azure Table documents. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureTableParameterPatch(string connectionString, string table, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConnectionString = connectionString;
+            Table = table;
+            Query = query;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The connection string of this Azure Table. </summary>

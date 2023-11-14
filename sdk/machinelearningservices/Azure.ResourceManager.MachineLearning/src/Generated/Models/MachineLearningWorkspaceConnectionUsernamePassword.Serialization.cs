@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceConnectionUsernamePassword : IUtf8JsonSerializable
+    public partial class MachineLearningWorkspaceConnectionUsernamePassword : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceConnectionUsernamePassword>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceConnectionUsernamePassword>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MachineLearningWorkspaceConnectionUsernamePassword>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningWorkspaceConnectionUsernamePassword>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningWorkspaceConnectionUsernamePassword>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Password))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningWorkspaceConnectionUsernamePassword DeserializeMachineLearningWorkspaceConnectionUsernamePassword(JsonElement element)
+        MachineLearningWorkspaceConnectionUsernamePassword IJsonModel<MachineLearningWorkspaceConnectionUsernamePassword>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionUsernamePassword)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceConnectionUsernamePassword(document.RootElement, options);
+        }
+
+        internal static MachineLearningWorkspaceConnectionUsernamePassword DeserializeMachineLearningWorkspaceConnectionUsernamePassword(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> password = default;
             Optional<string> username = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("password"u8))
@@ -48,8 +90,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     username = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningWorkspaceConnectionUsernamePassword(password.Value, username.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningWorkspaceConnectionUsernamePassword(password.Value, username.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningWorkspaceConnectionUsernamePassword>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionUsernamePassword)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningWorkspaceConnectionUsernamePassword IPersistableModel<MachineLearningWorkspaceConnectionUsernamePassword>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionUsernamePassword)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningWorkspaceConnectionUsernamePassword(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningWorkspaceConnectionUsernamePassword>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Describes The SKU capabilities object. </summary>
     public partial class KustoResourceSkuCapabilities
     {
-        /// <summary> Initializes a new instance of KustoResourceSkuCapabilities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoResourceSkuCapabilities"/>. </summary>
         internal KustoResourceSkuCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoResourceSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoResourceSkuCapabilities"/>. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
-        internal KustoResourceSkuCapabilities(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoResourceSkuCapabilities(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An invariant to describe the feature. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of Feature entities. </summary>
     internal partial class FeatureResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeatureResourceArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureResourceArmPaginatedResult"/>. </summary>
         internal FeatureResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeatureData>();
         }
 
-        /// <summary> Initializes a new instance of FeatureResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of Feature objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type Feature. </param>
-        internal FeatureResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of Feature objects. If null, there are no additional pages. </summary>

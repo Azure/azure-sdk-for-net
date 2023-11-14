@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> The List hybrid machine operation response. </summary>
     internal partial class MachineListResult
     {
-        /// <summary> Initializes a new instance of MachineListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
         /// <param name="value"> The list of hybrid machines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MachineListResult(IEnumerable<HybridComputeMachineData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MachineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineListResult"/>. </summary>
         /// <param name="value"> The list of hybrid machines. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of hybrid machines. </param>
-        internal MachineListResult(IReadOnlyList<HybridComputeMachineData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineListResult(IReadOnlyList<HybridComputeMachineData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineListResult"/> for deserialization. </summary>
+        internal MachineListResult()
+        {
         }
 
         /// <summary> The list of hybrid machines. </summary>

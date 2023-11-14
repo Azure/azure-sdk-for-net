@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> SSL configuration. If configured data-plane calls to user services will be exposed over SSL only. </summary>
     public partial class SslConfiguration
     {
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SslConfiguration"/>. </summary>
         public SslConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SslConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SslConfiguration"/>. </summary>
         /// <param name="status"> SSL status. Allowed values are Enabled and Disabled. </param>
         /// <param name="cert"> The SSL cert data in PEM format. </param>
         /// <param name="key"> The SSL key data in PEM format. This is not returned in response of GET/PUT on the resource. To see this please call listKeys API. </param>
         /// <param name="cname"> The CName of the certificate. </param>
-        internal SslConfiguration(Status? status, string cert, string key, string cname)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SslConfiguration(Status? status, string cert, string key, string cname, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Cert = cert;
             Key = key;
             Cname = cname;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SSL status. Allowed values are Enabled and Disabled. </summary>

@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.IotCentral
     /// </summary>
     public partial class IotCentralAppData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IotCentralAppData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> A valid instance SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.IotCentral
             PrivateEndpointConnections = new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of IotCentralAppData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +52,8 @@ namespace Azure.ResourceManager.IotCentral
         /// <param name="publicNetworkAccess"> Whether requests from the public network are allowed. </param>
         /// <param name="networkRuleSets"> Network Rule Set Properties of this IoT Central application. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IoT Central application. </param>
-        internal IotCentralAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotCentralAppSkuInfo sku, ManagedServiceIdentity identity, IotCentralProvisioningState? provisioningState, Guid? applicationId, string displayName, string subdomain, string template, IotCentralAppState? state, IotCentralPublicNetworkAccess? publicNetworkAccess, IotCentralNetworkRuleSets networkRuleSets, IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotCentralAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotCentralAppSkuInfo sku, ManagedServiceIdentity identity, IotCentralProvisioningState? provisioningState, Guid? applicationId, string displayName, string subdomain, string template, IotCentralAppState? state, IotCentralPublicNetworkAccess? publicNetworkAccess, IotCentralNetworkRuleSets networkRuleSets, IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -62,6 +66,12 @@ namespace Azure.ResourceManager.IotCentral
             PublicNetworkAccess = publicNetworkAccess;
             NetworkRuleSets = networkRuleSets;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotCentralAppData"/> for deserialization. </summary>
+        internal IotCentralAppData()
+        {
         }
 
         /// <summary> A valid instance SKU. </summary>

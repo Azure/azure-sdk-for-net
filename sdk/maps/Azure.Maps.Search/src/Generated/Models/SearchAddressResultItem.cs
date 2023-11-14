@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Maps.Search;
@@ -14,13 +15,16 @@ namespace Azure.Maps.Search.Models
     /// <summary> Result object for a Search API response. </summary>
     public partial class SearchAddressResultItem
     {
-        /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchAddressResultItem"/>. </summary>
         internal SearchAddressResultItem()
         {
             EntryPoints = new ChangeTrackingList<FacilityEntryPoint>();
         }
 
-        /// <summary> Initializes a new instance of SearchAddressResultItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchAddressResultItem"/>. </summary>
         /// <param name="searchAddressResultType">
         /// One of:
         /// * POI
@@ -51,7 +55,8 @@ namespace Azure.Maps.Search.Models
         ///   * Street
         /// </param>
         /// <param name="detourTimeInternal"> Detour time in seconds. Only returned for calls to the Search Along Route API. </param>
-        internal SearchAddressResultItem(SearchAddressResultType? searchAddressResultType, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntity? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int? detourTimeInternal)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchAddressResultItem(SearchAddressResultType? searchAddressResultType, string id, double? score, double? distanceInMeters, string dataSourceInfo, GeographicEntity? entityType, PointOfInterest pointOfInterest, MapsAddress address, LatLongPairAbbreviated positionInternal, BoundingBox viewportInternal, IReadOnlyList<FacilityEntryPoint> entryPoints, AddressRanges addressRanges, MapsDataSource dataSources, MapsSearchMatchType? matchType, int? detourTimeInternal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SearchAddressResultType = searchAddressResultType;
             Id = id;
@@ -68,6 +73,7 @@ namespace Azure.Maps.Search.Models
             DataSources = dataSources;
             MatchType = matchType;
             DetourTimeInternal = detourTimeInternal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Id property. </summary>
         public string Id { get; }

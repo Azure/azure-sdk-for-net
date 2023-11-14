@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -12,24 +14,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact store properties. </summary>
     public partial class ArtifactStorePropertiesFormat
     {
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormat"/>. </summary>
         public ArtifactStorePropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
         /// <param name="storeType"> The artifact store type. </param>
         /// <param name="replicationStrategy"> The replication strategy. </param>
         /// <param name="managedResourceGroupConfiguration"></param>
         /// <param name="storageResourceId"> The created storage resource id. </param>
-        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             StoreType = storeType;
             ReplicationStrategy = replicationStrategy;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             StorageResourceId = storageResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the application groups resource. </summary>

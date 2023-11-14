@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Api key object for workspace connection credential. </summary>
     internal partial class WorkspaceConnectionApiKey
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionApiKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionApiKey"/>. </summary>
         public WorkspaceConnectionApiKey()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionApiKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionApiKey"/>. </summary>
         /// <param name="key"></param>
-        internal WorkspaceConnectionApiKey(string key)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceConnectionApiKey(string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the key. </summary>

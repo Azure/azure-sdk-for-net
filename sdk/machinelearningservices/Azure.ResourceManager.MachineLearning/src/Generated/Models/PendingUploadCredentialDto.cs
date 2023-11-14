@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class PendingUploadCredentialDto
     {
-        /// <summary> Initializes a new instance of PendingUploadCredentialDto. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PendingUploadCredentialDto"/>. </summary>
         protected PendingUploadCredentialDto()
         {
         }
 
-        /// <summary> Initializes a new instance of PendingUploadCredentialDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="PendingUploadCredentialDto"/>. </summary>
         /// <param name="credentialType"> [Required] Credential type used to authentication with storage. </param>
-        internal PendingUploadCredentialDto(PendingUploadCredentialType credentialType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PendingUploadCredentialDto(PendingUploadCredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CredentialType = credentialType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Credential type used to authentication with storage. </summary>

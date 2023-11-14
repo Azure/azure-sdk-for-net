@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of an enrichment that your IoT hub applies to messages delivered to endpoints. </summary>
     public partial class IotHubEnrichmentProperties
     {
-        /// <summary> Initializes a new instance of IotHubEnrichmentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubEnrichmentProperties"/>. </summary>
         /// <param name="key"> The key or name for the enrichment property. </param>
         /// <param name="value"> The value for the enrichment property. </param>
         /// <param name="endpointNames"> The list of endpoints for which the enrichment is applied to the message. </param>
@@ -31,15 +34,22 @@ namespace Azure.ResourceManager.IotHub.Models
             EndpointNames = endpointNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of IotHubEnrichmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubEnrichmentProperties"/>. </summary>
         /// <param name="key"> The key or name for the enrichment property. </param>
         /// <param name="value"> The value for the enrichment property. </param>
         /// <param name="endpointNames"> The list of endpoints for which the enrichment is applied to the message. </param>
-        internal IotHubEnrichmentProperties(string key, string value, IList<string> endpointNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubEnrichmentProperties(string key, string value, IList<string> endpointNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
             EndpointNames = endpointNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubEnrichmentProperties"/> for deserialization. </summary>
+        internal IotHubEnrichmentProperties()
+        {
         }
 
         /// <summary> The key or name for the enrichment property. </summary>

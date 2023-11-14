@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of an IoT hub shared access policy. </summary>
     public partial class SharedAccessSignatureAuthorizationRule
     {
-        /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureAuthorizationRule"/>. </summary>
         /// <param name="keyName"> The name of the shared access policy. </param>
         /// <param name="rights"> The permissions assigned to the shared access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
@@ -25,17 +29,24 @@ namespace Azure.ResourceManager.IotHub.Models
             Rights = rights;
         }
 
-        /// <summary> Initializes a new instance of SharedAccessSignatureAuthorizationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureAuthorizationRule"/>. </summary>
         /// <param name="keyName"> The name of the shared access policy. </param>
         /// <param name="primaryKey"> The primary key. </param>
         /// <param name="secondaryKey"> The secondary key. </param>
         /// <param name="rights"> The permissions assigned to the shared access policy. </param>
-        internal SharedAccessSignatureAuthorizationRule(string keyName, string primaryKey, string secondaryKey, IotHubSharedAccessRight rights)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharedAccessSignatureAuthorizationRule(string keyName, string primaryKey, string secondaryKey, IotHubSharedAccessRight rights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyName = keyName;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             Rights = rights;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureAuthorizationRule"/> for deserialization. </summary>
+        internal SharedAccessSignatureAuthorizationRule()
+        {
         }
 
         /// <summary> The name of the shared access policy. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The AuthenticationMechanism. </summary>
     public partial class AuthenticationMechanism
     {
-        /// <summary> Initializes a new instance of AuthenticationMechanism. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthenticationMechanism"/>. </summary>
         public AuthenticationMechanism()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthenticationMechanism. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthenticationMechanism"/>. </summary>
         /// <param name="symmetricKey"> The primary and secondary keys used for SAS based authentication. </param>
         /// <param name="x509Thumbprint"> The primary and secondary x509 thumbprints used for x509 based authentication. </param>
         /// <param name="type"> The type of authentication used to connect to the service. </param>
-        internal AuthenticationMechanism(SymmetricKey symmetricKey, X509Thumbprint x509Thumbprint, AuthenticationMechanismType? type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthenticationMechanism(SymmetricKey symmetricKey, X509Thumbprint x509Thumbprint, AuthenticationMechanismType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SymmetricKey = symmetricKey;
             X509Thumbprint = x509Thumbprint;
             Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary and secondary keys used for SAS based authentication. </summary>

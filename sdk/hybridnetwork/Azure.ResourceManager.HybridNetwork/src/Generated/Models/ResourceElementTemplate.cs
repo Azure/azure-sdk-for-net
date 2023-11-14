@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
@@ -14,20 +17,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class ResourceElementTemplate
     {
-        /// <summary> Initializes a new instance of ResourceElementTemplate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceElementTemplate"/>. </summary>
         protected ResourceElementTemplate()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceElementTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceElementTemplate"/>. </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="resourceElementType"> The resource element template type. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>
-        internal ResourceElementTemplate(string name, Type resourceElementType, DependsOnProfile dependsOnProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceElementTemplate(string name, Type resourceElementType, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceElementType = resourceElementType;
             DependsOnProfile = dependsOnProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the resource element template. </summary>

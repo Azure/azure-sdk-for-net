@@ -5,16 +5,103 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class PointOfInterestCategory
+    public partial class PointOfInterestCategory : IUtf8JsonSerializable, IJsonModel<PointOfInterestCategory>
     {
-        internal static PointOfInterestCategory DeserializePointOfInterestCategory(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PointOfInterestCategory>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PointOfInterestCategory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PointOfInterestCategory>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PointOfInterestCategory>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteNumberValue(Id.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ChildIds))
+                {
+                    writer.WritePropertyName("childCategoryIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ChildIds)
+                    {
+                        writer.WriteNumberValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Synonyms))
+                {
+                    writer.WritePropertyName("synonyms"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Synonyms)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PointOfInterestCategory IJsonModel<PointOfInterestCategory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterestCategory)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePointOfInterestCategory(document.RootElement, options);
+        }
+
+        internal static PointOfInterestCategory DeserializePointOfInterestCategory(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +110,8 @@ namespace Azure.Maps.Search.Models
             Optional<string> name = default;
             Optional<IReadOnlyList<int>> childCategoryIds = default;
             Optional<IReadOnlyList<string>> synonyms = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -67,8 +156,38 @@ namespace Azure.Maps.Search.Models
                     synonyms = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PointOfInterestCategory(Optional.ToNullable(id), name.Value, Optional.ToList(childCategoryIds), Optional.ToList(synonyms));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PointOfInterestCategory(Optional.ToNullable(id), name.Value, Optional.ToList(childCategoryIds), Optional.ToList(synonyms), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PointOfInterestCategory>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterestCategory)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PointOfInterestCategory IPersistableModel<PointOfInterestCategory>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PointOfInterestCategory)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePointOfInterestCategory(document.RootElement, options);
+        }
+
+        string IPersistableModel<PointOfInterestCategory>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

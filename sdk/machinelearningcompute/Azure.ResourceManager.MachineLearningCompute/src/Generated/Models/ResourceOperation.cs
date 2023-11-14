@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Resource operation. </summary>
     public partial class ResourceOperation
     {
-        /// <summary> Initializes a new instance of ResourceOperation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
         internal ResourceOperation()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceOperation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceOperation"/>. </summary>
         /// <param name="name"> Name of this operation. </param>
         /// <param name="display"> Display of the operation. </param>
         /// <param name="origin"> The operation origin. </param>
-        internal ResourceOperation(string name, ResourceOperationDisplay display, string origin)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceOperation(string name, ResourceOperationDisplay display, string origin, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Display = display;
             Origin = origin;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of this operation. </summary>

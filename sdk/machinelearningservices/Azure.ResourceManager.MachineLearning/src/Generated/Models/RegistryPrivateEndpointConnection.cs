@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Private endpoint connection definition. </summary>
     public partial class RegistryPrivateEndpointConnection
     {
-        /// <summary> Initializes a new instance of RegistryPrivateEndpointConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpointConnection"/>. </summary>
         public RegistryPrivateEndpointConnection()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RegistryPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistryPrivateEndpointConnection"/>. </summary>
         /// <param name="id">
         /// This is the private endpoint connection name created on SRP
         /// Full resource id: /subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.MachineLearningServices/{resourceType}/{resourceName}/privateEndpointConnections/{peConnectionName}
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="privateEndpoint"> The PE network resource that is linked to this PE connection. </param>
         /// <param name="privateLinkServiceConnectionState"> The connection state. </param>
         /// <param name="provisioningState"> One of null, "Succeeded", "Provisioning", "Failed". While not approved, it's null. </param>
-        internal RegistryPrivateEndpointConnection(ResourceIdentifier id, AzureLocation? location, IList<string> groupIds, RegistryPrivateEndpoint privateEndpoint, RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegistryPrivateEndpointConnection(ResourceIdentifier id, AzureLocation? location, IList<string> groupIds, RegistryPrivateEndpoint privateEndpoint, RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Location = location;
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

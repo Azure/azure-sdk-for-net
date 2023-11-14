@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Vhd mapping rule profile. </summary>
     internal partial class VhdImageMappingRuleProfile
     {
-        /// <summary> Initializes a new instance of VhdImageMappingRuleProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VhdImageMappingRuleProfile"/>. </summary>
         public VhdImageMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of VhdImageMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VhdImageMappingRuleProfile"/>. </summary>
         /// <param name="userConfiguration"> List of values. </param>
-        internal VhdImageMappingRuleProfile(string userConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VhdImageMappingRuleProfile(string userConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserConfiguration = userConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of values. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account partner's business identity. </summary>
     public partial class IntegrationAccountBusinessIdentity
     {
-        /// <summary> Initializes a new instance of IntegrationAccountBusinessIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBusinessIdentity"/>. </summary>
         /// <param name="qualifier"> The business identity qualifier e.g. as2identity, ZZ, ZZZ, 31, 32. </param>
         /// <param name="value"> The user defined business identity value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="qualifier"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Logic.Models
 
             Qualifier = qualifier;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBusinessIdentity"/>. </summary>
+        /// <param name="qualifier"> The business identity qualifier e.g. as2identity, ZZ, ZZZ, 31, 32. </param>
+        /// <param name="value"> The user defined business identity value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountBusinessIdentity(string qualifier, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Qualifier = qualifier;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountBusinessIdentity"/> for deserialization. </summary>
+        internal IntegrationAccountBusinessIdentity()
+        {
         }
 
         /// <summary> The business identity qualifier e.g. as2identity, ZZ, ZZZ, 31, 32. </summary>

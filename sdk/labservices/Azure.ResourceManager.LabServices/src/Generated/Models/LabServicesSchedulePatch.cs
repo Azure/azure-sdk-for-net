@@ -6,15 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> Schedule for automatically turning virtual machines in a lab on and off at specified times. Used for updates. </summary>
     public partial class LabServicesSchedulePatch
     {
-        /// <summary> Initializes a new instance of LabServicesSchedulePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesSchedulePatch"/>. </summary>
         public LabServicesSchedulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesSchedulePatch"/>. </summary>
+        /// <param name="startOn"> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </param>
+        /// <param name="stopOn"> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </param>
+        /// <param name="recurrencePattern"> The recurrence pattern of the scheduled actions. </param>
+        /// <param name="timeZoneId"> The IANA timezone id for the schedule. </param>
+        /// <param name="notes"> Notes for this schedule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabServicesSchedulePatch(DateTimeOffset? startOn, DateTimeOffset? stopOn, LabServicesRecurrencePattern recurrencePattern, string timeZoneId, BinaryData notes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartOn = startOn;
+            StopOn = stopOn;
+            RecurrencePattern = recurrencePattern;
+            TimeZoneId = timeZoneId;
+            Notes = notes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>

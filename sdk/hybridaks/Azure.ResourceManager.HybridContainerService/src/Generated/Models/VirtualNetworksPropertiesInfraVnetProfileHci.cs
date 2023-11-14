@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Infra network profile for HCI platform. </summary>
     public partial class VirtualNetworksPropertiesInfraVnetProfileHci
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileHci. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfileHci"/>. </summary>
         public VirtualNetworksPropertiesInfraVnetProfileHci()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileHci. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfileHci"/>. </summary>
         /// <param name="mocGroup"> Resource group in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocVnetName"> Virtual Network name in MOC(Microsoft On-premises Cloud). </param>
-        internal VirtualNetworksPropertiesInfraVnetProfileHci(string mocGroup, string mocLocation, string mocVnetName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksPropertiesInfraVnetProfileHci(string mocGroup, string mocLocation, string mocVnetName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MocGroup = mocGroup;
             MocLocation = mocLocation;
             MocVnetName = mocVnetName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource group in MOC(Microsoft On-premises Cloud). </summary>

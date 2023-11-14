@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact validation override settings. </summary>
     public partial class EdifactValidationOverride
     {
-        /// <summary> Initializes a new instance of EdifactValidationOverride. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactValidationOverride"/>. </summary>
         /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
         /// <param name="enforceCharacterSet"> The value indicating whether to validate character Set. </param>
         /// <param name="validateEdiTypes"> The value indicating whether to validate EDI types. </param>
@@ -33,6 +37,32 @@ namespace Azure.ResourceManager.Logic.Models
             AllowLeadingAndTrailingSpacesAndZeroes = allowLeadingAndTrailingSpacesAndZeroes;
             TrailingSeparatorPolicy = trailingSeparatorPolicy;
             TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactValidationOverride"/>. </summary>
+        /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
+        /// <param name="enforceCharacterSet"> The value indicating whether to validate character Set. </param>
+        /// <param name="validateEdiTypes"> The value indicating whether to validate EDI types. </param>
+        /// <param name="validateXsdTypes"> The value indicating whether to validate XSD types. </param>
+        /// <param name="allowLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to allow leading and trailing spaces and zeroes. </param>
+        /// <param name="trailingSeparatorPolicy"> The trailing separator policy. </param>
+        /// <param name="trimLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to trim leading and trailing spaces and zeroes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactValidationOverride(string messageId, bool enforceCharacterSet, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy, bool trimLeadingAndTrailingSpacesAndZeroes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageId = messageId;
+            EnforceCharacterSet = enforceCharacterSet;
+            ValidateEdiTypes = validateEdiTypes;
+            ValidateXsdTypes = validateXsdTypes;
+            AllowLeadingAndTrailingSpacesAndZeroes = allowLeadingAndTrailingSpacesAndZeroes;
+            TrailingSeparatorPolicy = trailingSeparatorPolicy;
+            TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactValidationOverride"/> for deserialization. </summary>
+        internal EdifactValidationOverride()
+        {
         }
 
         /// <summary> The message id on which the validation settings has to be applied. </summary>

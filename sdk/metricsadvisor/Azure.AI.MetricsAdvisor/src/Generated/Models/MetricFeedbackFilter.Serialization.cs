@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class MetricFeedbackFilter : IUtf8JsonSerializable
+    internal partial class MetricFeedbackFilter : IUtf8JsonSerializable, IJsonModel<MetricFeedbackFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricFeedbackFilter>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MetricFeedbackFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MetricFeedbackFilter>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MetricFeedbackFilter>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
@@ -43,7 +54,136 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("timeMode"u8);
                 writer.WriteStringValue(TimeMode.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MetricFeedbackFilter IJsonModel<MetricFeedbackFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricFeedbackFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricFeedbackFilter(document.RootElement, options);
+        }
+
+        internal static MetricFeedbackFilter DeserializeMetricFeedbackFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Guid metricId = default;
+            Optional<FeedbackFilter> dimensionFilter = default;
+            Optional<MetricFeedbackKind> feedbackType = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> endTime = default;
+            Optional<FeedbackQueryTimeMode> timeMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("metricId"u8))
+                {
+                    metricId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("dimensionFilter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("feedbackType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    feedbackType = new MetricFeedbackKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("startTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("endTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("timeMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeMode = property.Value.GetString().ToFeedbackQueryTimeMode();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MetricFeedbackFilter(metricId, dimensionFilter.Value, Optional.ToNullable(feedbackType), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(timeMode), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MetricFeedbackFilter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricFeedbackFilter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MetricFeedbackFilter IPersistableModel<MetricFeedbackFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricFeedbackFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMetricFeedbackFilter(document.RootElement, options);
+        }
+
+        string IPersistableModel<MetricFeedbackFilter>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

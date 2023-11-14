@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The arm template RE. </summary>
     public partial class ArmResourceDefinitionResourceElementTemplate
     {
-        /// <summary> Initializes a new instance of ArmResourceDefinitionResourceElementTemplate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmResourceDefinitionResourceElementTemplate"/>. </summary>
         public ArmResourceDefinitionResourceElementTemplate()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmResourceDefinitionResourceElementTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceDefinitionResourceElementTemplate"/>. </summary>
         /// <param name="templateType"> The template type. </param>
         /// <param name="parameterValues"> Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string. </param>
         /// <param name="artifactProfile"> Artifact profile properties. </param>
-        internal ArmResourceDefinitionResourceElementTemplate(TemplateType? templateType, string parameterValues, NSDArtifactProfile artifactProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmResourceDefinitionResourceElementTemplate(TemplateType? templateType, string parameterValues, NSDArtifactProfile artifactProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TemplateType = templateType;
             ParameterValues = parameterValues;
             ArtifactProfile = artifactProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The template type. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The CosmosDbSettings. </summary>
     internal partial class CosmosDbSettings
     {
-        /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
         public CosmosDbSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
         /// <param name="collectionsThroughput"></param>
-        internal CosmosDbSettings(int? collectionsThroughput)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDbSettings(int? collectionsThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CollectionsThroughput = collectionsThroughput;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the collections throughput. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The configuration metrics for Iot Hub devices and modules. </summary>
     public partial class ConfigurationMetrics
     {
-        /// <summary> Initializes a new instance of ConfigurationMetrics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationMetrics"/>. </summary>
         public ConfigurationMetrics()
         {
             Results = new ChangeTrackingDictionary<string, long>();
             Queries = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationMetrics"/>. </summary>
         /// <param name="results"> The results of the metrics collection queries. </param>
         /// <param name="queries"> The key-value pairs with queries and their identifier. </param>
-        internal ConfigurationMetrics(IDictionary<string, long> results, IDictionary<string, string> queries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationMetrics(IDictionary<string, long> results, IDictionary<string, string> queries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Results = results;
             Queries = queries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The results of the metrics collection queries. </summary>

@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Creator resource properties. </summary>
     public partial class MapsCreatorProperties
     {
-        /// <summary> Initializes a new instance of MapsCreatorProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorProperties"/>. </summary>
         /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
         public MapsCreatorProperties(int storageUnits)
         {
             StorageUnits = storageUnits;
         }
 
-        /// <summary> Initializes a new instance of MapsCreatorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorProperties"/>. </summary>
         /// <param name="provisioningState"> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </param>
         /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
-        internal MapsCreatorProperties(string provisioningState, int storageUnits)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsCreatorProperties(string provisioningState, int storageUnits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             StorageUnits = storageUnits;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorProperties"/> for deserialization. </summary>
+        internal MapsCreatorProperties()
+        {
         }
 
         /// <summary> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </summary>

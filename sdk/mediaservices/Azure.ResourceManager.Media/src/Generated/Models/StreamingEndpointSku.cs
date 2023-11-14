@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The streaming endpoint sku. </summary>
     internal partial class StreamingEndpointSku
     {
-        /// <summary> Initializes a new instance of StreamingEndpointSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointSku"/>. </summary>
         internal StreamingEndpointSku()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointSku"/>. </summary>
         /// <param name="name"> The streaming endpoint sku name. </param>
-        internal StreamingEndpointSku(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointSku(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The streaming endpoint sku name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage accounts list result. </summary>
     internal partial class StorageListResult
     {
-        /// <summary> Initializes a new instance of StorageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageListResult"/>. </summary>
         internal StorageListResult()
         {
             Value = new ChangeTrackingList<StorageAccountItem>();
         }
 
-        /// <summary> Initializes a new instance of StorageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageListResult"/>. </summary>
         /// <param name="value"> A response message containing a list of storage accounts in the key vault along with a link to the next page of storage accounts. </param>
         /// <param name="nextLink"> The URL to get the next set of storage accounts. </param>
-        internal StorageListResult(IReadOnlyList<StorageAccountItem> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageListResult(IReadOnlyList<StorageAccountItem> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A response message containing a list of storage accounts in the key vault along with a link to the next page of storage accounts. </summary>

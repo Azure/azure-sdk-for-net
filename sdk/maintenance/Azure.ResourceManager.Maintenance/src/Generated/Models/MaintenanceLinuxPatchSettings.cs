@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Input properties for patching a Linux machine. </summary>
     public partial class MaintenanceLinuxPatchSettings
     {
-        /// <summary> Initializes a new instance of MaintenanceLinuxPatchSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceLinuxPatchSettings"/>. </summary>
         public MaintenanceLinuxPatchSettings()
         {
             PackageNameMasksToExclude = new ChangeTrackingList<string>();
@@ -21,15 +25,17 @@ namespace Azure.ResourceManager.Maintenance.Models
             ClassificationsToInclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceLinuxPatchSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceLinuxPatchSettings"/>. </summary>
         /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
         /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
         /// <param name="classificationsToInclude"> Classification category of patches to be patched. </param>
-        internal MaintenanceLinuxPatchSettings(IList<string> packageNameMasksToExclude, IList<string> packageNameMasksToInclude, IList<string> classificationsToInclude)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceLinuxPatchSettings(IList<string> packageNameMasksToExclude, IList<string> packageNameMasksToInclude, IList<string> classificationsToInclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackageNameMasksToExclude = packageNameMasksToExclude;
             PackageNameMasksToInclude = packageNameMasksToInclude;
             ClassificationsToInclude = classificationsToInclude;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Package names to be excluded for patching. </summary>

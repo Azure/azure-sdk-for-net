@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Open time range for a day. </summary>
     public partial class OperatingHoursTimeRange
     {
-        /// <summary> Initializes a new instance of OperatingHoursTimeRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperatingHoursTimeRange"/>. </summary>
         internal OperatingHoursTimeRange()
         {
         }
 
-        /// <summary> Initializes a new instance of OperatingHoursTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperatingHoursTimeRange"/>. </summary>
         /// <param name="rawStartTime"> The point in the next 7 days range when a given POI is being opened, or the beginning of the range if it was opened before the range. </param>
         /// <param name="rawEndTime"> The point in the next 7 days range when a given POI is being closed, or the beginning of the range if it was closed before the range. </param>
-        internal OperatingHoursTimeRange(OperatingHoursTime rawStartTime, OperatingHoursTime rawEndTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperatingHoursTimeRange(OperatingHoursTime rawStartTime, OperatingHoursTime rawEndTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RawStartTime = rawStartTime;
             RawEndTime = rawEndTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The recurrence schedule. </summary>
     public partial class LogicWorkflowRecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRecurrenceSchedule"/>. </summary>
         public LogicWorkflowRecurrenceSchedule()
         {
             Minutes = new ChangeTrackingList<int>();
@@ -23,19 +27,21 @@ namespace Azure.ResourceManager.Logic.Models
             MonthlyOccurrences = new ChangeTrackingList<LogicWorkflowRecurrenceScheduleOccurrence>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRecurrenceSchedule"/>. </summary>
         /// <param name="minutes"> The minutes. </param>
         /// <param name="hours"> The hours. </param>
         /// <param name="weekDays"> The days of the week. </param>
         /// <param name="monthDays"> The month days. </param>
         /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
-        internal LogicWorkflowRecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<LogicWorkflowDayOfWeek> weekDays, IList<int> monthDays, IList<LogicWorkflowRecurrenceScheduleOccurrence> monthlyOccurrences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRecurrenceSchedule(IList<int> minutes, IList<int> hours, IList<LogicWorkflowDayOfWeek> weekDays, IList<int> monthDays, IList<LogicWorkflowRecurrenceScheduleOccurrence> monthlyOccurrences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Minutes = minutes;
             Hours = hours;
             WeekDays = weekDays;
             MonthDays = monthDays;
             MonthlyOccurrences = monthlyOccurrences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minutes. </summary>

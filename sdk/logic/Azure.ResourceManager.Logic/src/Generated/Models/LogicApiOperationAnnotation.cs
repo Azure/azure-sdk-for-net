@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The Api Operation Annotation. </summary>
     public partial class LogicApiOperationAnnotation
     {
-        /// <summary> Initializes a new instance of LogicApiOperationAnnotation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationAnnotation"/>. </summary>
         public LogicApiOperationAnnotation()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiOperationAnnotation. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiOperationAnnotation"/>. </summary>
         /// <param name="status"> The status annotation. </param>
         /// <param name="family"> The family. </param>
         /// <param name="revision"> The revision. </param>
-        internal LogicApiOperationAnnotation(LogicApiOperationAnnotationStatus? status, string family, int? revision)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicApiOperationAnnotation(LogicApiOperationAnnotationStatus? status, string family, int? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Family = family;
             Revision = revision;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status annotation. </summary>

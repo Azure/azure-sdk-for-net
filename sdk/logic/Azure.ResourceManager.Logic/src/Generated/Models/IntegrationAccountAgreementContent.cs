@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration account agreement content. </summary>
     public partial class IntegrationAccountAgreementContent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementContent"/>. </summary>
         public IntegrationAccountAgreementContent()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementContent"/>. </summary>
         /// <param name="aS2"> The AS2 agreement content. </param>
         /// <param name="x12"> The X12 agreement content. </param>
         /// <param name="edifact"> The EDIFACT agreement content. </param>
-        internal IntegrationAccountAgreementContent(AS2AgreementContent aS2, X12AgreementContent x12, EdifactAgreementContent edifact)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountAgreementContent(AS2AgreementContent aS2, X12AgreementContent x12, EdifactAgreementContent edifact, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AS2 = aS2;
             X12 = x12;
             Edifact = edifact;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The AS2 agreement content. </summary>

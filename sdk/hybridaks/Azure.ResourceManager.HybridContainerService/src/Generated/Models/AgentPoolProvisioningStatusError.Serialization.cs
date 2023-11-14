@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AgentPoolProvisioningStatusError : IUtf8JsonSerializable
+    public partial class AgentPoolProvisioningStatusError : IUtf8JsonSerializable, IJsonModel<AgentPoolProvisioningStatusError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolProvisioningStatusError>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AgentPoolProvisioningStatusError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AgentPoolProvisioningStatusError>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AgentPoolProvisioningStatusError>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AgentPoolProvisioningStatusError DeserializeAgentPoolProvisioningStatusError(JsonElement element)
+        AgentPoolProvisioningStatusError IJsonModel<AgentPoolProvisioningStatusError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatusError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolProvisioningStatusError(document.RootElement, options);
+        }
+
+        internal static AgentPoolProvisioningStatusError DeserializeAgentPoolProvisioningStatusError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> code = default;
             Optional<string> message = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -48,8 +90,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentPoolProvisioningStatusError(code.Value, message.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AgentPoolProvisioningStatusError(code.Value, message.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgentPoolProvisioningStatusError>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatusError)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AgentPoolProvisioningStatusError IPersistableModel<AgentPoolProvisioningStatusError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatusError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAgentPoolProvisioningStatusError(document.RootElement, options);
+        }
+
+        string IPersistableModel<AgentPoolProvisioningStatusError>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Response object of the current cell in the input matrix. </summary>
     internal partial class RouteMatrixResultResponse
     {
-        /// <summary> Initializes a new instance of RouteMatrixResultResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixResultResponse"/>. </summary>
         internal RouteMatrixResultResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteMatrixResultResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteMatrixResultResponse"/>. </summary>
         /// <param name="summary"> Summary object for route section. </param>
-        internal RouteMatrixResultResponse(RouteLegSummary summary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteMatrixResultResponse(RouteLegSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Summary = summary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Summary object for route section. </summary>

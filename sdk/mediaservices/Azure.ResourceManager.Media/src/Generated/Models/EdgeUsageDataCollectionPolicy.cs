@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The EdgeUsageDataCollectionPolicy. </summary>
     public partial class EdgeUsageDataCollectionPolicy
     {
-        /// <summary> Initializes a new instance of EdgeUsageDataCollectionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeUsageDataCollectionPolicy"/>. </summary>
         internal EdgeUsageDataCollectionPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeUsageDataCollectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeUsageDataCollectionPolicy"/>. </summary>
         /// <param name="dataCollectionFrequency"> Usage data collection frequency in ISO 8601 duration format e.g. PT10M , PT5H. </param>
         /// <param name="dataReportingFrequency"> Usage data reporting frequency in ISO 8601 duration format e.g. PT10M , PT5H. </param>
         /// <param name="maxAllowedUnreportedUsageDuration"> Maximum time for which the functionality of the device will not be hampered for not reporting the usage data. </param>
         /// <param name="eventHubDetails"> Details of Event Hub where the usage will be reported. </param>
-        internal EdgeUsageDataCollectionPolicy(string dataCollectionFrequency, string dataReportingFrequency, TimeSpan? maxAllowedUnreportedUsageDuration, EdgeUsageDataEventHub eventHubDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeUsageDataCollectionPolicy(string dataCollectionFrequency, string dataReportingFrequency, TimeSpan? maxAllowedUnreportedUsageDuration, EdgeUsageDataEventHub eventHubDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataCollectionFrequency = dataCollectionFrequency;
             DataReportingFrequency = dataReportingFrequency;
             MaxAllowedUnreportedUsageDuration = maxAllowedUnreportedUsageDuration;
             EventHubDetails = eventHubDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Usage data collection frequency in ISO 8601 duration format e.g. PT10M , PT5H. </summary>

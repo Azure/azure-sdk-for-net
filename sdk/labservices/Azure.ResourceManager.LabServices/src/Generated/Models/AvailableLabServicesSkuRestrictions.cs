@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The restriction details. </summary>
     public partial class AvailableLabServicesSkuRestrictions
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuRestrictions"/>. </summary>
         internal AvailableLabServicesSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuRestrictions"/>. </summary>
         /// <param name="labServicesSkuRestrictionType"> The type of restriction. </param>
         /// <param name="values"> The values of the restriction. </param>
         /// <param name="reasonCode"> The reason for the restriction. </param>
-        internal AvailableLabServicesSkuRestrictions(LabServicesSkuRestrictionType? labServicesSkuRestrictionType, IReadOnlyList<string> values, LabServicesSkuRestrictionReasonCode? reasonCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableLabServicesSkuRestrictions(LabServicesSkuRestrictionType? labServicesSkuRestrictionType, IReadOnlyList<string> values, LabServicesSkuRestrictionReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LabServicesSkuRestrictionType = labServicesSkuRestrictionType;
             Values = values;
             ReasonCode = reasonCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of restriction. </summary>

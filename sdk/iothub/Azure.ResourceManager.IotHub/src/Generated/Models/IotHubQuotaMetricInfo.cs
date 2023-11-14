@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Quota metrics properties. </summary>
     public partial class IotHubQuotaMetricInfo
     {
-        /// <summary> Initializes a new instance of IotHubQuotaMetricInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubQuotaMetricInfo"/>. </summary>
         internal IotHubQuotaMetricInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubQuotaMetricInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubQuotaMetricInfo"/>. </summary>
         /// <param name="name"> The name of the quota metric. </param>
         /// <param name="currentValue"> The current value for the quota metric. </param>
         /// <param name="maxValue"> The maximum value of the quota metric. </param>
-        internal IotHubQuotaMetricInfo(string name, long? currentValue, long? maxValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubQuotaMetricInfo(string name, long? currentValue, long? maxValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             CurrentValue = currentValue;
             MaxValue = maxValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the quota metric. </summary>

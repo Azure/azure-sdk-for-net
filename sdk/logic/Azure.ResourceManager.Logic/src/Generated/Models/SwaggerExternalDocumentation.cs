@@ -14,21 +14,26 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger external documentation. </summary>
     public partial class SwaggerExternalDocumentation
     {
-        /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerExternalDocumentation"/>. </summary>
         public SwaggerExternalDocumentation()
         {
             Extensions = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerExternalDocumentation"/>. </summary>
         /// <param name="description"> The document description. </param>
         /// <param name="uri"> The documentation Uri. </param>
         /// <param name="extensions"> The vendor extensions. </param>
-        internal SwaggerExternalDocumentation(string description, Uri uri, IDictionary<string, BinaryData> extensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerExternalDocumentation(string description, Uri uri, IDictionary<string, BinaryData> extensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Uri = uri;
             Extensions = extensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The document description. </summary>

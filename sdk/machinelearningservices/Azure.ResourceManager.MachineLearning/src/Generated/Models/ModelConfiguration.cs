@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Model configuration options. </summary>
     public partial class ModelConfiguration
     {
-        /// <summary> Initializes a new instance of ModelConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelConfiguration"/>. </summary>
         public ModelConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ModelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelConfiguration"/>. </summary>
         /// <param name="mode"> Input delivery mode for the model. </param>
         /// <param name="mountPath"> Relative mounting path of the model in the target image. </param>
-        internal ModelConfiguration(PackageInputDeliveryMode? mode, string mountPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelConfiguration(PackageInputDeliveryMode? mode, string mountPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             MountPath = mountPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Input delivery mode for the model. </summary>

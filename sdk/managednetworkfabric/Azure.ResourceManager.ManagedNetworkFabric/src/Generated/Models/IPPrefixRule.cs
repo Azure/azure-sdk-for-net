@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Prefix Rule properties. </summary>
     public partial class IPPrefixRule
     {
-        /// <summary> Initializes a new instance of IPPrefixRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPPrefixRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="networkPrefix"> Network Prefix specifying IPv4/IPv6 packets to be permitted or denied. Example: 1.1.1.0/24 | 3FFE:FFFF:0:CD30::/126. </param>
@@ -27,19 +31,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkPrefix = networkPrefix;
         }
 
-        /// <summary> Initializes a new instance of IPPrefixRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPrefixRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="networkPrefix"> Network Prefix specifying IPv4/IPv6 packets to be permitted or denied. Example: 1.1.1.0/24 | 3FFE:FFFF:0:CD30::/126. </param>
         /// <param name="condition"> Specify prefix-list bounds. </param>
         /// <param name="subnetMaskLength"> SubnetMaskLength gives the minimum NetworkPrefix length to be matched. Possible values for IPv4 are 1 - 32 . Possible values of IPv6 are 1 - 128. </param>
-        internal IPPrefixRule(CommunityActionType action, long sequenceNumber, string networkPrefix, IPPrefixRuleCondition? condition, string subnetMaskLength)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPPrefixRule(CommunityActionType action, long sequenceNumber, string networkPrefix, IPPrefixRuleCondition? condition, string subnetMaskLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             SequenceNumber = sequenceNumber;
             NetworkPrefix = networkPrefix;
             Condition = condition;
             SubnetMaskLength = subnetMaskLength;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IPPrefixRule"/> for deserialization. </summary>
+        internal IPPrefixRule()
+        {
         }
 
         /// <summary> Action to be taken on the configuration. Example: Permit | Deny. </summary>

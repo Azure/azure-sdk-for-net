@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Depends on profile definition. </summary>
     public partial class DependsOnProfile
     {
-        /// <summary> Initializes a new instance of DependsOnProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DependsOnProfile"/>. </summary>
         public DependsOnProfile()
         {
             InstallDependsOn = new ChangeTrackingList<string>();
@@ -21,15 +25,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             UpdateDependsOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DependsOnProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependsOnProfile"/>. </summary>
         /// <param name="installDependsOn"> Application installation operation dependency. </param>
         /// <param name="uninstallDependsOn"> Application deletion operation dependency. </param>
         /// <param name="updateDependsOn"> Application update operation dependency. </param>
-        internal DependsOnProfile(IList<string> installDependsOn, IList<string> uninstallDependsOn, IList<string> updateDependsOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DependsOnProfile(IList<string> installDependsOn, IList<string> uninstallDependsOn, IList<string> updateDependsOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstallDependsOn = installDependsOn;
             UninstallDependsOn = uninstallDependsOn;
             UpdateDependsOn = updateDependsOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application installation operation dependency. </summary>

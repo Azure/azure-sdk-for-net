@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of External Networks. </summary>
     internal partial class ExternalNetworksList
     {
-        /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
         internal ExternalNetworksList()
         {
             Value = new ChangeTrackingList<NetworkFabricExternalNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of ExternalNetworksList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalNetworksList"/>. </summary>
         /// <param name="value"> List of External Network resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal ExternalNetworksList(IReadOnlyList<NetworkFabricExternalNetworkData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExternalNetworksList(IReadOnlyList<NetworkFabricExternalNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of External Network resources. </summary>

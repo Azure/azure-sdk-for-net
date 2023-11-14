@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Network To Network Interconnects. </summary>
     internal partial class NetworkToNetworkInterconnectsList
     {
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectsList"/>. </summary>
         internal NetworkToNetworkInterconnectsList()
         {
             Value = new ChangeTrackingList<NetworkToNetworkInterconnectData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkToNetworkInterconnectsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectsList"/>. </summary>
         /// <param name="value"> List of NetworkToNetworkInterconnects resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkToNetworkInterconnectsList(IReadOnlyList<NetworkToNetworkInterconnectData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkToNetworkInterconnectsList(IReadOnlyList<NetworkToNetworkInterconnectData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of NetworkToNetworkInterconnects resources. </summary>

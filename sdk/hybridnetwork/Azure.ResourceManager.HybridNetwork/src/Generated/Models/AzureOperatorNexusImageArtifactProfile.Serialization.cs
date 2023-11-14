@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureOperatorNexusImageArtifactProfile : IUtf8JsonSerializable
+    public partial class AzureOperatorNexusImageArtifactProfile : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusImageArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusImageArtifactProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureOperatorNexusImageArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureOperatorNexusImageArtifactProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureOperatorNexusImageArtifactProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ImageArtifactProfile))
             {
@@ -26,17 +37,48 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureOperatorNexusImageArtifactProfile DeserializeAzureOperatorNexusImageArtifactProfile(JsonElement element)
+        AzureOperatorNexusImageArtifactProfile IJsonModel<AzureOperatorNexusImageArtifactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureOperatorNexusImageArtifactProfile(document.RootElement, options);
+        }
+
+        internal static AzureOperatorNexusImageArtifactProfile DeserializeAzureOperatorNexusImageArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ImageArtifactProfile> imageArtifactProfile = default;
             Optional<WritableSubResource> artifactStore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageArtifactProfile"u8))
@@ -57,8 +99,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     artifactStore = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureOperatorNexusImageArtifactProfile(artifactStore, imageArtifactProfile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureOperatorNexusImageArtifactProfile(artifactStore, serializedAdditionalRawData, imageArtifactProfile.Value);
         }
+
+        BinaryData IPersistableModel<AzureOperatorNexusImageArtifactProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureOperatorNexusImageArtifactProfile IPersistableModel<AzureOperatorNexusImageArtifactProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureOperatorNexusImageArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureOperatorNexusImageArtifactProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureOperatorNexusImageArtifactProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

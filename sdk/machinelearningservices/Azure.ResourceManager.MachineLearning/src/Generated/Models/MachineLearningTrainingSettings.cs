@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Training related configuration. </summary>
     public partial class MachineLearningTrainingSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningTrainingSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
         public MachineLearningTrainingSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningTrainingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
         /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
         /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
         /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>
@@ -33,7 +37,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If 'Distributed' then only distributed featurization is used and distributed algorithms are chosen.
         /// If 'NonDistributed' then only non distributed algorithms are chosen.
         /// </param>
-        internal MachineLearningTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, TrainingMode? trainingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, TrainingMode? trainingMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsDnnTrainingEnabled = isDnnTrainingEnabled;
             IsModelExplainabilityEnabled = isModelExplainabilityEnabled;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnsembleModelDownloadTimeout = ensembleModelDownloadTimeout;
             StackEnsembleSettings = stackEnsembleSettings;
             TrainingMode = trainingMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable recommendation of DNN models. </summary>

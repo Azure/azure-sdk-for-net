@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of MediaService items. </summary>
     internal partial class MediaServicesAccountListResult
     {
-        /// <summary> Initializes a new instance of MediaServicesAccountListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountListResult"/>. </summary>
         internal MediaServicesAccountListResult()
         {
             Value = new ChangeTrackingList<MediaServicesAccountData>();
         }
 
-        /// <summary> Initializes a new instance of MediaServicesAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaServicesAccountListResult"/>. </summary>
         /// <param name="value"> A collection of MediaService items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
-        internal MediaServicesAccountListResult(IReadOnlyList<MediaServicesAccountData> value, string odataNextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaServicesAccountListResult(IReadOnlyList<MediaServicesAccountData> value, string odataNextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             OdataNextLink = odataNextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A collection of MediaService items. </summary>

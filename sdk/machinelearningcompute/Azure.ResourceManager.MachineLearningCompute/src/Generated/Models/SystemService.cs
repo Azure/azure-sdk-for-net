@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Information about a system service deployed in the cluster. </summary>
     public partial class SystemService
     {
-        /// <summary> Initializes a new instance of SystemService. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SystemService"/>. </summary>
         /// <param name="systemServiceType"> The system service type. </param>
         public SystemService(SystemServiceType systemServiceType)
         {
             SystemServiceType = systemServiceType;
         }
 
-        /// <summary> Initializes a new instance of SystemService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemService"/>. </summary>
         /// <param name="systemServiceType"> The system service type. </param>
         /// <param name="publicIPAddress"> The public IP address of the system service. </param>
         /// <param name="version"> The state of the system service. </param>
-        internal SystemService(SystemServiceType systemServiceType, string publicIPAddress, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SystemService(SystemServiceType systemServiceType, string publicIPAddress, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemServiceType = systemServiceType;
             PublicIPAddress = publicIPAddress;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemService"/> for deserialization. </summary>
+        internal SystemService()
+        {
         }
 
         /// <summary> The system service type. </summary>

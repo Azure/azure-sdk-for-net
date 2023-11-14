@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -12,9 +13,21 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> The subscriptions list to get the related collections. </summary>
     public partial class CollectionsToSubscriptionsMappingContent
     {
-        /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingContent"/>. </summary>
         public CollectionsToSubscriptionsMappingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingContent"/>. </summary>
+        /// <param name="properties"> Subscriptions ids list. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionsToSubscriptionsMappingContent(CollectionsToSubscriptionsMappingProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Subscriptions ids list. </summary>

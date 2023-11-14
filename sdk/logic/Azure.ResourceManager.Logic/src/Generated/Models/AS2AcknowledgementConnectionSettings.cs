@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The AS2 agreement acknowledgement connection settings. </summary>
     public partial class AS2AcknowledgementConnectionSettings
     {
-        /// <summary> Initializes a new instance of AS2AcknowledgementConnectionSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AS2AcknowledgementConnectionSettings"/>. </summary>
         /// <param name="ignoreCertificateNameMismatch"> Indicates whether to ignore mismatch in certificate name. </param>
         /// <param name="supportHttpStatusCodeContinue"> Indicates whether to support HTTP status code 'CONTINUE'. </param>
         /// <param name="keepHttpConnectionAlive"> Indicates whether to keep the connection alive. </param>
@@ -21,6 +27,26 @@ namespace Azure.ResourceManager.Logic.Models
             SupportHttpStatusCodeContinue = supportHttpStatusCodeContinue;
             KeepHttpConnectionAlive = keepHttpConnectionAlive;
             UnfoldHttpHeaders = unfoldHttpHeaders;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2AcknowledgementConnectionSettings"/>. </summary>
+        /// <param name="ignoreCertificateNameMismatch"> Indicates whether to ignore mismatch in certificate name. </param>
+        /// <param name="supportHttpStatusCodeContinue"> Indicates whether to support HTTP status code 'CONTINUE'. </param>
+        /// <param name="keepHttpConnectionAlive"> Indicates whether to keep the connection alive. </param>
+        /// <param name="unfoldHttpHeaders"> Indicates whether to unfold the HTTP headers. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AS2AcknowledgementConnectionSettings(bool ignoreCertificateNameMismatch, bool supportHttpStatusCodeContinue, bool keepHttpConnectionAlive, bool unfoldHttpHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IgnoreCertificateNameMismatch = ignoreCertificateNameMismatch;
+            SupportHttpStatusCodeContinue = supportHttpStatusCodeContinue;
+            KeepHttpConnectionAlive = keepHttpConnectionAlive;
+            UnfoldHttpHeaders = unfoldHttpHeaders;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2AcknowledgementConnectionSettings"/> for deserialization. </summary>
+        internal AS2AcknowledgementConnectionSettings()
+        {
         }
 
         /// <summary> Indicates whether to ignore mismatch in certificate name. </summary>

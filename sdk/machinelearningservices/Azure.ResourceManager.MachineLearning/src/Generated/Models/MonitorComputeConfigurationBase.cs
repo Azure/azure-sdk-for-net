@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitorComputeConfigurationBase
     {
-        /// <summary> Initializes a new instance of MonitorComputeConfigurationBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorComputeConfigurationBase"/>. </summary>
         protected MonitorComputeConfigurationBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorComputeConfigurationBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorComputeConfigurationBase"/>. </summary>
         /// <param name="computeType"> [Required] Specifies the type of signal to monitor. </param>
-        internal MonitorComputeConfigurationBase(MonitorComputeType computeType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorComputeConfigurationBase(MonitorComputeType computeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputeType = computeType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the type of signal to monitor. </summary>

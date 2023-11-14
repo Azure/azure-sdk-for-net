@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.KubernetesConfiguration;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Result of the request to list Source Control Configurations.  It contains a list of SourceControlConfiguration objects and a URL link to get the next set of results. </summary>
     internal partial class SourceControlConfigurationList
     {
-        /// <summary> Initializes a new instance of SourceControlConfigurationList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlConfigurationList"/>. </summary>
         internal SourceControlConfigurationList()
         {
             Value = new ChangeTrackingList<KubernetesSourceControlConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of SourceControlConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlConfigurationList"/>. </summary>
         /// <param name="value"> List of Source Control Configurations within a Kubernetes cluster. </param>
         /// <param name="nextLink"> URL to get the next set of configuration objects, if any. </param>
-        internal SourceControlConfigurationList(IReadOnlyList<KubernetesSourceControlConfigurationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlConfigurationList(IReadOnlyList<KubernetesSourceControlConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Source Control Configurations within a Kubernetes cluster. </summary>

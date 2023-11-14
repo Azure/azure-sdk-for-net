@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Network device interface properties. </summary>
     public partial class NetworkDeviceInterfaceProperties
     {
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceProperties"/>. </summary>
         public NetworkDeviceInterfaceProperties()
         {
             SupportedConnectorTypes = new ChangeTrackingList<SupportedConnectorProperties>();
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceInterfaceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceProperties"/>. </summary>
         /// <param name="identifier"> Interface identifier. Example: HundredGigE0/0. </param>
         /// <param name="interfaceType"> Interface type. </param>
         /// <param name="supportedConnectorTypes"> List of supported connector types. </param>
-        internal NetworkDeviceInterfaceProperties(string identifier, string interfaceType, IList<SupportedConnectorProperties> supportedConnectorTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDeviceInterfaceProperties(string identifier, string interfaceType, IList<SupportedConnectorProperties> supportedConnectorTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identifier = identifier;
             InterfaceType = interfaceType;
             SupportedConnectorTypes = supportedConnectorTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Interface identifier. Example: HundredGigE0/0. </summary>

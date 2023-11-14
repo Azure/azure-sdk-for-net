@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOutputPathAssetReference : IUtf8JsonSerializable
+    public partial class MachineLearningOutputPathAssetReference : IUtf8JsonSerializable, IJsonModel<MachineLearningOutputPathAssetReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOutputPathAssetReference>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MachineLearningOutputPathAssetReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningOutputPathAssetReference>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningOutputPathAssetReference>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(JobId))
             {
@@ -41,11 +52,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("referenceType"u8);
             writer.WriteStringValue(ReferenceType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningOutputPathAssetReference DeserializeMachineLearningOutputPathAssetReference(JsonElement element)
+        MachineLearningOutputPathAssetReference IJsonModel<MachineLearningOutputPathAssetReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningOutputPathAssetReference(document.RootElement, options);
+        }
+
+        internal static MachineLearningOutputPathAssetReference DeserializeMachineLearningOutputPathAssetReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +93,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<ResourceIdentifier> jobId = default;
             Optional<string> path = default;
             ReferenceType referenceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -80,8 +122,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     referenceType = new ReferenceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningOutputPathAssetReference(referenceType, jobId.Value, path.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningOutputPathAssetReference(referenceType, serializedAdditionalRawData, jobId.Value, path.Value);
         }
+
+        BinaryData IPersistableModel<MachineLearningOutputPathAssetReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningOutputPathAssetReference IPersistableModel<MachineLearningOutputPathAssetReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningOutputPathAssetReference(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningOutputPathAssetReference>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> A collection of StreamingLocator items. </summary>
     internal partial class StreamingLocatorListResult
     {
-        /// <summary> Initializes a new instance of StreamingLocatorListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorListResult"/>. </summary>
         internal StreamingLocatorListResult()
         {
             Value = new ChangeTrackingList<StreamingLocatorData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingLocatorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingLocatorListResult"/>. </summary>
         /// <param name="value"> A collection of StreamingLocator items. </param>
         /// <param name="odataNextLink"> A link to the next page of the collection (when the collection contains too many results to return in one response). </param>
-        internal StreamingLocatorListResult(IReadOnlyList<StreamingLocatorData> value, string odataNextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingLocatorListResult(IReadOnlyList<StreamingLocatorData> value, string odataNextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             OdataNextLink = odataNextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A collection of StreamingLocator items. </summary>

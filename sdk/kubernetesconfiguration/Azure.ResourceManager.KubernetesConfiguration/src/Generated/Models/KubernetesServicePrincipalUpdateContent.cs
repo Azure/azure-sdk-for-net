@@ -6,15 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Parameters to authenticate using Service Principal. </summary>
     public partial class KubernetesServicePrincipalUpdateContent
     {
-        /// <summary> Initializes a new instance of KubernetesServicePrincipalUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesServicePrincipalUpdateContent"/>. </summary>
         public KubernetesServicePrincipalUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesServicePrincipalUpdateContent"/>. </summary>
+        /// <param name="clientId"> The client Id for authenticating a Service Principal. </param>
+        /// <param name="tenantId"> The tenant Id for authenticating a Service Principal. </param>
+        /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
+        /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
+        /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
+        /// <param name="clientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesServicePrincipalUpdateContent(Guid? clientId, Guid? tenantId, string clientSecret, string clientCertificate, string clientCertificatePassword, bool? clientCertificateSendChain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClientId = clientId;
+            TenantId = tenantId;
+            ClientSecret = clientSecret;
+            ClientCertificate = clientCertificate;
+            ClientCertificatePassword = clientCertificatePassword;
+            ClientCertificateSendChain = clientCertificateSendChain;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The client Id for authenticating a Service Principal. </summary>

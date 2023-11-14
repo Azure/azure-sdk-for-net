@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role Assignments. </summary>
     public partial class KeyVaultRoleAssignment
     {
-        /// <summary> Initializes a new instance of KeyVaultRoleAssignment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignment"/>. </summary>
         internal KeyVaultRoleAssignment()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultRoleAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignment"/>. </summary>
         /// <param name="id"> The role assignment ID. </param>
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
-        internal KeyVaultRoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultRoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role assignment ID. </summary>

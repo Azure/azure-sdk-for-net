@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class MarketplaceAdminApprovalRequestData : ResourceData
     {
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
         public MarketplaceAdminApprovalRequestData()
         {
             ApprovedPlans = new ChangeTrackingList<string>();
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Marketplace
             CollectionIds = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarketplaceAdminApprovalRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +45,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="plans"> Gets list of plans with requesters details. </param>
         /// <param name="collectionIds"> Gets or sets list of associated collection ids. </param>
         /// <param name="iconUri"> The offer icon url. </param>
-        internal MarketplaceAdminApprovalRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string offerId, string displayName, string publisherId, MarketplaceAdminAction? adminAction, IList<string> approvedPlans, string comment, string administrator, IReadOnlyList<PlanRequesterDetails> plans, IList<Guid> collectionIds, Uri iconUri) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceAdminApprovalRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string offerId, string displayName, string publisherId, MarketplaceAdminAction? adminAction, IList<string> approvedPlans, string comment, string administrator, IReadOnlyList<PlanRequesterDetails> plans, IList<Guid> collectionIds, Uri iconUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OfferId = offerId;
             DisplayName = displayName;
@@ -54,6 +58,7 @@ namespace Azure.ResourceManager.Marketplace
             Plans = plans;
             CollectionIds = collectionIds;
             IconUri = iconUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets offer Id. </summary>

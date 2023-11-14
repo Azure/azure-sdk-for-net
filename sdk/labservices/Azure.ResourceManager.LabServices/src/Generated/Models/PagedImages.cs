@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LabServices;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Paged list of Lab services virtual machine images. </summary>
     internal partial class PagedImages
     {
-        /// <summary> Initializes a new instance of PagedImages. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PagedImages"/>. </summary>
         internal PagedImages()
         {
             Value = new ChangeTrackingList<LabVirtualMachineImageData>();
         }
 
-        /// <summary> Initializes a new instance of PagedImages. </summary>
+        /// <summary> Initializes a new instance of <see cref="PagedImages"/>. </summary>
         /// <param name="value"> The array page of virtual machine images. </param>
         /// <param name="nextLink"> The link to get the next page of image results. </param>
-        internal PagedImages(IReadOnlyList<LabVirtualMachineImageData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PagedImages(IReadOnlyList<LabVirtualMachineImageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The array page of virtual machine images. </summary>

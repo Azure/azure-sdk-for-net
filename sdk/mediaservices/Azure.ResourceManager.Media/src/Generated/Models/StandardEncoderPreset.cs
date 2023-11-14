@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Describes all the settings to be used when encoding the input video with the Standard Encoder. </summary>
     public partial class StandardEncoderPreset : MediaTransformPreset
     {
-        /// <summary> Initializes a new instance of StandardEncoderPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandardEncoderPreset"/>. </summary>
         /// <param name="codecs">
         /// The list of codecs to be used when encoding the input video.
         /// Please note <see cref="MediaCodecBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -38,8 +38,9 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.StandardEncoderPreset";
         }
 
-        /// <summary> Initializes a new instance of StandardEncoderPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandardEncoderPreset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="experimentalOptions"> Dictionary containing key value pairs for parameters not exposed in the preset itself. </param>
         /// <param name="filters"> One or more filtering operations that are applied to the input media before encoding. </param>
         /// <param name="codecs">
@@ -52,13 +53,18 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="MediaFormatBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
         /// </param>
-        internal StandardEncoderPreset(string odataType, IDictionary<string, string> experimentalOptions, FilteringOperations filters, IList<MediaCodecBase> codecs, IList<MediaFormatBase> formats) : base(odataType)
+        internal StandardEncoderPreset(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> experimentalOptions, FilteringOperations filters, IList<MediaCodecBase> codecs, IList<MediaFormatBase> formats) : base(odataType, serializedAdditionalRawData)
         {
             ExperimentalOptions = experimentalOptions;
             Filters = filters;
             Codecs = codecs;
             Formats = formats;
             OdataType = odataType ?? "#Microsoft.Media.StandardEncoderPreset";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StandardEncoderPreset"/> for deserialization. </summary>
+        internal StandardEncoderPreset()
+        {
         }
 
         /// <summary> Dictionary containing key value pairs for parameters not exposed in the preset itself. </summary>

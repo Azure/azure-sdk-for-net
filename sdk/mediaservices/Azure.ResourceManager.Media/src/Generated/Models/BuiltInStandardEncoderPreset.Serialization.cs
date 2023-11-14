@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class BuiltInStandardEncoderPreset : IUtf8JsonSerializable
+    public partial class BuiltInStandardEncoderPreset : IUtf8JsonSerializable, IJsonModel<BuiltInStandardEncoderPreset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuiltInStandardEncoderPreset>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BuiltInStandardEncoderPreset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BuiltInStandardEncoderPreset>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BuiltInStandardEncoderPreset>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Configurations))
             {
@@ -24,11 +35,40 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(PresetName.ToString());
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BuiltInStandardEncoderPreset DeserializeBuiltInStandardEncoderPreset(JsonElement element)
+        BuiltInStandardEncoderPreset IJsonModel<BuiltInStandardEncoderPreset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBuiltInStandardEncoderPreset(document.RootElement, options);
+        }
+
+        internal static BuiltInStandardEncoderPreset DeserializeBuiltInStandardEncoderPreset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.Media.Models
             Optional<EncoderPresetConfigurations> configurations = default;
             EncoderNamedPreset presetName = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurations"u8))
@@ -57,8 +99,38 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BuiltInStandardEncoderPreset(odataType, configurations.Value, presetName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BuiltInStandardEncoderPreset(odataType, serializedAdditionalRawData, configurations.Value, presetName);
         }
+
+        BinaryData IPersistableModel<BuiltInStandardEncoderPreset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BuiltInStandardEncoderPreset IPersistableModel<BuiltInStandardEncoderPreset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BuiltInStandardEncoderPreset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBuiltInStandardEncoderPreset(document.RootElement, options);
+        }
+
+        string IPersistableModel<BuiltInStandardEncoderPreset>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public abstract partial class MediaJobInputBasicProperties
     {
-        /// <summary> Initializes a new instance of MediaJobInputBasicProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputBasicProperties"/>. </summary>
         protected MediaJobInputBasicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobInputBasicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobInputBasicProperties"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal MediaJobInputBasicProperties(string odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobInputBasicProperties(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The discriminator for derived types. </summary>

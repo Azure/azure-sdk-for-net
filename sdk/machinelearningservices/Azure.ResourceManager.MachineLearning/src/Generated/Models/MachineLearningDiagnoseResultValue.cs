@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningDiagnoseResultValue. </summary>
     public partial class MachineLearningDiagnoseResultValue
     {
-        /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDiagnoseResultValue"/>. </summary>
         internal MachineLearningDiagnoseResultValue()
         {
             UserDefinedRouteResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             OtherResults = new ChangeTrackingList<MachineLearningDiagnoseResult>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDiagnoseResultValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDiagnoseResultValue"/>. </summary>
         /// <param name="userDefinedRouteResults"></param>
         /// <param name="networkSecurityRuleResults"></param>
         /// <param name="resourceLockResults"></param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="containerRegistryResults"></param>
         /// <param name="applicationInsightsResults"></param>
         /// <param name="otherResults"></param>
-        internal MachineLearningDiagnoseResultValue(IReadOnlyList<MachineLearningDiagnoseResult> userDefinedRouteResults, IReadOnlyList<MachineLearningDiagnoseResult> networkSecurityRuleResults, IReadOnlyList<MachineLearningDiagnoseResult> resourceLockResults, IReadOnlyList<MachineLearningDiagnoseResult> dnsResolutionResults, IReadOnlyList<MachineLearningDiagnoseResult> storageAccountResults, IReadOnlyList<MachineLearningDiagnoseResult> keyVaultResults, IReadOnlyList<MachineLearningDiagnoseResult> containerRegistryResults, IReadOnlyList<MachineLearningDiagnoseResult> applicationInsightsResults, IReadOnlyList<MachineLearningDiagnoseResult> otherResults)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDiagnoseResultValue(IReadOnlyList<MachineLearningDiagnoseResult> userDefinedRouteResults, IReadOnlyList<MachineLearningDiagnoseResult> networkSecurityRuleResults, IReadOnlyList<MachineLearningDiagnoseResult> resourceLockResults, IReadOnlyList<MachineLearningDiagnoseResult> dnsResolutionResults, IReadOnlyList<MachineLearningDiagnoseResult> storageAccountResults, IReadOnlyList<MachineLearningDiagnoseResult> keyVaultResults, IReadOnlyList<MachineLearningDiagnoseResult> containerRegistryResults, IReadOnlyList<MachineLearningDiagnoseResult> applicationInsightsResults, IReadOnlyList<MachineLearningDiagnoseResult> otherResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserDefinedRouteResults = userDefinedRouteResults;
             NetworkSecurityRuleResults = networkSecurityRuleResults;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ContainerRegistryResults = containerRegistryResults;
             ApplicationInsightsResults = applicationInsightsResults;
             OtherResults = otherResults;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the user defined route results. </summary>

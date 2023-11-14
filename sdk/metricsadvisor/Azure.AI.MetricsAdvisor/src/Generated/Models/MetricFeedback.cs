@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
@@ -18,5 +19,31 @@ namespace Azure.AI.MetricsAdvisor
     /// </summary>
     public abstract partial class MetricFeedback
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricFeedback"/>. </summary>
+        /// <param name="feedbackKind"> feedback type. </param>
+        /// <param name="id"> feedback unique id. </param>
+        /// <param name="createdOn"> feedback created time. </param>
+        /// <param name="userPrincipal"> user who gives this feedback. </param>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <param name="dimensionFilter"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricFeedback(MetricFeedbackKind feedbackKind, string id, DateTimeOffset? createdOn, string userPrincipal, string metricId, FeedbackFilter dimensionFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FeedbackKind = feedbackKind;
+            Id = id;
+            CreatedOn = createdOn;
+            UserPrincipal = userPrincipal;
+            MetricId = metricId;
+            DimensionFilter = dimensionFilter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricFeedback"/> for deserialization. </summary>
+        internal MetricFeedback()
+        {
+        }
     }
 }

@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The deployment status properties of the network function component. </summary>
     public partial class DeploymentStatusProperties
     {
-        /// <summary> Initializes a new instance of DeploymentStatusProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentStatusProperties"/>. </summary>
         internal DeploymentStatusProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentStatusProperties"/>. </summary>
         /// <param name="status"> The status of the component resource. </param>
         /// <param name="resources"> The resource related to the component resource. </param>
         /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>
-        internal DeploymentStatusProperties(ComponentStatus? status, ComponentKubernetesResources resources, DateTimeOffset? nextExpectedUpdateOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentStatusProperties(ComponentStatus? status, ComponentKubernetesResources resources, DateTimeOffset? nextExpectedUpdateOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Resources = resources;
             NextExpectedUpdateOn = nextExpectedUpdateOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the component resource. </summary>

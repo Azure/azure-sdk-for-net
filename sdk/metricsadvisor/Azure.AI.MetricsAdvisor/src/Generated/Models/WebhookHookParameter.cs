@@ -14,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The WebhookHookParameter. </summary>
     internal partial class WebhookHookParameter
     {
-        /// <summary> Initializes a new instance of WebhookHookParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebhookHookParameter"/>. </summary>
         /// <param name="endpoint"> API address, will be called when alert is triggered, only support POST method via SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public WebhookHookParameter(string endpoint)
@@ -25,14 +28,15 @@ namespace Azure.AI.MetricsAdvisor.Models
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WebhookHookParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebhookHookParameter"/>. </summary>
         /// <param name="endpoint"> API address, will be called when alert is triggered, only support POST method via SSL. </param>
         /// <param name="username"> (Deprecated) The username, if using basic authentication. </param>
         /// <param name="password"> (Deprecated) The password, if using basic authentication. </param>
         /// <param name="headers"> custom headers in api call. </param>
         /// <param name="certificateKey"> The certificate key/URL, if using client certificate, please read documents for more informations. </param>
         /// <param name="certificatePassword"> The certificate password, if using client certificate, please read documents for more informations. </param>
-        internal WebhookHookParameter(string endpoint, string username, string password, IDictionary<string, string> headers, string certificateKey, string certificatePassword)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebhookHookParameter(string endpoint, string username, string password, IDictionary<string, string> headers, string certificateKey, string certificatePassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             Username = username;
@@ -40,6 +44,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             Headers = headers;
             CertificateKey = certificateKey;
             CertificatePassword = certificatePassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebhookHookParameter"/> for deserialization. </summary>
+        internal WebhookHookParameter()
+        {
         }
 
         /// <summary> API address, will be called when alert is triggered, only support POST method via SSL. </summary>

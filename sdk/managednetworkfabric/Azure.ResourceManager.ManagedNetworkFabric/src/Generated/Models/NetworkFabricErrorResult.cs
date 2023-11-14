@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
     public partial class NetworkFabricErrorResult
     {
-        /// <summary> Initializes a new instance of NetworkFabricErrorResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricErrorResult"/>. </summary>
         internal NetworkFabricErrorResult()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricErrorResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricErrorResult"/>. </summary>
         /// <param name="error"> The error object. </param>
-        internal NetworkFabricErrorResult(ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricErrorResult(ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error object. </summary>

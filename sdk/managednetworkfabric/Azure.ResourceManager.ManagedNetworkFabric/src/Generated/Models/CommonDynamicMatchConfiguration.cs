@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Dynamic match configuration object. </summary>
     public partial class CommonDynamicMatchConfiguration
     {
-        /// <summary> Initializes a new instance of CommonDynamicMatchConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommonDynamicMatchConfiguration"/>. </summary>
         public CommonDynamicMatchConfiguration()
         {
             IPGroups = new ChangeTrackingList<MatchConfigurationIPGroupProperties>();
@@ -21,15 +25,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             PortGroups = new ChangeTrackingList<PortGroupProperties>();
         }
 
-        /// <summary> Initializes a new instance of CommonDynamicMatchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonDynamicMatchConfiguration"/>. </summary>
         /// <param name="ipGroups"> List of IP Groups. </param>
         /// <param name="vlanGroups"> List of vlan groups. </param>
         /// <param name="portGroups"> List of the port groups. </param>
-        internal CommonDynamicMatchConfiguration(IList<MatchConfigurationIPGroupProperties> ipGroups, IList<VlanGroupProperties> vlanGroups, IList<PortGroupProperties> portGroups)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommonDynamicMatchConfiguration(IList<MatchConfigurationIPGroupProperties> ipGroups, IList<VlanGroupProperties> vlanGroups, IList<PortGroupProperties> portGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPGroups = ipGroups;
             VlanGroups = vlanGroups;
             PortGroups = portGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of IP Groups. </summary>

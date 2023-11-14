@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class NetworkFunctionDefinitionVersionUpdateState : IUtf8JsonSerializable
+    public partial class NetworkFunctionDefinitionVersionUpdateState : IUtf8JsonSerializable, IJsonModel<NetworkFunctionDefinitionVersionUpdateState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionDefinitionVersionUpdateState>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetworkFunctionDefinitionVersionUpdateState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkFunctionDefinitionVersionUpdateState>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkFunctionDefinitionVersionUpdateState>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkFunctionDefinitionVersionUpdateState DeserializeNetworkFunctionDefinitionVersionUpdateState(JsonElement element)
+        NetworkFunctionDefinitionVersionUpdateState IJsonModel<NetworkFunctionDefinitionVersionUpdateState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFunctionDefinitionVersionUpdateState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFunctionDefinitionVersionUpdateState(document.RootElement, options);
+        }
+
+        internal static NetworkFunctionDefinitionVersionUpdateState DeserializeNetworkFunctionDefinitionVersionUpdateState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<VersionState> versionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("versionState"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     versionState = new VersionState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkFunctionDefinitionVersionUpdateState(Optional.ToNullable(versionState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkFunctionDefinitionVersionUpdateState(Optional.ToNullable(versionState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkFunctionDefinitionVersionUpdateState>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFunctionDefinitionVersionUpdateState)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkFunctionDefinitionVersionUpdateState IPersistableModel<NetworkFunctionDefinitionVersionUpdateState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFunctionDefinitionVersionUpdateState)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkFunctionDefinitionVersionUpdateState(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkFunctionDefinitionVersionUpdateState>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class SelectVideoTrackByAttribute : IUtf8JsonSerializable
+    public partial class SelectVideoTrackByAttribute : IUtf8JsonSerializable, IJsonModel<SelectVideoTrackByAttribute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelectVideoTrackByAttribute>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SelectVideoTrackByAttribute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SelectVideoTrackByAttribute>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SelectVideoTrackByAttribute>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("attribute"u8);
             writer.WriteStringValue(Attribute.ToString());
@@ -26,11 +37,40 @@ namespace Azure.ResourceManager.Media.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SelectVideoTrackByAttribute DeserializeSelectVideoTrackByAttribute(JsonElement element)
+        SelectVideoTrackByAttribute IJsonModel<SelectVideoTrackByAttribute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelectVideoTrackByAttribute)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelectVideoTrackByAttribute(document.RootElement, options);
+        }
+
+        internal static SelectVideoTrackByAttribute DeserializeSelectVideoTrackByAttribute(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.Media.Models
             TrackAttributeFilter filter = default;
             Optional<string> filterValue = default;
             string odataType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attribute"u8))
@@ -61,8 +103,38 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SelectVideoTrackByAttribute(odataType, attribute, filter, filterValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SelectVideoTrackByAttribute(odataType, serializedAdditionalRawData, attribute, filter, filterValue.Value);
         }
+
+        BinaryData IPersistableModel<SelectVideoTrackByAttribute>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelectVideoTrackByAttribute)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SelectVideoTrackByAttribute IPersistableModel<SelectVideoTrackByAttribute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelectVideoTrackByAttribute)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSelectVideoTrackByAttribute(document.RootElement, options);
+        }
+
+        string IPersistableModel<SelectVideoTrackByAttribute>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

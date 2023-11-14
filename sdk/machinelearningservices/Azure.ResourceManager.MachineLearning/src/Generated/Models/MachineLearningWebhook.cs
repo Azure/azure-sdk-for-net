@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningWebhook
     {
-        /// <summary> Initializes a new instance of MachineLearningWebhook. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
         protected MachineLearningWebhook()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWebhook. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
         /// <param name="eventType"> Send callback on a specified notification event. </param>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
-        internal MachineLearningWebhook(string eventType, MachineLearningWebhookType webhookType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWebhook(string eventType, MachineLearningWebhookType webhookType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventType = eventType;
             WebhookType = webhookType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Send callback on a specified notification event. </summary>

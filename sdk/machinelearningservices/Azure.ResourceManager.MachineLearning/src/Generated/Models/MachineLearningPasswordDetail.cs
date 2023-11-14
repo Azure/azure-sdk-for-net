@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningPasswordDetail. </summary>
     public partial class MachineLearningPasswordDetail
     {
-        /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPasswordDetail"/>. </summary>
         internal MachineLearningPasswordDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPasswordDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPasswordDetail"/>. </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        internal MachineLearningPasswordDetail(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningPasswordDetail(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

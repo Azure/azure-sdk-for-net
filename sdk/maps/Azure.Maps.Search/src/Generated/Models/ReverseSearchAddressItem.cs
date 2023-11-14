@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Maps.Search;
@@ -14,13 +15,16 @@ namespace Azure.Maps.Search.Models
     /// <summary> Result object for a Search Address Reverse response. </summary>
     public partial class ReverseSearchAddressItem
     {
-        /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressItem"/>. </summary>
         internal ReverseSearchAddressItem()
         {
             RoadUse = new ChangeTrackingList<RoadKind>();
         }
 
-        /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseSearchAddressItem"/>. </summary>
         /// <param name="address"> The address of the result. </param>
         /// <param name="position"> Position property in the form of "{latitude},{longitude}". </param>
         /// <param name="roadUse"></param>
@@ -32,12 +36,14 @@ namespace Azure.Maps.Search.Models
         ///   * HouseNumberRange
         ///   * Street
         /// </param>
-        internal ReverseSearchAddressItem(MapsAddress address, string position, IReadOnlyList<RoadKind> roadUse, MapsSearchMatchType? matchType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReverseSearchAddressItem(MapsAddress address, string position, IReadOnlyList<RoadKind> roadUse, MapsSearchMatchType? matchType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             Position = position;
             RoadUse = roadUse;
             MatchType = matchType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The address of the result. </summary>

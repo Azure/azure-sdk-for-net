@@ -5,18 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    public partial class DataSourceCredentialEntity : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownDataSourceCredential))]
+    public partial class DataSourceCredentialEntity : IUtf8JsonSerializable, IJsonModel<DataSourceCredentialEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataSourceCredentialEntity>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataSourceCredentialEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataSourceCredentialEntity>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataSourceCredentialEntity>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("dataSourceCredentialId"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
             writer.WritePropertyName("dataSourceCredentialName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -24,7 +44,80 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 writer.WritePropertyName("dataSourceCredentialDescription"u8);
                 writer.WriteStringValue(Description);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DataSourceCredentialEntity IJsonModel<DataSourceCredentialEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataSourceCredentialEntity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataSourceCredentialEntity(document.RootElement, options);
+        }
+
+        internal static DataSourceCredentialEntity DeserializeDataSourceCredentialEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("dataSourceCredentialType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureSQLConnectionString": return SqlConnectionStringCredentialEntity.DeserializeSqlConnectionStringCredentialEntity(element);
+                    case "DataLakeGen2SharedKey": return DataLakeSharedKeyCredentialEntity.DeserializeDataLakeSharedKeyCredentialEntity(element);
+                    case "ServicePrincipal": return ServicePrincipalCredentialEntity.DeserializeServicePrincipalCredentialEntity(element);
+                    case "ServicePrincipalInKV": return ServicePrincipalInKeyVaultCredentialEntity.DeserializeServicePrincipalInKeyVaultCredentialEntity(element);
+                }
+            }
+            return UnknownDataSourceCredential.DeserializeUnknownDataSourceCredential(element);
+        }
+
+        BinaryData IPersistableModel<DataSourceCredentialEntity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataSourceCredentialEntity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataSourceCredentialEntity IPersistableModel<DataSourceCredentialEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataSourceCredentialEntity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataSourceCredentialEntity(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataSourceCredentialEntity>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

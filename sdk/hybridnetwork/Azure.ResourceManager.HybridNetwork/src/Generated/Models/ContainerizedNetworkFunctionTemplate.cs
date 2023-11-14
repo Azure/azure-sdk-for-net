@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class ContainerizedNetworkFunctionTemplate
     {
-        /// <summary> Initializes a new instance of ContainerizedNetworkFunctionTemplate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerizedNetworkFunctionTemplate"/>. </summary>
         protected ContainerizedNetworkFunctionTemplate()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerizedNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerizedNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
-        internal ContainerizedNetworkFunctionTemplate(ContainerizedNetworkFunctionNfviType nfviType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerizedNetworkFunctionTemplate(ContainerizedNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NfviType = nfviType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The network function type. </summary>

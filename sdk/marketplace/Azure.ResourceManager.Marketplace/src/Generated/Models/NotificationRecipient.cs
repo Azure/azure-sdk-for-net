@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Describes the json payload for a notified recipient for new requests. </summary>
     public partial class NotificationRecipient
     {
-        /// <summary> Initializes a new instance of NotificationRecipient. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationRecipient"/>. </summary>
         public NotificationRecipient()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationRecipient. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationRecipient"/>. </summary>
         /// <param name="principalId"> Principal ID. </param>
         /// <param name="emailAddress"> Email Address. </param>
         /// <param name="displayName"> Display Name. </param>
-        internal NotificationRecipient(Guid? principalId, string emailAddress, string displayName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationRecipient(Guid? principalId, string emailAddress, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalId = principalId;
             EmailAddress = emailAddress;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Principal ID. </summary>

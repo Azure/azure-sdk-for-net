@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The content link. </summary>
     public partial class LogicContentLink
     {
-        /// <summary> Initializes a new instance of LogicContentLink. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicContentLink"/>. </summary>
         public LogicContentLink()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicContentLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicContentLink"/>. </summary>
         /// <param name="uri"> The content link URI. </param>
         /// <param name="contentVersion"> The content version. </param>
         /// <param name="contentSize"> The content size. </param>
         /// <param name="contentHash"> The content hash. </param>
         /// <param name="metadata"> The metadata. </param>
-        internal LogicContentLink(Uri uri, string contentVersion, long? contentSize, LogicContentHash contentHash, BinaryData metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicContentLink(Uri uri, string contentVersion, long? contentSize, LogicContentHash contentHash, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             ContentVersion = contentVersion;
             ContentSize = contentSize;
             ContentHash = contentHash;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The content link URI. </summary>

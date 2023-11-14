@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> An identity that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </summary>
     public partial class KeyVaultAccessPolicy
     {
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicy"/>. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="objectId"> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </param>
         /// <param name="permissions"> Permissions the identity has for keys, secrets and certificates. </param>
@@ -28,17 +32,24 @@ namespace Azure.ResourceManager.KeyVault.Models
             Permissions = permissions;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicy"/>. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="objectId"> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </param>
         /// <param name="applicationId"> Application ID of the client making request on behalf of a principal. </param>
         /// <param name="permissions"> Permissions the identity has for keys, secrets and certificates. </param>
-        internal KeyVaultAccessPolicy(Guid tenantId, string objectId, Guid? applicationId, IdentityAccessPermissions permissions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultAccessPolicy(Guid tenantId, string objectId, Guid? applicationId, IdentityAccessPermissions permissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             ObjectId = objectId;
             ApplicationId = applicationId;
             Permissions = permissions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicy"/> for deserialization. </summary>
+        internal KeyVaultAccessPolicy()
+        {
         }
 
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The JobQueueSettings. </summary>
     public partial class JobQueueSettings
     {
-        /// <summary> Initializes a new instance of JobQueueSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobQueueSettings"/>. </summary>
         public JobQueueSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of JobQueueSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobQueueSettings"/>. </summary>
         /// <param name="jobTier"> Controls the compute job tier. </param>
         /// <param name="priority"> Controls the priority of the job on a compute. </param>
-        internal JobQueueSettings(JobTier? jobTier, int? priority)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobQueueSettings(JobTier? jobTier, int? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobTier = jobTier;
             Priority = priority;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Controls the compute job tier. </summary>

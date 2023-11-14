@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </summary>
     internal partial class LatLongPairAbbreviated
     {
-        /// <summary> Initializes a new instance of LatLongPairAbbreviated. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LatLongPairAbbreviated"/>. </summary>
         internal LatLongPairAbbreviated()
         {
         }
 
-        /// <summary> Initializes a new instance of LatLongPairAbbreviated. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatLongPairAbbreviated"/>. </summary>
         /// <param name="lat"> Latitude property. </param>
         /// <param name="lon"> Longitude property. </param>
-        internal LatLongPairAbbreviated(double? lat, double? lon)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LatLongPairAbbreviated(double? lat, double? lon, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Lat = lat;
             Lon = lon;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Latitude property. </summary>

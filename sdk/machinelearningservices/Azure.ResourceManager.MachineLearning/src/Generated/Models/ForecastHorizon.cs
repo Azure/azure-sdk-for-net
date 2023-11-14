@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class ForecastHorizon
     {
-        /// <summary> Initializes a new instance of ForecastHorizon. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastHorizon"/>. </summary>
         protected ForecastHorizon()
         {
         }
 
-        /// <summary> Initializes a new instance of ForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastHorizon"/>. </summary>
         /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
-        internal ForecastHorizon(ForecastHorizonMode mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastHorizon(ForecastHorizonMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Set forecast horizon value selection mode. </summary>

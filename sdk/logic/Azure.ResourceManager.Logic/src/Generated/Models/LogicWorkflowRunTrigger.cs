@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The workflow run trigger. </summary>
     public partial class LogicWorkflowRunTrigger
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunTrigger. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunTrigger"/>. </summary>
         internal LogicWorkflowRunTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunTrigger"/>. </summary>
         /// <param name="name"> Gets the name. </param>
         /// <param name="inputs"> Gets the inputs. </param>
         /// <param name="inputsLink"> Gets the link to inputs. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="status"> Gets the status. </param>
         /// <param name="error"> Gets the error. </param>
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
-        internal LogicWorkflowRunTrigger(string name, BinaryData inputs, LogicContentLink inputsLink, BinaryData outputs, LogicContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? trackingId, Correlation correlation, string code, LogicWorkflowStatus? status, BinaryData error, BinaryData trackedProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRunTrigger(string name, BinaryData inputs, LogicContentLink inputsLink, BinaryData outputs, LogicContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? trackingId, Correlation correlation, string code, LogicWorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Inputs = inputs;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.Logic.Models
             Status = status;
             Error = error;
             TrackedProperties = trackedProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Name of Iot Hub type. </summary>
     public partial class IotHubTypeName
     {
-        /// <summary> Initializes a new instance of IotHubTypeName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTypeName"/>. </summary>
         internal IotHubTypeName()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubTypeName. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubTypeName"/>. </summary>
         /// <param name="value"> IotHub type. </param>
         /// <param name="localizedValue"> Localized value of name. </param>
-        internal IotHubTypeName(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubTypeName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IotHub type. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,19 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> ARM ResourceId of a resource. </summary>
     internal partial class ArmResourceId
     {
-        /// <summary> Initializes a new instance of ArmResourceId. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmResourceId"/>. </summary>
         public ArmResourceId()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmResourceId. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceId"/>. </summary>
         /// <param name="resourceId">
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
         /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
         /// </param>
-        internal ArmResourceId(ResourceIdentifier resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmResourceId(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

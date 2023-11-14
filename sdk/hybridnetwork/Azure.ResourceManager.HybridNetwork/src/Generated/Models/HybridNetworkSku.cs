@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Sku, to be associated with a SiteNetworkService. </summary>
     public partial class HybridNetworkSku
     {
-        /// <summary> Initializes a new instance of HybridNetworkSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridNetworkSku"/>. </summary>
         /// <param name="name"> Name of this Sku. </param>
         public HybridNetworkSku(HybridNetworkSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of HybridNetworkSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetworkSku"/>. </summary>
         /// <param name="name"> Name of this Sku. </param>
         /// <param name="tier"> The SKU tier based on the SKU name. </param>
-        internal HybridNetworkSku(HybridNetworkSkuName name, HybridNetworkSkuTier? tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridNetworkSku(HybridNetworkSkuName name, HybridNetworkSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridNetworkSku"/> for deserialization. </summary>
+        internal HybridNetworkSku()
+        {
         }
 
         /// <summary> Name of this Sku. </summary>

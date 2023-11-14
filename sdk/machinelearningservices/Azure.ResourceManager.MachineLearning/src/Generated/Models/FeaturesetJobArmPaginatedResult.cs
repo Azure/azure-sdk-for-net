@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of FeaturesetJob entities. </summary>
     internal partial class FeaturesetJobArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeaturesetJobArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeaturesetJobArmPaginatedResult"/>. </summary>
         internal FeaturesetJobArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeatureSetJob>();
         }
 
-        /// <summary> Initializes a new instance of FeaturesetJobArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetJobArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturesetJob objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturesetJob. </param>
-        internal FeaturesetJobArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetJob> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeaturesetJobArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetJob> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of FeaturesetJob objects. If null, there are no additional pages. </summary>

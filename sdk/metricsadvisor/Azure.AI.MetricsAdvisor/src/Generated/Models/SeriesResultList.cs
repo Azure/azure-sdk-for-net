@@ -15,7 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SeriesResultList. </summary>
     internal partial class SeriesResultList
     {
-        /// <summary> Initializes a new instance of SeriesResultList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SeriesResultList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SeriesResultList(IEnumerable<MetricEnrichedSeriesData> value)
@@ -25,11 +28,18 @@ namespace Azure.AI.MetricsAdvisor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SeriesResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SeriesResultList"/>. </summary>
         /// <param name="value"></param>
-        internal SeriesResultList(IReadOnlyList<MetricEnrichedSeriesData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SeriesResultList(IReadOnlyList<MetricEnrichedSeriesData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SeriesResultList"/> for deserialization. </summary>
+        internal SeriesResultList()
+        {
         }
 
         /// <summary> Gets the value. </summary>

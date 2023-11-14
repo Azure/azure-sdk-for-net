@@ -5,16 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ConfigurationGroupValuePropertiesFormat : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownConfigurationGroupValuePropertiesFormat))]
+    public partial class ConfigurationGroupValuePropertiesFormat : IUtf8JsonSerializable, IJsonModel<ConfigurationGroupValuePropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationGroupValuePropertiesFormat>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConfigurationGroupValuePropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConfigurationGroupValuePropertiesFormat>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConfigurationGroupValuePropertiesFormat>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherName))
+                {
+                    writer.WritePropertyName("publisherName"u8);
+                    writer.WriteStringValue(PublisherName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherScope))
+                {
+                    writer.WritePropertyName("publisherScope"u8);
+                    writer.WriteStringValue(PublisherScope.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConfigurationGroupSchemaName))
+                {
+                    writer.WritePropertyName("configurationGroupSchemaName"u8);
+                    writer.WriteStringValue(ConfigurationGroupSchemaName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConfigurationGroupSchemaOfferingLocation))
+                {
+                    writer.WritePropertyName("configurationGroupSchemaOfferingLocation"u8);
+                    writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation);
+                }
+            }
             if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
@@ -22,11 +73,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationGroupValuePropertiesFormat DeserializeConfigurationGroupValuePropertiesFormat(JsonElement element)
+        ConfigurationGroupValuePropertiesFormat IJsonModel<ConfigurationGroupValuePropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+        }
+
+        internal static ConfigurationGroupValuePropertiesFormat DeserializeConfigurationGroupValuePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,5 +121,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             return UnknownConfigurationGroupValuePropertiesFormat.DeserializeUnknownConfigurationGroupValuePropertiesFormat(element);
         }
+
+        BinaryData IPersistableModel<ConfigurationGroupValuePropertiesFormat>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConfigurationGroupValuePropertiesFormat IPersistableModel<ConfigurationGroupValuePropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConfigurationGroupValuePropertiesFormat>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

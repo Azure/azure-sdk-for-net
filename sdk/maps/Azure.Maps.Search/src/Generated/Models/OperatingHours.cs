@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Maps.Search.Models
     /// <summary> Opening hours for a POI (Points of Interest). </summary>
     public partial class OperatingHours
     {
-        /// <summary> Initializes a new instance of OperatingHours. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperatingHours"/>. </summary>
         internal OperatingHours()
         {
             TimeRanges = new ChangeTrackingList<OperatingHoursTimeRange>();
         }
 
-        /// <summary> Initializes a new instance of OperatingHours. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperatingHours"/>. </summary>
         /// <param name="mode"> Value used in the request: none or "nextSevenDays". </param>
         /// <param name="timeRanges"> List of time ranges for the next 7 days. </param>
-        internal OperatingHours(string mode, IReadOnlyList<OperatingHoursTimeRange> timeRanges)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperatingHours(string mode, IReadOnlyList<OperatingHoursTimeRange> timeRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             TimeRanges = timeRanges;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value used in the request: none or "nextSevenDays". </summary>

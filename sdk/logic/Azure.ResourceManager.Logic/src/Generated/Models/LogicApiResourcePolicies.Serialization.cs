@@ -6,21 +6,85 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiResourcePolicies
+    public partial class LogicApiResourcePolicies : IUtf8JsonSerializable, IJsonModel<LogicApiResourcePolicies>
     {
-        internal static LogicApiResourcePolicies DeserializeLogicApiResourcePolicies(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiResourcePolicies>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LogicApiResourcePolicies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LogicApiResourcePolicies>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LogicApiResourcePolicies>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Content))
+            {
+                writer.WritePropertyName("content"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Content))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(ContentLink))
+            {
+                writer.WritePropertyName("contentLink"u8);
+                writer.WriteStringValue(ContentLink);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LogicApiResourcePolicies IJsonModel<LogicApiResourcePolicies>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicApiResourcePolicies)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiResourcePolicies(document.RootElement, options);
+        }
+
+        internal static LogicApiResourcePolicies DeserializeLogicApiResourcePolicies(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BinaryData> content = default;
             Optional<string> contentLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("content"u8))
@@ -37,8 +101,38 @@ namespace Azure.ResourceManager.Logic.Models
                     contentLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicApiResourcePolicies(content.Value, contentLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogicApiResourcePolicies(content.Value, contentLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicApiResourcePolicies>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicApiResourcePolicies)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LogicApiResourcePolicies IPersistableModel<LogicApiResourcePolicies>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicApiResourcePolicies)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLogicApiResourcePolicies(document.RootElement, options);
+        }
+
+        string IPersistableModel<LogicApiResourcePolicies>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

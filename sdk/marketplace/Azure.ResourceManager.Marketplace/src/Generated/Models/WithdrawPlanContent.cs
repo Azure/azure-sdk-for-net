@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Withdraw properties. </summary>
     public partial class WithdrawPlanContent
     {
-        /// <summary> Initializes a new instance of WithdrawPlanContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WithdrawPlanContent"/>. </summary>
         public WithdrawPlanContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WithdrawPlanContent"/>. </summary>
+        /// <param name="planId"> Gets or sets Plan Id. </param>
+        /// <param name="publisherId"> The offer's publisher id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WithdrawPlanContent(string planId, string publisherId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PlanId = planId;
+            PublisherId = publisherId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets Plan Id. </summary>

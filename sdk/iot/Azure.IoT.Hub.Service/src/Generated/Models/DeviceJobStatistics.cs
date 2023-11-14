@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The job statistics regarding execution status. </summary>
     public partial class DeviceJobStatistics
     {
-        /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceJobStatistics"/>. </summary>
         internal DeviceJobStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceJobStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceJobStatistics"/>. </summary>
         /// <param name="deviceCount"> The number of devices targeted by the job. </param>
         /// <param name="failedCount"> The number of failed jobs. </param>
         /// <param name="succeededCount"> The number of succeeded jobs. </param>
         /// <param name="runningCount"> The number of running jobs. </param>
         /// <param name="pendingCount"> The number of pending (scheduled) jobs. </param>
-        internal DeviceJobStatistics(int? deviceCount, int? failedCount, int? succeededCount, int? runningCount, int? pendingCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceJobStatistics(int? deviceCount, int? failedCount, int? succeededCount, int? runningCount, int? pendingCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceCount = deviceCount;
             FailedCount = failedCount;
             SucceededCount = succeededCount;
             RunningCount = runningCount;
             PendingCount = pendingCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of devices targeted by the job. </summary>

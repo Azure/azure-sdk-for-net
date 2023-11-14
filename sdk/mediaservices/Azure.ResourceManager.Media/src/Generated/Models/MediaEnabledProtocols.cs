@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify which protocols are enabled. </summary>
     public partial class MediaEnabledProtocols
     {
-        /// <summary> Initializes a new instance of MediaEnabledProtocols. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/>. </summary>
         /// <param name="isDownloadEnabled"> Enable Download protocol or not. </param>
         /// <param name="isDashEnabled"> Enable DASH protocol or not. </param>
         /// <param name="isHlsEnabled"> Enable HLS protocol or not. </param>
@@ -21,6 +27,26 @@ namespace Azure.ResourceManager.Media.Models
             IsDashEnabled = isDashEnabled;
             IsHlsEnabled = isHlsEnabled;
             IsSmoothStreamingEnabled = isSmoothStreamingEnabled;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/>. </summary>
+        /// <param name="isDownloadEnabled"> Enable Download protocol or not. </param>
+        /// <param name="isDashEnabled"> Enable DASH protocol or not. </param>
+        /// <param name="isHlsEnabled"> Enable HLS protocol or not. </param>
+        /// <param name="isSmoothStreamingEnabled"> Enable SmoothStreaming protocol or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaEnabledProtocols(bool isDownloadEnabled, bool isDashEnabled, bool isHlsEnabled, bool isSmoothStreamingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsDownloadEnabled = isDownloadEnabled;
+            IsDashEnabled = isDashEnabled;
+            IsHlsEnabled = isHlsEnabled;
+            IsSmoothStreamingEnabled = isSmoothStreamingEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/> for deserialization. </summary>
+        internal MediaEnabledProtocols()
+        {
         }
 
         /// <summary> Enable Download protocol or not. </summary>

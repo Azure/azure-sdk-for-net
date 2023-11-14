@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The tracking event error info. </summary>
     public partial class IntegrationAccountTrackingEventErrorInfo
     {
-        /// <summary> Initializes a new instance of IntegrationAccountTrackingEventErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEventErrorInfo"/>. </summary>
         public IntegrationAccountTrackingEventErrorInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountTrackingEventErrorInfo"/>. </summary>
+        /// <param name="message"> The message. </param>
+        /// <param name="code"> The code. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountTrackingEventErrorInfo(string message, string code, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Message = message;
+            Code = code;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The message. </summary>

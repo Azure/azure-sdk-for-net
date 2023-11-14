@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineInstallPatchesContent : IUtf8JsonSerializable
+    public partial class MachineInstallPatchesContent : IUtf8JsonSerializable, IJsonModel<MachineInstallPatchesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineInstallPatchesContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MachineInstallPatchesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineInstallPatchesContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineInstallPatchesContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("maximumDuration"u8);
             writer.WriteStringValue(MaximumDuration, "P");
@@ -29,7 +40,112 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MachineInstallPatchesContent IJsonModel<MachineInstallPatchesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineInstallPatchesContent(document.RootElement, options);
+        }
+
+        internal static MachineInstallPatchesContent DeserializeMachineInstallPatchesContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TimeSpan maximumDuration = default;
+            VmGuestPatchRebootSetting rebootSetting = default;
+            Optional<WindowsParameters> windowsParameters = default;
+            Optional<LinuxParameters> linuxParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("maximumDuration"u8))
+                {
+                    maximumDuration = property.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (property.NameEquals("rebootSetting"u8))
+                {
+                    rebootSetting = new VmGuestPatchRebootSetting(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("windowsParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    windowsParameters = WindowsParameters.DeserializeWindowsParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("linuxParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linuxParameters = LinuxParameters.DeserializeLinuxParameters(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters.Value, linuxParameters.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<MachineInstallPatchesContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineInstallPatchesContent IPersistableModel<MachineInstallPatchesContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineInstallPatchesContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineInstallPatchesContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

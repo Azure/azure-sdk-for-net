@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Admin credentials for virtual machine. </summary>
     public partial class MachineLearningVmSshCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningVmSshCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSshCredentials"/>. </summary>
         public MachineLearningVmSshCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningVmSshCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningVmSshCredentials"/>. </summary>
         /// <param name="username"> Username of admin account. </param>
         /// <param name="password"> Password of admin account. </param>
         /// <param name="publicKeyData"> Public key data. </param>
         /// <param name="privateKeyData"> Private key data. </param>
-        internal MachineLearningVmSshCredentials(string username, string password, string publicKeyData, string privateKeyData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningVmSshCredentials(string username, string password, string publicKeyData, string privateKeyData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             PublicKeyData = publicKeyData;
             PrivateKeyData = privateKeyData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Username of admin account. </summary>

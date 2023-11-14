@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Community patchable properties. </summary>
     public partial class IPCommunityRule
     {
-        /// <summary> Initializes a new instance of IPCommunityRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPCommunityRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="communityMembers"> List the community members of IP Community. </param>
@@ -30,17 +33,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityMembers = communityMembers.ToList();
         }
 
-        /// <summary> Initializes a new instance of IPCommunityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunityRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="wellKnownCommunities"> Supported well known Community List. </param>
         /// <param name="communityMembers"> List the community members of IP Community. </param>
-        internal IPCommunityRule(CommunityActionType action, long sequenceNumber, IList<WellKnownCommunity> wellKnownCommunities, IList<string> communityMembers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPCommunityRule(CommunityActionType action, long sequenceNumber, IList<WellKnownCommunity> wellKnownCommunities, IList<string> communityMembers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             SequenceNumber = sequenceNumber;
             WellKnownCommunities = wellKnownCommunities;
             CommunityMembers = communityMembers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IPCommunityRule"/> for deserialization. </summary>
+        internal IPCommunityRule()
+        {
         }
 
         /// <summary> Action to be taken on the configuration. Example: Permit | Deny. </summary>

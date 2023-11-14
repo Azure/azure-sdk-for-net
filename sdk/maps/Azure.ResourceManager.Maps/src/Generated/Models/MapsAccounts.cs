@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Maps;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> A list of Maps Accounts. </summary>
     internal partial class MapsAccounts
     {
-        /// <summary> Initializes a new instance of MapsAccounts. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsAccounts"/>. </summary>
         internal MapsAccounts()
         {
             Value = new ChangeTrackingList<MapsAccountData>();
         }
 
-        /// <summary> Initializes a new instance of MapsAccounts. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAccounts"/>. </summary>
         /// <param name="value"> a Maps Account. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal MapsAccounts(IReadOnlyList<MapsAccountData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsAccounts(IReadOnlyList<MapsAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> a Maps Account. </summary>

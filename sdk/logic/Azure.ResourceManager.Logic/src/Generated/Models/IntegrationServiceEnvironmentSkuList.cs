@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration service environment skus. </summary>
     internal partial class IntegrationServiceEnvironmentSkuList
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuList"/>. </summary>
         internal IntegrationServiceEnvironmentSkuList()
         {
             Value = new ChangeTrackingList<IntegrationServiceEnvironmentSkuDefinition>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuList"/>. </summary>
         /// <param name="value"> The list of integration service environment skus. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal IntegrationServiceEnvironmentSkuList(IReadOnlyList<IntegrationServiceEnvironmentSkuDefinition> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentSkuList(IReadOnlyList<IntegrationServiceEnvironmentSkuDefinition> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of integration service environment skus. </summary>

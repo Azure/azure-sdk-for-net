@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> The source reference for the GitRepository object. </summary>
     public partial class KubernetesGitRepositoryRef
     {
-        /// <summary> Initializes a new instance of KubernetesGitRepositoryRef. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepositoryRef"/>. </summary>
         public KubernetesGitRepositoryRef()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesGitRepositoryRef. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesGitRepositoryRef"/>. </summary>
         /// <param name="branch"> The git repository branch name to checkout. </param>
         /// <param name="tag"> The git repository tag name to checkout. This takes precedence over branch. </param>
         /// <param name="semver"> The semver range used to match against git repository tags. This takes precedence over tag. </param>
         /// <param name="commit"> The commit SHA to checkout. This value must be combined with the branch name to be valid. This takes precedence over semver. </param>
-        internal KubernetesGitRepositoryRef(string branch, string tag, string semver, string commit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesGitRepositoryRef(string branch, string tag, string semver, string commit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Branch = branch;
             Tag = tag;
             Semver = semver;
             Commit = commit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The git repository branch name to checkout. </summary>
