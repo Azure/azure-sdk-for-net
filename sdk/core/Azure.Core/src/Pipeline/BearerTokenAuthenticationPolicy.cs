@@ -18,6 +18,8 @@ namespace Azure.Core.Pipeline
     {
         private string[] _scopes;
         private readonly AccessTokenCache _accessTokenCache;
+        private readonly TokenCredential _tokenCredential;
+        private string? _popNonce;
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -47,6 +49,7 @@ namespace Azure.Core.Pipeline
 
             _scopes = scopes.ToArray();
             _accessTokenCache = new AccessTokenCache(credential, tokenRefreshOffset, tokenRefreshRetryDelay);
+            _tokenCredential = credential;
         }
 
         /// <inheritdoc />
@@ -71,7 +74,11 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         protected virtual ValueTask AuthorizeRequestAsync(HttpMessage message)
         {
-            var context = new TokenRequestContext(_scopes, message.Request.ClientRequestId);
+            var context = _popNonce switch
+            {
+                null => new TokenRequestContext(_scopes, message.Request.ClientRequestId),
+                _ => new TokenRequestContext(_scopes, message.Request.ClientRequestId, proofOfPossessionNonce: _popNonce)
+            };
             return AuthenticateAndAuthorizeRequestAsync(message, context);
         }
 
@@ -149,6 +156,13 @@ namespace Azure.Core.Pipeline
                     }
                 }
             }
+            // Handle the PoP token scenario where successful responses will also contain a WWW-Authenticate header containing a nonce.
+            else if (!message.Response.IsError && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate))
+            {
+                var nonce = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "PoP", "nonce");
+                // if nonce is null, the response was not a PoP token response, so null assignment is intended.
+                _popNonce = nonce;
+            }
         }
 
         /// <summary>
@@ -158,8 +172,18 @@ namespace Azure.Core.Pipeline
         /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
         protected async ValueTask AuthenticateAndAuthorizeRequestAsync(HttpMessage message, TokenRequestContext context)
         {
-            string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, true).ConfigureAwait(false);
-            message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+            // bypass the cache if we have a PoP token request
+            if (context.ProofOfPossessionNonce != null)
+            {
+                _popNonce = context.ProofOfPossessionNonce;
+                var token = await _tokenCredential.GetTokenAsync(context, message.CancellationToken).ConfigureAwait(false);
+                message.Request.Headers.SetValue(HttpHeader.Names.Authorization, "PoP " + token.Token);
+            }
+            else
+            {
+                string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, true).ConfigureAwait(false);
+                message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
+            }
         }
 
         /// <summary>
