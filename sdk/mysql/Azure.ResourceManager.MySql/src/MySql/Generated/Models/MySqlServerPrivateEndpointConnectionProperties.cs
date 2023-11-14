@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Properties of a private endpoint connection. </summary>
     public partial class MySqlServerPrivateEndpointConnectionProperties
     {
-        /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateEndpointConnectionProperties"/>. </summary>
         internal MySqlServerPrivateEndpointConnectionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal MySqlServerPrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, MySqlServerPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, MySqlPrivateEndpointProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlServerPrivateEndpointConnectionProperties(WritableSubResource privateEndpoint, MySqlServerPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, MySqlPrivateEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Private endpoint which the connection belongs to. </summary>

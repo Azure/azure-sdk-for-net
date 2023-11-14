@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListFirewallPolicyRuleCollectionGroups API service call. </summary>
     internal partial class FirewallPolicyRuleCollectionGroupListResult
     {
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupListResult"/>. </summary>
         internal FirewallPolicyRuleCollectionGroupListResult()
         {
             Value = new ChangeTrackingList<FirewallPolicyRuleCollectionGroupData>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupListResult"/>. </summary>
         /// <param name="value"> List of FirewallPolicyRuleCollectionGroups in a FirewallPolicy. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal FirewallPolicyRuleCollectionGroupListResult(IReadOnlyList<FirewallPolicyRuleCollectionGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyRuleCollectionGroupListResult(IReadOnlyList<FirewallPolicyRuleCollectionGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of FirewallPolicyRuleCollectionGroups in a FirewallPolicy. </summary>

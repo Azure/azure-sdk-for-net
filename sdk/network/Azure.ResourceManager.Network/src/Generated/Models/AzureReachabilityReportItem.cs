@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure reachability report details for a given provider location. </summary>
     public partial class AzureReachabilityReportItem
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReportItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportItem"/>. </summary>
         internal AzureReachabilityReportItem()
         {
             Latencies = new ChangeTrackingList<AzureReachabilityReportLatencyInfo>();
         }
 
-        /// <summary> Initializes a new instance of AzureReachabilityReportItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportItem"/>. </summary>
         /// <param name="provider"> The Internet service provider. </param>
         /// <param name="azureLocation"> The Azure region. </param>
         /// <param name="latencies"> List of latency details for each of the time series. </param>
-        internal AzureReachabilityReportItem(string provider, AzureLocation? azureLocation, IReadOnlyList<AzureReachabilityReportLatencyInfo> latencies)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureReachabilityReportItem(string provider, AzureLocation? azureLocation, IReadOnlyList<AzureReachabilityReportLatencyInfo> latencies, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Provider = provider;
             AzureLocation = azureLocation;
             Latencies = latencies;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Internet service provider. </summary>

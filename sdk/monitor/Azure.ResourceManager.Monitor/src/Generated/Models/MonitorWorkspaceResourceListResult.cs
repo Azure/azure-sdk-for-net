@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A pageable list of resources. </summary>
     internal partial class MonitorWorkspaceResourceListResult
     {
-        /// <summary> Initializes a new instance of MonitorWorkspaceResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceListResult"/>. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MonitorWorkspaceResourceListResult(IEnumerable<MonitorWorkspaceResourceData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorWorkspaceResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceListResult"/>. </summary>
         /// <param name="value"> A list of resources. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal MonitorWorkspaceResourceListResult(IReadOnlyList<MonitorWorkspaceResourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorWorkspaceResourceListResult(IReadOnlyList<MonitorWorkspaceResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourceListResult"/> for deserialization. </summary>
+        internal MonitorWorkspaceResourceListResult()
+        {
         }
 
         /// <summary> A list of resources. </summary>

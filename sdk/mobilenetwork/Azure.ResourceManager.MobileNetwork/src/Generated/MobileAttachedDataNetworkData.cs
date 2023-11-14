@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class MobileAttachedDataNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MobileAttachedDataNetworkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileAttachedDataNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="userPlaneDataInterface"> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
         /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </param>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.MobileNetwork
             UserEquipmentStaticAddressPoolPrefix = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MobileAttachedDataNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileAttachedDataNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -60,7 +63,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The packet core instance assigns an IP address to a UE when the UE sets up a PDU session. The static IP address for a specific UE is set in StaticIPConfiguration on the corresponding SIM resource.
         /// At least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix must be defined. If both are defined, they must be of the same size.
         /// </param>
-        internal MobileAttachedDataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneDataInterface, IList<string> dnsAddresses, NaptConfiguration naptConfiguration, IList<string> userEquipmentAddressPoolPrefix, IList<string> userEquipmentStaticAddressPoolPrefix) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileAttachedDataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneDataInterface, IList<string> dnsAddresses, NaptConfiguration naptConfiguration, IList<string> userEquipmentAddressPoolPrefix, IList<string> userEquipmentStaticAddressPoolPrefix, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             UserPlaneDataInterface = userPlaneDataInterface;
@@ -68,6 +72,12 @@ namespace Azure.ResourceManager.MobileNetwork
             NaptConfiguration = naptConfiguration;
             UserEquipmentAddressPoolPrefix = userEquipmentAddressPoolPrefix;
             UserEquipmentStaticAddressPoolPrefix = userEquipmentStaticAddressPoolPrefix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileAttachedDataNetworkData"/> for deserialization. </summary>
+        internal MobileAttachedDataNetworkData()
+        {
         }
 
         /// <summary> The provisioning state of the attached data network resource. </summary>

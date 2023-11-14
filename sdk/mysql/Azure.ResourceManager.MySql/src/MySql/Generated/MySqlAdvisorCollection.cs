@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlAdvisorAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlAdvisorAdvisorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlAdvisorResource(Client, MySqlAdvisorData.DeserializeMySqlAdvisorData(e)), _mySqlAdvisorAdvisorsClientDiagnostics, Pipeline, "MySqlAdvisorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlAdvisorResource(Client, MySqlAdvisorData.DeserializeMySqlAdvisorData(e)), _mySqlAdvisorAdvisorsClientDiagnostics, Pipeline, "MySqlAdvisorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlAdvisorAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlAdvisorAdvisorsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlAdvisorResource(Client, MySqlAdvisorData.DeserializeMySqlAdvisorData(e)), _mySqlAdvisorAdvisorsClientDiagnostics, Pipeline, "MySqlAdvisorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MySqlAdvisorResource(Client, MySqlAdvisorData.DeserializeMySqlAdvisorData(e)), _mySqlAdvisorAdvisorsClientDiagnostics, Pipeline, "MySqlAdvisorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

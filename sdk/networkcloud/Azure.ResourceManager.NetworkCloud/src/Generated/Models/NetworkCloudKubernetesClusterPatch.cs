@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesClusterPatchParameters represents the body of the request to patch the Hybrid AKS cluster. </summary>
     public partial class NetworkCloudKubernetesClusterPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudKubernetesClusterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterPatch"/>. </summary>
         public NetworkCloudKubernetesClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </param>
+        /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. Accepts n.n, n.n.n, and n.n.n-n format. The interpreted version used will be resolved into this field after creation or update. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudKubernetesClusterPatch(IDictionary<string, string> tags, ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
+            KubernetesVersion = kubernetesVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

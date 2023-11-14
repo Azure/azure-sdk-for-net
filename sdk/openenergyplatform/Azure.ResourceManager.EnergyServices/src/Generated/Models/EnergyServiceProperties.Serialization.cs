@@ -5,17 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
-    public partial class EnergyServiceProperties : IUtf8JsonSerializable
+    public partial class EnergyServiceProperties : IUtf8JsonSerializable, IJsonModel<EnergyServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnergyServiceProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EnergyServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EnergyServiceProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EnergyServiceProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DnsName))
+                {
+                    writer.WritePropertyName("dnsName"u8);
+                    writer.WriteStringValue(DnsName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(AuthAppId))
             {
                 writer.WritePropertyName("authAppId"u8);
@@ -31,11 +57,40 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EnergyServiceProperties DeserializeEnergyServiceProperties(JsonElement element)
+        EnergyServiceProperties IJsonModel<EnergyServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnergyServiceProperties(document.RootElement, options);
+        }
+
+        internal static EnergyServiceProperties DeserializeEnergyServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +99,8 @@ namespace Azure.ResourceManager.EnergyServices.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> authAppId = default;
             Optional<IList<DataPartitionName>> dataPartitionNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsName"u8))
@@ -79,8 +136,38 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     dataPartitionNames = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EnergyServiceProperties(dnsName.Value, Optional.ToNullable(provisioningState), authAppId.Value, Optional.ToList(dataPartitionNames));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EnergyServiceProperties(dnsName.Value, Optional.ToNullable(provisioningState), authAppId.Value, Optional.ToList(dataPartitionNames), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EnergyServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EnergyServiceProperties IPersistableModel<EnergyServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EnergyServiceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEnergyServiceProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<EnergyServiceProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

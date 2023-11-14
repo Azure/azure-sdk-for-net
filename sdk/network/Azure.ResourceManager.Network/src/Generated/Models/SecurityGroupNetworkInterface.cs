@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network interface and all its associated security rules. </summary>
     public partial class SecurityGroupNetworkInterface
     {
-        /// <summary> Initializes a new instance of SecurityGroupNetworkInterface. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityGroupNetworkInterface"/>. </summary>
         internal SecurityGroupNetworkInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityGroupNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityGroupNetworkInterface"/>. </summary>
         /// <param name="id"> ID of the network interface. </param>
         /// <param name="securityRuleAssociations"> All security rules associated with the network interface. </param>
-        internal SecurityGroupNetworkInterface(string id, SecurityRuleAssociations securityRuleAssociations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityGroupNetworkInterface(string id, SecurityRuleAssociations securityRuleAssociations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SecurityRuleAssociations = securityRuleAssociations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of the network interface. </summary>

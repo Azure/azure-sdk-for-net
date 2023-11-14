@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class ActionGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ActionGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActionGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ActionGroupData(AzureLocation location) : base(location)
         {
@@ -35,7 +39,7 @@ namespace Azure.ResourceManager.Monitor
             EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
         }
 
-        /// <summary> Initializes a new instance of ActionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +59,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
-        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             GroupShortName = groupShortName;
             IsEnabled = isEnabled;
@@ -70,6 +75,12 @@ namespace Azure.ResourceManager.Monitor
             AzureFunctionReceivers = azureFunctionReceivers;
             ArmRoleReceivers = armRoleReceivers;
             EventHubReceivers = eventHubReceivers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ActionGroupData"/> for deserialization. </summary>
+        internal ActionGroupData()
+        {
         }
 
         /// <summary> The short name of the action group. This will be used in SMS messages. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The network resource usage. </summary>
     public partial class NetworkUsage
     {
-        /// <summary> Initializes a new instance of NetworkUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
@@ -29,19 +33,26 @@ namespace Azure.ResourceManager.Network.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of NetworkUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkUsage"/>. </summary>
         /// <param name="id"> Resource identifier. </param>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal NetworkUsage(ResourceIdentifier id, NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkUsage(ResourceIdentifier id, NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkUsage"/> for deserialization. </summary>
+        internal NetworkUsage()
+        {
         }
 
         /// <summary> Resource identifier. </summary>

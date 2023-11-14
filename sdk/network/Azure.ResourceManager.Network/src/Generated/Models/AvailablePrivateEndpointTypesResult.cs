@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An array of available PrivateEndpoint types. </summary>
     internal partial class AvailablePrivateEndpointTypesResult
     {
-        /// <summary> Initializes a new instance of AvailablePrivateEndpointTypesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailablePrivateEndpointTypesResult"/>. </summary>
         internal AvailablePrivateEndpointTypesResult()
         {
             Value = new ChangeTrackingList<AvailablePrivateEndpointType>();
         }
 
-        /// <summary> Initializes a new instance of AvailablePrivateEndpointTypesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailablePrivateEndpointTypesResult"/>. </summary>
         /// <param name="value"> An array of available privateEndpoint type. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AvailablePrivateEndpointTypesResult(IReadOnlyList<AvailablePrivateEndpointType> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailablePrivateEndpointTypesResult(IReadOnlyList<AvailablePrivateEndpointType> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of available privateEndpoint type. </summary>

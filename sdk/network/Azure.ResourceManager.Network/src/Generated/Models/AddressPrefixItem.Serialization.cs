@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AddressPrefixItem : IUtf8JsonSerializable
+    public partial class AddressPrefixItem : IUtf8JsonSerializable, IJsonModel<AddressPrefixItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddressPrefixItem>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AddressPrefixItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AddressPrefixItem>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AddressPrefixItem>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressPrefix))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("addressPrefixType"u8);
                 writer.WriteStringValue(AddressPrefixType.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AddressPrefixItem DeserializeAddressPrefixItem(JsonElement element)
+        AddressPrefixItem IJsonModel<AddressPrefixItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddressPrefixItem(document.RootElement, options);
+        }
+
+        internal static AddressPrefixItem DeserializeAddressPrefixItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> addressPrefix = default;
             Optional<AddressPrefixType> addressPrefixType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressPrefix"u8))
@@ -52,8 +94,38 @@ namespace Azure.ResourceManager.Network.Models
                     addressPrefixType = new AddressPrefixType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AddressPrefixItem(addressPrefix.Value, Optional.ToNullable(addressPrefixType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AddressPrefixItem(addressPrefix.Value, Optional.ToNullable(addressPrefixType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AddressPrefixItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AddressPrefixItem IPersistableModel<AddressPrefixItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddressPrefixItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAddressPrefixItem(document.RootElement, options);
+        }
+
+        string IPersistableModel<AddressPrefixItem>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

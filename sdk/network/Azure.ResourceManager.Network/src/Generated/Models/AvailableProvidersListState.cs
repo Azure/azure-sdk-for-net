@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> State details. </summary>
     public partial class AvailableProvidersListState
     {
-        /// <summary> Initializes a new instance of AvailableProvidersListState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersListState"/>. </summary>
         internal AvailableProvidersListState()
         {
             Providers = new ChangeTrackingList<string>();
             Cities = new ChangeTrackingList<AvailableProvidersListCity>();
         }
 
-        /// <summary> Initializes a new instance of AvailableProvidersListState. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersListState"/>. </summary>
         /// <param name="stateName"> The state name. </param>
         /// <param name="providers"> A list of Internet service providers. </param>
         /// <param name="cities"> List of available cities or towns in the state. </param>
-        internal AvailableProvidersListState(string stateName, IReadOnlyList<string> providers, IReadOnlyList<AvailableProvidersListCity> cities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableProvidersListState(string stateName, IReadOnlyList<string> providers, IReadOnlyList<AvailableProvidersListCity> cities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StateName = stateName;
             Providers = providers;
             Cities = cities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state name. </summary>

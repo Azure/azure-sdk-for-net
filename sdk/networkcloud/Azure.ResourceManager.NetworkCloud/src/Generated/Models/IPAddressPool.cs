@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> IpAddressPool represents a pool of IP addresses that can be allocated to a service. </summary>
     public partial class IPAddressPool
     {
-        /// <summary> Initializes a new instance of IPAddressPool. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPAddressPool"/>. </summary>
         /// <param name="addresses"> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. </param>
         /// <param name="name"> The name used to identify this IP address pool for association with a BGP advertisement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addresses"/> or <paramref name="name"/> is null. </exception>
@@ -28,17 +31,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of IPAddressPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddressPool"/>. </summary>
         /// <param name="addresses"> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. </param>
         /// <param name="autoAssign"> The indicator to determine if automatic allocation from the pool should occur. </param>
         /// <param name="name"> The name used to identify this IP address pool for association with a BGP advertisement. </param>
         /// <param name="onlyUseHostIPs"> The indicator to prevent the use of IP addresses ending with .0 and .255 for this pool. Enabling this option will only use IP addresses between .1 and .254 inclusive. </param>
-        internal IPAddressPool(IList<string> addresses, BfdEnabled? autoAssign, string name, BfdEnabled? onlyUseHostIPs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPAddressPool(IList<string> addresses, BfdEnabled? autoAssign, string name, BfdEnabled? onlyUseHostIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Addresses = addresses;
             AutoAssign = autoAssign;
             Name = name;
             OnlyUseHostIPs = onlyUseHostIPs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IPAddressPool"/> for deserialization. </summary>
+        internal IPAddressPool()
+        {
         }
 
         /// <summary> The list of IP address ranges. Each range can be a either a subnet in CIDR format or an explicit start-end range of IP addresses. </summary>

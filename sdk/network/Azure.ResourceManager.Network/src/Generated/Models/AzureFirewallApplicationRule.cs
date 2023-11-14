@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of an application rule. </summary>
     public partial class AzureFirewallApplicationRule
     {
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRule"/>. </summary>
         public AzureFirewallApplicationRule()
         {
             SourceAddresses = new ChangeTrackingList<string>();
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             SourceIPGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallApplicationRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallApplicationRule"/>. </summary>
         /// <param name="name"> Name of the application rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
         /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
         /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        internal AzureFirewallApplicationRule(string name, string description, IList<string> sourceAddresses, IList<AzureFirewallApplicationRuleProtocol> protocols, IList<string> targetFqdns, IList<string> fqdnTags, IList<string> sourceIPGroups)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallApplicationRule(string name, string description, IList<string> sourceAddresses, IList<AzureFirewallApplicationRuleProtocol> protocols, IList<string> targetFqdns, IList<string> fqdnTags, IList<string> sourceIPGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             TargetFqdns = targetFqdns;
             FqdnTags = fqdnTags;
             SourceIPGroups = sourceIPGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the application rule. </summary>

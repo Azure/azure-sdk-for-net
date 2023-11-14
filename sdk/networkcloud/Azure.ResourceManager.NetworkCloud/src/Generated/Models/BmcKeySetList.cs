@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BmcKeySetList represents a list of baseboard management controller key sets. </summary>
     internal partial class BmcKeySetList
     {
-        /// <summary> Initializes a new instance of BmcKeySetList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BmcKeySetList"/>. </summary>
         internal BmcKeySetList()
         {
             Value = new ChangeTrackingList<NetworkCloudBmcKeySetData>();
         }
 
-        /// <summary> Initializes a new instance of BmcKeySetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BmcKeySetList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of baseboard management controller key sets. </param>
-        internal BmcKeySetList(string nextLink, IReadOnlyList<NetworkCloudBmcKeySetData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BmcKeySetList(string nextLink, IReadOnlyList<NetworkCloudBmcKeySetData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of operations. </summary>

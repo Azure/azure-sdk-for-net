@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    public partial class PrivateDnsSoaRecordInfo : IUtf8JsonSerializable
+    public partial class PrivateDnsSoaRecordInfo : IUtf8JsonSerializable, IJsonModel<PrivateDnsSoaRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsSoaRecordInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PrivateDnsSoaRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PrivateDnsSoaRecordInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PrivateDnsSoaRecordInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Host))
             {
@@ -50,11 +61,40 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 writer.WritePropertyName("minimumTtl"u8);
                 writer.WriteNumberValue(MinimumTtlInSeconds.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateDnsSoaRecordInfo DeserializePrivateDnsSoaRecordInfo(JsonElement element)
+        PrivateDnsSoaRecordInfo IJsonModel<PrivateDnsSoaRecordInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateDnsSoaRecordInfo(document.RootElement, options);
+        }
+
+        internal static PrivateDnsSoaRecordInfo DeserializePrivateDnsSoaRecordInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +106,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
             Optional<long> retryTime = default;
             Optional<long> expireTime = default;
             Optional<long> minimumTtl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -123,8 +165,38 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     minimumTtl = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateDnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTtl));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrivateDnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTtl), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateDnsSoaRecordInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PrivateDnsSoaRecordInfo IPersistableModel<PrivateDnsSoaRecordInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePrivateDnsSoaRecordInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<PrivateDnsSoaRecordInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

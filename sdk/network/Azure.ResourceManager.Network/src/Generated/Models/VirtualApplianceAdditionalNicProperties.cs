@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network Virtual Appliance Additional NIC properties. </summary>
     public partial class VirtualApplianceAdditionalNicProperties
     {
-        /// <summary> Initializes a new instance of VirtualApplianceAdditionalNicProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceAdditionalNicProperties"/>. </summary>
         public VirtualApplianceAdditionalNicProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceAdditionalNicProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceAdditionalNicProperties"/>. </summary>
         /// <param name="name"> Name of additional nic. </param>
         /// <param name="hasPublicIP"> Flag (true or false) for Intent for Public Ip on additional nic. </param>
-        internal VirtualApplianceAdditionalNicProperties(string name, bool? hasPublicIP)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplianceAdditionalNicProperties(string name, bool? hasPublicIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             HasPublicIP = hasPublicIP;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of additional nic. </summary>

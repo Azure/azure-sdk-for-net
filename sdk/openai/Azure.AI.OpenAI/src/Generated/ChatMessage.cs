@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> A single, role-attributed message within a chat completion interaction. </summary>
     public partial class ChatMessage
     {
-        /// <summary> Initializes a new instance of ChatMessage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessage"/>. </summary>
         /// <param name="role"> The role associated with this message payload. </param>
         /// <param name="content"> The text associated with this message payload. </param>
         public ChatMessage(ChatRole role, string content)
         {
             Role = role;
             Content = content;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ChatMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessage"/>. </summary>
         /// <param name="role"> The role associated with this message payload. </param>
         /// <param name="content"> The text associated with this message payload. </param>
         /// <param name="name">
@@ -34,13 +42,15 @@ namespace Azure.AI.OpenAI
         ///   request.
         ///   This context information is only populated when using Azure OpenAI with chat extensions capabilities configured.
         /// </param>
-        internal ChatMessage(ChatRole role, string content, string name, FunctionCall functionCall, AzureChatExtensionsMessageContext azureExtensionsContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatMessage(ChatRole role, string content, string name, FunctionCall functionCall, AzureChatExtensionsMessageContext azureExtensionsContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Content = content;
             Name = name;
             FunctionCall = functionCall;
             AzureExtensionsContext = azureExtensionsContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role associated with this message payload. </summary>

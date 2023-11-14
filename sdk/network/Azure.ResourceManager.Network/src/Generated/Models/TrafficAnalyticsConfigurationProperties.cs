@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,24 +14,29 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the configuration of traffic analytics. </summary>
     public partial class TrafficAnalyticsConfigurationProperties
     {
-        /// <summary> Initializes a new instance of TrafficAnalyticsConfigurationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficAnalyticsConfigurationProperties"/>. </summary>
         public TrafficAnalyticsConfigurationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficAnalyticsConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficAnalyticsConfigurationProperties"/>. </summary>
         /// <param name="enabled"> Flag to enable/disable traffic analytics. </param>
         /// <param name="workspaceId"> The resource guid of the attached workspace. </param>
         /// <param name="workspaceRegion"> The location of the attached workspace. </param>
         /// <param name="workspaceResourceId"> Resource Id of the attached workspace. </param>
         /// <param name="trafficAnalyticsIntervalInMinutes"> The interval in minutes which would decide how frequently TA service should do flow analytics. </param>
-        internal TrafficAnalyticsConfigurationProperties(bool? enabled, string workspaceId, string workspaceRegion, ResourceIdentifier workspaceResourceId, int? trafficAnalyticsIntervalInMinutes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficAnalyticsConfigurationProperties(bool? enabled, string workspaceId, string workspaceRegion, ResourceIdentifier workspaceResourceId, int? trafficAnalyticsIntervalInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             WorkspaceId = workspaceId;
             WorkspaceRegion = workspaceRegion;
             WorkspaceResourceId = workspaceResourceId;
             TrafficAnalyticsIntervalInMinutes = trafficAnalyticsIntervalInMinutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag to enable/disable traffic analytics. </summary>

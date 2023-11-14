@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SKU of nat gateway. </summary>
     internal partial class NatGatewaySku
     {
-        /// <summary> Initializes a new instance of NatGatewaySku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NatGatewaySku"/>. </summary>
         public NatGatewaySku()
         {
         }
 
-        /// <summary> Initializes a new instance of NatGatewaySku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NatGatewaySku"/>. </summary>
         /// <param name="name"> Name of Nat Gateway SKU. </param>
-        internal NatGatewaySku(NatGatewaySkuName? name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NatGatewaySku(NatGatewaySkuName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of Nat Gateway SKU. </summary>

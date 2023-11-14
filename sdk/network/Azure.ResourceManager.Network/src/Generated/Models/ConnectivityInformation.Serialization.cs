@@ -5,16 +5,122 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityInformation
+    public partial class ConnectivityInformation : IUtf8JsonSerializable, IJsonModel<ConnectivityInformation>
     {
-        internal static ConnectivityInformation DeserializeConnectivityInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityInformation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConnectivityInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectivityInformation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectivityInformation>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Hops))
+                {
+                    writer.WritePropertyName("hops"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Hops)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetworkConnectionStatus))
+                {
+                    writer.WritePropertyName("connectionStatus"u8);
+                    writer.WriteStringValue(NetworkConnectionStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AvgLatencyInMs))
+                {
+                    writer.WritePropertyName("avgLatencyInMs"u8);
+                    writer.WriteNumberValue(AvgLatencyInMs.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MinLatencyInMs))
+                {
+                    writer.WritePropertyName("minLatencyInMs"u8);
+                    writer.WriteNumberValue(MinLatencyInMs.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MaxLatencyInMs))
+                {
+                    writer.WritePropertyName("maxLatencyInMs"u8);
+                    writer.WriteNumberValue(MaxLatencyInMs.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProbesSent))
+                {
+                    writer.WritePropertyName("probesSent"u8);
+                    writer.WriteNumberValue(ProbesSent.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProbesFailed))
+                {
+                    writer.WritePropertyName("probesFailed"u8);
+                    writer.WriteNumberValue(ProbesFailed.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectivityInformation IJsonModel<ConnectivityInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityInformation(document.RootElement, options);
+        }
+
+        internal static ConnectivityInformation DeserializeConnectivityInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +132,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> maxLatencyInMs = default;
             Optional<int> probesSent = default;
             Optional<int> probesFailed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hops"u8))
@@ -96,8 +204,38 @@ namespace Azure.ResourceManager.Network.Models
                     probesFailed = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectivityInformation(Optional.ToList(hops), Optional.ToNullable(connectionStatus), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectivityInformation(Optional.ToList(hops), Optional.ToNullable(connectionStatus), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectivityInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectivityInformation IPersistableModel<ConnectivityInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectivityInformation(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectivityInformation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

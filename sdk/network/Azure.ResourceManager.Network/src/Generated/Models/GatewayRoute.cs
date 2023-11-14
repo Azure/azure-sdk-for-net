@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gateway routing details. </summary>
     public partial class GatewayRoute
     {
-        /// <summary> Initializes a new instance of GatewayRoute. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayRoute"/>. </summary>
         internal GatewayRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayRoute"/>. </summary>
         /// <param name="localAddress"> The gateway's local address. </param>
         /// <param name="network"> The route's network prefix. </param>
         /// <param name="nextHop"> The route's next hop. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="origin"> The source this route was learned from. </param>
         /// <param name="asPath"> The route's AS path sequence. </param>
         /// <param name="weight"> The route's weight. </param>
-        internal GatewayRoute(string localAddress, string network, string nextHop, string sourcePeer, string origin, string asPath, int? weight)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayRoute(string localAddress, string network, string nextHop, string sourcePeer, string origin, string asPath, int? weight, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocalAddress = localAddress;
             Network = network;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             Origin = origin;
             AsPath = asPath;
             Weight = weight;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The gateway's local address. </summary>

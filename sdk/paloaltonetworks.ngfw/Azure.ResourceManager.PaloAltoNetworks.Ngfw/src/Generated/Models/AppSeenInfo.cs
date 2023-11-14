@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Definition for App Seen. </summary>
     public partial class AppSeenInfo
     {
-        /// <summary> Initializes a new instance of AppSeenInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/>. </summary>
         /// <param name="title"> title. </param>
         /// <param name="category"> category. </param>
         /// <param name="subCategory"> subCategory. </param>
@@ -39,6 +43,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Tag = tag;
             Technology = technology;
             StandardPorts = standardPorts;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/>. </summary>
+        /// <param name="title"> title. </param>
+        /// <param name="category"> category. </param>
+        /// <param name="subCategory"> subCategory. </param>
+        /// <param name="risk"> risk. </param>
+        /// <param name="tag"> tag. </param>
+        /// <param name="technology"> technology. </param>
+        /// <param name="standardPorts"> standardPorts. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppSeenInfo(string title, string category, string subCategory, string risk, string tag, string technology, string standardPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Title = title;
+            Category = category;
+            SubCategory = subCategory;
+            Risk = risk;
+            Tag = tag;
+            Technology = technology;
+            StandardPorts = standardPorts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/> for deserialization. </summary>
+        internal AppSeenInfo()
+        {
         }
 
         /// <summary> title. </summary>

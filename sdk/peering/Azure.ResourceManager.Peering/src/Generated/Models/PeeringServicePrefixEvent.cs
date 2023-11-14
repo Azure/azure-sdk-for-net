@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The details of the event associated with a prefix. </summary>
     public partial class PeeringServicePrefixEvent
     {
-        /// <summary> Initializes a new instance of PeeringServicePrefixEvent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringServicePrefixEvent"/>. </summary>
         internal PeeringServicePrefixEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringServicePrefixEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServicePrefixEvent"/>. </summary>
         /// <param name="eventTimestamp"> The timestamp of the event associated with a prefix. </param>
         /// <param name="eventType"> The type of the event associated with a prefix. </param>
         /// <param name="eventSummary"> The summary of the event associated with a prefix. </param>
         /// <param name="eventLevel"> The level of the event associated with a prefix. </param>
         /// <param name="eventDescription"> The description of the event associated with a prefix. </param>
-        internal PeeringServicePrefixEvent(DateTimeOffset? eventTimestamp, string eventType, string eventSummary, string eventLevel, string eventDescription)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringServicePrefixEvent(DateTimeOffset? eventTimestamp, string eventType, string eventSummary, string eventLevel, string eventDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventTimestamp = eventTimestamp;
             EventType = eventType;
             EventSummary = eventSummary;
             EventLevel = eventLevel;
             EventDescription = eventDescription;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The timestamp of the event associated with a prefix. </summary>

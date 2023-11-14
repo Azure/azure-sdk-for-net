@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class PeeringServicePrefixData : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringServicePrefixData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringServicePrefixData"/>. </summary>
         public PeeringServicePrefixData()
         {
             Events = new ChangeTrackingList<PeeringServicePrefixEvent>();
         }
 
-        /// <summary> Initializes a new instance of PeeringServicePrefixData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServicePrefixData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="events"> The list of events for peering service prefix. </param>
         /// <param name="peeringServicePrefixKey"> The peering service prefix key. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringServicePrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, PeeringLearnedType? learnedType, string errorMessage, IReadOnlyList<PeeringServicePrefixEvent> events, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringServicePrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string prefix, PeeringPrefixValidationState? prefixValidationState, PeeringLearnedType? learnedType, string errorMessage, IReadOnlyList<PeeringServicePrefixEvent> events, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Prefix = prefix;
             PrefixValidationState = prefixValidationState;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.Peering
             Events = events;
             PeeringServicePrefixKey = peeringServicePrefixKey;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The prefix from which your traffic originates. </summary>

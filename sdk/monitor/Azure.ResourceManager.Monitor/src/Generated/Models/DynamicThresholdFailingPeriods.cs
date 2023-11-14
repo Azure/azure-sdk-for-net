@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The minimum number of violations required within the selected lookback time window required to raise an alert. </summary>
     public partial class DynamicThresholdFailingPeriods
     {
-        /// <summary> Initializes a new instance of DynamicThresholdFailingPeriods. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynamicThresholdFailingPeriods"/>. </summary>
         /// <param name="numberOfEvaluationPeriods"> The number of aggregated lookback points. The lookback time window is calculated based on the aggregation granularity (windowSize) and the selected number of aggregated points. </param>
         /// <param name="minFailingPeriodsToAlert"> The number of violations to trigger an alert. Should be smaller or equal to numberOfEvaluationPeriods. </param>
         public DynamicThresholdFailingPeriods(float numberOfEvaluationPeriods, float minFailingPeriodsToAlert)
         {
             NumberOfEvaluationPeriods = numberOfEvaluationPeriods;
             MinFailingPeriodsToAlert = minFailingPeriodsToAlert;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicThresholdFailingPeriods"/>. </summary>
+        /// <param name="numberOfEvaluationPeriods"> The number of aggregated lookback points. The lookback time window is calculated based on the aggregation granularity (windowSize) and the selected number of aggregated points. </param>
+        /// <param name="minFailingPeriodsToAlert"> The number of violations to trigger an alert. Should be smaller or equal to numberOfEvaluationPeriods. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynamicThresholdFailingPeriods(float numberOfEvaluationPeriods, float minFailingPeriodsToAlert, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NumberOfEvaluationPeriods = numberOfEvaluationPeriods;
+            MinFailingPeriodsToAlert = minFailingPeriodsToAlert;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynamicThresholdFailingPeriods"/> for deserialization. </summary>
+        internal DynamicThresholdFailingPeriods()
+        {
         }
 
         /// <summary> The number of aggregated lookback points. The lookback time window is calculated based on the aggregation granularity (windowSize) and the selected number of aggregated points. </summary>

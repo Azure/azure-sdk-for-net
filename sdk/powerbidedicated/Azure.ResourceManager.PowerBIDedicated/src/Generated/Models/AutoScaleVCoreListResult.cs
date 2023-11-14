@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> An array of auto scale v-core resources. </summary>
     internal partial class AutoScaleVCoreListResult
     {
-        /// <summary> Initializes a new instance of AutoScaleVCoreListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreListResult"/>. </summary>
         /// <param name="value"> An array of auto scale v-core resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AutoScaleVCoreListResult(IEnumerable<AutoScaleVCoreData> value)
@@ -26,11 +29,18 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoScaleVCoreListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreListResult"/>. </summary>
         /// <param name="value"> An array of auto scale v-core resources. </param>
-        internal AutoScaleVCoreListResult(IReadOnlyList<AutoScaleVCoreData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoScaleVCoreListResult(IReadOnlyList<AutoScaleVCoreData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreListResult"/> for deserialization. </summary>
+        internal AutoScaleVCoreListResult()
+        {
         }
 
         /// <summary> An array of auto scale v-core resources. </summary>

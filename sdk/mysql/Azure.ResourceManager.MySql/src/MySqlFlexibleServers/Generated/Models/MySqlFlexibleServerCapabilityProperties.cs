@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Location capabilities. </summary>
     public partial class MySqlFlexibleServerCapabilityProperties
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerCapabilityProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerCapabilityProperties"/>. </summary>
         internal MySqlFlexibleServerCapabilityProperties()
         {
             SupportedHAMode = new ChangeTrackingList<string>();
@@ -21,17 +25,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             SupportedFlexibleServerEditions = new ChangeTrackingList<MySqlFlexibleServerEditionCapability>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerCapabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="zone"> zone name. </param>
         /// <param name="supportedHAMode"> Supported high availability mode. </param>
         /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>
         /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
-        internal MySqlFlexibleServerCapabilityProperties(string zone, IReadOnlyList<string> supportedHAMode, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<MySqlFlexibleServerEditionCapability> supportedFlexibleServerEditions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerCapabilityProperties(string zone, IReadOnlyList<string> supportedHAMode, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<MySqlFlexibleServerEditionCapability> supportedFlexibleServerEditions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Zone = zone;
             SupportedHAMode = supportedHAMode;
             SupportedGeoBackupRegions = supportedGeoBackupRegions;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> zone name. </summary>

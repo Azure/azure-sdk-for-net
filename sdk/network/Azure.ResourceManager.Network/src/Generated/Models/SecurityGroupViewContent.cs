@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the VM to check security groups for. </summary>
     public partial class SecurityGroupViewContent
     {
-        /// <summary> Initializes a new instance of SecurityGroupViewContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityGroupViewContent"/>. </summary>
         /// <param name="targetResourceId"> ID of the target VM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public SecurityGroupViewContent(ResourceIdentifier targetResourceId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
 
             TargetResourceId = targetResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityGroupViewContent"/>. </summary>
+        /// <param name="targetResourceId"> ID of the target VM. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityGroupViewContent(ResourceIdentifier targetResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetResourceId = targetResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityGroupViewContent"/> for deserialization. </summary>
+        internal SecurityGroupViewContent()
+        {
         }
 
         /// <summary> ID of the target VM. </summary>

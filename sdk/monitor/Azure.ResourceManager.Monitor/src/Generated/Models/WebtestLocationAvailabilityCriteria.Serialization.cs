@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class WebtestLocationAvailabilityCriteria : IUtf8JsonSerializable
+    public partial class WebtestLocationAvailabilityCriteria : IUtf8JsonSerializable, IJsonModel<WebtestLocationAvailabilityCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebtestLocationAvailabilityCriteria>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<WebtestLocationAvailabilityCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WebtestLocationAvailabilityCriteria>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WebtestLocationAvailabilityCriteria>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("webTestId"u8);
             writer.WriteStringValue(WebTestId);
@@ -40,8 +49,22 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element)
+        WebtestLocationAvailabilityCriteria IJsonModel<WebtestLocationAvailabilityCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebtestLocationAvailabilityCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebtestLocationAvailabilityCriteria(document.RootElement, options);
+        }
+
+        internal static WebtestLocationAvailabilityCriteria DeserializeWebtestLocationAvailabilityCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,5 +102,30 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties = additionalPropertiesDictionary;
             return new WebtestLocationAvailabilityCriteria(odataType, additionalProperties, webTestId, componentId, failedLocationCount);
         }
+
+        BinaryData IPersistableModel<WebtestLocationAvailabilityCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebtestLocationAvailabilityCriteria)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WebtestLocationAvailabilityCriteria IPersistableModel<WebtestLocationAvailabilityCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WebtestLocationAvailabilityCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWebtestLocationAvailabilityCriteria(document.RootElement, options);
+        }
+
+        string IPersistableModel<WebtestLocationAvailabilityCriteria>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

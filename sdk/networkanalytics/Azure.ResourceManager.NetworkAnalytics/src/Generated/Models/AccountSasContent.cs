@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The details for storage account sas creation. </summary>
     public partial class AccountSasContent
     {
-        /// <summary> Initializes a new instance of AccountSasContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasContent"/>. </summary>
         /// <param name="startTimeStamp"> Sas token start timestamp. </param>
         /// <param name="expiryTimeStamp"> Sas token expiry timestamp. </param>
         /// <param name="ipAddress"> Ip Address. </param>
@@ -25,6 +29,24 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             StartTimeStamp = startTimeStamp;
             ExpiryTimeStamp = expiryTimeStamp;
             IPAddress = ipAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasContent"/>. </summary>
+        /// <param name="startTimeStamp"> Sas token start timestamp. </param>
+        /// <param name="expiryTimeStamp"> Sas token expiry timestamp. </param>
+        /// <param name="ipAddress"> Ip Address. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccountSasContent(DateTimeOffset startTimeStamp, DateTimeOffset expiryTimeStamp, string ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTimeStamp = startTimeStamp;
+            ExpiryTimeStamp = expiryTimeStamp;
+            IPAddress = ipAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasContent"/> for deserialization. </summary>
+        internal AccountSasContent()
+        {
         }
 
         /// <summary> Sas token start timestamp. </summary>

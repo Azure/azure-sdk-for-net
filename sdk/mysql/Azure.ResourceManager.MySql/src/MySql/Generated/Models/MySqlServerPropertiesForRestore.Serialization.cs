@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlServerPropertiesForRestore : IUtf8JsonSerializable
+    public partial class MySqlServerPropertiesForRestore : IUtf8JsonSerializable, IJsonModel<MySqlServerPropertiesForRestore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPropertiesForRestore>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MySqlServerPropertiesForRestore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MySqlServerPropertiesForRestore>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MySqlServerPropertiesForRestore>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourceServerId"u8);
             writer.WriteStringValue(SourceServerId);
@@ -51,7 +62,158 @@ namespace Azure.ResourceManager.MySql.Models
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        MySqlServerPropertiesForRestore IJsonModel<MySqlServerPropertiesForRestore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlServerPropertiesForRestore(document.RootElement, options);
+        }
+
+        internal static MySqlServerPropertiesForRestore DeserializeMySqlServerPropertiesForRestore(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier sourceServerId = default;
+            DateTimeOffset restorePointInTime = default;
+            Optional<MySqlServerVersion> version = default;
+            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
+            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
+            Optional<MySqlInfrastructureEncryption> infrastructureEncryption = default;
+            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
+            Optional<MySqlStorageProfile> storageProfile = default;
+            MySqlCreateMode createMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceServerId"u8))
+                {
+                    sourceServerId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("restorePointInTime"u8))
+                {
+                    restorePointInTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    version = new MySqlServerVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sslEnforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sslEnforcement = property.Value.GetString().ToMySqlSslEnforcementEnum();
+                    continue;
+                }
+                if (property.NameEquals("minimalTlsVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimalTlsVersion = new MySqlMinimalTlsVersionEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("infrastructureEncryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    infrastructureEncryption = new MySqlInfrastructureEncryption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new MySqlPublicNetworkAccessEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new MySqlCreateMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MySqlServerPropertiesForRestore(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData, sourceServerId, restorePointInTime);
+        }
+
+        BinaryData IPersistableModel<MySqlServerPropertiesForRestore>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MySqlServerPropertiesForRestore IPersistableModel<MySqlServerPropertiesForRestore>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlServerPropertiesForRestore)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMySqlServerPropertiesForRestore(document.RootElement, options);
+        }
+
+        string IPersistableModel<MySqlServerPropertiesForRestore>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Response containing operationId for a specific purge action. </summary>
     public partial class OperationalInsightsWorkspacePurgeResult
     {
-        /// <summary> Initializes a new instance of OperationalInsightsWorkspacePurgeResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeResult"/>. </summary>
         /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationStringId"/> is null. </exception>
         internal OperationalInsightsWorkspacePurgeResult(string operationStringId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Argument.AssertNotNull(operationStringId, nameof(operationStringId));
 
             OperationStringId = operationStringId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeResult"/>. </summary>
+        /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsWorkspacePurgeResult(string operationStringId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OperationStringId = operationStringId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeResult"/> for deserialization. </summary>
+        internal OperationalInsightsWorkspacePurgeResult()
+        {
         }
 
         /// <summary> Id to use when querying for status for a particular purge operation. </summary>

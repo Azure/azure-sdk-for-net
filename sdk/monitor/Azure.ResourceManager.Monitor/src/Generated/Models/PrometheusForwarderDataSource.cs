@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of Prometheus metrics forwarding configuration. </summary>
     public partial class PrometheusForwarderDataSource
     {
-        /// <summary> Initializes a new instance of PrometheusForwarderDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrometheusForwarderDataSource"/>. </summary>
         public PrometheusForwarderDataSource()
         {
             Streams = new ChangeTrackingList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream>();
             LabelIncludeFilter = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PrometheusForwarderDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrometheusForwarderDataSource"/>. </summary>
         /// <param name="streams"> List of streams that this data source will be sent to. </param>
         /// <param name="labelIncludeFilter">
         /// The list of label inclusion filters in the form of label "name-value" pairs.
@@ -31,11 +35,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal PrometheusForwarderDataSource(IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> streams, IDictionary<string, string> labelIncludeFilter, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrometheusForwarderDataSource(IList<DataCollectionRuleKnownPrometheusForwarderDataSourceStream> streams, IDictionary<string, string> labelIncludeFilter, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Streams = streams;
             LabelIncludeFilter = labelIncludeFilter;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of streams that this data source will be sent to. </summary>

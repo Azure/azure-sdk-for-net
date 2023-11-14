@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the source of connection monitor. </summary>
     public partial class ConnectionMonitorSource
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSource"/>. </summary>
         /// <param name="resourceId"> The ID of the resource used as the source by connection monitor. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ConnectionMonitorSource(ResourceIdentifier resourceId)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.Network.Models
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSource"/>. </summary>
         /// <param name="resourceId"> The ID of the resource used as the source by connection monitor. </param>
         /// <param name="port"> The source port used by connection monitor. </param>
-        internal ConnectionMonitorSource(ResourceIdentifier resourceId, int? port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorSource(ResourceIdentifier resourceId, int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorSource"/> for deserialization. </summary>
+        internal ConnectionMonitorSource()
+        {
         }
 
         /// <summary> The ID of the resource used as the source by connection monitor. </summary>

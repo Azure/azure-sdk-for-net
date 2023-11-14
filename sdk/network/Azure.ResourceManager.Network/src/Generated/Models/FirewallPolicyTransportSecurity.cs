@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration needed to perform TLS termination &amp; initiation. </summary>
     internal partial class FirewallPolicyTransportSecurity
     {
-        /// <summary> Initializes a new instance of FirewallPolicyTransportSecurity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyTransportSecurity"/>. </summary>
         public FirewallPolicyTransportSecurity()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyTransportSecurity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyTransportSecurity"/>. </summary>
         /// <param name="certificateAuthority"> The CA used for intermediate CA generation. </param>
-        internal FirewallPolicyTransportSecurity(FirewallPolicyCertificateAuthority certificateAuthority)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyTransportSecurity(FirewallPolicyCertificateAuthority certificateAuthority, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateAuthority = certificateAuthority;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The CA used for intermediate CA generation. </summary>

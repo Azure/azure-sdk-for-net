@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> The MySqlServerPrivateLinkServiceConnectionStateProperty. </summary>
     public partial class MySqlServerPrivateLinkServiceConnectionStateProperty
     {
-        /// <summary> Initializes a new instance of MySqlServerPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
@@ -25,15 +29,22 @@ namespace Azure.ResourceManager.MySql.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of MySqlServerPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        internal MySqlServerPrivateLinkServiceConnectionStateProperty(MySqlPrivateLinkServiceConnectionStateStatus status, string description, MySqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlServerPrivateLinkServiceConnectionStateProperty(MySqlPrivateLinkServiceConnectionStateStatus status, string description, MySqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateLinkServiceConnectionStateProperty"/> for deserialization. </summary>
+        internal MySqlServerPrivateLinkServiceConnectionStateProperty()
+        {
         }
 
         /// <summary> The private link service connection status. </summary>

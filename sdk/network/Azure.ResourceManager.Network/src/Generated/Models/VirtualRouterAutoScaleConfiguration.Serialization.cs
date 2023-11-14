@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class VirtualRouterAutoScaleConfiguration : IUtf8JsonSerializable
+    internal partial class VirtualRouterAutoScaleConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualRouterAutoScaleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualRouterAutoScaleConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualRouterAutoScaleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualRouterAutoScaleConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualRouterAutoScaleConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualRouterAutoScaleConfiguration DeserializeVirtualRouterAutoScaleConfiguration(JsonElement element)
+        VirtualRouterAutoScaleConfiguration IJsonModel<VirtualRouterAutoScaleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualRouterAutoScaleConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualRouterAutoScaleConfiguration(document.RootElement, options);
+        }
+
+        internal static VirtualRouterAutoScaleConfiguration DeserializeVirtualRouterAutoScaleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> minCapacity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minCapacity"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.Network.Models
                     minCapacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualRouterAutoScaleConfiguration(Optional.ToNullable(minCapacity));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualRouterAutoScaleConfiguration(Optional.ToNullable(minCapacity), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualRouterAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualRouterAutoScaleConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualRouterAutoScaleConfiguration IPersistableModel<VirtualRouterAutoScaleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualRouterAutoScaleConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualRouterAutoScaleConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualRouterAutoScaleConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

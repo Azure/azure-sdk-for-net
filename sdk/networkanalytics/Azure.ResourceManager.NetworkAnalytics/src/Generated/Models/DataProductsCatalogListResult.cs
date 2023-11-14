@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The response of a DataProductsCatalog list operation. </summary>
     internal partial class DataProductsCatalogListResult
     {
-        /// <summary> Initializes a new instance of DataProductsCatalogListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProductsCatalogListResult"/>. </summary>
         /// <param name="value"> The DataProductsCatalog items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataProductsCatalogListResult(IEnumerable<DataProductsCatalogData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProductsCatalogListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductsCatalogListResult"/>. </summary>
         /// <param name="value"> The DataProductsCatalog items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal DataProductsCatalogListResult(IReadOnlyList<DataProductsCatalogData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProductsCatalogListResult(IReadOnlyList<DataProductsCatalogData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProductsCatalogListResult"/> for deserialization. </summary>
+        internal DataProductsCatalogListResult()
+        {
         }
 
         /// <summary> The DataProductsCatalog items on this page. </summary>

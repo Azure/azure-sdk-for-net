@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,10 +16,17 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudClusterMetricsConfigurationData : IUtf8JsonSerializable
+    public partial class NetworkCloudClusterMetricsConfigurationData : IUtf8JsonSerializable, IJsonModel<NetworkCloudClusterMetricsConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterMetricsConfigurationData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetworkCloudClusterMetricsConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkCloudClusterMetricsConfigurationData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkCloudClusterMetricsConfigurationData>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation);
@@ -33,10 +43,62 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("collectionInterval"u8);
             writer.WriteNumberValue(CollectionInterval);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DetailedStatus))
+                {
+                    writer.WritePropertyName("detailedStatus"u8);
+                    writer.WriteStringValue(DetailedStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DetailedStatusMessage))
+                {
+                    writer.WritePropertyName("detailedStatusMessage"u8);
+                    writer.WriteStringValue(DetailedStatusMessage);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(DisabledMetrics))
+                {
+                    writer.WritePropertyName("disabledMetrics"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DisabledMetrics)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsCollectionDefined(EnabledMetrics))
             {
                 writer.WritePropertyName("enabledMetrics"u8);
@@ -47,12 +109,49 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudClusterMetricsConfigurationData DeserializeNetworkCloudClusterMetricsConfigurationData(JsonElement element)
+        NetworkCloudClusterMetricsConfigurationData IJsonModel<NetworkCloudClusterMetricsConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudClusterMetricsConfigurationData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudClusterMetricsConfigurationData(document.RootElement, options);
+        }
+
+        internal static NetworkCloudClusterMetricsConfigurationData DeserializeNetworkCloudClusterMetricsConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +169,8 @@ namespace Azure.ResourceManager.NetworkCloud
             Optional<IReadOnlyList<string>> disabledMetrics = default;
             Optional<IList<string>> enabledMetrics = default;
             Optional<ClusterMetricsConfigurationProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -188,8 +289,38 @@ namespace Azure.ResourceManager.NetworkCloud
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkCloudClusterMetricsConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, collectionInterval, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(disabledMetrics), Optional.ToList(enabledMetrics), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkCloudClusterMetricsConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, collectionInterval, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(disabledMetrics), Optional.ToList(enabledMetrics), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudClusterMetricsConfigurationData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkCloudClusterMetricsConfigurationData IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudClusterMetricsConfigurationData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkCloudClusterMetricsConfigurationData(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkCloudClusterMetricsConfigurationData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> ClusterMetricsConfigurationList represents a list of metrics configuration of the cluster. </summary>
     internal partial class ClusterMetricsConfigurationList
     {
-        /// <summary> Initializes a new instance of ClusterMetricsConfigurationList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterMetricsConfigurationList"/>. </summary>
         internal ClusterMetricsConfigurationList()
         {
             Value = new ChangeTrackingList<NetworkCloudClusterMetricsConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of ClusterMetricsConfigurationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterMetricsConfigurationList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of metrics configurations. </param>
-        internal ClusterMetricsConfigurationList(string nextLink, IReadOnlyList<NetworkCloudClusterMetricsConfigurationData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterMetricsConfigurationList(string nextLink, IReadOnlyList<NetworkCloudClusterMetricsConfigurationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of operations. </summary>

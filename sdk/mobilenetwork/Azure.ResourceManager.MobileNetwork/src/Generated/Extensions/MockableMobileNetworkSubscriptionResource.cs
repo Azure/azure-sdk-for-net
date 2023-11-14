@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetMobileNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetMobileNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetMobileNetworks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkResource(Client, MobileNetworkData.DeserializeMobileNetworkData(e)), MobileNetworkClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetMobileNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PacketCoreControlPlaneRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PacketCoreControlPlaneResource(Client, PacketCoreControlPlaneData.DeserializePacketCoreControlPlaneData(e)), PacketCoreControlPlaneClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetPacketCoreControlPlanes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MobileNetworkSimGroupSimGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MobileNetworkSimGroupResource(Client, MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(e)), MobileNetworkSimGroupSimGroupsClientDiagnostics, Pipeline, "MockableMobileNetworkSubscriptionResource.GetMobileNetworkSimGroups", "value", "nextLink", cancellationToken);
         }
     }
 }

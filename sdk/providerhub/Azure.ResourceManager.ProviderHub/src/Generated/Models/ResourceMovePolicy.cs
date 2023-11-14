@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceMovePolicy. </summary>
     public partial class ResourceMovePolicy
     {
-        /// <summary> Initializes a new instance of ResourceMovePolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceMovePolicy"/>. </summary>
         public ResourceMovePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceMovePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMovePolicy"/>. </summary>
         /// <param name="isValidationRequired"></param>
         /// <param name="isCrossResourceGroupMoveEnabled"></param>
         /// <param name="isCrossSubscriptionMoveEnabled"></param>
-        internal ResourceMovePolicy(bool? isValidationRequired, bool? isCrossResourceGroupMoveEnabled, bool? isCrossSubscriptionMoveEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceMovePolicy(bool? isValidationRequired, bool? isCrossResourceGroupMoveEnabled, bool? isCrossSubscriptionMoveEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsValidationRequired = isValidationRequired;
             IsCrossResourceGroupMoveEnabled = isCrossResourceGroupMoveEnabled;
             IsCrossSubscriptionMoveEnabled = isCrossSubscriptionMoveEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the is validation required. </summary>

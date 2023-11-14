@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> The fully qualified metric namespace name. </summary>
     internal partial class MetricNamespaceName
     {
-        /// <summary> Initializes a new instance of MetricNamespaceName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceName"/>. </summary>
         internal MetricNamespaceName()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricNamespaceName. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricNamespaceName"/>. </summary>
         /// <param name="metricNamespaceNameValue"> The metric namespace name. </param>
-        internal MetricNamespaceName(string metricNamespaceNameValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricNamespaceName(string metricNamespaceNameValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricNamespaceNameValue = metricNamespaceNameValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The metric namespace name. </summary>

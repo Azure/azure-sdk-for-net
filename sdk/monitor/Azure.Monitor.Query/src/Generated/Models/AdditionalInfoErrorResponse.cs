@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -13,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The response to a metrics query that results in a bad request, with optional additional information. </summary>
     internal partial class AdditionalInfoErrorResponse
     {
-        /// <summary> Initializes a new instance of AdditionalInfoErrorResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponse"/>. </summary>
         /// <param name="error"> Top level error object that contains all relevant information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal AdditionalInfoErrorResponse(AdditionalInfoErrorResponseError error)
@@ -21,6 +25,20 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponse"/>. </summary>
+        /// <param name="error"> Top level error object that contains all relevant information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdditionalInfoErrorResponse(AdditionalInfoErrorResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdditionalInfoErrorResponse"/> for deserialization. </summary>
+        internal AdditionalInfoErrorResponse()
+        {
         }
 
         /// <summary> Top level error object that contains all relevant information. </summary>

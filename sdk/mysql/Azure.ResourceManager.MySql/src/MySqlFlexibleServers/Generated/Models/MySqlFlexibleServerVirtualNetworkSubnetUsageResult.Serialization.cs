@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageResult
+    public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageResult : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>
     {
-        internal static MySqlFlexibleServerVirtualNetworkSubnetUsageResult DeserializeMySqlFlexibleServerVirtualNetworkSubnetUsageResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    writer.WritePropertyName("location"u8);
+                    writer.WriteStringValue(Location.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(DelegatedSubnetsUsage))
+                {
+                    writer.WritePropertyName("delegatedSubnetsUsage"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DelegatedSubnetsUsage)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MySqlFlexibleServerVirtualNetworkSubnetUsageResult IJsonModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerVirtualNetworkSubnetUsageResult(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerVirtualNetworkSubnetUsageResult DeserializeMySqlFlexibleServerVirtualNetworkSubnetUsageResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +96,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<AzureLocation> location = default;
             Optional<string> subscriptionId = default;
             Optional<IReadOnlyList<MySqlFlexibleServerDelegatedSubnetUsage>> delegatedSubnetsUsage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -52,8 +128,38 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     delegatedSubnetsUsage = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToNullable(location), subscriptionId.Value, Optional.ToList(delegatedSubnetsUsage));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Optional.ToNullable(location), subscriptionId.Value, Optional.ToList(delegatedSubnetsUsage), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MySqlFlexibleServerVirtualNetworkSubnetUsageResult IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerVirtualNetworkSubnetUsageResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerVirtualNetworkSubnetUsageResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

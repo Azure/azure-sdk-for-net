@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkFunction;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Response for the ListCollectorPolicies API service call. </summary>
     internal partial class CollectorPolicyListResult
     {
-        /// <summary> Initializes a new instance of CollectorPolicyListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectorPolicyListResult"/>. </summary>
         internal CollectorPolicyListResult()
         {
             Value = new ChangeTrackingList<CollectorPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of CollectorPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectorPolicyListResult"/>. </summary>
         /// <param name="value"> A list of collection policies. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal CollectorPolicyListResult(IReadOnlyList<CollectorPolicyData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectorPolicyListResult(IReadOnlyList<CollectorPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of collection policies. </summary>

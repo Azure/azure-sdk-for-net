@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The customer name to be printed on a letter of authorization. </summary>
     public partial class GenerateExpressRoutePortsLoaContent
     {
-        /// <summary> Initializes a new instance of GenerateExpressRoutePortsLoaContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaContent"/>. </summary>
         /// <param name="customerName"> The customer name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customerName"/> is null. </exception>
         public GenerateExpressRoutePortsLoaContent(string customerName)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(customerName, nameof(customerName));
 
             CustomerName = customerName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaContent"/>. </summary>
+        /// <param name="customerName"> The customer name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateExpressRoutePortsLoaContent(string customerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CustomerName = customerName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerateExpressRoutePortsLoaContent"/> for deserialization. </summary>
+        internal GenerateExpressRoutePortsLoaContent()
+        {
         }
 
         /// <summary> The customer name. </summary>

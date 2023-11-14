@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeQuotaRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetAppVolumeQuotaRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppVolumeQuotaRuleData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeQuotaRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +39,19 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="quotaSizeInKiBs"> Size of quota. </param>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
-        internal NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeQuotaRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             QuotaSizeInKiBs = quotaSizeInKiBs;
             QuotaType = quotaType;
             QuotaTarget = quotaTarget;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRuleData"/> for deserialization. </summary>
+        internal NetAppVolumeQuotaRuleData()
+        {
         }
 
         /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> NIC information and list of volumes for which the NIC has the primary mount ip address. </summary>
     public partial class NicInfo
     {
-        /// <summary> Initializes a new instance of NicInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NicInfo"/>. </summary>
         internal NicInfo()
         {
             VolumeResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of NicInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicInfo"/>. </summary>
         /// <param name="ipAddress"> ipAddress. </param>
         /// <param name="volumeResourceIds"> Volume resource Ids. </param>
-        internal NicInfo(string ipAddress, IReadOnlyList<ResourceIdentifier> volumeResourceIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NicInfo(string ipAddress, IReadOnlyList<ResourceIdentifier> volumeResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddress = ipAddress;
             VolumeResourceIds = volumeResourceIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ipAddress. </summary>

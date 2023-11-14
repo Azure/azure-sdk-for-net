@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of properties of a link provider. </summary>
     public partial class VpnLinkProviderProperties
     {
-        /// <summary> Initializes a new instance of VpnLinkProviderProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnLinkProviderProperties"/>. </summary>
         public VpnLinkProviderProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnLinkProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnLinkProviderProperties"/>. </summary>
         /// <param name="linkProviderName"> Name of the link provider. </param>
         /// <param name="linkSpeedInMbps"> Link speed. </param>
-        internal VpnLinkProviderProperties(string linkProviderName, int? linkSpeedInMbps)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnLinkProviderProperties(string linkProviderName, int? linkSpeedInMbps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkProviderName = linkProviderName;
             LinkSpeedInMbps = linkSpeedInMbps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the link provider. </summary>

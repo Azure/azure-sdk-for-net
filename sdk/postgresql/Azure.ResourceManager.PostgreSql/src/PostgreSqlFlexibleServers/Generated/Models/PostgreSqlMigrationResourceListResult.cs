@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A list of migration resources. </summary>
     internal partial class PostgreSqlMigrationResourceListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationResourceListResult"/>. </summary>
         internal PostgreSqlMigrationResourceListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlMigrationData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationResourceListResult"/>. </summary>
         /// <param name="value"> A list of migration resources. </param>
         /// <param name="nextLink"> The link used to get the next page of migrations. </param>
-        internal PostgreSqlMigrationResourceListResult(IReadOnlyList<PostgreSqlMigrationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationResourceListResult(IReadOnlyList<PostgreSqlMigrationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of migration resources. </summary>

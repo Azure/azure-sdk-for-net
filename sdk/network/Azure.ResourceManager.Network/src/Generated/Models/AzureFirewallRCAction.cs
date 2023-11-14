@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the AzureFirewallRCAction. </summary>
     internal partial class AzureFirewallRCAction
     {
-        /// <summary> Initializes a new instance of AzureFirewallRCAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallRCAction"/>. </summary>
         public AzureFirewallRCAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallRCAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallRCAction"/>. </summary>
         /// <param name="actionType"> The type of action. </param>
-        internal AzureFirewallRCAction(AzureFirewallRCActionType? actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallRCAction(AzureFirewallRCActionType? actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of action. </summary>

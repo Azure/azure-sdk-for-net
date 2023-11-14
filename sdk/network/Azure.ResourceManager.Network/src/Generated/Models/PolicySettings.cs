@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Defines contents of a web application firewall global configuration. </summary>
     public partial class PolicySettings
     {
-        /// <summary> Initializes a new instance of PolicySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicySettings"/>. </summary>
         public PolicySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettings"/>. </summary>
         /// <param name="state"> The state of the policy. </param>
         /// <param name="mode"> The mode of the policy. </param>
         /// <param name="requestBodyCheck"> Whether to allow WAF to check request Body. </param>
@@ -27,7 +33,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customBlockResponseStatusCode"> If the action type is block, customer can override the response status code. </param>
         /// <param name="customBlockResponseBody"> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </param>
         /// <param name="logScrubbing"> To scrub sensitive log fields. </param>
-        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySettings(WebApplicationFirewallEnabledState? state, WebApplicationFirewallMode? mode, bool? requestBodyCheck, int? requestBodyInspectLimitInKB, bool? requestBodyEnforcement, int? maxRequestBodySizeInKb, bool? fileUploadEnforcement, int? fileUploadLimitInMb, int? customBlockResponseStatusCode, string customBlockResponseBody, PolicySettingsLogScrubbing logScrubbing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             Mode = mode;
@@ -40,6 +47,7 @@ namespace Azure.ResourceManager.Network.Models
             CustomBlockResponseStatusCode = customBlockResponseStatusCode;
             CustomBlockResponseBody = customBlockResponseBody;
             LogScrubbing = logScrubbing;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the policy. </summary>

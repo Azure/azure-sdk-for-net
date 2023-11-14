@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VirtualNetworkGatewayConnection properties. </summary>
     public partial class TunnelConnectionHealth
     {
-        /// <summary> Initializes a new instance of TunnelConnectionHealth. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TunnelConnectionHealth"/>. </summary>
         internal TunnelConnectionHealth()
         {
         }
 
-        /// <summary> Initializes a new instance of TunnelConnectionHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="TunnelConnectionHealth"/>. </summary>
         /// <param name="tunnel"> Tunnel name. </param>
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="ingressBytesTransferred"> The Ingress Bytes Transferred in this connection. </param>
         /// <param name="egressBytesTransferred"> The Egress Bytes Transferred in this connection. </param>
         /// <param name="lastConnectionEstablishedOn"> The time at which connection was established in Utc format. </param>
-        internal TunnelConnectionHealth(string tunnel, VirtualNetworkGatewayConnectionStatus? connectionStatus, long? ingressBytesTransferred, long? egressBytesTransferred, string lastConnectionEstablishedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TunnelConnectionHealth(string tunnel, VirtualNetworkGatewayConnectionStatus? connectionStatus, long? ingressBytesTransferred, long? egressBytesTransferred, string lastConnectionEstablishedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tunnel = tunnel;
             ConnectionStatus = connectionStatus;
             IngressBytesTransferred = ingressBytesTransferred;
             EgressBytesTransferred = egressBytesTransferred;
             LastConnectionEstablishedOn = lastConnectionEstablishedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tunnel name. </summary>

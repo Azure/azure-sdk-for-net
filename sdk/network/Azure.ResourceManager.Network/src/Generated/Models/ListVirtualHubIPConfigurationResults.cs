@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VirtualHubIpConfigurations list. </summary>
     internal partial class ListVirtualHubIPConfigurationResults
     {
-        /// <summary> Initializes a new instance of ListVirtualHubIPConfigurationResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubIPConfigurationResults"/>. </summary>
         internal ListVirtualHubIPConfigurationResults()
         {
             Value = new ChangeTrackingList<HubIPConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of ListVirtualHubIPConfigurationResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualHubIPConfigurationResults"/>. </summary>
         /// <param name="value"> The list of VirtualHubIpConfigurations. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal ListVirtualHubIPConfigurationResults(IReadOnlyList<HubIPConfigurationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListVirtualHubIPConfigurationResults(IReadOnlyList<HubIPConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of VirtualHubIpConfigurations. </summary>

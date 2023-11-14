@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A private endpoint connection under a server. </summary>
     public partial class MySqlServerPrivateEndpointConnection
     {
-        /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateEndpointConnection"/>. </summary>
         internal MySqlServerPrivateEndpointConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlServerPrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPrivateEndpointConnection"/>. </summary>
         /// <param name="id"> Resource Id of the private endpoint connection. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
-        internal MySqlServerPrivateEndpointConnection(ResourceIdentifier id, MySqlServerPrivateEndpointConnectionProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlServerPrivateEndpointConnection(ResourceIdentifier id, MySqlServerPrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Id of the private endpoint connection. </summary>

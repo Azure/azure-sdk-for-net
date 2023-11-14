@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,22 +18,28 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureChatExtensionsMessageContext
     {
-        /// <summary> Initializes a new instance of AzureChatExtensionsMessageContext. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
         public AzureChatExtensionsMessageContext()
         {
             Messages = new ChangeTrackingList<ChatMessage>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AzureChatExtensionsMessageContext. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionsMessageContext"/>. </summary>
         /// <param name="messages">
         ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
         ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
         ///   extensions.
         /// </param>
-        internal AzureChatExtensionsMessageContext(IList<ChatMessage> messages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureChatExtensionsMessageContext(IList<ChatMessage> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

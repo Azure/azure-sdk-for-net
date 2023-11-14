@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,5 +14,26 @@ namespace Azure.AI.OpenAI
     /// <summary> Optional settings to control how fields are processed when using a configured Azure Cognitive Search resource. </summary>
     public partial class AzureCognitiveSearchIndexFieldMappingOptions
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchIndexFieldMappingOptions"/>. </summary>
+        /// <param name="titleFieldName"> The name of the index field to use as a title. </param>
+        /// <param name="urlFieldName"> The name of the index field to use as a URL. </param>
+        /// <param name="filepathFieldName"> The name of the index field to use as a filepath. </param>
+        /// <param name="contentFieldNames"> The names of index fields that should be treated as content. </param>
+        /// <param name="contentFieldSeparator"> The separator pattern that content fields should use. </param>
+        /// <param name="vectorFieldNames"> The names of fields that represent vector data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureCognitiveSearchIndexFieldMappingOptions(string titleFieldName, string urlFieldName, string filepathFieldName, IList<string> contentFieldNames, string contentFieldSeparator, IList<string> vectorFieldNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TitleFieldName = titleFieldName;
+            UrlFieldName = urlFieldName;
+            FilepathFieldName = filepathFieldName;
+            ContentFieldNames = contentFieldNames;
+            ContentFieldSeparator = contentFieldSeparator;
+            VectorFieldNames = vectorFieldNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }

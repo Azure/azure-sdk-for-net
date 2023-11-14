@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -12,9 +14,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Virtual network subnet usage parameter. </summary>
     public partial class PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/>. </summary>
         public PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/>. </summary>
+        /// <param name="virtualNetworkArmResourceId"> Virtual network resource id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter(ResourceIdentifier virtualNetworkArmResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VirtualNetworkArmResourceId = virtualNetworkArmResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Virtual network resource id. </summary>

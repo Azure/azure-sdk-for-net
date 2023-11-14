@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> The network address and port translation settings to use for the attached data network. </summary>
     public partial class NaptConfiguration
     {
-        /// <summary> Initializes a new instance of NaptConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NaptConfiguration"/>. </summary>
         public NaptConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of NaptConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NaptConfiguration"/>. </summary>
         /// <param name="enabled"> Whether NAPT is enabled for connections to this attached data network. </param>
         /// <param name="portRange">
         /// Range of port numbers to use as translated ports on each translated address.
@@ -25,13 +31,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="portReuseHoldTime"> The minimum time (in seconds) that will pass before a port that was used by a closed pinhole can be recycled for use by another pinhole. All hold times must be at least 1 second. </param>
         /// <param name="pinholeLimits"> Maximum number of UDP and TCP pinholes that can be open simultaneously on the core interface. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
         /// <param name="pinholeTimeouts"> Expiry times of inactive NAPT pinholes, in seconds. All timers must be at least 1 second. </param>
-        internal NaptConfiguration(NaptState? enabled, MobileNetworkPortRange portRange, MobileNetworkPortReuseHoldTimes portReuseHoldTime, int? pinholeLimits, PinholeTimeouts pinholeTimeouts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NaptConfiguration(NaptState? enabled, MobileNetworkPortRange portRange, MobileNetworkPortReuseHoldTimes portReuseHoldTime, int? pinholeLimits, PinholeTimeouts pinholeTimeouts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             PortRange = portRange;
             PortReuseHoldTime = portReuseHoldTime;
             PinholeLimits = pinholeLimits;
             PinholeTimeouts = pinholeTimeouts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether NAPT is enabled for connections to this attached data network. </summary>

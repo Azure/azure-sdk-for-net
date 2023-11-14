@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerConfigurations
+    public partial class MySqlFlexibleServerConfigurations : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerConfigurations>
     {
-        internal static MySqlFlexibleServerConfigurations DeserializeMySqlFlexibleServerConfigurations(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerConfigurations>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MySqlFlexibleServerConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MySqlFlexibleServerConfigurations>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MySqlFlexibleServerConfigurations>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Values))
+            {
+                writer.WritePropertyName("values"u8);
+                writer.WriteStartArray();
+                foreach (var item in Values)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MySqlFlexibleServerConfigurations IJsonModel<MySqlFlexibleServerConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurations)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerConfigurations(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerConfigurations DeserializeMySqlFlexibleServerConfigurations(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MySqlFlexibleServerConfigurationData>> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -37,8 +94,38 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     values = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerConfigurations(Optional.ToList(values));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MySqlFlexibleServerConfigurations(Optional.ToList(values), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerConfigurations>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurations)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MySqlFlexibleServerConfigurations IPersistableModel<MySqlFlexibleServerConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurations)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMySqlFlexibleServerConfigurations(document.RootElement, options);
+        }
+
+        string IPersistableModel<MySqlFlexibleServerConfigurations>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

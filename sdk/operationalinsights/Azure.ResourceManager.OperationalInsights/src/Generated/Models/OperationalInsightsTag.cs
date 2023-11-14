@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> A tag of a saved search. </summary>
     public partial class OperationalInsightsTag
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTag. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTag"/>. </summary>
         /// <param name="name"> The tag name. </param>
         /// <param name="value"> The tag value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTag"/>. </summary>
+        /// <param name="name"> The tag name. </param>
+        /// <param name="value"> The tag value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsTag(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTag"/> for deserialization. </summary>
+        internal OperationalInsightsTag()
+        {
         }
 
         /// <summary> The tag name. </summary>

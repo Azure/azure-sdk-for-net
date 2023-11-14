@@ -14,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The code and message for an error. </summary>
     internal partial class ErrorInfo
     {
-        /// <summary> Initializes a new instance of ErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/>. </summary>
         /// <param name="code"> A machine readable error code. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,19 +31,26 @@ namespace Azure.Monitor.Query.Models
             Details = new ChangeTrackingList<ErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of ErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/>. </summary>
         /// <param name="code"> A machine readable error code. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="details"> error details. </param>
         /// <param name="innererror"> Inner error details if they exist. </param>
         /// <param name="additionalProperties"> Additional properties that can be provided on the error info object. </param>
-        internal ErrorInfo(string code, string message, IReadOnlyList<ErrorDetail> details, ErrorInfo innererror, object additionalProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorInfo(string code, string message, IReadOnlyList<ErrorDetail> details, ErrorInfo innererror, object additionalProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Details = details;
             Innererror = innererror;
             AdditionalProperties = additionalProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ErrorInfo"/> for deserialization. </summary>
+        internal ErrorInfo()
+        {
         }
 
         /// <summary> A machine readable error code. </summary>

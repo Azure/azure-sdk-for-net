@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Monitor;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of alert rule resources. </summary>
     internal partial class DiagnosticSettingsResourceCollection
     {
-        /// <summary> Initializes a new instance of DiagnosticSettingsResourceCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsResourceCollection"/>. </summary>
         internal DiagnosticSettingsResourceCollection()
         {
             Value = new ChangeTrackingList<DiagnosticSettingData>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsResourceCollection"/>. </summary>
         /// <param name="value"> The collection of diagnostic settings resources;. </param>
-        internal DiagnosticSettingsResourceCollection(IReadOnlyList<DiagnosticSettingData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticSettingsResourceCollection(IReadOnlyList<DiagnosticSettingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of diagnostic settings resources;. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Azure reachability report details. </summary>
     public partial class AzureReachabilityReport
     {
-        /// <summary> Initializes a new instance of AzureReachabilityReport. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReport"/>. </summary>
         /// <param name="aggregationLevel"> The aggregation level of Azure reachability report. Can be Country, State or City. </param>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
         /// <param name="reachabilityReport"> List of Azure reachability report items. </param>
@@ -31,15 +34,22 @@ namespace Azure.ResourceManager.Network.Models
             ReachabilityReport = reachabilityReport.ToList();
         }
 
-        /// <summary> Initializes a new instance of AzureReachabilityReport. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReport"/>. </summary>
         /// <param name="aggregationLevel"> The aggregation level of Azure reachability report. Can be Country, State or City. </param>
         /// <param name="providerLocation"> Parameters that define a geographic location. </param>
         /// <param name="reachabilityReport"> List of Azure reachability report items. </param>
-        internal AzureReachabilityReport(string aggregationLevel, AzureReachabilityReportLocation providerLocation, IReadOnlyList<AzureReachabilityReportItem> reachabilityReport)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureReachabilityReport(string aggregationLevel, AzureReachabilityReportLocation providerLocation, IReadOnlyList<AzureReachabilityReportItem> reachabilityReport, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AggregationLevel = aggregationLevel;
             ProviderLocation = providerLocation;
             ReachabilityReport = reachabilityReport;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReport"/> for deserialization. </summary>
+        internal AzureReachabilityReport()
+        {
         }
 
         /// <summary> The aggregation level of Azure reachability report. Can be Country, State or City. </summary>

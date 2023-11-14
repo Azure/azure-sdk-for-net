@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudVolumeData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudVolumeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="sizeInMiB"> The size of the allocation for this volume in Mebibytes. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud
             SizeInMiB = sizeInMiB;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudVolumeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="provisioningState"> The provisioning state of the volume. </param>
         /// <param name="serialNumber"> The unique identifier of the volume. </param>
         /// <param name="sizeInMiB"> The size of the allocation for this volume in Mebibytes. </param>
-        internal NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AttachedTo = attachedTo;
@@ -56,6 +60,12 @@ namespace Azure.ResourceManager.NetworkCloud
             ProvisioningState = provisioningState;
             SerialNumber = serialNumber;
             SizeInMiB = sizeInMiB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudVolumeData"/> for deserialization. </summary>
+        internal NetworkCloudVolumeData()
+        {
         }
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>

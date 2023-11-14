@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class MigrateLoadBalancerToIPBasedResult
+    public partial class MigrateLoadBalancerToIPBasedResult : IUtf8JsonSerializable, IJsonModel<MigrateLoadBalancerToIPBasedResult>
     {
-        internal static MigrateLoadBalancerToIPBasedResult DeserializeMigrateLoadBalancerToIPBasedResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateLoadBalancerToIPBasedResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MigrateLoadBalancerToIPBasedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MigrateLoadBalancerToIPBasedResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MigrateLoadBalancerToIPBasedResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(MigratedPools))
+            {
+                writer.WritePropertyName("migratedPools"u8);
+                writer.WriteStartArray();
+                foreach (var item in MigratedPools)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateLoadBalancerToIPBasedResult IJsonModel<MigrateLoadBalancerToIPBasedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateLoadBalancerToIPBasedResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateLoadBalancerToIPBasedResult(document.RootElement, options);
+        }
+
+        internal static MigrateLoadBalancerToIPBasedResult DeserializeMigrateLoadBalancerToIPBasedResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<string>> migratedPools = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migratedPools"u8))
@@ -36,8 +93,38 @@ namespace Azure.ResourceManager.Network.Models
                     migratedPools = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateLoadBalancerToIPBasedResult(Optional.ToList(migratedPools));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateLoadBalancerToIPBasedResult(Optional.ToList(migratedPools), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MigrateLoadBalancerToIPBasedResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateLoadBalancerToIPBasedResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrateLoadBalancerToIPBasedResult IPersistableModel<MigrateLoadBalancerToIPBasedResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateLoadBalancerToIPBasedResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrateLoadBalancerToIPBasedResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<MigrateLoadBalancerToIPBasedResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

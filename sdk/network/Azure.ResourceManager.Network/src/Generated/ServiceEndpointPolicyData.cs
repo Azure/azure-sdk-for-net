@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ServiceEndpointPolicyData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyData"/>. </summary>
         public ServiceEndpointPolicyData()
         {
             ServiceEndpointPolicyDefinitions = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
@@ -27,12 +27,13 @@ namespace Azure.ResourceManager.Network
             ContextualServiceEndpointPolicies = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="kind"> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </param>
         /// <param name="serviceEndpointPolicyDefinitions"> A collection of service endpoint policy definitions of the service endpoint policy. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy resource. </param>
         /// <param name="serviceAlias"> The alias indicating if the policy belongs to a service. </param>
         /// <param name="contextualServiceEndpointPolicies"> A collection of contextual service endpoint policy. </param>
-        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string serviceAlias, IList<string> contextualServiceEndpointPolicies) : base(id, name, resourceType, location, tags)
+        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string serviceAlias, IList<string> contextualServiceEndpointPolicies) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Kind = kind;

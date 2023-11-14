@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Restore status. </summary>
     public partial class NetAppRestoreStatus
     {
-        /// <summary> Initializes a new instance of NetAppRestoreStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
         internal NetAppRestoreStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppRestoreStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
         /// <param name="isHealthy"> Restore health status. </param>
         /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
         /// <param name="mirrorState"> The status of the restore. </param>
         /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
         /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
         /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
-        internal NetAppRestoreStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppRestoreStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsHealthy = isHealthy;
             RelationshipStatus = relationshipStatus;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
             UnhealthyReason = unhealthyReason;
             ErrorMessage = errorMessage;
             TotalTransferBytes = totalTransferBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Restore health status. </summary>

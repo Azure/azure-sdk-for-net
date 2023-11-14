@@ -15,7 +15,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// <summary> Represents an ingestion configuration. </summary>
     public partial class AssetConversionConfiguration
     {
-        /// <summary> Initializes a new instance of AssetConversionConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionConfiguration"/>. </summary>
         /// <param name="assetDimensionsWrapper"> Dimensions of the asset. </param>
         /// <param name="boundingBoxCenterWrapper"> BoundingBoxCenter of the asset. </param>
         /// <param name="gravityWrapper"> Gravity vector with respect to object's nominal position. </param>
@@ -26,7 +29,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="disableDetectScaleUnits"> Whether or not disable the scale units in the model metadata. </param>
         /// <param name="supportingPlaneWrapper"> Definition of supporting plane. </param>
         /// <param name="testTrajectoryCameraPoses"> Test Trajectory. </param>
-        internal AssetConversionConfiguration(Vector3 assetDimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IReadOnlyList<int> keyFrameIndexes, IReadOnlyList<TrajectoryPose> groundTruthTrajectoryCameraPoses, Quaternion principalAxisWrapper, float scale, bool disableDetectScaleUnits, Vector4 supportingPlaneWrapper, IReadOnlyList<TrajectoryPose> testTrajectoryCameraPoses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetConversionConfiguration(Vector3 assetDimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IReadOnlyList<int> keyFrameIndexes, IReadOnlyList<TrajectoryPose> groundTruthTrajectoryCameraPoses, Quaternion principalAxisWrapper, float scale, bool disableDetectScaleUnits, Vector4 supportingPlaneWrapper, IReadOnlyList<TrajectoryPose> testTrajectoryCameraPoses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssetDimensionsWrapper = assetDimensionsWrapper;
             BoundingBoxCenterWrapper = boundingBoxCenterWrapper;
@@ -38,6 +42,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             DisableDetectScaleUnits = disableDetectScaleUnits;
             SupportingPlaneWrapper = supportingPlaneWrapper;
             TestTrajectoryCameraPoses = testTrajectoryCameraPoses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionConfiguration"/> for deserialization. </summary>
+        internal AssetConversionConfiguration()
+        {
         }
     }
 }

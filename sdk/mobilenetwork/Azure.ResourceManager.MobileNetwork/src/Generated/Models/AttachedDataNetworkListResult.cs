@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Response for attached data network API service call. </summary>
     internal partial class AttachedDataNetworkListResult
     {
-        /// <summary> Initializes a new instance of AttachedDataNetworkListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttachedDataNetworkListResult"/>. </summary>
         internal AttachedDataNetworkListResult()
         {
             Value = new ChangeTrackingList<MobileAttachedDataNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of AttachedDataNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttachedDataNetworkListResult"/>. </summary>
         /// <param name="value"> A list of data networks in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AttachedDataNetworkListResult(IReadOnlyList<MobileAttachedDataNetworkData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttachedDataNetworkListResult(IReadOnlyList<MobileAttachedDataNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of data networks in a resource group. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> EgressEndpoint represents the connection from a cloud services network to the specified endpoint for a common purpose. </summary>
     public partial class EgressEndpoint
     {
-        /// <summary> Initializes a new instance of EgressEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EgressEndpoint"/>. </summary>
         /// <param name="category"> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category 'default'. </param>
         /// <param name="endpoints"> The list of endpoint dependencies. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> or <paramref name="endpoints"/> is null. </exception>
@@ -28,13 +31,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Endpoints = endpoints.ToList();
         }
 
-        /// <summary> Initializes a new instance of EgressEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="EgressEndpoint"/>. </summary>
         /// <param name="category"> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category 'default'. </param>
         /// <param name="endpoints"> The list of endpoint dependencies. </param>
-        internal EgressEndpoint(string category, IList<EndpointDependency> endpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EgressEndpoint(string category, IList<EndpointDependency> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Endpoints = endpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EgressEndpoint"/> for deserialization. </summary>
+        internal EgressEndpoint()
+        {
         }
 
         /// <summary> The descriptive category name of endpoints accessible by the AKS agent node. For example, azure-resource-management, API server, etc. The platform egress endpoints provided by default will use the category 'default'. </summary>

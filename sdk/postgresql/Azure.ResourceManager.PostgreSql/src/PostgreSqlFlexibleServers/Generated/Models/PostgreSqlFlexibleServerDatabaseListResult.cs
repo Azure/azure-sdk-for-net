@@ -15,19 +15,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A List of databases. </summary>
     internal partial class PostgreSqlFlexibleServerDatabaseListResult
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDatabaseListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerDatabaseListResult"/>. </summary>
         internal PostgreSqlFlexibleServerDatabaseListResult()
         {
             Value = new ChangeTrackingList<PostgreSqlFlexibleServerDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerDatabaseListResult"/>. </summary>
         /// <param name="value"> The list of databases housed in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of databases. </param>
-        internal PostgreSqlFlexibleServerDatabaseListResult(IReadOnlyList<PostgreSqlFlexibleServerDatabaseData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerDatabaseListResult(IReadOnlyList<PostgreSqlFlexibleServerDatabaseData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of databases housed in a server. </summary>

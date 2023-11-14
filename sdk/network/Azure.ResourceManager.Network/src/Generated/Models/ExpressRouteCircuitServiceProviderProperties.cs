@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Contains ServiceProviderProperties in an ExpressRouteCircuit. </summary>
     public partial class ExpressRouteCircuitServiceProviderProperties
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitServiceProviderProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitServiceProviderProperties"/>. </summary>
         public ExpressRouteCircuitServiceProviderProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitServiceProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitServiceProviderProperties"/>. </summary>
         /// <param name="serviceProviderName"> The serviceProviderName. </param>
         /// <param name="peeringLocation"> The peering location. </param>
         /// <param name="bandwidthInMbps"> The BandwidthInMbps. </param>
-        internal ExpressRouteCircuitServiceProviderProperties(string serviceProviderName, string peeringLocation, int? bandwidthInMbps)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitServiceProviderProperties(string serviceProviderName, string peeringLocation, int? bandwidthInMbps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceProviderName = serviceProviderName;
             PeeringLocation = peeringLocation;
             BandwidthInMbps = bandwidthInMbps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The serviceProviderName. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,9 +15,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the representation of topology. </summary>
     public partial class TopologyContent
     {
-        /// <summary> Initializes a new instance of TopologyContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopologyContent"/>. </summary>
         public TopologyContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopologyContent"/>. </summary>
+        /// <param name="targetResourceGroupName"> The name of the target resource group to perform topology on. </param>
+        /// <param name="targetVirtualNetwork"> The reference to the Virtual Network resource. </param>
+        /// <param name="targetSubnet"> The reference to the Subnet resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopologyContent(string targetResourceGroupName, WritableSubResource targetVirtualNetwork, WritableSubResource targetSubnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetResourceGroupName = targetResourceGroupName;
+            TargetVirtualNetwork = targetVirtualNetwork;
+            TargetSubnet = targetSubnet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the target resource group to perform topology on. </summary>

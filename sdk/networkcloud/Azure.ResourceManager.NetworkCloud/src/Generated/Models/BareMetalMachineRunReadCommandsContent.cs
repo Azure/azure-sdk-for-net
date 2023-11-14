@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineRunReadCommandsParameters represents the body of request containing list of read-only commands to run on the bare metal machine. </summary>
     public partial class BareMetalMachineRunReadCommandsContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachineRunReadCommandsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunReadCommandsContent"/>. </summary>
         /// <param name="commands"> The list of read-only commands to be executed directly against the target machine. </param>
         /// <param name="limitTimeSeconds">
         /// The maximum time the commands are allowed to run.
@@ -28,6 +31,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             Commands = commands.ToList();
             LimitTimeSeconds = limitTimeSeconds;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunReadCommandsContent"/>. </summary>
+        /// <param name="commands"> The list of read-only commands to be executed directly against the target machine. </param>
+        /// <param name="limitTimeSeconds">
+        /// The maximum time the commands are allowed to run.
+        /// If the execution time exceeds the maximum, the script will be stopped, any output produced until then will be captured, and the exit code matching a timeout will be returned (252).
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BareMetalMachineRunReadCommandsContent(IList<BareMetalMachineCommandSpecification> commands, long limitTimeSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Commands = commands;
+            LimitTimeSeconds = limitTimeSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunReadCommandsContent"/> for deserialization. </summary>
+        internal BareMetalMachineRunReadCommandsContent()
+        {
         }
 
         /// <summary> The list of read-only commands to be executed directly against the target machine. </summary>

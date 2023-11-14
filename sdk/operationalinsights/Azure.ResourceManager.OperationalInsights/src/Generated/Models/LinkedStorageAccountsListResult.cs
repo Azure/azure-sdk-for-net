@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list linked storage accounts service operation response. </summary>
     internal partial class LinkedStorageAccountsListResult
     {
-        /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedStorageAccountsListResult"/>. </summary>
         internal LinkedStorageAccountsListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsLinkedStorageAccountsData>();
         }
 
-        /// <summary> Initializes a new instance of LinkedStorageAccountsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedStorageAccountsListResult"/>. </summary>
         /// <param name="value"> A list of linked storage accounts instances. </param>
-        internal LinkedStorageAccountsListResult(IReadOnlyList<OperationalInsightsLinkedStorageAccountsData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedStorageAccountsListResult(IReadOnlyList<OperationalInsightsLinkedStorageAccountsData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of linked storage accounts instances. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlServerKeyData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerKeyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerKeyData"/>. </summary>
         public PostgreSqlServerKeyData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +36,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="serverKeyType"> The key type like 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the key. </param>
         /// <param name="createdOn"> The key creation date. </param>
-        internal PostgreSqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, PostgreSqlServerKeyType? serverKeyType, Uri uri, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, PostgreSqlServerKeyType? serverKeyType, Uri uri, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServerKeyType = serverKeyType;
             Uri = uri;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of encryption protector used to protect the key. </summary>

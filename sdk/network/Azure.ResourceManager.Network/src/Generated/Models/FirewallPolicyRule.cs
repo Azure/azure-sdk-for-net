@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
@@ -14,20 +17,25 @@ namespace Azure.ResourceManager.Network.Models
     /// </summary>
     public abstract partial class FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRule"/>. </summary>
         protected FirewallPolicyRule()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
-        internal FirewallPolicyRule(string name, string description, FirewallPolicyRuleType ruleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             RuleType = ruleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the rule. </summary>

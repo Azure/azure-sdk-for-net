@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerAuthConfig : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerAuthConfig : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerAuthConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerAuthConfig>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PostgreSqlFlexibleServerAuthConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PostgreSqlFlexibleServerAuthConfig>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PostgreSqlFlexibleServerAuthConfig>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActiveDirectoryAuth))
             {
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerAuthConfig DeserializePostgreSqlFlexibleServerAuthConfig(JsonElement element)
+        PostgreSqlFlexibleServerAuthConfig IJsonModel<PostgreSqlFlexibleServerAuthConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerAuthConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerAuthConfig(document.RootElement, options);
+        }
+
+        internal static PostgreSqlFlexibleServerAuthConfig DeserializePostgreSqlFlexibleServerAuthConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<PostgreSqlFlexibleServerActiveDirectoryAuthEnum> activeDirectoryAuth = default;
             Optional<PostgreSqlFlexibleServerPasswordAuthEnum> passwordAuth = default;
             Optional<Guid> tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeDirectoryAuth"u8))
@@ -72,8 +113,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlFlexibleServerAuthConfig(Optional.ToNullable(activeDirectoryAuth), Optional.ToNullable(passwordAuth), Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostgreSqlFlexibleServerAuthConfig(Optional.ToNullable(activeDirectoryAuth), Optional.ToNullable(passwordAuth), Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerAuthConfig>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerAuthConfig)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PostgreSqlFlexibleServerAuthConfig IPersistableModel<PostgreSqlFlexibleServerAuthConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerAuthConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePostgreSqlFlexibleServerAuthConfig(document.RootElement, options);
+        }
+
+        string IPersistableModel<PostgreSqlFlexibleServerAuthConfig>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

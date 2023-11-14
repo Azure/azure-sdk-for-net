@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> The details of a account resource. </summary>
     public partial class NewRelicAccountResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of NewRelicAccountResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
         public NewRelicAccountResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of NewRelicAccountResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicAccountResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,12 +32,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="accountId"> account id. </param>
         /// <param name="accountName"> account name. </param>
         /// <param name="region"> region. </param>
-        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OrganizationId = organizationId;
             AccountId = accountId;
             AccountName = accountName;
             Region = region;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> organization id. </summary>

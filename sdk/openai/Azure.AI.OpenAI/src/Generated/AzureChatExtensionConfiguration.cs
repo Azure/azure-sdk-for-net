@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -17,7 +18,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureChatExtensionConfiguration
     {
-        /// <summary> Initializes a new instance of AzureChatExtensionConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
@@ -34,6 +38,25 @@ namespace Azure.AI.OpenAI
 
             Type = type;
             Parameters = parameters;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureChatExtensionConfiguration"/>. </summary>
+        /// <param name="type">
+        ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
+        ///   Azure chat extensions are only compatible with Azure OpenAI.
+        /// </param>
+        /// <param name="parameters">
+        ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
+        ///   extension being configured.
+        ///   Azure chat extensions are only compatible with Azure OpenAI.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureChatExtensionConfiguration(AzureChatExtensionType type, BinaryData parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Type = type;
+            Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

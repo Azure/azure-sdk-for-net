@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> StorageApplianceList represents a list of storage appliances. </summary>
     internal partial class StorageApplianceList
     {
-        /// <summary> Initializes a new instance of StorageApplianceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceList"/>. </summary>
         internal StorageApplianceList()
         {
             Value = new ChangeTrackingList<NetworkCloudStorageApplianceData>();
         }
 
-        /// <summary> Initializes a new instance of StorageApplianceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of storage appliances. </param>
-        internal StorageApplianceList(string nextLink, IReadOnlyList<NetworkCloudStorageApplianceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageApplianceList(string nextLink, IReadOnlyList<NetworkCloudStorageApplianceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of operations. </summary>

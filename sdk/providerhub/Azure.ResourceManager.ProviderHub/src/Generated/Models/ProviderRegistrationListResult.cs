@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ProviderHub;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ProviderRegistrationListResult. </summary>
     internal partial class ProviderRegistrationListResult
     {
-        /// <summary> Initializes a new instance of ProviderRegistrationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationListResult"/>. </summary>
         internal ProviderRegistrationListResult()
         {
             Value = new ChangeTrackingList<ProviderRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of ProviderRegistrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderRegistrationListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
-        internal ProviderRegistrationListResult(IReadOnlyList<ProviderRegistrationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderRegistrationListResult(IReadOnlyList<ProviderRegistrationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

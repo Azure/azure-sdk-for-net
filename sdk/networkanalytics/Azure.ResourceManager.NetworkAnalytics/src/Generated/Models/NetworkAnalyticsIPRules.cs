@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
     public partial class NetworkAnalyticsIPRules
     {
-        /// <summary> Initializes a new instance of NetworkAnalyticsIPRules. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsIPRules"/>. </summary>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         public NetworkAnalyticsIPRules(string action)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of NetworkAnalyticsIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsIPRules"/>. </summary>
         /// <param name="value"> IP Rules Value. </param>
         /// <param name="action"> The action of virtual network rule. </param>
-        internal NetworkAnalyticsIPRules(string value, string action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkAnalyticsIPRules(string value, string action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsIPRules"/> for deserialization. </summary>
+        internal NetworkAnalyticsIPRules()
+        {
         }
 
         /// <summary> IP Rules Value. </summary>

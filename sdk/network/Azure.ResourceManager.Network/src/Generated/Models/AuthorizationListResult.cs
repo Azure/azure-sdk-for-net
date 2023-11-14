@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListAuthorizations API service call retrieves all authorizations that belongs to an ExpressRouteCircuit. </summary>
     internal partial class AuthorizationListResult
     {
-        /// <summary> Initializes a new instance of AuthorizationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationListResult"/>. </summary>
         internal AuthorizationListResult()
         {
             Value = new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationListResult"/>. </summary>
         /// <param name="value"> The authorizations in an ExpressRoute Circuit. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal AuthorizationListResult(IReadOnlyList<ExpressRouteCircuitAuthorizationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationListResult(IReadOnlyList<ExpressRouteCircuitAuthorizationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The authorizations in an ExpressRoute Circuit. </summary>

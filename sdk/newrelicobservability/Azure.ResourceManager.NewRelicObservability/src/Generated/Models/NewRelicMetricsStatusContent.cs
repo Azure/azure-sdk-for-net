@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Request of get metrics status Operation. </summary>
     public partial class NewRelicMetricsStatusContent
     {
-        /// <summary> Initializes a new instance of NewRelicMetricsStatusContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/>. </summary>
         /// <param name="userEmail"> User Email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userEmail"/> is null. </exception>
         public NewRelicMetricsStatusContent(string userEmail)
@@ -23,6 +26,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
             AzureResourceIds = new ChangeTrackingList<string>();
             UserEmail = userEmail;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/>. </summary>
+        /// <param name="azureResourceIds"> Azure resource IDs. </param>
+        /// <param name="userEmail"> User Email. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicMetricsStatusContent(IList<string> azureResourceIds, string userEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AzureResourceIds = azureResourceIds;
+            UserEmail = userEmail;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMetricsStatusContent"/> for deserialization. </summary>
+        internal NewRelicMetricsStatusContent()
+        {
         }
 
         /// <summary> Azure resource IDs. </summary>

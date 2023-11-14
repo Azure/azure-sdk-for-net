@@ -15,7 +15,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The result data of a query. </summary>
     public partial class MetricResult
     {
-        /// <summary> Initializes a new instance of MetricResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricResult"/>. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="resourceType"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
@@ -36,7 +39,7 @@ namespace Azure.Monitor.Query.Models
             TimeSeries = timeSeries.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResult"/>. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="resourceType"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
@@ -45,7 +48,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>
-        internal MetricResult(string id, string resourceType, LocalizableString localizedName, string description, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricResult(string id, string resourceType, LocalizableString localizedName, string description, string errorCode, string errorMessage, MetricUnit unit, IReadOnlyList<MetricTimeSeriesElement> timeSeries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResourceType = resourceType;
@@ -55,6 +59,12 @@ namespace Azure.Monitor.Query.Models
             ErrorMessage = errorMessage;
             Unit = unit;
             TimeSeries = timeSeries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricResult"/> for deserialization. </summary>
+        internal MetricResult()
+        {
         }
 
         /// <summary> the metric Id. </summary>

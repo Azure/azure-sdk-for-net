@@ -5,19 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary> Information about the content filtering category, if it has been detected. </summary>
     public partial class ContentFilterResults
     {
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResults"/>. </summary>
         internal ContentFilterResults()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ContentFilterResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResults"/>. </summary>
         /// <param name="sexual">
         /// Describes language related to anatomical organs and genitals, romantic relationships,
         ///  acts portrayed in erotic or affectionate terms, physical sexual acts, including
@@ -43,13 +50,15 @@ namespace Azure.AI.OpenAI
         /// Describes an error returned if the content filtering system is
         /// down or otherwise unable to complete the operation in time.
         /// </param>
-        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentFilterResults(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sexual = sexual;
             Violence = violence;
             Hate = hate;
             SelfHarm = selfHarm;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyGroupSummary
+    public partial class PolicyGroupSummary : IUtf8JsonSerializable, IJsonModel<PolicyGroupSummary>
     {
-        internal static PolicyGroupSummary DeserializePolicyGroupSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyGroupSummary>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PolicyGroupSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PolicyGroupSummary>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PolicyGroupSummary>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PolicyGroupName))
+            {
+                writer.WritePropertyName("policyGroupName"u8);
+                writer.WriteStringValue(PolicyGroupName);
+            }
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteObjectValue(Results);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyGroupSummary IJsonModel<PolicyGroupSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyGroupSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyGroupSummary(document.RootElement, options);
+        }
+
+        internal static PolicyGroupSummary DeserializePolicyGroupSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> policyGroupName = default;
             Optional<PolicySummaryResults> results = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyGroupName"u8))
@@ -36,8 +94,38 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyGroupSummary(policyGroupName.Value, results.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PolicyGroupSummary(policyGroupName.Value, results.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyGroupSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyGroupSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PolicyGroupSummary IPersistableModel<PolicyGroupSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyGroupSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePolicyGroupSummary(document.RootElement, options);
+        }
+
+        string IPersistableModel<PolicyGroupSummary>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

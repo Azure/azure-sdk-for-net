@@ -5,31 +5,44 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A web application firewall rule. </summary>
     public partial class ApplicationGatewayFirewallRule
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/>. </summary>
         /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
         public ApplicationGatewayFirewallRule(int ruleId)
         {
             RuleId = ruleId;
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/>. </summary>
         /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
         /// <param name="ruleIdString"> The string representation of the web application firewall rule identifier. </param>
         /// <param name="state"> The string representation of the web application firewall rule state. </param>
         /// <param name="action"> The string representation of the web application firewall rule action. </param>
         /// <param name="description"> The description of the web application firewall rule. </param>
-        internal ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleId = ruleId;
             RuleIdString = ruleIdString;
             State = state;
             Action = action;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRule"/> for deserialization. </summary>
+        internal ApplicationGatewayFirewallRule()
+        {
         }
 
         /// <summary> The identifier of the web application firewall rule. </summary>

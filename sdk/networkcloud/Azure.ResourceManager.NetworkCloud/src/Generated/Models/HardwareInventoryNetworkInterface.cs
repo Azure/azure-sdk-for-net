@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> HardwareInventoryNetworkInterface represents the network interface details as part of a hardware inventory. </summary>
     public partial class HardwareInventoryNetworkInterface
     {
-        /// <summary> Initializes a new instance of HardwareInventoryNetworkInterface. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardwareInventoryNetworkInterface"/>. </summary>
         internal HardwareInventoryNetworkInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareInventoryNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareInventoryNetworkInterface"/>. </summary>
         /// <param name="linkStatus"> The current status of the link. </param>
         /// <param name="macAddress"> The MAC address associated with this interface. </param>
         /// <param name="name"> The name of the interface. </param>
         /// <param name="networkInterfaceId"> The resource ID of the network interface for the port on the switch that this machine's interface is connected to. </param>
-        internal HardwareInventoryNetworkInterface(string linkStatus, string macAddress, string name, string networkInterfaceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardwareInventoryNetworkInterface(string linkStatus, string macAddress, string name, string networkInterfaceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkStatus = linkStatus;
             MacAddress = macAddress;
             Name = name;
             NetworkInterfaceId = networkInterfaceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current status of the link. </summary>

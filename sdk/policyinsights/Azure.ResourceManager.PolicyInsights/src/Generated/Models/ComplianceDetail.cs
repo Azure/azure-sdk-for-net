@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> The compliance state rollup. </summary>
     public partial class ComplianceDetail
     {
-        /// <summary> Initializes a new instance of ComplianceDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComplianceDetail"/>. </summary>
         internal ComplianceDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ComplianceDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceDetail"/>. </summary>
         /// <param name="complianceState"> The compliance state. </param>
         /// <param name="count"> Summarized count value for this compliance state. </param>
-        internal ComplianceDetail(string complianceState, int? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComplianceDetail(string complianceState, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComplianceState = complianceState;
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The compliance state. </summary>

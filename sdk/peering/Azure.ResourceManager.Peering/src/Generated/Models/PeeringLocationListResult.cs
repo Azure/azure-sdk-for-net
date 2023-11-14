@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The paginated list of peering locations. </summary>
     internal partial class PeeringLocationListResult
     {
-        /// <summary> Initializes a new instance of PeeringLocationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringLocationListResult"/>. </summary>
         internal PeeringLocationListResult()
         {
             Value = new ChangeTrackingList<PeeringLocation>();
         }
 
-        /// <summary> Initializes a new instance of PeeringLocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLocationListResult"/>. </summary>
         /// <param name="value"> The list of peering locations. </param>
         /// <param name="nextLink"> The link to fetch the next page of peering locations. </param>
-        internal PeeringLocationListResult(IReadOnlyList<PeeringLocation> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringLocationListResult(IReadOnlyList<PeeringLocation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of peering locations. </summary>

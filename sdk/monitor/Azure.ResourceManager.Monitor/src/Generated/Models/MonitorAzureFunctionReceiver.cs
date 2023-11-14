@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An azure function receiver. </summary>
     public partial class MonitorAzureFunctionReceiver
     {
-        /// <summary> Initializes a new instance of MonitorAzureFunctionReceiver. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorAzureFunctionReceiver"/>. </summary>
         /// <param name="name"> The name of the azure function receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="functionAppResourceId"> The azure resource id of the function app. </param>
         /// <param name="functionName"> The function name in the function app. </param>
@@ -32,19 +36,26 @@ namespace Azure.ResourceManager.Monitor.Models
             HttpTriggerUri = httpTriggerUri;
         }
 
-        /// <summary> Initializes a new instance of MonitorAzureFunctionReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorAzureFunctionReceiver"/>. </summary>
         /// <param name="name"> The name of the azure function receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="functionAppResourceId"> The azure resource id of the function app. </param>
         /// <param name="functionName"> The function name in the function app. </param>
         /// <param name="httpTriggerUri"> The http trigger url where http request sent to. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
-        internal MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri, bool? useCommonAlertSchema)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorAzureFunctionReceiver(string name, ResourceIdentifier functionAppResourceId, string functionName, Uri httpTriggerUri, bool? useCommonAlertSchema, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FunctionAppResourceId = functionAppResourceId;
             FunctionName = functionName;
             HttpTriggerUri = httpTriggerUri;
             UseCommonAlertSchema = useCommonAlertSchema;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorAzureFunctionReceiver"/> for deserialization. </summary>
+        internal MonitorAzureFunctionReceiver()
+        {
         }
 
         /// <summary> The name of the azure function receiver. Names must be unique across all receivers within an action group. </summary>

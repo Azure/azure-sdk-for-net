@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsTableResultStatistics
+    public partial class OperationalInsightsTableResultStatistics : IUtf8JsonSerializable, IJsonModel<OperationalInsightsTableResultStatistics>
     {
-        internal static OperationalInsightsTableResultStatistics DeserializeOperationalInsightsTableResultStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableResultStatistics>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OperationalInsightsTableResultStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OperationalInsightsTableResultStatistics>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OperationalInsightsTableResultStatistics>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Progress))
+                {
+                    writer.WritePropertyName("progress"u8);
+                    writer.WriteNumberValue(Progress.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IngestedRecords))
+                {
+                    writer.WritePropertyName("ingestedRecords"u8);
+                    writer.WriteNumberValue(IngestedRecords.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ScannedGB))
+                {
+                    writer.WritePropertyName("scannedGb"u8);
+                    writer.WriteNumberValue(ScannedGB.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OperationalInsightsTableResultStatistics IJsonModel<OperationalInsightsTableResultStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsTableResultStatistics(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsTableResultStatistics DeserializeOperationalInsightsTableResultStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<float> progress = default;
             Optional<int> ingestedRecords = default;
             Optional<float> scannedGb = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("progress"u8))
@@ -50,8 +122,38 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     scannedGb = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsTableResultStatistics(Optional.ToNullable(progress), Optional.ToNullable(ingestedRecords), Optional.ToNullable(scannedGb));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsTableResultStatistics(Optional.ToNullable(progress), Optional.ToNullable(ingestedRecords), Optional.ToNullable(scannedGb), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsTableResultStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OperationalInsightsTableResultStatistics IPersistableModel<OperationalInsightsTableResultStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsTableResultStatistics(document.RootElement, options);
+        }
+
+        string IPersistableModel<OperationalInsightsTableResultStatistics>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

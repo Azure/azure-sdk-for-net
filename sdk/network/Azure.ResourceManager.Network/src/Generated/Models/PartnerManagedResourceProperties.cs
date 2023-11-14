@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the partner managed resource. </summary>
     public partial class PartnerManagedResourceProperties
     {
-        /// <summary> Initializes a new instance of PartnerManagedResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerManagedResourceProperties"/>. </summary>
         public PartnerManagedResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerManagedResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerManagedResourceProperties"/>. </summary>
         /// <param name="id"> The partner managed resource id. </param>
         /// <param name="internalLoadBalancerId"> The partner managed ILB resource id. </param>
         /// <param name="standardLoadBalancerId"> The partner managed SLB resource id. </param>
-        internal PartnerManagedResourceProperties(ResourceIdentifier id, ResourceIdentifier internalLoadBalancerId, ResourceIdentifier standardLoadBalancerId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerManagedResourceProperties(ResourceIdentifier id, ResourceIdentifier internalLoadBalancerId, ResourceIdentifier standardLoadBalancerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             InternalLoadBalancerId = internalLoadBalancerId;
             StandardLoadBalancerId = standardLoadBalancerId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The partner managed resource id. </summary>

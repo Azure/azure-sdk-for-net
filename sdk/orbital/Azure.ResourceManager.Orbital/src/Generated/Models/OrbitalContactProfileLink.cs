@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Contact Profile Link. </summary>
     public partial class OrbitalContactProfileLink
     {
-        /// <summary> Initializes a new instance of OrbitalContactProfileLink. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="polarization"> Polarization. e.g. (RHCP, LHCP). </param>
         /// <param name="direction"> Direction (uplink or downlink). </param>
@@ -32,14 +35,15 @@ namespace Azure.ResourceManager.Orbital.Models
             Channels = channels.ToList();
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactProfileLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLink"/>. </summary>
         /// <param name="name"> Link name. </param>
         /// <param name="polarization"> Polarization. e.g. (RHCP, LHCP). </param>
         /// <param name="direction"> Direction (uplink or downlink). </param>
         /// <param name="gainOverTemperature"> Gain To Noise Temperature in db/K. It is the required G/T by the customer. Not used yet. </param>
         /// <param name="eirpdBW"> Effective Isotropic Radiated Power (EIRP) in dBW. It is the required EIRP by the customer. Not used yet. </param>
         /// <param name="channels"> Contact Profile Link Channel. </param>
-        internal OrbitalContactProfileLink(string name, OrbitalLinkPolarization polarization, OrbitalLinkDirection direction, float? gainOverTemperature, float? eirpdBW, IList<OrbitalContactProfileLinkChannel> channels)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalContactProfileLink(string name, OrbitalLinkPolarization polarization, OrbitalLinkDirection direction, float? gainOverTemperature, float? eirpdBW, IList<OrbitalContactProfileLinkChannel> channels, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Polarization = polarization;
@@ -47,6 +51,12 @@ namespace Azure.ResourceManager.Orbital.Models
             GainOverTemperature = gainOverTemperature;
             EirpdBW = eirpdBW;
             Channels = channels;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLink"/> for deserialization. </summary>
+        internal OrbitalContactProfileLink()
+        {
         }
 
         /// <summary> Link name. </summary>

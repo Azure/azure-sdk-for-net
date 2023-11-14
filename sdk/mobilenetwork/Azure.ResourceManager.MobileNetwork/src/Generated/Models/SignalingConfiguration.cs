@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Signaling configuration for the packet core. </summary>
     internal partial class SignalingConfiguration
     {
-        /// <summary> Initializes a new instance of SignalingConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalingConfiguration"/>. </summary>
         public SignalingConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalingConfiguration"/>. </summary>
         /// <param name="nasReroute"> Configuration enabling 4G NAS reroute. </param>
-        internal SignalingConfiguration(NASRerouteConfiguration nasReroute)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalingConfiguration(NASRerouteConfiguration nasReroute, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NasReroute = nasReroute;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Configuration enabling 4G NAS reroute. </summary>

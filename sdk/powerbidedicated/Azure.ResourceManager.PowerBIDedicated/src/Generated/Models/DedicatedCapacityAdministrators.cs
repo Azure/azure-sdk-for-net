@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     /// <summary> An array of administrator user identities. </summary>
     internal partial class DedicatedCapacityAdministrators
     {
-        /// <summary> Initializes a new instance of DedicatedCapacityAdministrators. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityAdministrators"/>. </summary>
         public DedicatedCapacityAdministrators()
         {
             Members = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DedicatedCapacityAdministrators. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityAdministrators"/>. </summary>
         /// <param name="members"> An array of administrator user identities. </param>
-        internal DedicatedCapacityAdministrators(IList<string> members)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DedicatedCapacityAdministrators(IList<string> members, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Members = members;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of administrator user identities. </summary>

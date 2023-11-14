@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -14,13 +16,75 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class MobileNetworkPacketCaptureData : IUtf8JsonSerializable
+    public partial class MobileNetworkPacketCaptureData : IUtf8JsonSerializable, IJsonModel<MobileNetworkPacketCaptureData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkPacketCaptureData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MobileNetworkPacketCaptureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MobileNetworkPacketCaptureData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MobileNetworkPacketCaptureData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    writer.WritePropertyName("reason"u8);
+                    writer.WriteStringValue(Reason);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CaptureStartOn))
+                {
+                    writer.WritePropertyName("captureStartTime"u8);
+                    writer.WriteStringValue(CaptureStartOn.Value, "O");
+                }
+            }
             if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
@@ -46,12 +110,54 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("timeLimitInSeconds"u8);
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(OutputFiles))
+                {
+                    writer.WritePropertyName("outputFiles"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in OutputFiles)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MobileNetworkPacketCaptureData DeserializeMobileNetworkPacketCaptureData(JsonElement element)
+        MobileNetworkPacketCaptureData IJsonModel<MobileNetworkPacketCaptureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkPacketCaptureData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMobileNetworkPacketCaptureData(document.RootElement, options);
+        }
+
+        internal static MobileNetworkPacketCaptureData DeserializeMobileNetworkPacketCaptureData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +175,8 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<long> totalBytesPerSession = default;
             Optional<int> timeLimitInSeconds = default;
             Optional<IReadOnlyList<string>> outputFiles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -194,8 +302,38 @@ namespace Azure.ResourceManager.MobileNetwork
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MobileNetworkPacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), reason.Value, Optional.ToNullable(captureStartTime), Optional.ToList(networkInterfaces), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), Optional.ToList(outputFiles));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MobileNetworkPacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), reason.Value, Optional.ToNullable(captureStartTime), Optional.ToList(networkInterfaces), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), Optional.ToList(outputFiles), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MobileNetworkPacketCaptureData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkPacketCaptureData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MobileNetworkPacketCaptureData IPersistableModel<MobileNetworkPacketCaptureData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MobileNetworkPacketCaptureData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMobileNetworkPacketCaptureData(document.RootElement, options);
+        }
+
+        string IPersistableModel<MobileNetworkPacketCaptureData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

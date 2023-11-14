@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TemplateDeploymentOptions. </summary>
     public partial class TemplateDeploymentOptions
     {
-        /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentOptions"/>. </summary>
         public TemplateDeploymentOptions()
         {
             PreflightOptions = new ChangeTrackingList<PreflightOption>();
         }
 
-        /// <summary> Initializes a new instance of TemplateDeploymentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentOptions"/>. </summary>
         /// <param name="isPreflightSupported"></param>
         /// <param name="preflightOptions"></param>
-        internal TemplateDeploymentOptions(bool? isPreflightSupported, IList<PreflightOption> preflightOptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateDeploymentOptions(bool? isPreflightSupported, IList<PreflightOption> preflightOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsPreflightSupported = isPreflightSupported;
             PreflightOptions = preflightOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the is preflight supported. </summary>

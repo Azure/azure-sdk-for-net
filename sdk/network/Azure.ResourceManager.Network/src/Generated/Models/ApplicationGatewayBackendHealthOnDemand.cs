@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of on demand test probe. </summary>
     public partial class ApplicationGatewayBackendHealthOnDemand
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthOnDemand. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthOnDemand"/>. </summary>
         internal ApplicationGatewayBackendHealthOnDemand()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthOnDemand. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthOnDemand"/>. </summary>
         /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
         /// <param name="backendHealthHttpSettings"> Application gateway BackendHealthHttp settings. </param>
-        internal ApplicationGatewayBackendHealthOnDemand(ApplicationGatewayBackendAddressPool backendAddressPool, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayBackendHealthOnDemand(ApplicationGatewayBackendAddressPool backendAddressPool, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackendAddressPool = backendAddressPool;
             BackendHealthHttpSettings = backendHealthHttpSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Reference to an ApplicationGatewayBackendAddressPool resource. </summary>

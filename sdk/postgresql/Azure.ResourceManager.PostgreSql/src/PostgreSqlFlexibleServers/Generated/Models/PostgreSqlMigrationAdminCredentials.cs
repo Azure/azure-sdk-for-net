@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Server admin credentials. </summary>
     public partial class PostgreSqlMigrationAdminCredentials
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationAdminCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/>. </summary>
         /// <param name="sourceServerPassword"> Password for source server. </param>
         /// <param name="targetServerPassword"> Password for target server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerPassword"/> or <paramref name="targetServerPassword"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
             SourceServerPassword = sourceServerPassword;
             TargetServerPassword = targetServerPassword;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/>. </summary>
+        /// <param name="sourceServerPassword"> Password for source server. </param>
+        /// <param name="targetServerPassword"> Password for target server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationAdminCredentials(string sourceServerPassword, string targetServerPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceServerPassword = sourceServerPassword;
+            TargetServerPassword = targetServerPassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/> for deserialization. </summary>
+        internal PostgreSqlMigrationAdminCredentials()
+        {
         }
 
         /// <summary> Password for source server. </summary>

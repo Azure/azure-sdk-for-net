@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlFlexibleServerConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerConfigurationData"/>. </summary>
         public PostgreSqlFlexibleServerConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +43,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="isConfigPendingRestart"> Configuration is pending restart or not. </param>
         /// <param name="unit"> Configuration unit. </param>
         /// <param name="documentationLink"> Configuration documentation link. </param>
-        internal PostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, string defaultValue, PostgreSqlFlexibleServerConfigurationDataType? dataType, string allowedValues, string source, bool? isDynamicConfig, bool? isReadOnly, bool? isConfigPendingRestart, string unit, string documentationLink) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, string defaultValue, PostgreSqlFlexibleServerConfigurationDataType? dataType, string allowedValues, string source, bool? isDynamicConfig, bool? isReadOnly, bool? isConfigPendingRestart, string unit, string documentationLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Value = value;
             Description = description;
@@ -51,6 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             IsConfigPendingRestart = isConfigPendingRestart;
             Unit = unit;
             DocumentationLink = documentationLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the configuration. </summary>

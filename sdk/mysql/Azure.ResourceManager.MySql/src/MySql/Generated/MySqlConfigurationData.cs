@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlConfigurationData"/>. </summary>
         public MySqlConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +37,8 @@ namespace Azure.ResourceManager.MySql
         /// <param name="dataType"> Data type of the configuration. </param>
         /// <param name="allowedValues"> Allowed values of the configuration. </param>
         /// <param name="source"> Source of the configuration. </param>
-        internal MySqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, string defaultValue, string dataType, string allowedValues, string source) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, string defaultValue, string dataType, string allowedValues, string source, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Value = value;
             Description = description;
@@ -40,6 +46,7 @@ namespace Azure.ResourceManager.MySql
             DataType = dataType;
             AllowedValues = allowedValues;
             Source = source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the configuration. </summary>

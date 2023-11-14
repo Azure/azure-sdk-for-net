@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NginxDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NginxDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "MockableNginxSubscriptionResource.GetNginxDeployments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "MockableNginxSubscriptionResource.GetNginxDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Nginx.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NginxDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NginxDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "MockableNginxSubscriptionResource.GetNginxDeployments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NginxDeploymentResource(Client, NginxDeploymentData.DeserializeNginxDeploymentData(e)), NginxDeploymentDeploymentsClientDiagnostics, Pipeline, "MockableNginxSubscriptionResource.GetNginxDeployments", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,23 +19,28 @@ namespace Azure.ResourceManager.NetworkAnalytics
     /// </summary>
     public partial class DataProductsCatalogData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataProductsCatalogData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProductsCatalogData"/>. </summary>
         public DataProductsCatalogData()
         {
             Publishers = new ChangeTrackingList<PublisherInformation>();
         }
 
-        /// <summary> Initializes a new instance of DataProductsCatalogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductsCatalogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The data catalog provisioning state. </param>
         /// <param name="publishers"> The data product publisher information. </param>
-        internal DataProductsCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkAnalyticsProvisioningState? provisioningState, IList<PublisherInformation> publishers) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProductsCatalogData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkAnalyticsProvisioningState? provisioningState, IList<PublisherInformation> publishers, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Publishers = publishers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The data catalog provisioning state. </summary>

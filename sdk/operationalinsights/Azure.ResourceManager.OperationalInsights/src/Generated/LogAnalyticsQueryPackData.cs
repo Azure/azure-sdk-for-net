@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class LogAnalyticsQueryPackData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackData"/>. </summary>
         /// <param name="location"> The location. </param>
         public LogAnalyticsQueryPackData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsQueryPackData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +38,19 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="createdOn"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
         /// <param name="modifiedOn"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
         /// <param name="provisioningState"> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
-        internal LogAnalyticsQueryPackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? queryPackId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogAnalyticsQueryPackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? queryPackId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             QueryPackId = queryPackId;
             CreatedOn = createdOn;
             ModifiedOn = modifiedOn;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackData"/> for deserialization. </summary>
+        internal LogAnalyticsQueryPackData()
+        {
         }
 
         /// <summary> The unique ID of your application. This field cannot be changed. </summary>

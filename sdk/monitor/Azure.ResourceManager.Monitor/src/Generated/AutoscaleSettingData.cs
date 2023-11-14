@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class AutoscaleSettingData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AutoscaleSettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profiles"/> is null. </exception>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Monitor
             Notifications = new ChangeTrackingList<AutoscaleNotification>();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
         /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
-        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? isEnabled, PredictiveAutoscalePolicy predictiveAutoscalePolicy, string autoscaleSettingName, ResourceIdentifier targetResourceId, AzureLocation? targetResourceLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<AutoscaleProfile> profiles, IList<AutoscaleNotification> notifications, bool? isEnabled, PredictiveAutoscalePolicy predictiveAutoscalePolicy, string autoscaleSettingName, ResourceIdentifier targetResourceId, AzureLocation? targetResourceLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Profiles = profiles;
             Notifications = notifications;
@@ -55,6 +59,12 @@ namespace Azure.ResourceManager.Monitor
             AutoscaleSettingName = autoscaleSettingName;
             TargetResourceId = targetResourceId;
             TargetResourceLocation = targetResourceLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingData"/> for deserialization. </summary>
+        internal AutoscaleSettingData()
+        {
         }
 
         /// <summary> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </summary>

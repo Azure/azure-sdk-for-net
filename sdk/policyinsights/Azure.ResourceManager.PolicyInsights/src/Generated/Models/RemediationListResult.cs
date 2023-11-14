@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PolicyInsights;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> List of remediations. </summary>
     internal partial class RemediationListResult
     {
-        /// <summary> Initializes a new instance of RemediationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemediationListResult"/>. </summary>
         internal RemediationListResult()
         {
             Value = new ChangeTrackingList<PolicyRemediationData>();
         }
 
-        /// <summary> Initializes a new instance of RemediationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationListResult"/>. </summary>
         /// <param name="value"> Array of remediation definitions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal RemediationListResult(IReadOnlyList<PolicyRemediationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemediationListResult(IReadOnlyList<PolicyRemediationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of remediation definitions. </summary>

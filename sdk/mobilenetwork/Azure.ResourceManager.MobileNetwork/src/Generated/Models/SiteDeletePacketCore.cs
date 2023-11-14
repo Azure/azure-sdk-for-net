@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,9 +15,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The packet core to delete under a site. </summary>
     public partial class SiteDeletePacketCore
     {
-        /// <summary> Initializes a new instance of SiteDeletePacketCore. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteDeletePacketCore"/>. </summary>
         public SiteDeletePacketCore()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteDeletePacketCore"/>. </summary>
+        /// <param name="packetCore"> Reference to an packet core control plane resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteDeletePacketCore(SubResource packetCore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PacketCore = packetCore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Reference to an packet core control plane resource. </summary>

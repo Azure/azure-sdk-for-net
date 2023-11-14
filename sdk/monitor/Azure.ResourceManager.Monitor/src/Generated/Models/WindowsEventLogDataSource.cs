@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,14 +17,17 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class WindowsEventLogDataSource
     {
-        /// <summary> Initializes a new instance of WindowsEventLogDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WindowsEventLogDataSource"/>. </summary>
         public WindowsEventLogDataSource()
         {
             Streams = new ChangeTrackingList<WindowsEventLogDataSourceStream>();
             XPathQueries = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WindowsEventLogDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsEventLogDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
@@ -33,11 +37,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal WindowsEventLogDataSource(IList<WindowsEventLogDataSourceStream> streams, IList<string> xPathQueries, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsEventLogDataSource(IList<WindowsEventLogDataSourceStream> streams, IList<string> xPathQueries, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Streams = streams;
             XPathQueries = xPathQueries;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

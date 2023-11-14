@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkEncryption : IUtf8JsonSerializable
+    public partial class VirtualNetworkEncryption : IUtf8JsonSerializable, IJsonModel<VirtualNetworkEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkEncryption>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualNetworkEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualNetworkEncryption>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualNetworkEncryption>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enforcement"u8);
                 writer.WriteStringValue(Enforcement.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkEncryption DeserializeVirtualNetworkEncryption(JsonElement element)
+        VirtualNetworkEncryption IJsonModel<VirtualNetworkEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkEncryption(document.RootElement, options);
+        }
+
+        internal static VirtualNetworkEncryption DeserializeVirtualNetworkEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool enabled = default;
             Optional<VirtualNetworkEncryptionEnforcement> enforcement = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -49,8 +91,38 @@ namespace Azure.ResourceManager.Network.Models
                     enforcement = new VirtualNetworkEncryptionEnforcement(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualNetworkEncryption(enabled, Optional.ToNullable(enforcement));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualNetworkEncryption(enabled, Optional.ToNullable(enforcement), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualNetworkEncryption>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualNetworkEncryption IPersistableModel<VirtualNetworkEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualNetworkEncryption(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualNetworkEncryption>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The routing policy object used in a RoutingIntent resource. </summary>
     public partial class RoutingPolicy
     {
-        /// <summary> Initializes a new instance of RoutingPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingPolicy"/>. </summary>
         /// <param name="name"> The unique name for the routing policy. </param>
         /// <param name="destinations"> List of all destinations which this routing policy is applicable to (for example: Internet, PrivateTraffic). </param>
         /// <param name="nextHop"> The next hop resource id on which this routing policy is applicable to. </param>
@@ -31,15 +34,22 @@ namespace Azure.ResourceManager.Network.Models
             NextHop = nextHop;
         }
 
-        /// <summary> Initializes a new instance of RoutingPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingPolicy"/>. </summary>
         /// <param name="name"> The unique name for the routing policy. </param>
         /// <param name="destinations"> List of all destinations which this routing policy is applicable to (for example: Internet, PrivateTraffic). </param>
         /// <param name="nextHop"> The next hop resource id on which this routing policy is applicable to. </param>
-        internal RoutingPolicy(string name, IList<string> destinations, string nextHop)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingPolicy(string name, IList<string> destinations, string nextHop, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Destinations = destinations;
             NextHop = nextHop;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutingPolicy"/> for deserialization. </summary>
+        internal RoutingPolicy()
+        {
         }
 
         /// <summary> The unique name for the routing policy. </summary>

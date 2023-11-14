@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> list role assignments. </summary>
     public partial class RoleAssignmentListResult
     {
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         /// <param name="count"> Count of role assignments. </param>
         /// <param name="roleAssignmentResponse"> list of role assignments. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentResponse"/> is null. </exception>
@@ -27,13 +30,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             RoleAssignmentResponse = roleAssignmentResponse.ToList();
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         /// <param name="count"> Count of role assignments. </param>
         /// <param name="roleAssignmentResponse"> list of role assignments. </param>
-        internal RoleAssignmentListResult(int count, IReadOnlyList<RoleAssignmentDetail> roleAssignmentResponse)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentListResult(int count, IReadOnlyList<RoleAssignmentDetail> roleAssignmentResponse, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             RoleAssignmentResponse = roleAssignmentResponse;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/> for deserialization. </summary>
+        internal RoleAssignmentListResult()
+        {
         }
 
         /// <summary> Count of role assignments. </summary>

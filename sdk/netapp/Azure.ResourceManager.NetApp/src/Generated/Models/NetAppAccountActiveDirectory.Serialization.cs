@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppAccountActiveDirectory : IUtf8JsonSerializable
+    public partial class NetAppAccountActiveDirectory : IUtf8JsonSerializable, IJsonModel<NetAppAccountActiveDirectory>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountActiveDirectory>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetAppAccountActiveDirectory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetAppAccountActiveDirectory>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetAppAccountActiveDirectory>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActiveDirectoryId))
             {
@@ -48,6 +58,22 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 writer.WritePropertyName("dns"u8);
                 writer.WriteStringValue(Dns);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StatusDetails))
+                {
+                    writer.WritePropertyName("statusDetails"u8);
+                    writer.WriteStringValue(StatusDetails);
+                }
             }
             if (Optional.IsDefined(SmbServerName))
             {
@@ -144,11 +170,40 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("preferredServersForLdapClient"u8);
                 writer.WriteStringValue(PreferredServersForLdapClient);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppAccountActiveDirectory DeserializeNetAppAccountActiveDirectory(JsonElement element)
+        NetAppAccountActiveDirectory IJsonModel<NetAppAccountActiveDirectory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppAccountActiveDirectory(document.RootElement, options);
+        }
+
+        internal static NetAppAccountActiveDirectory DeserializeNetAppAccountActiveDirectory(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -176,6 +231,8 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<bool> encryptDCConnections = default;
             Optional<NetAppLdapSearchScopeConfiguration> ldapSearchScope = default;
             Optional<string> preferredServersForLdapClient = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeDirectoryId"u8))
@@ -357,8 +414,38 @@ namespace Azure.ResourceManager.NetApp.Models
                     preferredServersForLdapClient = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, Optional.ToList(backupOperators), Optional.ToList(administrators), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), Optional.ToList(securityOperators), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value, preferredServersForLdapClient.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, Optional.ToList(backupOperators), Optional.ToList(administrators), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), Optional.ToList(securityOperators), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value, preferredServersForLdapClient.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppAccountActiveDirectory>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetAppAccountActiveDirectory IPersistableModel<NetAppAccountActiveDirectory>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetAppAccountActiveDirectory)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetAppAccountActiveDirectory(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetAppAccountActiveDirectory>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

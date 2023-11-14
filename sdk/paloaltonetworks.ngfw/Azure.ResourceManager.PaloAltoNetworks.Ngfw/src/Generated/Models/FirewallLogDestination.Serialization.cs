@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallLogDestination : IUtf8JsonSerializable
+    public partial class FirewallLogDestination : IUtf8JsonSerializable, IJsonModel<FirewallLogDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallLogDestination>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FirewallLogDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FirewallLogDestination>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FirewallLogDestination>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageConfiguration))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("monitorConfigurations"u8);
                 writer.WriteObjectValue(MonitorConfiguration);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallLogDestination DeserializeFirewallLogDestination(JsonElement element)
+        FirewallLogDestination IJsonModel<FirewallLogDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallLogDestination(document.RootElement, options);
+        }
+
+        internal static FirewallLogDestination DeserializeFirewallLogDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Optional<StorageAccountConfiguration> storageConfigurations = default;
             Optional<EventHubConfiguration> eventHubConfigurations = default;
             Optional<MonitorLogConfiguration> monitorConfigurations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConfigurations"u8))
@@ -71,8 +113,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     monitorConfigurations = MonitorLogConfiguration.DeserializeMonitorLogConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FirewallLogDestination(storageConfigurations.Value, eventHubConfigurations.Value, monitorConfigurations.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FirewallLogDestination(storageConfigurations.Value, eventHubConfigurations.Value, monitorConfigurations.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FirewallLogDestination>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FirewallLogDestination IPersistableModel<FirewallLogDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirewallLogDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFirewallLogDestination(document.RootElement, options);
+        }
+
+        string IPersistableModel<FirewallLogDestination>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

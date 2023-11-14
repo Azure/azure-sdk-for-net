@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of p2s vpn connections to be disconnected. </summary>
     public partial class P2SVpnConnectionRequest
     {
-        /// <summary> Initializes a new instance of P2SVpnConnectionRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionRequest"/>. </summary>
         public P2SVpnConnectionRequest()
         {
             VpnConnectionIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnConnectionRequest"/>. </summary>
+        /// <param name="vpnConnectionIds"> List of p2s vpn connection Ids. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal P2SVpnConnectionRequest(IList<string> vpnConnectionIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VpnConnectionIds = vpnConnectionIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of p2s vpn connection Ids. </summary>
