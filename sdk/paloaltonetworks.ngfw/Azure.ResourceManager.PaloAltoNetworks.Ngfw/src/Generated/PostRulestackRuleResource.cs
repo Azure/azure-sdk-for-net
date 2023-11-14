@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The string to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FirewallRuleCounter>> GetCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The string to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FirewallRuleCounter> GetCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The string to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RefreshCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The string to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RefreshCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The string to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string firewallName = null, CancellationToken cancellationToken = default)
         {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallName"> The String to use. </param>
+        /// <param name="firewallName"> The string to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FirewallRuleResetConter> ResetCounters(string firewallName = null, CancellationToken cancellationToken = default)
         {
