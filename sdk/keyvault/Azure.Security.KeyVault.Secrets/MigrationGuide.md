@@ -14,6 +14,7 @@ Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those ne
   - [Setting secrets](#setting-secrets)
   - [Getting secrets](#getting-secrets)
   - [Listing secrets](#listing-secrets)
+  - [Listing secret versions](#listing-secret-versions)
   - [Deleting secrets](#deleting-secrets)
   - [Managing shared access signatures](#managing-shared-access-signatures)
 - [Additional samples](#additional-samples)
