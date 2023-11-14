@@ -83,6 +83,22 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ManagedPrivateEndpointModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedPrivateEndpointModelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedPrivateEndpointModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaArmClient.GetManagedPrivateEndpointModelResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource" /> object. </returns>
+        public static ManagedPrivateEndpointModelResource GetManagedPrivateEndpointModelResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableGrafanaArmClient(client).GetManagedPrivateEndpointModelResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of ManagedGrafanaResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
