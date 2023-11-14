@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
@@ -28,15 +27,22 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
             StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -53,15 +59,22 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
             ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -78,15 +91,22 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
             UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -107,15 +127,22 @@ namespace Azure.Storage.DataMovement
             string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
             StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -134,15 +161,22 @@ namespace Azure.Storage.DataMovement
 
             string childSourcePath = header.SourcePath;
             string childDestinationPath = header.DestinationPath;
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
             ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -164,15 +198,22 @@ namespace Azure.Storage.DataMovement
             string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
-            DataTransferStatus jobPartStatus = header.JobPartStatus;
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
             UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
                 destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
-                jobPartStatus: jobPartStatus,
-                initialTransferSize: header.InitialTransferSize,
-                transferChunkSize: header.ChunkSize);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -197,7 +238,7 @@ namespace Azure.Storage.DataMovement
                 destinationTypeId: jobPart._destinationResource.ResourceId,
                 sourcePath: sourcePath,
                 destinationPath: destinationPath,
-                overwrite: jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                createPreference: jobPart._createMode,
                 initialTransferSize: jobPart._initialTransferSize,
                 chunkSize: jobPart._transferChunkSize,
                 priority: 0, // TODO: add priority feature
@@ -236,13 +277,6 @@ namespace Azure.Storage.DataMovement
             if (!header.DestinationPath.StartsWith(passedDestinationPath))
             {
                 throw Errors.MismatchResumeTransferArguments(nameof(header.DestinationPath), header.DestinationPath, passedDestinationPath);
-            }
-
-            // Check CreateMode / Overwrite
-            if ((header.Overwrite && jobPart._createMode != StorageResourceCreationPreference.OverwriteIfExists) ||
-                (!header.Overwrite && jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists))
-            {
-                throw Errors.MismatchResumeCreateMode(header.Overwrite, jobPart._createMode);
             }
         }
     }

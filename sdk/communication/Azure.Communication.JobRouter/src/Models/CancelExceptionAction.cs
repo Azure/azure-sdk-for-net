@@ -12,7 +12,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
         public CancelExceptionAction()
         {
-            Kind = "cancel";
+            Kind = ExceptionActionKind.Cancel;
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStringValue(DispositionCode);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

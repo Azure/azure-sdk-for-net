@@ -114,7 +114,6 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicyAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DistributionPolicy>> GetDistributionPolicyAsync(string distributionPolicyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
@@ -129,7 +128,6 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicy(string,CancellationToken)']/*" />
         public virtual Response<DistributionPolicy> GetDistributionPolicy(string distributionPolicyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
@@ -160,7 +158,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetDistributionPolicyAsync(string distributionPolicyId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
@@ -200,7 +197,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicy(string,RequestContext)']/*" />
         public virtual Response GetDistributionPolicy(string distributionPolicyId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
@@ -236,7 +232,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteDistributionPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteDistributionPolicyAsync(string distributionPolicyId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
@@ -272,7 +267,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteDistributionPolicy(string,RequestContext)']/*" />
         public virtual Response DeleteDistributionPolicy(string distributionPolicyId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
@@ -376,7 +370,6 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicyAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<ClassificationPolicy>> GetClassificationPolicyAsync(string classificationPolicyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
@@ -391,7 +384,6 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicy(string,CancellationToken)']/*" />
         public virtual Response<ClassificationPolicy> GetClassificationPolicy(string classificationPolicyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
@@ -422,7 +414,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationPolicyAsync(string classificationPolicyId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
@@ -462,7 +453,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicy(string,RequestContext)']/*" />
         public virtual Response GetClassificationPolicy(string classificationPolicyId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
@@ -498,7 +488,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteClassificationPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteClassificationPolicyAsync(string classificationPolicyId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
@@ -534,7 +523,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteClassificationPolicy(string,RequestContext)']/*" />
         public virtual Response DeleteClassificationPolicy(string classificationPolicyId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
@@ -638,7 +626,6 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicyAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<ExceptionPolicy>> GetExceptionPolicyAsync(string exceptionPolicyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
@@ -653,7 +640,6 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicy(string,CancellationToken)']/*" />
         public virtual Response<ExceptionPolicy> GetExceptionPolicy(string exceptionPolicyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
@@ -684,7 +670,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetExceptionPolicyAsync(string exceptionPolicyId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
@@ -724,7 +709,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicy(string,RequestContext)']/*" />
         public virtual Response GetExceptionPolicy(string exceptionPolicyId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
@@ -760,7 +744,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteExceptionPolicyAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteExceptionPolicyAsync(string exceptionPolicyId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
@@ -796,7 +779,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteExceptionPolicy(string,RequestContext)']/*" />
         public virtual Response DeleteExceptionPolicy(string exceptionPolicyId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
@@ -900,7 +882,6 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueueAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<RouterQueue>> GetQueueAsync(string queueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
@@ -915,7 +896,6 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueue(string,CancellationToken)']/*" />
         public virtual Response<RouterQueue> GetQueue(string queueId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
@@ -946,7 +926,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueueAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetQueueAsync(string queueId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
@@ -986,7 +965,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueue(string,RequestContext)']/*" />
         public virtual Response GetQueue(string queueId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
@@ -1022,7 +1000,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteQueueAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteQueueAsync(string queueId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
@@ -1058,7 +1035,6 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='DeleteQueue(string,RequestContext)']/*" />
         public virtual Response DeleteQueue(string queueId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
@@ -1080,8 +1056,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
@@ -1092,8 +1067,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing distribution policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int?,CancellationToken)']/*" />
-        public virtual Pageable<DistributionPolicy> GetDistributionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<DistributionPolicy> GetDistributionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
@@ -1120,8 +1094,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPoliciesAsync(int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetDistributionPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1147,8 +1120,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetDistributionPolicies(int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDistributionPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<BinaryData> GetDistributionPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDistributionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDistributionPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1158,8 +1130,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
@@ -1170,8 +1141,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing classification policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int?,CancellationToken)']/*" />
-        public virtual Pageable<ClassificationPolicy> GetClassificationPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<ClassificationPolicy> GetClassificationPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
@@ -1198,8 +1168,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPoliciesAsync(int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetClassificationPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1225,8 +1194,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetClassificationPolicies(int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetClassificationPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<BinaryData> GetClassificationPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1236,8 +1204,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
@@ -1248,8 +1215,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing exception policies. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int?,CancellationToken)']/*" />
-        public virtual Pageable<ExceptionPolicy> GetExceptionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<ExceptionPolicy> GetExceptionPolicies(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
@@ -1276,8 +1242,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPoliciesAsync(int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetExceptionPoliciesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1303,8 +1268,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetExceptionPolicies(int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetExceptionPolicies(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<BinaryData> GetExceptionPolicies(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExceptionPoliciesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExceptionPoliciesNextPageRequest(nextLink, maxpagesize, context);
@@ -1314,8 +1278,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueuesAsync(int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<RouterQueue> GetQueuesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<RouterQueue> GetQueuesAsync(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
@@ -1326,8 +1289,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Retrieves existing queues. </summary>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueues(int?,CancellationToken)']/*" />
-        public virtual Pageable<RouterQueue> GetQueues(int? maxpagesize = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<RouterQueue> GetQueues(int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
@@ -1354,8 +1316,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueuesAsync(int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetQueuesAsync(int? maxpagesize, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetQueuesAsync(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);
@@ -1381,8 +1342,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/JobRouterAdministrationClient.xml" path="doc/members/member[@name='GetQueues(int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetQueues(int? maxpagesize, RequestContext context)
+        internal virtual Pageable<BinaryData> GetQueues(int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetQueuesRequest(maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetQueuesNextPageRequest(nextLink, maxpagesize, context);

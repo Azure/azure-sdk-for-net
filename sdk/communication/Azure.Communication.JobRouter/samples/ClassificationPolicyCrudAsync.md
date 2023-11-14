@@ -85,7 +85,7 @@ Console.WriteLine($"Classification policy successfully update with new prioritiz
 ## List classification policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicies_Async
-AsyncPageable<ClassificationPolicy> classificationPolicies = routerAdministrationClient.GetClassificationPoliciesAsync();
+AsyncPageable<ClassificationPolicy> classificationPolicies = routerAdministrationClient.GetClassificationPoliciesAsync(cancellationToken: default);
 await foreach (Page<ClassificationPolicy> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
 {
     foreach (ClassificationPolicy? policy in asPage.Values)

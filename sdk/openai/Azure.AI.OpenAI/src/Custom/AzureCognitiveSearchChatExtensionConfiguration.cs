@@ -28,18 +28,6 @@ namespace Azure.AI.OpenAI
         public Uri SearchEndpoint { get; set; }
         /// <summary> The name of the index to use as available in the referenced Azure Cognitive Search resource. </summary>
         public string IndexName { get; set; }
-        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
-        public AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
-        /// <summary> The configured top number of documents to feature for the configured query. </summary>
-        public int? DocumentCount { get; set; }
-        /// <summary> The query type to use with Azure Cognitive Search. </summary>
-        public AzureCognitiveSearchQueryType? QueryType { get; set; }
-        /// <summary> Whether queries should be restricted to use of indexed data. </summary>
-        public bool? ShouldRestrictResultScope { get; set; }
-        /// <summary> The additional semantic configuration for the query. </summary>
-        public string SemanticConfiguration { get; set; }
-        /// <summary> When using embeddings for search, specifies the resource URL from which embeddings should be retrieved. </summary>
-        public Uri EmbeddingEndpoint { get; set; }
 
         /// <summary> The API key to use with the specified Azure Cognitive Search endpoint. </summary>
         private string SearchKey { get; set; }
@@ -51,7 +39,13 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public AzureCognitiveSearchChatExtensionConfiguration()
         {
+            // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
+            //                      may be reconsidered for required payload constituents in the future.
         }
+
+        // CUSTOM CODE NOTE: Users must set the search key using the SetSearchKey method, so we make the constructor
+        //                       that receives it as a parameter to be internal and instead expose a public constructor
+        //                       without it.
 
         /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
         /// <param name="type">
@@ -68,6 +62,27 @@ namespace Azure.AI.OpenAI
 
             Type = type;
             SearchEndpoint = searchEndpoint;
+            IndexName = indexName;
+        }
+
+        /// <summary> Initializes a new instance of AzureCognitiveSearchChatExtensionConfiguration. </summary>
+        /// <param name="type">
+        /// The type label to use when configuring Azure OpenAI chat extensions. This should typically not be changed from its
+        /// default value for Azure Cognitive Search.
+        /// </param>
+        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
+        /// <param name="searchKey"> The API admin key to use with the specified Azure Cognitive Search endpoint. </param>
+        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchEndpoint"/>, <paramref name="searchKey"/> or <paramref name="indexName"/> is null. </exception>
+        internal AzureCognitiveSearchChatExtensionConfiguration(AzureChatExtensionType type, Uri searchEndpoint, string searchKey, string indexName)
+        {
+            Argument.AssertNotNull(searchEndpoint, nameof(searchEndpoint));
+            Argument.AssertNotNull(searchKey, nameof(searchKey));
+            Argument.AssertNotNull(indexName, nameof(indexName));
+
+            Type = type;
+            SearchEndpoint = searchEndpoint;
+            SearchKey = searchKey;
             IndexName = indexName;
         }
 

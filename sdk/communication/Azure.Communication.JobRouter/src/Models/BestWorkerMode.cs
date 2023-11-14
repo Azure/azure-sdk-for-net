@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public BestWorkerMode()
         {
-            Kind = "best-worker";
+            Kind = DistributionModeKind.BestWorker;
         }
 
         #endregion
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteObjectValue(ScoringRuleOptions);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(MinConcurrentOffers))
             {
                 writer.WritePropertyName("minConcurrentOffers"u8);

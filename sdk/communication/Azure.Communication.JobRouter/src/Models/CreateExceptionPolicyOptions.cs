@@ -19,10 +19,10 @@ namespace Azure.Communication.JobRouter
         /// <param name="exceptionRules"> A collection of exception rules on the exception policy. Key is the Id of each exception rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exceptionRules"/> is null. </exception>
-        public CreateExceptionPolicyOptions(string exceptionPolicyId, IList<ExceptionRule> exceptionRules)
+        public CreateExceptionPolicyOptions(string exceptionPolicyId, IEnumerable<ExceptionRule> exceptionRules)
         {
             Argument.AssertNotNullOrWhiteSpace(exceptionPolicyId, nameof(exceptionPolicyId));
-            Argument.AssertNotNullOrEmpty(exceptionRules, nameof(exceptionRules));
+            Argument.AssertNotNull(exceptionRules, nameof(exceptionRules));
 
             ExceptionPolicyId = exceptionPolicyId;
             ExceptionRules.AddRange(exceptionRules);

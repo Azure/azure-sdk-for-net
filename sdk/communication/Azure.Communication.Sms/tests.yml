@@ -16,6 +16,7 @@ extends:
         SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
           - $(sub-config-communication-int-test-resources-net)
+          - $(sub-config-communication-sms-int-test-resources)
     Clouds: Public,Int
     TestResourceDirectories:
       - communication/test-resources/

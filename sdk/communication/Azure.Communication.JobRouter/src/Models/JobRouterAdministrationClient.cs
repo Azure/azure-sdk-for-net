@@ -7,6 +7,7 @@ using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Autorest.CSharp.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -22,17 +23,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of <see cref="JobRouterAdministrationClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        public JobRouterAdministrationClient(string connectionString)
-            : this(
-                ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                new JobRouterClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouterAdministrationClient"/>.</summary>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public JobRouterAdministrationClient(string connectionString, JobRouterClientOptions options)
+        public JobRouterAdministrationClient(string connectionString, JobRouterClientOptions options = default)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new JobRouterClientOptions())
@@ -40,7 +32,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouterAdministrationClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
         /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterAdministrationClient(Uri endpoint, AzureKeyCredential credential, JobRouterClientOptions options = default)
@@ -52,8 +44,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouterAdministrationClient"/>.</summary>
-        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
-        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
+        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterAdministrationClient(Uri endpoint, TokenCredential credential, JobRouterClientOptions options = default)
             : this(
@@ -330,6 +322,20 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary> Retrieves existing classification policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ClassificationPolicy> GetClassificationPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetClassificationPoliciesAsync(null, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing classification policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ClassificationPolicy> GetClassificationPolicies(CancellationToken cancellationToken = default)
+        {
+            return GetClassificationPolicies(null, cancellationToken);
+        }
+
         #endregion ClassificationPolicy
 
         #region DistributionPolicy
@@ -534,6 +540,20 @@ namespace Azure.Communication.JobRouter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Retrieves existing distribution policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<DistributionPolicy> GetDistributionPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetDistributionPoliciesAsync(null, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing distribution policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<DistributionPolicy> GetDistributionPolicies(CancellationToken cancellationToken = default)
+        {
+            return GetDistributionPolicies(null, cancellationToken);
         }
 
         #endregion DistributionPolicy
@@ -744,6 +764,20 @@ namespace Azure.Communication.JobRouter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Retrieves existing exception policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ExceptionPolicy> GetExceptionPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetExceptionPoliciesAsync(null, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing exception policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ExceptionPolicy> GetExceptionPolicies(CancellationToken cancellationToken = default)
+        {
+            return GetExceptionPolicies(null, cancellationToken);
         }
 
         #endregion ExceptionPolicy
@@ -965,6 +999,20 @@ namespace Azure.Communication.JobRouter
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Retrieves existing queues. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<RouterQueue> GetQueuesAsync(CancellationToken cancellationToken = default)
+        {
+            return GetQueuesAsync(null, cancellationToken);
+        }
+
+        /// <summary> Retrieves existing exception policies. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<RouterQueue> GetQueues(CancellationToken cancellationToken = default)
+        {
+            return GetQueues(null, cancellationToken);
         }
 
         #endregion Queue

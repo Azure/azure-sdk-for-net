@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.8.1 (2023-11-13)
+
+### Other Changes
+
+- Refined some customization code to make the library more maintainable.
+
 ## 1.8.0 (2023-11-02)
 
 ### Features Added

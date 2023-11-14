@@ -5,20 +5,21 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A field that is used as part of the semantic configuration. </summary>
     public partial class SemanticField
     {
         /// <summary> Initializes a new instance of SemanticField. </summary>
-        public SemanticField()
-        {
-        }
-
-        /// <summary> Initializes a new instance of SemanticField. </summary>
         /// <param name="fieldName"></param>
-        internal SemanticField(string fieldName)
+        /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> is null. </exception>
+        public SemanticField(string fieldName)
         {
+            Argument.AssertNotNull(fieldName, nameof(fieldName));
+
             FieldName = fieldName;
         }
 
