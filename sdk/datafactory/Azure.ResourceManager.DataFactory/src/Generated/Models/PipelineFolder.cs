@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The folder that this Pipeline is in. If not specified, Pipeline will appear at the root level. </summary>
     internal partial class PipelineFolder
     {
-        /// <summary> Initializes a new instance of PipelineFolder. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineFolder"/>. </summary>
         public PipelineFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of PipelineFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this Pipeline is in. </param>
-        internal PipelineFolder(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineFolder(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the folder that this Pipeline is in. </summary>

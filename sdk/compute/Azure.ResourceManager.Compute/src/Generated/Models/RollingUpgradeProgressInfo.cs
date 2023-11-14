@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Information about the number of virtual machine instances in each upgrade state. </summary>
     public partial class RollingUpgradeProgressInfo
     {
-        /// <summary> Initializes a new instance of RollingUpgradeProgressInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RollingUpgradeProgressInfo"/>. </summary>
         internal RollingUpgradeProgressInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RollingUpgradeProgressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RollingUpgradeProgressInfo"/>. </summary>
         /// <param name="successfulInstanceCount"> The number of instances that have been successfully upgraded. </param>
         /// <param name="failedInstanceCount"> The number of instances that have failed to be upgraded successfully. </param>
         /// <param name="inProgressInstanceCount"> The number of instances that are currently being upgraded. </param>
         /// <param name="pendingInstanceCount"> The number of instances that have not yet begun to be upgraded. </param>
-        internal RollingUpgradeProgressInfo(int? successfulInstanceCount, int? failedInstanceCount, int? inProgressInstanceCount, int? pendingInstanceCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RollingUpgradeProgressInfo(int? successfulInstanceCount, int? failedInstanceCount, int? inProgressInstanceCount, int? pendingInstanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SuccessfulInstanceCount = successfulInstanceCount;
             FailedInstanceCount = failedInstanceCount;
             InProgressInstanceCount = inProgressInstanceCount;
             PendingInstanceCount = pendingInstanceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of instances that have been successfully upgraded. </summary>

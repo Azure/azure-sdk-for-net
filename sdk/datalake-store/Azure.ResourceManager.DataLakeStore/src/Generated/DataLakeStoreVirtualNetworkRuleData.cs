@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,20 +18,25 @@ namespace Azure.ResourceManager.DataLakeStore
     /// </summary>
     public partial class DataLakeStoreVirtualNetworkRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleData"/>. </summary>
         internal DataLakeStoreVirtualNetworkRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreVirtualNetworkRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="subnetId"> The resource identifier for the subnet. </param>
-        internal DataLakeStoreVirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier subnetId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreVirtualNetworkRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SubnetId = subnetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource identifier for the subnet. </summary>

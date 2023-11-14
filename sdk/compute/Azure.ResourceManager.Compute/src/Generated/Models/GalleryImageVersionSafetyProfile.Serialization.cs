@@ -5,27 +5,87 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryImageVersionSafetyProfile : IUtf8JsonSerializable
+    public partial class GalleryImageVersionSafetyProfile : IUtf8JsonSerializable, IJsonModel<GalleryImageVersionSafetyProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageVersionSafetyProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GalleryImageVersionSafetyProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GalleryImageVersionSafetyProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GalleryImageVersionSafetyProfile>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsReportedForPolicyViolation))
+                {
+                    writer.WritePropertyName("reportedForPolicyViolation"u8);
+                    writer.WriteBooleanValue(IsReportedForPolicyViolation.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(PolicyViolations))
+                {
+                    writer.WritePropertyName("policyViolations"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PolicyViolations)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GalleryImageVersionSafetyProfile DeserializeGalleryImageVersionSafetyProfile(JsonElement element)
+        GalleryImageVersionSafetyProfile IJsonModel<GalleryImageVersionSafetyProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryImageVersionSafetyProfile(document.RootElement, options);
+        }
+
+        internal static GalleryImageVersionSafetyProfile DeserializeGalleryImageVersionSafetyProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +93,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> reportedForPolicyViolation = default;
             Optional<IReadOnlyList<GalleryImageVersionPolicyViolation>> policyViolations = default;
             Optional<bool> allowDeletionOfReplicatedLocations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reportedForPolicyViolation"u8))
@@ -67,8 +129,38 @@ namespace Azure.ResourceManager.Compute.Models
                     allowDeletionOfReplicatedLocations = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GalleryImageVersionSafetyProfile(Optional.ToNullable(allowDeletionOfReplicatedLocations), Optional.ToNullable(reportedForPolicyViolation), Optional.ToList(policyViolations));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GalleryImageVersionSafetyProfile(Optional.ToNullable(allowDeletionOfReplicatedLocations), serializedAdditionalRawData, Optional.ToNullable(reportedForPolicyViolation), Optional.ToList(policyViolations));
         }
+
+        BinaryData IPersistableModel<GalleryImageVersionSafetyProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GalleryImageVersionSafetyProfile IPersistableModel<GalleryImageVersionSafetyProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryImageVersionSafetyProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGalleryImageVersionSafetyProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<GalleryImageVersionSafetyProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupRestoreContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAzureBackupRestoreRequest))]
+    public partial class BackupRestoreContent : IUtf8JsonSerializable, IJsonModel<BackupRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRestoreContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BackupRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BackupRestoreContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BackupRestoreContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -31,7 +42,79 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("identityDetails"u8);
                 writer.WriteObjectValue(IdentityDetails);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        BackupRestoreContent IJsonModel<BackupRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupRestoreContent(document.RootElement, options);
+        }
+
+        internal static BackupRestoreContent DeserializeBackupRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "AzureBackupRecoveryPointBasedRestoreRequest": return BackupRecoveryPointBasedRestoreContent.DeserializeBackupRecoveryPointBasedRestoreContent(element);
+                    case "AzureBackupRecoveryTimeBasedRestoreRequest": return BackupRecoveryTimeBasedRestoreContent.DeserializeBackupRecoveryTimeBasedRestoreContent(element);
+                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element);
+                }
+            }
+            return UnknownAzureBackupRestoreRequest.DeserializeUnknownAzureBackupRestoreRequest(element);
+        }
+
+        BinaryData IPersistableModel<BackupRestoreContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BackupRestoreContent IPersistableModel<BackupRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBackupRestoreContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<BackupRestoreContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

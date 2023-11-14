@@ -6,19 +6,39 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The date range for data in the export. This should only be specified with timeFrame set to 'Custom'. The maximum date range is 3 months. </summary>
     public partial class ExportTimePeriod
     {
-        /// <summary> Initializes a new instance of ExportTimePeriod. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportTimePeriod"/>. </summary>
         /// <param name="from"> The start date for export data. </param>
         /// <param name="to"> The end date for export data. </param>
         public ExportTimePeriod(DateTimeOffset @from, DateTimeOffset to)
         {
             From = @from;
             To = to;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportTimePeriod"/>. </summary>
+        /// <param name="from"> The start date for export data. </param>
+        /// <param name="to"> The end date for export data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportTimePeriod(DateTimeOffset @from, DateTimeOffset to, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            From = @from;
+            To = to;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportTimePeriod"/> for deserialization. </summary>
+        internal ExportTimePeriod()
+        {
         }
 
         /// <summary> The start date for export data. </summary>

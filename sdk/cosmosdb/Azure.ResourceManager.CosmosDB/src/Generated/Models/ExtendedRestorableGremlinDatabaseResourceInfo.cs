@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB Gremlin database event. </summary>
     public partial class ExtendedRestorableGremlinDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableGremlinDatabaseResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableGremlinDatabaseResourceInfo"/>. </summary>
         internal ExtendedRestorableGremlinDatabaseResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableGremlinDatabaseResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableGremlinDatabaseResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this database event. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
         /// <param name="databaseName"> The name of this Gremlin database. </param>
         /// <param name="databaseId"> The resource ID of this Gremlin database. </param>
-        internal ExtendedRestorableGremlinDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string databaseName, string databaseId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedRestorableGremlinDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string databaseName, string databaseId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
             EventTimestamp = eventTimestamp;
             DatabaseName = databaseName;
             DatabaseId = databaseId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

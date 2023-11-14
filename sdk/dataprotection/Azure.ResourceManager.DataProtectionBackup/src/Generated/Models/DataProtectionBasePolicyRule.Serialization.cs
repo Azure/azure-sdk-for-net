@@ -5,25 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBasePolicyRule : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownBasePolicyRule))]
+    public partial class DataProtectionBasePolicyRule : IUtf8JsonSerializable, IJsonModel<DataProtectionBasePolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBasePolicyRule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataProtectionBasePolicyRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataProtectionBasePolicyRule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataProtectionBasePolicyRule>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBasePolicyRule DeserializeDataProtectionBasePolicyRule(JsonElement element)
+        DataProtectionBasePolicyRule IJsonModel<DataProtectionBasePolicyRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBasePolicyRule(document.RootElement, options);
+        }
+
+        internal static DataProtectionBasePolicyRule DeserializeDataProtectionBasePolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,5 +78,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return UnknownBasePolicyRule.DeserializeUnknownBasePolicyRule(element);
         }
+
+        BinaryData IPersistableModel<DataProtectionBasePolicyRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataProtectionBasePolicyRule IPersistableModel<DataProtectionBasePolicyRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBasePolicyRule(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataProtectionBasePolicyRule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

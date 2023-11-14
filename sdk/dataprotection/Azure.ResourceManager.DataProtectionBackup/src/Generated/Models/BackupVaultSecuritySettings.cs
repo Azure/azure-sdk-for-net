@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Class containing security settings of vault. </summary>
     public partial class BackupVaultSecuritySettings
     {
-        /// <summary> Initializes a new instance of BackupVaultSecuritySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupVaultSecuritySettings"/>. </summary>
         public BackupVaultSecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupVaultSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultSecuritySettings"/>. </summary>
         /// <param name="softDeleteSettings"> Soft delete related settings. </param>
         /// <param name="immutabilitySettings"> Immutability Settings at vault level. </param>
-        internal BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SoftDeleteSettings = softDeleteSettings;
             ImmutabilitySettings = immutabilitySettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Soft delete related settings. </summary>

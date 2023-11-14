@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Basic Data Lake Store account information, returned on list calls. </summary>
     public partial class DataLakeStoreAccountBasicData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountBasicData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountBasicData"/>. </summary>
         internal DataLakeStoreAccountBasicData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountBasicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountBasicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +37,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <param name="endpoint"> The full CName endpoint for this account. </param>
         /// <param name="location"> The resource location. </param>
         /// <param name="tags"> The resource tags. </param>
-        internal DataLakeStoreAccountBasicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeStoreAccountStatus? provisioningState, DataLakeStoreAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreAccountBasicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeStoreAccountStatus? provisioningState, DataLakeStoreAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AccountId = accountId;
             ProvisioningState = provisioningState;
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             Endpoint = endpoint;
             Location = location;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier associated with this Data Lake Store account. </summary>

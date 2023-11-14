@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 using Azure.ResourceManager.Models;
@@ -19,12 +20,15 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// </summary>
     public partial class DataLakeAnalyticsComputePolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyData"/>. </summary>
         internal DataLakeAnalyticsComputePolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsComputePolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsComputePolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,12 +49,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The minimum priority per job this user can use to submit jobs.
         /// Serialized Name: ComputePolicy.properties.minPriorityPerJob
         /// </param>
-        internal DataLakeAnalyticsComputePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? objectId, AadObjectIdentifierType? objectType, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsComputePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? objectId, AadObjectIdentifierType? objectType, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             ObjectType = objectType;
             MaxDegreeOfParallelismPerJob = maxDegreeOfParallelismPerJob;
             MinPriorityPerJob = minPriorityPerJob;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

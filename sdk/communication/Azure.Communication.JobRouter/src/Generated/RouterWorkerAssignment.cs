@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> The assignment for a worker to a job. </summary>
     public partial class RouterWorkerAssignment
     {
-        /// <summary> Initializes a new instance of RouterWorkerAssignment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerAssignment"/>. </summary>
         /// <param name="assignmentId"> The Id of the assignment. </param>
         /// <param name="jobId"> The Id of the Job assigned. </param>
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
@@ -28,6 +32,27 @@ namespace Azure.Communication.JobRouter
             JobId = jobId;
             CapacityCost = capacityCost;
             AssignedAt = assignedAt;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerAssignment"/>. </summary>
+        /// <param name="assignmentId"> The Id of the assignment. </param>
+        /// <param name="jobId"> The Id of the Job assigned. </param>
+        /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
+        /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterWorkerAssignment(string assignmentId, string jobId, int capacityCost, DateTimeOffset assignedAt, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AssignmentId = assignmentId;
+            JobId = jobId;
+            CapacityCost = capacityCost;
+            AssignedAt = assignedAt;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterWorkerAssignment"/> for deserialization. </summary>
+        internal RouterWorkerAssignment()
+        {
         }
 
         /// <summary> The Id of the assignment. </summary>

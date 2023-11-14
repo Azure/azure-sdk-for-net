@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class OSProfile : IUtf8JsonSerializable
+    public partial class OSProfile : IUtf8JsonSerializable, IJsonModel<OSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OSProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OSProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputerName))
             {
@@ -35,11 +46,72 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSName))
+                {
+                    writer.WritePropertyName("osName"u8);
+                    writer.WriteStringValue(OSName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ToolsRunningStatus))
+                {
+                    writer.WritePropertyName("toolsRunningStatus"u8);
+                    writer.WriteStringValue(ToolsRunningStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ToolsVersionStatus))
+                {
+                    writer.WritePropertyName("toolsVersionStatus"u8);
+                    writer.WriteStringValue(ToolsVersionStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ToolsVersion))
+                {
+                    writer.WritePropertyName("toolsVersion"u8);
+                    writer.WriteStringValue(ToolsVersion);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OSProfile DeserializeOSProfile(JsonElement element)
+        OSProfile IJsonModel<OSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSProfile(document.RootElement, options);
+        }
+
+        internal static OSProfile DeserializeOSProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +124,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> toolsRunningStatus = default;
             Optional<string> toolsVersionStatus = default;
             Optional<string> toolsVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerName"u8))
@@ -98,8 +172,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     toolsVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, Optional.ToNullable(osType), osName.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, Optional.ToNullable(osType), osName.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OSProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OSProfile IPersistableModel<OSProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOSProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<OSProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

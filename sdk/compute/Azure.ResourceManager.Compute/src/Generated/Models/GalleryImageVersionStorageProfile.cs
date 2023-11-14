@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
     public partial class GalleryImageVersionStorageProfile
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionStorageProfile"/>. </summary>
         public GalleryImageVersionStorageProfile()
         {
             DataDiskImages = new ChangeTrackingList<GalleryDataDiskImage>();
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersionStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionStorageProfile"/>. </summary>
         /// <param name="gallerySource"> The source of the gallery artifact version. </param>
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
-        internal GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource gallerySource, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource gallerySource, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GallerySource = gallerySource;
             OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> This is the OS disk image. </summary>
         public GalleryOSDiskImage OSDiskImage { get; set; }

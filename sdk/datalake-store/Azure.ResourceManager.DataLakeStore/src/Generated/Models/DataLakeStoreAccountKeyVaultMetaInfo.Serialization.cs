@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    public partial class DataLakeStoreAccountKeyVaultMetaInfo : IUtf8JsonSerializable
+    public partial class DataLakeStoreAccountKeyVaultMetaInfo : IUtf8JsonSerializable, IJsonModel<DataLakeStoreAccountKeyVaultMetaInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreAccountKeyVaultMetaInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataLakeStoreAccountKeyVaultMetaInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataLakeStoreAccountKeyVaultMetaInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataLakeStoreAccountKeyVaultMetaInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultResourceId"u8);
             writer.WriteStringValue(KeyVaultResourceId);
@@ -21,11 +32,40 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStringValue(EncryptionKeyName);
             writer.WritePropertyName("encryptionKeyVersion"u8);
             writer.WriteStringValue(EncryptionKeyVersion);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataLakeStoreAccountKeyVaultMetaInfo DeserializeDataLakeStoreAccountKeyVaultMetaInfo(JsonElement element)
+        DataLakeStoreAccountKeyVaultMetaInfo IJsonModel<DataLakeStoreAccountKeyVaultMetaInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountKeyVaultMetaInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeStoreAccountKeyVaultMetaInfo(document.RootElement, options);
+        }
+
+        internal static DataLakeStoreAccountKeyVaultMetaInfo DeserializeDataLakeStoreAccountKeyVaultMetaInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +73,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             string keyVaultResourceId = default;
             string encryptionKeyName = default;
             string encryptionKeyVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultResourceId"u8))
@@ -50,8 +92,38 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     encryptionKeyVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLakeStoreAccountKeyVaultMetaInfo(keyVaultResourceId, encryptionKeyName, encryptionKeyVersion);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataLakeStoreAccountKeyVaultMetaInfo(keyVaultResourceId, encryptionKeyName, encryptionKeyVersion, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataLakeStoreAccountKeyVaultMetaInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountKeyVaultMetaInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataLakeStoreAccountKeyVaultMetaInfo IPersistableModel<DataLakeStoreAccountKeyVaultMetaInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountKeyVaultMetaInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataLakeStoreAccountKeyVaultMetaInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataLakeStoreAccountKeyVaultMetaInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

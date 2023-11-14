@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Disks operation response. </summary>
     internal partial class DiskList
     {
-        /// <summary> Initializes a new instance of DiskList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
         /// <param name="value"> A list of disks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskList(IEnumerable<ManagedDiskData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskList"/>. </summary>
         /// <param name="value"> A list of disks. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disks. Call ListNext() with this to fetch the next page of disks. </param>
-        internal DiskList(IReadOnlyList<ManagedDiskData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskList(IReadOnlyList<ManagedDiskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskList"/> for deserialization. </summary>
+        internal DiskList()
+        {
         }
 
         /// <summary> A list of disks. </summary>

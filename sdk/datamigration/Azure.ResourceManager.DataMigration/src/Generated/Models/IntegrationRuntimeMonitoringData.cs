@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Integration Runtime Monitoring Data. </summary>
     public partial class IntegrationRuntimeMonitoringData
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeMonitoringData"/>. </summary>
         internal IntegrationRuntimeMonitoringData()
         {
             Nodes = new ChangeTrackingList<NodeMonitoringData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeMonitoringData"/>. </summary>
         /// <param name="name"> The name of Integration Runtime. </param>
         /// <param name="nodes"> Integration Runtime node monitoring data. </param>
-        internal IntegrationRuntimeMonitoringData(string name, IReadOnlyList<NodeMonitoringData> nodes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeMonitoringData(string name, IReadOnlyList<NodeMonitoringData> nodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Nodes = nodes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of Integration Runtime. </summary>

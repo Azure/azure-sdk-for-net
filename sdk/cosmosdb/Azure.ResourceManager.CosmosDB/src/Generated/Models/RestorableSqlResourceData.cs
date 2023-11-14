@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,23 +15,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specific Databases to restore. </summary>
     public partial class RestorableSqlResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of RestorableSqlResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlResourceData"/>. </summary>
         internal RestorableSqlResourceData()
         {
             CollectionNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
-        internal RestorableSqlResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IReadOnlyList<string> collectionNames) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableSqlResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IReadOnlyList<string> collectionNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatabaseName = databaseName;
             CollectionNames = collectionNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the database available for restore. </summary>

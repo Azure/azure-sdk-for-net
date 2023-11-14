@@ -20,12 +20,15 @@ namespace Azure.ResourceManager.CostManagement
     /// </summary>
     public partial class CostManagementExportData : ResourceData
     {
-        /// <summary> Initializes a new instance of CostManagementExportData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementExportData"/>. </summary>
         public CostManagementExportData()
         {
         }
 
-        /// <summary> Initializes a new instance of CostManagementExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementExportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
         /// <param name="schedule"> Has schedule information for the export. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportFormatType? format, ExportDeliveryInfo deliveryInfo, ExportDefinition definition, ExportExecutionListResult runHistory, bool? partitionData, DateTimeOffset? nextRunTimeEstimate, ExportSchedule schedule, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Format = format;
             DeliveryInfo = deliveryInfo;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.CostManagement
             NextRunTimeEstimate = nextRunTimeEstimate;
             Schedule = schedule;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The format of the export being delivered. Currently only 'Csv' is supported. </summary>

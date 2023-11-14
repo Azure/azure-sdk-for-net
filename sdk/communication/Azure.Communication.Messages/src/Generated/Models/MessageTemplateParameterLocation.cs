@@ -5,14 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Messages
 {
     /// <summary> The message template's location value information. </summary>
     internal partial class MessageTemplateParameterLocation
     {
-        /// <summary> Initializes a new instance of MessageTemplateParameterLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateParameterLocation"/>. </summary>
         public MessageTemplateParameterLocation()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateParameterLocation"/>. </summary>
+        /// <param name="name"> The [Optional] name of the location. </param>
+        /// <param name="address"> The [Optional] address of the location. </param>
+        /// <param name="latitude"> The latitude of the location. </param>
+        /// <param name="longitude"> The longitude of the location. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateParameterLocation(string name, string address, double? latitude, double? longitude, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Address = address;
+            Latitude = latitude;
+            Longitude = longitude;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The [Optional] name of the location. </summary>

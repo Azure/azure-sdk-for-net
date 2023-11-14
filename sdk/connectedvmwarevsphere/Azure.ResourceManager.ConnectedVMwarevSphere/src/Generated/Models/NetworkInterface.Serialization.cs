@@ -5,21 +5,60 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class NetworkInterface : IUtf8JsonSerializable
+    public partial class NetworkInterface : IUtf8JsonSerializable, IJsonModel<NetworkInterface>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterface>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetworkInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkInterface>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkInterface>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Label))
+                {
+                    writer.WritePropertyName("label"u8);
+                    writer.WriteStringValue(Label);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(IPAddresses))
+                {
+                    writer.WritePropertyName("ipAddresses"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in IPAddresses)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MacAddress))
+                {
+                    writer.WritePropertyName("macAddress"u8);
+                    writer.WriteStringValue(MacAddress);
+                }
             }
             if (Optional.IsDefined(NetworkId))
             {
@@ -36,6 +75,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("powerOnBoot"u8);
                 writer.WriteStringValue(PowerOnBoot.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetworkMoRefId))
+                {
+                    writer.WritePropertyName("networkMoRefId"u8);
+                    writer.WriteStringValue(NetworkMoRefId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NetworkMoName))
+                {
+                    writer.WritePropertyName("networkMoName"u8);
+                    writer.WriteStringValue(NetworkMoName);
+                }
+            }
             if (Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
@@ -46,11 +101,40 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("ipSettings"u8);
                 writer.WriteObjectValue(IPSettings);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkInterface DeserializeNetworkInterface(JsonElement element)
+        NetworkInterface IJsonModel<NetworkInterface>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkInterface)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkInterface(document.RootElement, options);
+        }
+
+        internal static NetworkInterface DeserializeNetworkInterface(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +150,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> networkMoName = default;
             Optional<int> deviceKey = default;
             Optional<NicIPSettings> ipSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -148,8 +234,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     ipSettings = NicIPSettings.DeserializeNicIPSettings(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkInterface(name.Value, label.Value, Optional.ToList(ipAddresses), macAddress.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), networkMoRefId.Value, networkMoName.Value, Optional.ToNullable(deviceKey), ipSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkInterface(name.Value, label.Value, Optional.ToList(ipAddresses), macAddress.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), networkMoRefId.Value, networkMoName.Value, Optional.ToNullable(deviceKey), ipSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkInterface>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkInterface)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkInterface IPersistableModel<NetworkInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkInterface)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkInterface(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkInterface>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

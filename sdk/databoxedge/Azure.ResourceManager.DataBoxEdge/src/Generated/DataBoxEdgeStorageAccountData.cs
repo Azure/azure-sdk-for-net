@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -17,14 +19,17 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeStorageAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/>. </summary>
         /// <param name="dataPolicy"> Data policy of the storage Account. </param>
         public DataBoxEdgeStorageAccountData(DataBoxEdgeDataPolicy dataPolicy)
         {
             DataPolicy = dataPolicy;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +40,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="storageAccountCredentialId"> Storage Account Credential Id. </param>
         /// <param name="blobEndpoint"> BlobEndpoint of Storage Account. </param>
         /// <param name="containerCount"> The Container Count. Present only for Storage Accounts with DataPolicy set to Cloud. </param>
-        internal DataBoxEdgeStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, DataBoxEdgeStorageAccountStatus? storageAccountStatus, DataBoxEdgeDataPolicy dataPolicy, ResourceIdentifier storageAccountCredentialId, string blobEndpoint, int? containerCount) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeStorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, DataBoxEdgeStorageAccountStatus? storageAccountStatus, DataBoxEdgeDataPolicy dataPolicy, ResourceIdentifier storageAccountCredentialId, string blobEndpoint, int? containerCount, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             StorageAccountStatus = storageAccountStatus;
@@ -43,6 +49,12 @@ namespace Azure.ResourceManager.DataBoxEdge
             StorageAccountCredentialId = storageAccountCredentialId;
             BlobEndpoint = blobEndpoint;
             ContainerCount = containerCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountData"/> for deserialization. </summary>
+        internal DataBoxEdgeStorageAccountData()
+        {
         }
 
         /// <summary> Description for the storage Account. </summary>

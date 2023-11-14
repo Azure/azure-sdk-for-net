@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The folder that this CDC is in. If not specified, CDC will appear at the root level. </summary>
     internal partial class ChangeDataCaptureFolder
     {
-        /// <summary> Initializes a new instance of ChangeDataCaptureFolder. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureFolder"/>. </summary>
         public ChangeDataCaptureFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of ChangeDataCaptureFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this CDC is in. </param>
-        internal ChangeDataCaptureFolder(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChangeDataCaptureFolder(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the folder that this CDC is in. </summary>

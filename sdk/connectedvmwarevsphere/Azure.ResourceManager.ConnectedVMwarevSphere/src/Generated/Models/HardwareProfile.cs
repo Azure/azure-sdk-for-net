@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class HardwareProfile
     {
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
         public HardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HardwareProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
         /// <param name="memorySizeMB"> Gets or sets memory size in MBs for the vm. </param>
         /// <param name="numCpus"> Gets or sets the number of vCPUs for the vm. </param>
         /// <param name="numCoresPerSocket"> Gets or sets the number of cores per socket for the vm. Defaults to 1 if unspecified. </param>
         /// <param name="cpuHotAddEnabled"> Gets or sets a value indicating whether virtual processors can be added while this virtual machine is running. </param>
         /// <param name="cpuHotRemoveEnabled"> Gets or sets a value indicating whether virtual processors can be removed while this virtual machine is running. </param>
         /// <param name="memoryHotAddEnabled"> Gets or sets a value indicating whether memory can be added while this virtual machine is running. </param>
-        internal HardwareProfile(int? memorySizeMB, int? numCpus, int? numCoresPerSocket, bool? cpuHotAddEnabled, bool? cpuHotRemoveEnabled, bool? memoryHotAddEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardwareProfile(int? memorySizeMB, int? numCpus, int? numCoresPerSocket, bool? cpuHotAddEnabled, bool? cpuHotRemoveEnabled, bool? memoryHotAddEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MemorySizeMB = memorySizeMB;
             NumCpus = numCpus;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             CpuHotAddEnabled = cpuHotAddEnabled;
             CpuHotRemoveEnabled = cpuHotRemoveEnabled;
             MemoryHotAddEnabled = memoryHotAddEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets memory size in MBs for the vm. </summary>

@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Describes metadata for retrieving price info. </summary>
     public partial class DataBoxSkuCost
     {
-        /// <summary> Initializes a new instance of DataBoxSkuCost. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCost"/>. </summary>
         internal DataBoxSkuCost()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxSkuCost"/>. </summary>
         /// <param name="meterId"> Meter id of the Sku. </param>
         /// <param name="meterType"> The type of the meter. </param>
         /// <param name="multiplier"> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </param>
-        internal DataBoxSkuCost(Guid? meterId, string meterType, double? multiplier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxSkuCost(Guid? meterId, string meterType, double? multiplier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MeterId = meterId;
             MeterType = meterType;
             Multiplier = multiplier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Meter id of the Sku. </summary>

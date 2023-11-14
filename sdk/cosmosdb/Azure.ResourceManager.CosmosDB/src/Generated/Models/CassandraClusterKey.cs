@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB Cassandra table cluster key. </summary>
     public partial class CassandraClusterKey
     {
-        /// <summary> Initializes a new instance of CassandraClusterKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterKey"/>. </summary>
         public CassandraClusterKey()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterKey"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB Cassandra table cluster key. </param>
         /// <param name="orderBy"> Order of the Cosmos DB Cassandra table cluster key, only support "Asc" and "Desc". </param>
-        internal CassandraClusterKey(string name, string orderBy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterKey(string name, string orderBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             OrderBy = orderBy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table cluster key. </summary>

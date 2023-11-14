@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -14,10 +17,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class VirtualMachineTemplateData : IUtf8JsonSerializable
+    public partial class VirtualMachineTemplateData : IUtf8JsonSerializable, IJsonModel<VirtualMachineTemplateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineTemplateData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualMachineTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualMachineTemplateData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualMachineTemplateData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -42,8 +52,39 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Uuid))
+                {
+                    writer.WritePropertyName("uuid"u8);
+                    writer.WriteStringValue(Uuid);
+                }
+            }
             if (Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
@@ -59,12 +100,176 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MoName))
+                {
+                    writer.WritePropertyName("moName"u8);
+                    writer.WriteStringValue(MoName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MemorySizeMB))
+                {
+                    writer.WritePropertyName("memorySizeMB"u8);
+                    writer.WriteNumberValue(MemorySizeMB.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumCpus))
+                {
+                    writer.WritePropertyName("numCPUs"u8);
+                    writer.WriteNumberValue(NumCpus.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumCoresPerSocket))
+                {
+                    writer.WritePropertyName("numCoresPerSocket"u8);
+                    writer.WriteNumberValue(NumCoresPerSocket.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSType))
+                {
+                    writer.WritePropertyName("osType"u8);
+                    writer.WriteStringValue(OSType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSName))
+                {
+                    writer.WritePropertyName("osName"u8);
+                    writer.WriteStringValue(OSName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FolderPath))
+                {
+                    writer.WritePropertyName("folderPath"u8);
+                    writer.WriteStringValue(FolderPath);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(NetworkInterfaces))
+                {
+                    writer.WritePropertyName("networkInterfaces"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NetworkInterfaces)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Disks))
+                {
+                    writer.WritePropertyName("disks"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Disks)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CustomResourceName))
+                {
+                    writer.WritePropertyName("customResourceName"u8);
+                    writer.WriteStringValue(CustomResourceName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ToolsVersionStatus))
+                {
+                    writer.WritePropertyName("toolsVersionStatus"u8);
+                    writer.WriteStringValue(ToolsVersionStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ToolsVersion))
+                {
+                    writer.WritePropertyName("toolsVersion"u8);
+                    writer.WriteStringValue(ToolsVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FirmwareType))
+                {
+                    writer.WritePropertyName("firmwareType"u8);
+                    writer.WriteStringValue(FirmwareType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Statuses))
+                {
+                    writer.WritePropertyName("statuses"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Statuses)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineTemplateData DeserializeVirtualMachineTemplateData(JsonElement element)
+        VirtualMachineTemplateData IJsonModel<VirtualMachineTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineTemplateData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineTemplateData(document.RootElement, options);
+        }
+
+        internal static VirtualMachineTemplateData DeserializeVirtualMachineTemplateData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,6 +301,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<FirmwareType> firmwareType = default;
             Optional<IReadOnlyList<ResourceStatus>> statuses = default;
             Optional<string> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -309,8 +516,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(osType), osName.Value, folderPath.Value, Optional.ToList(networkInterfaces), Optional.ToList(disks), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Optional.ToNullable(firmwareType), Optional.ToList(statuses), provisioningState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(osType), osName.Value, folderPath.Value, Optional.ToList(networkInterfaces), Optional.ToList(disks), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Optional.ToNullable(firmwareType), Optional.ToList(statuses), provisioningState.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineTemplateData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineTemplateData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualMachineTemplateData IPersistableModel<VirtualMachineTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineTemplateData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineTemplateData(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualMachineTemplateData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RunCommandParameterDefinition
+    public partial class RunCommandParameterDefinition : IUtf8JsonSerializable, IJsonModel<RunCommandParameterDefinition>
     {
-        internal static RunCommandParameterDefinition DeserializeRunCommandParameterDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunCommandParameterDefinition>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RunCommandParameterDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RunCommandParameterDefinition>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RunCommandParameterDefinition>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(RunCommandParameterDefinitionType);
+            if (Optional.IsDefined(DefaultValue))
+            {
+                writer.WritePropertyName("defaultValue"u8);
+                writer.WriteStringValue(DefaultValue);
+            }
+            if (Optional.IsDefined(Required))
+            {
+                writer.WritePropertyName("required"u8);
+                writer.WriteBooleanValue(Required.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RunCommandParameterDefinition IJsonModel<RunCommandParameterDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunCommandParameterDefinition(document.RootElement, options);
+        }
+
+        internal static RunCommandParameterDefinition DeserializeRunCommandParameterDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +82,8 @@ namespace Azure.ResourceManager.Compute.Models
             string type = default;
             Optional<string> defaultValue = default;
             Optional<bool> required = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -48,8 +110,38 @@ namespace Azure.ResourceManager.Compute.Models
                     required = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Optional.ToNullable(required));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RunCommandParameterDefinition(name, type, defaultValue.Value, Optional.ToNullable(required), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RunCommandParameterDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RunCommandParameterDefinition IPersistableModel<RunCommandParameterDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRunCommandParameterDefinition(document.RootElement, options);
+        }
+
+        string IPersistableModel<RunCommandParameterDefinition>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

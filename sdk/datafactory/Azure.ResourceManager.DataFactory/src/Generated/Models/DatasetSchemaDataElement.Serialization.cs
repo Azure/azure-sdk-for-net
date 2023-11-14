@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -15,10 +17,17 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     [JsonConverter(typeof(DatasetSchemaDataElementConverter))]
-    public partial class DatasetSchemaDataElement : IUtf8JsonSerializable
+    public partial class DatasetSchemaDataElement : IUtf8JsonSerializable, IJsonModel<DatasetSchemaDataElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetSchemaDataElement>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DatasetSchemaDataElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DatasetSchemaDataElement>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DatasetSchemaDataElement>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SchemaColumnName))
             {
@@ -45,8 +54,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DatasetSchemaDataElement DeserializeDatasetSchemaDataElement(JsonElement element)
+        DatasetSchemaDataElement IJsonModel<DatasetSchemaDataElement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetSchemaDataElement(document.RootElement, options);
+        }
+
+        internal static DatasetSchemaDataElement DeserializeDatasetSchemaDataElement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -80,6 +103,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetSchemaDataElement(name.Value, type.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<DatasetSchemaDataElement>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatasetSchemaDataElement IPersistableModel<DatasetSchemaDataElement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatasetSchemaDataElement(document.RootElement, options);
+        }
+
+        string IPersistableModel<DatasetSchemaDataElement>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class DatasetSchemaDataElementConverter : JsonConverter<DatasetSchemaDataElement>
         {

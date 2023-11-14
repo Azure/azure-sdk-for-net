@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the SQL database events and their properties. </summary>
     internal partial class RestorableSqlDatabasesListResult
     {
-        /// <summary> Initializes a new instance of RestorableSqlDatabasesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasesListResult"/>. </summary>
         internal RestorableSqlDatabasesListResult()
         {
             Value = new ChangeTrackingList<RestorableSqlDatabase>();
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlDatabasesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasesListResult"/>. </summary>
         /// <param name="value"> List of SQL database events and their properties. </param>
-        internal RestorableSqlDatabasesListResult(IReadOnlyList<RestorableSqlDatabase> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableSqlDatabasesListResult(IReadOnlyList<RestorableSqlDatabase> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of SQL database events and their properties. </summary>

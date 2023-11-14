@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information about backup files when existing backup mode is used. </summary>
     public partial class DatabaseBackupInfo
     {
-        /// <summary> Initializes a new instance of DatabaseBackupInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseBackupInfo"/>. </summary>
         internal DatabaseBackupInfo()
         {
             BackupFiles = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseBackupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseBackupInfo"/>. </summary>
         /// <param name="databaseName"> Database name. </param>
         /// <param name="backupType"> Backup Type. </param>
         /// <param name="backupFiles"> The list of backup files for the current database. </param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isCompressed"> Whether the backup set is compressed. </param>
         /// <param name="familyCount"> Number of files in the backup set. </param>
         /// <param name="backupFinishOn"> Date and time when the backup operation finished. </param>
-        internal DatabaseBackupInfo(string databaseName, BackupType? backupType, IReadOnlyList<string> backupFiles, int? position, bool? isDamaged, bool? isCompressed, int? familyCount, DateTimeOffset? backupFinishOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseBackupInfo(string databaseName, BackupType? backupType, IReadOnlyList<string> backupFiles, int? position, bool? isDamaged, bool? isCompressed, int? familyCount, DateTimeOffset? backupFinishOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             BackupType = backupType;
@@ -39,6 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IsCompressed = isCompressed;
             FamilyCount = familyCount;
             BackupFinishOn = backupFinishOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Database name. </summary>

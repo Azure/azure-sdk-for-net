@@ -5,16 +5,88 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraReaperStatus
+    public partial class CassandraReaperStatus : IUtf8JsonSerializable, IJsonModel<CassandraReaperStatus>
     {
-        internal static CassandraReaperStatus DeserializeCassandraReaperStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraReaperStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CassandraReaperStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CassandraReaperStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CassandraReaperStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsHealthy))
+            {
+                writer.WritePropertyName("healthy"u8);
+                writer.WriteBooleanValue(IsHealthy.Value);
+            }
+            if (Optional.IsCollectionDefined(RepairRunIds))
+            {
+                writer.WritePropertyName("repairRunIds"u8);
+                writer.WriteStartObject();
+                foreach (var item in RepairRunIds)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(RepairSchedules))
+            {
+                writer.WritePropertyName("repairSchedules"u8);
+                writer.WriteStartObject();
+                foreach (var item in RepairSchedules)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CassandraReaperStatus IJsonModel<CassandraReaperStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraReaperStatus(document.RootElement, options);
+        }
+
+        internal static CassandraReaperStatus DeserializeCassandraReaperStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +94,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> healthy = default;
             Optional<IReadOnlyDictionary<string, string>> repairRunIds = default;
             Optional<IReadOnlyDictionary<string, string>> repairSchedules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthy"u8))
@@ -61,8 +135,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     repairSchedules = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CassandraReaperStatus(Optional.ToNullable(healthy), Optional.ToDictionary(repairRunIds), Optional.ToDictionary(repairSchedules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CassandraReaperStatus(Optional.ToNullable(healthy), Optional.ToDictionary(repairRunIds), Optional.ToDictionary(repairSchedules), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CassandraReaperStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CassandraReaperStatus IPersistableModel<CassandraReaperStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraReaperStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCassandraReaperStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<CassandraReaperStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

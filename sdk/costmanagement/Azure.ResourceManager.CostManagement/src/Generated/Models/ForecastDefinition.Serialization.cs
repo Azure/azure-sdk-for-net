@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ForecastDefinition : IUtf8JsonSerializable
+    public partial class ForecastDefinition : IUtf8JsonSerializable, IJsonModel<ForecastDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastDefinition>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ForecastDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ForecastDefinition>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ForecastDefinition>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ForecastType.ToString());
@@ -36,7 +47,128 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("includeFreshPartialCost"u8);
                 writer.WriteBooleanValue(IncludeFreshPartialCost.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ForecastDefinition IJsonModel<ForecastDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeForecastDefinition(document.RootElement, options);
+        }
+
+        internal static ForecastDefinition DeserializeForecastDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ForecastType type = default;
+            ForecastTimeframe timeframe = default;
+            Optional<ForecastTimePeriod> timePeriod = default;
+            ForecastDataset dataset = default;
+            Optional<bool> includeActualCost = default;
+            Optional<bool> includeFreshPartialCost = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ForecastType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timeframe"u8))
+                {
+                    timeframe = new ForecastTimeframe(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timePeriod"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timePeriod = ForecastTimePeriod.DeserializeForecastTimePeriod(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataset"u8))
+                {
+                    dataset = ForecastDataset.DeserializeForecastDataset(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("includeActualCost"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeActualCost = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("includeFreshPartialCost"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeFreshPartialCost = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ForecastDefinition(type, timeframe, timePeriod.Value, dataset, Optional.ToNullable(includeActualCost), Optional.ToNullable(includeFreshPartialCost), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ForecastDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ForecastDefinition IPersistableModel<ForecastDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ForecastDefinition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeForecastDefinition(document.RootElement, options);
+        }
+
+        string IPersistableModel<ForecastDefinition>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing charge summary. </summary>
     internal partial class ChargesListResult
     {
-        /// <summary> Initializes a new instance of ChargesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChargesListResult"/>. </summary>
         internal ChargesListResult()
         {
             Value = new ChangeTrackingList<ConsumptionChargeSummary>();
         }
 
-        /// <summary> Initializes a new instance of ChargesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChargesListResult"/>. </summary>
         /// <param name="value">
         /// The list of charge summary
         /// Please note <see cref="ConsumptionChargeSummary"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConsumptionLegacyChargeSummary"/> and <see cref="ConsumptionModernChargeSummary"/>.
         /// </param>
-        internal ChargesListResult(IReadOnlyList<ConsumptionChargeSummary> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChargesListResult(IReadOnlyList<ConsumptionChargeSummary> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

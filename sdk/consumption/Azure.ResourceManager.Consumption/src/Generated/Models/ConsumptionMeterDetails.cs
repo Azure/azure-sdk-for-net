@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The properties of the meter detail. </summary>
     public partial class ConsumptionMeterDetails
     {
-        /// <summary> Initializes a new instance of ConsumptionMeterDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMeterDetails"/>. </summary>
         internal ConsumptionMeterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMeterDetails"/>. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
@@ -25,7 +31,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="pretaxStandardRate"> The pretax listing price. </param>
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="serviceTier"> The service tier. </param>
-        internal ConsumptionMeterDetails(string meterName, string meterCategory, string meterSubCategory, string unit, string meterLocation, decimal? totalIncludedQuantity, decimal? pretaxStandardRate, string serviceName, string serviceTier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionMeterDetails(string meterName, string meterCategory, string meterSubCategory, string unit, string meterLocation, decimal? totalIncludedQuantity, decimal? pretaxStandardRate, string serviceName, string serviceTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MeterName = meterName;
             MeterCategory = meterCategory;
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.Consumption.Models
             PretaxStandardRate = pretaxStandardRate;
             ServiceName = serviceName;
             ServiceTier = serviceTier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the meter, within the given meter category. </summary>

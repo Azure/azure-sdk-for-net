@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The status code and count of the virtual machine scale set instance view status summary. </summary>
     public partial class VirtualMachineStatusCodeCount
     {
-        /// <summary> Initializes a new instance of VirtualMachineStatusCodeCount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineStatusCodeCount"/>. </summary>
         internal VirtualMachineStatusCodeCount()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineStatusCodeCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineStatusCodeCount"/>. </summary>
         /// <param name="code"> The instance view status code. </param>
         /// <param name="count"> The number of instances having a particular status code. </param>
-        internal VirtualMachineStatusCodeCount(string code, int? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineStatusCodeCount(string code, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The instance view status code. </summary>

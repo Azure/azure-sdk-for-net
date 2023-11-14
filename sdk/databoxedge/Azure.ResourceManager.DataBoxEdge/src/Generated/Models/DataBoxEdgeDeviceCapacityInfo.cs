@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Object for Capturing DeviceCapacityInfo. </summary>
     public partial class DataBoxEdgeDeviceCapacityInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceCapacityInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceCapacityInfo"/>. </summary>
         public DataBoxEdgeDeviceCapacityInfo()
         {
             NodeCapacityInfos = new ChangeTrackingDictionary<string, HostCapacity>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceCapacityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceCapacityInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,12 +33,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="clusterStorageCapacityInfo"> Cluster capacity data for storage resources (CSV). </param>
         /// <param name="clusterComputeCapacityInfo"> Cluster capacity data for compute resources (Memory and GPU). </param>
         /// <param name="nodeCapacityInfos"> The dictionary of individual node names and node capacities in the cluster. </param>
-        internal DataBoxEdgeDeviceCapacityInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeStamp, EdgeClusterStorageViewInfo clusterStorageCapacityInfo, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDeviceCapacityInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeStamp, EdgeClusterStorageViewInfo clusterStorageCapacityInfo, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TimeStamp = timeStamp;
             ClusterStorageCapacityInfo = clusterStorageCapacityInfo;
             ClusterComputeCapacityInfo = clusterComputeCapacityInfo;
             NodeCapacityInfos = nodeCapacityInfos;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Timestamp of request in UTC. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,13 +16,16 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Reservation recommendation details. </summary>
     public partial class ConsumptionReservationRecommendationDetails : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionReservationRecommendationDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationDetails"/>. </summary>
         internal ConsumptionReservationRecommendationDetails()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationRecommendationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationRecommendationDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="usage"> Historical usage details used to calculate the estimated savings. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ConsumptionReservationRecommendationDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string sku, string currency, ConsumptionResourceProperties properties, string resourceGroup, ConsumptionSavingsProperties savings, string scope, ConsumptionUsageProperties usage, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionReservationRecommendationDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string sku, string currency, ConsumptionResourceProperties properties, string resourceGroup, ConsumptionSavingsProperties savings, string scope, ConsumptionUsageProperties usage, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Sku = sku;
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Usage = usage;
             ETag = etag;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Location. </summary>

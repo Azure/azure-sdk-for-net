@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,14 +14,20 @@ namespace Azure.Communication.JobRouter
     /// <summary> Attaches a queue selector where the value is passed through from the job label with the same key. </summary>
     public partial class PassThroughQueueSelectorAttachment : QueueSelectorAttachment
     {
-        /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="PassThroughQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
-        internal PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind kind, string key, LabelOperator labelOperator) : base(kind)
+        internal PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string key, LabelOperator labelOperator) : base(kind, serializedAdditionalRawData)
         {
             Key = key;
             LabelOperator = labelOperator;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PassThroughQueueSelectorAttachment"/> for deserialization. </summary>
+        internal PassThroughQueueSelectorAttachment()
+        {
         }
 
         /// <summary> The label key to query against. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class GremlinGraphData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GremlinGraphData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GremlinGraphData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GremlinGraphData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +38,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resource"></param>
         /// <param name="options"></param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinGraphResourceInfo resource, GremlinGraphPropertiesConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinGraphResourceInfo resource, GremlinGraphPropertiesConfig options, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GremlinGraphData"/> for deserialization. </summary>
+        internal GremlinGraphData()
+        {
         }
 
         /// <summary> Gets or sets the resource. </summary>

@@ -5,17 +5,56 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ResourceGuardProperties : IUtf8JsonSerializable
+    public partial class ResourceGuardProperties : IUtf8JsonSerializable, IJsonModel<ResourceGuardProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGuardProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ResourceGuardProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ResourceGuardProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ResourceGuardProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsAutoApprovalsAllowed))
+                {
+                    writer.WritePropertyName("allowAutoApprovals"u8);
+                    writer.WriteBooleanValue(IsAutoApprovalsAllowed.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ResourceGuardOperations))
+                {
+                    writer.WritePropertyName("resourceGuardOperations"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ResourceGuardOperations)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsCollectionDefined(VaultCriticalOperationExclusionList))
             {
                 writer.WritePropertyName("vaultCriticalOperationExclusionList"u8);
@@ -26,11 +65,48 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceGuardProperties DeserializeResourceGuardProperties(JsonElement element)
+        ResourceGuardProperties IJsonModel<ResourceGuardProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceGuardProperties(document.RootElement, options);
+        }
+
+        internal static ResourceGuardProperties DeserializeResourceGuardProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +116,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IReadOnlyList<ResourceGuardOperationDetails>> resourceGuardOperations = default;
             Optional<IList<string>> vaultCriticalOperationExclusionList = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -93,8 +171,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceGuardProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(allowAutoApprovals), Optional.ToList(resourceGuardOperations), Optional.ToList(vaultCriticalOperationExclusionList), description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceGuardProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(allowAutoApprovals), Optional.ToList(resourceGuardOperations), Optional.ToList(vaultCriticalOperationExclusionList), description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceGuardProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourceGuardProperties IPersistableModel<ResourceGuardProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceGuardProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourceGuardProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ResourceGuardProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

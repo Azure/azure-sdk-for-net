@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Managed Virtual Network reference type. </summary>
     public partial class ManagedVirtualNetworkReference
     {
-        /// <summary> Initializes a new instance of ManagedVirtualNetworkReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedVirtualNetworkReference"/>. </summary>
         /// <param name="referenceType"> Managed Virtual Network reference type. </param>
         /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             ReferenceType = referenceType;
             ReferenceName = referenceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedVirtualNetworkReference"/>. </summary>
+        /// <param name="referenceType"> Managed Virtual Network reference type. </param>
+        /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedVirtualNetworkReference(ManagedVirtualNetworkReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ReferenceType = referenceType;
+            ReferenceName = referenceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedVirtualNetworkReference"/> for deserialization. </summary>
+        internal ManagedVirtualNetworkReference()
+        {
         }
 
         /// <summary> Managed Virtual Network reference type. </summary>

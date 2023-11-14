@@ -6,15 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Rooms
 {
     /// <summary> Request payload for updating a room. </summary>
     internal partial class UpdateRoomRequest
     {
-        /// <summary> Initializes a new instance of UpdateRoomRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateRoomRequest"/>. </summary>
         public UpdateRoomRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateRoomRequest"/>. </summary>
+        /// <param name="validFrom"> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="validUntil"> (Optional) The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="pstnDialOutEnabled"> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateRoomRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ValidFrom = validFrom;
+            ValidUntil = validUntil;
+            PstnDialOutEnabled = pstnDialOutEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> (Optional) The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

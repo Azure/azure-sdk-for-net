@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -12,20 +13,25 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the GitHub provider. </summary>
     public partial class ContainerAppGitHubConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppGitHubConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppGitHubConfiguration"/>. </summary>
         public ContainerAppGitHubConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppGitHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppGitHubConfiguration"/>. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the GitHub provider. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>
-        internal ContainerAppGitHubConfiguration(bool? isEnabled, ContainerAppClientRegistration registration, LoginScopes login)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppGitHubConfiguration(bool? isEnabled, ContainerAppClientRegistration registration, LoginScopes login, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

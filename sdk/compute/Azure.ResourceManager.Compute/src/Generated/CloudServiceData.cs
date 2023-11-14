@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CloudServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CloudServiceData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -62,7 +65,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="extensionProfile"> Describes a cloud service extension profile. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="uniqueId"> The unique identifier for the cloud service. </param>
-        internal CloudServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, Uri packageUri, string configuration, Uri configurationUri, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, Uri packageUri, string configuration, Uri configurationUri, bool? startCloudService, bool? allowModelOverride, CloudServiceUpgradeMode? upgradeMode, CloudServiceRoleProfile roleProfile, CloudServiceOSProfile osProfile, CloudServiceNetworkProfile networkProfile, CloudServiceExtensionProfile extensionProfile, string provisioningState, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Zones = zones;
             PackageUri = packageUri;
@@ -77,6 +81,12 @@ namespace Azure.ResourceManager.Compute
             ExtensionProfile = extensionProfile;
             ProvisioningState = provisioningState;
             UniqueId = uniqueId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceData"/> for deserialization. </summary>
+        internal CloudServiceData()
+        {
         }
 
         /// <summary> List of logical availability zone of the resource. List should contain only 1 zone where cloud service should be provisioned. This field is optional. </summary>

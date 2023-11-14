@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> See [AKS custom node configuration](https://docs.microsoft.com/azure/aks/custom-node-configuration) for more details. </summary>
     public partial class KubeletConfig
     {
-        /// <summary> Initializes a new instance of KubeletConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubeletConfig"/>. </summary>
         public KubeletConfig()
         {
             AllowedUnsafeSysctls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KubeletConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubeletConfig"/>. </summary>
         /// <param name="cpuManagerPolicy"> The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </param>
         /// <param name="isCpuCfsQuotaEnabled"> The default is true. </param>
         /// <param name="cpuCfsQuotaPeriod"> The default is '100ms.' Valid values are a sequence of decimal numbers with an optional fraction and a unit suffix. For example: '300ms', '2h45m'. Supported units are 'ns', 'us', 'ms', 's', 'm', and 'h'. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="containerLogMaxSizeInMB"> The maximum size (e.g. 10Mi) of container log file before it is rotated. </param>
         /// <param name="containerLogMaxFiles"> The maximum number of container log files that can be present for a container. The number must be ≥ 2. </param>
         /// <param name="podMaxPids"> The maximum number of processes per pod. </param>
-        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? failStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubeletConfig(string cpuManagerPolicy, bool? isCpuCfsQuotaEnabled, string cpuCfsQuotaPeriod, int? imageGcHighThreshold, int? imageGcLowThreshold, string topologyManagerPolicy, IList<string> allowedUnsafeSysctls, bool? failStartWithSwapOn, int? containerLogMaxSizeInMB, int? containerLogMaxFiles, int? podMaxPids, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CpuManagerPolicy = cpuManagerPolicy;
             IsCpuCfsQuotaEnabled = isCpuCfsQuotaEnabled;
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerLogMaxSizeInMB = containerLogMaxSizeInMB;
             ContainerLogMaxFiles = containerLogMaxFiles;
             PodMaxPids = podMaxPids;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The default is 'none'. See [Kubernetes CPU management policies](https://kubernetes.io/docs/tasks/administer-cluster/cpu-management-policies/#cpu-management-policies) for more information. Allowed values are 'none' and 'static'. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a replication. </summary>
     public partial class ContainerRegistryReplicationPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryReplicationPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationPatch"/>. </summary>
         public ContainerRegistryReplicationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationPatch"/>. </summary>
+        /// <param name="tags"> The tags for the replication. </param>
+        /// <param name="isRegionEndpointEnabled"> Specifies whether the replication's regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryReplicationPatch(IDictionary<string, string> tags, bool? isRegionEndpointEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            IsRegionEndpointEnabled = isRegionEndpointEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The tags for the replication. </summary>

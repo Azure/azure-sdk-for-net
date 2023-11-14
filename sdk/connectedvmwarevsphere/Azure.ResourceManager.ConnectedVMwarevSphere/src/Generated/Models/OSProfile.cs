@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class OSProfile
     {
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         public OSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="adminUsername"> Gets or sets administrator username. </param>
         /// <param name="adminPassword"> Gets or sets administrator password. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="toolsRunningStatus"> Gets or sets the current running status of VMware Tools running in the guest operating system. </param>
         /// <param name="toolsVersionStatus"> Gets or sets the current version status of VMware Tools installed in the guest operating system. </param>
         /// <param name="toolsVersion"> Gets or sets the current version of VMware Tools. </param>
-        internal OSProfile(string computerName, string adminUsername, string adminPassword, OSType? osType, string osName, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSProfile(string computerName, string adminUsername, string adminPassword, OSType? osType, string osName, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             ToolsRunningStatus = toolsRunningStatus;
             ToolsVersionStatus = toolsVersionStatus;
             ToolsVersion = toolsVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets computer name. </summary>

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of pipeline resources. </summary>
     internal partial class DataFactoryPipelineListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelineListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineListResult"/>. </summary>
         /// <param name="value"> List of pipelines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryPipelineListResult(IEnumerable<DataFactoryPipelineData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineListResult"/>. </summary>
         /// <param name="value"> List of pipelines. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal DataFactoryPipelineListResult(IReadOnlyList<DataFactoryPipelineData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPipelineListResult(IReadOnlyList<DataFactoryPipelineData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineListResult"/> for deserialization. </summary>
+        internal DataFactoryPipelineListResult()
+        {
         }
 
         /// <summary> List of pipelines. </summary>

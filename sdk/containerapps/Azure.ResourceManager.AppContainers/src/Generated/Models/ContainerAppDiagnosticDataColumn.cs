@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Diagnostics data column. </summary>
     public partial class ContainerAppDiagnosticDataColumn
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataColumn. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataColumn"/>. </summary>
         public ContainerAppDiagnosticDataColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataColumn"/>. </summary>
         /// <param name="columnName"> Column name. </param>
         /// <param name="dataType"> Data type of the column. </param>
         /// <param name="columnType"> Column type. </param>
-        internal ContainerAppDiagnosticDataColumn(string columnName, string dataType, string columnType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticDataColumn(string columnName, string dataType, string columnType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ColumnName = columnName;
             DataType = dataType;
             ColumnType = columnType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Column name. </summary>

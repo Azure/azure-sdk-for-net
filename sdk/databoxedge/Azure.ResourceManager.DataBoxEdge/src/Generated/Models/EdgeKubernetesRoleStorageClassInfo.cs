@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Kubernetes storage class info. </summary>
     public partial class EdgeKubernetesRoleStorageClassInfo
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleStorageClassInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleStorageClassInfo"/>. </summary>
         internal EdgeKubernetesRoleStorageClassInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleStorageClassInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleStorageClassInfo"/>. </summary>
         /// <param name="name"> Storage class name. </param>
         /// <param name="kubernetesRoleStorageClassInfoType"> Storage class type. </param>
         /// <param name="posixCompliant"> If provisioned storage is posix compliant. </param>
-        internal EdgeKubernetesRoleStorageClassInfo(string name, string kubernetesRoleStorageClassInfoType, PosixComplianceStatus? posixCompliant)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesRoleStorageClassInfo(string name, string kubernetesRoleStorageClassInfoType, PosixComplianceStatus? posixCompliant, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             KubernetesRoleStorageClassInfoType = kubernetesRoleStorageClassInfoType;
             PosixCompliant = posixCompliant;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage class name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -12,18 +13,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB MongoDB collection index key. </summary>
     public partial class MongoDBIndex
     {
-        /// <summary> Initializes a new instance of MongoDBIndex. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBIndex"/>. </summary>
         public MongoDBIndex()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBIndex. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBIndex"/>. </summary>
         /// <param name="key"> Cosmos DB MongoDB collection index keys. </param>
         /// <param name="options"> Cosmos DB MongoDB collection index key options. </param>
-        internal MongoDBIndex(MongoIndexKeys key, MongoDBIndexConfig options)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBIndex(MongoIndexKeys key, MongoDBIndexConfig options, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Options = options;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Cosmos DB MongoDB collection index keys. </summary>

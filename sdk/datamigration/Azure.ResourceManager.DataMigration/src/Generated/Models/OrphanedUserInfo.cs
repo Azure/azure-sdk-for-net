@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Information of orphaned users on the SQL server database. </summary>
     public partial class OrphanedUserInfo
     {
-        /// <summary> Initializes a new instance of OrphanedUserInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrphanedUserInfo"/>. </summary>
         internal OrphanedUserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of OrphanedUserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrphanedUserInfo"/>. </summary>
         /// <param name="name"> Name of the orphaned user. </param>
         /// <param name="databaseName"> Parent database of the user. </param>
-        internal OrphanedUserInfo(string name, string databaseName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrphanedUserInfo(string name, string databaseName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DatabaseName = databaseName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the orphaned user. </summary>

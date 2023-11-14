@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,18 @@ namespace Azure.Communication.JobRouter
     /// <summary> A container for the rules that govern how jobs are classified. </summary>
     public partial class ClassificationPolicy
     {
-        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationPolicy"/>. </summary>
         internal ClassificationPolicy()
         {
             QueueSelectorAttachments = new ChangeTrackingList<QueueSelectorAttachment>();
             WorkerSelectorAttachments = new ChangeTrackingList<WorkerSelectorAttachment>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationPolicy"/>. </summary>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
@@ -28,7 +33,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="queueSelectorAttachments"> The queue selector attachments used to resolve a queue for a given job. </param>
         /// <param name="prioritizationRule"> The rule to determine a priority score for a given job. </param>
         /// <param name="workerSelectorAttachments"> The worker selector attachments used to attach worker selectors to a given job. </param>
-        internal ClassificationPolicy(string etag, string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectorAttachments, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectorAttachments)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClassificationPolicy(string etag, string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectorAttachments, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectorAttachments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _etag = etag;
             Id = id;
@@ -37,6 +43,7 @@ namespace Azure.Communication.JobRouter
             QueueSelectorAttachments = queueSelectorAttachments;
             PrioritizationRule = prioritizationRule;
             WorkerSelectorAttachments = workerSelectorAttachments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Unique identifier of this policy. </summary>
         public string Id { get; }

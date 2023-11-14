@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc backup tagging criteria. </summary>
     internal partial class AdhocBasedBackupTaggingCriteria
     {
-        /// <summary> Initializes a new instance of AdhocBasedBackupTaggingCriteria. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTaggingCriteria"/>. </summary>
         public AdhocBasedBackupTaggingCriteria()
         {
         }
 
-        /// <summary> Initializes a new instance of AdhocBasedBackupTaggingCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdhocBasedBackupTaggingCriteria"/>. </summary>
         /// <param name="tagInfo"> Retention tag information. </param>
-        internal AdhocBasedBackupTaggingCriteria(DataProtectionBackupRetentionTag tagInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdhocBasedBackupTaggingCriteria(DataProtectionBackupRetentionTag tagInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TagInfo = tagInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Retention tag information. </summary>

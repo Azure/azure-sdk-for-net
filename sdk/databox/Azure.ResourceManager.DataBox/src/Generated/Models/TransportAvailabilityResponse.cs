@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Transport options available for given sku in a region. </summary>
     internal partial class TransportAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of TransportAvailabilityResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityResponse"/>. </summary>
         internal TransportAvailabilityResponse()
         {
             TransportAvailabilityDetails = new ChangeTrackingList<TransportAvailabilityDetails>();
         }
 
-        /// <summary> Initializes a new instance of TransportAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransportAvailabilityResponse"/>. </summary>
         /// <param name="transportAvailabilityDetails"> List of transport availability details for given region. </param>
-        internal TransportAvailabilityResponse(IReadOnlyList<TransportAvailabilityDetails> transportAvailabilityDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransportAvailabilityResponse(IReadOnlyList<TransportAvailabilityDetails> transportAvailabilityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TransportAvailabilityDetails = transportAvailabilityDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of transport availability details for given region. </summary>

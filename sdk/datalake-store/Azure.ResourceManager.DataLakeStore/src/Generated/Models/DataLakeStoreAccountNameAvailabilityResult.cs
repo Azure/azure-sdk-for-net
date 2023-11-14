@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     /// <summary> Data Lake Store account name availability result information. </summary>
     public partial class DataLakeStoreAccountNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountNameAvailabilityResult"/>. </summary>
         internal DataLakeStoreAccountNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not. </param>
         /// <param name="reason"> The reason why the Data Lake Store account name is not available, if nameAvailable is false. </param>
         /// <param name="message"> The message describing why the Data Lake Store account name is not available, if nameAvailable is false. </param>
-        internal DataLakeStoreAccountNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreAccountNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not. </summary>

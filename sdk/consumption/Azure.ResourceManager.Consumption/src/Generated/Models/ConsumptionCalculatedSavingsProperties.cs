@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> Details of estimated savings. </summary>
     public partial class ConsumptionCalculatedSavingsProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionCalculatedSavingsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCalculatedSavingsProperties"/>. </summary>
         internal ConsumptionCalculatedSavingsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionCalculatedSavingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCalculatedSavingsProperties"/>. </summary>
         /// <param name="onDemandCost"> The cost without reservation. </param>
         /// <param name="overageCost"> The difference between total reservation cost and reservation cost. </param>
         /// <param name="quantity"> The quantity for calculated savings. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="totalReservationCost"> The cost of the suggested quantity. </param>
         /// <param name="reservedUnitCount"> The number of reserved units used to calculate savings. Always 1 for virtual machines. </param>
         /// <param name="savings"> The amount saved by purchasing the recommended quantity of reservation. </param>
-        internal ConsumptionCalculatedSavingsProperties(float? onDemandCost, float? overageCost, float? quantity, float? reservationCost, float? totalReservationCost, float? reservedUnitCount, float? savings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionCalculatedSavingsProperties(float? onDemandCost, float? overageCost, float? quantity, float? reservationCost, float? totalReservationCost, float? reservedUnitCount, float? savings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OnDemandCost = onDemandCost;
             OverageCost = overageCost;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.Consumption.Models
             TotalReservationCost = totalReservationCost;
             ReservedUnitCount = reservedUnitCount;
             Savings = savings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cost without reservation. </summary>

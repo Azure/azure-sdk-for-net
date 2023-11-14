@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
@@ -13,18 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Sql DW upsert option settings. </summary>
     public partial class SqlDWUpsertSettings
     {
-        /// <summary> Initializes a new instance of SqlDWUpsertSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlDWUpsertSettings"/>. </summary>
         public SqlDWUpsertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlDWUpsertSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWUpsertSettings"/>. </summary>
         /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
         /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
-        internal SqlDWUpsertSettings(DataFactoryElement<string> interimSchemaName, DataFactoryElement<IList<string>> keys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDWUpsertSettings(DataFactoryElement<string> interimSchemaName, DataFactoryElement<IList<string>> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InterimSchemaName = interimSchemaName;
             Keys = keys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Schema name for interim table. Type: string (or Expression with resultType string). </summary>

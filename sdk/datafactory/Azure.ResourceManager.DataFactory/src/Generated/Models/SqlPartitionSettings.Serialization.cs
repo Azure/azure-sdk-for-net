@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlPartitionSettings : IUtf8JsonSerializable
+    public partial class SqlPartitionSettings : IUtf8JsonSerializable, IJsonModel<SqlPartitionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlPartitionSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlPartitionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlPartitionSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlPartitionSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
@@ -31,11 +42,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("partitionLowerBound"u8);
                 JsonSerializer.Serialize(writer, PartitionLowerBound);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlPartitionSettings DeserializeSqlPartitionSettings(JsonElement element)
+        SqlPartitionSettings IJsonModel<SqlPartitionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlPartitionSettings(document.RootElement, options);
+        }
+
+        internal static SqlPartitionSettings DeserializeSqlPartitionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +83,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> partitionColumnName = default;
             Optional<DataFactoryElement<string>> partitionUpperBound = default;
             Optional<DataFactoryElement<string>> partitionLowerBound = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -72,8 +114,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     partitionLowerBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlPartitionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlPartitionSettings IPersistableModel<SqlPartitionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPartitionSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlPartitionSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlPartitionSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

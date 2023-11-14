@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Source or target connection reference details. </summary>
     public partial class MapperConnectionReference
     {
-        /// <summary> Initializes a new instance of MapperConnectionReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapperConnectionReference"/>. </summary>
         public MapperConnectionReference()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperConnectionReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperConnectionReference"/>. </summary>
         /// <param name="connectionName"> Name of the connection. </param>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
-        internal MapperConnectionReference(string connectionName, MapperConnectionType? connectionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapperConnectionReference(string connectionName, MapperConnectionType? connectionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionName = connectionName;
             ConnectionType = connectionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the connection. </summary>

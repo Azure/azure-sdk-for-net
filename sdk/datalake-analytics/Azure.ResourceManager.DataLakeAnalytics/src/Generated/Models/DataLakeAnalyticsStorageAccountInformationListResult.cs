@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeAnalytics;
@@ -17,13 +18,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     internal partial class DataLakeAnalyticsStorageAccountInformationListResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationListResult"/>. </summary>
         internal DataLakeAnalyticsStorageAccountInformationListResult()
         {
             Value = new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationListResult"/>. </summary>
         /// <param name="value">
         /// The results of the list operation.
         /// Serialized Name: StorageAccountInformationListResult.value
@@ -32,10 +36,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The link (url) to the next page of results.
         /// Serialized Name: StorageAccountInformationListResult.nextLink
         /// </param>
-        internal DataLakeAnalyticsStorageAccountInformationListResult(IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsStorageAccountInformationListResult(IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

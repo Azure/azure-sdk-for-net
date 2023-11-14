@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The name of the quota. </summary>
     public partial class QuotaName
     {
-        /// <summary> Initializes a new instance of QuotaName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaName"/>. </summary>
         internal QuotaName()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaName. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaName"/>. </summary>
         /// <param name="localizedValue"> The localized name of the quota. </param>
         /// <param name="value"> The unlocalized name (or ID) of the quota. </param>
-        internal QuotaName(string localizedValue, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaName(string localizedValue, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocalizedValue = localizedValue;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The localized name of the quota. </summary>

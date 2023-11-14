@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryImageData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryImageData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryImageData(AzureLocation location) : base(location)
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
         }
 
-        /// <summary> Initializes a new instance of GalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +51,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="features"> A list of gallery image features. </param>
         /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
-        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, ArchitectureType? architecture) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, ArchitectureType? architecture, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Eula = eula;
@@ -65,6 +69,12 @@ namespace Azure.ResourceManager.Compute
             ProvisioningState = provisioningState;
             Features = features;
             Architecture = architecture;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageData"/> for deserialization. </summary>
+        internal GalleryImageData()
+        {
         }
 
         /// <summary> The description of this gallery image definition resource. This property is updatable. </summary>

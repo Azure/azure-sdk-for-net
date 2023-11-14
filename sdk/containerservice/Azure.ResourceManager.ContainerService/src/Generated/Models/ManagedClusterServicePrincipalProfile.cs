@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Information about a service principal identity for the cluster to use for manipulating Azure APIs. </summary>
     public partial class ManagedClusterServicePrincipalProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterServicePrincipalProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterServicePrincipalProfile"/>. </summary>
         /// <param name="clientId"> The ID for the service principal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public ManagedClusterServicePrincipalProfile(string clientId)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.ContainerService.Models
             ClientId = clientId;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterServicePrincipalProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterServicePrincipalProfile"/>. </summary>
         /// <param name="clientId"> The ID for the service principal. </param>
         /// <param name="secret"> The secret password associated with the service principal in plain text. </param>
-        internal ManagedClusterServicePrincipalProfile(string clientId, string secret)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterServicePrincipalProfile(string clientId, string secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             Secret = secret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterServicePrincipalProfile"/> for deserialization. </summary>
+        internal ManagedClusterServicePrincipalProfile()
+        {
         }
 
         /// <summary> The ID for the service principal. </summary>

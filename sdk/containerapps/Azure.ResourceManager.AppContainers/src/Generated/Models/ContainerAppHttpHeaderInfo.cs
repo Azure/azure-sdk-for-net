@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> HTTPHeader describes a custom header to be used in HTTP probes. </summary>
     public partial class ContainerAppHttpHeaderInfo
     {
-        /// <summary> Initializes a new instance of ContainerAppHttpHeaderInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpHeaderInfo"/>. </summary>
         /// <param name="name"> The header field name. </param>
         /// <param name="value"> The header field value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.AppContainers.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpHeaderInfo"/>. </summary>
+        /// <param name="name"> The header field name. </param>
+        /// <param name="value"> The header field value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpHeaderInfo(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpHeaderInfo"/> for deserialization. </summary>
+        internal ContainerAppHttpHeaderInfo()
+        {
         }
 
         /// <summary> The header field name. </summary>

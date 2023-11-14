@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CORS policy for the Cosmos DB database account. </summary>
     public partial class CosmosDBAccountCorsPolicy
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountCorsPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCorsPolicy"/>. </summary>
         /// <param name="allowedOrigins"> The origin domains that are permitted to make a request against the service via CORS. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allowedOrigins"/> is null. </exception>
         public CosmosDBAccountCorsPolicy(string allowedOrigins)
@@ -23,19 +27,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AllowedOrigins = allowedOrigins;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountCorsPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCorsPolicy"/>. </summary>
         /// <param name="allowedOrigins"> The origin domains that are permitted to make a request against the service via CORS. </param>
         /// <param name="allowedMethods"> The methods (HTTP request verbs) that the origin domain may use for a CORS request. </param>
         /// <param name="allowedHeaders"> The request headers that the origin domain may specify on the CORS request. </param>
         /// <param name="exposedHeaders"> The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer. </param>
         /// <param name="maxAgeInSeconds"> The maximum amount time that a browser should cache the preflight OPTIONS request. </param>
-        internal CosmosDBAccountCorsPolicy(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, long? maxAgeInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountCorsPolicy(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, long? maxAgeInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowedOrigins = allowedOrigins;
             AllowedMethods = allowedMethods;
             AllowedHeaders = allowedHeaders;
             ExposedHeaders = exposedHeaders;
             MaxAgeInSeconds = maxAgeInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCorsPolicy"/> for deserialization. </summary>
+        internal CosmosDBAccountCorsPolicy()
+        {
         }
 
         /// <summary> The origin domains that are permitted to make a request against the service via CORS. </summary>

@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
     public partial class ExtendedRestorableMongoDBCollectionResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBCollectionResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBCollectionResourceInfo"/>. </summary>
         internal ExtendedRestorableMongoDBCollectionResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtendedRestorableMongoDBCollectionResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedRestorableMongoDBCollectionResourceInfo"/>. </summary>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="operationType"> The operation type of this collection event. </param>
         /// <param name="eventTimestamp"> The time when this collection event happened. </param>
         /// <param name="collectionName"> The name of this MongoDB collection. </param>
         /// <param name="collectionId"> The resource ID of this MongoDB collection. </param>
-        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string collectionName, string collectionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtendedRestorableMongoDBCollectionResourceInfo(string rid, CosmosDBOperationType? operationType, string eventTimestamp, string collectionName, string collectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
             EventTimestamp = eventTimestamp;
             CollectionName = collectionName;
             CollectionId = collectionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

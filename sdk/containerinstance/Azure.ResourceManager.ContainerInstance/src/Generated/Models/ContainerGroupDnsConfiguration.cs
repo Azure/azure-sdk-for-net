@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> DNS configuration for the container group. </summary>
     public partial class ContainerGroupDnsConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerGroupDnsConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupDnsConfiguration"/>. </summary>
         /// <param name="nameServers"> The DNS servers for the container group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nameServers"/> is null. </exception>
         public ContainerGroupDnsConfiguration(IEnumerable<string> nameServers)
@@ -25,15 +28,22 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             NameServers = nameServers.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupDnsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupDnsConfiguration"/>. </summary>
         /// <param name="nameServers"> The DNS servers for the container group. </param>
         /// <param name="searchDomains"> The DNS search domains for hostname lookup in the container group. </param>
         /// <param name="options"> The DNS options for the container group. </param>
-        internal ContainerGroupDnsConfiguration(IList<string> nameServers, string searchDomains, string options)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupDnsConfiguration(IList<string> nameServers, string searchDomains, string options, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameServers = nameServers;
             SearchDomains = searchDomains;
             Options = options;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupDnsConfiguration"/> for deserialization. </summary>
+        internal ContainerGroupDnsConfiguration()
+        {
         }
 
         /// <summary> The DNS servers for the container group. </summary>

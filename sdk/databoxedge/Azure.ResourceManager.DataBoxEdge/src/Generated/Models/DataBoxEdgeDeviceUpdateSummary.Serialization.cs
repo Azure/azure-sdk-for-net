@@ -7,17 +7,49 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeDeviceUpdateSummary : IUtf8JsonSerializable
+    public partial class DataBoxEdgeDeviceUpdateSummary : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeDeviceUpdateSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceUpdateSummary>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataBoxEdgeDeviceUpdateSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataBoxEdgeDeviceUpdateSummary>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataBoxEdgeDeviceUpdateSummary>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DeviceVersionNumber))
@@ -45,17 +77,208 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("lastSuccessfulScanJobTime"u8);
                 writer.WriteStringValue(LastSuccessfulScanJobOn.Value, "O");
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastCompletedDownloadJobOn))
+                {
+                    writer.WritePropertyName("lastCompletedDownloadJobDateTime"u8);
+                    writer.WriteStringValue(LastCompletedDownloadJobOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastCompletedDownloadJobId))
+                {
+                    writer.WritePropertyName("lastCompletedDownloadJobId"u8);
+                    writer.WriteStringValue(LastCompletedDownloadJobId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastDownloadJobStatus))
+                {
+                    writer.WritePropertyName("lastDownloadJobStatus"u8);
+                    writer.WriteStringValue(LastDownloadJobStatus.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(LastSuccessfulInstallJobOn))
             {
                 writer.WritePropertyName("lastSuccessfulInstallJobDateTime"u8);
                 writer.WriteStringValue(LastSuccessfulInstallJobOn.Value, "O");
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastCompletedInstallJobOn))
+                {
+                    writer.WritePropertyName("lastCompletedInstallJobDateTime"u8);
+                    writer.WriteStringValue(LastCompletedInstallJobOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastCompletedInstallJobId))
+                {
+                    writer.WritePropertyName("lastCompletedInstallJobId"u8);
+                    writer.WriteStringValue(LastCompletedInstallJobId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastInstallJobStatus))
+                {
+                    writer.WritePropertyName("lastInstallJobStatus"u8);
+                    writer.WriteStringValue(LastInstallJobStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalNumberOfUpdatesAvailable))
+                {
+                    writer.WritePropertyName("totalNumberOfUpdatesAvailable"u8);
+                    writer.WriteNumberValue(TotalNumberOfUpdatesAvailable.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalNumberOfUpdatesPendingDownload))
+                {
+                    writer.WritePropertyName("totalNumberOfUpdatesPendingDownload"u8);
+                    writer.WriteNumberValue(TotalNumberOfUpdatesPendingDownload.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalNumberOfUpdatesPendingInstall))
+                {
+                    writer.WritePropertyName("totalNumberOfUpdatesPendingInstall"u8);
+                    writer.WriteNumberValue(TotalNumberOfUpdatesPendingInstall.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RebootBehavior))
+                {
+                    writer.WritePropertyName("rebootBehavior"u8);
+                    writer.WriteStringValue(RebootBehavior.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OngoingUpdateOperation))
+                {
+                    writer.WritePropertyName("ongoingUpdateOperation"u8);
+                    writer.WriteStringValue(OngoingUpdateOperation.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InProgressDownloadJobId))
+                {
+                    writer.WritePropertyName("inProgressDownloadJobId"u8);
+                    writer.WriteStringValue(InProgressDownloadJobId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InProgressInstallJobId))
+                {
+                    writer.WritePropertyName("inProgressInstallJobId"u8);
+                    writer.WriteStringValue(InProgressInstallJobId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InProgressDownloadJobStartedOn))
+                {
+                    writer.WritePropertyName("inProgressDownloadJobStartedDateTime"u8);
+                    writer.WriteStringValue(InProgressDownloadJobStartedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InProgressInstallJobStartedOn))
+                {
+                    writer.WritePropertyName("inProgressInstallJobStartedDateTime"u8);
+                    writer.WriteStringValue(InProgressInstallJobStartedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(UpdateTitles))
+                {
+                    writer.WritePropertyName("updateTitles"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in UpdateTitles)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Updates))
+                {
+                    writer.WritePropertyName("updates"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Updates)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalUpdateSizeInBytes))
+                {
+                    writer.WritePropertyName("totalUpdateSizeInBytes"u8);
+                    writer.WriteNumberValue(TotalUpdateSizeInBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalTimeInMinutes))
+                {
+                    writer.WritePropertyName("totalTimeInMinutes"u8);
+                    writer.WriteNumberValue(TotalTimeInMinutes.Value);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataBoxEdgeDeviceUpdateSummary DeserializeDataBoxEdgeDeviceUpdateSummary(JsonElement element)
+        DataBoxEdgeDeviceUpdateSummary IJsonModel<DataBoxEdgeDeviceUpdateSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeDeviceUpdateSummary DeserializeDataBoxEdgeDeviceUpdateSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,6 +312,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<IReadOnlyList<DataBoxEdgeUpdateDetails>> updates = default;
             Optional<double> totalUpdateSizeInBytes = default;
             Optional<int> totalTimeInMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -354,8 +579,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeDeviceUpdateSummary(id, name, type, systemData.Value, deviceVersionNumber.Value, friendlyDeviceVersionName.Value, Optional.ToNullable(deviceLastScannedDateTime), Optional.ToNullable(lastCompletedScanJobDateTime), Optional.ToNullable(lastSuccessfulScanJobTime), Optional.ToNullable(lastCompletedDownloadJobDateTime), lastCompletedDownloadJobId.Value, Optional.ToNullable(lastDownloadJobStatus), Optional.ToNullable(lastSuccessfulInstallJobDateTime), Optional.ToNullable(lastCompletedInstallJobDateTime), lastCompletedInstallJobId.Value, Optional.ToNullable(lastInstallJobStatus), Optional.ToNullable(totalNumberOfUpdatesAvailable), Optional.ToNullable(totalNumberOfUpdatesPendingDownload), Optional.ToNullable(totalNumberOfUpdatesPendingInstall), Optional.ToNullable(rebootBehavior), Optional.ToNullable(ongoingUpdateOperation), inProgressDownloadJobId.Value, inProgressInstallJobId.Value, Optional.ToNullable(inProgressDownloadJobStartedDateTime), Optional.ToNullable(inProgressInstallJobStartedDateTime), Optional.ToList(updateTitles), Optional.ToList(updates), Optional.ToNullable(totalUpdateSizeInBytes), Optional.ToNullable(totalTimeInMinutes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataBoxEdgeDeviceUpdateSummary(id, name, type, systemData.Value, deviceVersionNumber.Value, friendlyDeviceVersionName.Value, Optional.ToNullable(deviceLastScannedDateTime), Optional.ToNullable(lastCompletedScanJobDateTime), Optional.ToNullable(lastSuccessfulScanJobTime), Optional.ToNullable(lastCompletedDownloadJobDateTime), lastCompletedDownloadJobId.Value, Optional.ToNullable(lastDownloadJobStatus), Optional.ToNullable(lastSuccessfulInstallJobDateTime), Optional.ToNullable(lastCompletedInstallJobDateTime), lastCompletedInstallJobId.Value, Optional.ToNullable(lastInstallJobStatus), Optional.ToNullable(totalNumberOfUpdatesAvailable), Optional.ToNullable(totalNumberOfUpdatesPendingDownload), Optional.ToNullable(totalNumberOfUpdatesPendingInstall), Optional.ToNullable(rebootBehavior), Optional.ToNullable(ongoingUpdateOperation), inProgressDownloadJobId.Value, inProgressInstallJobId.Value, Optional.ToNullable(inProgressDownloadJobStartedDateTime), Optional.ToNullable(inProgressInstallJobStartedDateTime), Optional.ToList(updateTitles), Optional.ToList(updates), Optional.ToNullable(totalUpdateSizeInBytes), Optional.ToNullable(totalTimeInMinutes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeDeviceUpdateSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxEdgeDeviceUpdateSummary IPersistableModel<DataBoxEdgeDeviceUpdateSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceUpdateSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxEdgeDeviceUpdateSummary(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataBoxEdgeDeviceUpdateSummary>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

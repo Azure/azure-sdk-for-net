@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Synapse spark job reference type. </summary>
     public partial class SynapseSparkJobReference
     {
-        /// <summary> Initializes a new instance of SynapseSparkJobReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/>. </summary>
         /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
         /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             SparkJobReferenceType = sparkJobReferenceType;
             ReferenceName = referenceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/>. </summary>
+        /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
+        /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, BinaryData referenceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SparkJobReferenceType = sparkJobReferenceType;
+            ReferenceName = referenceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/> for deserialization. </summary>
+        internal SynapseSparkJobReference()
+        {
         }
 
         /// <summary> Synapse spark job reference type. </summary>

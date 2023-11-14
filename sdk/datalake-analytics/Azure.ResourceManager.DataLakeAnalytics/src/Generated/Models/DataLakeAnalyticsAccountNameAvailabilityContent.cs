@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
@@ -16,7 +17,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsAccountNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name">
         /// The Data Lake Analytics name to check availability for.
         /// Serialized Name: CheckNameAvailabilityParameters.name
@@ -32,6 +36,28 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
             Name = name;
             ResourceType = resourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountNameAvailabilityContent"/>. </summary>
+        /// <param name="name">
+        /// The Data Lake Analytics name to check availability for.
+        /// Serialized Name: CheckNameAvailabilityParameters.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeAnalytics/accounts
+        /// Serialized Name: CheckNameAvailabilityParameters.type
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsAccountNameAvailabilityContent(string name, DataLakeAnalyticsResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountNameAvailabilityContent"/> for deserialization. </summary>
+        internal DataLakeAnalyticsAccountNameAvailabilityContent()
+        {
         }
 
         /// <summary>

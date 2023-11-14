@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Details related to the IPv4 address configuration. </summary>
     public partial class DataBoxEdgeIPv4Config
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeIPv4Config. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeIPv4Config"/>. </summary>
         internal DataBoxEdgeIPv4Config()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeIPv4Config. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeIPv4Config"/>. </summary>
         /// <param name="ipAddress"> The IPv4 address of the network adapter. </param>
         /// <param name="subnet"> The IPv4 subnet of the network adapter. </param>
         /// <param name="gateway"> The IPv4 gateway of the network adapter. </param>
-        internal DataBoxEdgeIPv4Config(IPAddress ipAddress, string subnet, string gateway)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeIPv4Config(IPAddress ipAddress, string subnet, string gateway, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddress = ipAddress;
             Subnet = subnet;
             Gateway = gateway;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IPv4 address of the network adapter. </summary>

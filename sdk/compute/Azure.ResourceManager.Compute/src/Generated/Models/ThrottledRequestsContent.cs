@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Api request input for LogAnalytics getThrottledRequests Api. </summary>
     public partial class ThrottledRequestsContent : LogAnalyticsInputBase
     {
-        /// <summary> Initializes a new instance of ThrottledRequestsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThrottledRequestsContent"/>. </summary>
         /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
         /// <param name="fromTime"> From time of the query. </param>
         /// <param name="toTime"> To time of the query. </param>
@@ -21,6 +22,25 @@ namespace Azure.ResourceManager.Compute.Models
         public ThrottledRequestsContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime) : base(blobContainerSasUri, fromTime, toTime)
         {
             Argument.AssertNotNull(blobContainerSasUri, nameof(blobContainerSasUri));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThrottledRequestsContent"/>. </summary>
+        /// <param name="blobContainerSasUri"> SAS Uri of the logging blob container to which LogAnalytics Api writes output logs to. </param>
+        /// <param name="fromTime"> From time of the query. </param>
+        /// <param name="toTime"> To time of the query. </param>
+        /// <param name="groupByThrottlePolicy"> Group query result by Throttle Policy applied. </param>
+        /// <param name="groupByOperationName"> Group query result by Operation Name. </param>
+        /// <param name="groupByResourceName"> Group query result by Resource Name. </param>
+        /// <param name="groupByClientApplicationId"> Group query result by Client Application ID. </param>
+        /// <param name="groupByUserAgent"> Group query result by User Agent. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThrottledRequestsContent(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime, bool? groupByThrottlePolicy, bool? groupByOperationName, bool? groupByResourceName, bool? groupByClientApplicationId, bool? groupByUserAgent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(blobContainerSasUri, fromTime, toTime, groupByThrottlePolicy, groupByOperationName, groupByResourceName, groupByClientApplicationId, groupByUserAgent, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThrottledRequestsContent"/> for deserialization. </summary>
+        internal ThrottledRequestsContent()
+        {
         }
     }
 }

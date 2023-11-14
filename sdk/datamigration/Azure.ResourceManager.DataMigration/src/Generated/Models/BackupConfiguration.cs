@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Backup Configuration. </summary>
     public partial class BackupConfiguration
     {
-        /// <summary> Initializes a new instance of BackupConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupConfiguration"/>. </summary>
         public BackupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupConfiguration"/>. </summary>
         /// <param name="sourceLocation"> Source location of backups. </param>
         /// <param name="targetLocation"> Target location for copying backups. </param>
-        internal BackupConfiguration(SourceLocation sourceLocation, TargetLocation targetLocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupConfiguration(SourceLocation sourceLocation, TargetLocation targetLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceLocation = sourceLocation;
             TargetLocation = targetLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source location of backups. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
@@ -18,22 +20,27 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class ProjectFileData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProjectFileData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProjectFileData"/>. </summary>
         public ProjectFileData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProjectFileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProjectFileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <param name="properties"> Custom file properties. </param>
-        internal ProjectFileData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ETag? etag, ProjectFileProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProjectFileData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ETag? etag, ProjectFileProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> HTTP strong entity tag value. This is ignored if submitted. </summary>

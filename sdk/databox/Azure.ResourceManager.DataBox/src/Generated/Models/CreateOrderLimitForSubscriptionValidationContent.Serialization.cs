@@ -5,21 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class CreateOrderLimitForSubscriptionValidationContent : IUtf8JsonSerializable
+    public partial class CreateOrderLimitForSubscriptionValidationContent : IUtf8JsonSerializable, IJsonModel<CreateOrderLimitForSubscriptionValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateOrderLimitForSubscriptionValidationContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CreateOrderLimitForSubscriptionValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CreateOrderLimitForSubscriptionValidationContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CreateOrderLimitForSubscriptionValidationContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CreateOrderLimitForSubscriptionValidationContent IJsonModel<CreateOrderLimitForSubscriptionValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreateOrderLimitForSubscriptionValidationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateOrderLimitForSubscriptionValidationContent(document.RootElement, options);
+        }
+
+        internal static CreateOrderLimitForSubscriptionValidationContent DeserializeCreateOrderLimitForSubscriptionValidationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataBoxSkuName deviceType = default;
+            DataBoxValidationInputDiscriminator validationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("deviceType"u8))
+                {
+                    deviceType = property.Value.GetString().ToDataBoxSkuName();
+                    continue;
+                }
+                if (property.NameEquals("validationType"u8))
+                {
+                    validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CreateOrderLimitForSubscriptionValidationContent(validationType, serializedAdditionalRawData, deviceType);
+        }
+
+        BinaryData IPersistableModel<CreateOrderLimitForSubscriptionValidationContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreateOrderLimitForSubscriptionValidationContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CreateOrderLimitForSubscriptionValidationContent IPersistableModel<CreateOrderLimitForSubscriptionValidationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreateOrderLimitForSubscriptionValidationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCreateOrderLimitForSubscriptionValidationContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<CreateOrderLimitForSubscriptionValidationContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

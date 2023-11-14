@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> List of repositories. </summary>
     internal partial class Repositories
     {
-        /// <summary> Initializes a new instance of Repositories. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Repositories"/>. </summary>
         internal Repositories()
         {
             RepositoriesValue = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of Repositories. </summary>
+        /// <summary> Initializes a new instance of <see cref="Repositories"/>. </summary>
         /// <param name="repositoriesValue"> Repository names. </param>
         /// <param name="link"></param>
-        internal Repositories(IReadOnlyList<string> repositoriesValue, string link)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Repositories(IReadOnlyList<string> repositoriesValue, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RepositoriesValue = repositoriesValue;
             Link = link;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Repository names. </summary>

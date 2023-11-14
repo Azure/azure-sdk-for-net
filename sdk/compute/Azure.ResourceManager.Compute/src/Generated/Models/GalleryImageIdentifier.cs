@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the gallery image definition identifier. </summary>
     public partial class GalleryImageIdentifier
     {
-        /// <summary> Initializes a new instance of GalleryImageIdentifier. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageIdentifier"/>. </summary>
         /// <param name="publisher"> The name of the gallery image definition publisher. </param>
         /// <param name="offer"> The name of the gallery image definition offer. </param>
         /// <param name="sku"> The name of the gallery image definition SKU. </param>
@@ -27,6 +31,19 @@ namespace Azure.ResourceManager.Compute.Models
             Publisher = publisher;
             Offer = offer;
             Sku = sku;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageIdentifier"/>. </summary>
+        /// <param name="publisher"> The name of the gallery image definition publisher. </param>
+        /// <param name="offer"> The name of the gallery image definition offer. </param>
+        /// <param name="sku"> The name of the gallery image definition SKU. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageIdentifier(string publisher, string offer, string sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Publisher = publisher;
+            Offer = offer;
+            Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the gallery image definition publisher. </summary>

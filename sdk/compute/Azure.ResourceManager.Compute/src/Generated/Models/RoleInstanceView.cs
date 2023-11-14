@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of the role instance. </summary>
     public partial class RoleInstanceView
     {
-        /// <summary> Initializes a new instance of RoleInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleInstanceView"/>. </summary>
         internal RoleInstanceView()
         {
             Statuses = new ChangeTrackingList<ResourceInstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of RoleInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleInstanceView"/>. </summary>
         /// <param name="platformUpdateDomain"> The Update Domain. </param>
         /// <param name="platformFaultDomain"> The Fault Domain. </param>
         /// <param name="privateId"> Specifies a unique identifier generated internally for the cloud service associated with this role instance. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
         /// <param name="statuses"></param>
-        internal RoleInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string privateId, IReadOnlyList<ResourceInstanceViewStatus> statuses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string privateId, IReadOnlyList<ResourceInstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
             PrivateId = privateId;
             Statuses = statuses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Update Domain. </summary>

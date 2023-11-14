@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Class containing feature settings of vault. </summary>
     public partial class BackupVaultFeatureSettings
     {
-        /// <summary> Initializes a new instance of BackupVaultFeatureSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupVaultFeatureSettings"/>. </summary>
         public BackupVaultFeatureSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupVaultFeatureSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultFeatureSettings"/>. </summary>
         /// <param name="crossSubscriptionRestoreSettings"> CrossSubscriptionRestore Settings. </param>
         /// <param name="crossRegionRestoreSettings"></param>
-        internal BackupVaultFeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings, CrossRegionRestoreSettings crossRegionRestoreSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupVaultFeatureSettings(CrossSubscriptionRestoreSettings crossSubscriptionRestoreSettings, CrossRegionRestoreSettings crossRegionRestoreSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CrossSubscriptionRestoreSettings = crossSubscriptionRestoreSettings;
             CrossRegionRestoreSettings = crossRegionRestoreSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> CrossSubscriptionRestore Settings. </summary>

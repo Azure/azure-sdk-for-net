@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class GraphResourceGetResultData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GraphResourceGetResultData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GraphResourceGetResultData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GraphResourceGetResultData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GraphResourceGetResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphResourceGetResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,11 +39,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="resource"> Gets or sets the resource. </param>
         /// <param name="options"></param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal GraphResourceGetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WritableSubResource resource, GraphResourceGetPropertiesOptions options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GraphResourceGetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WritableSubResource resource, GraphResourceGetPropertiesOptions options, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GraphResourceGetResultData"/> for deserialization. </summary>
+        internal GraphResourceGetResultData()
+        {
         }
 
         /// <summary> Gets or sets the resource. </summary>

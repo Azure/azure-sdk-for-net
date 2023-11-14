@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container App to be a dev service. </summary>
     internal partial class Service
     {
-        /// <summary> Initializes a new instance of Service. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Service"/>. </summary>
         /// <param name="serviceType"> Dev ContainerApp service type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceType"/> is null. </exception>
         public Service(string serviceType)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Argument.AssertNotNull(serviceType, nameof(serviceType));
 
             ServiceType = serviceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Service"/>. </summary>
+        /// <param name="serviceType"> Dev ContainerApp service type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Service(string serviceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ServiceType = serviceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Service"/> for deserialization. </summary>
+        internal Service()
+        {
         }
 
         /// <summary> Dev ContainerApp service type. </summary>

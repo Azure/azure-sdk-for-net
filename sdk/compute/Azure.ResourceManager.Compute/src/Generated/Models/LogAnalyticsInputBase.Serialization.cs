@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class LogAnalyticsInputBase : IUtf8JsonSerializable
+    public partial class LogAnalyticsInputBase : IUtf8JsonSerializable, IJsonModel<LogAnalyticsInputBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsInputBase>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LogAnalyticsInputBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LogAnalyticsInputBase>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LogAnalyticsInputBase>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("blobContainerSasUri"u8);
             writer.WriteStringValue(BlobContainerSasUri.AbsoluteUri);
@@ -46,7 +57,148 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("groupByUserAgent"u8);
                 writer.WriteBooleanValue(GroupByUserAgent.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        LogAnalyticsInputBase IJsonModel<LogAnalyticsInputBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogAnalyticsInputBase(document.RootElement, options);
+        }
+
+        internal static LogAnalyticsInputBase DeserializeLogAnalyticsInputBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri blobContainerSasUri = default;
+            DateTimeOffset fromTime = default;
+            DateTimeOffset toTime = default;
+            Optional<bool> groupByThrottlePolicy = default;
+            Optional<bool> groupByOperationName = default;
+            Optional<bool> groupByResourceName = default;
+            Optional<bool> groupByClientApplicationId = default;
+            Optional<bool> groupByUserAgent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("blobContainerSasUri"u8))
+                {
+                    blobContainerSasUri = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("fromTime"u8))
+                {
+                    fromTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("toTime"u8))
+                {
+                    toTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("groupByThrottlePolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    groupByThrottlePolicy = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("groupByOperationName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    groupByOperationName = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("groupByResourceName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    groupByResourceName = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("groupByClientApplicationId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    groupByClientApplicationId = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("groupByUserAgent"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    groupByUserAgent = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogAnalyticsInputBase(blobContainerSasUri, fromTime, toTime, Optional.ToNullable(groupByThrottlePolicy), Optional.ToNullable(groupByOperationName), Optional.ToNullable(groupByResourceName), Optional.ToNullable(groupByClientApplicationId), Optional.ToNullable(groupByUserAgent), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<LogAnalyticsInputBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LogAnalyticsInputBase IPersistableModel<LogAnalyticsInputBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLogAnalyticsInputBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<LogAnalyticsInputBase>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

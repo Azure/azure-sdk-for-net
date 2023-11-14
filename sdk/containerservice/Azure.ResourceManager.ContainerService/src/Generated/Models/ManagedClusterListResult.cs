@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The response from the List Managed Clusters operation. </summary>
     internal partial class ManagedClusterListResult
     {
-        /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         internal ManagedClusterListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceManagedClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         /// <param name="value"> The list of managed clusters. </param>
         /// <param name="nextLink"> The URL to get the next set of managed cluster results. </param>
-        internal ManagedClusterListResult(IReadOnlyList<ContainerServiceManagedClusterData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterListResult(IReadOnlyList<ContainerServiceManagedClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of managed clusters. </summary>

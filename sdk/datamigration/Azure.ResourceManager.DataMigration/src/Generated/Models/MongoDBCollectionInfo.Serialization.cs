@@ -5,15 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBCollectionInfo
+    public partial class MongoDBCollectionInfo : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionInfo>
     {
-        internal static MongoDBCollectionInfo DeserializeMongoDBCollectionInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MongoDBCollectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MongoDBCollectionInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MongoDBCollectionInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("databaseName"u8);
+            writer.WriteStringValue(DatabaseName);
+            writer.WritePropertyName("isCapped"u8);
+            writer.WriteBooleanValue(IsCapped);
+            writer.WritePropertyName("isSystemCollection"u8);
+            writer.WriteBooleanValue(IsSystemCollection);
+            writer.WritePropertyName("isView"u8);
+            writer.WriteBooleanValue(IsView);
+            if (Optional.IsDefined(ShardKey))
+            {
+                writer.WritePropertyName("shardKey"u8);
+                writer.WriteObjectValue(ShardKey);
+            }
+            writer.WritePropertyName("supportsSharding"u8);
+            writer.WriteBooleanValue(SupportsSharding);
+            if (Optional.IsDefined(ViewOf))
+            {
+                writer.WritePropertyName("viewOf"u8);
+                writer.WriteStringValue(ViewOf);
+            }
+            writer.WritePropertyName("averageDocumentSize"u8);
+            writer.WriteNumberValue(AverageDocumentSize);
+            writer.WritePropertyName("dataSize"u8);
+            writer.WriteNumberValue(DataSize);
+            writer.WritePropertyName("documentCount"u8);
+            writer.WriteNumberValue(DocumentCount);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("qualifiedName"u8);
+            writer.WriteStringValue(QualifiedName);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MongoDBCollectionInfo IJsonModel<MongoDBCollectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBCollectionInfo(document.RootElement, options);
+        }
+
+        internal static MongoDBCollectionInfo DeserializeMongoDBCollectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +106,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             long documentCount = default;
             string name = default;
             string qualifiedName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -96,8 +174,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     qualifiedName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, databaseName, isCapped, isSystemCollection, isView, shardKey.Value, supportsSharding, viewOf.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData, databaseName, isCapped, isSystemCollection, isView, shardKey.Value, supportsSharding, viewOf.Value);
         }
+
+        BinaryData IPersistableModel<MongoDBCollectionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MongoDBCollectionInfo IPersistableModel<MongoDBCollectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMongoDBCollectionInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<MongoDBCollectionInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

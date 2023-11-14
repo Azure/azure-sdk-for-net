@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
@@ -15,9 +17,29 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsFirewallRulePatch
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsFirewallRulePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRulePatch"/>. </summary>
         public DataLakeAnalyticsFirewallRulePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsFirewallRulePatch"/>. </summary>
+        /// <param name="startIPAddress">
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleParameters.properties.startIpAddress
+        /// </param>
+        /// <param name="endIPAddress">
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: UpdateFirewallRuleParameters.properties.endIpAddress
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsFirewallRulePatch(IPAddress startIPAddress, IPAddress endIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

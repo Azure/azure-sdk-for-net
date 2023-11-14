@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the containers and their properties. </summary>
     internal partial class CosmosDBSqlContainerListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlContainerListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerListResult"/>. </summary>
         internal CosmosDBSqlContainerListResult()
         {
             Value = new ChangeTrackingList<CosmosDBSqlContainerData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlContainerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerListResult"/>. </summary>
         /// <param name="value"> List of containers and their properties. </param>
-        internal CosmosDBSqlContainerListResult(IReadOnlyList<CosmosDBSqlContainerData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlContainerListResult(IReadOnlyList<CosmosDBSqlContainerData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of containers and their properties. </summary>

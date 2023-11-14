@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Migration Validation Result. </summary>
     public partial class MigrationValidationResult
     {
-        /// <summary> Initializes a new instance of MigrationValidationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationResult"/>. </summary>
         internal MigrationValidationResult()
         {
             SummaryResults = new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>();
         }
 
-        /// <summary> Initializes a new instance of MigrationValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationResult"/>. </summary>
         /// <param name="id"> Migration validation result identifier. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
-        internal MigrationValidationResult(string id, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, ValidationStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationValidationResult(string id, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, ValidationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             MigrationId = migrationId;
             SummaryResults = summaryResults;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Migration validation result identifier. </summary>

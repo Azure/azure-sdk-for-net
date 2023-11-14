@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppRevisionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppRevisionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
         public ContainerAppRevisionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppRevisionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRevisionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +50,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="healthState"> Current health State of the revision. </param>
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
         /// <param name="runningState"> Current running state of the revision. </param>
-        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState, RevisionRunningState? runningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastActiveOn, string fqdn, ContainerAppTemplate template, bool? isActive, int? replicas, int? trafficWeight, string provisioningError, ContainerAppRevisionHealthState? healthState, ContainerAppRevisionProvisioningState? provisioningState, RevisionRunningState? runningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             LastActiveOn = lastActiveOn;
@@ -59,6 +64,7 @@ namespace Azure.ResourceManager.AppContainers
             HealthState = healthState;
             ProvisioningState = provisioningState;
             RunningState = runningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Private endpoint which the connection belongs to. </summary>
     internal partial class PrivateEndpointProperty
     {
-        /// <summary> Initializes a new instance of PrivateEndpointProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointProperty"/>. </summary>
         public PrivateEndpointProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointProperty"/>. </summary>
         /// <param name="id"> Resource id of the private endpoint. </param>
-        internal PrivateEndpointProperty(ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointProperty(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource id of the private endpoint. </summary>

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Virtual Machine operation response. </summary>
     internal partial class VirtualMachineListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineListResult"/>. </summary>
         /// <param name="value"> The list of virtual machines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineListResult(IEnumerable<VirtualMachineData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineListResult"/>. </summary>
         /// <param name="value"> The list of virtual machines. </param>
         /// <param name="nextLink"> The URI to fetch the next page of VMs. Call ListNext() with this URI to fetch the next page of Virtual Machines. </param>
-        internal VirtualMachineListResult(IReadOnlyList<VirtualMachineData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineListResult(IReadOnlyList<VirtualMachineData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineListResult"/> for deserialization. </summary>
+        internal VirtualMachineListResult()
+        {
         }
 
         /// <summary> The list of virtual machines. </summary>

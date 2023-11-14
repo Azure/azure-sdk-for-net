@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Columns that define the structure of the dataset. </summary>
     public partial class DatasetDataElement
     {
-        /// <summary> Initializes a new instance of DatasetDataElement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
         public DatasetDataElement()
         {
         }
 
-        /// <summary> Initializes a new instance of DatasetDataElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetDataElement"/>. </summary>
         /// <param name="columnName"> Name of the column. Type: string (or Expression with resultType string). </param>
         /// <param name="columnType"> Type of the column. Type: string (or Expression with resultType string). </param>
-        internal DatasetDataElement(DataFactoryElement<string> columnName, DataFactoryElement<string> columnType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatasetDataElement(DataFactoryElement<string> columnName, DataFactoryElement<string> columnType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ColumnName = columnName;
             ColumnType = columnType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>

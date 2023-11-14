@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the load balancer configuration. </summary>
     public partial class CloudServiceLoadBalancerConfiguration
     {
-        /// <summary> Initializes a new instance of CloudServiceLoadBalancerConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceLoadBalancerConfiguration"/>. </summary>
         /// <param name="name"> The name of the Load balancer. </param>
         /// <param name="frontendIPConfigurations"> Specifies the frontend IP to be used for the load balancer. Only IPv4 frontend IP address is supported. Each load balancer configuration must have exactly one frontend IP configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="frontendIPConfigurations"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.ResourceManager.Compute.Models
             FrontendIPConfigurations = frontendIPConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceLoadBalancerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceLoadBalancerConfiguration"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the Load balancer. </param>
         /// <param name="frontendIPConfigurations"> Specifies the frontend IP to be used for the load balancer. Only IPv4 frontend IP address is supported. Each load balancer configuration must have exactly one frontend IP configuration. </param>
-        internal CloudServiceLoadBalancerConfiguration(ResourceIdentifier id, string name, IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceLoadBalancerConfiguration(ResourceIdentifier id, string name, IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             FrontendIPConfigurations = frontendIPConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceLoadBalancerConfiguration"/> for deserialization. </summary>
+        internal CloudServiceLoadBalancerConfiguration()
+        {
         }
 
         /// <summary> Resource Id. </summary>

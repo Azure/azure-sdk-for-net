@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Storage properties. </summary>
     internal partial class ConnectedEnvironmentStorageProperties
     {
-        /// <summary> Initializes a new instance of ConnectedEnvironmentStorageProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
         public ConnectedEnvironmentStorageProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectedEnvironmentStorageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
-        internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureFile = azureFile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure file properties. </summary>

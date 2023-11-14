@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> List of manifest attributes. </summary>
     internal partial class ManifestAttributesManifest
     {
-        /// <summary> Initializes a new instance of ManifestAttributesManifest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesManifest"/>. </summary>
         internal ManifestAttributesManifest()
         {
             References = new ChangeTrackingList<ArtifactManifestPlatform>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesManifest"/>. </summary>
+        /// <param name="references"> List of manifest attributes details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManifestAttributesManifest(IReadOnlyList<ArtifactManifestPlatform> references, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            References = references;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of manifest attributes details. </summary>

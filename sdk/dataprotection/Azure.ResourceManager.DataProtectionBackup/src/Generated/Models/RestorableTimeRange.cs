@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The RestorableTimeRange. </summary>
     public partial class RestorableTimeRange
     {
-        /// <summary> Initializes a new instance of RestorableTimeRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableTimeRange"/>. </summary>
         /// <param name="startOn"> Start time for the available restore range. </param>
         /// <param name="endOn"> End time for the available restore range. </param>
         public RestorableTimeRange(DateTimeOffset startOn, DateTimeOffset endOn)
@@ -21,15 +25,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             EndOn = endOn;
         }
 
-        /// <summary> Initializes a new instance of RestorableTimeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTimeRange"/>. </summary>
         /// <param name="startOn"> Start time for the available restore range. </param>
         /// <param name="endOn"> End time for the available restore range. </param>
         /// <param name="objectType"></param>
-        internal RestorableTimeRange(DateTimeOffset startOn, DateTimeOffset endOn, string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableTimeRange(DateTimeOffset startOn, DateTimeOffset endOn, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestorableTimeRange"/> for deserialization. </summary>
+        internal RestorableTimeRange()
+        {
         }
 
         /// <summary> Start time for the available restore range. </summary>

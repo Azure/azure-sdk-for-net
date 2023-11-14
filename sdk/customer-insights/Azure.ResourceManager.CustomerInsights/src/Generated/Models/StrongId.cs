@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Property/Properties which represent a unique ID. </summary>
     public partial class StrongId
     {
-        /// <summary> Initializes a new instance of StrongId. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StrongId"/>. </summary>
         /// <param name="keyPropertyNames"> The properties which make up the unique ID. </param>
         /// <param name="strongIdName"> The Name identifying the strong ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyPropertyNames"/> or <paramref name="strongIdName"/> is null. </exception>
@@ -30,17 +33,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Description = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StrongId. </summary>
+        /// <summary> Initializes a new instance of <see cref="StrongId"/>. </summary>
         /// <param name="keyPropertyNames"> The properties which make up the unique ID. </param>
         /// <param name="strongIdName"> The Name identifying the strong ID. </param>
         /// <param name="displayName"> Localized display name. </param>
         /// <param name="description"> Localized descriptions. </param>
-        internal StrongId(IList<string> keyPropertyNames, string strongIdName, IDictionary<string, string> displayName, IDictionary<string, string> description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StrongId(IList<string> keyPropertyNames, string strongIdName, IDictionary<string, string> displayName, IDictionary<string, string> description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyPropertyNames = keyPropertyNames;
             StrongIdName = strongIdName;
             DisplayName = displayName;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StrongId"/> for deserialization. </summary>
+        internal StrongId()
+        {
         }
 
         /// <summary> The properties which make up the unique ID. </summary>

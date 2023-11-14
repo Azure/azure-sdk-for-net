@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ThroughputPolicyResourceInfo : IUtf8JsonSerializable
+    public partial class ThroughputPolicyResourceInfo : IUtf8JsonSerializable, IJsonModel<ThroughputPolicyResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputPolicyResourceInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ThroughputPolicyResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ThroughputPolicyResourceInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ThroughputPolicyResourceInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("incrementPercent"u8);
                 writer.WriteNumberValue(IncrementPercent.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThroughputPolicyResourceInfo DeserializeThroughputPolicyResourceInfo(JsonElement element)
+        ThroughputPolicyResourceInfo IJsonModel<ThroughputPolicyResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThroughputPolicyResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeThroughputPolicyResourceInfo(document.RootElement, options);
+        }
+
+        internal static ThroughputPolicyResourceInfo DeserializeThroughputPolicyResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> isEnabled = default;
             Optional<int> incrementPercent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isEnabled"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     incrementPercent = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ThroughputPolicyResourceInfo(Optional.ToNullable(isEnabled), Optional.ToNullable(incrementPercent));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ThroughputPolicyResourceInfo(Optional.ToNullable(isEnabled), Optional.ToNullable(incrementPercent), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ThroughputPolicyResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThroughputPolicyResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ThroughputPolicyResourceInfo IPersistableModel<ThroughputPolicyResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThroughputPolicyResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeThroughputPolicyResourceInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<ThroughputPolicyResourceInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

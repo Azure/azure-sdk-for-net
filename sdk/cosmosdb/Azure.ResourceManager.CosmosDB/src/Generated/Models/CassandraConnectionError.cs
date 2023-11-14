@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraConnectionError. </summary>
     public partial class CassandraConnectionError
     {
-        /// <summary> Initializes a new instance of CassandraConnectionError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraConnectionError"/>. </summary>
         internal CassandraConnectionError()
         {
         }
 
-        /// <summary> Initializes a new instance of CassandraConnectionError. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraConnectionError"/>. </summary>
         /// <param name="connectionState"> The kind of connection error that occurred. </param>
         /// <param name="ipFrom"> The IP of host that originated the failed connection. </param>
         /// <param name="ipTo"> The IP that the connection attempted to reach. </param>
         /// <param name="port"> The TCP port the connection was attempted on. </param>
         /// <param name="exception"> Detailed error message about the failed connection. </param>
-        internal CassandraConnectionError(CassandraConnectionState? connectionState, string ipFrom, string ipTo, int? port, string exception)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraConnectionError(CassandraConnectionState? connectionState, string ipFrom, string ipTo, int? port, string exception, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionState = connectionState;
             IPFrom = ipFrom;
             IPTo = ipTo;
             Port = port;
             Exception = exception;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The kind of connection error that occurred. </summary>

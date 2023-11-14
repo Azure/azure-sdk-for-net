@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> managed cluster properties for snapshot, these properties are read only. </summary>
     public partial class ManagedClusterPropertiesForSnapshot
     {
-        /// <summary> Initializes a new instance of ManagedClusterPropertiesForSnapshot. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPropertiesForSnapshot"/>. </summary>
         internal ManagedClusterPropertiesForSnapshot()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPropertiesForSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPropertiesForSnapshot"/>. </summary>
         /// <param name="kubernetesVersion"> The current kubernetes version. </param>
         /// <param name="sku"> The current managed cluster sku. </param>
         /// <param name="enableRbac"> Whether the cluster has enabled Kubernetes Role-Based Access Control or not. </param>
         /// <param name="networkProfile"> The current network profile. </param>
-        internal ManagedClusterPropertiesForSnapshot(string kubernetesVersion, ManagedClusterSku sku, bool? enableRbac, ContainerServiceNetworkProfileForSnapshot networkProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPropertiesForSnapshot(string kubernetesVersion, ManagedClusterSku sku, bool? enableRbac, ContainerServiceNetworkProfileForSnapshot networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KubernetesVersion = kubernetesVersion;
             Sku = sku;
             EnableRbac = enableRbac;
             NetworkProfile = networkProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current kubernetes version. </summary>

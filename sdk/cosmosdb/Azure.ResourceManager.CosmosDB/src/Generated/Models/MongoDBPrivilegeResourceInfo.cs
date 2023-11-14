@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB Mongo DB Resource. </summary>
     public partial class MongoDBPrivilegeResourceInfo
     {
-        /// <summary> Initializes a new instance of MongoDBPrivilegeResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBPrivilegeResourceInfo"/>. </summary>
         public MongoDBPrivilegeResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBPrivilegeResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBPrivilegeResourceInfo"/>. </summary>
         /// <param name="dbName"> The database name the role is applied. </param>
         /// <param name="collection"> The collection name the role is applied. </param>
-        internal MongoDBPrivilegeResourceInfo(string dbName, string collection)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBPrivilegeResourceInfo(string dbName, string collection, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DBName = dbName;
             Collection = collection;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The database name the role is applied. </summary>

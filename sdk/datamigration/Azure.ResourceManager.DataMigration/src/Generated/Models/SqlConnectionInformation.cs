@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Source SQL Connection. </summary>
     public partial class SqlConnectionInformation
     {
-        /// <summary> Initializes a new instance of SqlConnectionInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInformation"/>. </summary>
         public SqlConnectionInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlConnectionInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlConnectionInformation"/>. </summary>
         /// <param name="dataSource"> Data source. </param>
         /// <param name="authentication"> Authentication type. </param>
         /// <param name="userName"> User name to connect to source SQL. </param>
         /// <param name="password"> Password to connect to source SQL. </param>
         /// <param name="encryptConnection"> Whether to encrypt connection or not. </param>
         /// <param name="trustServerCertificate"> Whether to trust server certificate or not. </param>
-        internal SqlConnectionInformation(string dataSource, string authentication, string userName, string password, bool? encryptConnection, bool? trustServerCertificate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlConnectionInformation(string dataSource, string authentication, string userName, string password, bool? encryptConnection, bool? trustServerCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSource = dataSource;
             Authentication = authentication;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Password = password;
             EncryptConnection = encryptConnection;
             TrustServerCertificate = trustServerCertificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Data source. </summary>

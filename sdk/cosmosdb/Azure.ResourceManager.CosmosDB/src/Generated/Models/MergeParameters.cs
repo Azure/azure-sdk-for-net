@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The properties of an Azure Cosmos DB merge operations. </summary>
     public partial class MergeParameters
     {
-        /// <summary> Initializes a new instance of MergeParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MergeParameters"/>. </summary>
         public MergeParameters()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MergeParameters"/>. </summary>
+        /// <param name="isDryRun"> Specifies whether the operation is a real merge operation or a simulation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MergeParameters(bool? isDryRun, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsDryRun = isDryRun;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies whether the operation is a real merge operation or a simulation. </summary>

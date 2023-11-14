@@ -5,14 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class that describes the PATCH request parameters of a Domains resource. </summary>
     public partial class CommunicationDomainResourcePatch : CommunicationAcceptTags
     {
-        /// <summary> Initializes a new instance of CommunicationDomainResourcePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourcePatch"/>. </summary>
         public CommunicationDomainResourcePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourcePatch"/>. </summary>
+        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
+        internal CommunicationDomainResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, UserEngagementTracking? userEngagementTracking) : base(tags, serializedAdditionalRawData)
+        {
+            UserEngagementTracking = userEngagementTracking;
         }
 
         /// <summary> Describes whether user engagement tracking is enabled or disabled. </summary>

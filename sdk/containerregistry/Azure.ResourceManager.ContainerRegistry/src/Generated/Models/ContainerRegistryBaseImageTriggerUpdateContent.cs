@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating base image dependency trigger. </summary>
     public partial class ContainerRegistryBaseImageTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryBaseImageTriggerUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistryBaseImageTriggerUpdateContent(string name)
@@ -21,6 +25,28 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/>. </summary>
+        /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
+        /// <param name="updateTriggerEndpoint"> The endpoint URL for receiving update triggers. </param>
+        /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryBaseImageTriggerUpdateContent(ContainerRegistryBaseImageTriggerType? baseImageTriggerType, string updateTriggerEndpoint, ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType, ContainerRegistryTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BaseImageTriggerType = baseImageTriggerType;
+            UpdateTriggerEndpoint = updateTriggerEndpoint;
+            UpdateTriggerPayloadType = updateTriggerPayloadType;
+            Status = status;
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryBaseImageTriggerUpdateContent"/> for deserialization. </summary>
+        internal ContainerRegistryBaseImageTriggerUpdateContent()
+        {
         }
 
         /// <summary> The type of the auto trigger for base image dependency updates. </summary>

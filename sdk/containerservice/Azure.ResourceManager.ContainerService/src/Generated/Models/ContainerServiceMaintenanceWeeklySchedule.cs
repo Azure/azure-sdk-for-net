@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </summary>
     public partial class ContainerServiceMaintenanceWeeklySchedule
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceWeeklySchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWeeklySchedule"/>. </summary>
         /// <param name="intervalWeeks"> Specifies the number of weeks between each set of occurrences. </param>
         /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
         public ContainerServiceMaintenanceWeeklySchedule(int intervalWeeks, ContainerServiceWeekDay dayOfWeek)
         {
             IntervalWeeks = intervalWeeks;
             DayOfWeek = dayOfWeek;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWeeklySchedule"/>. </summary>
+        /// <param name="intervalWeeks"> Specifies the number of weeks between each set of occurrences. </param>
+        /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceWeeklySchedule(int intervalWeeks, ContainerServiceWeekDay dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IntervalWeeks = intervalWeeks;
+            DayOfWeek = dayOfWeek;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWeeklySchedule"/> for deserialization. </summary>
+        internal ContainerServiceMaintenanceWeeklySchedule()
+        {
         }
 
         /// <summary> Specifies the number of weeks between each set of occurrences. </summary>

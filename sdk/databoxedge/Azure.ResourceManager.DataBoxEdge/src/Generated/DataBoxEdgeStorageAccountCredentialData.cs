@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeStorageAccountCredentialData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountCredentialData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/>. </summary>
         /// <param name="alias"> Alias for the storage account. </param>
         /// <param name="sslStatus"> Signifies whether SSL needs to be enabled or not. </param>
         /// <param name="accountType"> Type of storage accessed on the storage account. </param>
@@ -32,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             AccountType = accountType;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageAccountCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +49,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="blobDomainName"> Blob end point for private clouds. </param>
         /// <param name="accountType"> Type of storage accessed on the storage account. </param>
         /// <param name="storageAccountId"> Id of the storage account. </param>
-        internal DataBoxEdgeStorageAccountCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string @alias, string userName, AsymmetricEncryptedSecret accountKey, string connectionString, DataBoxEdgeStorageAccountSslStatus sslStatus, string blobDomainName, DataBoxEdgeStorageAccountType accountType, ResourceIdentifier storageAccountId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeStorageAccountCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string @alias, string userName, AsymmetricEncryptedSecret accountKey, string connectionString, DataBoxEdgeStorageAccountSslStatus sslStatus, string blobDomainName, DataBoxEdgeStorageAccountType accountType, ResourceIdentifier storageAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Alias = @alias;
             UserName = userName;
@@ -55,6 +60,12 @@ namespace Azure.ResourceManager.DataBoxEdge
             BlobDomainName = blobDomainName;
             AccountType = accountType;
             StorageAccountId = storageAccountId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageAccountCredentialData"/> for deserialization. </summary>
+        internal DataBoxEdgeStorageAccountCredentialData()
+        {
         }
 
         /// <summary> Alias for the storage account. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure ML WebService Input/Output file. </summary>
     public partial class AzureMLWebServiceFile
     {
-        /// <summary> Initializes a new instance of AzureMLWebServiceFile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLWebServiceFile"/>. </summary>
         /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
@@ -25,6 +29,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             FilePath = filePath;
             LinkedServiceName = linkedServiceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLWebServiceFile"/>. </summary>
+        /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMLWebServiceFile(DataFactoryElement<string> filePath, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FilePath = filePath;
+            LinkedServiceName = linkedServiceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLWebServiceFile"/> for deserialization. </summary>
+        internal AzureMLWebServiceFile()
+        {
         }
 
         /// <summary> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List Restore Ranges Response. </summary>
     public partial class BackupFindRestorableTimeRangeResultProperties
     {
-        /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeResultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResultProperties"/>. </summary>
         public BackupFindRestorableTimeRangeResultProperties()
         {
             RestorableTimeRanges = new ChangeTrackingList<RestorableTimeRange>();
         }
 
-        /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResultProperties"/>. </summary>
         /// <param name="restorableTimeRanges"> Returns the Restore Ranges available on the Backup Instance. </param>
         /// <param name="objectType"></param>
-        internal BackupFindRestorableTimeRangeResultProperties(IList<RestorableTimeRange> restorableTimeRanges, string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupFindRestorableTimeRangeResultProperties(IList<RestorableTimeRange> restorableTimeRanges, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestorableTimeRanges = restorableTimeRanges;
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Returns the Restore Ranges available on the Backup Instance. </summary>

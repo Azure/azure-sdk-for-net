@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,7 +14,10 @@ namespace Azure.Communication.JobRouter
     /// <summary> Describes a condition that must be met against a set of labels for queue selection. </summary>
     public partial class RouterQueueSelector
     {
-        /// <summary> Initializes a new instance of RouterQueueSelector. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueueSelector"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -23,17 +27,25 @@ namespace Azure.Communication.JobRouter
 
             Key = key;
             LabelOperator = labelOperator;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RouterQueueSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterQueueSelector"/>. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. Values must be primitive values - number, string, boolean. </param>
-        internal RouterQueueSelector(string key, LabelOperator labelOperator, BinaryData value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterQueueSelector(string key, LabelOperator labelOperator, BinaryData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             LabelOperator = labelOperator;
             _value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterQueueSelector"/> for deserialization. </summary>
+        internal RouterQueueSelector()
+        {
         }
 
         /// <summary> The label key to query against. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Desired managed outbound IPs for the cluster load balancer. </summary>
     public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs
     {
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileManagedOutboundIPs. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileManagedOutboundIPs"/>. </summary>
         public ManagedClusterLoadBalancerProfileManagedOutboundIPs()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileManagedOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileManagedOutboundIPs"/>. </summary>
         /// <param name="count"> The desired number of IPv4 outbound IPs created/managed by Azure for the cluster load balancer. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
         /// <param name="countIPv6"> The desired number of IPv6 outbound IPs created/managed by Azure for the cluster load balancer. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 0 for single-stack and 1 for dual-stack. </param>
-        internal ManagedClusterLoadBalancerProfileManagedOutboundIPs(int? count, int? countIPv6)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterLoadBalancerProfileManagedOutboundIPs(int? count, int? countIPv6, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             CountIPv6 = countIPv6;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The desired number of IPv4 outbound IPs created/managed by Azure for the cluster load balancer. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </summary>

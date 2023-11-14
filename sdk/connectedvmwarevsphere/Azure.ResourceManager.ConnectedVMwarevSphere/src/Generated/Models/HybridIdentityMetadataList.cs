@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of HybridIdentityMetadata. </summary>
     internal partial class HybridIdentityMetadataList
     {
-        /// <summary> Initializes a new instance of HybridIdentityMetadataList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataList"/>. </summary>
         /// <param name="value"> Array of HybridIdentityMetadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HybridIdentityMetadataList(IEnumerable<HybridIdentityMetadataData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of HybridIdentityMetadata. </param>
         /// <param name="value"> Array of HybridIdentityMetadata. </param>
-        internal HybridIdentityMetadataList(string nextLink, IReadOnlyList<HybridIdentityMetadataData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridIdentityMetadataList(string nextLink, IReadOnlyList<HybridIdentityMetadataData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataList"/> for deserialization. </summary>
+        internal HybridIdentityMetadataList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of HybridIdentityMetadata. </summary>

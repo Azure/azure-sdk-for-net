@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Script block of scripts. </summary>
     public partial class ScriptActivityScriptBlock
     {
-        /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptType"> The type of the query. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = new ChangeTrackingList<ScriptActivityParameter>();
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptType"> The type of the query. Type: string. </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
-        internal ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryScriptType scriptType, IList<ScriptActivityParameter> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryScriptType scriptType, IList<ScriptActivityParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             ScriptType = scriptType;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/> for deserialization. </summary>
+        internal ScriptActivityScriptBlock()
+        {
         }
 
         /// <summary> The query text. Type: string (or Expression with resultType string). </summary>

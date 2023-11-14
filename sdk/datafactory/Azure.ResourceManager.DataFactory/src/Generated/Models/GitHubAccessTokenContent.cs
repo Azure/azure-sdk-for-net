@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Get GitHub access token request definition. </summary>
     public partial class GitHubAccessTokenContent
     {
-        /// <summary> Initializes a new instance of GitHubAccessTokenContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/>. </summary>
         /// <param name="gitHubAccessCode"> GitHub access code. </param>
         /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUri"/> is null. </exception>
@@ -24,6 +28,26 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             GitHubAccessCode = gitHubAccessCode;
             GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/>. </summary>
+        /// <param name="gitHubAccessCode"> GitHub access code. </param>
+        /// <param name="gitHubClientId"> GitHub application client ID. </param>
+        /// <param name="gitHubClientSecret"> GitHub bring your own app client secret information. </param>
+        /// <param name="gitHubAccessTokenBaseUri"> GitHub access token base URL. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubAccessTokenContent(string gitHubAccessCode, string gitHubClientId, FactoryGitHubClientSecret gitHubClientSecret, Uri gitHubAccessTokenBaseUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            GitHubAccessCode = gitHubAccessCode;
+            GitHubClientId = gitHubClientId;
+            GitHubClientSecret = gitHubClientSecret;
+            GitHubAccessTokenBaseUri = gitHubAccessTokenBaseUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenContent"/> for deserialization. </summary>
+        internal GitHubAccessTokenContent()
+        {
         }
 
         /// <summary> GitHub access code. </summary>

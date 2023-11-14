@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The credential result response. </summary>
     public partial class ManagedClusterCredential
     {
-        /// <summary> Initializes a new instance of ManagedClusterCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterCredential"/>. </summary>
         internal ManagedClusterCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterCredential"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
-        internal ManagedClusterCredential(string name, byte[] value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterCredential(string name, byte[] value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the credential. </summary>

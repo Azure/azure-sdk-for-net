@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container object under Container App Revision Replica. </summary>
     public partial class ContainerAppReplicaContainer
     {
-        /// <summary> Initializes a new instance of ContainerAppReplicaContainer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaContainer"/>. </summary>
         public ContainerAppReplicaContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppReplicaContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaContainer"/>. </summary>
         /// <param name="name"> The Name of the Container. </param>
         /// <param name="containerId"> The Id of the Container. </param>
         /// <param name="isReady"> The container ready status. </param>
@@ -25,7 +31,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="runningStateDetails"> The details of container current running state. </param>
         /// <param name="logStreamEndpoint"> Log Stream endpoint. </param>
         /// <param name="execEndpoint"> Container exec endpoint. </param>
-        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, ContainerAppContainerRunningState? runningState, string runningStateDetails, string logStreamEndpoint, string execEndpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, ContainerAppContainerRunningState? runningState, string runningStateDetails, string logStreamEndpoint, string execEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ContainerId = containerId;
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             RunningStateDetails = runningStateDetails;
             LogStreamEndpoint = logStreamEndpoint;
             ExecEndpoint = execEndpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Name of the Container. </summary>

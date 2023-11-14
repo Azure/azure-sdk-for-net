@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Collection of Storage for Environments. </summary>
     internal partial class ConnectedEnvironmentStoragesCollection
     {
-        /// <summary> Initializes a new instance of ConnectedEnvironmentStoragesCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStoragesCollection"/>. </summary>
         /// <param name="value"> Collection of storage resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ConnectedEnvironmentStoragesCollection(IEnumerable<ContainerAppConnectedEnvironmentStorageData> value)
@@ -26,11 +29,18 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConnectedEnvironmentStoragesCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStoragesCollection"/>. </summary>
         /// <param name="value"> Collection of storage resources. </param>
-        internal ConnectedEnvironmentStoragesCollection(IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedEnvironmentStoragesCollection(IReadOnlyList<ContainerAppConnectedEnvironmentStorageData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStoragesCollection"/> for deserialization. </summary>
+        internal ConnectedEnvironmentStoragesCollection()
+        {
         }
 
         /// <summary> Collection of storage resources. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Package carrier details. </summary>
     public partial class PackageCarrierDetails
     {
-        /// <summary> Initializes a new instance of PackageCarrierDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PackageCarrierDetails"/>. </summary>
         public PackageCarrierDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PackageCarrierDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PackageCarrierDetails"/>. </summary>
         /// <param name="carrierAccountNumber"> Carrier Account Number of customer for customer disk. </param>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="trackingId"> Tracking Id of shipment. </param>
-        internal PackageCarrierDetails(string carrierAccountNumber, string carrierName, string trackingId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PackageCarrierDetails(string carrierAccountNumber, string carrierName, string trackingId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CarrierAccountNumber = carrierAccountNumber;
             CarrierName = carrierName;
             TrackingId = trackingId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Carrier Account Number of customer for customer disk. </summary>

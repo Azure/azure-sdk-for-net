@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Communication.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Communication
     /// </summary>
     public partial class CommunicationDomainResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CommunicationDomainResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.Communication
         /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
         /// <param name="verificationRecords"> List of DnsRecord. </param>
         /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, UserEngagementTracking? userEngagementTracking) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationDomainResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DomainProvisioningState? provisioningState, string dataLocation, string fromSenderDomain, string mailFromSenderDomain, DomainManagement? domainManagement, DomainPropertiesVerificationStates verificationStates, DomainPropertiesVerificationRecords verificationRecords, UserEngagementTracking? userEngagementTracking, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DataLocation = dataLocation;
@@ -49,6 +54,12 @@ namespace Azure.ResourceManager.Communication
             VerificationStates = verificationStates;
             VerificationRecords = verificationRecords;
             UserEngagementTracking = userEngagementTracking;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationDomainResourceData"/> for deserialization. </summary>
+        internal CommunicationDomainResourceData()
+        {
         }
 
         /// <summary> Provisioning state of the resource. </summary>

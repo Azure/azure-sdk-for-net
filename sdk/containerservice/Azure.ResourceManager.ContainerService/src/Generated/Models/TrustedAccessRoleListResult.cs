@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> List of trusted access roles. </summary>
     internal partial class TrustedAccessRoleListResult
     {
-        /// <summary> Initializes a new instance of TrustedAccessRoleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleListResult"/>. </summary>
         internal TrustedAccessRoleListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceTrustedAccessRole>();
         }
 
-        /// <summary> Initializes a new instance of TrustedAccessRoleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleListResult"/>. </summary>
         /// <param name="value"> Role list. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal TrustedAccessRoleListResult(IReadOnlyList<ContainerServiceTrustedAccessRole> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrustedAccessRoleListResult(IReadOnlyList<ContainerServiceTrustedAccessRole> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Role list. </summary>

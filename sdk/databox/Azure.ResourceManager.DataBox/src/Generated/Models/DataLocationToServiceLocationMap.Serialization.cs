@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataLocationToServiceLocationMap
+    public partial class DataLocationToServiceLocationMap : IUtf8JsonSerializable, IJsonModel<DataLocationToServiceLocationMap>
     {
-        internal static DataLocationToServiceLocationMap DeserializeDataLocationToServiceLocationMap(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLocationToServiceLocationMap>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataLocationToServiceLocationMap>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataLocationToServiceLocationMap>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataLocationToServiceLocationMap>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataLocation))
+                {
+                    writer.WritePropertyName("dataLocation"u8);
+                    writer.WriteStringValue(DataLocation.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceLocation))
+                {
+                    writer.WritePropertyName("serviceLocation"u8);
+                    writer.WriteStringValue(ServiceLocation.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataLocationToServiceLocationMap IJsonModel<DataLocationToServiceLocationMap>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLocationToServiceLocationMap(document.RootElement, options);
+        }
+
+        internal static DataLocationToServiceLocationMap DeserializeDataLocationToServiceLocationMap(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AzureLocation> dataLocation = default;
             Optional<AzureLocation> serviceLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataLocation"u8))
@@ -40,8 +104,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     serviceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLocationToServiceLocationMap(Optional.ToNullable(dataLocation), Optional.ToNullable(serviceLocation));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataLocationToServiceLocationMap(Optional.ToNullable(dataLocation), Optional.ToNullable(serviceLocation), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataLocationToServiceLocationMap>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataLocationToServiceLocationMap IPersistableModel<DataLocationToServiceLocationMap>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataLocationToServiceLocationMap(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataLocationToServiceLocationMap>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

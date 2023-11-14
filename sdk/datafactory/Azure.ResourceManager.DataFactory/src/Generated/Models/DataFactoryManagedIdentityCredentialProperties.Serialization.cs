@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryManagedIdentityCredentialProperties : IUtf8JsonSerializable
+    public partial class DataFactoryManagedIdentityCredentialProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryManagedIdentityCredentialProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryManagedIdentityCredentialProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataFactoryManagedIdentityCredentialProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataFactoryManagedIdentityCredentialProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataFactoryManagedIdentityCredentialProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CredentialType);
@@ -69,8 +78,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryManagedIdentityCredentialProperties DeserializeDataFactoryManagedIdentityCredentialProperties(JsonElement element)
+        DataFactoryManagedIdentityCredentialProperties IJsonModel<DataFactoryManagedIdentityCredentialProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryManagedIdentityCredentialProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryManagedIdentityCredentialProperties DeserializeDataFactoryManagedIdentityCredentialProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,5 +163,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryManagedIdentityCredentialProperties(type, description.Value, Optional.ToList(annotations), additionalProperties, resourceId.Value);
         }
+
+        BinaryData IPersistableModel<DataFactoryManagedIdentityCredentialProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFactoryManagedIdentityCredentialProperties IPersistableModel<DataFactoryManagedIdentityCredentialProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryManagedIdentityCredentialProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFactoryManagedIdentityCredentialProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataFactoryManagedIdentityCredentialProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

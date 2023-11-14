@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> A description of the scaling capacities of the SKU. </summary>
     public partial class AvailableServiceSkuCapacity
     {
-        /// <summary> Initializes a new instance of AvailableServiceSkuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceSkuCapacity"/>. </summary>
         internal AvailableServiceSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableServiceSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceSkuCapacity"/>. </summary>
         /// <param name="minimum"> The minimum capacity, usually 0 or 1. </param>
         /// <param name="maximum"> The maximum capacity. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="scaleType"> The scalability approach. </param>
-        internal AvailableServiceSkuCapacity(int? minimum, int? maximum, int? @default, ServiceScalability? scaleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableServiceSkuCapacity(int? minimum, int? maximum, int? @default, ServiceScalability? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
             ScaleType = scaleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minimum capacity, usually 0 or 1. </summary>

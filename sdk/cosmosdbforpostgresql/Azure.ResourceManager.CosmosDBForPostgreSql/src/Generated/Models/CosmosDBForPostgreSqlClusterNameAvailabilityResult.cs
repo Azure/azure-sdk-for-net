@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> Represents cluster name availability. </summary>
     public partial class CosmosDBForPostgreSqlClusterNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityResult"/>. </summary>
         internal CosmosDBForPostgreSqlClusterNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="isNameAvailable"> Indicates whether the cluster name is available. </param>
         /// <param name="name"> Name of the cluster. </param>
         /// <param name="resourceType"> Type of the cluster. </param>
-        internal CosmosDBForPostgreSqlClusterNameAvailabilityResult(string message, bool? isNameAvailable, string name, ResourceType? resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterNameAvailabilityResult(string message, bool? isNameAvailable, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;
             Name = name;
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error message. </summary>

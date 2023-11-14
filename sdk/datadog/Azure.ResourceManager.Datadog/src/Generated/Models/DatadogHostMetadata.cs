@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The DatadogHostMetadata. </summary>
     public partial class DatadogHostMetadata
     {
-        /// <summary> Initializes a new instance of DatadogHostMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogHostMetadata"/>. </summary>
         internal DatadogHostMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogHostMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogHostMetadata"/>. </summary>
         /// <param name="agentVersion"> The agent version. </param>
         /// <param name="installMethod"></param>
         /// <param name="logsAgent"></param>
-        internal DatadogHostMetadata(string agentVersion, DatadogInstallMethod installMethod, DatadogLogsAgent logsAgent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogHostMetadata(string agentVersion, DatadogInstallMethod installMethod, DatadogLogsAgent logsAgent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentVersion = agentVersion;
             InstallMethod = installMethod;
             LogsAgent = logsAgent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The agent version. </summary>

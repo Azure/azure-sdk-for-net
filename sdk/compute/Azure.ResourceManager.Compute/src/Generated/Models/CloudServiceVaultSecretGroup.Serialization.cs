@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CloudServiceVaultSecretGroup : IUtf8JsonSerializable
+    public partial class CloudServiceVaultSecretGroup : IUtf8JsonSerializable, IJsonModel<CloudServiceVaultSecretGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServiceVaultSecretGroup>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CloudServiceVaultSecretGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CloudServiceVaultSecretGroup>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CloudServiceVaultSecretGroup>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceVault))
             {
@@ -32,17 +42,48 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudServiceVaultSecretGroup DeserializeCloudServiceVaultSecretGroup(JsonElement element)
+        CloudServiceVaultSecretGroup IJsonModel<CloudServiceVaultSecretGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudServiceVaultSecretGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudServiceVaultSecretGroup(document.RootElement, options);
+        }
+
+        internal static CloudServiceVaultSecretGroup DeserializeCloudServiceVaultSecretGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<WritableSubResource> sourceVault = default;
             Optional<IList<CloudServiceVaultCertificate>> vaultCertificates = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceVault"u8))
@@ -68,8 +109,38 @@ namespace Azure.ResourceManager.Compute.Models
                     vaultCertificates = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudServiceVaultSecretGroup(sourceVault, Optional.ToList(vaultCertificates));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudServiceVaultSecretGroup(sourceVault, Optional.ToList(vaultCertificates), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudServiceVaultSecretGroup>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudServiceVaultSecretGroup)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CloudServiceVaultSecretGroup IPersistableModel<CloudServiceVaultSecretGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudServiceVaultSecretGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCloudServiceVaultSecretGroup(document.RootElement, options);
+        }
+
+        string IPersistableModel<CloudServiceVaultSecretGroup>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The properties of the node group on a cluster. </summary>
     public partial class NodeGroupProperties
     {
-        /// <summary> Initializes a new instance of NodeGroupProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeGroupProperties"/>. </summary>
         public NodeGroupProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of NodeGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeGroupProperties"/>. </summary>
         /// <param name="sku"> The resource sku for the node group. This defines the size of CPU and memory that is provisioned for each node. Example values: 'M30', 'M40'. </param>
         /// <param name="diskSizeInGB"> The disk storage size for the node group in GB. Example values: 128, 256, 512, 1024. </param>
         /// <param name="enableHa"> Whether high availability is enabled on the node group. </param>
-        internal NodeGroupProperties(string sku, long? diskSizeInGB, bool? enableHa)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeGroupProperties(string sku, long? diskSizeInGB, bool? enableHa, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             DiskSizeInGB = diskSizeInGB;
             EnableHa = enableHa;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource sku for the node group. This defines the size of CPU and memory that is provisioned for each node. Example values: 'M30', 'M40'. </summary>

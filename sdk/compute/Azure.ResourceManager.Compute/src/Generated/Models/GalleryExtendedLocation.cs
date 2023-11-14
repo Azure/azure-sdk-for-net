@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The name of the extended location. </summary>
     public partial class GalleryExtendedLocation
     {
-        /// <summary> Initializes a new instance of GalleryExtendedLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocation"/>. </summary>
         public GalleryExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocation"/>. </summary>
         /// <param name="name"></param>
         /// <param name="extendedLocationType"> It is type of the extended location. </param>
-        internal GalleryExtendedLocation(string name, GalleryExtendedLocationType? extendedLocationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryExtendedLocation(string name, GalleryExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ExtendedLocationType = extendedLocationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name. </summary>

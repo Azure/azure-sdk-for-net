@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the registration for the Apple provider. </summary>
     public partial class ContainerAppAppleRegistrationConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppAppleRegistrationConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAppleRegistrationConfiguration"/>. </summary>
         public ContainerAppAppleRegistrationConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAppleRegistrationConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAppleRegistrationConfiguration"/>. </summary>
         /// <param name="clientId"> The Client ID of the app used for login. </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
-        internal ContainerAppAppleRegistrationConfiguration(string clientId, string clientSecretSettingName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppAppleRegistrationConfiguration(string clientId, string clientSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientSecretSettingName = clientSecretSettingName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Client ID of the app used for login. </summary>

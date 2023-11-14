@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public abstract partial class DependencyReference
     {
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         protected DependencyReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
-        internal DependencyReference(string dependencyReferenceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DependencyReference(string dependencyReferenceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DependencyReferenceType = dependencyReferenceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of dependency reference. </summary>

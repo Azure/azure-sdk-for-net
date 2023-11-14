@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The usage data for a usage request. </summary>
     public partial class CosmosDBBaseUsage
     {
-        /// <summary> Initializes a new instance of CosmosDBBaseUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBaseUsage"/>. </summary>
         internal CosmosDBBaseUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBBaseUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBBaseUsage"/>. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
         /// <param name="limit"> Maximum value for this metric. </param>
         /// <param name="currentValue"> Current value for this metric. </param>
-        internal CosmosDBBaseUsage(CosmosDBMetricUnitType? unit, CosmosDBMetricName name, string quotaPeriod, long? limit, long? currentValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBBaseUsage(CosmosDBMetricUnitType? unit, CosmosDBMetricName name, string quotaPeriod, long? limit, long? currentValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Unit = unit;
             Name = name;
             QuotaPeriod = quotaPeriod;
             Limit = limit;
             CurrentValue = currentValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unit of the metric. </summary>

@@ -7,15 +7,167 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel
+    public partial class MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>
     {
-        internal static MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceDatabaseName))
+                {
+                    writer.WritePropertyName("sourceDatabaseName"u8);
+                    writer.WriteStringValue(SourceDatabaseName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MigrationState))
+                {
+                    writer.WritePropertyName("migrationState"u8);
+                    writer.WriteStringValue(MigrationState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartedOn))
+                {
+                    writer.WritePropertyName("startedOn"u8);
+                    writer.WriteStringValue(StartedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndedOn))
+                {
+                    writer.WritePropertyName("endedOn"u8);
+                    writer.WriteStringValue(EndedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FullBackupSetInfo))
+                {
+                    writer.WritePropertyName("fullBackupSetInfo"u8);
+                    writer.WriteObjectValue(FullBackupSetInfo);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastRestoredBackupSetInfo))
+                {
+                    writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
+                    writer.WriteObjectValue(LastRestoredBackupSetInfo);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ActiveBackupSets))
+                {
+                    writer.WritePropertyName("activeBackupSets"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ActiveBackupSets)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ContainerName))
+                {
+                    writer.WritePropertyName("containerName"u8);
+                    writer.WriteStringValue(ContainerName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorPrefix))
+                {
+                    writer.WritePropertyName("errorPrefix"u8);
+                    writer.WriteStringValue(ErrorPrefix);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsFullBackupRestored))
+                {
+                    writer.WritePropertyName("isFullBackupRestored"u8);
+                    writer.WriteBooleanValue(IsFullBackupRestored.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ExceptionsAndWarnings))
+                {
+                    writer.WritePropertyName("exceptionsAndWarnings"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ExceptionsAndWarnings)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel IJsonModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(document.RootElement, options);
+        }
+
+        internal static MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +185,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
             Optional<string> id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceDatabaseName"u8))
@@ -142,8 +296,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id.Value, resultType, sourceDatabaseName.Value, Optional.ToNullable(migrationState), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), containerName.Value, errorPrefix.Value, Optional.ToNullable(isFullBackupRestored), Optional.ToList(exceptionsAndWarnings));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, sourceDatabaseName.Value, Optional.ToNullable(migrationState), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), containerName.Value, errorPrefix.Value, Optional.ToNullable(isFullBackupRestored), Optional.ToList(exceptionsAndWarnings));
         }
+
+        BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(document.RootElement, options);
+        }
+
+        string IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

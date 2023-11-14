@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SsisLogLocation : IUtf8JsonSerializable
+    public partial class SsisLogLocation : IUtf8JsonSerializable, IJsonModel<SsisLogLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisLogLocation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SsisLogLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SsisLogLocation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SsisLogLocation>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("logPath"u8);
             JsonSerializer.Serialize(writer, LogPath);
@@ -33,11 +44,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, LogRefreshInterval);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SsisLogLocation DeserializeSsisLogLocation(JsonElement element)
+        SsisLogLocation IJsonModel<SsisLogLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SsisLogLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSsisLogLocation(document.RootElement, options);
+        }
+
+        internal static SsisLogLocation DeserializeSsisLogLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +86,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             SsisLogLocationType type = default;
             Optional<SsisAccessCredential> accessCredential = default;
             Optional<DataFactoryElement<string>> logRefreshInterval = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logPath"u8))
@@ -88,8 +130,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SsisLogLocation(logPath, type, accessCredential.Value, logRefreshInterval.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SsisLogLocation(logPath, type, accessCredential.Value, logRefreshInterval.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SsisLogLocation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SsisLogLocation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SsisLogLocation IPersistableModel<SsisLogLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SsisLogLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSsisLogLocation(document.RootElement, options);
+        }
+
+        string IPersistableModel<SsisLogLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

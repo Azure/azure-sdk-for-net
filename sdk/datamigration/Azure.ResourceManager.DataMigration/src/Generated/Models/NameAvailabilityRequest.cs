@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> A resource type and proposed name. </summary>
     public partial class NameAvailabilityRequest
     {
-        /// <summary> Initializes a new instance of NameAvailabilityRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NameAvailabilityRequest"/>. </summary>
         public NameAvailabilityRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NameAvailabilityRequest"/>. </summary>
+        /// <param name="name"> The proposed resource name. </param>
+        /// <param name="resourceType"> The resource type chain (e.g. virtualMachines/extensions). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NameAvailabilityRequest(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The proposed resource name. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Rendering details of a diagnostics table. </summary>
     public partial class ContainerAppDiagnosticsStatus
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsStatus"/>. </summary>
         public ContainerAppDiagnosticsStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsStatus"/>. </summary>
         /// <param name="message"> Diagnostic message. </param>
         /// <param name="statusId"> Status. </param>
-        internal ContainerAppDiagnosticsStatus(string message, int? statusId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticsStatus(string message, int? statusId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             StatusId = statusId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Diagnostic message. </summary>

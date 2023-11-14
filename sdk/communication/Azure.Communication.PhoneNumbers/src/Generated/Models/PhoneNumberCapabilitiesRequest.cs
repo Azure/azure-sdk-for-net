@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Capabilities of a phone number. </summary>
     internal partial class PhoneNumberCapabilitiesRequest
     {
-        /// <summary> Initializes a new instance of PhoneNumberCapabilitiesRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilitiesRequest"/>. </summary>
         public PhoneNumberCapabilitiesRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCapabilitiesRequest"/>. </summary>
+        /// <param name="calling"> Capability value for calling. </param>
+        /// <param name="sms"> Capability value for SMS. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberCapabilitiesRequest(PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Calling = calling;
+            Sms = sms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Capability value for calling. </summary>

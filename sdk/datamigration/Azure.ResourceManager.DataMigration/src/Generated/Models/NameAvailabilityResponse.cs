@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Indicates whether a proposed resource name is available. </summary>
     public partial class NameAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of NameAvailabilityResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NameAvailabilityResponse"/>. </summary>
         internal NameAvailabilityResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of NameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameAvailabilityResponse"/>. </summary>
         /// <param name="nameAvailable"> If true, the name is valid and available. If false, 'reason' describes why not. </param>
         /// <param name="reason"> The reason why the name is not available, if nameAvailable is false. </param>
         /// <param name="message"> The localized reason why the name is not available, if nameAvailable is false. </param>
-        internal NameAvailabilityResponse(bool? nameAvailable, NameCheckFailureReason? reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NameAvailabilityResponse(bool? nameAvailable, NameCheckFailureReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If true, the name is valid and available. If false, 'reason' describes why not. </summary>

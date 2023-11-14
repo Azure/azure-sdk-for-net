@@ -5,25 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupDeleteSetting : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownDeleteOption))]
+    public partial class DataProtectionBackupDeleteSetting : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupDeleteSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupDeleteSetting>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataProtectionBackupDeleteSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataProtectionBackupDeleteSetting>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataProtectionBackupDeleteSetting>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupDeleteSetting DeserializeDataProtectionBackupDeleteSetting(JsonElement element)
+        DataProtectionBackupDeleteSetting IJsonModel<DataProtectionBackupDeleteSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupDeleteSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupDeleteSetting(document.RootElement, options);
+        }
+
+        internal static DataProtectionBackupDeleteSetting DeserializeDataProtectionBackupDeleteSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,5 +77,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return UnknownDeleteOption.DeserializeUnknownDeleteOption(element);
         }
+
+        BinaryData IPersistableModel<DataProtectionBackupDeleteSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupDeleteSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataProtectionBackupDeleteSetting IPersistableModel<DataProtectionBackupDeleteSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupDeleteSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataProtectionBackupDeleteSetting(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataProtectionBackupDeleteSetting>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

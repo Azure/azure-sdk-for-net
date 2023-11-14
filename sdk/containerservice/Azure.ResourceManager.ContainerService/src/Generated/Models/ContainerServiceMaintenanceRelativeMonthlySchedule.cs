@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'. </summary>
     public partial class ContainerServiceMaintenanceRelativeMonthlySchedule
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceRelativeMonthlySchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceRelativeMonthlySchedule"/>. </summary>
         /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
         /// <param name="weekIndex"> Specifies on which instance of the allowed days specified in daysOfWeek the maintenance occurs. </param>
         /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
@@ -19,6 +25,24 @@ namespace Azure.ResourceManager.ContainerService.Models
             IntervalMonths = intervalMonths;
             WeekIndex = weekIndex;
             DayOfWeek = dayOfWeek;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceRelativeMonthlySchedule"/>. </summary>
+        /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
+        /// <param name="weekIndex"> Specifies on which instance of the allowed days specified in daysOfWeek the maintenance occurs. </param>
+        /// <param name="dayOfWeek"> Specifies on which day of the week the maintenance occurs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceRelativeMonthlySchedule(int intervalMonths, ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex weekIndex, ContainerServiceWeekDay dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IntervalMonths = intervalMonths;
+            WeekIndex = weekIndex;
+            DayOfWeek = dayOfWeek;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceRelativeMonthlySchedule"/> for deserialization. </summary>
+        internal ContainerServiceMaintenanceRelativeMonthlySchedule()
+        {
         }
 
         /// <summary> Specifies the number of months between each set of occurrences. </summary>

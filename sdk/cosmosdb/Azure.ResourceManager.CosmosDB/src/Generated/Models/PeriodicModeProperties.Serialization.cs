@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PeriodicModeProperties : IUtf8JsonSerializable
+    public partial class PeriodicModeProperties : IUtf8JsonSerializable, IJsonModel<PeriodicModeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicModeProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PeriodicModeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PeriodicModeProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PeriodicModeProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupIntervalInMinutes))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeriodicModeProperties DeserializePeriodicModeProperties(JsonElement element)
+        PeriodicModeProperties IJsonModel<PeriodicModeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeriodicModeProperties(document.RootElement, options);
+        }
+
+        internal static PeriodicModeProperties DeserializePeriodicModeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> backupIntervalInMinutes = default;
             Optional<int> backupRetentionIntervalInHours = default;
             Optional<CosmosDBBackupStorageRedundancy> backupStorageRedundancy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupIntervalInMinutes"u8))
@@ -71,8 +113,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupStorageRedundancy = new CosmosDBBackupStorageRedundancy(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeriodicModeProperties(Optional.ToNullable(backupIntervalInMinutes), Optional.ToNullable(backupRetentionIntervalInHours), Optional.ToNullable(backupStorageRedundancy));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PeriodicModeProperties(Optional.ToNullable(backupIntervalInMinutes), Optional.ToNullable(backupRetentionIntervalInHours), Optional.ToNullable(backupStorageRedundancy), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeriodicModeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PeriodicModeProperties IPersistableModel<PeriodicModeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PeriodicModeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePeriodicModeProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<PeriodicModeProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Configure the presentation layout. </summary>
     public partial class PresentationLayout : MediaCompositionLayout
     {
-        /// <summary> Initializes a new instance of PresentationLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationLayout"/>. </summary>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="presenterId"/> or <paramref name="audienceIds"/> is null. </exception>
@@ -30,20 +30,26 @@ namespace Azure.Communication.MediaComposition
             Kind = LayoutType.Presentation;
         }
 
-        /// <summary> Initializes a new instance of PresentationLayout. </summary>
+        /// <summary> Initializes a new instance of <see cref="PresentationLayout"/>. </summary>
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <param name="audiencePosition"> Position of the audience streams. </param>
-        internal PresentationLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, string presenterId, IList<string> audienceIds, AudiencePosition? audiencePosition) : base(kind, resolution, placeholderImageUri, scalingMode)
+        internal PresentationLayout(LayoutType kind, LayoutResolution resolution, string placeholderImageUri, ScalingMode? scalingMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string presenterId, IList<string> audienceIds, AudiencePosition? audiencePosition) : base(kind, resolution, placeholderImageUri, scalingMode, serializedAdditionalRawData)
         {
             PresenterId = presenterId;
             AudienceIds = audienceIds;
             AudiencePosition = audiencePosition;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PresentationLayout"/> for deserialization. </summary>
+        internal PresentationLayout()
+        {
         }
 
         /// <summary> Id of the presenter input. </summary>

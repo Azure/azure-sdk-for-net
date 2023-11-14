@@ -5,16 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Rooms
 {
     /// <summary> The ParticipantProperties. </summary>
     internal partial class ParticipantProperties
     {
-        /// <summary> Initializes a new instance of ParticipantProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParticipantProperties"/>. </summary>
         /// <param name="role"> The role of a room participant. The default value is Attendee. </param>
         public ParticipantProperties(ParticipantRole? role)
         {
             Role = role;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParticipantProperties"/>. </summary>
+        /// <param name="role"> The role of a room participant. The default value is Attendee. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParticipantProperties(ParticipantRole? role, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Role = role;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

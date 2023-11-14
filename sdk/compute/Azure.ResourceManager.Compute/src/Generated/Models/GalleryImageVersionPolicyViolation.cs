@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> A policy violation reported against a gallery artifact. </summary>
     public partial class GalleryImageVersionPolicyViolation
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionPolicyViolation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPolicyViolation"/>. </summary>
         internal GalleryImageVersionPolicyViolation()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersionPolicyViolation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionPolicyViolation"/>. </summary>
         /// <param name="category"> Describes the nature of the policy violation. </param>
         /// <param name="details"> Describes specific details about why this policy violation was reported. </param>
-        internal GalleryImageVersionPolicyViolation(GalleryImageVersionPolicyViolationCategory? category, string details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageVersionPolicyViolation(GalleryImageVersionPolicyViolationCategory? category, string details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the nature of the policy violation. </summary>

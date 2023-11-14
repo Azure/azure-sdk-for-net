@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Copy log details for a storage account of a DataBox job. </summary>
     public partial class DataBoxAccountCopyLogDetails : CopyLogDetails
     {
-        /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxAccountCopyLogDetails"/>. </summary>
         internal DataBoxAccountCopyLogDetails()
         {
             CopyLogDetailsType = DataBoxOrderType.DataBox;
         }
 
-        /// <summary> Initializes a new instance of DataBoxAccountCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxAccountCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </param>
-        internal DataBoxAccountCopyLogDetails(DataBoxOrderType copyLogDetailsType, string accountName, string copyLogLink, string copyVerboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxAccountCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountName, string copyLogLink, string copyVerboseLogLink) : base(copyLogDetailsType, serializedAdditionalRawData)
         {
             AccountName = accountName;
             CopyLogLink = copyLogLink;

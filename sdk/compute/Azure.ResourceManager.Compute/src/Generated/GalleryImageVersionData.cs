@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryImageVersionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryImageVersionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryImageVersionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryImageVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,13 +40,20 @@ namespace Azure.ResourceManager.Compute
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
             StorageProfile = storageProfile;
             SafetyProfile = safetyProfile;
             ReplicationStatus = replicationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/> for deserialization. </summary>
+        internal GalleryImageVersionData()
+        {
         }
 
         /// <summary> The publishing profile of a gallery image Version. </summary>

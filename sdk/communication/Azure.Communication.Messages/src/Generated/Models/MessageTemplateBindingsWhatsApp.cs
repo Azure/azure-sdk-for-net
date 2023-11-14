@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,31 @@ namespace Azure.Communication.Messages
     /// <summary> The template bindings for WhatsApp. </summary>
     internal partial class MessageTemplateBindingsWhatsApp
     {
-        /// <summary> Initializes a new instance of MessageTemplateBindingsWhatsApp. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsApp"/>. </summary>
         public MessageTemplateBindingsWhatsApp()
         {
             Header = new ChangeTrackingList<MessageTemplateBindingsWhatsAppComponent>();
             Body = new ChangeTrackingList<MessageTemplateBindingsWhatsAppComponent>();
             Footer = new ChangeTrackingList<MessageTemplateBindingsWhatsAppComponent>();
             Button = new ChangeTrackingList<MessageTemplateBindingsWhatsAppButton>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsApp"/>. </summary>
+        /// <param name="header"></param>
+        /// <param name="body"></param>
+        /// <param name="footer"></param>
+        /// <param name="button"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateBindingsWhatsApp(IList<MessageTemplateBindingsWhatsAppComponent> header, IList<MessageTemplateBindingsWhatsAppComponent> body, IList<MessageTemplateBindingsWhatsAppComponent> footer, IList<MessageTemplateBindingsWhatsAppButton> button, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Header = header;
+            Body = body;
+            Footer = footer;
+            Button = button;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the header. </summary>

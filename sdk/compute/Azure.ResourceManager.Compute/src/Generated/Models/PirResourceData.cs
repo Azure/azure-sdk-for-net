@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The Resource model definition. </summary>
     public partial class PirResourceData
     {
-        /// <summary> Initializes a new instance of PirResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PirResourceData"/>. </summary>
         internal PirResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of PirResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PirResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        internal PirResourceData(string name, AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PirResourceData(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource name. </summary>

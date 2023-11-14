@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The aggregation expression to be used in the query. </summary>
     public partial class QueryAggregation
     {
-        /// <summary> Initializes a new instance of QueryAggregation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryAggregation"/>. </summary>
         /// <param name="name"> The name of the column to aggregate. </param>
         /// <param name="function"> The name of the aggregation function to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.CostManagement.Models
 
             Name = name;
             Function = function;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryAggregation"/>. </summary>
+        /// <param name="name"> The name of the column to aggregate. </param>
+        /// <param name="function"> The name of the aggregation function to use. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryAggregation(string name, FunctionType function, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Function = function;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryAggregation"/> for deserialization. </summary>
+        internal QueryAggregation()
+        {
         }
 
         /// <summary> The name of the column to aggregate. </summary>
