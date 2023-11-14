@@ -27,32 +27,45 @@ namespace Azure.Monitor.Query.Tests
         public string StorageAccountId => GetRecordedOptionalVariable("STORAGE_ID");
         public string StorageAccountConnectionString => GetRecordedOptionalVariable("STORAGE_CONNECTION_STRING");
 
-        public string GetAudience()
+        public string GetLogsAudience()
         {
             Uri authorityHost = new(AuthorityHostUrl);
 
             if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
             {
-                if (AzureAuthorityHosts.AzurePublicCloud.ToString() == LogsQueryAudience.AzurePublicCloud)
-                    return LogsQueryAudience.AzurePublicCloud.ToString();
-                if (AzureAuthorityHosts.AzurePublicCloud.ToString() == MetricsQueryAudience.AzurePublicCloud)
-                    return MetricsQueryAudience.AzurePublicCloud.ToString();
+                return LogsQueryAudience.AzurePublicCloud.ToString();
             }
 
             else if (authorityHost == AzureAuthorityHosts.AzureChina)
             {
-                if (AzureAuthorityHosts.AzureChina.ToString() == LogsQueryAudience.AzureChina)
-                    return LogsQueryAudience.AzureChina.ToString();
-                if (AzureAuthorityHosts.AzureChina.ToString() == MetricsQueryAudience.AzureChina)
-                    return MetricsQueryAudience.AzureChina.ToString();
+                return LogsQueryAudience.AzureChina.ToString();
             }
 
             else if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
-                if (AzureAuthorityHosts.AzureGovernment.ToString() == LogsQueryAudience.AzureGovernment)
-                    return LogsQueryAudience.AzureGovernment.ToString();
-                if (AzureAuthorityHosts.AzureGovernment.ToString() == MetricsQueryAudience.AzureGovernment)
-                    return MetricsQueryAudience.AzureGovernment.ToString();
+                return LogsQueryAudience.AzureGovernment.ToString();
+            }
+
+            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
+
+        public string GetMetricsAudience()
+        {
+            Uri authorityHost = new(AuthorityHostUrl);
+
+            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
+            {
+                return MetricsQueryAudience.AzurePublicCloud.ToString();
+            }
+
+            else if (authorityHost == AzureAuthorityHosts.AzureChina)
+            {
+                return MetricsQueryAudience.AzureChina.ToString();
+            }
+
+            else if (authorityHost == AzureAuthorityHosts.AzureGovernment)
+            {
+                return MetricsQueryAudience.AzureGovernment.ToString();
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

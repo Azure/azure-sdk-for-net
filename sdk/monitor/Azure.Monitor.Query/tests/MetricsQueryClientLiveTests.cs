@@ -27,7 +27,7 @@ namespace Azure.Monitor.Query.Tests
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MetricsQueryClientOptions()
                 {
-                    Audience = TestEnvironment.GetAudience()
+                    Audience = TestEnvironment.GetMetricsAudience()
                 })
             ));
         }
@@ -344,7 +344,7 @@ namespace Azure.Monitor.Query.Tests
         public async Task MetricsBatchQueryAsync()
         {
             // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
-            if (TestEnvironment.GetAudience() == AzureAuthorityHosts.AzurePublicCloud.ToString())
+            if (TestEnvironment.GetMetricsAudience() == MetricsQueryAudience.AzurePublicCloud)
             {
                 MetricsBatchQueryClient client = CreateBatchClient();
 
@@ -377,7 +377,7 @@ namespace Azure.Monitor.Query.Tests
         public void MetricsBatchInvalid()
         {
             // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
-            if (TestEnvironment.GetAudience() == AzureAuthorityHosts.AzurePublicCloud.ToString())
+            if (TestEnvironment.GetMetricsAudience() == MetricsQueryAudience.AzurePublicCloud)
             {
                 MetricsBatchQueryClient client = CreateBatchClient();
 
