@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<DeviceUpdatePrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<DeviceUpdateSku> sku = default;
-            Optional<Encryption> encryption = default;
+            Optional<DeviceUpdateEncryption> encryption = default;
             Optional<IReadOnlyList<DeviceUpdateAccountLocationDetail>> locations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = DeviceUpdateEncryption.DeserializeDeviceUpdateEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("locations"u8))

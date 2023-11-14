@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
 [new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
 },
                 },
-                Encryption = new Encryption()
+                Encryption = new DeviceUpdateEncryption()
                 {
                     KeyVaultKeyUri = new Uri("https://contoso.vault.azure.net/keys/contoso"),
-                    UserAssignedIdentity = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1",
+                    UserAssignedIdentity = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1"),
                 },
             };
             ArmOperation<DeviceUpdateAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);

@@ -25,6 +25,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  'userAssignedIdentity': 'arm-id'
 
 acronym-mapping:
   CPU: Cpu
@@ -83,4 +84,7 @@ directive:
       $.Location['x-ms-client-name'] = 'DeviceUpdateAccountLocationDetail';
       $.Location.properties.role['x-ms-enum'].name = 'DeviceUpdateAccountLocationRole';
       $.Account.properties.properties.properties.sku['x-ms-enum'].name = 'Sku';
+  - from: swagger-document
+    where: $.definitions.Encryption
+    transform: $['x-ms-client-name'] = 'DeviceUpdateEncryption'
 ```

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class Encryption : IUtf8JsonSerializable
+    public partial class DeviceUpdateEncryption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteEndObject();
         }
 
-        internal static Encryption DeserializeEncryption(JsonElement element)
+        internal static DeviceUpdateEncryption DeserializeDeviceUpdateEncryption(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Uri> keyVaultKeyUri = default;
-            Optional<string> userAssignedIdentity = default;
+            Optional<ResourceIdentifier> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultKeyUri"u8))
@@ -50,11 +50,15 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (property.NameEquals("userAssignedIdentity"u8))
                 {
-                    userAssignedIdentity = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new Encryption(keyVaultKeyUri.Value, userAssignedIdentity.Value);
+            return new DeviceUpdateEncryption(keyVaultKeyUri.Value, userAssignedIdentity.Value);
         }
     }
 }

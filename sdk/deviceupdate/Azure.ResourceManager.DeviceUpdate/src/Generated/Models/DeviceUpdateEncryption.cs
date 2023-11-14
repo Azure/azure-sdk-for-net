@@ -6,21 +6,22 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> The CMK encryption settings on the Device Update account. </summary>
-    public partial class Encryption
+    public partial class DeviceUpdateEncryption
     {
-        /// <summary> Initializes a new instance of Encryption. </summary>
-        public Encryption()
+        /// <summary> Initializes a new instance of DeviceUpdateEncryption. </summary>
+        public DeviceUpdateEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of Encryption. </summary>
+        /// <summary> Initializes a new instance of DeviceUpdateEncryption. </summary>
         /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
         /// <param name="userAssignedIdentity"> The full resourceId of the user assigned identity to be used for key vault access. Identity has to be also assigned to the Account. </param>
-        internal Encryption(Uri keyVaultKeyUri, string userAssignedIdentity)
+        internal DeviceUpdateEncryption(Uri keyVaultKeyUri, ResourceIdentifier userAssignedIdentity)
         {
             KeyVaultKeyUri = keyVaultKeyUri;
             UserAssignedIdentity = userAssignedIdentity;
@@ -29,6 +30,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <summary> The URI of the key vault. </summary>
         public Uri KeyVaultKeyUri { get; set; }
         /// <summary> The full resourceId of the user assigned identity to be used for key vault access. Identity has to be also assigned to the Account. </summary>
-        public string UserAssignedIdentity { get; set; }
+        public ResourceIdentifier UserAssignedIdentity { get; set; }
     }
 }
