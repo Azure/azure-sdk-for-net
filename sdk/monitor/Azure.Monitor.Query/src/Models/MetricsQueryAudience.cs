@@ -32,7 +32,7 @@ namespace Azure.Monitor.Query
         public static MetricsQueryAudience AzureChina { get; } = new MetricsQueryAudience(AzureChinaValue);
 
         /// <summary> Azure US Government. </summary>
-        public static MetricsQueryAudience AzureUSGovernment { get; } = new MetricsQueryAudience(AzureGovernmentValue);
+        public static MetricsQueryAudience AzureGovernment { get; } = new MetricsQueryAudience(AzureGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
         public static MetricsQueryAudience AzurePublicCloud { get; } = new MetricsQueryAudience(AzurePublicCloudValue);

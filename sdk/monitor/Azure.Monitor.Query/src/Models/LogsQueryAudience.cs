@@ -32,7 +32,7 @@ namespace Azure.Monitor.Query
         public static LogsQueryAudience AzureChina { get; } = new LogsQueryAudience(AzureChinaValue);
 
         /// <summary> Azure US Government. </summary>
-        public static LogsQueryAudience AzureUSGovernment { get; } = new LogsQueryAudience(AzureGovernmentValue);
+        public static LogsQueryAudience AzureGovernment { get; } = new LogsQueryAudience(AzureGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
         public static LogsQueryAudience AzurePublicCloud { get; } = new LogsQueryAudience(AzurePublicCloudValue);
