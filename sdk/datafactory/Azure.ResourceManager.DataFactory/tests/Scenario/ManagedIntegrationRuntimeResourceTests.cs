@@ -107,5 +107,31 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             flag = await _dataFactory.GetDataFactoryIntegrationRuntimes().ExistsAsync(integrationRuntimeName);
             Assert.IsFalse(flag);
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task IntegrationRuntime_Managed()
+        {
+            string integrationRuntimeName = Recording.GenerateAssetName("integraionRuntime-");
+            DataFactoryIntegrationRuntimeData data = new DataFactoryIntegrationRuntimeData(new ManagedIntegrationRuntime()
+            {
+                ComputeProperties = new IntegrationRuntimeComputeProperties()
+                {
+                    Location = "westus",
+                    NodeSize = "standard_d2_v3",
+                    NumberOfNodes = 1,
+                    MaxParallelExecutionsPerNode = 4
+                }
+                ,
+                SsisProperties = new IntegrationRuntimeSsisProperties()
+                {
+                    LicenseType = "BasePrice",
+                    Edition = "Standard"
+                }
+            });
+
+            var result = await _dataFactory.GetDataFactoryIntegrationRuntimes().CreateOrUpdateAsync(WaitUntil.Completed, integrationRuntimeName, data);
+            Assert.IsNotNull(result.Value.Id);
+        }
     }
 }

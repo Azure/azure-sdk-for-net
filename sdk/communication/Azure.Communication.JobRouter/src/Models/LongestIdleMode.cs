@@ -14,14 +14,14 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of LongestIdleModePolicy. </summary>
         public LongestIdleMode()
         {
-            Kind = "longest-idle";
+            Kind = DistributionModeKind.LongestIdle;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(MinConcurrentOffers))
             {
                 writer.WritePropertyName("minConcurrentOffers"u8);

@@ -26,14 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EnableAdlsSingleFileParallel))
             {
                 writer.WritePropertyName("enableAdlsSingleFileParallel"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableAdlsSingleFileParallel);
-#else
-                using (JsonDocument document = JsonDocument.Parse(EnableAdlsSingleFileParallel))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, EnableAdlsSingleFileParallel);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -89,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<DataFactoryElement<string>> copyBehavior = default;
-            Optional<BinaryData> enableAdlsSingleFileParallel = default;
+            Optional<DataFactoryElement<bool>> enableAdlsSingleFileParallel = default;
             string type = default;
             Optional<DataFactoryElement<int>> writeBatchSize = default;
             Optional<DataFactoryElement<string>> writeBatchTimeout = default;
@@ -116,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableAdlsSingleFileParallel = BinaryData.FromString(property.Value.GetRawText());
+                    enableAdlsSingleFileParallel = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

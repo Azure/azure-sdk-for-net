@@ -18,7 +18,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of UnknownExceptionAction. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
-        internal UnknownExceptionAction(string id, string kind) : base(id, kind)
+        internal UnknownExceptionAction(string id, ExceptionActionKind kind) : base(id, kind)
         {
         }
     }

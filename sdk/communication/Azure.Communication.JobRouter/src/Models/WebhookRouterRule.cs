@@ -11,7 +11,7 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
         public WebhookRouterRule(Uri authorizationServerUri, OAuth2WebhookClientCredential clientCredential, Uri webhookUri)
-            : this("webhook-rule", authorizationServerUri, clientCredential, webhookUri)
+            : this(RouterRuleKind.Webhook, authorizationServerUri, clientCredential, webhookUri)
         {
         }
 
@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStringValue(WebhookUri.AbsoluteUri);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

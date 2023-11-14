@@ -80,14 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TableName);
-#else
-                using (JsonDocument document = JsonDocument.Parse(TableName))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, TableName);
             }
             if (Optional.IsDefined(SchemaTypePropertiesSchema))
             {
@@ -129,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> tableName = default;
+            Optional<DataFactoryElement<string>> tableName = default;
             Optional<DataFactoryElement<string>> schema0 = default;
             Optional<DataFactoryElement<string>> table = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -228,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tableName = BinaryData.FromString(property0.Value.GetRawText());
+                            tableName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("schema"u8))

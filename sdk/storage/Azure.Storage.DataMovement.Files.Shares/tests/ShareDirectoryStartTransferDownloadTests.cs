@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         protected override TransferValidator.ListFilesAsync GetSourceLister(ShareClient container, string prefix)
-            => TransferValidator.GetShareFilesLister(container, prefix);
+            => TransferValidator.GetShareFileLister(container.GetDirectoryClient(prefix));
 
         protected override StorageResourceContainer GetStorageResourceContainer(ShareClient container, string directoryPath)
         {

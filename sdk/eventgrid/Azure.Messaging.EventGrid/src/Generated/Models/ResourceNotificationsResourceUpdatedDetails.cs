@@ -16,6 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
         internal ResourceNotificationsResourceUpdatedDetails()
         {
+            ResourceTags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, object>();
         }
 
@@ -24,26 +25,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
         /// <param name="location"> the location of the resource for which the event is being emitted. </param>
-        /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
+        /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
         /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
-        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string resourceType, string location, string tags, IReadOnlyDictionary<string, object> properties)
+        internal ResourceNotificationsResourceUpdatedDetails(string id, string name, string resourceType, string location, IReadOnlyDictionary<string, string> resourceTags, IReadOnlyDictionary<string, object> properties)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
             Location = location;
-            Tags = tags;
+            ResourceTags = resourceTags;
             Properties = properties;
         }
-
-        /// <summary> id of the resource for which the event is being emitted. </summary>
-        public string Id { get; }
-        /// <summary> name of the resource for which the event is being emitted. </summary>
-        public string Name { get; }
-        /// <summary> the location of the resource for which the event is being emitted. </summary>
-        public string Location { get; }
-        /// <summary> the tags on the resource for which the event is being emitted. </summary>
-        public string Tags { get; }
         /// <summary> properties in the payload of the resource for which the event is being emitted. </summary>
         public IReadOnlyDictionary<string, object> Properties { get; }
     }
