@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> This defines the sku conversion status object for asynchronous sku conversions. </summary>
     public partial class StorageAccountSkuConversionStatus
     {
-        /// <summary> Initializes a new instance of StorageAccountSkuConversionStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountSkuConversionStatus"/>. </summary>
         public StorageAccountSkuConversionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountSkuConversionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountSkuConversionStatus"/>. </summary>
         /// <param name="skuConversionStatus"> This property indicates the current sku conversion status. </param>
         /// <param name="targetSkuName"> This property represents the target sku name to which the account sku is being converted asynchronously. </param>
         /// <param name="startOn"> This property represents the sku conversion start time. </param>
         /// <param name="endOn"> This property represents the sku conversion end time. </param>
-        internal StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus, StorageSkuName? targetSkuName, DateTimeOffset? startOn, DateTimeOffset? endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountSkuConversionStatus(StorageAccountSkuConversionState? skuConversionStatus, StorageSkuName? targetSkuName, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SkuConversionStatus = skuConversionStatus;
             TargetSkuName = targetSkuName;
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property indicates the current sku conversion status. </summary>

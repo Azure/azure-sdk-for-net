@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of StreamingJobOutputDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputDataSource"/>. </summary>
         protected StreamingJobOutputDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
-        internal StreamingJobOutputDataSource(string outputDataSourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OutputDataSourceType = outputDataSourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </summary>

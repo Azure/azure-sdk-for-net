@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class CognitiveServicesVisionProcessor : IUtf8JsonSerializable
+    public partial class CognitiveServicesVisionProcessor : IUtf8JsonSerializable, IJsonModel<CognitiveServicesVisionProcessor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesVisionProcessor>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CognitiveServicesVisionProcessor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CognitiveServicesVisionProcessor>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CognitiveServicesVisionProcessor>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
@@ -41,11 +51,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CognitiveServicesVisionProcessor DeserializeCognitiveServicesVisionProcessor(JsonElement element)
+        CognitiveServicesVisionProcessor IJsonModel<CognitiveServicesVisionProcessor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesVisionProcessor)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCognitiveServicesVisionProcessor(document.RootElement, options);
+        }
+
+        internal static CognitiveServicesVisionProcessor DeserializeCognitiveServicesVisionProcessor(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +96,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -107,8 +148,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     inputs = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CognitiveServicesVisionProcessor(type, name, inputs, endpoint, image.Value, samplingOptions.Value, operation);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CognitiveServicesVisionProcessor(type, name, inputs, serializedAdditionalRawData, endpoint, image.Value, samplingOptions.Value, operation);
         }
+
+        BinaryData IPersistableModel<CognitiveServicesVisionProcessor>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesVisionProcessor)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CognitiveServicesVisionProcessor IPersistableModel<CognitiveServicesVisionProcessor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CognitiveServicesVisionProcessor)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCognitiveServicesVisionProcessor(document.RootElement, options);
+        }
+
+        string IPersistableModel<CognitiveServicesVisionProcessor>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

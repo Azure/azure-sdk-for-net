@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StorageMover;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> List of Job Definitions. </summary>
     internal partial class JobDefinitionList
     {
-        /// <summary> Initializes a new instance of JobDefinitionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionList"/>. </summary>
         internal JobDefinitionList()
         {
             Value = new ChangeTrackingList<JobDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of JobDefinitionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Request URL that can be used to query next page of containers. Returned when total number of requested containers exceed maximum page size. </param>
-        internal JobDefinitionList(IReadOnlyList<JobDefinitionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobDefinitionList(IReadOnlyList<JobDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

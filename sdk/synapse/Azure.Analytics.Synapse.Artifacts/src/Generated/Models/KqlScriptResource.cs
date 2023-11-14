@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The KqlScriptResource. </summary>
     public partial class KqlScriptResource
     {
-        /// <summary> Initializes a new instance of KqlScriptResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KqlScriptResource"/>. </summary>
         public KqlScriptResource()
         {
         }
 
-        /// <summary> Initializes a new instance of KqlScriptResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="KqlScriptResource"/>. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="type"></param>
         /// <param name="properties"> Properties of sql script. </param>
-        internal KqlScriptResource(string id, string name, string type, KqlScript properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KqlScriptResource(string id, string name, string type, KqlScript properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Type = type;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the id. </summary>

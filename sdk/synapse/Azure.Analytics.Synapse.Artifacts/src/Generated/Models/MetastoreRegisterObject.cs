@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The MetastoreRegisterObject. </summary>
     public partial class MetastoreRegisterObject
     {
-        /// <summary> Initializes a new instance of MetastoreRegisterObject. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetastoreRegisterObject"/>. </summary>
         /// <param name="inputFolder"> The input folder containing CDM files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputFolder"/> is null. </exception>
         public MetastoreRegisterObject(string inputFolder)
@@ -21,6 +25,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Argument.AssertNotNull(inputFolder, nameof(inputFolder));
 
             InputFolder = inputFolder;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetastoreRegisterObject"/>. </summary>
+        /// <param name="inputFolder"> The input folder containing CDM files. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetastoreRegisterObject(string inputFolder, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InputFolder = inputFolder;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetastoreRegisterObject"/> for deserialization. </summary>
+        internal MetastoreRegisterObject()
+        {
         }
 
         /// <summary> The input folder containing CDM files. </summary>

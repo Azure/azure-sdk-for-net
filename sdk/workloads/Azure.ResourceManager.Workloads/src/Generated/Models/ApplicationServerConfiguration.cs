@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Gets or sets the application server configuration. </summary>
     public partial class ApplicationServerConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationServerConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationServerConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet id. </param>
         /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
         /// <param name="instanceCount"> The number of app server instances. </param>
@@ -26,6 +30,24 @@ namespace Azure.ResourceManager.Workloads.Models
             SubnetId = subnetId;
             VirtualMachineConfiguration = virtualMachineConfiguration;
             InstanceCount = instanceCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationServerConfiguration"/>. </summary>
+        /// <param name="subnetId"> The subnet id. </param>
+        /// <param name="virtualMachineConfiguration"> Gets or sets the virtual machine configuration. </param>
+        /// <param name="instanceCount"> The number of app server instances. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationServerConfiguration(ResourceIdentifier subnetId, SapVirtualMachineConfiguration virtualMachineConfiguration, long instanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SubnetId = subnetId;
+            VirtualMachineConfiguration = virtualMachineConfiguration;
+            InstanceCount = instanceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationServerConfiguration"/> for deserialization. </summary>
+        internal ApplicationServerConfiguration()
+        {
         }
 
         /// <summary> The subnet id. </summary>

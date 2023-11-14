@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Site seal. </summary>
     public partial class SiteSeal
     {
-        /// <summary> Initializes a new instance of SiteSeal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteSeal"/>. </summary>
         /// <param name="html"> HTML snippet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="html"/> is null. </exception>
         internal SiteSeal(string html)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.AppService.Models
             Argument.AssertNotNull(html, nameof(html));
 
             Html = html;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteSeal"/>. </summary>
+        /// <param name="html"> HTML snippet. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteSeal(string html, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Html = html;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteSeal"/> for deserialization. </summary>
+        internal SiteSeal()
+        {
         }
 
         /// <summary> HTML snippet. </summary>

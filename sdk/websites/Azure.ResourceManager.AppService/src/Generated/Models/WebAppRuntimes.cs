@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Web App stack runtimes. </summary>
     public partial class WebAppRuntimes
     {
-        /// <summary> Initializes a new instance of WebAppRuntimes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppRuntimes"/>. </summary>
         internal WebAppRuntimes()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppRuntimes. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppRuntimes"/>. </summary>
         /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
         /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
         /// <param name="linuxContainerSettings"> Linux-specific settings associated with the Java container minor version. </param>
         /// <param name="windowsContainerSettings"> Windows-specific settings associated with the Java container minor version. </param>
-        internal WebAppRuntimes(WebAppRuntimeSettings linuxRuntimeSettings, WebAppRuntimeSettings windowsRuntimeSettings, LinuxJavaContainerSettings linuxContainerSettings, WindowsJavaContainerSettings windowsContainerSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppRuntimes(WebAppRuntimeSettings linuxRuntimeSettings, WebAppRuntimeSettings windowsRuntimeSettings, LinuxJavaContainerSettings linuxContainerSettings, WindowsJavaContainerSettings windowsContainerSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinuxRuntimeSettings = linuxRuntimeSettings;
             WindowsRuntimeSettings = windowsRuntimeSettings;
             LinuxContainerSettings = linuxContainerSettings;
             WindowsContainerSettings = windowsContainerSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Linux-specific settings associated with the minor version. </summary>

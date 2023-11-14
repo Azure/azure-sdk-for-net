@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    public partial class TableRetentionPolicy : IXmlSerializable
+    public partial class TableRetentionPolicy : IXmlSerializable, IPersistableModel<TableRetentionPolicy>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -28,7 +32,7 @@ namespace Azure.Data.Tables
             writer.WriteEndElement();
         }
 
-        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element)
+        internal static TableRetentionPolicy DeserializeTableRetentionPolicy(XElement element, ModelReaderWriterOptions options = null)
         {
             bool enabled = default;
             int? days = default;
@@ -40,7 +44,43 @@ namespace Azure.Data.Tables
             {
                 days = (int?)daysElement;
             }
-            return new TableRetentionPolicy(enabled, days);
+            return new TableRetentionPolicy(enabled, days, default);
         }
+
+        BinaryData IPersistableModel<TableRetentionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<TableRetentionPolicy>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        TableRetentionPolicy IPersistableModel<TableRetentionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TableRetentionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeTableRetentionPolicy(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<TableRetentionPolicy>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

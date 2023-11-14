@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamingJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamingJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "MockableStreamAnalyticsSubscriptionResource.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

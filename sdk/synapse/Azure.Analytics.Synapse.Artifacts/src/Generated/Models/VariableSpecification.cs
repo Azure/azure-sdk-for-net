@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Definition of a single variable for a Pipeline. </summary>
     public partial class VariableSpecification
     {
-        /// <summary> Initializes a new instance of VariableSpecification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VariableSpecification"/>. </summary>
         /// <param name="type"> Variable type. </param>
         public VariableSpecification(VariableType type)
         {
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of VariableSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="VariableSpecification"/>. </summary>
         /// <param name="type"> Variable type. </param>
         /// <param name="defaultValue"> Default value of variable. </param>
-        internal VariableSpecification(VariableType type, object defaultValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VariableSpecification(VariableType type, object defaultValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             DefaultValue = defaultValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VariableSpecification"/> for deserialization. </summary>
+        internal VariableSpecification()
+        {
         }
 
         /// <summary> Variable type. </summary>

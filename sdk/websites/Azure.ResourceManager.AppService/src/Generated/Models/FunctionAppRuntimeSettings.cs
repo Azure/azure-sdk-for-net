@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App runtime settings. </summary>
     public partial class FunctionAppRuntimeSettings
     {
-        /// <summary> Initializes a new instance of FunctionAppRuntimeSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimeSettings"/>. </summary>
         internal FunctionAppRuntimeSettings()
         {
             AppSettingsDictionary = new ChangeTrackingDictionary<string, string>();
             SupportedFunctionsExtensionVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppRuntimeSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimeSettings"/>. </summary>
         /// <param name="runtimeVersion"> Function App stack minor version (runtime only). </param>
         /// <param name="isRemoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>
@@ -36,7 +39,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if the minor version the default; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal FunctionAppRuntimeSettings(string runtimeVersion, bool? isRemoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, IReadOnlyDictionary<string, string> appSettingsDictionary, SiteConfigPropertiesDictionary siteConfigPropertiesDictionary, IReadOnlyList<string> supportedFunctionsExtensionVersions, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, bool? isDefault)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppRuntimeSettings(string runtimeVersion, bool? isRemoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, IReadOnlyDictionary<string, string> appSettingsDictionary, SiteConfigPropertiesDictionary siteConfigPropertiesDictionary, IReadOnlyList<string> supportedFunctionsExtensionVersions, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, bool? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuntimeVersion = runtimeVersion;
             IsRemoteDebuggingSupported = isRemoteDebuggingSupported;
@@ -52,6 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
             IsAutoUpdate = isAutoUpdate;
             IsEarlyAccess = isEarlyAccess;
             IsDefault = isDefault;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Function App stack minor version (runtime only). </summary>

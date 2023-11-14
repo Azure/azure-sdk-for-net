@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metric limits set on an app. </summary>
     public partial class SiteLimits
     {
-        /// <summary> Initializes a new instance of SiteLimits. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteLimits"/>. </summary>
         public SiteLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteLimits. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteLimits"/>. </summary>
         /// <param name="maxPercentageCpu"> Maximum allowed CPU usage percentage. </param>
         /// <param name="maxMemoryInMb"> Maximum allowed memory usage in MB. </param>
         /// <param name="maxDiskSizeInMb"> Maximum allowed disk size usage in MB. </param>
-        internal SiteLimits(double? maxPercentageCpu, long? maxMemoryInMb, long? maxDiskSizeInMb)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteLimits(double? maxPercentageCpu, long? maxMemoryInMb, long? maxDiskSizeInMb, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxPercentageCpu = maxPercentageCpu;
             MaxMemoryInMb = maxMemoryInMb;
             MaxDiskSizeInMb = maxDiskSizeInMb;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Maximum allowed CPU usage percentage. </summary>

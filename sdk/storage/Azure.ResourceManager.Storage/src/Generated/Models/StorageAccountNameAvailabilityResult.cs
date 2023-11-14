@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The CheckNameAvailability operation response. </summary>
     public partial class StorageAccountNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of StorageAccountNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityResult"/>. </summary>
         internal StorageAccountNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a storage account name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the Reason value in more detail. </param>
-        internal StorageAccountNameAvailabilityResult(bool? isNameAvailable, StorageAccountNameUnavailableReason? reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountNameAvailabilityResult(bool? isNameAvailable, StorageAccountNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </summary>

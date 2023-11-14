@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an input column for the Azure Machine Learning Studio endpoint. </summary>
     public partial class MachineLearningStudioInputColumn
     {
-        /// <summary> Initializes a new instance of MachineLearningStudioInputColumn. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStudioInputColumn"/>. </summary>
         public MachineLearningStudioInputColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningStudioInputColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStudioInputColumn"/>. </summary>
         /// <param name="name"> The name of the input column. </param>
         /// <param name="dataType"> The (Azure Machine Learning supported) data type of the input column. A list of valid  Azure Machine Learning data types are described at https://msdn.microsoft.com/en-us/library/azure/dn905923.aspx . </param>
         /// <param name="mapTo"> The zero based index of the function parameter this input maps to. </param>
-        internal MachineLearningStudioInputColumn(string name, string dataType, int? mapTo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningStudioInputColumn(string name, string dataType, int? mapTo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DataType = dataType;
             MapTo = mapTo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the input column. </summary>

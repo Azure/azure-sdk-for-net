@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SQL pool reference type. </summary>
     public partial class SqlPoolReference
     {
-        /// <summary> Initializes a new instance of SqlPoolReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlPoolReference"/>. </summary>
         /// <param name="type"> SQL pool reference type. </param>
         /// <param name="referenceName"> Reference SQL pool name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             Type = type;
             ReferenceName = referenceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlPoolReference"/>. </summary>
+        /// <param name="type"> SQL pool reference type. </param>
+        /// <param name="referenceName"> Reference SQL pool name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlPoolReference(SqlPoolReferenceType type, string referenceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Type = type;
+            ReferenceName = referenceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlPoolReference"/> for deserialization. </summary>
+        internal SqlPoolReference()
+        {
         }
 
         /// <summary> SQL pool reference type. </summary>

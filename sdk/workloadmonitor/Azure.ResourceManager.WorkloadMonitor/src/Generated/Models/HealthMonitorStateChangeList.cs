@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.WorkloadMonitor;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
     /// <summary> Information about the health state changes of the monitor within the provided time window. </summary>
     internal partial class HealthMonitorStateChangeList
     {
-        /// <summary> Initializes a new instance of HealthMonitorStateChangeList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthMonitorStateChangeList"/>. </summary>
         internal HealthMonitorStateChangeList()
         {
             Value = new ChangeTrackingList<HealthMonitorStateChangeData>();
         }
 
-        /// <summary> Initializes a new instance of HealthMonitorStateChangeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthMonitorStateChangeList"/>. </summary>
         /// <param name="value"> Array of health state changes within the specified time window. </param>
         /// <param name="nextLink"> Link to next page if the list is too long. </param>
-        internal HealthMonitorStateChangeList(IReadOnlyList<HealthMonitorStateChangeData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthMonitorStateChangeList(IReadOnlyList<HealthMonitorStateChangeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of health state changes within the specified time window. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The EditTablesRequest. </summary>
     public partial class EditTablesRequest
     {
-        /// <summary> Initializes a new instance of EditTablesRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EditTablesRequest"/>. </summary>
         public EditTablesRequest()
         {
             LinkTables = new ChangeTrackingList<LinkTableRequest>();
         }
 
-        /// <summary> Initializes a new instance of EditTablesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="EditTablesRequest"/>. </summary>
         /// <param name="linkTables"> Edit link tables request. </param>
-        internal EditTablesRequest(IList<LinkTableRequest> linkTables)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EditTablesRequest(IList<LinkTableRequest> linkTables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkTables = linkTables;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Edit link tables request. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of active debug sessions. </summary>
     internal partial class QueryDataFlowDebugSessionsResponse
     {
-        /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryDataFlowDebugSessionsResponse"/>. </summary>
         internal QueryDataFlowDebugSessionsResponse()
         {
             Value = new ChangeTrackingList<DataFlowDebugSessionInfo>();
         }
 
-        /// <summary> Initializes a new instance of QueryDataFlowDebugSessionsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryDataFlowDebugSessionsResponse"/>. </summary>
         /// <param name="value"> Array with all active debug sessions. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal QueryDataFlowDebugSessionsResponse(IReadOnlyList<DataFlowDebugSessionInfo> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryDataFlowDebugSessionsResponse(IReadOnlyList<DataFlowDebugSessionInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array with all active debug sessions. </summary>

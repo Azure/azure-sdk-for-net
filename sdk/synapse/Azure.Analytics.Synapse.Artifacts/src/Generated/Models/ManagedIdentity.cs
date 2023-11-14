@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The workspace managed identity. </summary>
     public partial class ManagedIdentity
     {
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         public ManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of the workspace managed identity. </param>
         /// <param name="tenantId"> The tenant ID of the workspace managed identity. </param>
         /// <param name="type"> The type of managed identity for the workspace. </param>
-        internal ManagedIdentity(string principalId, Guid? tenantId, ResourceIdentityType? type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedIdentity(string principalId, Guid? tenantId, ResourceIdentityType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The principal ID of the workspace managed identity. </summary>

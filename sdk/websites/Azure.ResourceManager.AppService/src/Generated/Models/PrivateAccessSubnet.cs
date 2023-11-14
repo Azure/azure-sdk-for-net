@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a Virtual Network subnet that is useable for private site access. </summary>
     public partial class PrivateAccessSubnet
     {
-        /// <summary> Initializes a new instance of PrivateAccessSubnet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessSubnet"/>. </summary>
         public PrivateAccessSubnet()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateAccessSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessSubnet"/>. </summary>
         /// <param name="name"> The name of the subnet. </param>
         /// <param name="key"> The key (ID) of the subnet. </param>
-        internal PrivateAccessSubnet(string name, int? key)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateAccessSubnet(string name, int? key, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Key = key;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the subnet. </summary>

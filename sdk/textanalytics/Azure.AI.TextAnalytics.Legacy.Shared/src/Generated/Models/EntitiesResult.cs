@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The EntitiesResult. </summary>
     internal partial class EntitiesResult
     {
-        /// <summary> Initializes a new instance of EntitiesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
@@ -31,17 +34,24 @@ namespace Azure.AI.TextAnalytics.Legacy
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of EntitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntitiesResult"/>. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        internal EntitiesResult(IReadOnlyList<DocumentEntities> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntitiesResult(IReadOnlyList<DocumentEntities> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Documents = documents;
             Errors = errors;
             Statistics = statistics;
             ModelVersion = modelVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesResult"/> for deserialization. </summary>
+        internal EntitiesResult()
+        {
         }
 
         /// <summary> Response by document. </summary>

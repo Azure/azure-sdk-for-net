@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The list of the SKU descriptions. </summary>
     internal partial class KustoPoolSkuDescriptionListResult
     {
-        /// <summary> Initializes a new instance of KustoPoolSkuDescriptionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescriptionListResult"/>. </summary>
         internal KustoPoolSkuDescriptionListResult()
         {
             Value = new ChangeTrackingList<KustoPoolSkuDescription>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuDescriptionListResult"/>. </summary>
         /// <param name="value"> SKU descriptions. </param>
-        internal KustoPoolSkuDescriptionListResult(IReadOnlyList<KustoPoolSkuDescription> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPoolSkuDescriptionListResult(IReadOnlyList<KustoPoolSkuDescription> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SKU descriptions. </summary>

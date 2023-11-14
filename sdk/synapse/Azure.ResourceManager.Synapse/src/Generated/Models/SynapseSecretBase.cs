@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Synapse.Models
     /// </summary>
     public abstract partial class SynapseSecretBase
     {
-        /// <summary> Initializes a new instance of SynapseSecretBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSecretBase"/>. </summary>
         protected SynapseSecretBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSecretBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSecretBase"/>. </summary>
         /// <param name="secretBaseType"> Type of the secret. </param>
-        internal SynapseSecretBase(string secretBaseType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSecretBase(string secretBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecretBaseType = secretBaseType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the secret. </summary>

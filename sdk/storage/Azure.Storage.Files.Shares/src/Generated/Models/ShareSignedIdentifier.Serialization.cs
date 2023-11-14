@@ -5,13 +5,17 @@
 
 #nullable disable
 
+using System;
+using System.IO;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareSignedIdentifier : IXmlSerializable
+    public partial class ShareSignedIdentifier : IXmlSerializable, IPersistableModel<ShareSignedIdentifier>
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
@@ -26,7 +30,7 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareSignedIdentifier DeserializeShareSignedIdentifier(XElement element)
+        internal static ShareSignedIdentifier DeserializeShareSignedIdentifier(XElement element, ModelReaderWriterOptions options = null)
         {
             string id = default;
             ShareAccessPolicy accessPolicy = default;
@@ -38,7 +42,43 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 accessPolicy = ShareAccessPolicy.DeserializeShareAccessPolicy(accessPolicyElement);
             }
-            return new ShareSignedIdentifier(id, accessPolicy);
+            return new ShareSignedIdentifier(id, accessPolicy, default);
         }
+
+        BinaryData IPersistableModel<ShareSignedIdentifier>.Write(ModelReaderWriterOptions options)
+        {
+            bool implementsJson = this is IJsonModel<ShareSignedIdentifier>;
+            bool isValid = options.Format == "J" && implementsJson || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {GetType().Name} does not support '{options.Format}' format.");
+            }
+
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            ((IXmlSerializable)this).Write(writer, null);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
+
+        ShareSignedIdentifier IPersistableModel<ShareSignedIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ShareSignedIdentifier)} does not support '{options.Format}' format.");
+            }
+
+            return DeserializeShareSignedIdentifier(XElement.Load(data.ToStream()), options);
+        }
+
+        string IPersistableModel<ShareSignedIdentifier>.GetWireFormat(ModelReaderWriterOptions options) => "X";
     }
 }

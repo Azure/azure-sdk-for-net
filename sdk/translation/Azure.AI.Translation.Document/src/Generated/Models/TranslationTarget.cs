@@ -14,7 +14,10 @@ namespace Azure.AI.Translation.Document
     /// <summary> Destination for the finished translated documents. </summary>
     public partial class TranslationTarget
     {
-        /// <summary> Initializes a new instance of TranslationTarget. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
         /// <param name="languageCode"> Target Language. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetUri"/> or <paramref name="languageCode"/> is null. </exception>
@@ -26,6 +29,28 @@ namespace Azure.AI.Translation.Document
             TargetUri = targetUri;
             LanguageCode = languageCode;
             Glossaries = new ChangeTrackingList<TranslationGlossary>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/>. </summary>
+        /// <param name="targetUri"> Location of the folder / container with your documents. </param>
+        /// <param name="categoryId"> Category / custom system for translation request. </param>
+        /// <param name="languageCode"> Target Language. </param>
+        /// <param name="glossaries"> List of Glossary. </param>
+        /// <param name="storageSource"> Storage Source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, string storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetUri = targetUri;
+            CategoryId = categoryId;
+            LanguageCode = languageCode;
+            Glossaries = glossaries;
+            StorageSource = storageSource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationTarget"/> for deserialization. </summary>
+        internal TranslationTarget()
+        {
         }
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }

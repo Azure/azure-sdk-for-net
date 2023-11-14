@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class AnalyzeTextPiiEntitiesRecognitionInput : IUtf8JsonSerializable
+    internal partial class AnalyzeTextPiiEntitiesRecognitionInput : IUtf8JsonSerializable, IJsonModel<AnalyzeTextPiiEntitiesRecognitionInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextPiiEntitiesRecognitionInput>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AnalyzeTextPiiEntitiesRecognitionInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AnalyzeTextPiiEntitiesRecognitionInput>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AnalyzeTextPiiEntitiesRecognitionInput>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AnalysisInput))
             {
@@ -27,7 +38,106 @@ namespace Azure.AI.TextAnalytics.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AnalyzeTextPiiEntitiesRecognitionInput IJsonModel<AnalyzeTextPiiEntitiesRecognitionInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextPiiEntitiesRecognitionInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextPiiEntitiesRecognitionInput(document.RootElement, options);
+        }
+
+        internal static AnalyzeTextPiiEntitiesRecognitionInput DeserializeAnalyzeTextPiiEntitiesRecognitionInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<MultiLanguageAnalysisInput> analysisInput = default;
+            Optional<PiiTaskParameters> parameters = default;
+            AnalyzeTextTaskKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("analysisInput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    analysisInput = MultiLanguageAnalysisInput.DeserializeMultiLanguageAnalysisInput(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = PiiTaskParameters.DeserializePiiTaskParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new AnalyzeTextTaskKind(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzeTextPiiEntitiesRecognitionInput(kind, serializedAdditionalRawData, analysisInput.Value, parameters.Value);
+        }
+
+        BinaryData IPersistableModel<AnalyzeTextPiiEntitiesRecognitionInput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextPiiEntitiesRecognitionInput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnalyzeTextPiiEntitiesRecognitionInput IPersistableModel<AnalyzeTextPiiEntitiesRecognitionInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextPiiEntitiesRecognitionInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnalyzeTextPiiEntitiesRecognitionInput(document.RootElement, options);
+        }
+
+        string IPersistableModel<AnalyzeTextPiiEntitiesRecognitionInput>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

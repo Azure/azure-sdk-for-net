@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,31 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series instance that is returned by instances search call. Returned instance matched the search request and contains highlighted text to be displayed to the user if it is set to 'true'. </summary>
     internal partial class InstanceHit
     {
-        /// <summary> Initializes a new instance of InstanceHit. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstanceHit"/>. </summary>
         internal InstanceHit()
         {
             TimeSeriesId = new ChangeTrackingList<object>();
             HierarchyIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InstanceHit. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceHit"/>. </summary>
         /// <param name="timeSeriesId"> Time series ID of the time series instance that matched the search request. </param>
         /// <param name="name"> Name of the time series instance that matched the search request. May be null. </param>
         /// <param name="typeId"> Represents the type that time series instance which matched the search request belongs to. Never null. </param>
         /// <param name="hierarchyIds"> List of time series hierarchy IDs that time series instance which matched the search request belongs to. Cannot be used to lookup hierarchies. May be null. </param>
         /// <param name="highlights"> Highlighted text of time series instance to be displayed to the user. Highlighting inserts &lt;hit&gt; and &lt;/hit&gt; tags in the portions of text that matched the search string. Do not use any of the highlighted properties to do further API calls. </param>
-        internal InstanceHit(IReadOnlyList<object> timeSeriesId, string name, string typeId, IReadOnlyList<string> hierarchyIds, InstanceHitHighlights highlights)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstanceHit(IReadOnlyList<object> timeSeriesId, string name, string typeId, IReadOnlyList<string> hierarchyIds, InstanceHitHighlights highlights, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeSeriesId = timeSeriesId;
             Name = name;
             TypeId = typeId;
             HierarchyIds = hierarchyIds;
             Highlights = highlights;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Time series ID of the time series instance that matched the search request. </summary>

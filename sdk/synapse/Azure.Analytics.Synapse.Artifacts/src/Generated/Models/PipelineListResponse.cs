@@ -15,7 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of pipeline resources. </summary>
     internal partial class PipelineListResponse
     {
-        /// <summary> Initializes a new instance of PipelineListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineListResponse"/>. </summary>
         /// <param name="value"> List of pipelines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PipelineListResponse(IEnumerable<PipelineResource> value)
@@ -25,13 +28,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PipelineListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineListResponse"/>. </summary>
         /// <param name="value"> List of pipelines. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal PipelineListResponse(IReadOnlyList<PipelineResource> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineListResponse(IReadOnlyList<PipelineResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineListResponse"/> for deserialization. </summary>
+        internal PipelineListResponse()
+        {
         }
 
         /// <summary> List of pipelines. </summary>

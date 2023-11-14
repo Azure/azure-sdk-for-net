@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,14 +20,17 @@ namespace Azure.ResourceManager.Workloads
     /// </summary>
     public partial class SapApplicationServerInstanceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SapApplicationServerInstanceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SapApplicationServerInstanceData(AzureLocation location) : base(location)
         {
             VmDetails = new ChangeTrackingList<ApplicationServerVmDetails>();
         }
 
-        /// <summary> Initializes a new instance of SapApplicationServerInstanceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the Application Instance errors. </param>
-        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, string ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, SubResource loadBalancerDetails, IReadOnlyList<ApplicationServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, string ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, SubResource loadBalancerDetails, IReadOnlyList<ApplicationServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceNo = instanceNo;
             SubnetId = subnetId;
@@ -65,6 +70,12 @@ namespace Azure.ResourceManager.Workloads
             Health = health;
             ProvisioningState = provisioningState;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapApplicationServerInstanceData"/> for deserialization. </summary>
+        internal SapApplicationServerInstanceData()
+        {
         }
 
         /// <summary> Application server Instance Number. </summary>

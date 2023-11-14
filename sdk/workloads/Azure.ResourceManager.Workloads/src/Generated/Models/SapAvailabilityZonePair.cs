@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The SAP Availability Zone Pair. </summary>
     public partial class SapAvailabilityZonePair
     {
-        /// <summary> Initializes a new instance of SapAvailabilityZonePair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZonePair"/>. </summary>
         internal SapAvailabilityZonePair()
         {
         }
 
-        /// <summary> Initializes a new instance of SapAvailabilityZonePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapAvailabilityZonePair"/>. </summary>
         /// <param name="zoneA"> The zone A. </param>
         /// <param name="zoneB"> The zone B. </param>
-        internal SapAvailabilityZonePair(long? zoneA, long? zoneB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapAvailabilityZonePair(long? zoneA, long? zoneB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ZoneA = zoneA;
             ZoneB = zoneB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The zone A. </summary>

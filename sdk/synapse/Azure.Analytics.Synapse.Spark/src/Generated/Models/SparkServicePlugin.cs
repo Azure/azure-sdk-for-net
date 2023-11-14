@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     /// <summary> The SparkServicePlugin. </summary>
     public partial class SparkServicePlugin
     {
-        /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkServicePlugin"/>. </summary>
         internal SparkServicePlugin()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkServicePlugin. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkServicePlugin"/>. </summary>
         /// <param name="preparationStartedAt"></param>
         /// <param name="resourceAcquisitionStartedAt"></param>
         /// <param name="submissionStartedAt"></param>
         /// <param name="monitoringStartedAt"></param>
         /// <param name="cleanupStartedAt"></param>
         /// <param name="currentState"></param>
-        internal SparkServicePlugin(DateTimeOffset? preparationStartedAt, DateTimeOffset? resourceAcquisitionStartedAt, DateTimeOffset? submissionStartedAt, DateTimeOffset? monitoringStartedAt, DateTimeOffset? cleanupStartedAt, PluginCurrentState? currentState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkServicePlugin(DateTimeOffset? preparationStartedAt, DateTimeOffset? resourceAcquisitionStartedAt, DateTimeOffset? submissionStartedAt, DateTimeOffset? monitoringStartedAt, DateTimeOffset? cleanupStartedAt, PluginCurrentState? currentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreparationStartedAt = preparationStartedAt;
             ResourceAcquisitionStartedAt = resourceAcquisitionStartedAt;
@@ -32,6 +37,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             MonitoringStartedAt = monitoringStartedAt;
             CleanupStartedAt = cleanupStartedAt;
             CurrentState = currentState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the preparation started at. </summary>

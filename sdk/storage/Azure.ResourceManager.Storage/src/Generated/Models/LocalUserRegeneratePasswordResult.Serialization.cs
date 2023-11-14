@@ -5,20 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LocalUserRegeneratePasswordResult
+    public partial class LocalUserRegeneratePasswordResult : IUtf8JsonSerializable, IJsonModel<LocalUserRegeneratePasswordResult>
     {
-        internal static LocalUserRegeneratePasswordResult DeserializeLocalUserRegeneratePasswordResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocalUserRegeneratePasswordResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LocalUserRegeneratePasswordResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LocalUserRegeneratePasswordResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LocalUserRegeneratePasswordResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SshPassword))
+                {
+                    writer.WritePropertyName("sshPassword"u8);
+                    writer.WriteStringValue(SshPassword);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LocalUserRegeneratePasswordResult IJsonModel<LocalUserRegeneratePasswordResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LocalUserRegeneratePasswordResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLocalUserRegeneratePasswordResult(document.RootElement, options);
+        }
+
+        internal static LocalUserRegeneratePasswordResult DeserializeLocalUserRegeneratePasswordResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> sshPassword = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sshPassword"u8))
@@ -26,8 +82,38 @@ namespace Azure.ResourceManager.Storage.Models
                     sshPassword = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LocalUserRegeneratePasswordResult(sshPassword.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LocalUserRegeneratePasswordResult(sshPassword.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LocalUserRegeneratePasswordResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LocalUserRegeneratePasswordResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LocalUserRegeneratePasswordResult IPersistableModel<LocalUserRegeneratePasswordResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LocalUserRegeneratePasswordResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLocalUserRegeneratePasswordResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<LocalUserRegeneratePasswordResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

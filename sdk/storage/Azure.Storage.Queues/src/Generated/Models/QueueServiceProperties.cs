@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Storage.Queues.Models
     /// <summary> Storage Service Properties. </summary>
     public partial class QueueServiceProperties
     {
-        /// <summary> Initializes a new instance of QueueServiceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueueServiceProperties"/>. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for queues. </param>
         /// <param name="minuteMetrics"> a summary of request statistics grouped by API in minute aggregates for queues. </param>
         /// <param name="cors"> The set of CORS rules. </param>
-        internal QueueServiceProperties(QueueAnalyticsLogging logging, QueueMetrics hourMetrics, QueueMetrics minuteMetrics, IList<QueueCorsRule> cors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueServiceProperties(QueueAnalyticsLogging logging, QueueMetrics hourMetrics, QueueMetrics minuteMetrics, IList<QueueCorsRule> cors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Logging = logging;
             HourMetrics = hourMetrics;
             MinuteMetrics = minuteMetrics;
             Cors = cors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure Analytics Logging settings. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Address information for domain registration. </summary>
     public partial class RegistrationAddressInfo
     {
-        /// <summary> Initializes a new instance of RegistrationAddressInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegistrationAddressInfo"/>. </summary>
         /// <param name="address1"> First line of an Address. </param>
         /// <param name="city"> The city for the address. </param>
         /// <param name="country"> The country for the address. </param>
@@ -35,14 +39,15 @@ namespace Azure.ResourceManager.AppService.Models
             State = state;
         }
 
-        /// <summary> Initializes a new instance of RegistrationAddressInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegistrationAddressInfo"/>. </summary>
         /// <param name="address1"> First line of an Address. </param>
         /// <param name="address2"> The second line of the Address. Optional. </param>
         /// <param name="city"> The city for the address. </param>
         /// <param name="country"> The country for the address. </param>
         /// <param name="postalCode"> The postal code for the address. </param>
         /// <param name="state"> The state or province for the address. </param>
-        internal RegistrationAddressInfo(string address1, string address2, string city, string country, string postalCode, string state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegistrationAddressInfo(string address1, string address2, string city, string country, string postalCode, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address1 = address1;
             Address2 = address2;
@@ -50,6 +55,12 @@ namespace Azure.ResourceManager.AppService.Models
             Country = country;
             PostalCode = postalCode;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegistrationAddressInfo"/> for deserialization. </summary>
+        internal RegistrationAddressInfo()
+        {
         }
 
         /// <summary> First line of an Address. </summary>

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Support.Models
     /// <summary> Contact information associated with the support ticket. </summary>
     public partial class SupportContactProfile
     {
-        /// <summary> Initializes a new instance of SupportContactProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportContactProfile"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="preferredContactMethod"> Preferred contact method. </param>
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.Support.Models
             PreferredSupportLanguage = preferredSupportLanguage;
         }
 
-        /// <summary> Initializes a new instance of SupportContactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportContactProfile"/>. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="preferredContactMethod"> Preferred contact method. </param>
@@ -52,7 +55,8 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="preferredTimeZone"> Time zone of the user. This is the name of the time zone from [Microsoft Time Zone Index Values](https://support.microsoft.com/help/973627/microsoft-time-zone-index-values). </param>
         /// <param name="country"> Country of the user. This is the ISO 3166-1 alpha-3 code. </param>
         /// <param name="preferredSupportLanguage"> Preferred language of support from Azure. Support languages vary based on the severity you choose for your support ticket. Learn more at [Azure Severity and responsiveness](https://azure.microsoft.com/support/plans/response). Use the standard language-country code. Valid values are 'en-us' for English, 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr' for French, 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for Russian, 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for Chinese and 'de-de' for German. </param>
-        internal SupportContactProfile(string firstName, string lastName, PreferredContactMethod preferredContactMethod, string primaryEmailAddress, IList<string> additionalEmailAddresses, string phoneNumber, string preferredTimeZone, string country, string preferredSupportLanguage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportContactProfile(string firstName, string lastName, PreferredContactMethod preferredContactMethod, string primaryEmailAddress, IList<string> additionalEmailAddresses, string phoneNumber, string preferredTimeZone, string country, string preferredSupportLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -63,6 +67,12 @@ namespace Azure.ResourceManager.Support.Models
             PreferredTimeZone = preferredTimeZone;
             Country = country;
             PreferredSupportLanguage = preferredSupportLanguage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SupportContactProfile"/> for deserialization. </summary>
+        internal SupportContactProfile()
+        {
         }
 
         /// <summary> First name. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class ProcessModuleInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
         public ProcessModuleInfoData()
         {
         }
 
-        /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessModuleInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +43,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isDebug"> Is debug?. </param>
         /// <param name="language"> Module language (locale). </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BaseAddress = baseAddress;
             FileName = fileName;
@@ -52,6 +58,7 @@ namespace Azure.ResourceManager.AppService
             IsDebug = isDebug;
             Language = language;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>

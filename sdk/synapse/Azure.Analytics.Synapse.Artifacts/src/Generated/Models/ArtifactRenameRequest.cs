@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Request body structure for rename artifact. </summary>
     public partial class ArtifactRenameRequest
     {
-        /// <summary> Initializes a new instance of ArtifactRenameRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactRenameRequest"/>. </summary>
         public ArtifactRenameRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactRenameRequest"/>. </summary>
+        /// <param name="newName"> New name of the artifact. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactRenameRequest(string newName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NewName = newName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> New name of the artifact. </summary>

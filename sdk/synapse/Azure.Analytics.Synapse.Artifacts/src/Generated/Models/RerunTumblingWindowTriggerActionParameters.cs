@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Rerun tumbling window trigger Parameters. </summary>
     internal partial class RerunTumblingWindowTriggerActionParameters
     {
-        /// <summary> Initializes a new instance of RerunTumblingWindowTriggerActionParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTriggerActionParameters"/>. </summary>
         /// <param name="startTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="endTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
@@ -21,6 +25,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             StartTime = startTime;
             EndTime = endTime;
             MaxConcurrency = maxConcurrency;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTriggerActionParameters"/>. </summary>
+        /// <param name="startTime"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="endTime"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
+        /// <param name="maxConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RerunTumblingWindowTriggerActionParameters(DateTimeOffset startTime, DateTimeOffset endTime, int maxConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            MaxConcurrency = maxConcurrency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RerunTumblingWindowTriggerActionParameters"/> for deserialization. </summary>
+        internal RerunTumblingWindowTriggerActionParameters()
+        {
         }
 
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Http logs to file system configuration. </summary>
     public partial class FileSystemHttpLogsConfig
     {
-        /// <summary> Initializes a new instance of FileSystemHttpLogsConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileSystemHttpLogsConfig"/>. </summary>
         public FileSystemHttpLogsConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of FileSystemHttpLogsConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileSystemHttpLogsConfig"/>. </summary>
         /// <param name="retentionInMb">
         /// Maximum size in megabytes that http log files can use.
         /// When reached old log files will be removed to make space for new ones.
@@ -27,11 +33,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// 0 or lower means no retention.
         /// </param>
         /// <param name="isEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileSystemHttpLogsConfig(int? retentionInMb, int? retentionInDays, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RetentionInMb = retentionInMb;
             RetentionInDays = retentionInDays;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

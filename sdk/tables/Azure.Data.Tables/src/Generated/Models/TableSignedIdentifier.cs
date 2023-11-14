@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
@@ -13,7 +14,10 @@ namespace Azure.Data.Tables.Models
     /// <summary> A signed identifier. </summary>
     public partial class TableSignedIdentifier
     {
-        /// <summary> Initializes a new instance of TableSignedIdentifier. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableSignedIdentifier"/>. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.Data.Tables.Models
 
             Id = id;
             AccessPolicy = accessPolicy;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableSignedIdentifier"/>. </summary>
+        /// <param name="id"> A unique id. </param>
+        /// <param name="accessPolicy"> The access policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableSignedIdentifier(string id, TableAccessPolicy accessPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            AccessPolicy = accessPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableSignedIdentifier"/> for deserialization. </summary>
+        internal TableSignedIdentifier()
+        {
         }
 
         /// <summary> A unique id. </summary>

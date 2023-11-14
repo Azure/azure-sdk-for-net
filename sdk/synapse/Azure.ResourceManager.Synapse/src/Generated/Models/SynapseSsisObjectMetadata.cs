@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
@@ -14,22 +17,27 @@ namespace Azure.ResourceManager.Synapse.Models
     /// </summary>
     public abstract partial class SynapseSsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SynapseSsisObjectMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisObjectMetadata"/>. </summary>
         protected SynapseSsisObjectMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisObjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisObjectMetadata"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
-        internal SynapseSsisObjectMetadata(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSsisObjectMetadata(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetadataType = metadataType;
             Id = id;
             Name = name;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of metadata. </summary>

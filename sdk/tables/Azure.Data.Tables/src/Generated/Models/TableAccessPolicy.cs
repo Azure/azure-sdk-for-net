@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Data.Tables.Models
 {
     /// <summary> An Access policy. </summary>
     public partial class TableAccessPolicy
     {
-        /// <summary> Initializes a new instance of TableAccessPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableAccessPolicy"/>. </summary>
         /// <param name="startsOn"> The start datetime from which the policy is active. </param>
         /// <param name="expiresOn"> The datetime that the policy expires. </param>
         /// <param name="permission"> The permissions for the acl policy. </param>
@@ -21,6 +25,24 @@ namespace Azure.Data.Tables.Models
             StartsOn = startsOn;
             ExpiresOn = expiresOn;
             Permission = permission;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableAccessPolicy"/>. </summary>
+        /// <param name="startsOn"> The start datetime from which the policy is active. </param>
+        /// <param name="expiresOn"> The datetime that the policy expires. </param>
+        /// <param name="permission"> The permissions for the acl policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permission, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartsOn = startsOn;
+            ExpiresOn = expiresOn;
+            Permission = permission;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TableAccessPolicy"/> for deserialization. </summary>
+        internal TableAccessPolicy()
+        {
         }
         /// <summary> The permissions for the acl policy. </summary>
         public string Permission { get; set; }

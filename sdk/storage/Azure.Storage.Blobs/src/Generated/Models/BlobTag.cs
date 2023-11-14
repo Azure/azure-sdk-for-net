@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The BlobTag. </summary>
     internal partial class BlobTag
     {
-        /// <summary> Initializes a new instance of BlobTag. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Storage.Blobs.Models
 
             Key = key;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobTag(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Key = key;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobTag"/> for deserialization. </summary>
+        internal BlobTag()
+        {
         }
 
         /// <summary> Gets or sets the key. </summary>

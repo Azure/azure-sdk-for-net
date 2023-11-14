@@ -15,7 +15,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A list of linked service resources. </summary>
     internal partial class LinkedServiceListResponse
     {
-        /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceListResponse"/>. </summary>
         /// <param name="value"> List of linked services. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LinkedServiceListResponse(IEnumerable<LinkedServiceResource> value)
@@ -25,13 +28,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceListResponse"/>. </summary>
         /// <param name="value"> List of linked services. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal LinkedServiceListResponse(IReadOnlyList<LinkedServiceResource> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedServiceListResponse(IReadOnlyList<LinkedServiceResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceListResponse"/> for deserialization. </summary>
+        internal LinkedServiceListResponse()
+        {
         }
 
         /// <summary> List of linked services. </summary>

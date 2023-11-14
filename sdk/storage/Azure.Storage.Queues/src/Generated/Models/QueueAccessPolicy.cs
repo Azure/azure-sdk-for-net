@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> An Access policy. </summary>
     public partial class QueueAccessPolicy
     {
-        /// <summary> Initializes a new instance of QueueAccessPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueueAccessPolicy"/>. </summary>
         public QueueAccessPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of QueueAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueueAccessPolicy"/>. </summary>
         /// <param name="startsOn"> the date-time the policy is active. </param>
         /// <param name="expiresOn"> the date-time the policy expires. </param>
         /// <param name="permissions"> the permissions for the acl policy. </param>
-        internal QueueAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permissions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, string permissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartsOn = startsOn;
             ExpiresOn = expiresOn;
             Permissions = permissions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

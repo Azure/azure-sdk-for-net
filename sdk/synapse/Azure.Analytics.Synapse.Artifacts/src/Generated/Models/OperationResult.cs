@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Operation status for the operation. </summary>
     public partial class OperationResult
     {
-        /// <summary> Initializes a new instance of OperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
         internal OperationResult()
         {
             Details = new ChangeTrackingList<CloudError>();
         }
 
-        /// <summary> Initializes a new instance of OperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Property name/path in request associated with error. </param>
         /// <param name="details"> Array with additional error details. </param>
-        internal OperationResult(string status, string code, string message, string target, IReadOnlyList<CloudError> details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationResult(string status, string code, string message, string target, IReadOnlyList<CloudError> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Code = code;
             Message = message;
             Target = target;
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Operation status. </summary>

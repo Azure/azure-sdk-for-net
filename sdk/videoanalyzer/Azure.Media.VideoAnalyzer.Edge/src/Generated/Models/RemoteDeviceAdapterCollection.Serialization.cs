@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class RemoteDeviceAdapterCollection : IUtf8JsonSerializable
+    public partial class RemoteDeviceAdapterCollection : IUtf8JsonSerializable, IJsonModel<RemoteDeviceAdapterCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoteDeviceAdapterCollection>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RemoteDeviceAdapterCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RemoteDeviceAdapterCollection>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RemoteDeviceAdapterCollection>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
@@ -31,17 +41,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("@continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RemoteDeviceAdapterCollection DeserializeRemoteDeviceAdapterCollection(JsonElement element)
+        RemoteDeviceAdapterCollection IJsonModel<RemoteDeviceAdapterCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RemoteDeviceAdapterCollection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRemoteDeviceAdapterCollection(document.RootElement, options);
+        }
+
+        internal static RemoteDeviceAdapterCollection DeserializeRemoteDeviceAdapterCollection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<RemoteDeviceAdapter>> value = default;
             Optional<string> continuationToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -63,8 +104,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continuationToken = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RemoteDeviceAdapterCollection(Optional.ToList(value), continuationToken.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RemoteDeviceAdapterCollection(Optional.ToList(value), continuationToken.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RemoteDeviceAdapterCollection>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RemoteDeviceAdapterCollection)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RemoteDeviceAdapterCollection IPersistableModel<RemoteDeviceAdapterCollection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RemoteDeviceAdapterCollection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRemoteDeviceAdapterCollection(document.RootElement, options);
+        }
+
+        string IPersistableModel<RemoteDeviceAdapterCollection>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

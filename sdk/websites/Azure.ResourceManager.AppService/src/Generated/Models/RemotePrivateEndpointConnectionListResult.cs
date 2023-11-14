@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The RemotePrivateEndpointConnectionListResult. </summary>
     internal partial class RemotePrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RemotePrivateEndpointConnectionListResult(IEnumerable<RemotePrivateEndpointConnectionARMResourceData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal RemotePrivateEndpointConnectionListResult(IReadOnlyList<RemotePrivateEndpointConnectionARMResourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemotePrivateEndpointConnectionListResult(IReadOnlyList<RemotePrivateEndpointConnectionARMResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnectionListResult"/> for deserialization. </summary>
+        internal RemotePrivateEndpointConnectionListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

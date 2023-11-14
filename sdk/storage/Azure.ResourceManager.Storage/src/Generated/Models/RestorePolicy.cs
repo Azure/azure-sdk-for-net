@@ -6,30 +6,41 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The blob service properties for blob restore policy. </summary>
     public partial class RestorePolicy
     {
-        /// <summary> Initializes a new instance of RestorePolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePolicy"/>. </summary>
         /// <param name="isEnabled"> Blob restore is enabled if set to true. </param>
         public RestorePolicy(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of RestorePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePolicy"/>. </summary>
         /// <param name="isEnabled"> Blob restore is enabled if set to true. </param>
         /// <param name="days"> how long this blob can be restored. It should be great than zero and less than DeleteRetentionPolicy.days. </param>
         /// <param name="lastEnabledOn"> Deprecated in favor of minRestoreTime property. </param>
         /// <param name="minRestoreOn"> Returns the minimum date and time that the restore can be started. </param>
-        internal RestorePolicy(bool isEnabled, int? days, DateTimeOffset? lastEnabledOn, DateTimeOffset? minRestoreOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePolicy(bool isEnabled, int? days, DateTimeOffset? lastEnabledOn, DateTimeOffset? minRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Days = days;
             LastEnabledOn = lastEnabledOn;
             MinRestoreOn = minRestoreOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestorePolicy"/> for deserialization. </summary>
+        internal RestorePolicy()
+        {
         }
 
         /// <summary> Blob restore is enabled if set to true. </summary>

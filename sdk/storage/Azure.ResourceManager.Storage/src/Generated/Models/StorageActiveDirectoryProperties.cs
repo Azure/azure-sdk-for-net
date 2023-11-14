@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Settings properties for Active Directory (AD). </summary>
     public partial class StorageActiveDirectoryProperties
     {
-        /// <summary> Initializes a new instance of StorageActiveDirectoryProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageActiveDirectoryProperties"/>. </summary>
         /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. </param>
         /// <param name="domainGuid"> Specifies the domain GUID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
             DomainGuid = domainGuid;
         }
 
-        /// <summary> Initializes a new instance of StorageActiveDirectoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageActiveDirectoryProperties"/>. </summary>
         /// <param name="domainName"> Specifies the primary domain that the AD DNS server is authoritative for. </param>
         /// <param name="netBiosDomainName"> Specifies the NetBIOS domain name. </param>
         /// <param name="forestName"> Specifies the Active Directory forest to get. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="azureStorageSid"> Specifies the security identifier (SID) for Azure Storage. </param>
         /// <param name="samAccountName"> Specifies the Active Directory SAMAccountName for Azure Storage. </param>
         /// <param name="accountType"> Specifies the Active Directory account type for Azure Storage. </param>
-        internal StorageActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, Guid domainGuid, string domainSid, string azureStorageSid, string samAccountName, ActiveDirectoryAccountType? accountType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, Guid domainGuid, string domainSid, string azureStorageSid, string samAccountName, ActiveDirectoryAccountType? accountType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DomainName = domainName;
             NetBiosDomainName = netBiosDomainName;
@@ -44,6 +49,12 @@ namespace Azure.ResourceManager.Storage.Models
             AzureStorageSid = azureStorageSid;
             SamAccountName = samAccountName;
             AccountType = accountType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageActiveDirectoryProperties"/> for deserialization. </summary>
+        internal StorageActiveDirectoryProperties()
+        {
         }
 
         /// <summary> Specifies the primary domain that the AD DNS server is authoritative for. </summary>

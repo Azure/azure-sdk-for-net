@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -13,7 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The JobManifest. </summary>
     internal partial class JobManifest
     {
-        /// <summary> Initializes a new instance of JobManifest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobManifest"/>. </summary>
         /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         public JobManifest(JobManifestTasks tasks)
@@ -21,6 +25,20 @@ namespace Azure.AI.TextAnalytics.Legacy
             Argument.AssertNotNull(tasks, nameof(tasks));
 
             Tasks = tasks;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobManifest"/>. </summary>
+        /// <param name="tasks"> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobManifest(JobManifestTasks tasks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tasks = tasks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobManifest"/> for deserialization. </summary>
+        internal JobManifest()
+        {
         }
 
         /// <summary> The set of tasks to execute on the input documents. Cannot specify the same task more than once. </summary>

@@ -5,17 +5,86 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
-    internal partial class TextAnalyticsError
+    internal partial class TextAnalyticsError : IUtf8JsonSerializable, IJsonModel<TextAnalyticsError>
     {
-        internal static TextAnalyticsError DeserializeTextAnalyticsError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TextAnalyticsError>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TextAnalyticsError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TextAnalyticsError>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TextAnalyticsError>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code.ToString());
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
+            }
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror"u8);
+                writer.WriteObjectValue(Innererror);
+            }
+            if (Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TextAnalyticsError IJsonModel<TextAnalyticsError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextAnalyticsError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTextAnalyticsError(document.RootElement, options);
+        }
+
+        internal static TextAnalyticsError DeserializeTextAnalyticsError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +94,8 @@ namespace Azure.AI.TextAnalytics.Legacy
             Optional<string> target = default;
             Optional<InnerError> innererror = default;
             Optional<IReadOnlyList<TextAnalyticsError>> details = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,8 +136,38 @@ namespace Azure.AI.TextAnalytics.Legacy
                     details = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TextAnalyticsError(code, message, target.Value, innererror.Value, Optional.ToList(details));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TextAnalyticsError(code, message, target.Value, innererror.Value, Optional.ToList(details), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TextAnalyticsError>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextAnalyticsError)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TextAnalyticsError IPersistableModel<TextAnalyticsError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TextAnalyticsError)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTextAnalyticsError(document.RootElement, options);
+        }
+
+        string IPersistableModel<TextAnalyticsError>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Azure SKU definition. </summary>
     public partial class SynapseDataSourceSku
     {
-        /// <summary> Initializes a new instance of SynapseDataSourceSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceSku"/>. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="size"> SKU size. </param>
         public SynapseDataSourceSku(SynapseSkuName name, KustoPoolSkuSize size)
@@ -19,15 +25,22 @@ namespace Azure.ResourceManager.Synapse.Models
             Size = size;
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceSku"/>. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="capacity"> The number of instances of the cluster. </param>
         /// <param name="size"> SKU size. </param>
-        internal SynapseDataSourceSku(SynapseSkuName name, int? capacity, KustoPoolSkuSize size)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseDataSourceSku(SynapseSkuName name, int? capacity, KustoPoolSkuSize size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capacity = capacity;
             Size = size;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataSourceSku"/> for deserialization. </summary>
+        internal SynapseDataSourceSku()
+        {
         }
 
         /// <summary> SKU name. </summary>

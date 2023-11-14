@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The result returned from a database check name availability request. </summary>
     public partial class KustoPoolChildResourceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolChildResourceNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolChildResourceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.Synapse.Models
 
             Name = name;
             ResourceType = resourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolChildResourceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPoolChildResourceNameAvailabilityContent(string name, KustoPoolDatabaseType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolChildResourceNameAvailabilityContent"/> for deserialization. </summary>
+        internal KustoPoolChildResourceNameAvailabilityContent()
+        {
         }
 
         /// <summary> Resource name. </summary>

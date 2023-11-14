@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class SynapseWorkspaceKeyDetails
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceKeyDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceKeyDetails"/>. </summary>
         public SynapseWorkspaceKeyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceKeyDetails"/>. </summary>
         /// <param name="name"> Workspace Key sub-resource name. </param>
         /// <param name="keyVaultUri"> Workspace Key sub-resource key vault url. </param>
-        internal SynapseWorkspaceKeyDetails(string name, Uri keyVaultUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseWorkspaceKeyDetails(string name, Uri keyVaultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             KeyVaultUri = keyVaultUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Workspace Key sub-resource name. </summary>

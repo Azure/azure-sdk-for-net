@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class MachineLearningStudioInputColumn : IUtf8JsonSerializable
+    public partial class MachineLearningStudioInputColumn : IUtf8JsonSerializable, IJsonModel<MachineLearningStudioInputColumn>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningStudioInputColumn>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MachineLearningStudioInputColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningStudioInputColumn>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningStudioInputColumn>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("mapTo"u8);
                 writer.WriteNumberValue(MapTo.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningStudioInputColumn DeserializeMachineLearningStudioInputColumn(JsonElement element)
+        MachineLearningStudioInputColumn IJsonModel<MachineLearningStudioInputColumn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningStudioInputColumn)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningStudioInputColumn(document.RootElement, options);
+        }
+
+        internal static MachineLearningStudioInputColumn DeserializeMachineLearningStudioInputColumn(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> name = default;
             Optional<string> dataType = default;
             Optional<int> mapTo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     mapTo = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningStudioInputColumn(name.Value, dataType.Value, Optional.ToNullable(mapTo));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningStudioInputColumn(name.Value, dataType.Value, Optional.ToNullable(mapTo), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningStudioInputColumn>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningStudioInputColumn)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningStudioInputColumn IPersistableModel<MachineLearningStudioInputColumn>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningStudioInputColumn)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningStudioInputColumn(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningStudioInputColumn>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

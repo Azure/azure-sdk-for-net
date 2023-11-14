@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Storage service properties. </summary>
     public partial class ShareServiceProperties
     {
-        /// <summary> Initializes a new instance of ShareServiceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareServiceProperties"/>. </summary>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for files. </param>
         /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for files. </param>
         /// <param name="cors"> The set of CORS rules. </param>
         /// <param name="protocol"> Protocol settings. </param>
-        internal ShareServiceProperties(ShareMetrics hourMetrics, ShareMetrics minuteMetrics, IList<ShareCorsRule> cors, ShareProtocolSettings protocol)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareServiceProperties(ShareMetrics hourMetrics, ShareMetrics minuteMetrics, IList<ShareCorsRule> cors, ShareProtocolSettings protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HourMetrics = hourMetrics;
             MinuteMetrics = minuteMetrics;
             Cors = cors;
             Protocol = protocol;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A summary of request statistics grouped by API in hourly aggregates for files. </summary>

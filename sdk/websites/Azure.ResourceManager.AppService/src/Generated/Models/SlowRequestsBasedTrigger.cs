@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Trigger based on request execution time. </summary>
     public partial class SlowRequestsBasedTrigger
     {
-        /// <summary> Initializes a new instance of SlowRequestsBasedTrigger. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SlowRequestsBasedTrigger"/>. </summary>
         public SlowRequestsBasedTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of SlowRequestsBasedTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlowRequestsBasedTrigger"/>. </summary>
         /// <param name="timeTaken"> Time taken. </param>
         /// <param name="path"> Request Path. </param>
         /// <param name="count"> Request Count. </param>
         /// <param name="timeInterval"> Time interval. </param>
-        internal SlowRequestsBasedTrigger(string timeTaken, string path, int? count, string timeInterval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SlowRequestsBasedTrigger(string timeTaken, string path, int? count, string timeInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeTaken = timeTaken;
             Path = path;
             Count = count;
             TimeInterval = timeInterval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Time taken. </summary>

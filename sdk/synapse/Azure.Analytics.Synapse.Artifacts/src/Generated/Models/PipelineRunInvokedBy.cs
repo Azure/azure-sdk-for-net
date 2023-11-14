@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Provides entity name and id that started the pipeline run. </summary>
     public partial class PipelineRunInvokedBy
     {
-        /// <summary> Initializes a new instance of PipelineRunInvokedBy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineRunInvokedBy"/>. </summary>
         internal PipelineRunInvokedBy()
         {
         }
 
-        /// <summary> Initializes a new instance of PipelineRunInvokedBy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineRunInvokedBy"/>. </summary>
         /// <param name="name"> Name of the entity that started the pipeline run. </param>
         /// <param name="id"> The ID of the entity that started the run. </param>
         /// <param name="invokedByType"> The type of the entity that started the run. </param>
-        internal PipelineRunInvokedBy(string name, string id, string invokedByType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineRunInvokedBy(string name, string id, string invokedByType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
             InvokedByType = invokedByType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the entity that started the pipeline run. </summary>

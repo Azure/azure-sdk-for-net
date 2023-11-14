@@ -14,7 +14,10 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> An enumeration of handles. </summary>
     internal partial class ListHandlesResponse
     {
-        /// <summary> Initializes a new instance of ListHandlesResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListHandlesResponse"/>. </summary>
         /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextMarker"/> is null. </exception>
         internal ListHandlesResponse(string nextMarker)
@@ -25,13 +28,20 @@ namespace Azure.Storage.Files.Shares.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of ListHandlesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListHandlesResponse"/>. </summary>
         /// <param name="handleList"></param>
         /// <param name="nextMarker"></param>
-        internal ListHandlesResponse(IReadOnlyList<HandleItem> handleList, string nextMarker)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListHandlesResponse(IReadOnlyList<HandleItem> handleList, string nextMarker, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HandleList = handleList;
             NextMarker = nextMarker;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListHandlesResponse"/> for deserialization. </summary>
+        internal ListHandlesResponse()
+        {
         }
 
         /// <summary> Gets the handle list. </summary>

@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DocumentKeyPhrases. </summary>
     internal partial class DocumentKeyPhrases
     {
-        /// <summary> Initializes a new instance of DocumentKeyPhrases. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyPhrases"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
@@ -31,17 +34,24 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentKeyPhrases. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyPhrases"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="keyPhrases"> A list of representative words or phrases. The number of key phrases returned is proportional to the number of words in the input document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentKeyPhrases(string id, IReadOnlyList<string> keyPhrases, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentKeyPhrases(string id, IReadOnlyList<string> keyPhrases, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             KeyPhrases = keyPhrases;
             Warnings = warnings;
             Statistics = statistics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyPhrases"/> for deserialization. </summary>
+        internal DocumentKeyPhrases()
+        {
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>

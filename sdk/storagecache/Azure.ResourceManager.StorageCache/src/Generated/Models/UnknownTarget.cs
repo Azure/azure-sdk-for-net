@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Properties pertaining to the UnknownTarget. </summary>
     internal partial class UnknownTarget
     {
-        /// <summary> Initializes a new instance of UnknownTarget. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTarget"/>. </summary>
         public UnknownTarget()
         {
             Attributes = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of UnknownTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTarget"/>. </summary>
         /// <param name="attributes"> Dictionary of string-&gt;string pairs containing information about the Storage Target. </param>
-        internal UnknownTarget(IDictionary<string, string> attributes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTarget(IDictionary<string, string> attributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Attributes = attributes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dictionary of string-&gt;string pairs containing information about the Storage Target. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Storage Target space allocation properties. </summary>
     public partial class StorageTargetSpaceAllocation
     {
-        /// <summary> Initializes a new instance of StorageTargetSpaceAllocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageTargetSpaceAllocation"/>. </summary>
         public StorageTargetSpaceAllocation()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageTargetSpaceAllocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTargetSpaceAllocation"/>. </summary>
         /// <param name="name"> Name of the storage target. </param>
         /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
-        internal StorageTargetSpaceAllocation(string name, int? allocationPercentage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTargetSpaceAllocation(string name, int? allocationPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AllocationPercentage = allocationPercentage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the storage target. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Grant sql control to managed identity. </summary>
     public partial class SynapseGrantSqlControlToManagedIdentity
     {
-        /// <summary> Initializes a new instance of SynapseGrantSqlControlToManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseGrantSqlControlToManagedIdentity"/>. </summary>
         public SynapseGrantSqlControlToManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseGrantSqlControlToManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseGrantSqlControlToManagedIdentity"/>. </summary>
         /// <param name="desiredState"> Desired state. </param>
         /// <param name="actualState"> Actual state. </param>
-        internal SynapseGrantSqlControlToManagedIdentity(SynapseDesiredState? desiredState, SynapseGrantSqlControlToManagedIdentityState? actualState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseGrantSqlControlToManagedIdentity(SynapseDesiredState? desiredState, SynapseGrantSqlControlToManagedIdentityState? actualState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DesiredState = desiredState;
             ActualState = actualState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Desired state. </summary>

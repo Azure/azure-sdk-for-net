@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.TrafficManager;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.TrafficManager.Models
     /// <summary> The list Traffic Manager profiles operation response. </summary>
     internal partial class TrafficManagerProfileListResult
     {
-        /// <summary> Initializes a new instance of TrafficManagerProfileListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileListResult"/>. </summary>
         internal TrafficManagerProfileListResult()
         {
             Value = new ChangeTrackingList<TrafficManagerProfileData>();
         }
 
-        /// <summary> Initializes a new instance of TrafficManagerProfileListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficManagerProfileListResult"/>. </summary>
         /// <param name="value"> Gets the list of Traffic manager profiles. </param>
-        internal TrafficManagerProfileListResult(IReadOnlyList<TrafficManagerProfileData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficManagerProfileListResult(IReadOnlyList<TrafficManagerProfileData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the list of Traffic manager profiles. </summary>

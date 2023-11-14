@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Hydration and archive settings and status. </summary>
     public partial class AmlFileSystemPropertiesHsm
     {
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPropertiesHsm"/>. </summary>
         public AmlFileSystemPropertiesHsm()
         {
             ArchiveStatus = new ChangeTrackingList<AmlFileSystemArchive>();
         }
 
-        /// <summary> Initializes a new instance of AmlFileSystemPropertiesHsm. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemPropertiesHsm"/>. </summary>
         /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
         /// <param name="archiveStatus"> Archive status. </param>
-        internal AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings, IReadOnlyList<AmlFileSystemArchive> archiveStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings, IReadOnlyList<AmlFileSystemArchive> archiveStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Settings = settings;
             ArchiveStatus = archiveStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies HSM settings of the AML file system. </summary>

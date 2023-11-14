@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class HostNameBindingData : ResourceData
     {
-        /// <summary> Initializes a new instance of HostNameBindingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostNameBindingData"/>. </summary>
         public HostNameBindingData()
         {
         }
 
-        /// <summary> Initializes a new instance of HostNameBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostNameBindingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +42,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostNameBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string siteName, string domainId, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, AppServiceHostNameType? hostNameType, HostNameBindingSslState? sslState, string thumbprintString, string virtualIP, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SiteName = siteName;
             DomainId = domainId;
@@ -49,6 +55,7 @@ namespace Azure.ResourceManager.AppService
             ThumbprintString = thumbprintString;
             VirtualIP = virtualIP;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> App Service app name. </summary>

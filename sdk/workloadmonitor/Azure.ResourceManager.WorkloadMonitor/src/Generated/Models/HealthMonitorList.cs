@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.WorkloadMonitor;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
     /// <summary> Information about the current health statuses of the monitors. </summary>
     internal partial class HealthMonitorList
     {
-        /// <summary> Initializes a new instance of HealthMonitorList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthMonitorList"/>. </summary>
         internal HealthMonitorList()
         {
             Value = new ChangeTrackingList<HealthMonitorData>();
         }
 
-        /// <summary> Initializes a new instance of HealthMonitorList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthMonitorList"/>. </summary>
         /// <param name="value"> Array of health monitors of the virtual machine. </param>
         /// <param name="nextLink"> Link to next page if the list is too long. </param>
-        internal HealthMonitorList(IReadOnlyList<HealthMonitorData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthMonitorList(IReadOnlyList<HealthMonitorData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of health monitors of the virtual machine. </summary>

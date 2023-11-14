@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </summary>
     internal partial class SapDiskSku
     {
-        /// <summary> Initializes a new instance of SapDiskSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapDiskSku"/>. </summary>
         public SapDiskSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SapDiskSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiskSku"/>. </summary>
         /// <param name="name"> Defines the disk sku name. </param>
-        internal SapDiskSku(DiskDetailsDiskSkuName? name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapDiskSku(DiskDetailsDiskSkuName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the disk sku name. </summary>

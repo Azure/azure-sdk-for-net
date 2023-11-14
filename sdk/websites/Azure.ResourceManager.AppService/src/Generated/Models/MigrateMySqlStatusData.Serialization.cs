@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -12,24 +16,107 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class MigrateMySqlStatusData : IUtf8JsonSerializable
+    public partial class MigrateMySqlStatusData : IUtf8JsonSerializable, IJsonModel<MigrateMySqlStatusData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlStatusData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MigrateMySqlStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MigrateMySqlStatusData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MigrateMySqlStatusData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MigrationOperationStatus))
+                {
+                    writer.WritePropertyName("migrationOperationStatus"u8);
+                    writer.WriteStringValue(MigrationOperationStatus.Value.ToSerialString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OperationId))
+                {
+                    writer.WritePropertyName("operationId"u8);
+                    writer.WriteStringValue(OperationId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsLocalMySqlEnabled))
+                {
+                    writer.WritePropertyName("localMySqlEnabled"u8);
+                    writer.WriteBooleanValue(IsLocalMySqlEnabled.Value);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateMySqlStatusData DeserializeMigrateMySqlStatusData(JsonElement element)
+        MigrateMySqlStatusData IJsonModel<MigrateMySqlStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlStatusData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateMySqlStatusData(document.RootElement, options);
+        }
+
+        internal static MigrateMySqlStatusData DeserializeMigrateMySqlStatusData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +129,8 @@ namespace Azure.ResourceManager.AppService
             Optional<AppServiceOperationStatus> migrationOperationStatus = default;
             Optional<string> operationId = default;
             Optional<bool> localMySqlEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -108,8 +197,38 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateMySqlStatusData(id, name, type, systemData.Value, Optional.ToNullable(migrationOperationStatus), operationId.Value, Optional.ToNullable(localMySqlEnabled), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateMySqlStatusData(id, name, type, systemData.Value, Optional.ToNullable(migrationOperationStatus), operationId.Value, Optional.ToNullable(localMySqlEnabled), kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MigrateMySqlStatusData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlStatusData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrateMySqlStatusData IPersistableModel<MigrateMySqlStatusData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlStatusData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrateMySqlStatusData(document.RootElement, options);
+        }
+
+        string IPersistableModel<MigrateMySqlStatusData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

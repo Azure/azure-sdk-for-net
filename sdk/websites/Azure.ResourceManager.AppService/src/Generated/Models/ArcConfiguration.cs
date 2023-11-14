@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ArcConfiguration. </summary>
     public partial class ArcConfiguration
     {
-        /// <summary> Initializes a new instance of ArcConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArcConfiguration"/>. </summary>
         public ArcConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcConfiguration"/>. </summary>
         /// <param name="artifactsStorageType"></param>
         /// <param name="artifactStorageClassName"></param>
         /// <param name="artifactStorageMountPath"></param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="artifactStorageAccessMode"></param>
         /// <param name="frontEndServiceConfiguration"></param>
         /// <param name="kubeConfig"></param>
-        internal ArcConfiguration(ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArcConfiguration(ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactsStorageType = artifactsStorageType;
             ArtifactStorageClassName = artifactStorageClassName;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             ArtifactStorageAccessMode = artifactStorageAccessMode;
             FrontEndServiceConfiguration = frontEndServiceConfiguration;
             KubeConfig = kubeConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the artifacts storage type. </summary>

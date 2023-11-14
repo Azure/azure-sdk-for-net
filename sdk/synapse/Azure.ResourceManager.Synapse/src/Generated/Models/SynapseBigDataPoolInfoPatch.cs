@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Properties patch for a Big Data pool. </summary>
     public partial class SynapseBigDataPoolInfoPatch
     {
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoPatch"/>. </summary>
         public SynapseBigDataPoolInfoPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoPatch"/>. </summary>
+        /// <param name="tags"> Updated tags for the Big Data pool. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseBigDataPoolInfoPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Updated tags for the Big Data pool. </summary>

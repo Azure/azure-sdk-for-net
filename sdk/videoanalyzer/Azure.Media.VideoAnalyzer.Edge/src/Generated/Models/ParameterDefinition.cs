@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Defines the parameter value of an specific pipeline topology parameter. See pipeline topology parameters for more information. </summary>
     public partial class ParameterDefinition
     {
-        /// <summary> Initializes a new instance of ParameterDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinition"/>. </summary>
         /// <param name="name"> Name of the parameter declared in the pipeline topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ParameterDefinition(string name)
@@ -21,6 +25,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinition"/>. </summary>
+        /// <param name="name"> Name of the parameter declared in the pipeline topology. </param>
+        /// <param name="value"> Parameter value to be applied on this specific live pipeline. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ParameterDefinition(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ParameterDefinition"/> for deserialization. </summary>
+        internal ParameterDefinition()
+        {
         }
 
         /// <summary> Name of the parameter declared in the pipeline topology. </summary>

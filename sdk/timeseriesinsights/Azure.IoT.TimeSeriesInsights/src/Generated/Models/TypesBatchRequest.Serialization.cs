@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class TypesBatchRequest : IUtf8JsonSerializable
+    internal partial class TypesBatchRequest : IUtf8JsonSerializable, IJsonModel<TypesBatchRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TypesBatchRequest>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TypesBatchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TypesBatchRequest>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TypesBatchRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Get))
             {
@@ -35,7 +46,115 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        TypesBatchRequest IJsonModel<TypesBatchRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TypesBatchRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTypesBatchRequest(document.RootElement, options);
+        }
+
+        internal static TypesBatchRequest DeserializeTypesBatchRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<TypesRequestBatchGetOrDelete> @get = default;
+            Optional<IList<TimeSeriesType>> put = default;
+            Optional<TypesRequestBatchGetOrDelete> delete = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("get"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @get = TypesRequestBatchGetOrDelete.DeserializeTypesRequestBatchGetOrDelete(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("put"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<TimeSeriesType> array = new List<TimeSeriesType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TimeSeriesType.DeserializeTimeSeriesType(item));
+                    }
+                    put = array;
+                    continue;
+                }
+                if (property.NameEquals("delete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delete = TypesRequestBatchGetOrDelete.DeserializeTypesRequestBatchGetOrDelete(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TypesBatchRequest(@get.Value, Optional.ToList(put), delete.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<TypesBatchRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TypesBatchRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TypesBatchRequest IPersistableModel<TypesBatchRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TypesBatchRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTypesBatchRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<TypesBatchRequest>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

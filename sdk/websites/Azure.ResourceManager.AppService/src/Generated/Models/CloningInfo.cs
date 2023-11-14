@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Information needed for cloning operation. </summary>
     public partial class CloningInfo
     {
-        /// <summary> Initializes a new instance of CloningInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloningInfo"/>. </summary>
         /// <param name="sourceWebAppId">
         /// ARM resource ID of the source app. App resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
             AppSettingsOverrides = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CloningInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloningInfo"/>. </summary>
         /// <param name="correlationId">
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
@@ -54,7 +57,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </param>
         /// <param name="trafficManagerProfileName"> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </param>
-        internal CloningInfo(Guid? correlationId, bool? canOverwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, AzureLocation? sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloningInfo(Guid? correlationId, bool? canOverwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, AzureLocation? sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CorrelationId = correlationId;
             CanOverwrite = canOverwrite;
@@ -67,6 +71,12 @@ namespace Azure.ResourceManager.AppService.Models
             ConfigureLoadBalancing = configureLoadBalancing;
             TrafficManagerProfileId = trafficManagerProfileId;
             TrafficManagerProfileName = trafficManagerProfileName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloningInfo"/> for deserialization. </summary>
+        internal CloningInfo()
+        {
         }
 
         /// <summary>

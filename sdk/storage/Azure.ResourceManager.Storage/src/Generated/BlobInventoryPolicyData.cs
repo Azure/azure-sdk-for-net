@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -18,22 +19,27 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class BlobInventoryPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyData"/>. </summary>
         public BlobInventoryPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobInventoryPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="lastModifiedOn"> Returns the last modified date and time of the blob inventory policy. </param>
         /// <param name="policySchema"> The storage account blob inventory policy object. It is composed of policy rules. </param>
-        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, BlobInventoryPolicySchema policySchema) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobInventoryPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, BlobInventoryPolicySchema policySchema, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             PolicySchema = policySchema;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Returns the last modified date and time of the blob inventory policy. </summary>

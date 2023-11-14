@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The CustomEntityRecognitionLROResult. </summary>
     internal partial class CustomEntityRecognitionLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of CustomEntityRecognitionLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
@@ -27,16 +28,22 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.CustomEntityRecognitionLROResults;
         }
 
-        /// <summary> Initializes a new instance of CustomEntityRecognitionLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>
         /// <param name="taskName"></param>
         /// <param name="results"></param>
-        internal CustomEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AnalyzeTextLROResultsKind kind, string taskName, CustomEntitiesResult results) : base(lastUpdateDateTime, status, kind, taskName)
+        internal CustomEntityRecognitionLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData, AnalyzeTextLROResultsKind kind, string taskName, CustomEntitiesResult results) : base(lastUpdateDateTime, status, serializedAdditionalRawData, kind, taskName)
         {
             Results = results;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionLROResult"/> for deserialization. </summary>
+        internal CustomEntityRecognitionLROResult()
+        {
         }
 
         /// <summary> Gets or sets the results. </summary>

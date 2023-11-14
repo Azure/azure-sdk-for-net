@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties associated with a Stream Analytics cluster. </summary>
     internal partial class ClusterInfo
     {
-        /// <summary> Initializes a new instance of ClusterInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterInfo"/>. </summary>
         public ClusterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterInfo"/>. </summary>
         /// <param name="id"> The resource id of cluster. </param>
-        internal ClusterInfo(ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterInfo(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id of cluster. </summary>

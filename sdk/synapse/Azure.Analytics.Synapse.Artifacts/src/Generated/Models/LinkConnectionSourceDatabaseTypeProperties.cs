@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkConnectionSourceDatabaseTypeProperties. </summary>
     public partial class LinkConnectionSourceDatabaseTypeProperties
     {
-        /// <summary> Initializes a new instance of LinkConnectionSourceDatabaseTypeProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionSourceDatabaseTypeProperties"/>. </summary>
         public LinkConnectionSourceDatabaseTypeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionSourceDatabaseTypeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionSourceDatabaseTypeProperties"/>. </summary>
         /// <param name="resourceId"> Link connection source database server's resource id. </param>
         /// <param name="principalId"> Link connection source database server's principal id. </param>
-        internal LinkConnectionSourceDatabaseTypeProperties(string resourceId, string principalId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkConnectionSourceDatabaseTypeProperties(string resourceId, string principalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             PrincipalId = principalId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Link connection source database server's resource id. </summary>

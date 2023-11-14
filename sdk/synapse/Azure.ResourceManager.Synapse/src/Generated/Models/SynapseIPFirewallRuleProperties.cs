@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -12,9 +14,25 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> IP firewall rule properties. </summary>
     public partial class SynapseIPFirewallRuleProperties
     {
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleProperties"/>. </summary>
         public SynapseIPFirewallRuleProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIPFirewallRuleProperties"/>. </summary>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIPFirewallRuleProperties(IPAddress endIPAddress, SynapseProvisioningState? provisioningState, IPAddress startIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EndIPAddress = endIPAddress;
+            ProvisioningState = provisioningState;
+            StartIPAddress = startIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </summary>

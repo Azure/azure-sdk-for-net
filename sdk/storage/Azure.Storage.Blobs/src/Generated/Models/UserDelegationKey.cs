@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> A user delegation key. </summary>
     public partial class UserDelegationKey
     {
-        /// <summary> Initializes a new instance of UserDelegationKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
         /// <param name="signedStartsOn"> The date-time the key is active. </param>
@@ -37,6 +41,27 @@ namespace Azure.Storage.Blobs.Models
             SignedService = signedService;
             SignedVersion = signedVersion;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
+        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedStartsOn"> The date-time the key is active. </param>
+        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
+        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
+        /// <param name="signedVersion"> The service version that created the key. </param>
+        /// <param name="value"> The key as a base64 string. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SignedObjectId = signedObjectId;
+            SignedTenantId = signedTenantId;
+            SignedStartsOn = signedStartsOn;
+            SignedExpiresOn = signedExpiresOn;
+            SignedService = signedService;
+            SignedVersion = signedVersion;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Top-level domains. </summary>
     internal partial class TopLevelDomainListResult
     {
-        /// <summary> Initializes a new instance of TopLevelDomainListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TopLevelDomainListResult(IEnumerable<TopLevelDomainData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TopLevelDomainListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal TopLevelDomainListResult(IReadOnlyList<TopLevelDomainData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopLevelDomainListResult(IReadOnlyList<TopLevelDomainData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainListResult"/> for deserialization. </summary>
+        internal TopLevelDomainListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you create the scale set. </summary>
     public partial class SapImageReference
     {
-        /// <summary> Initializes a new instance of SapImageReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapImageReference"/>. </summary>
         public SapImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of SapImageReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapImageReference"/>. </summary>
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
         /// <param name="sku"> The image SKU. </param>
         /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy time even if a new version becomes available. </param>
-        internal SapImageReference(string publisher, string offer, string sku, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapImageReference(string publisher, string offer, string sku, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Publisher = publisher;
             Offer = offer;
             Sku = sku;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The image publisher. </summary>

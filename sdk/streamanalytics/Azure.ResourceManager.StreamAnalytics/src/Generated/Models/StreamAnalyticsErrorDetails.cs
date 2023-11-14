@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Common error details representation. </summary>
     public partial class StreamAnalyticsErrorDetails
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsErrorDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsErrorDetails"/>. </summary>
         internal StreamAnalyticsErrorDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsErrorDetails"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="message"> Error message. </param>
-        internal StreamAnalyticsErrorDetails(string code, string target, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsErrorDetails(string code, string target, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Target = target;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code. </summary>

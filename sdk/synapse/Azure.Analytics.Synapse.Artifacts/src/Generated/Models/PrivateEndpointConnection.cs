@@ -5,24 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A private endpoint connection. </summary>
     public partial class PrivateEndpointConnection : ProxyResource
     {
-        /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnection"/>. </summary>
         public PrivateEndpointConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnection"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal PrivateEndpointConnection(string id, string name, string type, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, type)
+        internal PrivateEndpointConnection(string id, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, PrivateEndpoint privateEndpoint, PrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, type, serializedAdditionalRawData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;

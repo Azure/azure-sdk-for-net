@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The locations and zones info for SKU. </summary>
     public partial class KustoPoolSkuLocationInfoItem
     {
-        /// <summary> Initializes a new instance of KustoPoolSkuLocationInfoItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuLocationInfoItem"/>. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         internal KustoPoolSkuLocationInfoItem(AzureLocation location)
         {
@@ -21,13 +25,20 @@ namespace Azure.ResourceManager.Synapse.Models
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuLocationInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuLocationInfoItem"/>. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         /// <param name="zones"> The available zone of the SKU. </param>
-        internal KustoPoolSkuLocationInfoItem(AzureLocation location, IReadOnlyList<string> zones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPoolSkuLocationInfoItem(AzureLocation location, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolSkuLocationInfoItem"/> for deserialization. </summary>
+        internal KustoPoolSkuLocationInfoItem()
+        {
         }
 
         /// <summary> The available location of the SKU. </summary>

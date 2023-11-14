@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -13,7 +14,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The EntityLinkingTaskResult. </summary>
     internal partial class EntityLinkingTaskResult : AnalyzeTextTaskResult
     {
-        /// <summary> Initializes a new instance of EntityLinkingTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskResult"/>. </summary>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
         internal EntityLinkingTaskResult(EntityLinkingResult results)
@@ -24,13 +25,19 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextTaskResultsKind.EntityLinkingResults;
         }
 
-        /// <summary> Initializes a new instance of EntityLinkingTaskResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskResult"/>. </summary>
         /// <param name="kind"> Enumeration of supported Text Analysis task results. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"></param>
-        internal EntityLinkingTaskResult(AnalyzeTextTaskResultsKind kind, EntityLinkingResult results) : base(kind)
+        internal EntityLinkingTaskResult(AnalyzeTextTaskResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, EntityLinkingResult results) : base(kind, serializedAdditionalRawData)
         {
             Results = results;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityLinkingTaskResult"/> for deserialization. </summary>
+        internal EntityLinkingTaskResult()
+        {
         }
 
         /// <summary> Gets the results. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Pipeline reference type. </summary>
     public partial class PipelineReference
     {
-        /// <summary> Initializes a new instance of PipelineReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineReference"/>. </summary>
         /// <param name="type"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -25,15 +29,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Initializes a new instance of PipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineReference"/>. </summary>
         /// <param name="type"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <param name="name"> Reference name. </param>
-        internal PipelineReference(PipelineReferenceType type, string referenceName, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineReference(PipelineReferenceType type, string referenceName, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             ReferenceName = referenceName;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineReference"/> for deserialization. </summary>
+        internal PipelineReference()
+        {
         }
 
         /// <summary> Pipeline reference type. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -13,7 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The JobMetadata. </summary>
     internal partial class JobMetadata
     {
-        /// <summary> Initializes a new instance of JobMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobMetadata"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
@@ -26,19 +30,26 @@ namespace Azure.AI.TextAnalytics.Legacy
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of JobMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobMetadata"/>. </summary>
         /// <param name="createdDateTime"></param>
         /// <param name="expirationDateTime"></param>
         /// <param name="jobId"></param>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
-        internal JobMetadata(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobMetadata(DateTimeOffset createdDateTime, DateTimeOffset? expirationDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedDateTime = createdDateTime;
             ExpirationDateTime = expirationDateTime;
             JobId = jobId;
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobMetadata"/> for deserialization. </summary>
+        internal JobMetadata()
+        {
         }
 
         /// <summary> Gets the created date time. </summary>

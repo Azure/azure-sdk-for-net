@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseReplicationLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseReplicationLinkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseReplicationLinkData"/>. </summary>
         public SynapseReplicationLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseReplicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseReplicationLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="startOn"> The start time for the replication link. </param>
         /// <param name="percentComplete"> The percentage of seeding complete for the replication link. </param>
         /// <param name="replicationState"> The replication state for the replication link. </param>
-        internal SynapseReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? isTerminationAllowed, string replicationMode, string partnerServer, string partnerDatabase, AzureLocation? partnerLocation, SynapseReplicationRole? role, SynapseReplicationRole? partnerRole, DateTimeOffset? startOn, int? percentComplete, SynapseReplicationState? replicationState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? isTerminationAllowed, string replicationMode, string partnerServer, string partnerDatabase, AzureLocation? partnerLocation, SynapseReplicationRole? role, SynapseReplicationRole? partnerRole, DateTimeOffset? startOn, int? percentComplete, SynapseReplicationState? replicationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             IsTerminationAllowed = isTerminationAllowed;
@@ -52,6 +57,7 @@ namespace Azure.ResourceManager.Synapse
             StartOn = startOn;
             PercentComplete = percentComplete;
             ReplicationState = replicationState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the workspace that contains this firewall rule. </summary>

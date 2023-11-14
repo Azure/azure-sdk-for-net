@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SSIS access credential. </summary>
     public partial class SsisAccessCredential
     {
-        /// <summary> Initializes a new instance of SsisAccessCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
         /// <param name="domain"> Domain for windows authentication. </param>
         /// <param name="userName"> UseName for windows authentication. </param>
         /// <param name="password">
@@ -31,6 +35,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Domain = domain;
             UserName = userName;
             Password = password;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
+        /// <param name="domain"> Domain for windows authentication. </param>
+        /// <param name="userName"> UseName for windows authentication. </param>
+        /// <param name="password">
+        /// Password for windows authentication.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisAccessCredential(object domain, object userName, SecretBase password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Domain = domain;
+            UserName = userName;
+            Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/> for deserialization. </summary>
+        internal SsisAccessCredential()
+        {
         }
 
         /// <summary> Domain for windows authentication. </summary>

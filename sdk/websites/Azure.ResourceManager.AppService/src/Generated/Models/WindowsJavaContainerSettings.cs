@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Windows Java Container settings. </summary>
     public partial class WindowsJavaContainerSettings
     {
-        /// <summary> Initializes a new instance of WindowsJavaContainerSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WindowsJavaContainerSettings"/>. </summary>
         internal WindowsJavaContainerSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsJavaContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsJavaContainerSettings"/>. </summary>
         /// <param name="javaContainer"> Java container (runtime only). </param>
         /// <param name="javaContainerVersion"> Java container version (runtime only). </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="endOfLifeOn"> End-of-life date for the minor version. </param>
         /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal WindowsJavaContainerSettings(string javaContainer, string javaContainerVersion, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsJavaContainerSettings(string javaContainer, string javaContainerVersion, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JavaContainer = javaContainer;
             JavaContainerVersion = javaContainerVersion;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             EndOfLifeOn = endOfLifeOn;
             IsAutoUpdate = isAutoUpdate;
             IsEarlyAccess = isEarlyAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Java container (runtime only). </summary>

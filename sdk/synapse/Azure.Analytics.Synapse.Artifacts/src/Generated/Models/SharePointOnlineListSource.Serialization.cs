@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SharePointOnlineListSourceConverter))]
-    public partial class SharePointOnlineListSource : IUtf8JsonSerializable
+    public partial class SharePointOnlineListSource : IUtf8JsonSerializable, IJsonModel<SharePointOnlineListSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharePointOnlineListSource>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SharePointOnlineListSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SharePointOnlineListSource>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SharePointOnlineListSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -54,8 +63,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SharePointOnlineListSource DeserializeSharePointOnlineListSource(JsonElement element)
+        SharePointOnlineListSource IJsonModel<SharePointOnlineListSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SharePointOnlineListSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSharePointOnlineListSource(document.RootElement, options);
+        }
+
+        internal static SharePointOnlineListSource DeserializeSharePointOnlineListSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,6 +148,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SharePointOnlineListSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, httpRequestTimeout.Value);
         }
+
+        BinaryData IPersistableModel<SharePointOnlineListSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SharePointOnlineListSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SharePointOnlineListSource IPersistableModel<SharePointOnlineListSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SharePointOnlineListSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSharePointOnlineListSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<SharePointOnlineListSource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class SharePointOnlineListSourceConverter : JsonConverter<SharePointOnlineListSource>
         {

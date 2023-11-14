@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> The parameters used when calling recall action on server endpoint. </summary>
     public partial class RecallActionContent
     {
-        /// <summary> Initializes a new instance of RecallActionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecallActionContent"/>. </summary>
         public RecallActionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecallActionContent"/>. </summary>
+        /// <param name="pattern"> Pattern of the files. </param>
+        /// <param name="recallPath"> Recall path. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecallActionContent(string pattern, string recallPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Pattern = pattern;
+            RecallPath = recallPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Pattern of the files. </summary>

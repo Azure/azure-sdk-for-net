@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary>
@@ -14,9 +17,21 @@ namespace Azure.AI.TextAnalytics.Models
     /// </summary>
     internal partial class AnalyzeTextTask
     {
-        /// <summary> Initializes a new instance of AnalyzeTextTask. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextTask"/>. </summary>
         public AnalyzeTextTask()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextTask"/>. </summary>
+        /// <param name="kind"> Enumeration of supported Text Analysis tasks. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextTask(AnalyzeTextTaskKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enumeration of supported Text Analysis tasks. </summary>

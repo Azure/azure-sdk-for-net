@@ -14,7 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> An object representing a single summary with context for given document. </summary>
     internal partial class AbstractiveSummaryInternal
     {
-        /// <summary> Initializes a new instance of AbstractiveSummaryInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummaryInternal"/>. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AbstractiveSummaryInternal(string text)
@@ -25,13 +28,20 @@ namespace Azure.AI.TextAnalytics.Models
             Contexts = new ChangeTrackingList<SummaryContextInternal>();
         }
 
-        /// <summary> Initializes a new instance of AbstractiveSummaryInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummaryInternal"/>. </summary>
         /// <param name="text"> The text of the summary. </param>
         /// <param name="contexts"> The context list of the summary. </param>
-        internal AbstractiveSummaryInternal(string text, IList<SummaryContextInternal> contexts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AbstractiveSummaryInternal(string text, IList<SummaryContextInternal> contexts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Contexts = contexts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AbstractiveSummaryInternal"/> for deserialization. </summary>
+        internal AbstractiveSummaryInternal()
+        {
         }
 
         /// <summary> The text of the summary. </summary>
