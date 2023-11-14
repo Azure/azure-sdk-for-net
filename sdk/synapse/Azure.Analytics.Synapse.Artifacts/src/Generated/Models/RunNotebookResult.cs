@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sessionDetail"> Run notebook session details. </param>
         /// <param name="exitValue"> Output of exit command. </param>
         /// <param name="error"> Run notebook error. </param>
-        internal RunNotebookResult(string runId, string runStatus, string lastCheckedOn, long? sessionId, string sparkPool, object sessionDetail, string exitValue, RunNotebookError error)
+        internal RunNotebookResult(string runId, string runStatus, string lastCheckedOn, string sessionId, string sparkPool, object sessionDetail, string exitValue, RunNotebookError error)
         {
             RunId = runId;
             RunStatus = runStatus;
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Timestamp of last update. </summary>
         public string LastCheckedOn { get; }
         /// <summary> Livy session id. </summary>
-        public long? SessionId { get; }
+        public string SessionId { get; }
         /// <summary> SparkPool name. </summary>
         public string SparkPool { get; }
         /// <summary> Run notebook session details. </summary>

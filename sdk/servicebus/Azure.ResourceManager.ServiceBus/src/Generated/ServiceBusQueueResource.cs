@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusQueueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusQueueResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="queueName"> The queueName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string queueName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}";
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> An object representing collection of ServiceBusQueueAuthorizationRuleResources and their operations over a ServiceBusQueueAuthorizationRuleResource. </returns>
         public virtual ServiceBusQueueAuthorizationRuleCollection GetServiceBusQueueAuthorizationRules()
         {
-            return GetCachedClient(Client => new ServiceBusQueueAuthorizationRuleCollection(Client, Id));
+            return GetCachedClient(client => new ServiceBusQueueAuthorizationRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +112,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceBusQueueAuthorizationRuleResource>> GetServiceBusQueueAuthorizationRuleAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +135,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceBusQueueAuthorizationRuleResource> GetServiceBusQueueAuthorizationRule(string authorizationRuleName, CancellationToken cancellationToken = default)
         {

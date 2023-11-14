@@ -16,8 +16,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of UnknownExceptionTrigger. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        internal UnknownExceptionTrigger(string kind) : base(kind)
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
+        internal UnknownExceptionTrigger(ExceptionTriggerKind kind) : base(kind)
         {
         }
     }

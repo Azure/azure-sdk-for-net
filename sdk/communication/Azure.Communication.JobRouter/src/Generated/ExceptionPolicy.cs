@@ -14,19 +14,23 @@ namespace Azure.Communication.JobRouter
     public partial class ExceptionPolicy
     {
         /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
-        /// <param name="id"> The Id of the exception policy. </param>
-        /// <param name="name"> (Optional) The name of the exception policy. </param>
-        /// <param name="exceptionRules">
-        /// (Optional) A dictionary collection of exception rules on the exception policy.
-        /// Key is the Id of each exception rule.
-        /// </param>
-        internal ExceptionPolicy(string id, string name, IDictionary<string, ExceptionRule> exceptionRules)
+        internal ExceptionPolicy()
         {
-            Id = id;
-            Name = name;
-            _exceptionRules = exceptionRules;
+            ExceptionRules = new ChangeTrackingList<ExceptionRule>();
         }
 
+        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
+        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="id"> The Id of the exception policy. </param>
+        /// <param name="name"> The name of the exception policy. </param>
+        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
+        internal ExceptionPolicy(string etag, string id, string name, IList<ExceptionRule> exceptionRules)
+        {
+            _etag = etag;
+            Id = id;
+            Name = name;
+            ExceptionRules = exceptionRules;
+        }
         /// <summary> The Id of the exception policy. </summary>
         public string Id { get; }
     }

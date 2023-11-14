@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Analysis
     }
     public partial class AnalysisServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AnalysisServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisResourceSku analysisSku) : base (default(Azure.Core.AzureLocation)) { }
+        public AnalysisServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisResourceSku analysisSku) { }
         public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku AnalysisServerSku { get { throw null; } set { } }
         public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku AnalysisSku { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AsAdministratorIdentities { get { throw null; } }
@@ -75,6 +75,31 @@ namespace Azure.ResourceManager.Analysis
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SuspendAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Analysis.AnalysisServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Analysis.Models.AnalysisServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Analysis.AnalysisServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Analysis.Models.AnalysisServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Analysis.Mocking
+{
+    public partial class MockableAnalysisArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAnalysisArmClient() { }
+        public virtual Azure.ResourceManager.Analysis.AnalysisServerResource GetAnalysisServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableAnalysisResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAnalysisResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource> GetAnalysisServer(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.AnalysisServerResource>> GetAnalysisServerAsync(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Analysis.AnalysisServerCollection GetAnalysisServers() { throw null; }
+    }
+    public partial class MockableAnalysisSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableAnalysisSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult> CheckAnalysisServerNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityResult>> CheckAnalysisServerNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Analysis.AnalysisServerResource> GetAnalysisServers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Analysis.AnalysisServerResource> GetAnalysisServersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku> GetEligibleSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Analysis.Models.AnalysisResourceSku> GetEligibleSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Analysis.Models

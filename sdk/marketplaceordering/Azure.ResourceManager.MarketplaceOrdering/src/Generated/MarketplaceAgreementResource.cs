@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
     public partial class MarketplaceAgreementResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MarketplaceAgreementResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="publisherId"> The publisherId. </param>
+        /// <param name="offerId"> The offerId. </param>
+        /// <param name="planId"> The planId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string publisherId, string offerId, string planId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/agreements/{publisherId}/offers/{offerId}/plans/{planId}";

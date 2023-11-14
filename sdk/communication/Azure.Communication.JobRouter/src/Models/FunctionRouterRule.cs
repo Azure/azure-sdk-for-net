@@ -7,15 +7,13 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("FunctionRouterRule")]
-    [CodeGenSuppress("FunctionRouterRule")]
     public partial class FunctionRouterRule : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of AzureFunctionRule. </summary>
         /// <param name="functionAppUri"> URL for custom azure function. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         public FunctionRouterRule(Uri functionAppUri)
-            : this("azure-function-rule", functionAppUri, null)
+            : this(RouterRuleKind.Function, functionAppUri, null)
         {
             Argument.AssertNotNull(functionAppUri, nameof(functionAppUri));
         }
@@ -34,7 +32,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteObjectValue(Credential);
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

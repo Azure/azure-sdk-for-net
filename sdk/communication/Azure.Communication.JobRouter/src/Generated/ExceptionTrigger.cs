@@ -20,13 +20,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of ExceptionTrigger. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        internal ExceptionTrigger(string kind)
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
+        internal ExceptionTrigger(ExceptionTriggerKind kind)
         {
             Kind = kind;
         }
-
-        /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
     }
 }

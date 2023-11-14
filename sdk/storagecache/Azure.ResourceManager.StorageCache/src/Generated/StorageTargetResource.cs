@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.StorageCache
     public partial class StorageTargetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageTargetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cacheName"> The cacheName. </param>
+        /// <param name="storageTargetName"> The storageTargetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cacheName, string storageTargetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}";

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppContainers
     public partial class ContainerAppManagedEnvironmentDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppManagedEnvironmentDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}";

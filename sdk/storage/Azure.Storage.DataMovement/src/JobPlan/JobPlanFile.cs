@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(headerStream, nameof(headerStream));
 
-            string fileName = $"{id}.{DataMovementConstants.JobPlanFile.FileExtension}";
+            string fileName = $"{id}{DataMovementConstants.JobPlanFile.FileExtension}";
             string filePath = Path.Combine(checkpointerPath, fileName);
 
             JobPlanFile jobPlanFile = new(id, filePath);

@@ -20,28 +20,16 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of DistributionMode. </summary>
-        /// <param name="kind"> Discriminator. </param>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
-        /// <param name="bypassSelectors">
-        /// (Optional)
-        /// If set to true, then router will match workers to jobs even if they
-        /// don't match label selectors.
-        /// Warning: You may get workers that are not
-        /// qualified for the job they are matched with if you set this
-        /// variable to true.
-        /// This flag is intended more for temporary usage.
-        /// By default, set to false.
-        /// </param>
-        internal DistributionMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors)
+        /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for the job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of DistributionMode. </param>
+        internal DistributionMode(int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, DistributionModeKind kind)
         {
-            Kind = kind;
             MinConcurrentOffers = minConcurrentOffers;
             MaxConcurrentOffers = maxConcurrentOffers;
             BypassSelectors = bypassSelectors;
+            Kind = kind;
         }
-
-        /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
     }
 }

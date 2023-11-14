@@ -6,20 +6,19 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("DirectMapRouterRule")]
-    [CodeGenSuppress("DirectMapRouterRule")]
     public partial class DirectMapRouterRule : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of DirectMapRouterRule. </summary>
-        public DirectMapRouterRule(): this("direct-map-rule")
+        public DirectMapRouterRule()
         {
+            Kind = RouterRuleKind.DirectMap;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

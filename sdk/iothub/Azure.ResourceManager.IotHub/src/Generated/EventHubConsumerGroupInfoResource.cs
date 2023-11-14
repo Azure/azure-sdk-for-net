@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.IotHub
     public partial class EventHubConsumerGroupInfoResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventHubConsumerGroupInfoResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="eventHubEndpointName"> The eventHubEndpointName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string eventHubEndpointName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/eventHubEndpoints/{eventHubEndpointName}/ConsumerGroups/{name}";

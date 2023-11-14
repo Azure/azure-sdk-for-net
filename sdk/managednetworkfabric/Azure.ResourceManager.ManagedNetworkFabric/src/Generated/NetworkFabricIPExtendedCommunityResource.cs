@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricIPExtendedCommunityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricIPExtendedCommunityResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ipExtendedCommunityName"> The ipExtendedCommunityName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ipExtendedCommunityName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/{ipExtendedCommunityName}";

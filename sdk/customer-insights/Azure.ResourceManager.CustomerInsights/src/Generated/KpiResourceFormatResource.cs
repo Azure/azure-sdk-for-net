@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CustomerInsights
     public partial class KpiResourceFormatResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KpiResourceFormatResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hubName"> The hubName. </param>
+        /// <param name="kpiName"> The kpiName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hubName, string kpiName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/kpi/{kpiName}";

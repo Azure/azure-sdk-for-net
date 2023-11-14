@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineRunCommandResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineRunCommandResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vmName"> The vmName. </param>
+        /// <param name="runCommandName"> The runCommandName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string runCommandName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}";

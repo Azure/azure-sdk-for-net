@@ -14,10 +14,10 @@ namespace Azure.Communication.JobRouter
     public partial class FunctionRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of FunctionRouterRule. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="functionUri"> URL for Azure Function. </param>
         /// <param name="credential"> Credentials used to access Azure function rule. </param>
-        internal FunctionRouterRule(string kind, Uri functionUri, FunctionRouterRuleCredential credential) : base(kind)
+        internal FunctionRouterRule(RouterRuleKind kind, Uri functionUri, FunctionRouterRuleCredential credential) : base(kind)
         {
             FunctionUri = functionUri;
             Credential = credential;

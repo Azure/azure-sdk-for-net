@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.SelfHelp
     public partial class SelfHelpDiagnosticResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SelfHelpDiagnosticResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="diagnosticsResourceName"> The diagnosticsResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string diagnosticsResourceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}";
@@ -151,7 +153,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Diagnostics tells you precisely the root cause of the issue and how to address it. You can get diagnostics once you discover and identify the relevant solution for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can create diagnostics using the ‘solutionId’  from Solution Discovery API response and ‘additionalParameters’ &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API
+        /// Creates a diagnostic for the specific resource using solutionId and requiredInputs* from discovery solutions. &lt;br/&gt;Diagnostics tells you precisely the root cause of the issue and the steps to address it. You can get diagnostics once you discover the relevant solution for your Azure issue. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -189,7 +191,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Diagnostics tells you precisely the root cause of the issue and how to address it. You can get diagnostics once you discover and identify the relevant solution for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can create diagnostics using the ‘solutionId’  from Solution Discovery API response and ‘additionalParameters’ &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API
+        /// Creates a diagnostic for the specific resource using solutionId and requiredInputs* from discovery solutions. &lt;br/&gt;Diagnostics tells you precisely the root cause of the issue and the steps to address it. You can get diagnostics once you discover the relevant solution for your Azure issue. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

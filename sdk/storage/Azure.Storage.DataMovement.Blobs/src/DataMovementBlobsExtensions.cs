@@ -471,5 +471,23 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobOptions = baseOptions,
             };
         }
+
+        internal static BlobStorageResourceContainerOptions DeepCopy(this BlobStorageResourceContainerOptions options)
+            => new BlobStorageResourceContainerOptions()
+            {
+                BlobType = options?.BlobType ?? BlobType.Block,
+                BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
+                BlobOptions = new BlobStorageResourceOptions()
+                {
+                    Metadata = options?.BlobOptions?.Metadata,
+                    Tags = options?.BlobOptions?.Tags,
+                    HttpHeaders = options?.BlobOptions?.HttpHeaders,
+                    AccessTier = options?.BlobOptions?.AccessTier,
+                    DestinationImmutabilityPolicy = options?.BlobOptions?.DestinationImmutabilityPolicy,
+                    LegalHold = options?.BlobOptions?.LegalHold,
+                    UploadTransferValidationOptions = options?.BlobOptions?.UploadTransferValidationOptions,
+                    DownloadTransferValidationOptions = options?.BlobOptions?.DownloadTransferValidationOptions,
+                }
+            };
     }
 }

@@ -20,13 +20,15 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of ExceptionAction. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        internal ExceptionAction(string kind)
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
+        internal ExceptionAction(string id, ExceptionActionKind kind)
         {
+            Id = id;
             Kind = kind;
         }
 
-        /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
+        /// <summary> Unique Id of the exception action. </summary>
+        public string Id { get; }
     }
 }

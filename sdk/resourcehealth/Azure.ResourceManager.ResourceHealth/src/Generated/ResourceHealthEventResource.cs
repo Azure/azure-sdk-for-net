@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.ResourceHealth
     public partial class ResourceHealthEventResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceHealthEventResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="eventTrackingId"> The eventTrackingId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string eventTrackingId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}";
@@ -96,7 +98,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <returns> An object representing collection of ResourceHealthEventImpactedResources and their operations over a ResourceHealthEventImpactedResource. </returns>
         public virtual ResourceHealthEventImpactedResourceCollection GetResourceHealthEventImpactedResources()
         {
-            return GetCachedClient(Client => new ResourceHealthEventImpactedResourceCollection(Client, Id));
+            return GetCachedClient(client => new ResourceHealthEventImpactedResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +116,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ResourceHealthEventImpactedResource>> GetResourceHealthEventImpactedResourceAsync(string impactedResourceName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +139,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ResourceHealthEventImpactedResource> GetResourceHealthEventImpactedResource(string impactedResourceName, CancellationToken cancellationToken = default)
         {

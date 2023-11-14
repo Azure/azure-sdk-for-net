@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Automation
     public partial class HybridRunbookWorkerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridRunbookWorkerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        /// <param name="hybridRunbookWorkerGroupName"> The hybridRunbookWorkerGroupName. </param>
+        /// <param name="hybridRunbookWorkerId"> The hybridRunbookWorkerId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, string hybridRunbookWorkerId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}/hybridRunbookWorkers/{hybridRunbookWorkerId}";

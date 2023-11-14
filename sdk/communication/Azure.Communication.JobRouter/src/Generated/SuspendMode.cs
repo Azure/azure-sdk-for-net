@@ -11,8 +11,8 @@ namespace Azure.Communication.JobRouter
     public partial class SuspendMode : JobMatchingMode
     {
         /// <summary> Initializes a new instance of SuspendMode. </summary>
-        /// <param name="kind"> Discriminator. </param>
-        internal SuspendMode(string kind) : base(kind)
+        /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
+        internal SuspendMode(JobMatchingModeKind kind) : base(kind)
         {
         }
     }

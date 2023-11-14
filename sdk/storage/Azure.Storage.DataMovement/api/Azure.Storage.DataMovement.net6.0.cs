@@ -129,6 +129,8 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResourceContainer() { }
         protected internal override bool IsContainer { get { throw null; } }
+        protected internal abstract System.Threading.Tasks.Task CreateIfNotExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected internal abstract Azure.Storage.DataMovement.StorageResourceContainer GetChildStorageResourceContainer(string path);
         protected internal abstract Azure.Storage.DataMovement.StorageResourceItem GetStorageResourceReference(string path);
         protected internal abstract System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> GetStorageResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
@@ -140,16 +142,17 @@ namespace Azure.Storage.DataMovement
     }
     public enum StorageResourceCreationPreference
     {
-        FailIfExists = 0,
-        OverwriteIfExists = 1,
-        SkipIfExists = 2,
+        Default = 0,
+        FailIfExists = 1,
+        OverwriteIfExists = 2,
+        SkipIfExists = 3,
     }
     public abstract partial class StorageResourceItem : Azure.Storage.DataMovement.StorageResource
     {
         protected StorageResourceItem() { }
         protected internal override bool IsContainer { get { throw null; } }
         protected internal abstract long? Length { get; }
-        protected internal abstract long MaxChunkSize { get; }
+        protected internal abstract long MaxSupportedChunkSize { get; }
         protected internal abstract string ResourceId { get; }
         protected internal abstract Azure.Storage.DataMovement.DataTransferOrder TransferType { get; }
         protected internal abstract System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));

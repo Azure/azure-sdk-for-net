@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevCenterPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="poolName"> The poolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string poolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/pools/{poolName}";
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterScheduleResources and their operations over a DevCenterScheduleResource. </returns>
         public virtual DevCenterScheduleCollection GetDevCenterSchedules()
         {
-            return GetCachedClient(Client => new DevCenterScheduleCollection(Client, Id));
+            return GetCachedClient(client => new DevCenterScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +115,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterScheduleResource>> GetDevCenterScheduleAsync(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +139,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="scheduleName"> The name of the schedule that uniquely identifies it. </param>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevCenterScheduleResource> GetDevCenterSchedule(string scheduleName, int? top = null, CancellationToken cancellationToken = default)
         {
