@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> DC Access code in the case of Self Managed Shipping. </summary>
     public partial class DataBoxEdgeDataCenterAccessCode
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDataCenterAccessCode. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDataCenterAccessCode"/>. </summary>
         internal DataBoxEdgeDataCenterAccessCode()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDataCenterAccessCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDataCenterAccessCode"/>. </summary>
         /// <param name="authCode"> DCAccess Code for the Self Managed shipment. </param>
-        internal DataBoxEdgeDataCenterAccessCode(string authCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDataCenterAccessCode(string authCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthCode = authCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> DCAccess Code for the Self Managed shipment. </summary>

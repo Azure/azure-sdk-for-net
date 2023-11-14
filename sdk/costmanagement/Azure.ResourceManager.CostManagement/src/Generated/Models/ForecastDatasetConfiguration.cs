@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The configuration of dataset in the forecast. </summary>
     internal partial class ForecastDatasetConfiguration
     {
-        /// <summary> Initializes a new instance of ForecastDatasetConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastDatasetConfiguration"/>. </summary>
         public ForecastDatasetConfiguration()
         {
             Columns = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForecastDatasetConfiguration"/>. </summary>
+        /// <param name="columns"> Array of column names to be included in the forecast. Any valid forecast column name is allowed. If not provided, then forecast includes all columns. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastDatasetConfiguration(IList<string> columns, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Columns = columns;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of column names to be included in the forecast. Any valid forecast column name is allowed. If not provided, then forecast includes all columns. </summary>

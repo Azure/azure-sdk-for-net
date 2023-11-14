@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class DiskEncryptionSetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DiskEncryptionSetData(AzureLocation location) : base(location)
         {
             PreviousKeys = new ChangeTrackingList<KeyForDiskEncryptionSet>();
         }
 
-        /// <summary> Initializes a new instance of DiskEncryptionSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +45,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="lastKeyRotationTimestamp"> The time when the active key of this disk encryption set was updated. </param>
         /// <param name="autoKeyRotationError"> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </param>
         /// <param name="federatedClientId"> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </param>
-        internal DiskEncryptionSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp, ComputeApiError autoKeyRotationError, string federatedClientId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskEncryptionSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DiskEncryptionSetType? encryptionType, KeyForDiskEncryptionSet activeKey, IReadOnlyList<KeyForDiskEncryptionSet> previousKeys, string provisioningState, bool? rotationToLatestKeyVersionEnabled, DateTimeOffset? lastKeyRotationTimestamp, ComputeApiError autoKeyRotationError, string federatedClientId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             EncryptionType = encryptionType;
@@ -53,6 +57,12 @@ namespace Azure.ResourceManager.Compute
             LastKeyRotationTimestamp = lastKeyRotationTimestamp;
             AutoKeyRotationError = autoKeyRotationError;
             FederatedClientId = federatedClientId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskEncryptionSetData"/> for deserialization. </summary>
+        internal DiskEncryptionSetData()
+        {
         }
 
         /// <summary> The managed identity for the disk encryption set. It should be given permission on the key vault before it can be used to encrypt disks. </summary>

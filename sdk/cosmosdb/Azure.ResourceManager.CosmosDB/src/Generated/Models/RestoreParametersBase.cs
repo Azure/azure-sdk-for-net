@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Parameters to indicate the information about the restore. </summary>
     public partial class RestoreParametersBase
     {
-        /// <summary> Initializes a new instance of RestoreParametersBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestoreParametersBase"/>. </summary>
         public RestoreParametersBase()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreParametersBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreParametersBase"/>. </summary>
         /// <param name="restoreSource"> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </param>
         /// <param name="restoreTimestampInUtc"> Time to which the account has to be restored (ISO-8601 format). </param>
-        internal RestoreParametersBase(string restoreSource, DateTimeOffset? restoreTimestampInUtc)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreParametersBase(string restoreSource, DateTimeOffset? restoreTimestampInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestoreSource = restoreSource;
             RestoreTimestampInUtc = restoreTimestampInUtc;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </summary>

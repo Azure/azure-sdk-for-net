@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class MonitoringMetricConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringMetricConfigurationData"/>. </summary>
         /// <param name="metricConfigurations"> The metrics configuration details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricConfigurations"/> is null. </exception>
         public MonitoringMetricConfigurationData(IEnumerable<DataBoxEdgeMetricConfiguration> metricConfigurations)
@@ -30,15 +33,22 @@ namespace Azure.ResourceManager.DataBoxEdge
             MetricConfigurations = metricConfigurations.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringMetricConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="metricConfigurations"> The metrics configuration details. </param>
-        internal MonitoringMetricConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<DataBoxEdgeMetricConfiguration> metricConfigurations) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringMetricConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<DataBoxEdgeMetricConfiguration> metricConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MetricConfigurations = metricConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringMetricConfigurationData"/> for deserialization. </summary>
+        internal MonitoringMetricConfigurationData()
+        {
         }
 
         /// <summary> The metrics configuration details. </summary>

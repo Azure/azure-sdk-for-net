@@ -6,15 +6,113 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class ContainerRepositoryProperties
+    public partial class ContainerRepositoryProperties : IUtf8JsonSerializable, IJsonModel<ContainerRepositoryProperties>
     {
-        internal static ContainerRepositoryProperties DeserializeContainerRepositoryProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRepositoryProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerRepositoryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerRepositoryProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerRepositoryProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("registry"u8);
+                writer.WriteStringValue(RegistryLoginServer);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("imageName"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn, "O");
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("lastUpdateTime"u8);
+                writer.WriteStringValue(LastUpdatedOn, "O");
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("manifestCount"u8);
+                writer.WriteNumberValue(ManifestCount);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("tagCount"u8);
+                writer.WriteNumberValue(TagCount);
+            }
+            writer.WritePropertyName("changeableAttributes"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CanDelete))
+            {
+                writer.WritePropertyName("deleteEnabled"u8);
+                writer.WriteBooleanValue(CanDelete.Value);
+            }
+            if (Optional.IsDefined(CanWrite))
+            {
+                writer.WritePropertyName("writeEnabled"u8);
+                writer.WriteBooleanValue(CanWrite.Value);
+            }
+            if (Optional.IsDefined(CanList))
+            {
+                writer.WritePropertyName("listEnabled"u8);
+                writer.WriteBooleanValue(CanList.Value);
+            }
+            if (Optional.IsDefined(CanRead))
+            {
+                writer.WritePropertyName("readEnabled"u8);
+                writer.WriteBooleanValue(CanRead.Value);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerRepositoryProperties IJsonModel<ContainerRepositoryProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRepositoryProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRepositoryProperties(document.RootElement, options);
+        }
+
+        internal static ContainerRepositoryProperties DeserializeContainerRepositoryProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +127,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
             Optional<bool> readEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -109,8 +209,38 @@ namespace Azure.Containers.ContainerRegistry
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRepositoryProperties(registry, imageName, createdTime, lastUpdateTime, manifestCount, tagCount, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRepositoryProperties(registry, imageName, createdTime, lastUpdateTime, manifestCount, tagCount, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerRepositoryProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRepositoryProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerRepositoryProperties IPersistableModel<ContainerRepositoryProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRepositoryProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerRepositoryProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerRepositoryProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

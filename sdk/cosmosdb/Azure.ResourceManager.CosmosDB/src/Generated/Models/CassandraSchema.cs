@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table schema. </summary>
     public partial class CassandraSchema
     {
-        /// <summary> Initializes a new instance of CassandraSchema. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraSchema"/>. </summary>
         public CassandraSchema()
         {
             Columns = new ChangeTrackingList<CassandraColumn>();
@@ -21,15 +25,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ClusterKeys = new ChangeTrackingList<CassandraClusterKey>();
         }
 
-        /// <summary> Initializes a new instance of CassandraSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraSchema"/>. </summary>
         /// <param name="columns"> List of Cassandra table columns. </param>
         /// <param name="partitionKeys"> List of partition key. </param>
         /// <param name="clusterKeys"> List of cluster key. </param>
-        internal CassandraSchema(IList<CassandraColumn> columns, IList<CassandraPartitionKey> partitionKeys, IList<CassandraClusterKey> clusterKeys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraSchema(IList<CassandraColumn> columns, IList<CassandraPartitionKey> partitionKeys, IList<CassandraClusterKey> clusterKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Columns = columns;
             PartitionKeys = partitionKeys;
             ClusterKeys = clusterKeys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Cassandra table columns. </summary>

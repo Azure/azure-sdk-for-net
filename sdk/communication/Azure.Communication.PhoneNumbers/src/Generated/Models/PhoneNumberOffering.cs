@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,7 +14,10 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a phone number capability offering. </summary>
     public partial class PhoneNumberOffering
     {
-        /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOffering"/>. </summary>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cost"/> is null. </exception>
         internal PhoneNumberOffering(PhoneNumberCost cost)
@@ -23,17 +27,24 @@ namespace Azure.Communication.PhoneNumbers
             Cost = cost;
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOffering"/>. </summary>
         /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
         /// <param name="assignmentType"> Represents the assignment type of the offering. </param>
         /// <param name="availableCapabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
-        internal PhoneNumberOffering(PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, PhoneNumberCapabilities availableCapabilities, PhoneNumberCost cost)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberOffering(PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, PhoneNumberCapabilities availableCapabilities, PhoneNumberCost cost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PhoneNumberType = phoneNumberType;
             AssignmentType = assignmentType;
             AvailableCapabilities = availableCapabilities;
             Cost = cost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberOffering"/> for deserialization. </summary>
+        internal PhoneNumberOffering()
+        {
         }
 
         /// <summary> Represents the number type of the offering. </summary>

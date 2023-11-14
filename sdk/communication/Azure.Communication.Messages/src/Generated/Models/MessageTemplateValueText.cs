@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -13,7 +14,10 @@ namespace Azure.Communication.Messages
     /// <summary> The message template's text value information. </summary>
     internal partial class MessageTemplateValueText
     {
-        /// <summary> Initializes a new instance of MessageTemplateValueText. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueText"/>. </summary>
         /// <param name="text"> The text value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public MessageTemplateValueText(string text)
@@ -21,6 +25,20 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueText"/>. </summary>
+        /// <param name="text"> The text value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateValueText(string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueText"/> for deserialization. </summary>
+        internal MessageTemplateValueText()
+        {
         }
 
         /// <summary> The text value. </summary>

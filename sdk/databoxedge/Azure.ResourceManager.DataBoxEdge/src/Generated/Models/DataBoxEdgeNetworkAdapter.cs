@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Represents the networkAdapter on a device. </summary>
     public partial class DataBoxEdgeNetworkAdapter
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapter"/>. </summary>
         internal DataBoxEdgeNetworkAdapter()
         {
             DnsServers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapter"/>. </summary>
         /// <param name="adapterId"> Instance ID of network adapter. </param>
         /// <param name="adapterPosition"> Hardware position of network adapter. </param>
         /// <param name="index"> Logical index of the adapter. </param>
@@ -36,7 +39,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="ipv6Configuration"> The IPv6 configuration of the network adapter. </param>
         /// <param name="ipv6LinkLocalAddress"> The IPv6 local address. </param>
         /// <param name="dnsServers"> The list of DNS Servers of the device. </param>
-        internal DataBoxEdgeNetworkAdapter(string adapterId, DataBoxEdgeNetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, DataBoxEdgeNetworkAdapterStatus? status, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus, DataBoxEdgeIPv4Config ipv4Configuration, DataBoxEdgeIPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeNetworkAdapter(string adapterId, DataBoxEdgeNetworkAdapterPosition adapterPosition, int? index, Guid? nodeId, string networkAdapterName, string label, string macAddress, long? linkSpeed, DataBoxEdgeNetworkAdapterStatus? status, DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus, DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus, DataBoxEdgeIPv4Config ipv4Configuration, DataBoxEdgeIPv6Config ipv6Configuration, string ipv6LinkLocalAddress, IReadOnlyList<string> dnsServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdapterId = adapterId;
             AdapterPosition = adapterPosition;
@@ -53,6 +57,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             IPv6Configuration = ipv6Configuration;
             IPv6LinkLocalAddress = ipv6LinkLocalAddress;
             DnsServers = dnsServers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Instance ID of network adapter. </summary>

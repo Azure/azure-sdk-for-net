@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Username / Password Credentials to connect to guest. </summary>
     public partial class GuestCredential
     {
-        /// <summary> Initializes a new instance of GuestCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestCredential"/>. </summary>
         public GuestCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestCredential"/>. </summary>
         /// <param name="username"> Gets or sets username to connect with the guest. </param>
         /// <param name="password"> Gets or sets the password to connect with the guest. </param>
-        internal GuestCredential(string username, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestCredential(string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets username to connect with the guest. </summary>

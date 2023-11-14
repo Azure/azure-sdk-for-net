@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Describes the credentials that will be used to access a custom registry during a run. </summary>
     public partial class CustomRegistryCredentials
     {
-        /// <summary> Initializes a new instance of CustomRegistryCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomRegistryCredentials"/>. </summary>
         public CustomRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of CustomRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRegistryCredentials"/>. </summary>
         /// <param name="userName"> The username for logging into the custom registry. </param>
         /// <param name="password">
         /// The password for logging into the custom registry. The password is a secret
@@ -28,11 +34,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// identity may be used to authenticate to key vault to retrieve credentials or it may be the only
         /// source of authentication used for accessing the registry.
         /// </param>
-        internal CustomRegistryCredentials(ContainerRegistrySecretObject userName, ContainerRegistrySecretObject password, string identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomRegistryCredentials(ContainerRegistrySecretObject userName, ContainerRegistrySecretObject password, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserName = userName;
             Password = password;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The username for logging into the custom registry. </summary>

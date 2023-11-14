@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> System generated entities. </summary>
     public partial class PredictionSystemGeneratedEntities
     {
-        /// <summary> Initializes a new instance of PredictionSystemGeneratedEntities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionSystemGeneratedEntities"/>. </summary>
         internal PredictionSystemGeneratedEntities()
         {
             GeneratedInteractionTypes = new ChangeTrackingList<string>();
@@ -21,15 +25,17 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             GeneratedKpis = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PredictionSystemGeneratedEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionSystemGeneratedEntities"/>. </summary>
         /// <param name="generatedInteractionTypes"> Generated interaction types. </param>
         /// <param name="generatedLinks"> Generated links. </param>
         /// <param name="generatedKpis"> Generated KPIs. </param>
-        internal PredictionSystemGeneratedEntities(IReadOnlyList<string> generatedInteractionTypes, IReadOnlyList<string> generatedLinks, IReadOnlyDictionary<string, string> generatedKpis)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionSystemGeneratedEntities(IReadOnlyList<string> generatedInteractionTypes, IReadOnlyList<string> generatedLinks, IReadOnlyDictionary<string, string> generatedKpis, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GeneratedInteractionTypes = generatedInteractionTypes;
             GeneratedLinks = generatedLinks;
             GeneratedKpis = generatedKpis;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Generated interaction types. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Key Vault Key Url to be used for server side encryption of Managed Disks and Snapshots. </summary>
     public partial class KeyForDiskEncryptionSet
     {
-        /// <summary> Initializes a new instance of KeyForDiskEncryptionSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyForDiskEncryptionSet"/>. </summary>
         /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> is null. </exception>
         public KeyForDiskEncryptionSet(Uri keyUri)
@@ -24,13 +28,20 @@ namespace Azure.ResourceManager.Compute.Models
             KeyUri = keyUri;
         }
 
-        /// <summary> Initializes a new instance of KeyForDiskEncryptionSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyForDiskEncryptionSet"/>. </summary>
         /// <param name="sourceVault"> Resource id of the KeyVault containing the key or secret. This property is optional and cannot be used if the KeyVault subscription is not the same as the Disk Encryption Set subscription. </param>
         /// <param name="keyUri"> Fully versioned Key Url pointing to a key in KeyVault. Version segment of the Url is required regardless of rotationToLatestKeyVersionEnabled value. </param>
-        internal KeyForDiskEncryptionSet(WritableSubResource sourceVault, Uri keyUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyForDiskEncryptionSet(WritableSubResource sourceVault, Uri keyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceVault = sourceVault;
             KeyUri = keyUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyForDiskEncryptionSet"/> for deserialization. </summary>
+        internal KeyForDiskEncryptionSet()
+        {
         }
 
         /// <summary> Resource id of the KeyVault containing the key or secret. This property is optional and cannot be used if the KeyVault subscription is not the same as the Disk Encryption Set subscription. </summary>

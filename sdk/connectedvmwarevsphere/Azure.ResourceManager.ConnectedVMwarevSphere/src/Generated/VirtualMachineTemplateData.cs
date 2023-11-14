@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VirtualMachineTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualMachineTemplateData(AzureLocation location) : base(location)
         {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -62,7 +66,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="firmwareType"> Firmware type. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal VirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, int? memorySizeMB, int? numCpus, int? numCoresPerSocket, OSType? osType, string osName, string folderPath, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string customResourceName, string toolsVersionStatus, string toolsVersion, FirmwareType? firmwareType, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, int? memorySizeMB, int? numCpus, int? numCoresPerSocket, OSType? osType, string osName, string folderPath, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string customResourceName, string toolsVersionStatus, string toolsVersion, FirmwareType? firmwareType, IReadOnlyList<ResourceStatus> statuses, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -85,6 +90,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             FirmwareType = firmwareType;
             Statuses = statuses;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineTemplateData"/> for deserialization. </summary>
+        internal VirtualMachineTemplateData()
+        {
         }
 
         /// <summary> Gets or sets the extended location. </summary>

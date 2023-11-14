@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the task that gets the list of tables for a provided list of PostgreSQL databases. </summary>
     public partial class GetUserTablesPostgreSqlTaskOutput
     {
-        /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesPostgreSqlTaskOutput"/>. </summary>
         internal GetUserTablesPostgreSqlTaskOutput()
         {
             Tables = new ChangeTrackingList<DatabaseTable>();
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of GetUserTablesPostgreSqlTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesPostgreSqlTaskOutput"/>. </summary>
         /// <param name="databaseName"> The database this result is for. </param>
         /// <param name="tables"> List of valid tables found for this database. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
-        internal GetUserTablesPostgreSqlTaskOutput(string databaseName, IReadOnlyList<DatabaseTable> tables, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetUserTablesPostgreSqlTaskOutput(string databaseName, IReadOnlyList<DatabaseTable> tables, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             Tables = tables;
             ValidationErrors = validationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The database this result is for. </summary>

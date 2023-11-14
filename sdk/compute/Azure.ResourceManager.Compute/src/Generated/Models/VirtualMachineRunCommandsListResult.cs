@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List run command operation response. </summary>
     internal partial class VirtualMachineRunCommandsListResult
     {
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandsListResult"/>. </summary>
         /// <param name="value"> The list of run commands. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VirtualMachineRunCommandsListResult(IEnumerable<VirtualMachineRunCommandData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineRunCommandsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandsListResult"/>. </summary>
         /// <param name="value"> The list of run commands. </param>
         /// <param name="nextLink"> The uri to fetch the next page of run commands. </param>
-        internal VirtualMachineRunCommandsListResult(IReadOnlyList<VirtualMachineRunCommandData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineRunCommandsListResult(IReadOnlyList<VirtualMachineRunCommandData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandsListResult"/> for deserialization. </summary>
+        internal VirtualMachineRunCommandsListResult()
+        {
         }
 
         /// <summary> The list of run commands. </summary>

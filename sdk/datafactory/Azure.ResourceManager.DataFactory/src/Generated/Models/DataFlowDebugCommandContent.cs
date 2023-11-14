@@ -6,15 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Request body structure for data flow debug command. </summary>
     public partial class DataFlowDebugCommandContent
     {
-        /// <summary> Initializes a new instance of DataFlowDebugCommandContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandContent"/>. </summary>
         public DataFlowDebugCommandContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandContent"/>. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <param name="command"> The command type. </param>
+        /// <param name="commandPayload"> The command payload object. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowDebugCommandContent(Guid? sessionId, DataFlowDebugCommandType? command, DataFlowDebugCommandPayload commandPayload, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SessionId = sessionId;
+            Command = command;
+            CommandPayload = commandPayload;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
     /// <summary> A list of servers in a cluster. </summary>
     internal partial class CosmosDBForPostgreSqlClusterServerListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerListResult"/>. </summary>
         internal CosmosDBForPostgreSqlClusterServerListResult()
         {
             Value = new ChangeTrackingList<CosmosDBForPostgreSqlClusterServerData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlClusterServerListResult"/>. </summary>
         /// <param name="value"> The list of servers in a cluster. </param>
-        internal CosmosDBForPostgreSqlClusterServerListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterServerData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlClusterServerListResult(IReadOnlyList<CosmosDBForPostgreSqlClusterServerData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of servers in a cluster. </summary>

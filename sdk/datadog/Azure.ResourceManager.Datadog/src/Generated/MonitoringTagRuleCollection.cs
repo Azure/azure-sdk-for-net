@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoringTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitoringTagRuleResource(Client, MonitoringTagRuleData.DeserializeMonitoringTagRuleData(e)), _monitoringTagRuleTagRulesClientDiagnostics, Pipeline, "MonitoringTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MonitoringTagRuleResource(Client, MonitoringTagRuleData.DeserializeMonitoringTagRuleData(e)), _monitoringTagRuleTagRulesClientDiagnostics, Pipeline, "MonitoringTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Datadog
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitoringTagRuleTagRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _monitoringTagRuleTagRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitoringTagRuleResource(Client, MonitoringTagRuleData.DeserializeMonitoringTagRuleData(e)), _monitoringTagRuleTagRulesClientDiagnostics, Pipeline, "MonitoringTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MonitoringTagRuleResource(Client, MonitoringTagRuleData.DeserializeMonitoringTagRuleData(e)), _monitoringTagRuleTagRulesClientDiagnostics, Pipeline, "MonitoringTagRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Map a field of profile to its corresponding StrongId in Related Profile. </summary>
     public partial class RelationshipTypeFieldMapping
     {
-        /// <summary> Initializes a new instance of RelationshipTypeFieldMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipTypeFieldMapping"/>. </summary>
         /// <param name="profileFieldName"> Specifies the fieldName in profile. </param>
         /// <param name="relatedProfileKeyProperty"> Specifies the KeyProperty (from StrongId) of the related profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="profileFieldName"/> or <paramref name="relatedProfileKeyProperty"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
             ProfileFieldName = profileFieldName;
             RelatedProfileKeyProperty = relatedProfileKeyProperty;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipTypeFieldMapping"/>. </summary>
+        /// <param name="profileFieldName"> Specifies the fieldName in profile. </param>
+        /// <param name="relatedProfileKeyProperty"> Specifies the KeyProperty (from StrongId) of the related profile. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelationshipTypeFieldMapping(string profileFieldName, string relatedProfileKeyProperty, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ProfileFieldName = profileFieldName;
+            RelatedProfileKeyProperty = relatedProfileKeyProperty;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipTypeFieldMapping"/> for deserialization. </summary>
+        internal RelationshipTypeFieldMapping()
+        {
         }
 
         /// <summary> Specifies the fieldName in profile. </summary>

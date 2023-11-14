@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    internal partial class SendNotificationRequest : IUtf8JsonSerializable
+    internal partial class SendNotificationRequest : IUtf8JsonSerializable, IJsonModel<SendNotificationRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SendNotificationRequest>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SendNotificationRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SendNotificationRequest>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SendNotificationRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
@@ -41,7 +52,125 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("template"u8);
                 writer.WriteObjectValue(Template);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SendNotificationRequest IJsonModel<SendNotificationRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SendNotificationRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSendNotificationRequest(document.RootElement, options);
+        }
+
+        internal static SendNotificationRequest DeserializeSendNotificationRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string channelRegistrationId = default;
+            IList<string> to = default;
+            CommunicationMessageType type = default;
+            Optional<string> content = default;
+            Optional<string> mediaUri = default;
+            Optional<MessageTemplateInternal> template = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("channelRegistrationId"u8))
+                {
+                    channelRegistrationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("to"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    to = array;
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new CommunicationMessageType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("content"u8))
+                {
+                    content = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("mediaUri"u8))
+                {
+                    mediaUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("template"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    template = MessageTemplateInternal.DeserializeMessageTemplateInternal(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SendNotificationRequest(channelRegistrationId, to, type, content.Value, mediaUri.Value, template.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SendNotificationRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SendNotificationRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SendNotificationRequest IPersistableModel<SendNotificationRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SendNotificationRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSendNotificationRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<SendNotificationRequest>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

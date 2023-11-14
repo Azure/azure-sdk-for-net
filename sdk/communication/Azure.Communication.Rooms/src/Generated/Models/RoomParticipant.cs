@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Rooms
@@ -13,5 +14,23 @@ namespace Azure.Communication.Rooms
     /// <summary> A participant of the room. </summary>
     public partial class RoomParticipant
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoomParticipant"/>. </summary>
+        /// <param name="rawId"> Raw ID representation of the communication identifier. Please refer to the following document for additional information on Raw ID. &lt;br&gt; https://learn.microsoft.com/azure/communication-services/concepts/identifiers?pivots=programming-language-rest#raw-id-representation. </param>
+        /// <param name="role"> The role of a room participant. The default value is Attendee. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoomParticipant(string rawId, ParticipantRole role, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RawId = rawId;
+            Role = role;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoomParticipant"/> for deserialization. </summary>
+        internal RoomParticipant()
+        {
+        }
     }
 }

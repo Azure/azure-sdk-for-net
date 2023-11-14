@@ -6,18 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Describes a matching mode used for scheduling jobs to be queued at a future time. At the specified time, matching worker to a job will not start automatically. </summary>
     public partial class ScheduleAndSuspendMode : JobMatchingMode
     {
-        /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scheduleAt"> Scheduled time. </param>
-        internal ScheduleAndSuspendMode(JobMatchingModeKind kind, DateTimeOffset scheduleAt) : base(kind)
+        internal ScheduleAndSuspendMode(JobMatchingModeKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset scheduleAt) : base(kind, serializedAdditionalRawData)
         {
             ScheduleAt = scheduleAt;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/> for deserialization. </summary>
+        internal ScheduleAndSuspendMode()
+        {
         }
 
         /// <summary> Scheduled time. </summary>

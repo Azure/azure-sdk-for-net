@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the Table and their properties. </summary>
     internal partial class CosmosDBTableListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBTableListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableListResult"/>. </summary>
         internal CosmosDBTableListResult()
         {
             Value = new ChangeTrackingList<CosmosDBTableData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBTableListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableListResult"/>. </summary>
         /// <param name="value"> List of Table and their properties. </param>
-        internal CosmosDBTableListResult(IReadOnlyList<CosmosDBTableData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBTableListResult(IReadOnlyList<CosmosDBTableData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Table and their properties. </summary>

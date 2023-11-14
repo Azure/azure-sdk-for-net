@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Retention tag. </summary>
     public partial class DataProtectionBackupRetentionTag
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupRetentionTag. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRetentionTag"/>. </summary>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tagName"/> is null. </exception>
         public DataProtectionBackupRetentionTag(string tagName)
@@ -24,15 +28,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             TagName = tagName;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupRetentionTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRetentionTag"/>. </summary>
         /// <param name="eTag"> Retention Tag version. </param>
         /// <param name="id"> Retention Tag version. </param>
         /// <param name="tagName"> Retention Tag Name to relate it to retention rule. </param>
-        internal DataProtectionBackupRetentionTag(ETag? eTag, string id, string tagName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupRetentionTag(ETag? eTag, string id, string tagName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ETag = eTag;
             Id = id;
             TagName = tagName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRetentionTag"/> for deserialization. </summary>
+        internal DataProtectionBackupRetentionTag()
+        {
         }
 
         /// <summary> Retention Tag version. </summary>

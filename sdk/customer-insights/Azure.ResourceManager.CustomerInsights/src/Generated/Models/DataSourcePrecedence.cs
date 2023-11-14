@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The data source precedence is a way to know the precedence of each data source. </summary>
     public partial class DataSourcePrecedence
     {
-        /// <summary> Initializes a new instance of DataSourcePrecedence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataSourcePrecedence"/>. </summary>
         internal DataSourcePrecedence()
         {
         }
 
-        /// <summary> Initializes a new instance of DataSourcePrecedence. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourcePrecedence"/>. </summary>
         /// <param name="precedence"> the precedence value. </param>
         /// <param name="name"> The data source name. </param>
         /// <param name="dataSourceType"> The data source type. </param>
         /// <param name="status"> The data source status. </param>
         /// <param name="id"> The data source ID. </param>
         /// <param name="dataSourceReferenceId"> The data source reference id. </param>
-        internal DataSourcePrecedence(int? precedence, string name, DataSourceType? dataSourceType, Status? status, int? id, string dataSourceReferenceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourcePrecedence(int? precedence, string name, DataSourceType? dataSourceType, Status? status, int? id, string dataSourceReferenceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Precedence = precedence;
             Name = name;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Status = status;
             Id = id;
             DataSourceReferenceId = dataSourceReferenceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the precedence value. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The KPI GroupBy field metadata. </summary>
     public partial class KpiGroupByMetadata
     {
-        /// <summary> Initializes a new instance of KpiGroupByMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KpiGroupByMetadata"/>. </summary>
         internal KpiGroupByMetadata()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KpiGroupByMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="KpiGroupByMetadata"/>. </summary>
         /// <param name="displayName"> The display name. </param>
         /// <param name="fieldName"> The name of the field. </param>
         /// <param name="fieldType"> The type of the field. </param>
-        internal KpiGroupByMetadata(IReadOnlyDictionary<string, string> displayName, string fieldName, string fieldType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KpiGroupByMetadata(IReadOnlyDictionary<string, string> displayName, string fieldName, string fieldType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             FieldName = fieldName;
             FieldType = fieldType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The display name. </summary>

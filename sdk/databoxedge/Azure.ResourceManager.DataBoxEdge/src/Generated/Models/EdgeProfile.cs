@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Details about Edge Profile for the resource. </summary>
     internal partial class EdgeProfile
     {
-        /// <summary> Initializes a new instance of EdgeProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeProfile"/>. </summary>
         internal EdgeProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeProfile"/>. </summary>
         /// <param name="subscription"> Edge Profile Subscription. </param>
-        internal EdgeProfile(EdgeProfileSubscription subscription)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeProfile(EdgeProfileSubscription subscription, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subscription = subscription;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Edge Profile Subscription. </summary>

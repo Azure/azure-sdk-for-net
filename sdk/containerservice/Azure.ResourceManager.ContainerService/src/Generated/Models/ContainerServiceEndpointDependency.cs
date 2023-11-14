@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> A domain name that AKS agent nodes are reaching at. </summary>
     public partial class ContainerServiceEndpointDependency
     {
-        /// <summary> Initializes a new instance of ContainerServiceEndpointDependency. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDependency"/>. </summary>
         internal ContainerServiceEndpointDependency()
         {
             EndpointDetails = new ChangeTrackingList<ContainerServiceEndpointDetail>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceEndpointDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceEndpointDependency"/>. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The Ports and Protocols used when connecting to domainName. </param>
-        internal ContainerServiceEndpointDependency(string domainName, IReadOnlyList<ContainerServiceEndpointDetail> endpointDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceEndpointDependency(string domainName, IReadOnlyList<ContainerServiceEndpointDetail> endpointDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DomainName = domainName;
             EndpointDetails = endpointDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The domain name of the dependency. </summary>

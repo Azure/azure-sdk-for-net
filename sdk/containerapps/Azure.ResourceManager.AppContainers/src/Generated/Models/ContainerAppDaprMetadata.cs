@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Dapr component metadata. </summary>
     public partial class ContainerAppDaprMetadata
     {
-        /// <summary> Initializes a new instance of ContainerAppDaprMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprMetadata"/>. </summary>
         public ContainerAppDaprMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDaprMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprMetadata"/>. </summary>
         /// <param name="name"> Metadata property name. </param>
         /// <param name="value"> Metadata property value. </param>
         /// <param name="secretRef"> Name of the Dapr Component secret from which to pull the metadata property value. </param>
-        internal ContainerAppDaprMetadata(string name, string value, string secretRef)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDaprMetadata(string name, string value, string secretRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             SecretRef = secretRef;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metadata property name. </summary>

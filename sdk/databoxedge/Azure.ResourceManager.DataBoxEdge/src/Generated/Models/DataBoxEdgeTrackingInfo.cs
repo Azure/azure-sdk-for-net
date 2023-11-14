@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Tracking courier information. </summary>
     public partial class DataBoxEdgeTrackingInfo
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeTrackingInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeTrackingInfo"/>. </summary>
         internal DataBoxEdgeTrackingInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeTrackingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeTrackingInfo"/>. </summary>
         /// <param name="serialNumber"> Serial number of the device being tracked. </param>
         /// <param name="carrierName"> Name of the carrier used in the delivery. </param>
         /// <param name="trackingId"> Tracking ID of the shipment. </param>
         /// <param name="trackingUri"> Tracking URL of the shipment. </param>
-        internal DataBoxEdgeTrackingInfo(string serialNumber, string carrierName, string trackingId, Uri trackingUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeTrackingInfo(string serialNumber, string carrierName, string trackingId, Uri trackingUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
             CarrierName = carrierName;
             TrackingId = trackingId;
             TrackingUri = trackingUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Serial number of the device being tracked. </summary>

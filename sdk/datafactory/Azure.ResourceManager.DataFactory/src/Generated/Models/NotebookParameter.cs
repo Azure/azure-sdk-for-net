@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Notebook parameter. </summary>
     public partial class NotebookParameter
     {
-        /// <summary> Initializes a new instance of NotebookParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotebookParameter"/>. </summary>
         public NotebookParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of NotebookParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookParameter"/>. </summary>
         /// <param name="value"> Notebook parameter value. Type: string (or Expression with resultType string). </param>
         /// <param name="parameterType"> Notebook parameter type. </param>
-        internal NotebookParameter(DataFactoryElement<string> value, NotebookParameterType? parameterType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotebookParameter(DataFactoryElement<string> value, NotebookParameterType? parameterType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ParameterType = parameterType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Notebook parameter value. Type: string (or Expression with resultType string). </summary>

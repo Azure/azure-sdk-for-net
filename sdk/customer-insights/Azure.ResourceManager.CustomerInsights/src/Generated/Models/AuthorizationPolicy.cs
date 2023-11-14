@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The authorization policy. </summary>
     public partial class AuthorizationPolicy
     {
-        /// <summary> Initializes a new instance of AuthorizationPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicy"/>. </summary>
         /// <param name="permissions"> The permissions associated with the policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permissions"/> is null. </exception>
         internal AuthorizationPolicy(IEnumerable<PermissionType> permissions)
@@ -25,17 +28,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Permissions = permissions.ToList();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicy"/>. </summary>
         /// <param name="policyName"> Name of the policy. </param>
         /// <param name="permissions"> The permissions associated with the policy. </param>
         /// <param name="primaryKey"> Primary key associated with the policy. </param>
         /// <param name="secondaryKey"> Secondary key associated with the policy. </param>
-        internal AuthorizationPolicy(string policyName, IReadOnlyList<PermissionType> permissions, string primaryKey, string secondaryKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationPolicy(string policyName, IReadOnlyList<PermissionType> permissions, string primaryKey, string secondaryKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyName = policyName;
             Permissions = permissions;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicy"/> for deserialization. </summary>
+        internal AuthorizationPolicy()
+        {
         }
 
         /// <summary> Name of the policy. </summary>

@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Percentile Metric data. </summary>
     public partial class CosmosDBPercentileMetric
     {
-        /// <summary> Initializes a new instance of CosmosDBPercentileMetric. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPercentileMetric"/>. </summary>
         internal CosmosDBPercentileMetric()
         {
             MetricValues = new ChangeTrackingList<PercentileMetricValue>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPercentileMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPercentileMetric"/>. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The percentile metric values for the specified time window and timestep. </param>
-        internal CosmosDBPercentileMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<PercentileMetricValue> metricValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBPercentileMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<PercentileMetricValue> metricValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Unit = unit;
             Name = name;
             MetricValues = metricValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The start time for the metric (ISO-8601 format). </summary>

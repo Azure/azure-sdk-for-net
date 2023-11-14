@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a reference to Key Vault Key. </summary>
     public partial class KeyVaultKeyReference
     {
-        /// <summary> Initializes a new instance of KeyVaultKeyReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/>. </summary>
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> or <paramref name="sourceVault"/> is null. </exception>
@@ -25,6 +29,22 @@ namespace Azure.ResourceManager.Compute.Models
 
             KeyUri = keyUri;
             SourceVault = sourceVault;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/>. </summary>
+        /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
+        /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyUri = keyUri;
+            SourceVault = sourceVault;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyReference"/> for deserialization. </summary>
+        internal KeyVaultKeyReference()
+        {
         }
 
         /// <summary> The URL referencing a key encryption key in Key Vault. </summary>

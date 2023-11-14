@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> Summary of credit balances. </summary>
     public partial class CreditBalanceSummary
     {
-        /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreditBalanceSummary"/>. </summary>
         internal CreditBalanceSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreditBalanceSummary"/>. </summary>
         /// <param name="estimatedBalance"> Estimated balance. </param>
         /// <param name="currentBalance"> Current balance. </param>
         /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
-        internal CreditBalanceSummary(ConsumptionAmount estimatedBalance, ConsumptionAmount currentBalance, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreditBalanceSummary(ConsumptionAmount estimatedBalance, ConsumptionAmount currentBalance, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EstimatedBalance = estimatedBalance;
             CurrentBalance = currentBalance;
             EstimatedBalanceInBillingCurrency = estimatedBalanceInBillingCurrency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Estimated balance. </summary>

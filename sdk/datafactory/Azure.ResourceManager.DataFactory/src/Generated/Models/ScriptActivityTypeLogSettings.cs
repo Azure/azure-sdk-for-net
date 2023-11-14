@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Log settings of script activity. </summary>
     public partial class ScriptActivityTypeLogSettings
     {
-        /// <summary> Initializes a new instance of ScriptActivityTypeLogSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
         public ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination)
         {
             LogDestination = logDestination;
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityTypeLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/>. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
-        internal ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocationSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActivityTypeLogSettings(ScriptActivityLogDestination logDestination, LogLocationSettings logLocationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogDestination = logDestination;
             LogLocationSettings = logLocationSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityTypeLogSettings"/> for deserialization. </summary>
+        internal ScriptActivityTypeLogSettings()
+        {
         }
 
         /// <summary> The destination of logs. Type: string. </summary>

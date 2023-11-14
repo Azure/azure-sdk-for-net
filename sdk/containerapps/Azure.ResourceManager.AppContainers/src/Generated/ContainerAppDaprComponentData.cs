@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppDaprComponentData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppDaprComponentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprComponentData"/>. </summary>
         public ContainerAppDaprComponentData()
         {
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDaprComponentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDaprComponentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
         /// <param name="metadata"> Component metadata. </param>
         /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
-        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComponentType = componentType;
             Version = version;
@@ -49,6 +54,7 @@ namespace Azure.ResourceManager.AppContainers
             SecretStoreComponent = secretStoreComponent;
             Metadata = metadata;
             Scopes = scopes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Component type. </summary>

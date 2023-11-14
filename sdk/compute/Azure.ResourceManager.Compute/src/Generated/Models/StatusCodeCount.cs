@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The status code and count of the cloud service instance view statuses. </summary>
     public partial class StatusCodeCount
     {
-        /// <summary> Initializes a new instance of StatusCodeCount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StatusCodeCount"/>. </summary>
         internal StatusCodeCount()
         {
         }
 
-        /// <summary> Initializes a new instance of StatusCodeCount. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatusCodeCount"/>. </summary>
         /// <param name="code"> The instance view status code. </param>
         /// <param name="count"> Number of instances having this status code. </param>
-        internal StatusCodeCount(string code, int? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StatusCodeCount(string code, int? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The instance view status code. </summary>

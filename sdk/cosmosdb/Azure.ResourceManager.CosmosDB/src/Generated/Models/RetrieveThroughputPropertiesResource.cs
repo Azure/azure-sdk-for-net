@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource to retrieve throughput information for Cosmos DB resource. </summary>
     public partial class RetrieveThroughputPropertiesResource
     {
-        /// <summary> Initializes a new instance of RetrieveThroughputPropertiesResource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="physicalPartitionIds"/> is null. </exception>
         public RetrieveThroughputPropertiesResource(IEnumerable<WritableSubResource> physicalPartitionIds)
@@ -26,11 +29,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             PhysicalPartitionIds = physicalPartitionIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of RetrieveThroughputPropertiesResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/>. </summary>
         /// <param name="physicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
-        internal RetrieveThroughputPropertiesResource(IList<WritableSubResource> physicalPartitionIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RetrieveThroughputPropertiesResource(IList<WritableSubResource> physicalPartitionIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PhysicalPartitionIds = physicalPartitionIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RetrieveThroughputPropertiesResource"/> for deserialization. </summary>
+        internal RetrieveThroughputPropertiesResource()
+        {
         }
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>

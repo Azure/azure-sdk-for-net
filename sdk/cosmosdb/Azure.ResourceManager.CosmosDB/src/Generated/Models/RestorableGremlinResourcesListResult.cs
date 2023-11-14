@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the restorable Gremlin resources. </summary>
     internal partial class RestorableGremlinResourcesListResult
     {
-        /// <summary> Initializes a new instance of RestorableGremlinResourcesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinResourcesListResult"/>. </summary>
         internal RestorableGremlinResourcesListResult()
         {
             Value = new ChangeTrackingList<RestorableGremlinResourceData>();
         }
 
-        /// <summary> Initializes a new instance of RestorableGremlinResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableGremlinResourcesListResult"/>. </summary>
         /// <param name="value"> List of restorable Gremlin resources, including the gremlin database and graph names. </param>
-        internal RestorableGremlinResourcesListResult(IReadOnlyList<RestorableGremlinResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableGremlinResourcesListResult(IReadOnlyList<RestorableGremlinResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of restorable Gremlin resources, including the gremlin database and graph names. </summary>

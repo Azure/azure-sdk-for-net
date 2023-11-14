@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Scaling rule. </summary>
     public partial class ContainerAppJobScaleRule
     {
-        /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobScaleRule"/>. </summary>
         public ContainerAppJobScaleRule()
         {
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobScaleRule"/>. </summary>
         /// <param name="name"> Scale Rule Name. </param>
         /// <param name="jobScaleRuleType">
         /// Type of the scale rule
@@ -28,12 +31,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="metadata"> Metadata properties to describe the scale rule. </param>
         /// <param name="auth"> Authentication secrets for the scale rule. </param>
-        internal ContainerAppJobScaleRule(string name, string jobScaleRuleType, BinaryData metadata, IList<ContainerAppScaleRuleAuth> auth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppJobScaleRule(string name, string jobScaleRuleType, BinaryData metadata, IList<ContainerAppScaleRuleAuth> auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             JobScaleRuleType = jobScaleRuleType;
             Metadata = metadata;
             Auth = auth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Scale Rule Name. </summary>

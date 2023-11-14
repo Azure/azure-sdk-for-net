@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> Connector mapping property availability. </summary>
     public partial class ConnectorMappingAvailability
     {
-        /// <summary> Initializes a new instance of ConnectorMappingAvailability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingAvailability"/>. </summary>
         /// <param name="interval"> The interval of the given frequency to use. </param>
         public ConnectorMappingAvailability(int interval)
         {
             Interval = interval;
         }
 
-        /// <summary> Initializes a new instance of ConnectorMappingAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingAvailability"/>. </summary>
         /// <param name="frequency"> The frequency to update. </param>
         /// <param name="interval"> The interval of the given frequency to use. </param>
-        internal ConnectorMappingAvailability(FrequencyType? frequency, int interval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorMappingAvailability(FrequencyType? frequency, int interval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             Interval = interval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorMappingAvailability"/> for deserialization. </summary>
+        internal ConnectorMappingAvailability()
+        {
         }
 
         /// <summary> The frequency to update. </summary>

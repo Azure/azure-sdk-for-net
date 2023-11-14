@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The status of the long running operation. </summary>
     public partial class OperationStatus
     {
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         internal OperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
         /// <param name="status"> The status of the long running operation. </param>
         /// <param name="reportUri"> The CSV file from the reportUrl blob link consists of reservation usage data with the following schema at daily granularity. </param>
         /// <param name="validUntil"> The time at which report URL becomes invalid. </param>
-        internal OperationStatus(OperationStatusType? status, ReservationReportSchema? reportUri, DateTimeOffset? validUntil)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationStatus(OperationStatusType? status, ReservationReportSchema? reportUri, DateTimeOffset? validUntil, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             ReportUri = reportUri;
             ValidUntil = validUntil;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the long running operation. </summary>

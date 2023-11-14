@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </summary>
     internal partial class ManagedClusterWorkloadAutoScalerProfileKeda
     {
-        /// <summary> Initializes a new instance of ManagedClusterWorkloadAutoScalerProfileKeda. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfileKeda"/>. </summary>
         /// <param name="enabled"> Whether to enable KEDA. </param>
         public ManagedClusterWorkloadAutoScalerProfileKeda(bool enabled)
         {
             Enabled = enabled;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfileKeda"/>. </summary>
+        /// <param name="enabled"> Whether to enable KEDA. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterWorkloadAutoScalerProfileKeda(bool enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfileKeda"/> for deserialization. </summary>
+        internal ManagedClusterWorkloadAutoScalerProfileKeda()
+        {
         }
 
         /// <summary> Whether to enable KEDA. </summary>

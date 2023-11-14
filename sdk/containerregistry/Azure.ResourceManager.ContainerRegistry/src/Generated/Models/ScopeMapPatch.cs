@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,28 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating the scope map. </summary>
     public partial class ScopeMapPatch
     {
-        /// <summary> Initializes a new instance of ScopeMapPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScopeMapPatch"/>. </summary>
         public ScopeMapPatch()
         {
             Actions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScopeMapPatch"/>. </summary>
+        /// <param name="description"> The user friendly description of the scope map. </param>
+        /// <param name="actions">
+        /// The list of scope permissions for registry artifacts.
+        /// E.g. repositories/repository-name/pull,
+        /// repositories/repository-name/delete
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScopeMapPatch(string description, IList<string> actions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Description = description;
+            Actions = actions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The user friendly description of the scope map. </summary>

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of GuestAgent. </summary>
     internal partial class GuestAgentList
     {
-        /// <summary> Initializes a new instance of GuestAgentList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestAgentList"/>. </summary>
         /// <param name="value"> Array of GuestAgent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GuestAgentList(IEnumerable<GuestAgentData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GuestAgentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of GuestAgent. </param>
         /// <param name="value"> Array of GuestAgent. </param>
-        internal GuestAgentList(string nextLink, IReadOnlyList<GuestAgentData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestAgentList(string nextLink, IReadOnlyList<GuestAgentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GuestAgentList"/> for deserialization. </summary>
+        internal GuestAgentList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of GuestAgent. </summary>

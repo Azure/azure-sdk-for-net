@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The storage of a physical partition. </summary>
     public partial class PhysicalPartitionStorageInfo
     {
-        /// <summary> Initializes a new instance of PhysicalPartitionStorageInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionStorageInfo"/>. </summary>
         internal PhysicalPartitionStorageInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PhysicalPartitionStorageInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionStorageInfo"/>. </summary>
         /// <param name="id"> The unique identifier of the partition. </param>
         /// <param name="storageInKB"> The storage in KB for the physical partition. </param>
-        internal PhysicalPartitionStorageInfo(string id, double? storageInKB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhysicalPartitionStorageInfo(string id, double? storageInKB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             StorageInKB = storageInKB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the partition. </summary>

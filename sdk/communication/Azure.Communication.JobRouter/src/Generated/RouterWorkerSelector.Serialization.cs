@@ -6,16 +6,103 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterWorkerSelector
+    public partial class RouterWorkerSelector : IUtf8JsonSerializable, IJsonModel<RouterWorkerSelector>
     {
-        internal static RouterWorkerSelector DeserializeRouterWorkerSelector(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterWorkerSelector>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RouterWorkerSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RouterWorkerSelector>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RouterWorkerSelector>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("key"u8);
+            writer.WriteStringValue(Key);
+            writer.WritePropertyName("labelOperator"u8);
+            writer.WriteStringValue(LabelOperator.ToString());
+            if (Optional.IsDefined(_value))
+            {
+                writer.WritePropertyName("value"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(_value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(_value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(_expiresAfterSeconds))
+            {
+                writer.WritePropertyName("expiresAfterSeconds"u8);
+                writer.WriteNumberValue(_expiresAfterSeconds.Value);
+            }
+            if (Optional.IsDefined(Expedite))
+            {
+                writer.WritePropertyName("expedite"u8);
+                writer.WriteBooleanValue(Expedite.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ExpiresAt))
+                {
+                    writer.WritePropertyName("expiresAt"u8);
+                    writer.WriteStringValue(ExpiresAt.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouterWorkerSelector IJsonModel<RouterWorkerSelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterWorkerSelector(document.RootElement, options);
+        }
+
+        internal static RouterWorkerSelector DeserializeRouterWorkerSelector(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +114,8 @@ namespace Azure.Communication.JobRouter
             Optional<bool> expedite = default;
             Optional<RouterWorkerSelectorStatus> status = default;
             Optional<DateTimeOffset> expiresAt = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -84,16 +173,54 @@ namespace Azure.Communication.JobRouter
                     expiresAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouterWorkerSelector(key, labelOperator, value.Value, Optional.ToNullable(expiresAfterSeconds), Optional.ToNullable(expedite), Optional.ToNullable(status), Optional.ToNullable(expiresAt));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouterWorkerSelector(key, labelOperator, value.Value, Optional.ToNullable(expiresAfterSeconds), Optional.ToNullable(expedite), Optional.ToNullable(status), Optional.ToNullable(expiresAt), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouterWorkerSelector>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RouterWorkerSelector IPersistableModel<RouterWorkerSelector>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRouterWorkerSelector(document.RootElement, options);
+        }
+
+        string IPersistableModel<RouterWorkerSelector>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RouterWorkerSelector FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRouterWorkerSelector(document.RootElement);
+            return DeserializeRouterWorkerSelector(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

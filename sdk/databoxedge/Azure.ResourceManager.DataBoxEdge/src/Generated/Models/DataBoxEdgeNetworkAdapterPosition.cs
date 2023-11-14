@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The network adapter position. </summary>
     public partial class DataBoxEdgeNetworkAdapterPosition
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapterPosition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapterPosition"/>. </summary>
         internal DataBoxEdgeNetworkAdapterPosition()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeNetworkAdapterPosition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNetworkAdapterPosition"/>. </summary>
         /// <param name="networkGroup"> The network group. </param>
         /// <param name="port"> The port. </param>
-        internal DataBoxEdgeNetworkAdapterPosition(DataBoxEdgeNetworkGroup? networkGroup, int? port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeNetworkAdapterPosition(DataBoxEdgeNetworkGroup? networkGroup, int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkGroup = networkGroup;
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The network group. </summary>

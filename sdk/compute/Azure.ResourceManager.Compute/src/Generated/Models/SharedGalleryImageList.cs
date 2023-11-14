@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Shared Gallery Images operation response. </summary>
     internal partial class SharedGalleryImageList
     {
-        /// <summary> Initializes a new instance of SharedGalleryImageList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageList"/>. </summary>
         /// <param name="value"> A list of shared gallery images. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SharedGalleryImageList(IEnumerable<SharedGalleryImageData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryImageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageList"/>. </summary>
         /// <param name="value"> A list of shared gallery images. </param>
         /// <param name="nextLink"> The uri to fetch the next page of shared gallery images. Call ListNext() with this to fetch the next page of shared gallery images. </param>
-        internal SharedGalleryImageList(IReadOnlyList<SharedGalleryImageData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharedGalleryImageList(IReadOnlyList<SharedGalleryImageData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageList"/> for deserialization. </summary>
+        internal SharedGalleryImageList()
+        {
         }
 
         /// <summary> A list of shared gallery images. </summary>

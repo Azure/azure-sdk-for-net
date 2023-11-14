@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains Cosmos DB locations and their properties. </summary>
     internal partial class CosmosDBLocationListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBLocationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationListResult"/>. </summary>
         internal CosmosDBLocationListResult()
         {
             Value = new ChangeTrackingList<CosmosDBLocationData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBLocationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationListResult"/>. </summary>
         /// <param name="value"> List of Cosmos DB locations and their properties. </param>
-        internal CosmosDBLocationListResult(IReadOnlyList<CosmosDBLocationData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBLocationListResult(IReadOnlyList<CosmosDBLocationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Cosmos DB locations and their properties. </summary>

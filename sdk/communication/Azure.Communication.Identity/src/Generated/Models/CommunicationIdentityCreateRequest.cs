@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication.Identity;
 using Azure.Core;
@@ -14,10 +15,24 @@ namespace Azure.Communication.Identity.Models
     /// <summary> The CommunicationIdentityCreateRequest. </summary>
     internal partial class CommunicationIdentityCreateRequest
     {
-        /// <summary> Initializes a new instance of CommunicationIdentityCreateRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityCreateRequest"/>. </summary>
         public CommunicationIdentityCreateRequest()
         {
             CreateTokenWithScopes = new ChangeTrackingList<CommunicationTokenScope>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityCreateRequest"/>. </summary>
+        /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
+        /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationIdentityCreateRequest(IList<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CreateTokenWithScopes = createTokenWithScopes;
+            ExpiresInMinutes = expiresInMinutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Also create access token for the created identity. </summary>

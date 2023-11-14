@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     /// <summary>
@@ -13,9 +16,24 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeStoreAccountInformationCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountInformationCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountInformationCreateOrUpdateContent"/>. </summary>
         public DataLakeStoreAccountInformationCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountInformationCreateOrUpdateContent"/>. </summary>
+        /// <param name="suffix">
+        /// The optional suffix for the Data Lake Store account.
+        /// Serialized Name: AddDataLakeStoreParameters.properties.suffix
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreAccountInformationCreateOrUpdateContent(string suffix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Suffix = suffix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

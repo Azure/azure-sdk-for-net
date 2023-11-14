@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App container resource requirements. </summary>
     public partial class AppContainerResources
     {
-        /// <summary> Initializes a new instance of AppContainerResources. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppContainerResources"/>. </summary>
         public AppContainerResources()
         {
         }
 
-        /// <summary> Initializes a new instance of AppContainerResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppContainerResources"/>. </summary>
         /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
         /// <param name="memory"> Required memory, e.g. "250Mb". </param>
         /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. "1Gi". </param>
-        internal AppContainerResources(double? cpu, string memory, string ephemeralStorage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppContainerResources(double? cpu, string memory, string ephemeralStorage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cpu = cpu;
             Memory = memory;
             EphemeralStorage = ephemeralStorage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Required CPU in cores, e.g. 0.5. </summary>

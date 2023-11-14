@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for the service task to upload an OCI driver. </summary>
     public partial class UploadOciDriverTaskOutput
     {
-        /// <summary> Initializes a new instance of UploadOciDriverTaskOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskOutput"/>. </summary>
         internal UploadOciDriverTaskOutput()
         {
             ValidationErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of UploadOciDriverTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskOutput"/>. </summary>
         /// <param name="driverPackageName"> The name of the driver package that was validated and uploaded. </param>
         /// <param name="validationErrors"> Validation errors. </param>
-        internal UploadOciDriverTaskOutput(string driverPackageName, IReadOnlyList<ReportableException> validationErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UploadOciDriverTaskOutput(string driverPackageName, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DriverPackageName = driverPackageName;
             ValidationErrors = validationErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the driver package that was validated and uploaded. </summary>

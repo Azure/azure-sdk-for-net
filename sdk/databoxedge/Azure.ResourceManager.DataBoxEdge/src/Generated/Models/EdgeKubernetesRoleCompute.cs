@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes role compute resource. </summary>
     public partial class EdgeKubernetesRoleCompute
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleCompute. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleCompute"/>. </summary>
         /// <param name="vmProfile"> VM profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmProfile"/> is null. </exception>
         public EdgeKubernetesRoleCompute(string vmProfile)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             VmProfile = vmProfile;
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleCompute. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleCompute"/>. </summary>
         /// <param name="vmProfile"> VM profile. </param>
         /// <param name="memoryInBytes"> Memory in bytes. </param>
         /// <param name="processorCount"> Processor count. </param>
-        internal EdgeKubernetesRoleCompute(string vmProfile, long? memoryInBytes, int? processorCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesRoleCompute(string vmProfile, long? memoryInBytes, int? processorCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmProfile = vmProfile;
             MemoryInBytes = memoryInBytes;
             ProcessorCount = processorCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleCompute"/> for deserialization. </summary>
+        internal EdgeKubernetesRoleCompute()
+        {
         }
 
         /// <summary> VM profile. </summary>

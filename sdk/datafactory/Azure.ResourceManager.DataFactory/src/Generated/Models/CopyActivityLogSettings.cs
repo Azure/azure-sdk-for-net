@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Settings for copy activity log. </summary>
     public partial class CopyActivityLogSettings
     {
-        /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyActivityLogSettings"/>. </summary>
         public CopyActivityLogSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CopyActivityLogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivityLogSettings"/>. </summary>
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
         /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
-        internal CopyActivityLogSettings(DataFactoryElement<string> logLevel, DataFactoryElement<bool> enableReliableLogging)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyActivityLogSettings(DataFactoryElement<string> logLevel, DataFactoryElement<bool> enableReliableLogging, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogLevel = logLevel;
             EnableReliableLogging = enableReliableLogging;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </summary>

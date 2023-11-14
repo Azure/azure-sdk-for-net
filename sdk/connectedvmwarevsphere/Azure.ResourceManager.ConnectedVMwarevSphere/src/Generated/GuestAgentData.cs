@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class GuestAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of GuestAgentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestAgentData"/>. </summary>
         public GuestAgentData()
         {
             Statuses = new ChangeTrackingList<ResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of GuestAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal GuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, GuestCredential credentials, HttpProxyConfiguration httpProxyConfig, ProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, GuestCredential credentials, HttpProxyConfiguration httpProxyConfig, ProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<ResourceStatus> statuses, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Uuid = uuid;
             Credentials = credentials;
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             CustomResourceName = customResourceName;
             Statuses = statuses;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a unique identifier for this resource. </summary>

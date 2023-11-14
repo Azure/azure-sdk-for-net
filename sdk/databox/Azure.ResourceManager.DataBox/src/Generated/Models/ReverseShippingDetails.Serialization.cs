@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ReverseShippingDetails : IUtf8JsonSerializable
+    public partial class ReverseShippingDetails : IUtf8JsonSerializable, IJsonModel<ReverseShippingDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReverseShippingDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ReverseShippingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ReverseShippingDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ReverseShippingDetails>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContactDetails))
             {
@@ -25,11 +36,48 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsUpdated))
+                {
+                    writer.WritePropertyName("isUpdated"u8);
+                    writer.WriteBooleanValue(IsUpdated.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ReverseShippingDetails DeserializeReverseShippingDetails(JsonElement element)
+        ReverseShippingDetails IJsonModel<ReverseShippingDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReverseShippingDetails(document.RootElement, options);
+        }
+
+        internal static ReverseShippingDetails DeserializeReverseShippingDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +85,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<ContactInfo> contactDetails = default;
             Optional<DataBoxShippingAddress> shippingAddress = default;
             Optional<bool> isUpdated = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactDetails"u8))
@@ -66,8 +116,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     isUpdated = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReverseShippingDetails(contactDetails.Value, shippingAddress.Value, Optional.ToNullable(isUpdated));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReverseShippingDetails(contactDetails.Value, shippingAddress.Value, Optional.ToNullable(isUpdated), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReverseShippingDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReverseShippingDetails IPersistableModel<ReverseShippingDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReverseShippingDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<ReverseShippingDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

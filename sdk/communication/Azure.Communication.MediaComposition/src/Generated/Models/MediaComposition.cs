@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
@@ -14,14 +15,17 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Body of a media composition. </summary>
     public partial class MediaComposition
     {
-        /// <summary> Initializes a new instance of MediaComposition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaComposition"/>. </summary>
         public MediaComposition()
         {
             Inputs = new ChangeTrackingDictionary<string, MediaInput>();
             Outputs = new ChangeTrackingDictionary<string, MediaOutput>();
         }
 
-        /// <summary> Initializes a new instance of MediaComposition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaComposition"/>. </summary>
         /// <param name="id"> Id of the media composition. </param>
         /// <param name="layout">
         /// Configure a layout
@@ -39,13 +43,15 @@ namespace Azure.Communication.MediaComposition
         /// The available derived classes include <see cref="GroupCallOutput"/>, <see cref="RoomOutput"/>, <see cref="RtmpOutput"/>, <see cref="SrtOutput"/> and <see cref="TeamsMeetingOutput"/>.
         /// </param>
         /// <param name="streamState"> Provides the state of the media composition. </param>
-        internal MediaComposition(string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState streamState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaComposition(string id, MediaCompositionLayout layout, IDictionary<string, MediaInput> inputs, IDictionary<string, MediaOutput> outputs, CompositionStreamState streamState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Layout = layout;
             Inputs = inputs;
             Outputs = outputs;
             StreamState = streamState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Id of the media composition. </summary>

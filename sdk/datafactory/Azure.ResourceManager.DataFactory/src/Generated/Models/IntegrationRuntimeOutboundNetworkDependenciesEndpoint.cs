@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The endpoint for Azure-SSIS integration runtime outbound network dependency. </summary>
     public partial class IntegrationRuntimeOutboundNetworkDependenciesEndpoint
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeOutboundNetworkDependenciesEndpoint"/>. </summary>
         internal IntegrationRuntimeOutboundNetworkDependenciesEndpoint()
         {
             EndpointDetails = new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeOutboundNetworkDependenciesEndpoint"/>. </summary>
         /// <param name="domainName"> The domain name of endpoint. </param>
         /// <param name="endpointDetails"> The details of endpoint. </param>
-        internal IntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName, IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName, IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DomainName = domainName;
             EndpointDetails = endpointDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The domain name of endpoint. </summary>

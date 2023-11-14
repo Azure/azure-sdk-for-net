@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,18 +15,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A request to approve or reject a private endpoint connection. </summary>
     public partial class PrivateLinkConnectionApprovalRequest
     {
-        /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequest"/>. </summary>
         public PrivateLinkConnectionApprovalRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkConnectionApprovalRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkConnectionApprovalRequest"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="privateEndpoint"> The resource of private endpoint. </param>
-        internal PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState, WritableSubResource privateEndpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState, WritableSubResource privateEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             PrivateEndpoint = privateEndpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of a private link connection. </summary>

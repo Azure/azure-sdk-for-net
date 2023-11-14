@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    internal partial class ManagedClusterLoadBalancerProfileOutboundIPPrefixes : IUtf8JsonSerializable
+    internal partial class ManagedClusterLoadBalancerProfileOutboundIPPrefixes : IUtf8JsonSerializable, IJsonModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PublicIPPrefixes))
             {
@@ -27,16 +37,47 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterLoadBalancerProfileOutboundIPPrefixes DeserializeManagedClusterLoadBalancerProfileOutboundIPPrefixes(JsonElement element)
+        ManagedClusterLoadBalancerProfileOutboundIPPrefixes IJsonModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileOutboundIPPrefixes)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterLoadBalancerProfileOutboundIPPrefixes(document.RootElement, options);
+        }
+
+        internal static ManagedClusterLoadBalancerProfileOutboundIPPrefixes DeserializeManagedClusterLoadBalancerProfileOutboundIPPrefixes(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<WritableSubResource>> publicIPPrefixes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPPrefixes"u8))
@@ -53,8 +94,38 @@ namespace Azure.ResourceManager.ContainerService.Models
                     publicIPPrefixes = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(Optional.ToList(publicIPPrefixes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterLoadBalancerProfileOutboundIPPrefixes(Optional.ToList(publicIPPrefixes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileOutboundIPPrefixes)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedClusterLoadBalancerProfileOutboundIPPrefixes IPersistableModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileOutboundIPPrefixes)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedClusterLoadBalancerProfileOutboundIPPrefixes(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

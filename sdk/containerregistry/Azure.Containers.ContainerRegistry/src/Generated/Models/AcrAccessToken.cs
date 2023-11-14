@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The AcrAccessToken. </summary>
     internal partial class AcrAccessToken
     {
-        /// <summary> Initializes a new instance of AcrAccessToken. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcrAccessToken"/>. </summary>
         internal AcrAccessToken()
         {
         }
 
-        /// <summary> Initializes a new instance of AcrAccessToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrAccessToken"/>. </summary>
         /// <param name="accessToken"> The access token for performing authenticated requests. </param>
-        internal AcrAccessToken(string accessToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcrAccessToken(string accessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessToken = accessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The access token for performing authenticated requests. </summary>

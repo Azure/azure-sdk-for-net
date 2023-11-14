@@ -15,7 +15,10 @@ namespace Azure.Communication.Messages
     /// <summary> Result of the send message operation. </summary>
     public partial class SendMessageResult
     {
-        /// <summary> Initializes a new instance of SendMessageResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SendMessageResult"/>. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receipts"/> is null. </exception>
         internal SendMessageResult(IEnumerable<MessageReceipt> receipts)
@@ -25,11 +28,18 @@ namespace Azure.Communication.Messages
             Receipts = receipts.ToList();
         }
 
-        /// <summary> Initializes a new instance of SendMessageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendMessageResult"/>. </summary>
         /// <param name="receipts"> Receipts of the send message operation. </param>
-        internal SendMessageResult(IReadOnlyList<MessageReceipt> receipts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SendMessageResult(IReadOnlyList<MessageReceipt> receipts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Receipts = receipts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendMessageResult"/> for deserialization. </summary>
+        internal SendMessageResult()
+        {
         }
 
         /// <summary> Receipts of the send message operation. </summary>

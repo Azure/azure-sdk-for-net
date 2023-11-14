@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Details about ongoing updates and availability of updates on the device. </summary>
     public partial class DataBoxEdgeDeviceUpdateSummary : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceUpdateSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceUpdateSummary"/>. </summary>
         public DataBoxEdgeDeviceUpdateSummary()
         {
             UpdateTitles = new ChangeTrackingList<string>();
             Updates = new ChangeTrackingList<DataBoxEdgeUpdateDetails>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceUpdateSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceUpdateSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +55,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="updates"> The list of updates available for install. </param>
         /// <param name="totalUpdateSizeInBytes"> The total size of updates available for download in bytes. </param>
         /// <param name="totalTimeInMinutes"> The total time in Minutes. </param>
-        internal DataBoxEdgeDeviceUpdateSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceVersionNumber, string friendlyDeviceVersionName, DateTimeOffset? deviceLastScannedOn, DateTimeOffset? lastCompletedScanJobOn, DateTimeOffset? lastSuccessfulScanJobOn, DateTimeOffset? lastCompletedDownloadJobOn, ResourceIdentifier lastCompletedDownloadJobId, DataBoxEdgeJobStatus? lastDownloadJobStatus, DateTimeOffset? lastSuccessfulInstallJobOn, DateTimeOffset? lastCompletedInstallJobOn, ResourceIdentifier lastCompletedInstallJobId, DataBoxEdgeJobStatus? lastInstallJobStatus, int? totalNumberOfUpdatesAvailable, int? totalNumberOfUpdatesPendingDownload, int? totalNumberOfUpdatesPendingInstall, InstallRebootBehavior? rebootBehavior, DataBoxEdgeUpdateOperation? ongoingUpdateOperation, ResourceIdentifier inProgressDownloadJobId, ResourceIdentifier inProgressInstallJobId, DateTimeOffset? inProgressDownloadJobStartedOn, DateTimeOffset? inProgressInstallJobStartedOn, IReadOnlyList<string> updateTitles, IReadOnlyList<DataBoxEdgeUpdateDetails> updates, double? totalUpdateSizeInBytes, int? totalTimeInMinutes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDeviceUpdateSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceVersionNumber, string friendlyDeviceVersionName, DateTimeOffset? deviceLastScannedOn, DateTimeOffset? lastCompletedScanJobOn, DateTimeOffset? lastSuccessfulScanJobOn, DateTimeOffset? lastCompletedDownloadJobOn, ResourceIdentifier lastCompletedDownloadJobId, DataBoxEdgeJobStatus? lastDownloadJobStatus, DateTimeOffset? lastSuccessfulInstallJobOn, DateTimeOffset? lastCompletedInstallJobOn, ResourceIdentifier lastCompletedInstallJobId, DataBoxEdgeJobStatus? lastInstallJobStatus, int? totalNumberOfUpdatesAvailable, int? totalNumberOfUpdatesPendingDownload, int? totalNumberOfUpdatesPendingInstall, InstallRebootBehavior? rebootBehavior, DataBoxEdgeUpdateOperation? ongoingUpdateOperation, ResourceIdentifier inProgressDownloadJobId, ResourceIdentifier inProgressInstallJobId, DateTimeOffset? inProgressDownloadJobStartedOn, DateTimeOffset? inProgressInstallJobStartedOn, IReadOnlyList<string> updateTitles, IReadOnlyList<DataBoxEdgeUpdateDetails> updates, double? totalUpdateSizeInBytes, int? totalTimeInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeviceVersionNumber = deviceVersionNumber;
             FriendlyDeviceVersionName = friendlyDeviceVersionName;
@@ -79,6 +83,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Updates = updates;
             TotalUpdateSizeInBytes = totalUpdateSizeInBytes;
             TotalTimeInMinutes = totalTimeInMinutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current version of the device in format: 1.2.17312.13.",. </summary>

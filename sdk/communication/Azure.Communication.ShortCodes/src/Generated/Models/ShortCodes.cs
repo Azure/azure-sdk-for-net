@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> A wrapper for a list of short code entities. </summary>
     internal partial class ShortCodes
     {
-        /// <summary> Initializes a new instance of ShortCodes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShortCodes"/>. </summary>
         internal ShortCodes()
         {
             ShortCodesValue = new ChangeTrackingList<ShortCode>();
         }
 
-        /// <summary> Initializes a new instance of ShortCodes. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortCodes"/>. </summary>
         /// <param name="shortCodesValue"> List of short codes. </param>
         /// <param name="nextLink"> Represents the URL link to the next page. </param>
-        internal ShortCodes(IReadOnlyList<ShortCode> shortCodesValue, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShortCodes(IReadOnlyList<ShortCode> shortCodesValue, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShortCodesValue = shortCodesValue;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of short codes. </summary>

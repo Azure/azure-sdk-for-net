@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The Guardrails profile. </summary>
     public partial class ManagedClusterGuardrailsProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterGuardrailsProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterGuardrailsProfile"/>. </summary>
         /// <param name="version"> The version of constraints to use. </param>
         /// <param name="level"> The guardrails level to be used. By default, Guardrails is enabled for all namespaces except those that AKS excludes via systemExcludedNamespaces. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
@@ -28,17 +31,24 @@ namespace Azure.ResourceManager.ContainerService.Models
             ExcludedNamespaces = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterGuardrailsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterGuardrailsProfile"/>. </summary>
         /// <param name="systemExcludedNamespaces"> List of namespaces specified by AKS to be excluded from Guardrails. </param>
         /// <param name="version"> The version of constraints to use. </param>
         /// <param name="level"> The guardrails level to be used. By default, Guardrails is enabled for all namespaces except those that AKS excludes via systemExcludedNamespaces. </param>
         /// <param name="excludedNamespaces"> List of namespaces excluded from guardrails checks. </param>
-        internal ManagedClusterGuardrailsProfile(IReadOnlyList<string> systemExcludedNamespaces, string version, ManagedClusterGuardrailsProfileLevel level, IList<string> excludedNamespaces)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterGuardrailsProfile(IReadOnlyList<string> systemExcludedNamespaces, string version, ManagedClusterGuardrailsProfileLevel level, IList<string> excludedNamespaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemExcludedNamespaces = systemExcludedNamespaces;
             Version = version;
             Level = level;
             ExcludedNamespaces = excludedNamespaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterGuardrailsProfile"/> for deserialization. </summary>
+        internal ManagedClusterGuardrailsProfile()
+        {
         }
 
         /// <summary> List of namespaces specified by AKS to be excluded from Guardrails. </summary>

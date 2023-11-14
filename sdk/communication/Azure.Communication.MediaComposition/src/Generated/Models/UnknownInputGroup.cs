@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
@@ -12,14 +14,15 @@ namespace Azure.Communication.MediaComposition
     /// <summary> The UnknownInputGroup. </summary>
     internal partial class UnknownInputGroup : InputGroup
     {
-        /// <summary> Initializes a new instance of UnknownInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownInputGroup"/>. </summary>
         /// <param name="kind"> Kind of input group. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
         /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
-        internal UnknownInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode) : base(kind, position, width, height, layer, scalingMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownInputGroup(InputGroupType kind, InputPosition position, string width, string height, string layer, ScalingMode? scalingMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, position, width, height, layer, scalingMode, serializedAdditionalRawData)
         {
             Kind = kind;
         }

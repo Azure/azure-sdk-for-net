@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The CapacityReservationGroupInstanceView. </summary>
     internal partial class CapacityReservationGroupInstanceView
     {
-        /// <summary> Initializes a new instance of CapacityReservationGroupInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupInstanceView"/>. </summary>
         internal CapacityReservationGroupInstanceView()
         {
             CapacityReservations = new ChangeTrackingList<CapacityReservationInstanceViewWithName>();
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationGroupInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupInstanceView"/>. </summary>
         /// <param name="capacityReservations"> List of instance view of the capacity reservations under the capacity reservation group. </param>
-        internal CapacityReservationGroupInstanceView(IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CapacityReservationGroupInstanceView(IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CapacityReservations = capacityReservations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of instance view of the capacity reservations under the capacity reservation group. </summary>

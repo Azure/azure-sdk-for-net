@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Azure-SSIS integration runtime outbound network dependency endpoints. </summary>
     internal partial class IntegrationRuntimeOutboundNetworkDependenciesResult
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeOutboundNetworkDependenciesResult"/>. </summary>
         internal IntegrationRuntimeOutboundNetworkDependenciesResult()
         {
             Value = new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeOutboundNetworkDependenciesResult"/>. </summary>
         /// <param name="value"> The list of outbound network dependency endpoints. </param>
-        internal IntegrationRuntimeOutboundNetworkDependenciesResult(IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeOutboundNetworkDependenciesResult(IReadOnlyList<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of outbound network dependency endpoints. </summary>

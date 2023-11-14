@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> For more details see [managed AAD on AKS](https://docs.microsoft.com/azure/aks/managed-aad). </summary>
     public partial class ManagedClusterAadProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAadProfile"/>. </summary>
         public ManagedClusterAadProfile()
         {
             AdminGroupObjectIds = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAadProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAadProfile"/>. </summary>
         /// <param name="isManagedAadEnabled"> Whether to enable managed AAD. </param>
         /// <param name="isAzureRbacEnabled"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="serverAppId"> The server AAD application ID. </param>
         /// <param name="serverAppSecret"> The server AAD application secret. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<Guid> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAadProfile(bool? isManagedAadEnabled, bool? isAzureRbacEnabled, IList<Guid> adminGroupObjectIds, Guid? clientAppId, Guid? serverAppId, string serverAppSecret, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsManagedAadEnabled = isManagedAadEnabled;
             IsAzureRbacEnabled = isAzureRbacEnabled;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ServerAppId = serverAppId;
             ServerAppSecret = serverAppSecret;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to enable managed AAD. </summary>

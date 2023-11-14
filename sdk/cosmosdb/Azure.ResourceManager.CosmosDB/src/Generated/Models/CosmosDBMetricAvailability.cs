@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The availability of the metric. </summary>
     public partial class CosmosDBMetricAvailability
     {
-        /// <summary> Initializes a new instance of CosmosDBMetricAvailability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricAvailability"/>. </summary>
         internal CosmosDBMetricAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMetricAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricAvailability"/>. </summary>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
         /// <param name="retention"> The retention for the metric values. </param>
-        internal CosmosDBMetricAvailability(string timeGrain, string retention)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBMetricAvailability(string timeGrain, string retention, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeGrain = timeGrain;
             Retention = retention;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time grain to be used to summarize the metric values. </summary>

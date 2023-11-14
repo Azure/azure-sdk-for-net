@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The ComputeScheduledEventsProfile. </summary>
     public partial class ComputeScheduledEventsProfile
     {
-        /// <summary> Initializes a new instance of ComputeScheduledEventsProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduledEventsProfile"/>. </summary>
         public ComputeScheduledEventsProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeScheduledEventsProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeScheduledEventsProfile"/>. </summary>
         /// <param name="terminateNotificationProfile"> Specifies Terminate Scheduled Event related configurations. </param>
         /// <param name="osImageNotificationProfile"> Specifies OS Image Scheduled Event related configurations. </param>
-        internal ComputeScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile, OSImageNotificationProfile osImageNotificationProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile, OSImageNotificationProfile osImageNotificationProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TerminateNotificationProfile = terminateNotificationProfile;
             OSImageNotificationProfile = osImageNotificationProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>

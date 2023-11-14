@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,14 +15,17 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Metadata of the diagnostics response. </summary>
     public partial class ContainerAppDiagnosticsMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsMetadata"/>. </summary>
         public ContainerAppDiagnosticsMetadata()
         {
             SupportTopicList = new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>();
             AnalysisTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticsMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticsMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="supportTopicList"> List of support topics. </param>
         /// <param name="analysisTypes"> List of analysis types. </param>
         /// <param name="score"> Authors' names of the detector. </param>
-        internal ContainerAppDiagnosticsMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string author, string category, IList<ContainerAppDiagnosticSupportTopic> supportTopicList, IList<string> analysisTypes, float? score) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticsMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string author, string category, IList<ContainerAppDiagnosticSupportTopic> supportTopicList, IList<string> analysisTypes, float? score, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Author = author;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             SupportTopicList = supportTopicList;
             AnalysisTypes = analysisTypes;
             Score = score;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Details of the diagnostics info. </summary>

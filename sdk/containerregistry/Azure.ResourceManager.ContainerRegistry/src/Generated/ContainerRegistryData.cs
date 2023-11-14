@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             PrivateEndpointConnections = new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +58,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
         /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
         /// <param name="zoneRedundancy"> Whether or not zone redundancy is enabled for this container registry. </param>
-        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IReadOnlyList<string> dataEndpointHostNames, IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistrySku sku, ManagedServiceIdentity identity, string loginServer, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, IReadOnlyList<string> dataEndpointHostNames, IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, ContainerRegistryZoneRedundancy? zoneRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -73,6 +77,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             PublicNetworkAccess = publicNetworkAccess;
             NetworkRuleBypassOptions = networkRuleBypassOptions;
             ZoneRedundancy = zoneRedundancy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryData"/> for deserialization. </summary>
+        internal ContainerRegistryData()
+        {
         }
 
         /// <summary> The SKU of the container registry. </summary>

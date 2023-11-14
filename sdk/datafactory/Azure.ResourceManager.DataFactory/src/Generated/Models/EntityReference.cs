@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The entity reference. </summary>
     public partial class EntityReference
     {
-        /// <summary> Initializes a new instance of EntityReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EntityReference"/>. </summary>
         public EntityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of EntityReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityReference"/>. </summary>
         /// <param name="integrationRuntimeEntityReferenceType"> The type of this referenced entity. </param>
         /// <param name="referenceName"> The name of this referenced entity. </param>
-        internal EntityReference(IntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntityReference(IntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IntegrationRuntimeEntityReferenceType = integrationRuntimeEntityReferenceType;
             ReferenceName = referenceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of this referenced entity. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The definition of a query. </summary>
     public partial class QueryDefinition
     {
-        /// <summary> Initializes a new instance of QueryDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryDefinition"/>. </summary>
         /// <param name="exportType"> The type of the query. </param>
         /// <param name="timeframe"> The time frame for pulling data for the query. If custom, then a specific time period must be provided. </param>
         /// <param name="dataset"> Has definition for data in this query. </param>
@@ -25,6 +29,26 @@ namespace Azure.ResourceManager.CostManagement.Models
             ExportType = exportType;
             Timeframe = timeframe;
             Dataset = dataset;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryDefinition"/>. </summary>
+        /// <param name="exportType"> The type of the query. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the query. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the query. </param>
+        /// <param name="dataset"> Has definition for data in this query. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryDefinition(ExportType exportType, TimeframeType timeframe, QueryTimePeriod timePeriod, QueryDataset dataset, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ExportType = exportType;
+            Timeframe = timeframe;
+            TimePeriod = timePeriod;
+            Dataset = dataset;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryDefinition"/> for deserialization. </summary>
+        internal QueryDefinition()
+        {
         }
 
         /// <summary> The type of the query. </summary>

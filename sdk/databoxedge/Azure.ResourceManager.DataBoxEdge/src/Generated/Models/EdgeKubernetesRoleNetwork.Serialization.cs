@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRoleNetwork
+    public partial class EdgeKubernetesRoleNetwork : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRoleNetwork>
     {
-        internal static EdgeKubernetesRoleNetwork DeserializeEdgeKubernetesRoleNetwork(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRoleNetwork>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EdgeKubernetesRoleNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EdgeKubernetesRoleNetwork>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EdgeKubernetesRoleNetwork>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CniConfig))
+                {
+                    writer.WritePropertyName("cniConfig"u8);
+                    writer.WriteObjectValue(CniConfig);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LoadBalancerConfig))
+                {
+                    writer.WritePropertyName("loadBalancerConfig"u8);
+                    writer.WriteObjectValue(LoadBalancerConfig);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EdgeKubernetesRoleNetwork IJsonModel<EdgeKubernetesRoleNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeKubernetesRoleNetwork(document.RootElement, options);
+        }
+
+        internal static EdgeKubernetesRoleNetwork DeserializeEdgeKubernetesRoleNetwork(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CniConfig> cniConfig = default;
             Optional<DataBoxEdgeLoadBalancerConfig> loadBalancerConfig = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cniConfig"u8))
@@ -40,8 +104,38 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     loadBalancerConfig = DataBoxEdgeLoadBalancerConfig.DeserializeDataBoxEdgeLoadBalancerConfig(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeKubernetesRoleNetwork(cniConfig.Value, loadBalancerConfig.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdgeKubernetesRoleNetwork(cniConfig.Value, loadBalancerConfig.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeKubernetesRoleNetwork>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EdgeKubernetesRoleNetwork IPersistableModel<EdgeKubernetesRoleNetwork>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleNetwork)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEdgeKubernetesRoleNetwork(document.RootElement, options);
+        }
+
+        string IPersistableModel<EdgeKubernetesRoleNetwork>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

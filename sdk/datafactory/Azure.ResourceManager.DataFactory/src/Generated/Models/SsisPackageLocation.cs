@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SSIS package location. </summary>
     public partial class SsisPackageLocation
     {
-        /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisPackageLocation"/>. </summary>
         public SsisPackageLocation()
         {
             ChildPackages = new ChangeTrackingList<SsisChildPackage>();
         }
 
-        /// <summary> Initializes a new instance of SsisPackageLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisPackageLocation"/>. </summary>
         /// <param name="packagePath"> The SSIS package path. Type: string (or Expression with resultType string). </param>
         /// <param name="locationType"> The type of SSIS package location. </param>
         /// <param name="packagePassword"> Password of the package. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageContent"> The embedded package content. Type: string (or Expression with resultType string). </param>
         /// <param name="packageLastModifiedDate"> The embedded package last modified date. </param>
         /// <param name="childPackages"> The embedded child package list. </param>
-        internal SsisPackageLocation(DataFactoryElement<string> packagePath, SsisPackageLocationType? locationType, DataFactorySecretBaseDefinition packagePassword, SsisAccessCredential accessCredential, DataFactoryElement<string> configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, DataFactoryElement<string> packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisPackageLocation(DataFactoryElement<string> packagePath, SsisPackageLocationType? locationType, DataFactorySecretBaseDefinition packagePassword, SsisAccessCredential accessCredential, DataFactoryElement<string> configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, DataFactoryElement<string> packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackagePath = packagePath;
             LocationType = locationType;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             PackageContent = packageContent;
             PackageLastModifiedDate = packageLastModifiedDate;
             ChildPackages = childPackages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SSIS package path. Type: string (or Expression with resultType string). </summary>

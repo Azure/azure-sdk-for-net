@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB location metadata. </summary>
     public partial class CosmosDBLocationProperties
     {
-        /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationProperties"/>. </summary>
         public CosmosDBLocationProperties()
         {
             BackupStorageRedundancies = new ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationProperties"/>. </summary>
         /// <param name="doesSupportAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
         /// <param name="isResidencyRestricted"> Flag indicating whether the location is residency sensitive. </param>
         /// <param name="backupStorageRedundancies"> The properties of available backup storage redundancies. </param>
         /// <param name="isSubscriptionRegionAccessAllowedForRegular"> Flag indicating whether the subscription have access in region for Non-Availability Zones. </param>
         /// <param name="isSubscriptionRegionAccessAllowedForAz"> Flag indicating whether the subscription have access in region for Availability Zones(Az). </param>
         /// <param name="status"> Enum to indicate current buildout status of the region. </param>
-        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies, bool? isSubscriptionRegionAccessAllowedForRegular, bool? isSubscriptionRegionAccessAllowedForAz, CosmosDBStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies, bool? isSubscriptionRegionAccessAllowedForRegular, bool? isSubscriptionRegionAccessAllowedForAz, CosmosDBStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
             IsResidencyRestricted = isResidencyRestricted;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IsSubscriptionRegionAccessAllowedForRegular = isSubscriptionRegionAccessAllowedForRegular;
             IsSubscriptionRegionAccessAllowedForAz = isSubscriptionRegionAccessAllowedForAz;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag indicating whether the location supports availability zones or not. </summary>

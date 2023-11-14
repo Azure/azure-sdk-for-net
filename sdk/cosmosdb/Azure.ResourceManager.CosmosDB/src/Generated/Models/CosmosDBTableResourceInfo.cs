@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB table resource object. </summary>
     public partial class CosmosDBTableResourceInfo
     {
-        /// <summary> Initializes a new instance of CosmosDBTableResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CosmosDBTableResourceInfo(string tableName)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             TableName = tableName;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB table. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
-        internal CosmosDBTableResourceInfo(string tableName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBTableResourceInfo(string tableName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TableName = tableName;
             RestoreParameters = restoreParameters;
             CreateMode = createMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/> for deserialization. </summary>
+        internal CosmosDBTableResourceInfo()
+        {
         }
 
         /// <summary> Name of the Cosmos DB table. </summary>

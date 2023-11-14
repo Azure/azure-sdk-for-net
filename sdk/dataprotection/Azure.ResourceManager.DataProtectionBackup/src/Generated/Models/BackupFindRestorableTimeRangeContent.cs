@@ -6,17 +6,39 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> List Restore Ranges Request. </summary>
     public partial class BackupFindRestorableTimeRangeContent
     {
-        /// <summary> Initializes a new instance of BackupFindRestorableTimeRangeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeContent"/>. </summary>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         public BackupFindRestorableTimeRangeContent(RestoreSourceDataStoreType sourceDataStoreType)
         {
             SourceDataStoreType = sourceDataStoreType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeContent"/>. </summary>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="startOn"> Start time for the List Restore Ranges request. ISO 8601 format. </param>
+        /// <param name="endOn"> End time for the List Restore Ranges request. ISO 8601 format. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupFindRestorableTimeRangeContent(RestoreSourceDataStoreType sourceDataStoreType, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceDataStoreType = sourceDataStoreType;
+            StartOn = startOn;
+            EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeContent"/> for deserialization. </summary>
+        internal BackupFindRestorableTimeRangeContent()
+        {
         }
 
         /// <summary> Gets or sets the type of the source data store. </summary>

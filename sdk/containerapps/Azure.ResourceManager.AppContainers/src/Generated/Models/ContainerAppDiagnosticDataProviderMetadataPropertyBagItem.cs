@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Property details. </summary>
     public partial class ContainerAppDiagnosticDataProviderMetadataPropertyBagItem
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadataPropertyBagItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/>. </summary>
         public ContainerAppDiagnosticDataProviderMetadataPropertyBagItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadataPropertyBagItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadataPropertyBagItem"/>. </summary>
         /// <param name="name"> Property name. </param>
         /// <param name="value"> Property value. </param>
-        internal ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticDataProviderMetadataPropertyBagItem(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Property name. </summary>

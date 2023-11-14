@@ -5,16 +5,86 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupJobSubTask
+    public partial class BackupJobSubTask : IUtf8JsonSerializable, IJsonModel<BackupJobSubTask>
     {
-        internal static BackupJobSubTask DeserializeBackupJobSubTask(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupJobSubTask>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BackupJobSubTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BackupJobSubTask>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BackupJobSubTask>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(AdditionalDetails))
+            {
+                writer.WritePropertyName("additionalDetails"u8);
+                writer.WriteStartObject();
+                foreach (var item in AdditionalDetails)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("taskId"u8);
+            writer.WriteNumberValue(TaskId);
+            writer.WritePropertyName("taskName"u8);
+            writer.WriteStringValue(TaskName);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TaskProgress))
+                {
+                    writer.WritePropertyName("taskProgress"u8);
+                    writer.WriteStringValue(TaskProgress);
+                }
+            }
+            writer.WritePropertyName("taskStatus"u8);
+            writer.WriteStringValue(TaskStatus);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BackupJobSubTask IJsonModel<BackupJobSubTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupJobSubTask)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupJobSubTask(document.RootElement, options);
+        }
+
+        internal static BackupJobSubTask DeserializeBackupJobSubTask(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +94,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string taskName = default;
             Optional<string> taskProgress = default;
             string taskStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalDetails"u8))
@@ -60,8 +132,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     taskStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupJobSubTask(Optional.ToDictionary(additionalDetails), taskId, taskName, taskProgress.Value, taskStatus);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BackupJobSubTask(Optional.ToDictionary(additionalDetails), taskId, taskName, taskProgress.Value, taskStatus, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupJobSubTask>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupJobSubTask)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BackupJobSubTask IPersistableModel<BackupJobSubTask>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BackupJobSubTask)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBackupJobSubTask(document.RootElement, options);
+        }
+
+        string IPersistableModel<BackupJobSubTask>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

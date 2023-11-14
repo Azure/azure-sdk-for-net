@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
         /// <param name="softDeletePolicy"> Contains information about the soft deletion policy of the gallery. </param>
         /// <param name="sharingStatus"> Sharing status of current gallery. </param>
-        internal GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, GalleryIdentifier identifier, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, GalleryIdentifier identifier, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Identifier = identifier;
@@ -45,6 +50,12 @@ namespace Azure.ResourceManager.Compute
             SharingProfile = sharingProfile;
             SoftDeletePolicy = softDeletePolicy;
             SharingStatus = sharingStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryData"/> for deserialization. </summary>
+        internal GalleryData()
+        {
         }
 
         /// <summary> The description of this Shared Image Gallery resource. This property is updatable. </summary>

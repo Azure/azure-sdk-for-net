@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a VM size. </summary>
     public partial class VirtualMachineSize
     {
-        /// <summary> Initializes a new instance of VirtualMachineSize. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSize"/>. </summary>
         internal VirtualMachineSize()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineSize"/>. </summary>
         /// <param name="name"> The name of the virtual machine size. </param>
         /// <param name="numberOfCores"> The number of cores supported by the virtual machine size. For Constrained vCPU capable VM sizes, this number represents the total vCPUs of quota that the VM uses. For accurate vCPU count, please refer to https://docs.microsoft.com/azure/virtual-machines/constrained-vcpu or https://docs.microsoft.com/rest/api/compute/resourceskus/list. </param>
         /// <param name="osDiskSizeInMB"> The OS disk size, in MB, allowed by the virtual machine size. </param>
         /// <param name="resourceDiskSizeInMB"> The resource disk size, in MB, allowed by the virtual machine size. </param>
         /// <param name="memoryInMB"> The amount of memory, in MB, supported by the virtual machine size. </param>
         /// <param name="maxDataDiskCount"> The maximum number of data disks that can be attached to the virtual machine size. </param>
-        internal VirtualMachineSize(string name, int? numberOfCores, int? osDiskSizeInMB, int? resourceDiskSizeInMB, int? memoryInMB, int? maxDataDiskCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineSize(string name, int? numberOfCores, int? osDiskSizeInMB, int? resourceDiskSizeInMB, int? memoryInMB, int? maxDataDiskCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             NumberOfCores = numberOfCores;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceDiskSizeInMB = resourceDiskSizeInMB;
             MemoryInMB = memoryInMB;
             MaxDataDiskCount = maxDataDiskCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the virtual machine size. </summary>

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The init container definition. </summary>
     public partial class InitContainerDefinitionContent
     {
-        /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InitContainerDefinitionContent"/>. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public InitContainerDefinitionContent(string name)
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             VolumeMounts = new ChangeTrackingList<ContainerVolumeMount>();
         }
 
-        /// <summary> Initializes a new instance of InitContainerDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerDefinitionContent"/>. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <param name="image"> The image of the init container. </param>
         /// <param name="command"> The command to execute within the init container in exec form. </param>
@@ -35,7 +38,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="instanceView"> The instance view of the init container. Only valid in response. </param>
         /// <param name="volumeMounts"> The volume mounts available to the init container. </param>
         /// <param name="securityContext"> The container security properties. </param>
-        internal InitContainerDefinitionContent(string name, string image, IList<string> command, IList<ContainerEnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<ContainerVolumeMount> volumeMounts, ContainerSecurityContextDefinition securityContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InitContainerDefinitionContent(string name, string image, IList<string> command, IList<ContainerEnvironmentVariable> environmentVariables, InitContainerPropertiesDefinitionInstanceView instanceView, IList<ContainerVolumeMount> volumeMounts, ContainerSecurityContextDefinition securityContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Image = image;
@@ -44,6 +48,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             InstanceView = instanceView;
             VolumeMounts = volumeMounts;
             SecurityContext = securityContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InitContainerDefinitionContent"/> for deserialization. </summary>
+        internal InitContainerDefinitionContent()
+        {
         }
 
         /// <summary> The name for the init container. </summary>

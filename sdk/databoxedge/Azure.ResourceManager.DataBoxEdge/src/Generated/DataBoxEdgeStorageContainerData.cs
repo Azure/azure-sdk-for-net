@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeStorageContainerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
         /// <param name="dataFormat"> DataFormat for Container. </param>
         public DataBoxEdgeStorageContainerData(DataBoxEdgeStorageContainerDataFormat dataFormat)
         {
             DataFormat = dataFormat;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeStorageContainerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +38,19 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="dataFormat"> DataFormat for Container. </param>
         /// <param name="refreshDetails"> Details of the refresh job on this container. </param>
         /// <param name="createdOn"> The UTC time when container got created. </param>
-        internal DataBoxEdgeStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeStorageContainerStatus? containerStatus, DataBoxEdgeStorageContainerDataFormat dataFormat, DataBoxEdgeRefreshDetails refreshDetails, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeStorageContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeStorageContainerStatus? containerStatus, DataBoxEdgeStorageContainerDataFormat dataFormat, DataBoxEdgeRefreshDetails refreshDetails, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ContainerStatus = containerStatus;
             DataFormat = dataFormat;
             RefreshDetails = refreshDetails;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeStorageContainerData"/> for deserialization. </summary>
+        internal DataBoxEdgeStorageContainerData()
+        {
         }
 
         /// <summary> Current status of the container. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The AgentPoolAvailableVersion. </summary>
     public partial class AgentPoolAvailableVersion
     {
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
         internal AgentPoolAvailableVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolAvailableVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAvailableVersion"/>. </summary>
         /// <param name="isDefault"> Whether this version is the default agent pool version. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether Kubernetes version is currently in preview. </param>
-        internal AgentPoolAvailableVersion(bool? isDefault, string kubernetesVersion, bool? isPreview)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolAvailableVersion(bool? isDefault, string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsDefault = isDefault;
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether this version is the default agent pool version. </summary>

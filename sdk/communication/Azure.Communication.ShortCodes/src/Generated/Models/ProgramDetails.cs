@@ -14,14 +14,17 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The ProgramDetails. </summary>
     public partial class ProgramDetails
     {
-        /// <summary> Initializes a new instance of ProgramDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProgramDetails"/>. </summary>
         public ProgramDetails()
         {
             PreferredVanityNumbers = new ChangeTrackingList<string>();
             SignUpTypes = new ChangeTrackingList<ProgramSignUpType>();
         }
 
-        /// <summary> Initializes a new instance of ProgramDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgramDetails"/>. </summary>
         /// <param name="isVanity"> Set to true if the request is for a vanity number. </param>
         /// <param name="preferredVanityNumbers">
         /// Priority ordered list of preferred vanity numbers.
@@ -45,7 +48,8 @@ namespace Azure.Communication.ShortCodes.Models
         /// Should follow ISO 8601 internet format for datetimes.
         /// e.g. 2021-08-17T22:02:51.316Z, 2021-08-17T16:39:57-08:00, etc.
         /// </param>
-        internal ProgramDetails(bool? isVanity, IList<string> preferredVanityNumbers, NumberType? numberType, bool? isPoliticalCampaign, string name, string description, Uri url, IList<ProgramSignUpType> signUpTypes, Uri signUpUrl, Uri termsOfServiceUrl, Uri privacyPolicyUrl, DateTimeOffset? expectedDateOfService)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProgramDetails(bool? isVanity, IList<string> preferredVanityNumbers, NumberType? numberType, bool? isPoliticalCampaign, string name, string description, Uri url, IList<ProgramSignUpType> signUpTypes, Uri signUpUrl, Uri termsOfServiceUrl, Uri privacyPolicyUrl, DateTimeOffset? expectedDateOfService, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsVanity = isVanity;
             PreferredVanityNumbers = preferredVanityNumbers;
@@ -59,6 +63,7 @@ namespace Azure.Communication.ShortCodes.Models
             TermsOfServiceUrl = termsOfServiceUrl;
             PrivacyPolicyUrl = privacyPolicyUrl;
             ExpectedDateOfService = expectedDateOfService;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Set to true if the request is for a vanity number. </summary>

@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Modern Reservation transaction resource. </summary>
     public partial class ConsumptionModernReservationTransaction : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionModernReservationTransaction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationTransaction"/>. </summary>
         internal ConsumptionModernReservationTransaction()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernReservationTransaction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationTransaction"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="reservationOrderName"> The name of the reservation order. </param>
         /// <param name="term"> This is the term of the transaction. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ConsumptionModernReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, decimal? amount, string armSkuName, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileName, string currency, string description, DateTimeOffset? transactOn, string eventType, string invoice, ResourceIdentifier invoiceId, ResourceIdentifier invoiceSectionId, string invoiceSectionName, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, decimal? quantity, string region, string reservationOrderId, string reservationOrderName, string term, IReadOnlyList<string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionModernReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, decimal? amount, string armSkuName, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileName, string currency, string description, DateTimeOffset? transactOn, string eventType, string invoice, ResourceIdentifier invoiceId, ResourceIdentifier invoiceSectionId, string invoiceSectionName, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, decimal? quantity, string region, string reservationOrderId, string reservationOrderName, string term, IReadOnlyList<string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Amount = amount;
             ArmSkuName = armSkuName;
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ReservationOrderName = reservationOrderName;
             Term = term;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The charge of the transaction. </summary>

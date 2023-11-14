@@ -5,14 +5,39 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Job details for update. </summary>
     public partial class UpdateJobDetails
     {
-        /// <summary> Initializes a new instance of UpdateJobDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateJobDetails"/>. </summary>
         public UpdateJobDetails()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateJobDetails"/>. </summary>
+        /// <param name="contactDetails"> Contact details for notification and shipping. </param>
+        /// <param name="shippingAddress"> Shipping address of the customer. </param>
+        /// <param name="reverseShippingDetails"> Reverse Shipping Address and contact details for a job. </param>
+        /// <param name="preferences"> Preferences related to the order. </param>
+        /// <param name="keyEncryptionKey"> Key encryption key for the job. </param>
+        /// <param name="returnToCustomerPackageDetails"> Return package details of job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateJobDetails(DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, ReverseShippingDetails reverseShippingDetails, DataBoxOrderPreferences preferences, DataBoxKeyEncryptionKey keyEncryptionKey, PackageCarrierDetails returnToCustomerPackageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContactDetails = contactDetails;
+            ShippingAddress = shippingAddress;
+            ReverseShippingDetails = reverseShippingDetails;
+            Preferences = preferences;
+            KeyEncryptionKey = keyEncryptionKey;
+            ReturnToCustomerPackageDetails = returnToCustomerPackageDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contact details for notification and shipping. </summary>

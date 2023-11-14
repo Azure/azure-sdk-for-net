@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the virtualMachineUpdate. </summary>
     public partial class VirtualMachinePatch
     {
-        /// <summary> Initializes a new instance of VirtualMachinePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePatch"/>. </summary>
         public VirtualMachinePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePatch"/>. </summary>
+        /// <param name="tags"> Gets or sets the Resource tags. </param>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="hardwareProfile"> Defines the resource properties. </param>
+        /// <param name="storageProfile"> Defines the resource update properties. </param>
+        /// <param name="networkProfile"> Defines the update resource properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachinePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, HardwareProfile hardwareProfile, StorageProfileUpdate storageProfile, NetworkProfileUpdate networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The job error items. </summary>
     public partial class DataBoxEdgeJobErrorItem
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeJobErrorItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobErrorItem"/>. </summary>
         internal DataBoxEdgeJobErrorItem()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeJobErrorItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeJobErrorItem"/>. </summary>
         /// <param name="recommendations"> The recommended actions. </param>
         /// <param name="code"> The code intended for programmatic access. </param>
         /// <param name="message"> The message that describes the error in detail. </param>
-        internal DataBoxEdgeJobErrorItem(IReadOnlyList<string> recommendations, string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeJobErrorItem(IReadOnlyList<string> recommendations, string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Recommendations = recommendations;
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The recommended actions. </summary>

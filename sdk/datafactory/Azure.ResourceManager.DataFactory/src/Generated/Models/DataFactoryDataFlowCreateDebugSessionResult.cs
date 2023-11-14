@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Response body structure for creating data flow debug session. </summary>
     public partial class DataFactoryDataFlowCreateDebugSessionResult
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowCreateDebugSessionResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowCreateDebugSessionResult"/>. </summary>
         internal DataFactoryDataFlowCreateDebugSessionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowCreateDebugSessionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowCreateDebugSessionResult"/>. </summary>
         /// <param name="status"> The state of the debug session. </param>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
-        internal DataFactoryDataFlowCreateDebugSessionResult(string status, Guid? sessionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDataFlowCreateDebugSessionResult(string status, Guid? sessionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             SessionId = sessionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the debug session. </summary>

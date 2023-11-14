@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The response from the List FleetMembers operation. </summary>
     internal partial class FleetMembersListResult
     {
-        /// <summary> Initializes a new instance of FleetMembersListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FleetMembersListResult"/>. </summary>
         internal FleetMembersListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceFleetMemberData>();
         }
 
-        /// <summary> Initializes a new instance of FleetMembersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetMembersListResult"/>. </summary>
         /// <param name="value"> The list of members in a given Fleet. </param>
         /// <param name="nextLink"> The URL to get the next page of Fleet members. </param>
-        internal FleetMembersListResult(IReadOnlyList<ContainerServiceFleetMemberData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FleetMembersListResult(IReadOnlyList<ContainerServiceFleetMemberData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of members in a given Fleet. </summary>

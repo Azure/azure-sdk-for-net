@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> ResourceGuardProxyBase object, used in ResourceGuardProxyBaseResource. </summary>
     public partial class ResourceGuardProxyBase
     {
-        /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBase"/>. </summary>
         public ResourceGuardProxyBase()
         {
             ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBase"/>. </summary>
         /// <param name="resourceGuardResourceId"></param>
         /// <param name="resourceGuardOperationDetails"></param>
         /// <param name="lastUpdatedTime"></param>
         /// <param name="description"></param>
-        internal ResourceGuardProxyBase(string resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, string lastUpdatedTime, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardProxyBase(string resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, string lastUpdatedTime, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceGuardResourceId = resourceGuardResourceId;
             ResourceGuardOperationDetails = resourceGuardOperationDetails;
             LastUpdatedTime = lastUpdatedTime;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the resource guard resource id. </summary>

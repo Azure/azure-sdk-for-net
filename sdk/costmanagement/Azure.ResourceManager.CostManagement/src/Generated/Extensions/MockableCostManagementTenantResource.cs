@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetCostManagementAlerts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CostManagementAlertAlertsRestClient.CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetCostManagementAlerts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CostManagementAlertResource(Client, CostManagementAlertData.DeserializeCostManagementAlertData(e)), CostManagementAlertAlertsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetCostManagementAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>

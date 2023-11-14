@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -13,7 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The artifact's platform, consisting of operating system and architecture. </summary>
     public partial class ArtifactManifestPlatform
     {
-        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
         internal ArtifactManifestPlatform(string digest)
@@ -23,15 +27,22 @@ namespace Azure.Containers.ContainerRegistry
             Digest = digest;
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
-        internal ArtifactManifestPlatform(string digest, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactManifestPlatform(string digest, ArtifactArchitecture? architecture, ArtifactOperatingSystem? operatingSystem, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Digest = digest;
             Architecture = architecture;
             OperatingSystem = operatingSystem;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPlatform"/> for deserialization. </summary>
+        internal ArtifactManifestPlatform()
+        {
         }
 
         /// <summary> Manifest digest. </summary>

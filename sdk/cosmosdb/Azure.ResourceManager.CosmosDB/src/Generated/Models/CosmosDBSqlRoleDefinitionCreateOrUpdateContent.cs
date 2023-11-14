@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,29 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Parameters to create and update an Azure Cosmos DB SQL Role Definition. </summary>
     public partial class CosmosDBSqlRoleDefinitionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleDefinitionCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleDefinitionCreateOrUpdateContent"/>. </summary>
         public CosmosDBSqlRoleDefinitionCreateOrUpdateContent()
         {
             AssignableScopes = new ChangeTrackingList<string>();
             Permissions = new ChangeTrackingList<CosmosDBSqlRolePermission>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleDefinitionCreateOrUpdateContent"/>. </summary>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="roleDefinitionType"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
+        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlRoleDefinitionCreateOrUpdateContent(string roleName, CosmosDBSqlRoleDefinitionType? roleDefinitionType, IList<string> assignableScopes, IList<CosmosDBSqlRolePermission> permissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RoleName = roleName;
+            RoleDefinitionType = roleDefinitionType;
+            AssignableScopes = assignableScopes;
+            Permissions = permissions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>

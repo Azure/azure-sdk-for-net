@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Package store for the SSIS integration runtime. </summary>
     public partial class DataFactoryPackageStore
     {
-        /// <summary> Initializes a new instance of DataFactoryPackageStore. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPackageStore"/>. </summary>
         /// <param name="name"> The name of the package store. </param>
         /// <param name="packageStoreLinkedService"> The package store linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="packageStoreLinkedService"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             Name = name;
             PackageStoreLinkedService = packageStoreLinkedService;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPackageStore"/>. </summary>
+        /// <param name="name"> The name of the package store. </param>
+        /// <param name="packageStoreLinkedService"> The package store linked service reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPackageStore(string name, EntityReference packageStoreLinkedService, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            PackageStoreLinkedService = packageStoreLinkedService;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPackageStore"/> for deserialization. </summary>
+        internal DataFactoryPackageStore()
+        {
         }
 
         /// <summary> The name of the package store. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Support topic information. </summary>
     public partial class ContainerAppDiagnosticSupportTopic
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticSupportTopic. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticSupportTopic"/>. </summary>
         public ContainerAppDiagnosticSupportTopic()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticSupportTopic. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticSupportTopic"/>. </summary>
         /// <param name="id"> Unique topic identifier. </param>
         /// <param name="pesId"> PES identifier. </param>
-        internal ContainerAppDiagnosticSupportTopic(string id, string pesId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticSupportTopic(string id, string pesId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PesId = pesId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique topic identifier. </summary>

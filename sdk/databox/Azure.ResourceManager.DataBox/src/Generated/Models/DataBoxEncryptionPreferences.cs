@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Preferences related to the Encryption. </summary>
     public partial class DataBoxEncryptionPreferences
     {
-        /// <summary> Initializes a new instance of DataBoxEncryptionPreferences. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEncryptionPreferences"/>. </summary>
         public DataBoxEncryptionPreferences()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEncryptionPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEncryptionPreferences"/>. </summary>
         /// <param name="doubleEncryption"> Defines secondary layer of software-based encryption enablement. </param>
         /// <param name="hardwareEncryption"> Defines Hardware level encryption (Only for disk). </param>
-        internal DataBoxEncryptionPreferences(DataBoxDoubleEncryption? doubleEncryption, HardwareEncryption? hardwareEncryption)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEncryptionPreferences(DataBoxDoubleEncryption? doubleEncryption, HardwareEncryption? hardwareEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DoubleEncryption = doubleEncryption;
             HardwareEncryption = hardwareEncryption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines secondary layer of software-based encryption enablement. </summary>

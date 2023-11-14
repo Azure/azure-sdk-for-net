@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 
@@ -17,7 +18,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="name">
         /// The unique name of the firewall rule to create.
         /// Serialized Name: CreateFirewallRuleWithAccountParameters.name
@@ -40,6 +44,33 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             Name = name;
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="name">
+        /// The unique name of the firewall rule to create.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.name
+        /// </param>
+        /// <param name="startIPAddress">
+        /// The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.properties.startIpAddress
+        /// </param>
+        /// <param name="endIPAddress">
+        /// The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol.
+        /// Serialized Name: CreateFirewallRuleWithAccountParameters.properties.endIpAddress
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(string name, IPAddress startIPAddress, IPAddress endIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent"/> for deserialization. </summary>
+        internal FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent()
+        {
         }
 
         /// <summary>

@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class BandwidthScheduleData : ResourceData
     {
-        /// <summary> Initializes a new instance of BandwidthScheduleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/>. </summary>
         /// <param name="startOn"> The start time of the schedule in UTC. </param>
         /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             Days = days.ToList();
         }
 
-        /// <summary> Initializes a new instance of BandwidthScheduleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,12 +48,19 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="stopOn"> The stop time of the schedule in UTC. </param>
         /// <param name="rateInMbps"> The bandwidth rate in Mbps. </param>
         /// <param name="days"> The days of the week when this schedule is applicable. </param>
-        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IList<DataBoxEdgeDayOfWeek> days) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BandwidthScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan startOn, TimeSpan stopOn, int rateInMbps, IList<DataBoxEdgeDayOfWeek> days, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             StopOn = stopOn;
             RateInMbps = rateInMbps;
             Days = days;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BandwidthScheduleData"/> for deserialization. </summary>
+        internal BandwidthScheduleData()
+        {
         }
 
         /// <summary> The start time of the schedule in UTC. </summary>

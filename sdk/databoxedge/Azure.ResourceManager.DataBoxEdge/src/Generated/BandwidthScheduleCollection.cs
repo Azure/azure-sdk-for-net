@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BandwidthScheduleResource(Client, BandwidthScheduleData.DeserializeBandwidthScheduleData(e)), _bandwidthScheduleClientDiagnostics, Pipeline, "BandwidthScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BandwidthScheduleResource(Client, BandwidthScheduleData.DeserializeBandwidthScheduleData(e)), _bandwidthScheduleClientDiagnostics, Pipeline, "BandwidthScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _bandwidthScheduleRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BandwidthScheduleResource(Client, BandwidthScheduleData.DeserializeBandwidthScheduleData(e)), _bandwidthScheduleClientDiagnostics, Pipeline, "BandwidthScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BandwidthScheduleResource(Client, BandwidthScheduleData.DeserializeBandwidthScheduleData(e)), _bandwidthScheduleClientDiagnostics, Pipeline, "BandwidthScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

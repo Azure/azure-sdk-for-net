@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Map Power Query mashup query to sink dataset(s). </summary>
     public partial class PowerQuerySinkMapping
     {
-        /// <summary> Initializes a new instance of PowerQuerySinkMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySinkMapping"/>. </summary>
         public PowerQuerySinkMapping()
         {
             DataflowSinks = new ChangeTrackingList<PowerQuerySink>();
         }
 
-        /// <summary> Initializes a new instance of PowerQuerySinkMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerQuerySinkMapping"/>. </summary>
         /// <param name="queryName"> Name of the query in Power Query mashup document. </param>
         /// <param name="dataflowSinks"> List of sinks mapped to Power Query mashup query. </param>
-        internal PowerQuerySinkMapping(string queryName, IList<PowerQuerySink> dataflowSinks)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PowerQuerySinkMapping(string queryName, IList<PowerQuerySink> dataflowSinks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QueryName = queryName;
             DataflowSinks = dataflowSinks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the query in Power Query mashup document. </summary>

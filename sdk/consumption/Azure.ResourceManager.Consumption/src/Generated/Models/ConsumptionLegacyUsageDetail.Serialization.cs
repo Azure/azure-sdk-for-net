@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -14,10 +16,470 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionLegacyUsageDetail
+    public partial class ConsumptionLegacyUsageDetail : IUtf8JsonSerializable, IJsonModel<ConsumptionLegacyUsageDetail>
     {
-        internal static ConsumptionLegacyUsageDetail DeserializeConsumptionLegacyUsageDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionLegacyUsageDetail>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConsumptionLegacyUsageDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConsumptionLegacyUsageDetail>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConsumptionLegacyUsageDetail>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    writer.WritePropertyName("tags"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingAccountId))
+                {
+                    writer.WritePropertyName("billingAccountId"u8);
+                    writer.WriteStringValue(BillingAccountId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingAccountName))
+                {
+                    writer.WritePropertyName("billingAccountName"u8);
+                    writer.WriteStringValue(BillingAccountName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingPeriodStartOn))
+                {
+                    writer.WritePropertyName("billingPeriodStartDate"u8);
+                    writer.WriteStringValue(BillingPeriodStartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingPeriodEndOn))
+                {
+                    writer.WritePropertyName("billingPeriodEndDate"u8);
+                    writer.WriteStringValue(BillingPeriodEndOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingProfileId))
+                {
+                    writer.WritePropertyName("billingProfileId"u8);
+                    writer.WriteStringValue(BillingProfileId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingProfileName))
+                {
+                    writer.WritePropertyName("billingProfileName"u8);
+                    writer.WriteStringValue(BillingProfileName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AccountOwnerId))
+                {
+                    writer.WritePropertyName("accountOwnerId"u8);
+                    writer.WriteStringValue(AccountOwnerId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AccountName))
+                {
+                    writer.WritePropertyName("accountName"u8);
+                    writer.WriteStringValue(AccountName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionId))
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SubscriptionName))
+                {
+                    writer.WritePropertyName("subscriptionName"u8);
+                    writer.WriteStringValue(SubscriptionName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(On))
+                {
+                    writer.WritePropertyName("date"u8);
+                    writer.WriteStringValue(On.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Product))
+                {
+                    writer.WritePropertyName("product"u8);
+                    writer.WriteStringValue(Product);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PartNumber))
+                {
+                    writer.WritePropertyName("partNumber"u8);
+                    writer.WriteStringValue(PartNumber);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MeterId))
+                {
+                    writer.WritePropertyName("meterId"u8);
+                    writer.WriteStringValue(MeterId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MeterDetails))
+                {
+                    writer.WritePropertyName("meterDetails"u8);
+                    writer.WriteObjectValue(MeterDetails);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Quantity))
+                {
+                    writer.WritePropertyName("quantity"u8);
+                    writer.WriteNumberValue(Quantity.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EffectivePrice))
+                {
+                    writer.WritePropertyName("effectivePrice"u8);
+                    writer.WriteNumberValue(EffectivePrice.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Cost))
+                {
+                    writer.WritePropertyName("cost"u8);
+                    writer.WriteNumberValue(Cost.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UnitPrice))
+                {
+                    writer.WritePropertyName("unitPrice"u8);
+                    writer.WriteNumberValue(UnitPrice.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingCurrency))
+                {
+                    writer.WritePropertyName("billingCurrency"u8);
+                    writer.WriteStringValue(BillingCurrency);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceLocation))
+                {
+                    writer.WritePropertyName("resourceLocation"u8);
+                    writer.WriteStringValue(ResourceLocation);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConsumedService))
+                {
+                    writer.WritePropertyName("consumedService"u8);
+                    writer.WriteStringValue(ConsumedService);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceId))
+                {
+                    writer.WritePropertyName("resourceId"u8);
+                    writer.WriteStringValue(ResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceName))
+                {
+                    writer.WritePropertyName("resourceName"u8);
+                    writer.WriteStringValue(ResourceName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceInfo1))
+                {
+                    writer.WritePropertyName("serviceInfo1"u8);
+                    writer.WriteStringValue(ServiceInfo1);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServiceInfo2))
+                {
+                    writer.WritePropertyName("serviceInfo2"u8);
+                    writer.WriteStringValue(ServiceInfo2);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AdditionalInfo))
+                {
+                    writer.WritePropertyName("additionalInfo"u8);
+                    writer.WriteStringValue(AdditionalInfo);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InvoiceSection))
+                {
+                    writer.WritePropertyName("invoiceSection"u8);
+                    writer.WriteStringValue(InvoiceSection);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CostCenter))
+                {
+                    writer.WritePropertyName("costCenter"u8);
+                    writer.WriteStringValue(CostCenter);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceGroup))
+                {
+                    writer.WritePropertyName("resourceGroup"u8);
+                    writer.WriteStringValue(ResourceGroup);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ReservationId))
+                {
+                    writer.WritePropertyName("reservationId"u8);
+                    writer.WriteStringValue(ReservationId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ReservationName))
+                {
+                    writer.WritePropertyName("reservationName"u8);
+                    writer.WriteStringValue(ReservationName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProductOrderId))
+                {
+                    writer.WritePropertyName("productOrderId"u8);
+                    writer.WriteStringValue(ProductOrderId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProductOrderName))
+                {
+                    writer.WritePropertyName("productOrderName"u8);
+                    writer.WriteStringValue(ProductOrderName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OfferId))
+                {
+                    writer.WritePropertyName("offerId"u8);
+                    writer.WriteStringValue(OfferId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsAzureCreditEligible))
+                {
+                    writer.WritePropertyName("isAzureCreditEligible"u8);
+                    writer.WriteBooleanValue(IsAzureCreditEligible.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Term))
+                {
+                    writer.WritePropertyName("term"u8);
+                    writer.WriteStringValue(Term);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherName))
+                {
+                    writer.WritePropertyName("publisherName"u8);
+                    writer.WriteStringValue(PublisherName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PublisherType))
+                {
+                    writer.WritePropertyName("publisherType"u8);
+                    writer.WriteStringValue(PublisherType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PlanName))
+                {
+                    writer.WritePropertyName("planName"u8);
+                    writer.WriteStringValue(PlanName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ChargeType))
+                {
+                    writer.WritePropertyName("chargeType"u8);
+                    writer.WriteStringValue(ChargeType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Frequency))
+                {
+                    writer.WritePropertyName("frequency"u8);
+                    writer.WriteStringValue(Frequency);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PayGPrice))
+                {
+                    writer.WritePropertyName("payGPrice"u8);
+                    writer.WriteNumberValue(PayGPrice.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BenefitId))
+                {
+                    writer.WritePropertyName("benefitId"u8);
+                    writer.WriteStringValue(BenefitId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BenefitName))
+                {
+                    writer.WritePropertyName("benefitName"u8);
+                    writer.WriteStringValue(BenefitName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PricingModel))
+                {
+                    writer.WritePropertyName("pricingModel"u8);
+                    writer.WriteStringValue(PricingModel.Value.ToString());
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionLegacyUsageDetail IJsonModel<ConsumptionLegacyUsageDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionLegacyUsageDetail(document.RootElement, options);
+        }
+
+        internal static ConsumptionLegacyUsageDetail DeserializeConsumptionLegacyUsageDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +537,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> benefitId = default;
             Optional<string> benefitName = default;
             Optional<ConsumptionPricingModelType> pricingModel = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -419,8 +883,38 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionLegacyUsageDetail(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), billingAccountId.Value, billingAccountName.Value, Optional.ToNullable(billingPeriodStartDate), Optional.ToNullable(billingPeriodEndDate), billingProfileId.Value, billingProfileName.Value, accountOwnerId.Value, accountName.Value, subscriptionId.Value, subscriptionName.Value, Optional.ToNullable(date), product.Value, partNumber.Value, Optional.ToNullable(meterId), meterDetails.Value, Optional.ToNullable(quantity), Optional.ToNullable(effectivePrice), Optional.ToNullable(cost), Optional.ToNullable(unitPrice), billingCurrency.Value, resourceLocation.Value, consumedService.Value, resourceId.Value, resourceName.Value, serviceInfo1.Value, serviceInfo2.Value, additionalInfo.Value, invoiceSection.Value, costCenter.Value, resourceGroup.Value, reservationId.Value, reservationName.Value, productOrderId.Value, productOrderName.Value, offerId.Value, Optional.ToNullable(isAzureCreditEligible), term.Value, publisherName.Value, publisherType.Value, planName.Value, chargeType.Value, frequency.Value, Optional.ToNullable(payGPrice), benefitId.Value, benefitName.Value, Optional.ToNullable(pricingModel));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionLegacyUsageDetail(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData, billingAccountId.Value, billingAccountName.Value, Optional.ToNullable(billingPeriodStartDate), Optional.ToNullable(billingPeriodEndDate), billingProfileId.Value, billingProfileName.Value, accountOwnerId.Value, accountName.Value, subscriptionId.Value, subscriptionName.Value, Optional.ToNullable(date), product.Value, partNumber.Value, Optional.ToNullable(meterId), meterDetails.Value, Optional.ToNullable(quantity), Optional.ToNullable(effectivePrice), Optional.ToNullable(cost), Optional.ToNullable(unitPrice), billingCurrency.Value, resourceLocation.Value, consumedService.Value, resourceId.Value, resourceName.Value, serviceInfo1.Value, serviceInfo2.Value, additionalInfo.Value, invoiceSection.Value, costCenter.Value, resourceGroup.Value, reservationId.Value, reservationName.Value, productOrderId.Value, productOrderName.Value, offerId.Value, Optional.ToNullable(isAzureCreditEligible), term.Value, publisherName.Value, publisherType.Value, planName.Value, chargeType.Value, frequency.Value, Optional.ToNullable(payGPrice), benefitId.Value, benefitName.Value, Optional.ToNullable(pricingModel));
         }
+
+        BinaryData IPersistableModel<ConsumptionLegacyUsageDetail>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConsumptionLegacyUsageDetail IPersistableModel<ConsumptionLegacyUsageDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionLegacyUsageDetail)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConsumptionLegacyUsageDetail(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConsumptionLegacyUsageDetail>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

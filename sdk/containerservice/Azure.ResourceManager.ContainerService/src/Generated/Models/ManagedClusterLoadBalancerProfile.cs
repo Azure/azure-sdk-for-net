@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Profile of the managed cluster load balancer. </summary>
     public partial class ManagedClusterLoadBalancerProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfile"/>. </summary>
         public ManagedClusterLoadBalancerProfile()
         {
             EffectiveOutboundIPs = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfile"/>. </summary>
         /// <param name="managedOutboundIPs"> Desired managed outbound IPs for the cluster load balancer. </param>
         /// <param name="outboundIPPrefixes"> Desired outbound IP Prefix resources for the cluster load balancer. </param>
         /// <param name="outboundIPs"> Desired outbound IP resources for the cluster load balancer. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 30 minutes. </param>
         /// <param name="enableMultipleStandardLoadBalancers"> Enable multiple standard load balancers per AKS cluster or not. </param>
         /// <param name="backendPoolType"> The type of the managed inbound Load Balancer BackendPool. </param>
-        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterLoadBalancerProfile(ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs, ManagedClusterLoadBalancerProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterLoadBalancerProfileOutboundIPs outboundIPs, IList<WritableSubResource> effectiveOutboundIPs, int? allocatedOutboundPorts, int? idleTimeoutInMinutes, bool? enableMultipleStandardLoadBalancers, ManagedClusterLoadBalancerBackendPoolType? backendPoolType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagedOutboundIPs = managedOutboundIPs;
             OutboundIPPrefixes = outboundIPPrefixes;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             EnableMultipleStandardLoadBalancers = enableMultipleStandardLoadBalancers;
             BackendPoolType = backendPoolType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Desired managed outbound IPs for the cluster load balancer. </summary>

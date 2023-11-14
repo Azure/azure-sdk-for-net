@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Response body structure for starting data flow debug session. </summary>
     public partial class DataFactoryDataFlowStartDebugSessionResult
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowStartDebugSessionResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowStartDebugSessionResult"/>. </summary>
         internal DataFactoryDataFlowStartDebugSessionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowStartDebugSessionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowStartDebugSessionResult"/>. </summary>
         /// <param name="jobVersion"> The ID of data flow debug job version. </param>
-        internal DataFactoryDataFlowStartDebugSessionResult(string jobVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryDataFlowStartDebugSessionResult(string jobVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobVersion = jobVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of data flow debug job version. </summary>

@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -13,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class GremlinGraphData : IUtf8JsonSerializable
+    public partial class GremlinGraphData : IUtf8JsonSerializable, IJsonModel<GremlinGraphData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GremlinGraphData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GremlinGraphData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GremlinGraphData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GremlinGraphData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -37,6 +47,29 @@ namespace Azure.ResourceManager.CosmosDB
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
@@ -50,11 +83,40 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteObjectValue(Options);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GremlinGraphData DeserializeGremlinGraphData(JsonElement element)
+        GremlinGraphData IJsonModel<GremlinGraphData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GremlinGraphData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGremlinGraphData(document.RootElement, options);
+        }
+
+        internal static GremlinGraphData DeserializeGremlinGraphData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,7 +129,9 @@ namespace Azure.ResourceManager.CosmosDB
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ExtendedGremlinGraphResourceInfo> resource = default;
-            Optional<GremlinGraphPropertiesConfig> options = default;
+            Optional<GremlinGraphPropertiesConfig> options0 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -147,14 +211,44 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            options = GremlinGraphPropertiesConfig.DeserializeGremlinGraphPropertiesConfig(property0.Value);
+                            options0 = GremlinGraphPropertiesConfig.DeserializeGremlinGraphPropertiesConfig(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GremlinGraphData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, options.Value, identity);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GremlinGraphData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, options0.Value, identity, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GremlinGraphData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GremlinGraphData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GremlinGraphData IPersistableModel<GremlinGraphData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GremlinGraphData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGremlinGraphData(document.RootElement, options);
+        }
+
+        string IPersistableModel<GremlinGraphData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

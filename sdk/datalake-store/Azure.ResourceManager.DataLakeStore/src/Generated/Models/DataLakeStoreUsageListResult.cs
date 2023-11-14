@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The response from the List Usages operation. </summary>
     internal partial class DataLakeStoreUsageListResult
     {
-        /// <summary> Initializes a new instance of DataLakeStoreUsageListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreUsageListResult"/>. </summary>
         internal DataLakeStoreUsageListResult()
         {
             Value = new ChangeTrackingList<DataLakeStoreUsage>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreUsageListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of Storage Resource Usages. </param>
-        internal DataLakeStoreUsageListResult(IReadOnlyList<DataLakeStoreUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreUsageListResult(IReadOnlyList<DataLakeStoreUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of Storage Resource Usages. </summary>

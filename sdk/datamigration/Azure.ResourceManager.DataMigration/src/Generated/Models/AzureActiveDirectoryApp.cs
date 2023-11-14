@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Azure Active Directory Application. </summary>
     public partial class AzureActiveDirectoryApp
     {
-        /// <summary> Initializes a new instance of AzureActiveDirectoryApp. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureActiveDirectoryApp"/>. </summary>
         public AzureActiveDirectoryApp()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureActiveDirectoryApp. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureActiveDirectoryApp"/>. </summary>
         /// <param name="applicationId"> Application ID of the Azure Active Directory Application. </param>
         /// <param name="appKey"> Key used to authenticate to the Azure Active Directory Application. </param>
         /// <param name="tenantId"> Tenant id of the customer. </param>
         /// <param name="ignoreAzurePermissions"> Ignore checking azure permissions on the AAD app. </param>
-        internal AzureActiveDirectoryApp(string applicationId, string appKey, Guid? tenantId, bool? ignoreAzurePermissions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureActiveDirectoryApp(string applicationId, string appKey, Guid? tenantId, bool? ignoreAzurePermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationId = applicationId;
             AppKey = appKey;
             TenantId = tenantId;
             IgnoreAzurePermissions = ignoreAzurePermissions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application ID of the Azure Active Directory Application. </summary>

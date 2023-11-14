@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of managed Virtual Network resources. </summary>
     internal partial class DataFactoryManagedVirtualNetworkListResult
     {
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkListResult"/>. </summary>
         /// <param name="value"> List of managed Virtual Networks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryManagedVirtualNetworkListResult(IEnumerable<DataFactoryManagedVirtualNetworkData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkListResult"/>. </summary>
         /// <param name="value"> List of managed Virtual Networks. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal DataFactoryManagedVirtualNetworkListResult(IReadOnlyList<DataFactoryManagedVirtualNetworkData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryManagedVirtualNetworkListResult(IReadOnlyList<DataFactoryManagedVirtualNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkListResult"/> for deserialization. </summary>
+        internal DataFactoryManagedVirtualNetworkListResult()
+        {
         }
 
         /// <summary> List of managed Virtual Networks. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class GetImageUploadUrlInput : IUtf8JsonSerializable
+    public partial class GetImageUploadUrlInput : IUtf8JsonSerializable, IJsonModel<GetImageUploadUrlInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetImageUploadUrlInput>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GetImageUploadUrlInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GetImageUploadUrlInput>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GetImageUploadUrlInput>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EntityType))
             {
@@ -30,7 +41,98 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        GetImageUploadUrlInput IJsonModel<GetImageUploadUrlInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGetImageUploadUrlInput(document.RootElement, options);
+        }
+
+        internal static GetImageUploadUrlInput DeserializeGetImageUploadUrlInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> entityType = default;
+            Optional<string> entityTypeName = default;
+            Optional<string> relativePath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("entityType"u8))
+                {
+                    entityType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("entityTypeName"u8))
+                {
+                    entityTypeName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("relativePath"u8))
+                {
+                    relativePath = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GetImageUploadUrlInput(entityType.Value, entityTypeName.Value, relativePath.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<GetImageUploadUrlInput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GetImageUploadUrlInput IPersistableModel<GetImageUploadUrlInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GetImageUploadUrlInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGetImageUploadUrlInput(document.RootElement, options);
+        }
+
+        string IPersistableModel<GetImageUploadUrlInput>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

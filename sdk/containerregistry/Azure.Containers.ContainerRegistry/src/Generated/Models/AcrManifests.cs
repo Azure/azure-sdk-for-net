@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Manifest attributes. </summary>
     internal partial class AcrManifests
     {
-        /// <summary> Initializes a new instance of AcrManifests. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcrManifests"/>. </summary>
         internal AcrManifests()
         {
             Manifests = new ChangeTrackingList<ManifestAttributesBase>();
         }
 
-        /// <summary> Initializes a new instance of AcrManifests. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcrManifests"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="manifests"> List of manifests. </param>
         /// <param name="link"></param>
-        internal AcrManifests(string registryLoginServer, string repository, IReadOnlyList<ManifestAttributesBase> manifests, string link)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcrManifests(string registryLoginServer, string repository, IReadOnlyList<ManifestAttributesBase> manifests, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistryLoginServer = registryLoginServer;
             Repository = repository;
             Manifests = manifests;
             Link = link;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>

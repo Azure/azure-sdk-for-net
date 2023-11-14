@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> File storage information. </summary>
     public partial class FileStorageInfo
     {
-        /// <summary> Initializes a new instance of FileStorageInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileStorageInfo"/>. </summary>
         internal FileStorageInfo()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of FileStorageInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileStorageInfo"/>. </summary>
         /// <param name="uri"> A URI that can be used to access the file content. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
-        internal FileStorageInfo(Uri uri, IReadOnlyDictionary<string, string> headers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileStorageInfo(Uri uri, IReadOnlyDictionary<string, string> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Headers = headers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A URI that can be used to access the file content. </summary>

@@ -5,20 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    internal partial class DatadogLogsAgent
+    internal partial class DatadogLogsAgent : IUtf8JsonSerializable, IJsonModel<DatadogLogsAgent>
     {
-        internal static DatadogLogsAgent DeserializeDatadogLogsAgent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogLogsAgent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DatadogLogsAgent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DatadogLogsAgent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DatadogLogsAgent>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Transport))
+            {
+                writer.WritePropertyName("transport"u8);
+                writer.WriteStringValue(Transport);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DatadogLogsAgent IJsonModel<DatadogLogsAgent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogLogsAgent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatadogLogsAgent(document.RootElement, options);
+        }
+
+        internal static DatadogLogsAgent DeserializeDatadogLogsAgent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> transport = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transport"u8))
@@ -26,8 +79,38 @@ namespace Azure.ResourceManager.Datadog.Models
                     transport = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatadogLogsAgent(transport.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatadogLogsAgent(transport.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatadogLogsAgent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogLogsAgent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatadogLogsAgent IPersistableModel<DatadogLogsAgent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatadogLogsAgent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatadogLogsAgent(document.RootElement, options);
+        }
+
+        string IPersistableModel<DatadogLogsAgent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

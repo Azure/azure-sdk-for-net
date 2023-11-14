@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity Azure Search Index sink. </summary>
     public partial class AzureSearchIndexSink : CopySink
     {
-        /// <summary> Initializes a new instance of AzureSearchIndexSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexSink"/>. </summary>
         public AzureSearchIndexSink()
         {
             CopySinkType = "AzureSearchIndexSink";
         }
 
-        /// <summary> Initializes a new instance of AzureSearchIndexSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexSink"/>. </summary>
         /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

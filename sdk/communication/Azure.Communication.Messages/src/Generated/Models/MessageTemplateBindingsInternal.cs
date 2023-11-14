@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Messages
 {
     /// <summary> The binding object to link values to the template specific locations. </summary>
     internal partial class MessageTemplateBindingsInternal
     {
-        /// <summary> Initializes a new instance of MessageTemplateBindingsInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsInternal"/>. </summary>
         public MessageTemplateBindingsInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsInternal"/>. </summary>
+        /// <param name="whatsApp"> The template bindings for WhatsApp. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateBindingsInternal(MessageTemplateBindingsWhatsApp whatsApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            WhatsApp = whatsApp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The template bindings for WhatsApp. </summary>

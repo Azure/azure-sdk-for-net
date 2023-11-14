@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,13 +14,23 @@ namespace Azure.Communication.JobRouter
     /// <summary> A note attached to a job. </summary>
     public partial class RouterJobNote
     {
-        /// <summary> Initializes a new instance of RouterJobNote. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobNote"/>. </summary>
         /// <param name="message"> The message contained in the note. </param>
         /// <param name="addedAt"> The time at which the note was added in UTC. If not provided, will default to the current time. </param>
-        internal RouterJobNote(string message, DateTimeOffset? addedAt)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJobNote(string message, DateTimeOffset? addedAt, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             AddedAt = addedAt;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobNote"/> for deserialization. </summary>
+        internal RouterJobNote()
+        {
         }
 
         /// <summary> The message contained in the note. </summary>

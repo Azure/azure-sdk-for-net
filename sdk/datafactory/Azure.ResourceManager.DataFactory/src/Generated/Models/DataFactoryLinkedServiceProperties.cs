@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryLinkedServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/>. </summary>
         public DataFactoryLinkedServiceProperties()
         {
             Parameters = new ChangeTrackingDictionary<string, EntityParameterSpecification>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryLinkedServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

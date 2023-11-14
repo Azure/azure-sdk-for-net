@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class OSProfileProvisioningData : IUtf8JsonSerializable
+    public partial class OSProfileProvisioningData : IUtf8JsonSerializable, IJsonModel<OSProfileProvisioningData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSProfileProvisioningData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OSProfileProvisioningData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OSProfileProvisioningData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OSProfileProvisioningData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AdminPassword))
             {
@@ -25,7 +36,92 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        OSProfileProvisioningData IJsonModel<OSProfileProvisioningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOSProfileProvisioningData(document.RootElement, options);
+        }
+
+        internal static OSProfileProvisioningData DeserializeOSProfileProvisioningData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> adminPassword = default;
+            Optional<string> customData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("adminPassword"u8))
+                {
+                    adminPassword = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customData"u8))
+                {
+                    customData = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OSProfileProvisioningData(adminPassword.Value, customData.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<OSProfileProvisioningData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OSProfileProvisioningData IPersistableModel<OSProfileProvisioningData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOSProfileProvisioningData(document.RootElement, options);
+        }
+
+        string IPersistableModel<OSProfileProvisioningData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> A sequence of example messages to and from the end user. </summary>
     public partial class MessageExampleSequence
     {
-        /// <summary> Initializes a new instance of MessageExampleSequence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageExampleSequence"/>. </summary>
         public MessageExampleSequence()
         {
             Messages = new ChangeTrackingList<MessageExample>();
         }
 
-        /// <summary> Initializes a new instance of MessageExampleSequence. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageExampleSequence"/>. </summary>
         /// <param name="messages"> Example messages to be sent to and from the end user. </param>
-        internal MessageExampleSequence(IList<MessageExample> messages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageExampleSequence(IList<MessageExample> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Messages = messages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Example messages to be sent to and from the end user. </summary>

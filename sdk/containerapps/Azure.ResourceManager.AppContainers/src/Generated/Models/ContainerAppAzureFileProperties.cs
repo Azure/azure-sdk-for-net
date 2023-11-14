@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Azure File Properties. </summary>
     public partial class ContainerAppAzureFileProperties
     {
-        /// <summary> Initializes a new instance of ContainerAppAzureFileProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureFileProperties"/>. </summary>
         public ContainerAppAzureFileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAzureFileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppAzureFileProperties"/>. </summary>
         /// <param name="accountName"> Storage account name for azure file. </param>
         /// <param name="accountKey"> Storage account key for azure file. </param>
         /// <param name="accessMode"> Access mode for storage. </param>
         /// <param name="shareName"> Azure file share name. </param>
-        internal ContainerAppAzureFileProperties(string accountName, string accountKey, ContainerAppAccessMode? accessMode, string shareName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppAzureFileProperties(string accountName, string accountKey, ContainerAppAccessMode? accessMode, string shareName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountName = accountName;
             AccountKey = accountKey;
             AccessMode = accessMode;
             ShareName = shareName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage account name for azure file. </summary>

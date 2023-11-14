@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of Hosts. </summary>
     internal partial class HostsList
     {
-        /// <summary> Initializes a new instance of HostsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostsList"/>. </summary>
         /// <param name="value"> Array of Hosts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HostsList(IEnumerable<VMwareHostData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of HostsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostsList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of Hosts. </param>
         /// <param name="value"> Array of Hosts. </param>
-        internal HostsList(string nextLink, IReadOnlyList<VMwareHostData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostsList(string nextLink, IReadOnlyList<VMwareHostData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HostsList"/> for deserialization. </summary>
+        internal HostsList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of Hosts. </summary>

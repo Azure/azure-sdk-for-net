@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of listing benefit recommendations. </summary>
     internal partial class BenefitRecommendationsListResult
     {
-        /// <summary> Initializes a new instance of BenefitRecommendationsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationsListResult"/>. </summary>
         internal BenefitRecommendationsListResult()
         {
             Value = new ChangeTrackingList<BenefitRecommendationModel>();
         }
 
-        /// <summary> Initializes a new instance of BenefitRecommendationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BenefitRecommendationsListResult"/>. </summary>
         /// <param name="value"> The list of benefit recommendations. </param>
         /// <param name="nextLink"> The link (URL) to the next page of results. </param>
-        internal BenefitRecommendationsListResult(IReadOnlyList<BenefitRecommendationModel> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BenefitRecommendationsListResult(IReadOnlyList<BenefitRecommendationModel> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of benefit recommendations. </summary>

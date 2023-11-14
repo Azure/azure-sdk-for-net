@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -13,12 +14,18 @@ namespace Azure.Communication.JobRouter
     /// <summary> Attaches worker selectors to a job when a RouterRule is resolved. </summary>
     public partial class RuleEngineWorkerSelectorAttachment : WorkerSelectorAttachment
     {
-        /// <summary> Initializes a new instance of RuleEngineWorkerSelectorAttachment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleEngineWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rule"> A RouterRule that resolves a collection of worker selectors to attach. </param>
-        internal RuleEngineWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, RouterRule rule) : base(kind)
+        internal RuleEngineWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, RouterRule rule) : base(kind, serializedAdditionalRawData)
         {
             Rule = rule;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RuleEngineWorkerSelectorAttachment"/> for deserialization. </summary>
+        internal RuleEngineWorkerSelectorAttachment()
+        {
         }
 
         /// <summary>

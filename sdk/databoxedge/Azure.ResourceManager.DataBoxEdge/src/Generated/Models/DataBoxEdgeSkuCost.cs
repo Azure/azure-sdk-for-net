@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The metadata for retrieving price info. </summary>
     public partial class DataBoxEdgeSkuCost
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuCost. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuCost"/>. </summary>
         internal DataBoxEdgeSkuCost()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeSkuCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuCost"/>. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The cost quantity. </param>
         /// <param name="extendedUnit"> The extended unit. </param>
-        internal DataBoxEdgeSkuCost(string meterId, long? quantity, string extendedUnit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeSkuCost(string meterId, long? quantity, string extendedUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MeterId = meterId;
             Quantity = quantity;
             ExtendedUnit = extendedUnit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Used for querying price from commerce. </summary>

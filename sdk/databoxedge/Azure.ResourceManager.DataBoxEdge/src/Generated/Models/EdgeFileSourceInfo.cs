@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> File source details. </summary>
     public partial class EdgeFileSourceInfo
     {
-        /// <summary> Initializes a new instance of EdgeFileSourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeFileSourceInfo"/>. </summary>
         /// <param name="shareId"> File share ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
         public EdgeFileSourceInfo(ResourceIdentifier shareId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Argument.AssertNotNull(shareId, nameof(shareId));
 
             ShareId = shareId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeFileSourceInfo"/>. </summary>
+        /// <param name="shareId"> File share ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeFileSourceInfo(ResourceIdentifier shareId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ShareId = shareId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeFileSourceInfo"/> for deserialization. </summary>
+        internal EdgeFileSourceInfo()
+        {
         }
 
         /// <summary> File share ID. </summary>

@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The MongoDBCollectionPropertiesConfig. </summary>
     public partial class MongoDBCollectionPropertiesConfig : CosmosDBBaseConfig
     {
-        /// <summary> Initializes a new instance of MongoDBCollectionPropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionPropertiesConfig"/>. </summary>
         public MongoDBCollectionPropertiesConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionPropertiesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionPropertiesConfig"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
         /// <param name="autoscaleSettings"> Specifies the Autoscale settings. </param>
-        internal MongoDBCollectionPropertiesConfig(int? throughput, AutoscaleSettings autoscaleSettings) : base(throughput, autoscaleSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBCollectionPropertiesConfig(int? throughput, AutoscaleSettings autoscaleSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(throughput, autoscaleSettings, serializedAdditionalRawData)
         {
         }
     }

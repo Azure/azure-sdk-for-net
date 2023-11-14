@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
@@ -13,7 +14,10 @@ namespace Azure.AI.ContentSafety
     /// <summary> Item in TextBlocklist. </summary>
     public partial class TextBlockItem
     {
-        /// <summary> Initializes a new instance of TextBlockItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextBlockItem"/>. </summary>
         /// <param name="blockItemId"> Block Item Id. It will be uuid. </param>
         /// <param name="text"> Block item content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blockItemId"/> or <paramref name="text"/> is null. </exception>
@@ -24,17 +28,25 @@ namespace Azure.AI.ContentSafety
 
             BlockItemId = blockItemId;
             Text = text;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TextBlockItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextBlockItem"/>. </summary>
         /// <param name="blockItemId"> Block Item Id. It will be uuid. </param>
         /// <param name="description"> Block item description. </param>
         /// <param name="text"> Block item content. </param>
-        internal TextBlockItem(string blockItemId, string description, string text)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextBlockItem(string blockItemId, string description, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlockItemId = blockItemId;
             Description = description;
             Text = text;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextBlockItem"/> for deserialization. </summary>
+        internal TextBlockItem()
+        {
         }
 
         /// <summary> Block Item Id. It will be uuid. </summary>

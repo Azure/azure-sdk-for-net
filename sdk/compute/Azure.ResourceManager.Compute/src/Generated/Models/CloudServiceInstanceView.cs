@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> InstanceView of CloudService as a whole. </summary>
     public partial class CloudServiceInstanceView
     {
-        /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceInstanceView"/>. </summary>
         internal CloudServiceInstanceView()
         {
             PrivateIds = new ChangeTrackingList<string>();
             Statuses = new ChangeTrackingList<ResourceInstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceInstanceView"/>. </summary>
         /// <param name="roleInstance"> Instance view statuses. </param>
         /// <param name="sdkVersion"> The version of the SDK that was used to generate the package for the cloud service. </param>
         /// <param name="privateIds"> Specifies a list of unique identifiers generated internally for the cloud service. &lt;br /&gt;&lt;br /&gt; NOTE: If you are using Azure Diagnostics extension, this property can be used as 'DeploymentId' for querying details. </param>
         /// <param name="statuses"></param>
-        internal CloudServiceInstanceView(InstanceViewStatusesSummary roleInstance, string sdkVersion, IReadOnlyList<string> privateIds, IReadOnlyList<ResourceInstanceViewStatus> statuses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceInstanceView(InstanceViewStatusesSummary roleInstance, string sdkVersion, IReadOnlyList<string> privateIds, IReadOnlyList<ResourceInstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RoleInstance = roleInstance;
             SdkVersion = sdkVersion;
             PrivateIds = privateIds;
             Statuses = statuses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Instance view statuses. </summary>

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VCenters. </summary>
     internal partial class VCentersList
     {
-        /// <summary> Initializes a new instance of VCentersList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VCentersList"/>. </summary>
         /// <param name="value"> Array of VCenters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VCentersList(IEnumerable<VCenterData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VCentersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="VCentersList"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VCenters. </param>
         /// <param name="value"> Array of VCenters. </param>
-        internal VCentersList(string nextLink, IReadOnlyList<VCenterData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VCentersList(string nextLink, IReadOnlyList<VCenterData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VCentersList"/> for deserialization. </summary>
+        internal VCentersList()
+        {
         }
 
         /// <summary> Url to follow for getting next page of VCenters. </summary>

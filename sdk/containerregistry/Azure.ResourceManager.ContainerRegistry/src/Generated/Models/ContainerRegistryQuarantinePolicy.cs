@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The quarantine policy for a container registry. </summary>
     internal partial class ContainerRegistryQuarantinePolicy
     {
-        /// <summary> Initializes a new instance of ContainerRegistryQuarantinePolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryQuarantinePolicy"/>. </summary>
         public ContainerRegistryQuarantinePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryQuarantinePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryQuarantinePolicy"/>. </summary>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
-        internal ContainerRegistryQuarantinePolicy(ContainerRegistryPolicyStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryQuarantinePolicy(ContainerRegistryPolicyStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>

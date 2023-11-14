@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
     internal partial class SapHanaPartitionSettings
     {
-        /// <summary> Initializes a new instance of SapHanaPartitionSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapHanaPartitionSettings"/>. </summary>
         public SapHanaPartitionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SapHanaPartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapHanaPartitionSettings"/>. </summary>
         /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
-        internal SapHanaPartitionSettings(DataFactoryElement<string> partitionColumnName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapHanaPartitionSettings(DataFactoryElement<string> partitionColumnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartitionColumnName = partitionColumnName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </summary>

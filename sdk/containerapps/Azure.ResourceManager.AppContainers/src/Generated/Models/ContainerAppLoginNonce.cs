@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the nonce used in the login flow. </summary>
     public partial class ContainerAppLoginNonce
     {
-        /// <summary> Initializes a new instance of ContainerAppLoginNonce. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLoginNonce"/>. </summary>
         public ContainerAppLoginNonce()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppLoginNonce. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLoginNonce"/>. </summary>
         /// <param name="validateNonce"> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="nonceExpirationInterval"> The time after the request is made when the nonce should expire. </param>
-        internal ContainerAppLoginNonce(bool? validateNonce, string nonceExpirationInterval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppLoginNonce(bool? validateNonce, string nonceExpirationInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidateNonce = validateNonce;
             NonceExpirationInterval = nonceExpirationInterval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>

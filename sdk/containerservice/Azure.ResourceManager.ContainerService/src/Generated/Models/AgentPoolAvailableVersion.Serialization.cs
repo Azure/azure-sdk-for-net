@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolAvailableVersion
+    public partial class AgentPoolAvailableVersion : IUtf8JsonSerializable, IJsonModel<AgentPoolAvailableVersion>
     {
-        internal static AgentPoolAvailableVersion DeserializeAgentPoolAvailableVersion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolAvailableVersion>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AgentPoolAvailableVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AgentPoolAvailableVersion>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AgentPoolAvailableVersion>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("default"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
+            }
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
+            }
+            if (Optional.IsDefined(IsPreview))
+            {
+                writer.WritePropertyName("isPreview"u8);
+                writer.WriteBooleanValue(IsPreview.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AgentPoolAvailableVersion IJsonModel<AgentPoolAvailableVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolAvailableVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolAvailableVersion(document.RootElement, options);
+        }
+
+        internal static AgentPoolAvailableVersion DeserializeAgentPoolAvailableVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<bool> @default = default;
             Optional<string> kubernetesVersion = default;
             Optional<bool> isPreview = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("default"u8))
@@ -46,8 +109,38 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isPreview = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentPoolAvailableVersion(Optional.ToNullable(@default), kubernetesVersion.Value, Optional.ToNullable(isPreview));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AgentPoolAvailableVersion(Optional.ToNullable(@default), kubernetesVersion.Value, Optional.ToNullable(isPreview), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgentPoolAvailableVersion>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolAvailableVersion)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AgentPoolAvailableVersion IPersistableModel<AgentPoolAvailableVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolAvailableVersion)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAgentPoolAvailableVersion(document.RootElement, options);
+        }
+
+        string IPersistableModel<AgentPoolAvailableVersion>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

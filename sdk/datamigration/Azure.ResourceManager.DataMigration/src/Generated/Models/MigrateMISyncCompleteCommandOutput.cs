@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for command that completes online migration for an Azure SQL Database Managed Instance. </summary>
     internal partial class MigrateMISyncCompleteCommandOutput
     {
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandOutput"/>. </summary>
         internal MigrateMISyncCompleteCommandOutput()
         {
             Errors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMISyncCompleteCommandOutput"/>. </summary>
         /// <param name="errors"> List of errors that happened during the command execution. </param>
-        internal MigrateMISyncCompleteCommandOutput(IReadOnlyList<ReportableException> errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMISyncCompleteCommandOutput(IReadOnlyList<ReportableException> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of errors that happened during the command execution. </summary>

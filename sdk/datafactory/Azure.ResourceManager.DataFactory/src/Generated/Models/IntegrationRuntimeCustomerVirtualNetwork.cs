@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The definition and properties of virtual network to which Azure-SSIS integration runtime will join. </summary>
     internal partial class IntegrationRuntimeCustomerVirtualNetwork
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeCustomerVirtualNetwork. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomerVirtualNetwork"/>. </summary>
         public IntegrationRuntimeCustomerVirtualNetwork()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeCustomerVirtualNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomerVirtualNetwork"/>. </summary>
         /// <param name="subnetId"> The ID of subnet to which Azure-SSIS integration runtime will join. </param>
-        internal IntegrationRuntimeCustomerVirtualNetwork(ResourceIdentifier subnetId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeCustomerVirtualNetwork(ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetId = subnetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of subnet to which Azure-SSIS integration runtime will join. </summary>

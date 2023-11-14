@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Job stages. </summary>
     public partial class DataBoxJobStage
     {
-        /// <summary> Initializes a new instance of DataBoxJobStage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobStage"/>. </summary>
         internal DataBoxJobStage()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxJobStage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxJobStage"/>. </summary>
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
         /// <param name="stageTime"> Time for the job stage in UTC ISO 8601 format. </param>
         /// <param name="jobStageDetails"> Job Stage Details. </param>
-        internal DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxJobStage(DataBoxStageName? stageName, string displayName, DataBoxStageStatus? stageStatus, DateTimeOffset? stageTime, BinaryData jobStageDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StageName = stageName;
             DisplayName = displayName;
             StageStatus = stageStatus;
             StageTime = stageTime;
             JobStageDetails = jobStageDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the job stage. </summary>

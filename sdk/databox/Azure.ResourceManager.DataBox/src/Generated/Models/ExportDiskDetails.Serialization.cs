@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ExportDiskDetails
+    public partial class ExportDiskDetails : IUtf8JsonSerializable, IJsonModel<ExportDiskDetails>
     {
-        internal static ExportDiskDetails DeserializeExportDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportDiskDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ExportDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExportDiskDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExportDiskDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ManifestFile))
+                {
+                    writer.WritePropertyName("manifestFile"u8);
+                    writer.WriteStringValue(ManifestFile);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ManifestHash))
+                {
+                    writer.WritePropertyName("manifestHash"u8);
+                    writer.WriteStringValue(ManifestHash);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BackupManifestCloudPath))
+                {
+                    writer.WritePropertyName("backupManifestCloudPath"u8);
+                    writer.WriteStringValue(BackupManifestCloudPath);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExportDiskDetails IJsonModel<ExportDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportDiskDetails(document.RootElement, options);
+        }
+
+        internal static ExportDiskDetails DeserializeExportDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> manifestFile = default;
             Optional<string> manifestHash = default;
             Optional<string> backupManifestCloudPath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifestFile"u8))
@@ -38,8 +110,38 @@ namespace Azure.ResourceManager.DataBox.Models
                     backupManifestCloudPath = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExportDiskDetails(manifestFile.Value, manifestHash.Value, backupManifestCloudPath.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExportDiskDetails(manifestFile.Value, manifestHash.Value, backupManifestCloudPath.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExportDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExportDiskDetails IPersistableModel<ExportDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExportDiskDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExportDiskDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExportDiskDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The list operation result. </summary>
     internal partial class CloudServiceListResult
     {
-        /// <summary> Initializes a new instance of CloudServiceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceListResult"/>. </summary>
         /// <param name="value"> The list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CloudServiceListResult(IEnumerable<CloudServiceData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceListResult"/>. </summary>
         /// <param name="value"> The list of resources. </param>
         /// <param name="nextLink"> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </param>
-        internal CloudServiceListResult(IReadOnlyList<CloudServiceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceListResult(IReadOnlyList<CloudServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceListResult"/> for deserialization. </summary>
+        internal CloudServiceListResult()
+        {
         }
 
         /// <summary> The list of resources. </summary>

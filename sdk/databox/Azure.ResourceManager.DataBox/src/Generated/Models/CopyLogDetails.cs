@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class CopyLogDetails
     {
-        /// <summary> Initializes a new instance of CopyLogDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyLogDetails"/>. </summary>
         protected CopyLogDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        internal CopyLogDetails(DataBoxOrderType copyLogDetailsType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CopyLogDetailsType = copyLogDetailsType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates the type of job details. </summary>

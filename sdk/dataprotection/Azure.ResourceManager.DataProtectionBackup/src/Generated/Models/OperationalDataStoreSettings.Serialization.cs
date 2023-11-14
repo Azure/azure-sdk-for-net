@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class OperationalDataStoreSettings : IUtf8JsonSerializable
+    public partial class OperationalDataStoreSettings : IUtf8JsonSerializable, IJsonModel<OperationalDataStoreSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalDataStoreSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OperationalDataStoreSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OperationalDataStoreSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OperationalDataStoreSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceGroupId))
             {
@@ -24,11 +35,40 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("dataStoreType"u8);
             writer.WriteStringValue(DataStoreType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalDataStoreSettings DeserializeOperationalDataStoreSettings(JsonElement element)
+        OperationalDataStoreSettings IJsonModel<OperationalDataStoreSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalDataStoreSettings(document.RootElement, options);
+        }
+
+        internal static OperationalDataStoreSettings DeserializeOperationalDataStoreSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<ResourceIdentifier> resourceGroupId = default;
             string objectType = default;
             DataStoreType dataStoreType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGroupId"u8))
@@ -57,8 +99,38 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     dataStoreType = new DataStoreType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalDataStoreSettings(objectType, dataStoreType, resourceGroupId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalDataStoreSettings(objectType, dataStoreType, serializedAdditionalRawData, resourceGroupId.Value);
         }
+
+        BinaryData IPersistableModel<OperationalDataStoreSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OperationalDataStoreSettings IPersistableModel<OperationalDataStoreSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalDataStoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOperationalDataStoreSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<OperationalDataStoreSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
