@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport. </summary>
     internal partial class BoundingBox
     {
-        /// <summary> Initializes a new instance of BoundingBox. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BoundingBox"/>. </summary>
         internal BoundingBox()
         {
         }
 
-        /// <summary> Initializes a new instance of BoundingBox. </summary>
+        /// <summary> Initializes a new instance of <see cref="BoundingBox"/>. </summary>
         /// <param name="topLeft"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
         /// <param name="bottomRight"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
-        internal BoundingBox(LatLongPairAbbreviated topLeft, LatLongPairAbbreviated bottomRight)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BoundingBox(LatLongPairAbbreviated topLeft, LatLongPairAbbreviated bottomRight, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TopLeft = topLeft;
             BottomRight = bottomRight;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </summary>

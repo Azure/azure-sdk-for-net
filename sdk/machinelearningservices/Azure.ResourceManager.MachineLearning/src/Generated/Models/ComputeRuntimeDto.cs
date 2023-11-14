@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ComputeRuntimeDto. </summary>
     internal partial class ComputeRuntimeDto
     {
-        /// <summary> Initializes a new instance of ComputeRuntimeDto. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeRuntimeDto"/>. </summary>
         public ComputeRuntimeDto()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeRuntimeDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeRuntimeDto"/>. </summary>
         /// <param name="sparkRuntimeVersion"></param>
-        internal ComputeRuntimeDto(string sparkRuntimeVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeRuntimeDto(string sparkRuntimeVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SparkRuntimeVersion = sparkRuntimeVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the spark runtime version. </summary>

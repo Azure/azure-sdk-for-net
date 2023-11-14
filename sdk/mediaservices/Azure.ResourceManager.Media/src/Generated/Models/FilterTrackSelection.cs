@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Representing a list of FilterTrackPropertyConditions to select a track.  The filters are combined using a logical AND operation. </summary>
     public partial class FilterTrackSelection
     {
-        /// <summary> Initializes a new instance of FilterTrackSelection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilterTrackSelection"/>. </summary>
         /// <param name="trackSelections"> The track selections. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trackSelections"/> is null. </exception>
         public FilterTrackSelection(IEnumerable<FilterTrackPropertyCondition> trackSelections)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.Media.Models
             TrackSelections = trackSelections.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilterTrackSelection. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterTrackSelection"/>. </summary>
         /// <param name="trackSelections"> The track selections. </param>
-        internal FilterTrackSelection(IList<FilterTrackPropertyCondition> trackSelections)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilterTrackSelection(IList<FilterTrackPropertyCondition> trackSelections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrackSelections = trackSelections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterTrackSelection"/> for deserialization. </summary>
+        internal FilterTrackSelection()
+        {
         }
 
         /// <summary> The track selections. </summary>

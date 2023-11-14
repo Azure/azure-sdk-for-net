@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,13 +18,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class NetworkFunctionPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkFunctionPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionPropertiesFormat"/>. </summary>
         protected NetworkFunctionPropertiesFormat()
         {
             RoleOverrideValues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             AllowSoftwareUpdate = allowSoftwareUpdate;
             ConfigurationType = configurationType;
             RoleOverrideValues = roleOverrideValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the network function resource. </summary>

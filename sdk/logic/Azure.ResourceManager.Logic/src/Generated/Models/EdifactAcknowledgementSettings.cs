@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The Edifact agreement acknowledgement settings. </summary>
     public partial class EdifactAcknowledgementSettings
     {
-        /// <summary> Initializes a new instance of EdifactAcknowledgementSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdifactAcknowledgementSettings"/>. </summary>
         /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
         /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
         /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
@@ -33,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
             RolloverAcknowledgementControlNumber = rolloverAcknowledgementControlNumber;
         }
 
-        /// <summary> Initializes a new instance of EdifactAcknowledgementSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactAcknowledgementSettings"/>. </summary>
         /// <param name="needTechnicalAcknowledgement"> The value indicating whether technical acknowledgement is needed. </param>
         /// <param name="batchTechnicalAcknowledgement"> The value indicating whether to batch the technical acknowledgements. </param>
         /// <param name="needFunctionalAcknowledgement"> The value indicating whether functional acknowledgement is needed. </param>
@@ -45,7 +51,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="acknowledgementControlNumberLowerBound"> The acknowledgement control number lower bound. </param>
         /// <param name="acknowledgementControlNumberUpperBound"> The acknowledgement control number upper bound. </param>
         /// <param name="rolloverAcknowledgementControlNumber"> The value indicating whether to rollover acknowledgement control number. </param>
-        internal EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, string acknowledgementControlNumberPrefix, string acknowledgementControlNumberSuffix, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdifactAcknowledgementSettings(bool needTechnicalAcknowledgement, bool batchTechnicalAcknowledgement, bool needFunctionalAcknowledgement, bool batchFunctionalAcknowledgement, bool needLoopForValidMessages, bool sendSynchronousAcknowledgement, string acknowledgementControlNumberPrefix, string acknowledgementControlNumberSuffix, int acknowledgementControlNumberLowerBound, int acknowledgementControlNumberUpperBound, bool rolloverAcknowledgementControlNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NeedTechnicalAcknowledgement = needTechnicalAcknowledgement;
             BatchTechnicalAcknowledgement = batchTechnicalAcknowledgement;
@@ -58,6 +65,12 @@ namespace Azure.ResourceManager.Logic.Models
             AcknowledgementControlNumberLowerBound = acknowledgementControlNumberLowerBound;
             AcknowledgementControlNumberUpperBound = acknowledgementControlNumberUpperBound;
             RolloverAcknowledgementControlNumber = rolloverAcknowledgementControlNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdifactAcknowledgementSettings"/> for deserialization. </summary>
+        internal EdifactAcknowledgementSettings()
+        {
         }
 
         /// <summary> The value indicating whether technical acknowledgement is needed. </summary>

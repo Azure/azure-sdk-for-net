@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Information about the Azure Container Registry which contains the images deployed to the cluster. </summary>
     public partial class ContainerServiceCredentials
     {
-        /// <summary> Initializes a new instance of ContainerServiceCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceCredentials"/>. </summary>
         internal ContainerServiceCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceCredentials"/>. </summary>
         /// <param name="acsKubeConfig"> The ACS kube config file. </param>
         /// <param name="servicePrincipalConfiguration"> Service principal configuration used by Kubernetes. </param>
         /// <param name="imagePullSecretName"> The ACR image pull secret name which was created in Kubernetes. </param>
-        internal ContainerServiceCredentials(string acsKubeConfig, ServicePrincipalProperties servicePrincipalConfiguration, string imagePullSecretName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceCredentials(string acsKubeConfig, ServicePrincipalProperties servicePrincipalConfiguration, string imagePullSecretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AcsKubeConfig = acsKubeConfig;
             ServicePrincipalConfiguration = servicePrincipalConfiguration;
             ImagePullSecretName = imagePullSecretName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ACS kube config file. </summary>

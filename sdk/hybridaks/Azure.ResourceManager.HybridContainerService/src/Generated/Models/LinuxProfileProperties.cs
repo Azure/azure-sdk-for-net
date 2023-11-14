@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
@@ -12,18 +13,23 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> LinuxProfile - Profile for Linux VMs in the container service cluster. </summary>
     public partial class LinuxProfileProperties
     {
-        /// <summary> Initializes a new instance of LinuxProfileProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinuxProfileProperties"/>. </summary>
         public LinuxProfileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LinuxProfileProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxProfileProperties"/>. </summary>
         /// <param name="adminUsername"> AdminUsername - The administrator username to use for Linux VMs. </param>
         /// <param name="ssh"> SSH - SSH configuration for Linux-based VMs running on Azure. </param>
-        internal LinuxProfileProperties(string adminUsername, LinuxProfilePropertiesSsh ssh)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxProfileProperties(string adminUsername, LinuxProfilePropertiesSsh ssh, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminUsername = adminUsername;
             Ssh = ssh;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AdminUsername - The administrator username to use for Linux VMs. </summary>

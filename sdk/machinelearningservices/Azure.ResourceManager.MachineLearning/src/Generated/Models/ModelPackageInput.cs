@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Model package input options. </summary>
     public partial class ModelPackageInput
     {
-        /// <summary> Initializes a new instance of ModelPackageInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelPackageInput"/>. </summary>
         /// <param name="inputType"> [Required] Type of the input included in the target image. </param>
         /// <param name="path">
         /// [Required] Location of the input.
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Path = path;
         }
 
-        /// <summary> Initializes a new instance of ModelPackageInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPackageInput"/>. </summary>
         /// <param name="inputType"> [Required] Type of the input included in the target image. </param>
         /// <param name="mode"> Input delivery mode of the input. </param>
         /// <param name="mountPath"> Relative mount path of the input in the target image. </param>
@@ -38,12 +42,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="PackageInputPathBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PackageInputPathId"/>, <see cref="PackageInputPathVersion"/> and <see cref="PackageInputPathUri"/>.
         /// </param>
-        internal ModelPackageInput(PackageInputType inputType, PackageInputDeliveryMode? mode, string mountPath, PackageInputPathBase path)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelPackageInput(PackageInputType inputType, PackageInputDeliveryMode? mode, string mountPath, PackageInputPathBase path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InputType = inputType;
             Mode = mode;
             MountPath = mountPath;
             Path = path;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ModelPackageInput"/> for deserialization. </summary>
+        internal ModelPackageInput()
+        {
         }
 
         /// <summary> [Required] Type of the input included in the target image. </summary>

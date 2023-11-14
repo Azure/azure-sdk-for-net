@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> The ResourceGroupResourceGetConfigurationAssignmentByParentOptions. </summary>
     public partial class ResourceGroupResourceGetConfigurationAssignmentByParentOptions
     {
-        /// <summary> Initializes a new instance of ResourceGroupResourceGetConfigurationAssignmentByParentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceGetConfigurationAssignmentByParentOptions"/>. </summary>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
         /// <param name="resourceParentName"> Resource parent identifier. </param>
@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             ResourceType = resourceType;
             ResourceName = resourceName;
             ConfigurationAssignmentName = configurationAssignmentName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceGetConfigurationAssignmentByParentOptions"/> for deserialization. </summary>
+        internal ResourceGroupResourceGetConfigurationAssignmentByParentOptions()
+        {
         }
 
         /// <summary> Resource provider name. </summary>

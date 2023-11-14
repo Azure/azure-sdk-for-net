@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The EncryptionKeyVaultUpdateProperties. </summary>
     public partial class EncryptionKeyVaultUpdateProperties
     {
-        /// <summary> Initializes a new instance of EncryptionKeyVaultUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionKeyVaultUpdateProperties"/>. </summary>
         /// <param name="keyIdentifier"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyIdentifier"/> is null. </exception>
         public EncryptionKeyVaultUpdateProperties(string keyIdentifier)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
 
             KeyIdentifier = keyIdentifier;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionKeyVaultUpdateProperties"/>. </summary>
+        /// <param name="keyIdentifier"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionKeyVaultUpdateProperties(string keyIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyIdentifier = keyIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionKeyVaultUpdateProperties"/> for deserialization. </summary>
+        internal EncryptionKeyVaultUpdateProperties()
+        {
         }
 
         /// <summary> Gets the key identifier. </summary>

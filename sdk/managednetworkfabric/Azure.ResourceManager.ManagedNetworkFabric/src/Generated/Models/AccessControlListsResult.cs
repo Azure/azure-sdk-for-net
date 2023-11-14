@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of Access Control Lists. </summary>
     internal partial class AccessControlListsResult
     {
-        /// <summary> Initializes a new instance of AccessControlListsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccessControlListsResult"/>. </summary>
         internal AccessControlListsResult()
         {
             Value = new ChangeTrackingList<NetworkFabricAccessControlListData>();
         }
 
-        /// <summary> Initializes a new instance of AccessControlListsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessControlListsResult"/>. </summary>
         /// <param name="value"> List of Access Control List resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal AccessControlListsResult(IReadOnlyList<NetworkFabricAccessControlListData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccessControlListsResult(IReadOnlyList<NetworkFabricAccessControlListData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Access Control List resources. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Mapping rule profile properties. </summary>
     public partial class MappingRuleProfile
     {
-        /// <summary> Initializes a new instance of MappingRuleProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MappingRuleProfile"/>. </summary>
         public MappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of MappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
-        internal MappingRuleProfile(ApplicationEnablement? applicationEnablement)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApplicationEnablement = applicationEnablement;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The application enablement. </summary>

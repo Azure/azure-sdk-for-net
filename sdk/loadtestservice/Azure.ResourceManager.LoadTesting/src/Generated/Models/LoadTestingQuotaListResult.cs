@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LoadTesting;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> List of quota bucket objects. It contains a URL link to get the next set of results. </summary>
     internal partial class LoadTestingQuotaListResult
     {
-        /// <summary> Initializes a new instance of LoadTestingQuotaListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/>. </summary>
         internal LoadTestingQuotaListResult()
         {
             Value = new ChangeTrackingList<LoadTestingQuotaData>();
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadTestingQuotaListResult"/>. </summary>
         /// <param name="value"> List of quota bucket objects provided by the loadtestservice. </param>
         /// <param name="nextLink"> URL to get the next set of quota bucket objects results (if there are any). </param>
-        internal LoadTestingQuotaListResult(IReadOnlyList<LoadTestingQuotaData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingQuotaListResult(IReadOnlyList<LoadTestingQuotaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of quota bucket objects provided by the loadtestservice. </summary>

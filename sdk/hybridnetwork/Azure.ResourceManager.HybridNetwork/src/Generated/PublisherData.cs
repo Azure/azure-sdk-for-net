@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class PublisherData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PublisherData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PublisherData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Publisher properties. </param>
         /// <param name="identity"> The managed identity of the publisher, if configured. </param>
-        internal PublisherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PublisherPropertiesFormat properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublisherData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PublisherPropertiesFormat properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PublisherData"/> for deserialization. </summary>
+        internal PublisherData()
+        {
         }
 
         /// <summary> Publisher properties. </summary>

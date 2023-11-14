@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Mutable configuration for notification. </summary>
     internal partial class PartialNotificationSetting
     {
-        /// <summary> Initializes a new instance of PartialNotificationSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartialNotificationSetting"/>. </summary>
         public PartialNotificationSetting()
         {
             Webhooks = new ChangeTrackingDictionary<string, MachineLearningWebhook>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartialNotificationSetting"/>. </summary>
+        /// <param name="webhooks">
+        /// Send webhook callback to a service. Key is a user-provided name for the webhook.
+        /// Please note <see cref="MachineLearningWebhook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureDevOpsWebhook"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartialNotificationSetting(IDictionary<string, MachineLearningWebhook> webhooks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Webhooks = webhooks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

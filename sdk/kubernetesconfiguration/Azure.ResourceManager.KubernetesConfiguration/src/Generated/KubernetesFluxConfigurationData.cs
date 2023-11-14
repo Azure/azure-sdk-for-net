@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// </summary>
     public partial class KubernetesFluxConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationData"/>. </summary>
         public KubernetesFluxConfigurationData()
         {
             Kustomizations = new ChangeTrackingDictionary<string, Kustomization>();
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Statuses = new ChangeTrackingList<KubernetesObjectStatus>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +52,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="complianceState"> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </param>
         /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
         /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
-        internal KubernetesFluxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubernetesConfigurationScope? scope, string @namespace, KubernetesConfigurationSourceKind? sourceKind, bool? isReconciliationSuspended, KubernetesGitRepository gitRepository, KubernetesBucket bucket, KubernetesAzureBlob azureBlob, IDictionary<string, Kustomization> kustomizations, IDictionary<string, string> configurationProtectedSettings, IReadOnlyList<KubernetesObjectStatus> statuses, string repositoryPublicKey, string sourceSyncedCommitId, DateTimeOffset? sourceUpdatedOn, DateTimeOffset? statusUpdatedOn, KubernetesFluxComplianceState? complianceState, KubernetesConfigurationProvisioningState? provisioningState, string errorMessage) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesFluxConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, KubernetesConfigurationScope? scope, string @namespace, KubernetesConfigurationSourceKind? sourceKind, bool? isReconciliationSuspended, KubernetesGitRepository gitRepository, KubernetesBucket bucket, KubernetesAzureBlob azureBlob, IDictionary<string, Kustomization> kustomizations, IDictionary<string, string> configurationProtectedSettings, IReadOnlyList<KubernetesObjectStatus> statuses, string repositoryPublicKey, string sourceSyncedCommitId, DateTimeOffset? sourceUpdatedOn, DateTimeOffset? statusUpdatedOn, KubernetesFluxComplianceState? complianceState, KubernetesConfigurationProvisioningState? provisioningState, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             Namespace = @namespace;
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ComplianceState = complianceState;
             ProvisioningState = provisioningState;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Scope at which the operator will be installed. </summary>

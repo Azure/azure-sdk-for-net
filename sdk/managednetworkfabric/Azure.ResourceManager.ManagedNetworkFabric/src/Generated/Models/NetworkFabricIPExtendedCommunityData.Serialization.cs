@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -13,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricIPExtendedCommunityData : IUtf8JsonSerializable
+    public partial class NetworkFabricIPExtendedCommunityData : IUtf8JsonSerializable, IJsonModel<NetworkFabricIPExtendedCommunityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricIPExtendedCommunityData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetworkFabricIPExtendedCommunityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkFabricIPExtendedCommunityData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkFabricIPExtendedCommunityData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -31,6 +41,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Annotation))
@@ -45,12 +78,65 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConfigurationState))
+                {
+                    writer.WritePropertyName("configurationState"u8);
+                    writer.WriteStringValue(ConfigurationState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AdministrativeState))
+                {
+                    writer.WritePropertyName("administrativeState"u8);
+                    writer.WriteStringValue(AdministrativeState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkFabricIPExtendedCommunityData DeserializeNetworkFabricIPExtendedCommunityData(JsonElement element)
+        NetworkFabricIPExtendedCommunityData IJsonModel<NetworkFabricIPExtendedCommunityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricIPExtendedCommunityData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricIPExtendedCommunityData(document.RootElement, options);
+        }
+
+        internal static NetworkFabricIPExtendedCommunityData DeserializeNetworkFabricIPExtendedCommunityData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +152,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             Optional<NetworkFabricAdministrativeState> administrativeState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -165,8 +253,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkFabricIPExtendedCommunityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, ipExtendedCommunityRules, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkFabricIPExtendedCommunityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, ipExtendedCommunityRules, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkFabricIPExtendedCommunityData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricIPExtendedCommunityData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkFabricIPExtendedCommunityData IPersistableModel<NetworkFabricIPExtendedCommunityData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricIPExtendedCommunityData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkFabricIPExtendedCommunityData(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkFabricIPExtendedCommunityData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

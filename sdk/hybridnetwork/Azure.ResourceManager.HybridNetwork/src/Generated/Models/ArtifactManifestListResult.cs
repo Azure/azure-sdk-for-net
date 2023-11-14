@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> A list of artifact manifests. </summary>
     internal partial class ArtifactManifestListResult
     {
-        /// <summary> Initializes a new instance of ArtifactManifestListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestListResult"/>. </summary>
         internal ArtifactManifestListResult()
         {
             Value = new ChangeTrackingList<ArtifactManifestData>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestListResult"/>. </summary>
         /// <param name="value"> A list of artifact manifests. </param>
         /// <param name="nextLink"> The URI to get the next set of results. </param>
-        internal ArtifactManifestListResult(IReadOnlyList<ArtifactManifestData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactManifestListResult(IReadOnlyList<ArtifactManifestData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of artifact manifests. </summary>

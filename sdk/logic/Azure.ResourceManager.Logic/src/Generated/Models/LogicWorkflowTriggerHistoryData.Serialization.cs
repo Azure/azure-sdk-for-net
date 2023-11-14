@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
@@ -13,10 +16,178 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class LogicWorkflowTriggerHistoryData
+    public partial class LogicWorkflowTriggerHistoryData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowTriggerHistoryData>
     {
-        internal static LogicWorkflowTriggerHistoryData DeserializeLogicWorkflowTriggerHistoryData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowTriggerHistoryData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LogicWorkflowTriggerHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LogicWorkflowTriggerHistoryData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LogicWorkflowTriggerHistoryData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ScheduledOn))
+                {
+                    writer.WritePropertyName("scheduledTime"u8);
+                    writer.WriteStringValue(ScheduledOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Code))
+                {
+                    writer.WritePropertyName("code"u8);
+                    writer.WriteStringValue(Code);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    writer.WritePropertyName("error"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Error);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Error))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TrackingId))
+                {
+                    writer.WritePropertyName("trackingId"u8);
+                    writer.WriteStringValue(TrackingId.Value);
+                }
+            }
+            if (Optional.IsDefined(Correlation))
+            {
+                writer.WritePropertyName("correlation"u8);
+                writer.WriteObjectValue(Correlation);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InputsLink))
+                {
+                    writer.WritePropertyName("inputsLink"u8);
+                    writer.WriteObjectValue(InputsLink);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OutputsLink))
+                {
+                    writer.WritePropertyName("outputsLink"u8);
+                    writer.WriteObjectValue(OutputsLink);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsFired))
+                {
+                    writer.WritePropertyName("fired"u8);
+                    writer.WriteBooleanValue(IsFired.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Run))
+                {
+                    writer.WritePropertyName("run"u8);
+                    writer.WriteObjectValue(Run);
+                }
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LogicWorkflowTriggerHistoryData IJsonModel<LogicWorkflowTriggerHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowTriggerHistoryData(document.RootElement, options);
+        }
+
+        internal static LogicWorkflowTriggerHistoryData DeserializeLogicWorkflowTriggerHistoryData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +208,8 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicContentLink> outputsLink = default;
             Optional<bool> fired = default;
             Optional<LogicResourceReference> run = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -179,8 +352,38 @@ namespace Azure.ResourceManager.Logic
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicWorkflowTriggerHistoryData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(scheduledTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, Optional.ToNullable(fired), run.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogicWorkflowTriggerHistoryData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(scheduledTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, Optional.ToNullable(fired), run.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicWorkflowTriggerHistoryData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LogicWorkflowTriggerHistoryData IPersistableModel<LogicWorkflowTriggerHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerHistoryData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLogicWorkflowTriggerHistoryData(document.RootElement, options);
+        }
+
+        string IPersistableModel<LogicWorkflowTriggerHistoryData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

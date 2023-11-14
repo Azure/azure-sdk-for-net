@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12ProtocolSettings : IUtf8JsonSerializable
+    public partial class X12ProtocolSettings : IUtf8JsonSerializable, IJsonModel<X12ProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12ProtocolSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<X12ProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<X12ProtocolSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<X12ProtocolSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
             writer.WriteObjectValue(ValidationSettings);
@@ -77,11 +87,40 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12ProtocolSettings DeserializeX12ProtocolSettings(JsonElement element)
+        X12ProtocolSettings IJsonModel<X12ProtocolSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12ProtocolSettings(document.RootElement, options);
+        }
+
+        internal static X12ProtocolSettings DeserializeX12ProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,6 +137,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IList<X12MessageIdentifier>> messageFilterList = default;
             IList<X12SchemaReference> schemaReferences = default;
             Optional<IList<X12DelimiterOverrides>> x12DelimiterOverrides = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationSettings"u8))
@@ -201,8 +242,38 @@ namespace Azure.ResourceManager.Logic.Models
                     x12DelimiterOverrides = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, securitySettings, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(validationOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(x12DelimiterOverrides));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, securitySettings, processingSettings, Optional.ToList(envelopeOverrides), Optional.ToList(validationOverrides), Optional.ToList(messageFilterList), schemaReferences, Optional.ToList(x12DelimiterOverrides), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<X12ProtocolSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        X12ProtocolSettings IPersistableModel<X12ProtocolSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeX12ProtocolSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<X12ProtocolSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

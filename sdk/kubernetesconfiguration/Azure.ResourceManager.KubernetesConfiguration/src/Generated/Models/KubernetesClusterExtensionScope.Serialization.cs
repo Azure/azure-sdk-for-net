@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesClusterExtensionScope : IUtf8JsonSerializable
+    public partial class KubernetesClusterExtensionScope : IUtf8JsonSerializable, IJsonModel<KubernetesClusterExtensionScope>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterExtensionScope>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<KubernetesClusterExtensionScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<KubernetesClusterExtensionScope>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<KubernetesClusterExtensionScope>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Cluster))
             {
@@ -39,17 +50,48 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("namespace");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesClusterExtensionScope DeserializeKubernetesClusterExtensionScope(JsonElement element)
+        KubernetesClusterExtensionScope IJsonModel<KubernetesClusterExtensionScope>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesClusterExtensionScope(document.RootElement, options);
+        }
+
+        internal static KubernetesClusterExtensionScope DeserializeKubernetesClusterExtensionScope(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ScopeCluster> cluster = default;
             Optional<ScopeNamespace> @namespace = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cluster"u8))
@@ -72,8 +114,38 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     @namespace = ScopeNamespace.DeserializeScopeNamespace(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesClusterExtensionScope(cluster.Value, @namespace.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KubernetesClusterExtensionScope(cluster.Value, @namespace.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesClusterExtensionScope>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        KubernetesClusterExtensionScope IPersistableModel<KubernetesClusterExtensionScope>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeKubernetesClusterExtensionScope(document.RootElement, options);
+        }
+
+        string IPersistableModel<KubernetesClusterExtensionScope>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

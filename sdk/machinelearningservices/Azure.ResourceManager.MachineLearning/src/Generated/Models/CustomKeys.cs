@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Custom Keys credential object. </summary>
     internal partial class CustomKeys
     {
-        /// <summary> Initializes a new instance of CustomKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomKeys"/>. </summary>
         public CustomKeys()
         {
             Keys = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of CustomKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomKeys"/>. </summary>
         /// <param name="keys"> Dictionary of &lt;string&gt;. </param>
-        internal CustomKeys(IDictionary<string, string> keys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomKeys(IDictionary<string, string> keys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keys = keys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

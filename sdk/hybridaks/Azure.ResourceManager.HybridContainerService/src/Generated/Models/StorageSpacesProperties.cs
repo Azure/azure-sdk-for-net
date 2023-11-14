@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> HybridAKSStorageSpec defines the desired state of HybridAKSStorage. </summary>
     public partial class StorageSpacesProperties
     {
-        /// <summary> Initializes a new instance of StorageSpacesProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesProperties"/>. </summary>
         public StorageSpacesProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesProperties"/>. </summary>
         /// <param name="hciStorageProfile"></param>
         /// <param name="vmwareStorageProfile"></param>
         /// <param name="provisioningState"></param>
         /// <param name="status"> HybridAKSStorageStatus defines the observed state of HybridAKSStorage. </param>
-        internal StorageSpacesProperties(StorageSpacesPropertiesHciStorageProfile hciStorageProfile, StorageSpacesPropertiesVmwareStorageProfile vmwareStorageProfile, ProvisioningState? provisioningState, StorageSpacesPropertiesStatus status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSpacesProperties(StorageSpacesPropertiesHciStorageProfile hciStorageProfile, StorageSpacesPropertiesVmwareStorageProfile vmwareStorageProfile, ProvisioningState? provisioningState, StorageSpacesPropertiesStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HciStorageProfile = hciStorageProfile;
             VmwareStorageProfile = vmwareStorageProfile;
             ProvisioningState = provisioningState;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the hci storage profile. </summary>

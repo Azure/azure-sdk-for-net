@@ -5,22 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class IdleShutdownSetting : IUtf8JsonSerializable
+    public partial class IdleShutdownSetting : IUtf8JsonSerializable, IJsonModel<IdleShutdownSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdleShutdownSetting>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<IdleShutdownSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IdleShutdownSetting>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IdleShutdownSetting>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IdleTimeBeforeShutdown))
             {
                 writer.WritePropertyName("idleTimeBeforeShutdown"u8);
                 writer.WriteStringValue(IdleTimeBeforeShutdown);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        IdleShutdownSetting IJsonModel<IdleShutdownSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IdleShutdownSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIdleShutdownSetting(document.RootElement, options);
+        }
+
+        internal static IdleShutdownSetting DeserializeIdleShutdownSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> idleTimeBeforeShutdown = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("idleTimeBeforeShutdown"u8))
+                {
+                    idleTimeBeforeShutdown = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IdleShutdownSetting(idleTimeBeforeShutdown.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<IdleShutdownSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IdleShutdownSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IdleShutdownSetting IPersistableModel<IdleShutdownSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IdleShutdownSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIdleShutdownSetting(document.RootElement, options);
+        }
+
+        string IPersistableModel<IdleShutdownSetting>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

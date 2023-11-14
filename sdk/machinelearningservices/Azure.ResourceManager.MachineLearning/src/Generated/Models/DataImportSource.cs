@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class DataImportSource
     {
-        /// <summary> Initializes a new instance of DataImportSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataImportSource"/>. </summary>
         protected DataImportSource()
         {
         }
 
-        /// <summary> Initializes a new instance of DataImportSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImportSource"/>. </summary>
         /// <param name="connection"> Workspace connection for data import source storage. </param>
         /// <param name="sourceType"> [Required] Specifies the type of data. </param>
-        internal DataImportSource(string connection, DataImportSourceType sourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataImportSource(string connection, DataImportSourceType sourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Connection = connection;
             SourceType = sourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Workspace connection for data import source storage. </summary>

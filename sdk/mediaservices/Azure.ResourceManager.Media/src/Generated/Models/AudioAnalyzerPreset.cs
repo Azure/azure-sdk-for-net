@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,19 +18,20 @@ namespace Azure.ResourceManager.Media.Models
     /// </summary>
     public partial class AudioAnalyzerPreset : MediaTransformPreset
     {
-        /// <summary> Initializes a new instance of AudioAnalyzerPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioAnalyzerPreset"/>. </summary>
         public AudioAnalyzerPreset()
         {
             ExperimentalOptions = new ChangeTrackingDictionary<string, string>();
             OdataType = "#Microsoft.Media.AudioAnalyzerPreset";
         }
 
-        /// <summary> Initializes a new instance of AudioAnalyzerPreset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioAnalyzerPreset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="audioLanguage"> The language for the audio payload in the input using the BCP-47 format of 'language tag-region' (e.g: 'en-US').  If you know the language of your content, it is recommended that you specify it. The language must be specified explicitly for AudioAnalysisMode::Basic, since automatic language detection is not included in basic mode. If the language isn't specified or set to null, automatic language detection will choose the first language detected and process with the selected language for the duration of the file. It does not currently support dynamically switching between languages after the first language is detected. The automatic detection works best with audio recordings with clearly discernable speech. If automatic detection fails to find the language, transcription would fallback to 'en-US'." The list of supported languages is available here: https://go.microsoft.com/fwlink/?linkid=2109463. </param>
         /// <param name="mode"> Determines the set of audio analysis operations to be performed. If unspecified, the Standard AudioAnalysisMode would be chosen. </param>
         /// <param name="experimentalOptions"> Dictionary containing key value pairs for parameters not exposed in the preset itself. </param>
-        internal AudioAnalyzerPreset(string odataType, string audioLanguage, AudioAnalysisMode? mode, IDictionary<string, string> experimentalOptions) : base(odataType)
+        internal AudioAnalyzerPreset(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, string audioLanguage, AudioAnalysisMode? mode, IDictionary<string, string> experimentalOptions) : base(odataType, serializedAdditionalRawData)
         {
             AudioLanguage = audioLanguage;
             Mode = mode;

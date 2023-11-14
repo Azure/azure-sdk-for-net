@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The description of an X509 CA Certificate. </summary>
     public partial class IotHubCertificateProperties
     {
-        /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateProperties"/>. </summary>
         public IotHubCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificateProperties"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprintString"> The certificate's thumbprint. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="createdOn"> The certificate's create date and time. </param>
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="certificate"> The certificate content. </param>
-        internal IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subject = subject;
             ExpireOn = expireOn;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             Certificate = certificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The certificate's subject name. </summary>

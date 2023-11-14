@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
@@ -12,24 +14,29 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The core usage details. </summary>
     public partial class LabServicesUsage
     {
-        /// <summary> Initializes a new instance of LabServicesUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesUsage"/>. </summary>
         internal LabServicesUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of LabServicesUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesUsage"/>. </summary>
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The limit integer. </param>
         /// <param name="unit"> The unit details. </param>
         /// <param name="name"> The name. </param>
         /// <param name="id"> The fully qualified arm resource id. </param>
-        internal LabServicesUsage(long? currentValue, long? limit, LabServicesUsageUnit? unit, LabServicesUsageName name, ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabServicesUsage(long? currentValue, long? limit, LabServicesUsageUnit? unit, LabServicesUsageName name, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
             Name = name;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current usage. </summary>

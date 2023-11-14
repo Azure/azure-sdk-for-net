@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IngestionStatusList. </summary>
     internal partial class IngestionStatusList
     {
-        /// <summary> Initializes a new instance of IngestionStatusList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngestionStatusList"/>. </summary>
         internal IngestionStatusList()
         {
             Value = new ChangeTrackingList<DataFeedIngestionStatus>();
         }
 
-        /// <summary> Initializes a new instance of IngestionStatusList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionStatusList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
-        internal IngestionStatusList(string nextLink, IReadOnlyList<DataFeedIngestionStatus> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionStatusList(string nextLink, IReadOnlyList<DataFeedIngestionStatus> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the next link. </summary>

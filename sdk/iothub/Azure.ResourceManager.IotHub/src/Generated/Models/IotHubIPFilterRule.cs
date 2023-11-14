@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The IP filter rules for the IoT hub. </summary>
     public partial class IotHubIPFilterRule
     {
-        /// <summary> Initializes a new instance of IotHubIPFilterRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubIPFilterRule"/>. </summary>
         /// <param name="filterName"> The name of the IP filter rule. </param>
         /// <param name="action"> The desired action for requests captured by this rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
@@ -26,6 +30,24 @@ namespace Azure.ResourceManager.IotHub.Models
             FilterName = filterName;
             Action = action;
             IPMask = ipMask;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubIPFilterRule"/>. </summary>
+        /// <param name="filterName"> The name of the IP filter rule. </param>
+        /// <param name="action"> The desired action for requests captured by this rule. </param>
+        /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubIPFilterRule(string filterName, IotHubIPFilterActionType action, string ipMask, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FilterName = filterName;
+            Action = action;
+            IPMask = ipMask;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubIPFilterRule"/> for deserialization. </summary>
+        internal IotHubIPFilterRule()
+        {
         }
 
         /// <summary> The name of the IP filter rule. </summary>

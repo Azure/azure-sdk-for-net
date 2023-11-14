@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Response for ConfigurationAssignments list. </summary>
     internal partial class MaintenanceConfigurationAssignmentListResult
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentListResult"/>. </summary>
         internal MaintenanceConfigurationAssignmentListResult()
         {
             Value = new ChangeTrackingList<MaintenanceConfigurationAssignmentData>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentListResult"/>. </summary>
         /// <param name="value"> The list of configuration Assignments. </param>
-        internal MaintenanceConfigurationAssignmentListResult(IReadOnlyList<MaintenanceConfigurationAssignmentData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceConfigurationAssignmentListResult(IReadOnlyList<MaintenanceConfigurationAssignmentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of configuration Assignments. </summary>

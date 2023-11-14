@@ -15,7 +15,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> `GeoJSON` geometry, representing the area circle's center. </summary>
     public partial class AreaGeometry
     {
-        /// <summary> Initializes a new instance of AreaGeometry. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AreaGeometry"/>. </summary>
         /// <param name="type"> `GeoJSON` geometry type. </param>
         /// <param name="coordinates">
         /// Coordinates of the area circle's center, represented according to the `GeoJSON` standard.
@@ -28,18 +31,26 @@ namespace Azure.Health.Insights.ClinicalMatching
 
             Type = type;
             Coordinates = coordinates.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AreaGeometry. </summary>
+        /// <summary> Initializes a new instance of <see cref="AreaGeometry"/>. </summary>
         /// <param name="type"> `GeoJSON` geometry type. </param>
         /// <param name="coordinates">
         /// Coordinates of the area circle's center, represented according to the `GeoJSON` standard.
         /// This is an array of 2 decimal numbers, longitude and latitude (precisely in this order).
         /// </param>
-        internal AreaGeometry(GeoJsonGeometryType type, IList<float> coordinates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AreaGeometry(GeoJsonGeometryType type, IList<float> coordinates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Coordinates = coordinates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AreaGeometry"/> for deserialization. </summary>
+        internal AreaGeometry()
+        {
         }
 
         /// <summary> `GeoJSON` geometry type. </summary>

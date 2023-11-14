@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Extended Community Id list properties. </summary>
     internal partial class IPExtendedCommunityIdList
     {
-        /// <summary> Initializes a new instance of IPExtendedCommunityIdList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityIdList"/>. </summary>
         public IPExtendedCommunityIdList()
         {
             IPExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of IPExtendedCommunityIdList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityIdList"/>. </summary>
         /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
-        internal IPExtendedCommunityIdList(IList<ResourceIdentifier> ipExtendedCommunityIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPExtendedCommunityIdList(IList<ResourceIdentifier> ipExtendedCommunityIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPExtendedCommunityIds = ipExtendedCommunityIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of IP Extended Community resource IDs. </summary>

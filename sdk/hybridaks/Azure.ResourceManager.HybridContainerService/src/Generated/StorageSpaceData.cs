@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class StorageSpaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageSpaceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageSpaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,10 +37,17 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="location"> The location. </param>
         /// <param name="properties"> HybridAKSStorageSpec defines the desired state of HybridAKSStorage. </param>
         /// <param name="extendedLocation"></param>
-        internal StorageSpaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSpacesProperties properties, StorageSpacesExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSpaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageSpacesProperties properties, StorageSpacesExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpaceData"/> for deserialization. </summary>
+        internal StorageSpaceData()
+        {
         }
 
         /// <summary> HybridAKSStorageSpec defines the desired state of HybridAKSStorage. </summary>

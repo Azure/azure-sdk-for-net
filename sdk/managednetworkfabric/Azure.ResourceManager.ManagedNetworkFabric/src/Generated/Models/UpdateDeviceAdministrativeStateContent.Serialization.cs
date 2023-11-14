@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class UpdateDeviceAdministrativeStateContent : IUtf8JsonSerializable
+    public partial class UpdateDeviceAdministrativeStateContent : IUtf8JsonSerializable, IJsonModel<UpdateDeviceAdministrativeStateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDeviceAdministrativeStateContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<UpdateDeviceAdministrativeStateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UpdateDeviceAdministrativeStateContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
@@ -35,7 +46,112 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        UpdateDeviceAdministrativeStateContent IJsonModel<UpdateDeviceAdministrativeStateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpdateDeviceAdministrativeStateContent(document.RootElement, options);
+        }
+
+        internal static UpdateDeviceAdministrativeStateContent DeserializeUpdateDeviceAdministrativeStateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<NetworkDeviceAdministrativeState> state = default;
+            Optional<IList<ResourceIdentifier>> resourceIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new NetworkDeviceAdministrativeState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    resourceIds = array;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UpdateDeviceAdministrativeStateContent(Optional.ToList(resourceIds), serializedAdditionalRawData, Optional.ToNullable(state));
+        }
+
+        BinaryData IPersistableModel<UpdateDeviceAdministrativeStateContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UpdateDeviceAdministrativeStateContent IPersistableModel<UpdateDeviceAdministrativeStateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUpdateDeviceAdministrativeStateContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<UpdateDeviceAdministrativeStateContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> A class that contains virtual network definition. </summary>
     public partial class KustoClusterVirtualNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of KustoClusterVirtualNetworkConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterVirtualNetworkConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet resource id. </param>
         /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
         /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
@@ -29,17 +33,24 @@ namespace Azure.ResourceManager.Kusto.Models
             DataManagementPublicIPId = dataManagementPublicIPId;
         }
 
-        /// <summary> Initializes a new instance of KustoClusterVirtualNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoClusterVirtualNetworkConfiguration"/>. </summary>
         /// <param name="subnetId"> The subnet resource id. </param>
         /// <param name="enginePublicIPId"> Engine service's public IP address resource id. </param>
         /// <param name="dataManagementPublicIPId"> Data management's service public IP address resource id. </param>
         /// <param name="state"> When enabled, the cluster is deployed into the configured subnet, when disabled it will be removed from the subnet. </param>
-        internal KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId, KustoClusterVnetState? state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId, KustoClusterVnetState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetId = subnetId;
             EnginePublicIPId = enginePublicIPId;
             DataManagementPublicIPId = dataManagementPublicIPId;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoClusterVirtualNetworkConfiguration"/> for deserialization. </summary>
+        internal KustoClusterVirtualNetworkConfiguration()
+        {
         }
 
         /// <summary> The subnet resource id. </summary>

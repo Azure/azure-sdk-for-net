@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> Response object of query if are there existing offers in the collections. </summary>
     public partial class AnyExistingOffersInTheCollectionsResult
     {
-        /// <summary> Initializes a new instance of AnyExistingOffersInTheCollectionsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnyExistingOffersInTheCollectionsResult"/>. </summary>
         internal AnyExistingOffersInTheCollectionsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AnyExistingOffersInTheCollectionsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnyExistingOffersInTheCollectionsResult"/>. </summary>
         /// <param name="value"> Boolean answer, true if exists at least a single offer in an enabled collection, otherwise, false. </param>
-        internal AnyExistingOffersInTheCollectionsResult(bool? value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnyExistingOffersInTheCollectionsResult(bool? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Boolean answer, true if exists at least a single offer in an enabled collection, otherwise, false. </summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Network Rule Set Properties of IotHub. </summary>
     public partial class IotHubNetworkRuleSetProperties
     {
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetProperties"/>. </summary>
         /// <param name="applyToBuiltInEventHubEndpoint"> If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub. </param>
         /// <param name="ipRules"> List of IP Rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipRules"/> is null. </exception>
@@ -27,15 +30,22 @@ namespace Azure.ResourceManager.IotHub.Models
             IPRules = ipRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetProperties"/>. </summary>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
         /// <param name="applyToBuiltInEventHubEndpoint"> If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub. </param>
         /// <param name="ipRules"> List of IP Rules. </param>
-        internal IotHubNetworkRuleSetProperties(IotHubNetworkRuleSetDefaultAction? defaultAction, bool applyToBuiltInEventHubEndpoint, IList<IotHubNetworkRuleSetIPRule> ipRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubNetworkRuleSetProperties(IotHubNetworkRuleSetDefaultAction? defaultAction, bool applyToBuiltInEventHubEndpoint, IList<IotHubNetworkRuleSetIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
             ApplyToBuiltInEventHubEndpoint = applyToBuiltInEventHubEndpoint;
             IPRules = ipRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetProperties"/> for deserialization. </summary>
+        internal IotHubNetworkRuleSetProperties()
+        {
         }
 
         /// <summary> Default Action for Network Rule Set. </summary>

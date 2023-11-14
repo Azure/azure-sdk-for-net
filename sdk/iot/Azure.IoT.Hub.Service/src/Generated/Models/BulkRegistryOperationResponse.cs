@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The result of the bulk registry operation. </summary>
     public partial class BulkRegistryOperationResponse
     {
-        /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BulkRegistryOperationResponse"/>. </summary>
         internal BulkRegistryOperationResponse()
         {
             Errors = new ChangeTrackingList<DeviceRegistryOperationError>();
             Warnings = new ChangeTrackingList<DeviceRegistryOperationWarning>();
         }
 
-        /// <summary> Initializes a new instance of BulkRegistryOperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkRegistryOperationResponse"/>. </summary>
         /// <param name="isSuccessful"> The operation result. </param>
         /// <param name="errors"> The device registry operation errors. </param>
         /// <param name="warnings"> The device registry operation warnings. </param>
-        internal BulkRegistryOperationResponse(bool? isSuccessful, IReadOnlyList<DeviceRegistryOperationError> errors, IReadOnlyList<DeviceRegistryOperationWarning> warnings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BulkRegistryOperationResponse(bool? isSuccessful, IReadOnlyList<DeviceRegistryOperationError> errors, IReadOnlyList<DeviceRegistryOperationWarning> warnings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsSuccessful = isSuccessful;
             Errors = errors;
             Warnings = warnings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation result. </summary>

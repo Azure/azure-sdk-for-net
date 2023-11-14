@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Specifies the feature window. </summary>
     public partial class FeatureWindow
     {
-        /// <summary> Initializes a new instance of FeatureWindow. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureWindow"/>. </summary>
         public FeatureWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureWindow"/>. </summary>
         /// <param name="featureWindowEnd"> Specifies the feature window end time. </param>
         /// <param name="featureWindowStart"> Specifies the feature window start time. </param>
-        internal FeatureWindow(DateTimeOffset? featureWindowEnd, DateTimeOffset? featureWindowStart)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureWindow(DateTimeOffset? featureWindowEnd, DateTimeOffset? featureWindowStart, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FeatureWindowEnd = featureWindowEnd;
             FeatureWindowStart = featureWindowStart;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the feature window end time. </summary>

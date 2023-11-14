@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class StopSellOffersPlansNotificationsList
+    public partial class StopSellOffersPlansNotificationsList : IUtf8JsonSerializable, IJsonModel<StopSellOffersPlansNotificationsList>
     {
-        internal static StopSellOffersPlansNotificationsList DeserializeStopSellOffersPlansNotificationsList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StopSellOffersPlansNotificationsList>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StopSellOffersPlansNotificationsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StopSellOffersPlansNotificationsList>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StopSellOffersPlansNotificationsList>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(StopSellNotifications))
+            {
+                writer.WritePropertyName("stopSellNotifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in StopSellNotifications)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StopSellOffersPlansNotificationsList IJsonModel<StopSellOffersPlansNotificationsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStopSellOffersPlansNotificationsList(document.RootElement, options);
+        }
+
+        internal static StopSellOffersPlansNotificationsList DeserializeStopSellOffersPlansNotificationsList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<StopSellOffersPlansNotificationsResult>> stopSellNotifications = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stopSellNotifications"u8))
@@ -36,8 +93,38 @@ namespace Azure.ResourceManager.Marketplace.Models
                     stopSellNotifications = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StopSellOffersPlansNotificationsList(Optional.ToList(stopSellNotifications));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StopSellOffersPlansNotificationsList(Optional.ToList(stopSellNotifications), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StopSellOffersPlansNotificationsList>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StopSellOffersPlansNotificationsList IPersistableModel<StopSellOffersPlansNotificationsList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsList)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStopSellOffersPlansNotificationsList(document.RootElement, options);
+        }
+
+        string IPersistableModel<StopSellOffersPlansNotificationsList>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Azure query for the update configuration. </summary>
     public partial class MaintenanceConfigurationAssignmentFilter
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentFilter"/>. </summary>
         public MaintenanceConfigurationAssignmentFilter()
         {
             ResourceTypes = new ChangeTrackingList<ResourceType>();
@@ -22,19 +26,21 @@ namespace Azure.ResourceManager.Maintenance.Models
             Locations = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentFilter"/>. </summary>
         /// <param name="resourceTypes"> List of allowed resources. </param>
         /// <param name="resourceGroups"> List of allowed resource groups. </param>
         /// <param name="osTypes"> List of allowed operating systems. </param>
         /// <param name="locations"> List of locations to scope the query to. </param>
         /// <param name="tagSettings"> Tag settings for the VM. </param>
-        internal MaintenanceConfigurationAssignmentFilter(IList<ResourceType> resourceTypes, IList<string> resourceGroups, IList<string> osTypes, IList<AzureLocation> locations, VmTagSettings tagSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceConfigurationAssignmentFilter(IList<ResourceType> resourceTypes, IList<string> resourceGroups, IList<string> osTypes, IList<AzureLocation> locations, VmTagSettings tagSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceTypes = resourceTypes;
             ResourceGroups = resourceGroups;
             OSTypes = osTypes;
             Locations = locations;
             TagSettings = tagSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of allowed resources. </summary>

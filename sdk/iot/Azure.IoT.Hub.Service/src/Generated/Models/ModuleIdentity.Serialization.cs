@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.Hub.Service.Models
 {
-    public partial class ModuleIdentity : IUtf8JsonSerializable
+    public partial class ModuleIdentity : IUtf8JsonSerializable, IJsonModel<ModuleIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModuleIdentity>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ModuleIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ModuleIdentity>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModuleIdentity>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ModuleId))
             {
@@ -66,11 +76,40 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ModuleIdentity DeserializeModuleIdentity(JsonElement element)
+        ModuleIdentity IJsonModel<ModuleIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ModuleIdentity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeModuleIdentity(document.RootElement, options);
+        }
+
+        internal static ModuleIdentity DeserializeModuleIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,6 +124,8 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<DateTimeOffset> lastActivityTime = default;
             Optional<int> cloudToDeviceMessageCount = default;
             Optional<AuthenticationMechanism> authentication = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("moduleId"u8))
@@ -157,8 +198,38 @@ namespace Azure.IoT.Hub.Service.Models
                     authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ModuleIdentity(moduleId.Value, managedBy.Value, deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ModuleIdentity(moduleId.Value, managedBy.Value, deviceId.Value, generationId.Value, etag.Value, Optional.ToNullable(connectionState), Optional.ToNullable(connectionStateUpdatedTime), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), authentication.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ModuleIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ModuleIdentity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ModuleIdentity IPersistableModel<ModuleIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ModuleIdentity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeModuleIdentity(document.RootElement, options);
+        }
+
+        string IPersistableModel<ModuleIdentity>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

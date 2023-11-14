@@ -14,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricSeriesItem. </summary>
     public partial class MetricSeriesDefinition
     {
-        /// <summary> Initializes a new instance of MetricSeriesDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesDefinition"/>. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimension"> dimension name and value pair. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimension"/> is null. </exception>
@@ -25,6 +28,22 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             MetricId = metricId;
             Dimension = dimension;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesDefinition"/>. </summary>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <param name="dimension"> dimension name and value pair. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricSeriesDefinition(string metricId, IReadOnlyDictionary<string, string> dimension, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MetricId = metricId;
+            Dimension = dimension;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesDefinition"/> for deserialization. </summary>
+        internal MetricSeriesDefinition()
+        {
         }
     }
 }

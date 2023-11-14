@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CronTrigger. </summary>
     public partial class CronTrigger : MachineLearningTriggerBase
     {
-        /// <summary> Initializes a new instance of CronTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
         /// <param name="expression">
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TriggerType = MachineLearningTriggerType.Cron;
         }
 
-        /// <summary> Initializes a new instance of CronTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
@@ -39,14 +40,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
         /// <param name="triggerType"> [Required]. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="expression">
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
-        internal CronTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, string expression) : base(endTime, startTime, timeZone, triggerType)
+        internal CronTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData, string expression) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
         {
             Expression = expression;
             TriggerType = triggerType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CronTrigger"/> for deserialization. </summary>
+        internal CronTrigger()
+        {
         }
 
         /// <summary>

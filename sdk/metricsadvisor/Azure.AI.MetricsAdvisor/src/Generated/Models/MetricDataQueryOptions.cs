@@ -15,7 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDataQueryOptions. </summary>
     internal partial class MetricDataQueryOptions
     {
-        /// <summary> Initializes a new instance of MetricDataQueryOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataQueryOptions"/>. </summary>
         /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="endTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="series"> query specific series. The maximum number of series is 100. </param>
@@ -27,6 +30,24 @@ namespace Azure.AI.MetricsAdvisor.Models
             StartTime = startTime;
             EndTime = endTime;
             Series = series.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataQueryOptions"/>. </summary>
+        /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="endTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="series"> query specific series. The maximum number of series is 100. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDataQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime, IList<IDictionary<string, string>> series, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            Series = series;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataQueryOptions"/> for deserialization. </summary>
+        internal MetricDataQueryOptions()
+        {
         }
 
         /// <summary> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </summary>

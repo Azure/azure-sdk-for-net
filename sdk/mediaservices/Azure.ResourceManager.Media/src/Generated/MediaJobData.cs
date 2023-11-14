@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Media
     /// </summary>
     public partial class MediaJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of MediaJobData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobData"/>. </summary>
         public MediaJobData()
         {
             Outputs = new ChangeTrackingList<MediaJobOutput>();
             CorrelationData = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +52,8 @@ namespace Azure.ResourceManager.Media
         /// <param name="correlationData"> Customer provided key, value pairs that will be returned in Job and JobOutput state events. </param>
         /// <param name="startOn"> The UTC date and time at which this Job began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job finished processing. </param>
-        internal MediaJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, MediaJobState? state, string description, MediaJobInputBasicProperties input, DateTimeOffset? lastModifiedOn, IList<MediaJobOutput> outputs, MediaJobPriority? priority, IDictionary<string, string> correlationData, DateTimeOffset? startOn, DateTimeOffset? endOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, MediaJobState? state, string description, MediaJobInputBasicProperties input, DateTimeOffset? lastModifiedOn, IList<MediaJobOutput> outputs, MediaJobPriority? priority, IDictionary<string, string> correlationData, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             State = state;
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.Media
             CorrelationData = correlationData;
             StartOn = startOn;
             EndOn = endOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The UTC date and time when the customer has created the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </summary>

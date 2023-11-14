@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The ip address. </summary>
     public partial class FlowEndpointIPAddress
     {
-        /// <summary> Initializes a new instance of FlowEndpointIPAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowEndpointIPAddress"/>. </summary>
         public FlowEndpointIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowEndpointIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowEndpointIPAddress"/>. </summary>
         /// <param name="cidrAddress"> The address. </param>
-        internal FlowEndpointIPAddress(string cidrAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowEndpointIPAddress(string cidrAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CidrAddress = cidrAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The address. </summary>

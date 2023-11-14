@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The request history. </summary>
     public partial class LogicWorkflowRequestHistoryProperties
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRequestHistoryProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequestHistoryProperties"/>. </summary>
         public LogicWorkflowRequestHistoryProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRequestHistoryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRequestHistoryProperties"/>. </summary>
         /// <param name="startOn"> The time the request started. </param>
         /// <param name="endOn"> The time the request ended. </param>
         /// <param name="request"> The request. </param>
         /// <param name="response"> The response. </param>
-        internal LogicWorkflowRequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowRequest request, LogicWorkflowResponse response)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRequestHistoryProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowRequest request, LogicWorkflowResponse response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
             Request = request;
             Response = response;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time the request started. </summary>

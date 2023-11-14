@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> The provisionedClusters resource definition. </summary>
     public partial class ProvisionedClusterCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProvisionedClusterCreateOrUpdateContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +34,18 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="identity"> Identity for the Provisioned cluster. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="properties"> All properties of the provisioned cluster. </param>
         /// <param name="extendedLocation"></param>
-        internal ProvisionedClusterCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisionedClustersAllProperties properties, ProvisionedClustersExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisionedClustersAllProperties properties, ProvisionedClustersExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Properties = properties;
             ExtendedLocation = extendedLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterCreateOrUpdateContent"/> for deserialization. </summary>
+        internal ProvisionedClusterCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Identity for the Provisioned cluster. Current supported identity types: None, SystemAssigned. </summary>

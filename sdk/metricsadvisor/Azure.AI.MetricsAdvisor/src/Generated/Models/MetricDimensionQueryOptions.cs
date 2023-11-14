@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDimensionQueryOptions. </summary>
     internal partial class MetricDimensionQueryOptions
     {
-        /// <summary> Initializes a new instance of MetricDimensionQueryOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionQueryOptions"/>. </summary>
         /// <param name="dimensionName"> dimension name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensionName"/> is null. </exception>
         public MetricDimensionQueryOptions(string dimensionName)
@@ -21,6 +25,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(dimensionName, nameof(dimensionName));
 
             DimensionName = dimensionName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionQueryOptions"/>. </summary>
+        /// <param name="dimensionName"> dimension name. </param>
+        /// <param name="dimensionValueFilter"> dimension value to be filtered. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDimensionQueryOptions(string dimensionName, string dimensionValueFilter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DimensionName = dimensionName;
+            DimensionValueFilter = dimensionValueFilter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDimensionQueryOptions"/> for deserialization. </summary>
+        internal MetricDimensionQueryOptions()
+        {
         }
 
         /// <summary> dimension name. </summary>

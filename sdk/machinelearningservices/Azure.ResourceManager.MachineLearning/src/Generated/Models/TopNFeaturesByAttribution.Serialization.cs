@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TopNFeaturesByAttribution : IUtf8JsonSerializable
+    public partial class TopNFeaturesByAttribution : IUtf8JsonSerializable, IJsonModel<TopNFeaturesByAttribution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopNFeaturesByAttribution>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TopNFeaturesByAttribution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TopNFeaturesByAttribution>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TopNFeaturesByAttribution>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Top))
             {
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("filterType"u8);
             writer.WriteStringValue(FilterType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TopNFeaturesByAttribution DeserializeTopNFeaturesByAttribution(JsonElement element)
+        TopNFeaturesByAttribution IJsonModel<TopNFeaturesByAttribution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTopNFeaturesByAttribution(document.RootElement, options);
+        }
+
+        internal static TopNFeaturesByAttribution DeserializeTopNFeaturesByAttribution(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> top = default;
             MonitoringFeatureFilterType filterType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("top"u8))
@@ -49,8 +91,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     filterType = new MonitoringFeatureFilterType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TopNFeaturesByAttribution(filterType, Optional.ToNullable(top));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TopNFeaturesByAttribution(filterType, serializedAdditionalRawData, Optional.ToNullable(top));
         }
+
+        BinaryData IPersistableModel<TopNFeaturesByAttribution>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TopNFeaturesByAttribution IPersistableModel<TopNFeaturesByAttribution>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTopNFeaturesByAttribution(document.RootElement, options);
+        }
+
+        string IPersistableModel<TopNFeaturesByAttribution>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

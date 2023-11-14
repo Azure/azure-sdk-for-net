@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class AddonStatus
+    public partial class AddonStatus : IUtf8JsonSerializable, IJsonModel<AddonStatus>
     {
-        internal static AddonStatus DeserializeAddonStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddonStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AddonStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AddonStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AddonStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(Phase))
+            {
+                writer.WritePropertyName("phase"u8);
+                writer.WriteStringValue(Phase);
+            }
+            if (Optional.IsDefined(Ready))
+            {
+                writer.WritePropertyName("ready"u8);
+                writer.WriteBooleanValue(Ready.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AddonStatus IJsonModel<AddonStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddonStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAddonStatus(document.RootElement, options);
+        }
+
+        internal static AddonStatus DeserializeAddonStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> errorMessage = default;
             Optional<string> phase = default;
             Optional<bool> ready = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorMessage"u8))
@@ -42,8 +105,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     ready = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AddonStatus(errorMessage.Value, phase.Value, Optional.ToNullable(ready));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AddonStatus(errorMessage.Value, phase.Value, Optional.ToNullable(ready), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AddonStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddonStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AddonStatus IPersistableModel<AddonStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AddonStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAddonStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<AddonStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

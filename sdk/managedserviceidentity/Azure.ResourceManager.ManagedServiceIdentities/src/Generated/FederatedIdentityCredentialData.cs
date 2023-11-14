@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// </summary>
     public partial class FederatedIdentityCredentialData : ResourceData
     {
-        /// <summary> Initializes a new instance of FederatedIdentityCredentialData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialData"/>. </summary>
         public FederatedIdentityCredentialData()
         {
             Audiences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FederatedIdentityCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FederatedIdentityCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,11 +35,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <param name="issuerUri"> The URL of the issuer to be trusted. </param>
         /// <param name="subject"> The identifier of the external identity. </param>
         /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
-        internal FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IList<string> audiences) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IList<string> audiences, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IssuerUri = issuerUri;
             Subject = subject;
             Audiences = audiences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URL of the issuer to be trusted. </summary>

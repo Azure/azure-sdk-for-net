@@ -14,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SeriesIdentity. </summary>
     internal partial class SeriesIdentity
     {
-        /// <summary> Initializes a new instance of SeriesIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SeriesIdentity"/>. </summary>
         /// <param name="dimension"> dimension specified for series. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimension"/> is null. </exception>
         public SeriesIdentity(IDictionary<string, string> dimension)
@@ -22,6 +25,20 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(dimension, nameof(dimension));
 
             Dimension = dimension;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SeriesIdentity"/>. </summary>
+        /// <param name="dimension"> dimension specified for series. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SeriesIdentity(IDictionary<string, string> dimension, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Dimension = dimension;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SeriesIdentity"/> for deserialization. </summary>
+        internal SeriesIdentity()
+        {
         }
 
         /// <summary> dimension specified for series. </summary>

@@ -5,22 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    internal partial class MaintenanceApplyUpdateListResult
+    internal partial class MaintenanceApplyUpdateListResult : IUtf8JsonSerializable, IJsonModel<MaintenanceApplyUpdateListResult>
     {
-        internal static MaintenanceApplyUpdateListResult DeserializeMaintenanceApplyUpdateListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceApplyUpdateListResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MaintenanceApplyUpdateListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MaintenanceApplyUpdateListResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MaintenanceApplyUpdateListResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MaintenanceApplyUpdateListResult IJsonModel<MaintenanceApplyUpdateListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaintenanceApplyUpdateListResult(document.RootElement, options);
+        }
+
+        internal static MaintenanceApplyUpdateListResult DeserializeMaintenanceApplyUpdateListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<MaintenanceApplyUpdateData>> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -37,8 +94,38 @@ namespace Azure.ResourceManager.Maintenance.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MaintenanceApplyUpdateListResult(Optional.ToList(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MaintenanceApplyUpdateListResult(Optional.ToList(value), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MaintenanceApplyUpdateListResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MaintenanceApplyUpdateListResult IPersistableModel<MaintenanceApplyUpdateListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MaintenanceApplyUpdateListResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMaintenanceApplyUpdateListResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<MaintenanceApplyUpdateListResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

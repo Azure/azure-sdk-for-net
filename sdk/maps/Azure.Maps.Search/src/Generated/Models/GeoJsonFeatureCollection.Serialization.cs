@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonFeatureCollection : IUtf8JsonSerializable
+    internal partial class GeoJsonFeatureCollection : IUtf8JsonSerializable, IJsonModel<GeoJsonFeatureCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoJsonFeatureCollection>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GeoJsonFeatureCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GeoJsonFeatureCollection>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GeoJsonFeatureCollection>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("features"u8);
             writer.WriteStartArray();
@@ -25,17 +35,48 @@ namespace Azure.Maps.Search.Models
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GeoJsonFeatureCollection DeserializeGeoJsonFeatureCollection(JsonElement element)
+        GeoJsonFeatureCollection IJsonModel<GeoJsonFeatureCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GeoJsonFeatureCollection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeoJsonFeatureCollection(document.RootElement, options);
+        }
+
+        internal static GeoJsonFeatureCollection DeserializeGeoJsonFeatureCollection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<GeoJsonFeature> features = default;
             GeoJsonObjectType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("features"u8))
@@ -53,8 +94,38 @@ namespace Azure.Maps.Search.Models
                     type = property.Value.GetString().ToGeoJsonObjectType();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GeoJsonFeatureCollection(type, features);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GeoJsonFeatureCollection(type, serializedAdditionalRawData, features);
         }
+
+        BinaryData IPersistableModel<GeoJsonFeatureCollection>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GeoJsonFeatureCollection)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GeoJsonFeatureCollection IPersistableModel<GeoJsonFeatureCollection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GeoJsonFeatureCollection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGeoJsonFeatureCollection(document.RootElement, options);
+        }
+
+        string IPersistableModel<GeoJsonFeatureCollection>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

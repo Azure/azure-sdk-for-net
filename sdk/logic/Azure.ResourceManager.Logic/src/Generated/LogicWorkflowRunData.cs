@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class LogicWorkflowRunData : ResourceData
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRunData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunData"/>. </summary>
         internal LogicWorkflowRunData()
         {
             Outputs = new ChangeTrackingDictionary<string, LogicWorkflowOutputParameterInfo>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowRunData. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRunData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +45,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="trigger"> Gets the fired trigger. </param>
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="response"> Gets the response of the flow run. </param>
-        internal LogicWorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, LogicResourceReference workflow, LogicWorkflowRunTrigger trigger, IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo> outputs, LogicWorkflowRunTrigger response) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? waitEndOn, DateTimeOffset? startOn, DateTimeOffset? endOn, LogicWorkflowStatus? status, string code, BinaryData error, string correlationId, Correlation correlation, LogicResourceReference workflow, LogicWorkflowRunTrigger trigger, IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo> outputs, LogicWorkflowRunTrigger response, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             WaitEndOn = waitEndOn;
             StartOn = startOn;
@@ -56,6 +60,7 @@ namespace Azure.ResourceManager.Logic
             Trigger = trigger;
             Outputs = outputs;
             Response = response;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the wait end time. </summary>

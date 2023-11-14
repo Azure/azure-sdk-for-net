@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Compute Instance properties. </summary>
     public partial class MachineLearningComputeInstanceProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceProperties"/>. </summary>
         public MachineLearningComputeInstanceProperties()
         {
             CustomServices = new ChangeTrackingList<CustomService>();
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataMounts = new ChangeTrackingList<MachineLearningComputeInstanceDataMount>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceProperties"/>. </summary>
         /// <param name="vmSize"> Virtual Machine Size. </param>
         /// <param name="subnet"> Virtual network subnet resource ID the compute nodes belong to. </param>
         /// <param name="applicationSharingPolicy"> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </param>
@@ -48,7 +52,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
         /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
         /// <param name="versions"> ComputeInstance version. </param>
-        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceAutologgerSettings autologgerSettings, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceAutologgerSettings autologgerSettings, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSize = vmSize;
             Subnet = subnet;
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             DataDisks = dataDisks;
             DataMounts = dataMounts;
             Versions = versions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Virtual Machine Size. </summary>

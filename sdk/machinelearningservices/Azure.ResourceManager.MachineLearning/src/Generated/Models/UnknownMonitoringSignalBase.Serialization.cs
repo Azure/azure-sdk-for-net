@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownMonitoringSignalBase : IUtf8JsonSerializable
+    internal partial class UnknownMonitoringSignalBase : IUtf8JsonSerializable, IJsonModel<MonitoringSignalBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringSignalBase>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MonitoringSignalBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MonitoringSignalBase>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MonitoringSignalBase>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
@@ -41,11 +51,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("signalType"u8);
             writer.WriteStringValue(SignalType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownMonitoringSignalBase DeserializeUnknownMonitoringSignalBase(JsonElement element)
+        MonitoringSignalBase IJsonModel<MonitoringSignalBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownMonitoringSignalBase(document.RootElement, options);
+        }
+
+        internal static UnknownMonitoringSignalBase DeserializeUnknownMonitoringSignalBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +92,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MonitoringNotificationMode> mode = default;
             Optional<IDictionary<string, string>> properties = default;
             MonitoringSignalType signalType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -84,8 +125,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownMonitoringSignalBase(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownMonitoringSignalBase(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitoringSignalBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitoringSignalBase IPersistableModel<MonitoringSignalBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitoringSignalBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownMonitoringSignalBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<MonitoringSignalBase>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class TargetRollingWindowSize
     {
-        /// <summary> Initializes a new instance of TargetRollingWindowSize. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetRollingWindowSize"/>. </summary>
         protected TargetRollingWindowSize()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetRollingWindowSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRollingWindowSize"/>. </summary>
         /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
-        internal TargetRollingWindowSize(TargetRollingWindowSizeMode mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetRollingWindowSize(TargetRollingWindowSizeMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] TargetRollingWindowSiz detection mode. </summary>

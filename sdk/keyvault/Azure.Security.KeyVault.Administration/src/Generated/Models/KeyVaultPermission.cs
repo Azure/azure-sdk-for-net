@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Role definition permissions. </summary>
     public partial class KeyVaultPermission
     {
-        /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPermission"/>. </summary>
         public KeyVaultPermission()
         {
             Actions = new ChangeTrackingList<string>();
@@ -22,17 +26,19 @@ namespace Azure.Security.KeyVault.Administration
             NotDataActions = new ChangeTrackingList<KeyVaultDataAction>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPermission"/>. </summary>
         /// <param name="actions"> Action permissions that are granted. </param>
         /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
         /// <param name="dataActions"> Data action permissions that are granted. </param>
         /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
-        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<KeyVaultDataAction> dataActions, IList<KeyVaultDataAction> notDataActions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultPermission(IList<string> actions, IList<string> notActions, IList<KeyVaultDataAction> dataActions, IList<KeyVaultDataAction> notDataActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Actions = actions;
             NotActions = notActions;
             DataActions = dataActions;
             NotDataActions = notDataActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Action permissions that are granted. </summary>

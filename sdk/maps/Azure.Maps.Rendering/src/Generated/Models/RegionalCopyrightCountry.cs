@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Rendering
 {
     /// <summary> Country property. </summary>
     public partial class RegionalCopyrightCountry
     {
-        /// <summary> Initializes a new instance of RegionalCopyrightCountry. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegionalCopyrightCountry"/>. </summary>
         internal RegionalCopyrightCountry()
         {
         }
 
-        /// <summary> Initializes a new instance of RegionalCopyrightCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegionalCopyrightCountry"/>. </summary>
         /// <param name="iso3"> ISO3 property. </param>
         /// <param name="label"> Label property. </param>
-        internal RegionalCopyrightCountry(string iso3, string label)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegionalCopyrightCountry(string iso3, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Iso3 = iso3;
             Label = label;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Label property. </summary>
         public string Label { get; }

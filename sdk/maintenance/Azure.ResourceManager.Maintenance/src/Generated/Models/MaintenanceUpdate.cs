@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Maintenance update on a resource. </summary>
     public partial class MaintenanceUpdate
     {
-        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdate"/>. </summary>
         internal MaintenanceUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceUpdate"/>. </summary>
         /// <param name="maintenanceScope"> The impact area. </param>
         /// <param name="impactType"> The impact type. </param>
         /// <param name="status"> The status. </param>
         /// <param name="impactDurationInSec"> Duration of impact in seconds. </param>
         /// <param name="notBefore"> Time when Azure will start force updates if not self-updated by customer before this time. </param>
         /// <param name="resourceId"> The resourceId. </param>
-        internal MaintenanceUpdate(MaintenanceScope? maintenanceScope, MaintenanceImpactType? impactType, MaintenanceUpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, ResourceIdentifier resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceUpdate(MaintenanceScope? maintenanceScope, MaintenanceImpactType? impactType, MaintenanceUpdateStatus? status, int? impactDurationInSec, DateTimeOffset? notBefore, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaintenanceScope = maintenanceScope;
             ImpactType = impactType;
@@ -33,6 +38,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             ImpactDurationInSec = impactDurationInSec;
             NotBefore = notBefore;
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The impact area. </summary>

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesEligibleAuthorization : IUtf8JsonSerializable
+    public partial class ManagedServicesEligibleAuthorization : IUtf8JsonSerializable, IJsonModel<ManagedServicesEligibleAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesEligibleAuthorization>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedServicesEligibleAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedServicesEligibleAuthorization>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedServicesEligibleAuthorization>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
@@ -30,11 +40,40 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WritePropertyName("justInTimeAccessPolicy"u8);
                 writer.WriteObjectValue(JustInTimeAccessPolicy);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedServicesEligibleAuthorization DeserializeManagedServicesEligibleAuthorization(JsonElement element)
+        ManagedServicesEligibleAuthorization IJsonModel<ManagedServicesEligibleAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesEligibleAuthorization(document.RootElement, options);
+        }
+
+        internal static ManagedServicesEligibleAuthorization DeserializeManagedServicesEligibleAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Optional<string> principalIdDisplayName = default;
             string roleDefinitionId = default;
             Optional<ManagedServicesJustInTimeAccessPolicy> justInTimeAccessPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -69,8 +110,38 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     justInTimeAccessPolicy = ManagedServicesJustInTimeAccessPolicy.DeserializeManagedServicesJustInTimeAccessPolicy(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, justInTimeAccessPolicy.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, justInTimeAccessPolicy.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedServicesEligibleAuthorization>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedServicesEligibleAuthorization IPersistableModel<ManagedServicesEligibleAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedServicesEligibleAuthorization(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedServicesEligibleAuthorization>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

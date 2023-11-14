@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Search.Models
 {
     /// <summary> Name for the classification. </summary>
     public partial class ClassificationName
     {
-        /// <summary> Initializes a new instance of ClassificationName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationName"/>. </summary>
         internal ClassificationName()
         {
         }
 
-        /// <summary> Initializes a new instance of ClassificationName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationName"/>. </summary>
         /// <param name="nameLocale"> Name Locale property. </param>
         /// <param name="name"> Name property. </param>
-        internal ClassificationName(string nameLocale, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClassificationName(string nameLocale, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameLocale = nameLocale;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name Locale property. </summary>

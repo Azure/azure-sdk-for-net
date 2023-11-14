@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,24 +16,29 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Private endpoint connection item. </summary>
     public partial class ManagedHsmPrivateEndpointConnectionItemData
     {
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
         internal ManagedHsmPrivateEndpointConnectionItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateEndpointConnectionItemData"/>. </summary>
         /// <param name="id"> Id of private endpoint connection. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ETag = etag;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Id of private endpoint connection. </summary>

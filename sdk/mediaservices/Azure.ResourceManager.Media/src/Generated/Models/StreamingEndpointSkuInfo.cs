@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The StreamingEndpointSkuInfo. </summary>
     public partial class StreamingEndpointSkuInfo
     {
-        /// <summary> Initializes a new instance of StreamingEndpointSkuInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointSkuInfo"/>. </summary>
         internal StreamingEndpointSkuInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointSkuInfo"/>. </summary>
         /// <param name="resourceType"></param>
         /// <param name="capacity"> The streaming endpoint sku capacity. </param>
         /// <param name="sku"> The streaming endpoint sku. </param>
-        internal StreamingEndpointSkuInfo(ResourceType? resourceType, StreamingEndpointCapacity capacity, StreamingEndpointSku sku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointSkuInfo(ResourceType? resourceType, StreamingEndpointCapacity capacity, StreamingEndpointSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Capacity = capacity;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the resource type. </summary>

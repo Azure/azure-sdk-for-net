@@ -5,23 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age. </summary>
     public partial class AcceptedAgeRange
     {
-        /// <summary> Initializes a new instance of AcceptedAgeRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcceptedAgeRange"/>. </summary>
         public AcceptedAgeRange()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AcceptedAgeRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcceptedAgeRange"/>. </summary>
         /// <param name="minimumAge"> A person's age, given as a number (value) and a unit (e.g. years, months). </param>
         /// <param name="maximumAge"> A person's age, given as a number (value) and a unit (e.g. years, months). </param>
-        internal AcceptedAgeRange(AcceptedAge minimumAge, AcceptedAge maximumAge)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptedAgeRange(AcceptedAge minimumAge, AcceptedAge maximumAge, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinimumAge = minimumAge;
             MaximumAge = maximumAge;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A person's age, given as a number (value) and a unit (e.g. years, months). </summary>

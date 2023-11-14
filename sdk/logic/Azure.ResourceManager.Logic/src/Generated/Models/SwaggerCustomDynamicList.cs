@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger custom dynamic list. </summary>
     public partial class SwaggerCustomDynamicList
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicList"/>. </summary>
         public SwaggerCustomDynamicList()
         {
             Parameters = new ChangeTrackingDictionary<string, SwaggerCustomDynamicProperties>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicList"/>. </summary>
         /// <param name="operationId"> The operation id to fetch dynamic schema. </param>
         /// <param name="builtInOperation"> The built in operation. </param>
         /// <param name="itemsPath"> The path to a response property (relative to the response object, not the response body) which contains an array of dynamic value items. </param>
         /// <param name="itemValuePath"> The path to a property which defines the value which should be used. </param>
         /// <param name="itemTitlePath"> The path to an item property which defines the display name of the item. </param>
         /// <param name="parameters"> The parameters. </param>
-        internal SwaggerCustomDynamicList(string operationId, string builtInOperation, string itemsPath, string itemValuePath, string itemTitlePath, IDictionary<string, SwaggerCustomDynamicProperties> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerCustomDynamicList(string operationId, string builtInOperation, string itemsPath, string itemValuePath, string itemTitlePath, IDictionary<string, SwaggerCustomDynamicProperties> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             BuiltInOperation = builtInOperation;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
             ItemValuePath = itemValuePath;
             ItemTitlePath = itemTitlePath;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation id to fetch dynamic schema. </summary>

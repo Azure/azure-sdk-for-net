@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class PrivateEndpointDestination : IUtf8JsonSerializable
+    public partial class PrivateEndpointDestination : IUtf8JsonSerializable, IJsonModel<PrivateEndpointDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointDestination>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PrivateEndpointDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PrivateEndpointDestination>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PrivateEndpointDestination>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceResourceId))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("subresourceTarget"u8);
                 writer.WriteStringValue(SubresourceTarget);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateEndpointDestination DeserializePrivateEndpointDestination(JsonElement element)
+        PrivateEndpointDestination IJsonModel<PrivateEndpointDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateEndpointDestination(document.RootElement, options);
+        }
+
+        internal static PrivateEndpointDestination DeserializePrivateEndpointDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> sparkEnabled = default;
             Optional<OutboundRuleStatus> sparkStatus = default;
             Optional<string> subresourceTarget = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceResourceId"u8))
@@ -78,8 +120,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     subresourceTarget = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateEndpointDestination(serviceResourceId.Value, Optional.ToNullable(sparkEnabled), Optional.ToNullable(sparkStatus), subresourceTarget.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrivateEndpointDestination(serviceResourceId.Value, Optional.ToNullable(sparkEnabled), Optional.ToNullable(sparkStatus), subresourceTarget.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateEndpointDestination>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PrivateEndpointDestination IPersistableModel<PrivateEndpointDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PrivateEndpointDestination)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePrivateEndpointDestination(document.RootElement, options);
+        }
+
+        string IPersistableModel<PrivateEndpointDestination>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,31 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AnomalyDetectionConfigurationPatch. </summary>
     internal partial class AnomalyDetectionConfigurationPatch
     {
-        /// <summary> Initializes a new instance of AnomalyDetectionConfigurationPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionConfigurationPatch"/>. </summary>
         public AnomalyDetectionConfigurationPatch()
         {
             DimensionGroupOverrideConfigurations = new ChangeTrackingList<MetricSeriesGroupDetectionCondition>();
             SeriesOverrideConfigurations = new ChangeTrackingList<MetricSingleSeriesDetectionCondition>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetectionConfigurationPatch"/>. </summary>
+        /// <param name="name"> anomaly detection configuration name. </param>
+        /// <param name="description"> anomaly detection configuration description. </param>
+        /// <param name="wholeMetricConfiguration"></param>
+        /// <param name="dimensionGroupOverrideConfigurations"> detection configuration for series group. </param>
+        /// <param name="seriesOverrideConfigurations"> detection configuration for specific series. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyDetectionConfigurationPatch(string name, string description, WholeMetricConfigurationPatch wholeMetricConfiguration, IList<MetricSeriesGroupDetectionCondition> dimensionGroupOverrideConfigurations, IList<MetricSingleSeriesDetectionCondition> seriesOverrideConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Description = description;
+            WholeMetricConfiguration = wholeMetricConfiguration;
+            DimensionGroupOverrideConfigurations = dimensionGroupOverrideConfigurations;
+            SeriesOverrideConfigurations = seriesOverrideConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> anomaly detection configuration name. </summary>

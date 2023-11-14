@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> A map of collections subscriptions details. </summary>
     public partial class CollectionsToSubscriptionsMappingResult
     {
-        /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingResult"/>. </summary>
         internal CollectionsToSubscriptionsMappingResult()
         {
             Details = new ChangeTrackingDictionary<string, CollectionsSubscriptionsMappingDetails>();
         }
 
-        /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionsToSubscriptionsMappingResult"/>. </summary>
         /// <param name="details"> The map of collections subscriptions. </param>
-        internal CollectionsToSubscriptionsMappingResult(IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionsToSubscriptionsMappingResult(IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Details = details;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The map of collections subscriptions. </summary>

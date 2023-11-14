@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The azure storage account container credential definition. </summary>
     public partial class AzureStorageAccountContainerCredential
     {
-        /// <summary> Initializes a new instance of AzureStorageAccountContainerCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureStorageAccountContainerCredential"/>. </summary>
         internal AzureStorageAccountContainerCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureStorageAccountContainerCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStorageAccountContainerCredential"/>. </summary>
         /// <param name="containerName"> The storage account container name. </param>
         /// <param name="containerSasUri"> The storage account container sas uri. </param>
-        internal AzureStorageAccountContainerCredential(string containerName, Uri containerSasUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureStorageAccountContainerCredential(string containerName, Uri containerSasUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerName = containerName;
             ContainerSasUri = containerSasUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The storage account container name. </summary>

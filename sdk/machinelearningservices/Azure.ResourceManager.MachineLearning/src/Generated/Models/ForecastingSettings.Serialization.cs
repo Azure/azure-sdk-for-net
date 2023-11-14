@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ForecastingSettings : IUtf8JsonSerializable
+    public partial class ForecastingSettings : IUtf8JsonSerializable, IJsonModel<ForecastingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastingSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ForecastingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ForecastingSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ForecastingSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CountryOrRegionForHolidays))
             {
@@ -152,11 +162,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("useStl"u8);
                 writer.WriteStringValue(UseStl.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element)
+        ForecastingSettings IJsonModel<ForecastingSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ForecastingSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeForecastingSettings(document.RootElement, options);
+        }
+
+        internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -175,6 +214,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> timeColumnName = default;
             Optional<IList<string>> timeSeriesIdColumnNames = default;
             Optional<MachineLearningUseStl> useStl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryOrRegionForHolidays"u8))
@@ -321,8 +362,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     useStl = new MachineLearningUseStl(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), Optional.ToList(featuresUnknownAtForecastTime), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, Optional.ToList(timeSeriesIdColumnNames), Optional.ToNullable(useStl));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), Optional.ToList(featuresUnknownAtForecastTime), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, Optional.ToList(timeSeriesIdColumnNames), Optional.ToNullable(useStl), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ForecastingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ForecastingSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ForecastingSettings IPersistableModel<ForecastingSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ForecastingSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeForecastingSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<ForecastingSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

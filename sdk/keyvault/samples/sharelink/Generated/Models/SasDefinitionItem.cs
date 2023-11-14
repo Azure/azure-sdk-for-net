@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The SAS definition item containing storage SAS definition metadata. </summary>
     public partial class SasDefinitionItem
     {
-        /// <summary> Initializes a new instance of SasDefinitionItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionItem"/>. </summary>
         internal SasDefinitionItem()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SasDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionItem"/>. </summary>
         /// <param name="id"> The storage SAS identifier. </param>
         /// <param name="secretId"> The storage account SAS definition secret id. </param>
         /// <param name="attributes"> The SAS definition management attributes. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        internal SasDefinitionItem(string id, string secretId, SasDefinitionAttributes attributes, IReadOnlyDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SasDefinitionItem(string id, string secretId, SasDefinitionAttributes attributes, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SecretId = secretId;
             Attributes = attributes;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The storage SAS identifier. </summary>

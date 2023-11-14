@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ErrorCode. </summary>
     internal partial class ErrorCode
     {
-        /// <summary> Initializes a new instance of ErrorCode. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorCode"/>. </summary>
         internal ErrorCode()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorCode"/>. </summary>
         /// <param name="message"></param>
         /// <param name="code"></param>
-        internal ErrorCode(string message, string code)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorCode(string message, string code, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             Code = code;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the message. </summary>

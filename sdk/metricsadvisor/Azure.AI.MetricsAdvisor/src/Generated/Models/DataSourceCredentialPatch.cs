@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
@@ -14,9 +17,25 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// </summary>
     internal partial class DataSourceCredentialPatch
     {
-        /// <summary> Initializes a new instance of DataSourceCredentialPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialPatch"/>. </summary>
         public DataSourceCredentialPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialPatch"/>. </summary>
+        /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
+        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourceCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DataSourceCredentialType = dataSourceCredentialType;
+            DataSourceCredentialName = dataSourceCredentialName;
+            DataSourceCredentialDescription = dataSourceCredentialDescription;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of data source credential. </summary>

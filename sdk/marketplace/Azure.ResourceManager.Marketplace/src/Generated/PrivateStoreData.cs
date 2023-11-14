@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Marketplace
     /// </summary>
     public partial class PrivateStoreData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateStoreData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreData"/>. </summary>
         public PrivateStoreData()
         {
             CollectionIds = new ChangeTrackingList<Guid>();
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Marketplace
             Recipients = new ChangeTrackingList<NotificationRecipient>();
         }
 
-        /// <summary> Initializes a new instance of PrivateStoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="branding"> Gets or sets list of branding characteristics. </param>
         /// <param name="recipients"> Gets or sets list of notified recipients for new requests. </param>
         /// <param name="sendToAllMarketplaceAdmins"> Gets or sets whether to send email to all marketplace admins for new requests. </param>
-        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, IList<NotificationRecipient> recipients, bool? sendToAllMarketplaceAdmins) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, IList<NotificationRecipient> recipients, bool? sendToAllMarketplaceAdmins, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Availability = availability;
             PrivateStoreId = privateStoreId;
@@ -55,6 +59,7 @@ namespace Azure.ResourceManager.Marketplace
             Branding = branding;
             Recipients = recipients;
             SendToAllMarketplaceAdmins = sendToAllMarketplaceAdmins;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates private store availability. </summary>

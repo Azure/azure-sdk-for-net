@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact manifest properties. </summary>
     public partial class ArtifactManifestPropertiesFormat
     {
-        /// <summary> Initializes a new instance of ArtifactManifestPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPropertiesFormat"/>. </summary>
         public ArtifactManifestPropertiesFormat()
         {
             Artifacts = new ChangeTrackingList<ManifestArtifactFormat>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
         /// <param name="artifactManifestState"> The artifact manifest state. </param>
         /// <param name="artifacts"> The artifacts list. </param>
-        internal ArtifactManifestPropertiesFormat(ProvisioningState? provisioningState, ArtifactManifestState? artifactManifestState, IList<ManifestArtifactFormat> artifacts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactManifestPropertiesFormat(ProvisioningState? provisioningState, ArtifactManifestState? artifactManifestState, IList<ManifestArtifactFormat> artifacts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ArtifactManifestState = artifactManifestState;
             Artifacts = artifacts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the ArtifactManifest resource. </summary>

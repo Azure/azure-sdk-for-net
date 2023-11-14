@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The helm deployment options. </summary>
     public partial class HelmMappingRuleProfileConfig
     {
-        /// <summary> Initializes a new instance of HelmMappingRuleProfileConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfileConfig"/>. </summary>
         public HelmMappingRuleProfileConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmMappingRuleProfileConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfileConfig"/>. </summary>
         /// <param name="installOptions"> The helm deployment install options. </param>
         /// <param name="upgradeOptions"> The helm deployment upgrade options. </param>
-        internal HelmMappingRuleProfileConfig(HelmInstallConfig installOptions, HelmUpgradeConfig upgradeOptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HelmMappingRuleProfileConfig(HelmInstallConfig installOptions, HelmUpgradeConfig upgradeOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstallOptions = installOptions;
             UpgradeOptions = upgradeOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The helm deployment install options. </summary>

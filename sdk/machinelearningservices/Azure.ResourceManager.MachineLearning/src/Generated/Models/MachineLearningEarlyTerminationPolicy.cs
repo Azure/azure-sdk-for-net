@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,20 +17,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningEarlyTerminationPolicy
     {
-        /// <summary> Initializes a new instance of MachineLearningEarlyTerminationPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEarlyTerminationPolicy"/>. </summary>
         protected MachineLearningEarlyTerminationPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEarlyTerminationPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEarlyTerminationPolicy"/>. </summary>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
         /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        internal MachineLearningEarlyTerminationPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEarlyTerminationPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DelayEvaluation = delayEvaluation;
             EvaluationInterval = evaluationInterval;
             PolicyType = policyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of intervals by which to delay the first evaluation. </summary>

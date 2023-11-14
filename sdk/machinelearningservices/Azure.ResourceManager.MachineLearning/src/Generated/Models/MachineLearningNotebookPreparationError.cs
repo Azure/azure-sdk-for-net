@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningNotebookPreparationError. </summary>
     public partial class MachineLearningNotebookPreparationError
     {
-        /// <summary> Initializes a new instance of MachineLearningNotebookPreparationError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookPreparationError"/>. </summary>
         internal MachineLearningNotebookPreparationError()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNotebookPreparationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookPreparationError"/>. </summary>
         /// <param name="errorMessage"></param>
         /// <param name="statusCode"></param>
-        internal MachineLearningNotebookPreparationError(string errorMessage, int? statusCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningNotebookPreparationError(string errorMessage, int? statusCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorMessage = errorMessage;
             StatusCode = statusCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the error message. </summary>

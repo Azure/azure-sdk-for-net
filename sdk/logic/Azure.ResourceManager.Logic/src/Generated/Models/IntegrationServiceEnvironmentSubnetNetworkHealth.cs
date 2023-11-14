@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration service environment subnet network health. </summary>
     public partial class IntegrationServiceEnvironmentSubnetNetworkHealth
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSubnetNetworkHealth. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSubnetNetworkHealth"/>. </summary>
         /// <param name="networkDependencyHealthState"> The integration service environment network health state. </param>
         internal IntegrationServiceEnvironmentSubnetNetworkHealth(IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState)
         {
@@ -21,15 +25,22 @@ namespace Azure.ResourceManager.Logic.Models
             NetworkDependencyHealthState = networkDependencyHealthState;
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSubnetNetworkHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSubnetNetworkHealth"/>. </summary>
         /// <param name="outboundNetworkDependencies"> The outbound network dependencies. </param>
         /// <param name="outboundNetworkHealth"> The integration service environment network health. </param>
         /// <param name="networkDependencyHealthState"> The integration service environment network health state. </param>
-        internal IntegrationServiceEnvironmentSubnetNetworkHealth(IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency> outboundNetworkDependencies, IntegrationServiceEnvironmentNetworkDependencyHealth outboundNetworkHealth, IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentSubnetNetworkHealth(IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency> outboundNetworkDependencies, IntegrationServiceEnvironmentNetworkDependencyHealth outboundNetworkHealth, IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OutboundNetworkDependencies = outboundNetworkDependencies;
             OutboundNetworkHealth = outboundNetworkHealth;
             NetworkDependencyHealthState = networkDependencyHealthState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSubnetNetworkHealth"/> for deserialization. </summary>
+        internal IntegrationServiceEnvironmentSubnetNetworkHealth()
+        {
         }
 
         /// <summary> The outbound network dependencies. </summary>

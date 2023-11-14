@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The configuration content for devices or modules on edge devices. </summary>
     public partial class ConfigurationContent
     {
-        /// <summary> Initializes a new instance of ConfigurationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationContent"/>. </summary>
         public ConfigurationContent()
         {
             DeviceContent = new ChangeTrackingDictionary<string, object>();
@@ -21,15 +25,17 @@ namespace Azure.IoT.Hub.Service.Models
             ModuleContent = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ConfigurationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationContent"/>. </summary>
         /// <param name="deviceContent"> The device configuration content. </param>
         /// <param name="modulesContent"> The modules configuration content. </param>
         /// <param name="moduleContent"> The module configuration content. </param>
-        internal ConfigurationContent(IDictionary<string, object> deviceContent, IDictionary<string, IDictionary<string, object>> modulesContent, IDictionary<string, object> moduleContent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationContent(IDictionary<string, object> deviceContent, IDictionary<string, IDictionary<string, object>> modulesContent, IDictionary<string, object> moduleContent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceContent = deviceContent;
             ModulesContent = modulesContent;
             ModuleContent = moduleContent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The device configuration content. </summary>

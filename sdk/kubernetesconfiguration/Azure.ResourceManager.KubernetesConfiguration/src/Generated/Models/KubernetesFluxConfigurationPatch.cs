@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,35 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> The Flux Configuration Patch Request object. </summary>
     public partial class KubernetesFluxConfigurationPatch
     {
-        /// <summary> Initializes a new instance of KubernetesFluxConfigurationPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationPatch"/>. </summary>
         public KubernetesFluxConfigurationPatch()
         {
             Kustomizations = new ChangeTrackingDictionary<string, KustomizationUpdateContent>();
             ConfigurationProtectedSettings = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesFluxConfigurationPatch"/>. </summary>
+        /// <param name="sourceKind"> Source Kind to pull the configuration data from. </param>
+        /// <param name="suspend"> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </param>
+        /// <param name="gitRepository"> Parameters to reconcile to the GitRepository source kind type. </param>
+        /// <param name="bucket"> Parameters to reconcile to the Bucket source kind type. </param>
+        /// <param name="azureBlob"> Parameters to reconcile to the AzureBlob source kind type. </param>
+        /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
+        /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesFluxConfigurationPatch(KubernetesConfigurationSourceKind? sourceKind, bool? suspend, KubernetesGitRepositoryUpdateContent gitRepository, KubernetesBucketUpdateContent bucket, KubernetesAzureBlobUpdateContent azureBlob, IDictionary<string, KustomizationUpdateContent> kustomizations, IDictionary<string, string> configurationProtectedSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceKind = sourceKind;
+            Suspend = suspend;
+            GitRepository = gitRepository;
+            Bucket = bucket;
+            AzureBlob = azureBlob;
+            Kustomizations = kustomizations;
+            ConfigurationProtectedSettings = configurationProtectedSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source Kind to pull the configuration data from. </summary>

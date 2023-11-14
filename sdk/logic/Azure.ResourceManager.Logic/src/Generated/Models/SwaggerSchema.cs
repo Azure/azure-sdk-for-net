@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger schema. </summary>
     public partial class SwaggerSchema
     {
-        /// <summary> Initializes a new instance of SwaggerSchema. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerSchema"/>. </summary>
         public SwaggerSchema()
         {
             Properties = new ChangeTrackingDictionary<string, SwaggerSchema>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
             AllOf = new ChangeTrackingList<SwaggerSchema>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerSchema"/>. </summary>
         /// <param name="reference"> The reference. </param>
         /// <param name="schemaType"> The type. </param>
         /// <param name="title"> The title. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="dynamicSchemaNew"> The dynamic schema configuration. </param>
         /// <param name="dynamicListNew"> The dynamic list. </param>
         /// <param name="dynamicTree"> The dynamic values tree configuration. </param>
-        internal SwaggerSchema(string reference, SwaggerSchemaType? schemaType, string title, SwaggerSchema items, IDictionary<string, SwaggerSchema> properties, BinaryData additionalProperties, IList<string> requiredProperties, int? maxProperties, int? minProperties, IList<SwaggerSchema> allOf, string discriminator, bool? isReadOnly, SwaggerXml xml, SwaggerExternalDocumentation externalDocs, BinaryData example, bool? isNotificationUrlExtension, SwaggerCustomDynamicSchema dynamicSchemaOld, SwaggerCustomDynamicProperties dynamicSchemaNew, SwaggerCustomDynamicList dynamicListNew, SwaggerCustomDynamicTree dynamicTree)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerSchema(string reference, SwaggerSchemaType? schemaType, string title, SwaggerSchema items, IDictionary<string, SwaggerSchema> properties, BinaryData additionalProperties, IList<string> requiredProperties, int? maxProperties, int? minProperties, IList<SwaggerSchema> allOf, string discriminator, bool? isReadOnly, SwaggerXml xml, SwaggerExternalDocumentation externalDocs, BinaryData example, bool? isNotificationUrlExtension, SwaggerCustomDynamicSchema dynamicSchemaOld, SwaggerCustomDynamicProperties dynamicSchemaNew, SwaggerCustomDynamicList dynamicListNew, SwaggerCustomDynamicTree dynamicTree, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Reference = reference;
             SchemaType = schemaType;
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             DynamicSchemaNew = dynamicSchemaNew;
             DynamicListNew = dynamicListNew;
             DynamicTree = dynamicTree;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The reference. </summary>

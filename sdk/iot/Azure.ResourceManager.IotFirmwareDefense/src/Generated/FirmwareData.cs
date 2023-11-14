@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// </summary>
     public partial class FirmwareData : ResourceData
     {
-        /// <summary> Initializes a new instance of FirmwareData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareData"/>. </summary>
         public FirmwareData()
         {
             StatusMessages = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="status"> The status of firmware scan. </param>
         /// <param name="statusMessages"> A list of errors or other messages generated during firmware analysis. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal FirmwareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string fileName, string vendor, string model, string version, string description, long? fileSize, Status? status, IList<BinaryData> statusMessages, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string fileName, string vendor, string model, string version, string description, long? fileSize, Status? status, IList<BinaryData> statusMessages, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             FileName = fileName;
             Vendor = vendor;
@@ -50,6 +54,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             Status = status;
             StatusMessages = statusMessages;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> File name for a firmware that user uploaded. </summary>

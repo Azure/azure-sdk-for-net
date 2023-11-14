@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ArmTemplateArtifactProfile : IUtf8JsonSerializable
+    public partial class ArmTemplateArtifactProfile : IUtf8JsonSerializable, IJsonModel<ArmTemplateArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmTemplateArtifactProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ArmTemplateArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ArmTemplateArtifactProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ArmTemplateArtifactProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateName))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("templateVersion"u8);
                 writer.WriteStringValue(TemplateVersion);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmTemplateArtifactProfile DeserializeArmTemplateArtifactProfile(JsonElement element)
+        ArmTemplateArtifactProfile IJsonModel<ArmTemplateArtifactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmTemplateArtifactProfile(document.RootElement, options);
+        }
+
+        internal static ArmTemplateArtifactProfile DeserializeArmTemplateArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> templateName = default;
             Optional<string> templateVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateName"u8))
@@ -48,8 +90,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     templateVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArmTemplateArtifactProfile(templateName.Value, templateVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArmTemplateArtifactProfile(templateName.Value, templateVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArmTemplateArtifactProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ArmTemplateArtifactProfile IPersistableModel<ArmTemplateArtifactProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeArmTemplateArtifactProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<ArmTemplateArtifactProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,20 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class DatabaseInviteFollowerResult
+    public partial class DatabaseInviteFollowerResult : IUtf8JsonSerializable, IJsonModel<DatabaseInviteFollowerResult>
     {
-        internal static DatabaseInviteFollowerResult DeserializeDatabaseInviteFollowerResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseInviteFollowerResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DatabaseInviteFollowerResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DatabaseInviteFollowerResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DatabaseInviteFollowerResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(GeneratedInvitation))
+            {
+                writer.WritePropertyName("generatedInvitation"u8);
+                writer.WriteStringValue(GeneratedInvitation);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DatabaseInviteFollowerResult IJsonModel<DatabaseInviteFollowerResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseInviteFollowerResult(document.RootElement, options);
+        }
+
+        internal static DatabaseInviteFollowerResult DeserializeDatabaseInviteFollowerResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> generatedInvitation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generatedInvitation"u8))
@@ -26,8 +79,38 @@ namespace Azure.ResourceManager.Kusto.Models
                     generatedInvitation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatabaseInviteFollowerResult(generatedInvitation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatabaseInviteFollowerResult(generatedInvitation.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatabaseInviteFollowerResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DatabaseInviteFollowerResult IPersistableModel<DatabaseInviteFollowerResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DatabaseInviteFollowerResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDatabaseInviteFollowerResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<DatabaseInviteFollowerResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

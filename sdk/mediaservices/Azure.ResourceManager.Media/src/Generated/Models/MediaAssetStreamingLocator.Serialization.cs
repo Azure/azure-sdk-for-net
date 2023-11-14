@@ -6,15 +6,124 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaAssetStreamingLocator
+    public partial class MediaAssetStreamingLocator : IUtf8JsonSerializable, IJsonModel<MediaAssetStreamingLocator>
     {
-        internal static MediaAssetStreamingLocator DeserializeMediaAssetStreamingLocator(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaAssetStreamingLocator>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MediaAssetStreamingLocator>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MediaAssetStreamingLocator>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MediaAssetStreamingLocator>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AssetName))
+                {
+                    writer.WritePropertyName("assetName"u8);
+                    writer.WriteStringValue(AssetName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("created"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StreamingLocatorId))
+                {
+                    writer.WritePropertyName("streamingLocatorId"u8);
+                    writer.WriteStringValue(StreamingLocatorId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StreamingPolicyName))
+                {
+                    writer.WritePropertyName("streamingPolicyName"u8);
+                    writer.WriteStringValue(StreamingPolicyName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DefaultContentKeyPolicyName))
+                {
+                    writer.WritePropertyName("defaultContentKeyPolicyName"u8);
+                    writer.WriteStringValue(DefaultContentKeyPolicyName);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MediaAssetStreamingLocator IJsonModel<MediaAssetStreamingLocator>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaAssetStreamingLocator(document.RootElement, options);
+        }
+
+        internal static MediaAssetStreamingLocator DeserializeMediaAssetStreamingLocator(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +136,8 @@ namespace Azure.ResourceManager.Media.Models
             Optional<Guid> streamingLocatorId = default;
             Optional<string> streamingPolicyName = default;
             Optional<string> defaultContentKeyPolicyName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -85,8 +196,38 @@ namespace Azure.ResourceManager.Media.Models
                     defaultContentKeyPolicyName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaAssetStreamingLocator(name.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaAssetStreamingLocator(name.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaAssetStreamingLocator>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaAssetStreamingLocator IPersistableModel<MediaAssetStreamingLocator>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaAssetStreamingLocator)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaAssetStreamingLocator(document.RootElement, options);
+        }
+
+        string IPersistableModel<MediaAssetStreamingLocator>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of workflow versions. </summary>
     internal partial class LogicWorkflowVersionListResult
     {
-        /// <summary> Initializes a new instance of LogicWorkflowVersionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionListResult"/>. </summary>
         internal LogicWorkflowVersionListResult()
         {
             Value = new ChangeTrackingList<LogicWorkflowVersionData>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowVersionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowVersionListResult"/>. </summary>
         /// <param name="value"> A list of workflow versions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal LogicWorkflowVersionListResult(IReadOnlyList<LogicWorkflowVersionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowVersionListResult(IReadOnlyList<LogicWorkflowVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of workflow versions. </summary>

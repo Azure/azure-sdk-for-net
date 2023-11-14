@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MountBindOptions. </summary>
     public partial class MountBindOptions
     {
-        /// <summary> Initializes a new instance of MountBindOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         public MountBindOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of MountBindOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MountBindOptions"/>. </summary>
         /// <param name="propagation"> Type of Bind Option. </param>
         /// <param name="doesCreateHostPath"> Indicate whether to create host path. </param>
         /// <param name="selinux"> Mention the selinux options. </param>
-        internal MountBindOptions(string propagation, bool? doesCreateHostPath, string selinux)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MountBindOptions(string propagation, bool? doesCreateHostPath, string selinux, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Propagation = propagation;
             DoesCreateHostPath = doesCreateHostPath;
             Selinux = selinux;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of Bind Option. </summary>

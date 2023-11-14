@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class SiteData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SiteData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SiteData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +36,16 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Site properties. </param>
-        internal SiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SitePropertiesFormat properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SitePropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteData"/> for deserialization. </summary>
+        internal SiteData()
+        {
         }
 
         /// <summary> Site properties. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningFqdnEndpointsProperties. </summary>
     public partial class MachineLearningFqdnEndpointsProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpointsProperties"/>. </summary>
         internal MachineLearningFqdnEndpointsProperties()
         {
             Endpoints = new ChangeTrackingList<MachineLearningFqdnEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningFqdnEndpointsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningFqdnEndpointsProperties"/>. </summary>
         /// <param name="category"></param>
         /// <param name="endpoints"></param>
-        internal MachineLearningFqdnEndpointsProperties(string category, IReadOnlyList<MachineLearningFqdnEndpoint> endpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningFqdnEndpointsProperties(string category, IReadOnlyList<MachineLearningFqdnEndpoint> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Endpoints = endpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the category. </summary>

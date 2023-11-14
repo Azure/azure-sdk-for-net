@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class IPCommunityIdList : IUtf8JsonSerializable
+    public partial class IPCommunityIdList : IUtf8JsonSerializable, IJsonModel<IPCommunityIdList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPCommunityIdList>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<IPCommunityIdList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IPCommunityIdList>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IPCommunityIdList>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPCommunityIds))
             {
@@ -31,16 +41,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPCommunityIdList DeserializeIPCommunityIdList(JsonElement element)
+        IPCommunityIdList IJsonModel<IPCommunityIdList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IPCommunityIdList)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPCommunityIdList(document.RootElement, options);
+        }
+
+        internal static IPCommunityIdList DeserializeIPCommunityIdList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<ResourceIdentifier>> ipCommunityIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipCommunityIds"u8))
@@ -64,8 +105,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipCommunityIds = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IPCommunityIdList(Optional.ToList(ipCommunityIds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IPCommunityIdList(Optional.ToList(ipCommunityIds), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IPCommunityIdList>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IPCommunityIdList)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IPCommunityIdList IPersistableModel<IPCommunityIdList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IPCommunityIdList)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIPCommunityIdList(document.RootElement, options);
+        }
+
+        string IPersistableModel<IPCommunityIdList>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

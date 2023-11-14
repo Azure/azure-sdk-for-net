@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of FeaturesetContainer entities. </summary>
     internal partial class FeaturesetContainerResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of FeaturesetContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeaturesetContainerResourceArmPaginatedResult"/>. </summary>
         internal FeaturesetContainerResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningFeatureSetContainerData>();
         }
 
-        /// <summary> Initializes a new instance of FeaturesetContainerResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeaturesetContainerResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of FeaturesetContainer objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type FeaturesetContainer. </param>
-        internal FeaturesetContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetContainerData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeaturesetContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningFeatureSetContainerData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of FeaturesetContainer objects. If null, there are no additional pages. </summary>

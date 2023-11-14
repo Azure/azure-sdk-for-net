@@ -15,7 +15,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The MetricDataItem. </summary>
     public partial class MetricSeriesData
     {
-        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/>. </summary>
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>
@@ -31,15 +34,22 @@ namespace Azure.AI.MetricsAdvisor.Models
             MetricValues = metricValues.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/>. </summary>
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>
-        internal MetricSeriesData(MetricSeriesDefinition definition, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> metricValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricSeriesData(MetricSeriesDefinition definition, IReadOnlyList<DateTimeOffset> timestamps, IReadOnlyList<double> metricValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Definition = definition;
             Timestamps = timestamps;
             MetricValues = metricValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricSeriesData"/> for deserialization. </summary>
+        internal MetricSeriesData()
+        {
         }
     }
 }

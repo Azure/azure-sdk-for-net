@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties of a labeling job for text data. </summary>
     public partial class LabelingJobTextProperties : LabelingJobMediaProperties
     {
-        /// <summary> Initializes a new instance of LabelingJobTextProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobTextProperties"/>. </summary>
         public LabelingJobTextProperties()
         {
             MediaType = MediaType.Text;
         }
 
-        /// <summary> Initializes a new instance of LabelingJobTextProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobTextProperties"/>. </summary>
         /// <param name="mediaType"> [Required] Media type of the job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="annotationType"> Annotation type of text labeling job. </param>
-        internal LabelingJobTextProperties(MediaType mediaType, TextAnnotationType? annotationType) : base(mediaType)
+        internal LabelingJobTextProperties(MediaType mediaType, IDictionary<string, BinaryData> serializedAdditionalRawData, TextAnnotationType? annotationType) : base(mediaType, serializedAdditionalRawData)
         {
             AnnotationType = annotationType;
             MediaType = mediaType;

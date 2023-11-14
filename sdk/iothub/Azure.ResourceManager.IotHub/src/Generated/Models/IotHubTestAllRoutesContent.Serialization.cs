@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubTestAllRoutesContent : IUtf8JsonSerializable
+    public partial class IotHubTestAllRoutesContent : IUtf8JsonSerializable, IJsonModel<IotHubTestAllRoutesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubTestAllRoutesContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<IotHubTestAllRoutesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IotHubTestAllRoutesContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IotHubTestAllRoutesContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RoutingSource))
             {
@@ -30,7 +41,110 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        IotHubTestAllRoutesContent IJsonModel<IotHubTestAllRoutesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotHubTestAllRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubTestAllRoutesContent(document.RootElement, options);
+        }
+
+        internal static IotHubTestAllRoutesContent DeserializeIotHubTestAllRoutesContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IotHubRoutingSource> routingSource = default;
+            Optional<RoutingMessage> message = default;
+            Optional<RoutingTwin> twin = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("routingSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routingSource = new IotHubRoutingSource(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("message"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    message = RoutingMessage.DeserializeRoutingMessage(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("twin"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IotHubTestAllRoutesContent(Optional.ToNullable(routingSource), message.Value, twin.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<IotHubTestAllRoutesContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotHubTestAllRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IotHubTestAllRoutesContent IPersistableModel<IotHubTestAllRoutesContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IotHubTestAllRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIotHubTestAllRoutesContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<IotHubTestAllRoutesContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

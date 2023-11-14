@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Defines the observed Arc Agent status that is resourceSynced back to the ARM resource. </summary>
     public partial class ArcAgentStatus
     {
-        /// <summary> Initializes a new instance of ArcAgentStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArcAgentStatus"/>. </summary>
         internal ArcAgentStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcAgentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcAgentStatus"/>. </summary>
         /// <param name="deploymentState"> Observed deployment state of the Arc Agents on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
         /// <param name="errorMessage"> Error messages while onboarding/upgrading/uninstalling the Arc agents. </param>
         /// <param name="onboardingPublicKey"> Onboarding public key for provisioning the Managed identity for the HybridAKS cluster. Will be used to create the hybridIdentityMetadata proxy resource and will not be persisted. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="coreCount"> Number of CPU cores present in the Provisioned cluster resource. </param>
         /// <param name="managedIdentityCertificateExpirationOn"> ManagedIdentity certificate expiration time (ValidUntil). </param>
         /// <param name="lastConnectivityOn"> Last connected timestamp of the Provisioned cluster resource. </param>
-        internal ArcAgentStatus(DeploymentState? deploymentState, string errorMessage, string onboardingPublicKey, string agentVersion, long? coreCount, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArcAgentStatus(DeploymentState? deploymentState, string errorMessage, string onboardingPublicKey, string agentVersion, long? coreCount, DateTimeOffset? managedIdentityCertificateExpirationOn, DateTimeOffset? lastConnectivityOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentState = deploymentState;
             ErrorMessage = errorMessage;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             CoreCount = coreCount;
             ManagedIdentityCertificateExpirationOn = managedIdentityCertificateExpirationOn;
             LastConnectivityOn = lastConnectivityOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Observed deployment state of the Arc Agents on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioned', 'deleting', 'failed', 'upgrading'. </summary>

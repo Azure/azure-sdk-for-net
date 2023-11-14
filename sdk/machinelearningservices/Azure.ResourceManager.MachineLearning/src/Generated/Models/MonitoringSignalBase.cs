@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,21 +18,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of MonitoringSignalBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
         protected MonitoringSignalBase()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MonitoringSignalBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringSignalBase"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
-        internal MonitoringSignalBase(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringSignalBase(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             Properties = properties;
             SignalType = signalType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current notification mode for this signal. </summary>

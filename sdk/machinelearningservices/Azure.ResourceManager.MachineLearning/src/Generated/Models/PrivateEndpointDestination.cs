@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Private Endpoint destination for a Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </summary>
     public partial class PrivateEndpointDestination
     {
-        /// <summary> Initializes a new instance of PrivateEndpointDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointDestination"/>. </summary>
         public PrivateEndpointDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointDestination"/>. </summary>
         /// <param name="serviceResourceId"></param>
         /// <param name="sparkEnabled"></param>
         /// <param name="sparkStatus"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="subresourceTarget"></param>
-        internal PrivateEndpointDestination(string serviceResourceId, bool? sparkEnabled, OutboundRuleStatus? sparkStatus, string subresourceTarget)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointDestination(string serviceResourceId, bool? sparkEnabled, OutboundRuleStatus? sparkStatus, string subresourceTarget, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceResourceId = serviceResourceId;
             SparkEnabled = sparkEnabled;
             SparkStatus = sparkStatus;
             SubresourceTarget = subresourceTarget;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the service resource id. </summary>

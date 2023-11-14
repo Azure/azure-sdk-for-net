@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> This object is returned from a successful Batch service call. Extend with 'batchItems' property. </summary>
     public partial class BatchResult
     {
-        /// <summary> Initializes a new instance of BatchResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchResult"/>. </summary>
         internal BatchResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResult"/>. </summary>
         /// <param name="batchSummary"> Summary of the results for the batch request. </param>
-        internal BatchResult(BatchResultSummary batchSummary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchResult(BatchResultSummary batchSummary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BatchSummary = batchSummary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

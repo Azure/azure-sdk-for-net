@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Details of JobOutput errors. </summary>
     public partial class MediaJobErrorDetail
     {
-        /// <summary> Initializes a new instance of MediaJobErrorDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobErrorDetail"/>. </summary>
         internal MediaJobErrorDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobErrorDetail"/>. </summary>
         /// <param name="code"> Code describing the error detail. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
-        internal MediaJobErrorDetail(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobErrorDetail(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Code describing the error detail. </summary>

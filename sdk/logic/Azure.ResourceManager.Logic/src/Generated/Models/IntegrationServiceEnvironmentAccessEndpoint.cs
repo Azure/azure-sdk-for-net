@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The integration service environment access endpoint. </summary>
     internal partial class IntegrationServiceEnvironmentAccessEndpoint
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentAccessEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentAccessEndpoint"/>. </summary>
         public IntegrationServiceEnvironmentAccessEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentAccessEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentAccessEndpoint"/>. </summary>
         /// <param name="endpointType"> The access endpoint type. </param>
-        internal IntegrationServiceEnvironmentAccessEndpoint(IntegrationServiceEnvironmentAccessEndpointType? endpointType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentAccessEndpoint(IntegrationServiceEnvironmentAccessEndpointType? endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The access endpoint type. </summary>

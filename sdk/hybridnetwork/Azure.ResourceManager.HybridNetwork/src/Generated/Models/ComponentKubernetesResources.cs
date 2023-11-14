@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The resources of the network function component. </summary>
     public partial class ComponentKubernetesResources
     {
-        /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComponentKubernetesResources"/>. </summary>
         internal ComponentKubernetesResources()
         {
             Deployments = new ChangeTrackingList<KubernetesDeployment>();
@@ -23,19 +27,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             DaemonSets = new ChangeTrackingList<KubernetesDaemonSet>();
         }
 
-        /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentKubernetesResources"/>. </summary>
         /// <param name="deployments"> Deployments that are related to component resource. </param>
         /// <param name="pods"> Pods related to component resource. </param>
         /// <param name="replicaSets"> Replica sets related to component resource. </param>
         /// <param name="statefulSets"> Stateful sets related to component resource. </param>
         /// <param name="daemonSets"> Daemonsets related to component resource. </param>
-        internal ComponentKubernetesResources(IReadOnlyList<KubernetesDeployment> deployments, IReadOnlyList<KubernetesPod> pods, IReadOnlyList<KubernetesReplicaSet> replicaSets, IReadOnlyList<KubernetesStatefulSet> statefulSets, IReadOnlyList<KubernetesDaemonSet> daemonSets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentKubernetesResources(IReadOnlyList<KubernetesDeployment> deployments, IReadOnlyList<KubernetesPod> pods, IReadOnlyList<KubernetesReplicaSet> replicaSets, IReadOnlyList<KubernetesStatefulSet> statefulSets, IReadOnlyList<KubernetesDaemonSet> daemonSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Deployments = deployments;
             Pods = pods;
             ReplicaSets = replicaSets;
             StatefulSets = statefulSets;
             DaemonSets = daemonSets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Deployments that are related to component resource. </summary>

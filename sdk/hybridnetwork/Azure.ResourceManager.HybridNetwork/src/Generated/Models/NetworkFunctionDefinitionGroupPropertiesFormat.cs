@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Network function definition group properties. </summary>
     public partial class NetworkFunctionDefinitionGroupPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupPropertiesFormat"/>. </summary>
         public NetworkFunctionDefinitionGroupPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
         /// <param name="description"> The network function definition group description. </param>
-        internal NetworkFunctionDefinitionGroupPropertiesFormat(ProvisioningState? provisioningState, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFunctionDefinitionGroupPropertiesFormat(ProvisioningState? provisioningState, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the network function definition groups resource. </summary>

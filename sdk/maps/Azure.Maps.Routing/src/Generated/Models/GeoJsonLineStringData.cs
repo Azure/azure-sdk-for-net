@@ -15,7 +15,10 @@ namespace Azure.Maps.Routing.Models
     /// <summary> The GeoJsonLineStringData. </summary>
     internal partial class GeoJsonLineStringData
     {
-        /// <summary> Initializes a new instance of GeoJsonLineStringData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonLineStringData"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonLineStringData(IEnumerable<IList<double>> coordinates)
@@ -23,6 +26,20 @@ namespace Azure.Maps.Routing.Models
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = coordinates.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonLineStringData"/>. </summary>
+        /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeoJsonLineStringData(IList<IList<double>> coordinates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Coordinates = coordinates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GeoJsonLineStringData"/> for deserialization. </summary>
+        internal GeoJsonLineStringData()
+        {
         }
 
         /// <summary> Coordinates for the `GeoJson LineString` geometry. </summary>

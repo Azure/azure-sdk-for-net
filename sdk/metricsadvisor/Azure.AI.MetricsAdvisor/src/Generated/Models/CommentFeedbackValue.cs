@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The CommentFeedbackValue. </summary>
     internal partial class CommentFeedbackValue
     {
-        /// <summary> Initializes a new instance of CommentFeedbackValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommentFeedbackValue"/>. </summary>
         /// <param name="commentValue"> the comment string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="commentValue"/> is null. </exception>
         public CommentFeedbackValue(string commentValue)
@@ -21,6 +25,20 @@ namespace Azure.AI.MetricsAdvisor.Models
             Argument.AssertNotNull(commentValue, nameof(commentValue));
 
             CommentValue = commentValue;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommentFeedbackValue"/>. </summary>
+        /// <param name="commentValue"> the comment string. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommentFeedbackValue(string commentValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CommentValue = commentValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommentFeedbackValue"/> for deserialization. </summary>
+        internal CommentFeedbackValue()
+        {
         }
 
         /// <summary> the comment string. </summary>

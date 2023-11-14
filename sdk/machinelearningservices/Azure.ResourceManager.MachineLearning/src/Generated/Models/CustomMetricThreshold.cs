@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The CustomMetricThreshold. </summary>
     public partial class CustomMetricThreshold
     {
-        /// <summary> Initializes a new instance of CustomMetricThreshold. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The user-defined metric to calculate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metric"/> is null. </exception>
         public CustomMetricThreshold(string metric)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Metric = metric;
         }
 
-        /// <summary> Initializes a new instance of CustomMetricThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomMetricThreshold"/>. </summary>
         /// <param name="metric"> [Required] The user-defined metric to calculate. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
-        internal CustomMetricThreshold(string metric, MonitoringThreshold threshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomMetricThreshold(string metric, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metric = metric;
             Threshold = threshold;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomMetricThreshold"/> for deserialization. </summary>
+        internal CustomMetricThreshold()
+        {
         }
 
         /// <summary> [Required] The user-defined metric to calculate. </summary>

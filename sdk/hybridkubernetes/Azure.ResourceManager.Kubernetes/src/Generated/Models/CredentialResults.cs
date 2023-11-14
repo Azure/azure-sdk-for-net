@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> The list of credential result response. </summary>
     public partial class CredentialResults
     {
-        /// <summary> Initializes a new instance of CredentialResults. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CredentialResults"/>. </summary>
         internal CredentialResults()
         {
             Kubeconfigs = new ChangeTrackingList<CredentialResult>();
         }
 
-        /// <summary> Initializes a new instance of CredentialResults. </summary>
+        /// <summary> Initializes a new instance of <see cref="CredentialResults"/>. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Sender” access token. </param>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
-        internal CredentialResults(HybridConnectionConfig hybridConnectionConfig, IReadOnlyList<CredentialResult> kubeconfigs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CredentialResults(HybridConnectionConfig hybridConnectionConfig, IReadOnlyList<CredentialResult> kubeconfigs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HybridConnectionConfig = hybridConnectionConfig;
             Kubeconfigs = kubeconfigs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contains the REP (rendezvous endpoint) and “Sender” access token. </summary>

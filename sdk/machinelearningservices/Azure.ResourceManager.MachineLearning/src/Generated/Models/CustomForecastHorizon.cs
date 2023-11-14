@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The desired maximum forecast horizon in units of time-series frequency. </summary>
     public partial class CustomForecastHorizon : ForecastHorizon
     {
-        /// <summary> Initializes a new instance of CustomForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomForecastHorizon"/>. </summary>
         /// <param name="value"> [Required] Forecast horizon value. </param>
         public CustomForecastHorizon(int value)
         {
@@ -18,13 +21,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Mode = ForecastHorizonMode.Custom;
         }
 
-        /// <summary> Initializes a new instance of CustomForecastHorizon. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomForecastHorizon"/>. </summary>
         /// <param name="mode"> [Required] Set forecast horizon value selection mode. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> [Required] Forecast horizon value. </param>
-        internal CustomForecastHorizon(ForecastHorizonMode mode, int value) : base(mode)
+        internal CustomForecastHorizon(ForecastHorizonMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData, int value) : base(mode, serializedAdditionalRawData)
         {
             Value = value;
             Mode = mode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomForecastHorizon"/> for deserialization. </summary>
+        internal CustomForecastHorizon()
+        {
         }
 
         /// <summary> [Required] Forecast horizon value. </summary>

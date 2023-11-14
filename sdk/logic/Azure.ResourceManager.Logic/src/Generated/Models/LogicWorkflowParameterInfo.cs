@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The workflow parameters. </summary>
     public partial class LogicWorkflowParameterInfo
     {
-        /// <summary> Initializes a new instance of LogicWorkflowParameterInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowParameterInfo"/>. </summary>
         public LogicWorkflowParameterInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowParameterInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowParameterInfo"/>. </summary>
         /// <param name="parameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="description"> The description. </param>
-        internal LogicWorkflowParameterInfo(LogicWorkflowParameterType? parameterType, BinaryData value, BinaryData metadata, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowParameterInfo(LogicWorkflowParameterType? parameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ParameterType = parameterType;
             Value = value;
             Metadata = metadata;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type. </summary>

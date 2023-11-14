@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureCoreVhdImageDeployMappingRuleProfile : IUtf8JsonSerializable
+    public partial class AzureCoreVhdImageDeployMappingRuleProfile : IUtf8JsonSerializable, IJsonModel<AzureCoreVhdImageDeployMappingRuleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreVhdImageDeployMappingRuleProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureCoreVhdImageDeployMappingRuleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureCoreVhdImageDeployMappingRuleProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureCoreVhdImageDeployMappingRuleProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VhdImageMappingRuleProfile))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureCoreVhdImageDeployMappingRuleProfile DeserializeAzureCoreVhdImageDeployMappingRuleProfile(JsonElement element)
+        AzureCoreVhdImageDeployMappingRuleProfile IJsonModel<AzureCoreVhdImageDeployMappingRuleProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureCoreVhdImageDeployMappingRuleProfile(document.RootElement, options);
+        }
+
+        internal static AzureCoreVhdImageDeployMappingRuleProfile DeserializeAzureCoreVhdImageDeployMappingRuleProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<VhdImageMappingRuleProfile> vhdImageMappingRuleProfile = default;
             Optional<ApplicationEnablement> applicationEnablement = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vhdImageMappingRuleProfile"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     applicationEnablement = new ApplicationEnablement(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureCoreVhdImageDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), vhdImageMappingRuleProfile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureCoreVhdImageDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), serializedAdditionalRawData, vhdImageMappingRuleProfile.Value);
         }
+
+        BinaryData IPersistableModel<AzureCoreVhdImageDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureCoreVhdImageDeployMappingRuleProfile IPersistableModel<AzureCoreVhdImageDeployMappingRuleProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureCoreVhdImageDeployMappingRuleProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureCoreVhdImageDeployMappingRuleProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
