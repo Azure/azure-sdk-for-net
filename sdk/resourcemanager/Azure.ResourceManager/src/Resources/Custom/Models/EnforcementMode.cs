@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Resources.Models
         private const string EnforcedValue = "Default";
 
         /// <summary> The policy effect is enforced during resource creation or update. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EnforcementMode Enforced { get; } = new EnforcementMode(EnforcedValue);
     }
 }
