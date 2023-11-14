@@ -1,17 +1,12 @@
 # Release History
 
-## 7.17.0-beta.1 (Unreleased)
-
-### Features Added
+## 7.17.0 (2023-11-14)
 
 ### Breaking Changes
 
+The following breaking changes were made for the experimental support of Open Telemetry:
 - Change `ActivitySource` name used to report message activity from `Azure.Messaging.ServiceBus` to `Azure.Messaging.ServiceBus.Message`.
 - Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 7.16.2 (2023-10-11)
 
