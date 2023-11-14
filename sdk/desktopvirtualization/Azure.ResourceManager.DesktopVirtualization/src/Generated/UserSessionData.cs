@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class UserSessionData : ResourceData
     {
-        /// <summary> Initializes a new instance of UserSessionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserSessionData"/>. </summary>
         public UserSessionData()
         {
         }
 
-        /// <summary> Initializes a new instance of UserSessionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserSessionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessionState"> State of user session. </param>
         /// <param name="activeDirectoryUserName"> The active directory user name. </param>
         /// <param name="createOn"> The timestamp of the user session create. </param>
-        internal UserSessionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string userPrincipalName, VirtualApplicationType? applicationType, UserSessionState? sessionState, string activeDirectoryUserName, DateTimeOffset? createOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserSessionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string userPrincipalName, VirtualApplicationType? applicationType, UserSessionState? sessionState, string activeDirectoryUserName, DateTimeOffset? createOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             UserPrincipalName = userPrincipalName;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             SessionState = sessionState;
             ActiveDirectoryUserName = activeDirectoryUserName;
             CreateOn = createOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ObjectId of user session. (internal use). </summary>

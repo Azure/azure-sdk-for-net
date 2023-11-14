@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Dns;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> The response to a record set List operation. </summary>
     internal partial class DnsRecordListResult
     {
-        /// <summary> Initializes a new instance of DnsRecordListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsRecordListResult"/>. </summary>
         internal DnsRecordListResult()
         {
             Value = new ChangeTrackingList<DnsRecordData>();
         }
 
-        /// <summary> Initializes a new instance of DnsRecordListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsRecordListResult"/>. </summary>
         /// <param name="value"> Information about the record sets in the response. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal DnsRecordListResult(IReadOnlyList<DnsRecordData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsRecordListResult(IReadOnlyList<DnsRecordData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Information about the record sets in the response. </summary>

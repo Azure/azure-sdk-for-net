@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines a managed rule group override setting. </summary>
     public partial class ManagedRuleOverride
     {
-        /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverride"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         public ManagedRuleOverride(string ruleId)
@@ -25,17 +28,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Exclusions = new ChangeTrackingList<ManagedRuleExclusion>();
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleOverride. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverride"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="enabledState"> Describes if the managed rule is in enabled or disabled state. Defaults to Disabled if not specified. </param>
         /// <param name="action"> Describes the override action to be applied when rule matches. </param>
         /// <param name="exclusions"> Describes the exclusions that are applied to this specific rule. </param>
-        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, IList<ManagedRuleExclusion> exclusions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedRuleOverride(string ruleId, ManagedRuleEnabledState? enabledState, RuleMatchActionType? action, IList<ManagedRuleExclusion> exclusions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleId = ruleId;
             EnabledState = enabledState;
             Action = action;
             Exclusions = exclusions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedRuleOverride"/> for deserialization. </summary>
+        internal ManagedRuleOverride()
+        {
         }
 
         /// <summary> Identifier for the managed rule. </summary>

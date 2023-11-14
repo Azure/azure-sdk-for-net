@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class HostPoolRegistrationInfo : IUtf8JsonSerializable
+    public partial class HostPoolRegistrationInfo : IUtf8JsonSerializable, IJsonModel<HostPoolRegistrationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolRegistrationInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HostPoolRegistrationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HostPoolRegistrationInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HostPoolRegistrationInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireOn))
             {
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("registrationTokenOperation"u8);
                 writer.WriteStringValue(RegistrationTokenOperation.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element)
+        HostPoolRegistrationInfo IJsonModel<HostPoolRegistrationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHostPoolRegistrationInfo(document.RootElement, options);
+        }
+
+        internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Optional<DateTimeOffset> expirationTime = default;
             Optional<string> token = default;
             Optional<HostPoolRegistrationTokenOperation> registrationTokenOperation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expirationTime"u8))
@@ -68,8 +109,38 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     registrationTokenOperation = new HostPoolRegistrationTokenOperation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HostPoolRegistrationInfo(Optional.ToNullable(expirationTime), token.Value, Optional.ToNullable(registrationTokenOperation));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HostPoolRegistrationInfo(Optional.ToNullable(expirationTime), token.Value, Optional.ToNullable(registrationTokenOperation), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HostPoolRegistrationInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HostPoolRegistrationInfo IPersistableModel<HostPoolRegistrationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHostPoolRegistrationInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<HostPoolRegistrationInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

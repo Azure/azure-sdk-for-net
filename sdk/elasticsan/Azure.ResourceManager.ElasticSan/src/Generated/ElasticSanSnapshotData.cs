@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanSnapshotData : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticSanSnapshotData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSnapshotData"/>. </summary>
         /// <param name="creationData"> Data used when creating a volume snapshot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationData"/> is null. </exception>
         public ElasticSanSnapshotData(SnapshotCreationData creationData)
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.ElasticSan
             CreationData = creationData;
         }
 
-        /// <summary> Initializes a new instance of ElasticSanSnapshotData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,12 +41,19 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="sourceVolumeSizeGiB"> Size of Source Volume. </param>
         /// <param name="volumeName"> Source Volume Name of a snapshot. </param>
-        internal ElasticSanSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotCreationData creationData, ElasticSanProvisioningState? provisioningState, long? sourceVolumeSizeGiB, string volumeName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotCreationData creationData, ElasticSanProvisioningState? provisioningState, long? sourceVolumeSizeGiB, string volumeName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreationData = creationData;
             ProvisioningState = provisioningState;
             SourceVolumeSizeGiB = sourceVolumeSizeGiB;
             VolumeName = volumeName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSnapshotData"/> for deserialization. </summary>
+        internal ElasticSanSnapshotData()
+        {
         }
 
         /// <summary> Data used when creating a volume snapshot. </summary>

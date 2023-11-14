@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> NetworkSecurityPerimeter related information. </summary>
     public partial class EventHubsNetworkSecurityPerimeter
     {
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeter"/>. </summary>
         internal EventHubsNetworkSecurityPerimeter()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNetworkSecurityPerimeter"/>. </summary>
         /// <param name="id"> Fully qualified identifier of the resource. </param>
         /// <param name="perimeterGuid"> Guid of the resource. </param>
         /// <param name="location"> Location of the resource. </param>
-        internal EventHubsNetworkSecurityPerimeter(string id, string perimeterGuid, AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNetworkSecurityPerimeter(string id, string perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fully qualified identifier of the resource. </summary>

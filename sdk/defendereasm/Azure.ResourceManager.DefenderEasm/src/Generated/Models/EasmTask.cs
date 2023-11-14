@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> Task details. </summary>
     public partial class EasmTask : ResourceData
     {
-        /// <summary> Initializes a new instance of EasmTask. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EasmTask"/>. </summary>
         public EasmTask()
         {
         }
 
-        /// <summary> Initializes a new instance of EasmTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="EasmTask"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         /// <param name="phase"> the phase the task is in. </param>
         /// <param name="reason"> The reason the task was moved into its current state, if the task wasn't completed. </param>
         /// <param name="metadata"> The reason the task was moved into its current state, if the task wasn't completed. </param>
-        internal EasmTask(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EasmResourceProvisioningState? provisioningState, string startedAt, string completedAt, string lastPolledAt, string state, string phase, string reason, BinaryData metadata) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EasmTask(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EasmResourceProvisioningState? provisioningState, string startedAt, string completedAt, string lastPolledAt, string state, string phase, string reason, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             StartedAt = startedAt;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             Phase = phase;
             Reason = reason;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource provisioning state. </summary>

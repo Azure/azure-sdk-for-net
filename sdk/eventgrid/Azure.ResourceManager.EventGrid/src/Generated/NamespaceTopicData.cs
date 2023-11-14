@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class NamespaceTopicData : ResourceData
     {
-        /// <summary> Initializes a new instance of NamespaceTopicData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicData"/>. </summary>
         public NamespaceTopicData()
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +39,14 @@ namespace Azure.ResourceManager.EventGrid
         /// Event retention for the namespace topic expressed in days. The property default value is 1 day.
         /// Min event retention duration value is 1 day and max event retention duration value is 1 day.
         /// </param>
-        internal NamespaceTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NamespaceTopicProvisioningState? provisioningState, PublisherType? publisherType, EventInputSchema? inputSchema, int? eventRetentionInDays) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NamespaceTopicProvisioningState? provisioningState, PublisherType? publisherType, EventInputSchema? inputSchema, int? eventRetentionInDays, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PublisherType = publisherType;
             InputSchema = inputSchema;
             EventRetentionInDays = eventRetentionInDays;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the namespace topic. </summary>

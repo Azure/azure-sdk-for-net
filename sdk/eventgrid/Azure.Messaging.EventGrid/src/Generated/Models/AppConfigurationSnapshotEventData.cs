@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of snapshot events. </summary>
     public partial class AppConfigurationSnapshotEventData
     {
-        /// <summary> Initializes a new instance of AppConfigurationSnapshotEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotEventData"/>. </summary>
         internal AppConfigurationSnapshotEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationSnapshotEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        internal AppConfigurationSnapshotEventData(string name, string eTag, string syncToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationSnapshotEventData(string name, string eTag, string syncToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ETag = eTag;
             SyncToken = syncToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the snapshot. </summary>

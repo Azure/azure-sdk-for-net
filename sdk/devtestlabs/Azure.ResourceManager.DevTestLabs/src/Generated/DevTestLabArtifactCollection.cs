@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArtifactArtifactsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArtifactArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArtifactResource(Client, DevTestLabArtifactData.DeserializeDevTestLabArtifactData(e)), _devTestLabArtifactArtifactsClientDiagnostics, Pipeline, "DevTestLabArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DevTestLabArtifactResource(Client, DevTestLabArtifactData.DeserializeDevTestLabArtifactData(e)), _devTestLabArtifactArtifactsClientDiagnostics, Pipeline, "DevTestLabArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArtifactArtifactsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabArtifactArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabArtifactResource(Client, DevTestLabArtifactData.DeserializeDevTestLabArtifactData(e)), _devTestLabArtifactArtifactsClientDiagnostics, Pipeline, "DevTestLabArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DevTestLabArtifactResource(Client, DevTestLabArtifactData.DeserializeDevTestLabArtifactData(e)), _devTestLabArtifactArtifactsClientDiagnostics, Pipeline, "DevTestLabArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

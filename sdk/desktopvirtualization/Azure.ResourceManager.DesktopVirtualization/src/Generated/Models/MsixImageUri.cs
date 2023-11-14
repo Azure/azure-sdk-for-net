@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Represents URI referring to MSIX Image. </summary>
     public partial class MsixImageUri
     {
-        /// <summary> Initializes a new instance of MsixImageUri. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MsixImageUri"/>. </summary>
         public MsixImageUri()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MsixImageUri"/>. </summary>
+        /// <param name="uri"> URI to Image. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MsixImageUri(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> URI to Image. </summary>

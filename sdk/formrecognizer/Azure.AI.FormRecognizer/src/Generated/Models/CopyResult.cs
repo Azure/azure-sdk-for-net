@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Custom model copy result. </summary>
     internal partial class CopyResult
     {
-        /// <summary> Initializes a new instance of CopyResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyResult"/>. </summary>
         /// <param name="modelId"> Identifier of the target model. </param>
         internal CopyResult(Guid modelId)
         {
@@ -22,13 +25,20 @@ namespace Azure.AI.FormRecognizer.Models
             Errors = new ChangeTrackingList<FormRecognizerError>();
         }
 
-        /// <summary> Initializes a new instance of CopyResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyResult"/>. </summary>
         /// <param name="modelId"> Identifier of the target model. </param>
         /// <param name="errors"> Errors returned during the copy operation. </param>
-        internal CopyResult(Guid modelId, IReadOnlyList<FormRecognizerError> errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyResult(Guid modelId, IReadOnlyList<FormRecognizerError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyResult"/> for deserialization. </summary>
+        internal CopyResult()
+        {
         }
 
         /// <summary> Identifier of the target model. </summary>

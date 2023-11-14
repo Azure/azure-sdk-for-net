@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Schedule definition. </summary>
     public partial class AutoscaleSchedule
     {
-        /// <summary> Initializes a new instance of AutoscaleSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSchedule"/>. </summary>
         /// <param name="startOn"> User has to set the start time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="endOn"> User has to set the end time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="count"> User has to set the node count anticipated at end of the scaling operation of the set current schedule configuration, format is integer. </param>
@@ -31,17 +34,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Days = days.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSchedule"/>. </summary>
         /// <param name="startOn"> User has to set the start time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="endOn"> User has to set the end time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="count"> User has to set the node count anticipated at end of the scaling operation of the set current schedule configuration, format is integer. </param>
         /// <param name="days"> User has to set the days where schedule has to be set for autoscale operation. </param>
-        internal AutoscaleSchedule(DateTimeOffset startOn, DateTimeOffset endOn, int count, IList<AutoscaleScheduleDay> days)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleSchedule(DateTimeOffset startOn, DateTimeOffset endOn, int count, IList<AutoscaleScheduleDay> days, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
             Count = count;
             Days = days;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSchedule"/> for deserialization. </summary>
+        internal AutoscaleSchedule()
+        {
         }
 
         /// <summary> User has to set the start time of current schedule configuration, format like 10:30 (HH:MM). </summary>

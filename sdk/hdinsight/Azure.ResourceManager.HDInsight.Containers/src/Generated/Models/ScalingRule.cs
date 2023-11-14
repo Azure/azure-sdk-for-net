@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The scaling rule. </summary>
     public partial class ScalingRule
     {
-        /// <summary> Initializes a new instance of ScalingRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScalingRule"/>. </summary>
         /// <param name="actionType"> The action type. </param>
         /// <param name="evaluationCount"> This is an evaluation count for a scaling condition, the number of times a trigger condition should be successful, before scaling activity is triggered. </param>
         /// <param name="scalingMetric"> Metrics name for individual workloads. For example: cpu. </param>
@@ -28,6 +32,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             EvaluationCount = evaluationCount;
             ScalingMetric = scalingMetric;
             ComparisonRule = comparisonRule;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScalingRule"/>. </summary>
+        /// <param name="actionType"> The action type. </param>
+        /// <param name="evaluationCount"> This is an evaluation count for a scaling condition, the number of times a trigger condition should be successful, before scaling activity is triggered. </param>
+        /// <param name="scalingMetric"> Metrics name for individual workloads. For example: cpu. </param>
+        /// <param name="comparisonRule"> The comparison rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScalingRule(ScaleActionType actionType, int evaluationCount, string scalingMetric, HDInsightComparisonRule comparisonRule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ActionType = actionType;
+            EvaluationCount = evaluationCount;
+            ScalingMetric = scalingMetric;
+            ComparisonRule = comparisonRule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScalingRule"/> for deserialization. </summary>
+        internal ScalingRule()
+        {
         }
 
         /// <summary> The action type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,12 +14,31 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The parameters for the script actions to execute on a running cluster. </summary>
     public partial class ExecuteScriptActionContent
     {
-        /// <summary> Initializes a new instance of ExecuteScriptActionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/>. </summary>
         /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
         public ExecuteScriptActionContent(bool persistOnSuccess)
         {
             ScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
             PersistOnSuccess = persistOnSuccess;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/>. </summary>
+        /// <param name="scriptActions"> The list of run time script actions. </param>
+        /// <param name="persistOnSuccess"> Gets or sets if the scripts needs to be persisted. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExecuteScriptActionContent(IList<RuntimeScriptAction> scriptActions, bool persistOnSuccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ScriptActions = scriptActions;
+            PersistOnSuccess = persistOnSuccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteScriptActionContent"/> for deserialization. </summary>
+        internal ExecuteScriptActionContent()
+        {
         }
 
         /// <summary> The list of run time script actions. </summary>

@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabData(AzureLocation location) : base(location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.DevTestLabs
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +62,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="extendedProperties"> Extended properties of the lab used for experimental features. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IList<string> mandatoryArtifactsResourceIdsLinux, IList<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string defaultStorageAccount, string defaultPremiumStorageAccount, string artifactsStorageAccount, string premiumDataDiskStorageAccount, string vaultName, DevTestLabStorageType? labStorageType, IList<string> mandatoryArtifactsResourceIdsLinux, IList<string> mandatoryArtifactsResourceIdsWindows, DateTimeOffset? createdOn, DevTestLabPremiumDataDisk? premiumDataDisks, DevTestLabEnvironmentPermission? environmentPermission, DevTestLabAnnouncement announcement, DevTestLabSupport support, string vmCreationResourceGroup, string publicIPId, string loadBalancerId, string networkSecurityGroupId, IDictionary<string, string> extendedProperties, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DefaultStorageAccount = defaultStorageAccount;
             DefaultPremiumStorageAccount = defaultPremiumStorageAccount;
@@ -81,6 +85,12 @@ namespace Azure.ResourceManager.DevTestLabs
             ExtendedProperties = extendedProperties;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabData"/> for deserialization. </summary>
+        internal DevTestLabData()
+        {
         }
 
         /// <summary> The lab's default storage account. </summary>

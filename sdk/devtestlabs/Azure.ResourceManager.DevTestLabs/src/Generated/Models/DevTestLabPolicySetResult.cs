@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Result of a policy set evaluation. </summary>
     public partial class DevTestLabPolicySetResult
     {
-        /// <summary> Initializes a new instance of DevTestLabPolicySetResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicySetResult"/>. </summary>
         internal DevTestLabPolicySetResult()
         {
             PolicyViolations = new ChangeTrackingList<DevTestLabPolicyViolation>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabPolicySetResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicySetResult"/>. </summary>
         /// <param name="hasError"> A value indicating whether this policy set evaluation has discovered violations. </param>
         /// <param name="policyViolations"> The list of policy violations. </param>
-        internal DevTestLabPolicySetResult(bool? hasError, IReadOnlyList<DevTestLabPolicyViolation> policyViolations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabPolicySetResult(bool? hasError, IReadOnlyList<DevTestLabPolicyViolation> policyViolations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HasError = hasError;
             PolicyViolations = policyViolations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A value indicating whether this policy set evaluation has discovered violations. </summary>

@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> sku of app service plan. </summary>
     public partial class WebAppServicePlanUpdatedEventDataSku
     {
-        /// <summary> Initializes a new instance of WebAppServicePlanUpdatedEventDataSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventDataSku"/>. </summary>
         internal WebAppServicePlanUpdatedEventDataSku()
         {
         }
 
-        /// <summary> Initializes a new instance of WebAppServicePlanUpdatedEventDataSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppServicePlanUpdatedEventDataSku"/>. </summary>
         /// <param name="name"> name of app service plan sku. </param>
         /// <param name="tier"> tier of app service plan sku. </param>
         /// <param name="size"> size of app service plan sku. </param>
         /// <param name="family"> family of app service plan sku. </param>
         /// <param name="capacity"> capacity of app service plan sku. </param>
-        internal WebAppServicePlanUpdatedEventDataSku(string name, string tier, string size, string family, string capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppServicePlanUpdatedEventDataSku(string name, string tier, string size, string family, string capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             Size = size;
             Family = family;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> name of app service plan sku. </summary>

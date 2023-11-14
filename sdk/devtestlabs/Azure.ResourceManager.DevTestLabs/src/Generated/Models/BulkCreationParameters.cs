@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Parameters for creating multiple virtual machines as a single action. </summary>
     internal partial class BulkCreationParameters
     {
-        /// <summary> Initializes a new instance of BulkCreationParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BulkCreationParameters"/>. </summary>
         public BulkCreationParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of BulkCreationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkCreationParameters"/>. </summary>
         /// <param name="instanceCount"> The number of virtual machine instances to create. </param>
-        internal BulkCreationParameters(int? instanceCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BulkCreationParameters(int? instanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceCount = instanceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of virtual machine instances to create. </summary>

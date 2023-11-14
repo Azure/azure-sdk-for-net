@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> The available private link resources for an Account. </summary>
     internal partial class DeviceUpdatePrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateLinkResourceListResult"/>. </summary>
         internal DeviceUpdatePrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<PrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdatePrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> The list of available private link resources for an Account. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of private link resources. </param>
-        internal DeviceUpdatePrivateLinkResourceListResult(IReadOnlyList<PrivateLinkData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceUpdatePrivateLinkResourceListResult(IReadOnlyList<PrivateLinkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of available private link resources for an Account. </summary>

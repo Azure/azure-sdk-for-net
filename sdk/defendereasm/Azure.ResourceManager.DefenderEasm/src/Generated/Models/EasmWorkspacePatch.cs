@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,24 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> Workspace patch properties. </summary>
     public partial class EasmWorkspacePatch
     {
-        /// <summary> Initializes a new instance of EasmWorkspacePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspacePatch"/>. </summary>
         public EasmWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EasmWorkspacePatch"/>. </summary>
+        /// <param name="tags"> resource tags. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EasmWorkspacePatch(IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            SystemData = systemData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> resource tags. </summary>

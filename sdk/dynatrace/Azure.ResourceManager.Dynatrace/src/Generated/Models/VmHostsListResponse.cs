@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Response of a list VM Host Operation. </summary>
     internal partial class VmHostsListResponse
     {
-        /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmHostsListResponse"/>. </summary>
         internal VmHostsListResponse()
         {
             Value = new ChangeTrackingList<DynatraceMonitorVmInfo>();
         }
 
-        /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmHostsListResponse"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal VmHostsListResponse(IReadOnlyList<DynatraceMonitorVmInfo> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmHostsListResponse(IReadOnlyList<DynatraceMonitorVmInfo> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The items on this page. </summary>

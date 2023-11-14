@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> A consumer side list of share subscription synchronizations. </summary>
     internal partial class ShareSubscriptionSynchronizationList
     {
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronizationList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronizationList"/>. </summary>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ShareSubscriptionSynchronizationList(IEnumerable<ShareSubscriptionSynchronization> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.DataShare.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronizationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronizationList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type DataTransferObjects. </param>
-        internal ShareSubscriptionSynchronizationList(string nextLink, IReadOnlyList<ShareSubscriptionSynchronization> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareSubscriptionSynchronizationList(string nextLink, IReadOnlyList<ShareSubscriptionSynchronization> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronizationList"/> for deserialization. </summary>
+        internal ShareSubscriptionSynchronizationList()
+        {
         }
 
         /// <summary> The Url of next result page. </summary>

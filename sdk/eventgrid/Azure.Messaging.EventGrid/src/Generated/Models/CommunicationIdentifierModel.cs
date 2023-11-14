@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
     public partial class CommunicationIdentifierModel
     {
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
         internal CommunicationIdentifierModel()
         {
         }
 
-        /// <summary> Initializes a new instance of CommunicationIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentifierModel"/>. </summary>
         /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
-        internal CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RawId = rawId;
             CommunicationUser = communicationUser;
             PhoneNumber = phoneNumber;
             MicrosoftTeamsUser = microsoftTeamsUser;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>

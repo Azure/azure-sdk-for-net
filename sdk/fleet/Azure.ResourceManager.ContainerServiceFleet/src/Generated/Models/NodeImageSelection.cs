@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The node image upgrade to be applied to the target nodes in update run. </summary>
     internal partial class NodeImageSelection
     {
-        /// <summary> Initializes a new instance of NodeImageSelection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeImageSelection"/>. </summary>
         /// <param name="selectionType"> The node image upgrade type. </param>
         public NodeImageSelection(NodeImageSelectionType selectionType)
         {
             SelectionType = selectionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NodeImageSelection"/>. </summary>
+        /// <param name="selectionType"> The node image upgrade type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeImageSelection(NodeImageSelectionType selectionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SelectionType = selectionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NodeImageSelection"/> for deserialization. </summary>
+        internal NodeImageSelection()
+        {
         }
 
         /// <summary> The node image upgrade type. </summary>

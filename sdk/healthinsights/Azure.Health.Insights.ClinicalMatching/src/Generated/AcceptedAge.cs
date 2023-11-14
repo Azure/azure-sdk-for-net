@@ -5,18 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> A person's age, given as a number (value) and a unit (e.g. years, months). </summary>
     public partial class AcceptedAge
     {
-        /// <summary> Initializes a new instance of AcceptedAge. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcceptedAge"/>. </summary>
         /// <param name="unit"> Possible units for a person's age. </param>
         /// <param name="value"> The number of years/months/days that represents the person's age. </param>
         public AcceptedAge(AgeUnit unit, float value)
         {
             Unit = unit;
             Value = value;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptedAge"/>. </summary>
+        /// <param name="unit"> Possible units for a person's age. </param>
+        /// <param name="value"> The number of years/months/days that represents the person's age. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcceptedAge(AgeUnit unit, float value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Unit = unit;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcceptedAge"/> for deserialization. </summary>
+        internal AcceptedAge()
+        {
         }
 
         /// <summary> Possible units for a person's age. </summary>

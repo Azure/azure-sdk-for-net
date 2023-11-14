@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,11 +15,33 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> The project environment type for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterProjectEnvironmentPatch
     {
-        /// <summary> Initializes a new instance of DevCenterProjectEnvironmentPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectEnvironmentPatch"/>. </summary>
         public DevCenterProjectEnvironmentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             UserRoleAssignments = new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterProjectEnvironmentPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Managed identity properties. </param>
+        /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </param>
+        /// <param name="status"> Defines whether this Environment Type can be used in this Project. </param>
+        /// <param name="creatorRoleAssignment"> The role definition assigned to the environment creator on backing resources. </param>
+        /// <param name="userRoleAssignments"> Role Assignments created on environment backing resources. This is a mapping from a user object ID to an object of role definition IDs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterProjectEnvironmentPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ResourceIdentifier deploymentTargetId, EnvironmentTypeEnableStatus? status, ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment, IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            DeploymentTargetId = deploymentTargetId;
+            Status = status;
+            CreatorRoleAssignment = creatorRoleAssignment;
+            UserRoleAssignments = userRoleAssignments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

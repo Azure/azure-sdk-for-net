@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HealthBot.Models
 {
-    public partial class HealthBotKeyVaultProperties : IUtf8JsonSerializable
+    public partial class HealthBotKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<HealthBotKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthBotKeyVaultProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HealthBotKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HealthBotKeyVaultProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HealthBotKeyVaultProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
@@ -30,11 +40,40 @@ namespace Azure.ResourceManager.HealthBot.Models
                 writer.WritePropertyName("userIdentity"u8);
                 writer.WriteStringValue(UserIdentity);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HealthBotKeyVaultProperties DeserializeHealthBotKeyVaultProperties(JsonElement element)
+        HealthBotKeyVaultProperties IJsonModel<HealthBotKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHealthBotKeyVaultProperties(document.RootElement, options);
+        }
+
+        internal static HealthBotKeyVaultProperties DeserializeHealthBotKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.HealthBot.Models
             Optional<string> keyVersion = default;
             Uri keyVaultUri = default;
             Optional<string> userIdentity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))
@@ -65,8 +106,38 @@ namespace Azure.ResourceManager.HealthBot.Models
                     userIdentity = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HealthBotKeyVaultProperties(keyName, keyVersion.Value, keyVaultUri, userIdentity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HealthBotKeyVaultProperties(keyName, keyVersion.Value, keyVaultUri, userIdentity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HealthBotKeyVaultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HealthBotKeyVaultProperties IPersistableModel<HealthBotKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HealthBotKeyVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHealthBotKeyVaultProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<HealthBotKeyVaultProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

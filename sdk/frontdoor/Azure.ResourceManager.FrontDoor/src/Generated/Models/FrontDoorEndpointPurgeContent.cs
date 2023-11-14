@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Parameters required for content purge. </summary>
     public partial class FrontDoorEndpointPurgeContent
     {
-        /// <summary> Initializes a new instance of FrontDoorEndpointPurgeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPurgeContent"/>. </summary>
         /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentPaths"/> is null. </exception>
         public FrontDoorEndpointPurgeContent(IEnumerable<string> contentPaths)
@@ -23,6 +26,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Argument.AssertNotNull(contentPaths, nameof(contentPaths));
 
             ContentPaths = contentPaths.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPurgeContent"/>. </summary>
+        /// <param name="contentPaths"> The path to the content to be purged. Can describe a file path or a wild card directory. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorEndpointPurgeContent(IList<string> contentPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContentPaths = contentPaths;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorEndpointPurgeContent"/> for deserialization. </summary>
+        internal FrontDoorEndpointPurgeContent()
+        {
         }
 
         /// <summary> The path to the content to be purged. Can describe a file path or a wild card directory. </summary>

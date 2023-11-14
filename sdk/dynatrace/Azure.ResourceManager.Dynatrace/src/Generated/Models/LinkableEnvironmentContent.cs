@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
@@ -13,9 +14,25 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Request for getting all the linkable environments for a user. </summary>
     public partial class LinkableEnvironmentContent
     {
-        /// <summary> Initializes a new instance of LinkableEnvironmentContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentContent"/>. </summary>
         public LinkableEnvironmentContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkableEnvironmentContent"/>. </summary>
+        /// <param name="tenantId"> Tenant Id of the user in which they want to link the environment. </param>
+        /// <param name="userPrincipal"> user principal id of the user. </param>
+        /// <param name="region"> Azure region in which we want to link the environment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkableEnvironmentContent(Guid? tenantId, string userPrincipal, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TenantId = tenantId;
+            UserPrincipal = userPrincipal;
+            Region = region;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tenant Id of the user in which they want to link the environment. </summary>

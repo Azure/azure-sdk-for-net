@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a weekly schedule. </summary>
     public partial class DevTestLabWeekDetails
     {
-        /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabWeekDetails"/>. </summary>
         public DevTestLabWeekDetails()
         {
             Weekdays = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabWeekDetails"/>. </summary>
         /// <param name="weekdays"> The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.). </param>
         /// <param name="time"> The time of the day the schedule will occur. </param>
-        internal DevTestLabWeekDetails(IList<string> weekdays, string time)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabWeekDetails(IList<string> weekdays, string time, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Weekdays = weekdays;
             Time = time;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.). </summary>

@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> The description of an X509 CA Certificate. </summary>
     public partial class DeviceProvisioningServicesCertificateProperties
     {
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateProperties"/>. </summary>
         public DeviceProvisioningServicesCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateProperties"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprint"> The certificate's thumbprint. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
         /// <param name="createdOn"> The certificate's creation date and time. </param>
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
-        internal DeviceProvisioningServicesCertificateProperties(string subject, DateTimeOffset? expireOn, BinaryData thumbprint, bool? isVerified, BinaryData certificate, DateTimeOffset? createdOn, DateTimeOffset? updatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServicesCertificateProperties(string subject, DateTimeOffset? expireOn, BinaryData thumbprint, bool? isVerified, BinaryData certificate, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subject = subject;
             ExpireOn = expireOn;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Certificate = certificate;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The certificate's subject name. </summary>

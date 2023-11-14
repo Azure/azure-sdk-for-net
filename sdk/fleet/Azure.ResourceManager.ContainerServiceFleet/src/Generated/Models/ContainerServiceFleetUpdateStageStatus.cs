@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of a UpdateStage. </summary>
     public partial class ContainerServiceFleetUpdateStageStatus
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStageStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStageStatus"/>. </summary>
         internal ContainerServiceFleetUpdateStageStatus()
         {
             Groups = new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateStageStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStageStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateStage. </param>
         /// <param name="name"> The name of the UpdateStage. </param>
         /// <param name="groups"> The list of groups to be updated as part of this UpdateStage. </param>
         /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
-        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, ContainerServiceFleetWaitStatus afterStageWaitStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Name = name;
             Groups = groups;
             AfterStageWaitStatus = afterStageWaitStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the UpdateStage. </summary>

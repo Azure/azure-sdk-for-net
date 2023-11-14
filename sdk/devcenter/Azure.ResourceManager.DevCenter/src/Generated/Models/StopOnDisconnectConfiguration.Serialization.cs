@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class StopOnDisconnectConfiguration : IUtf8JsonSerializable
+    public partial class StopOnDisconnectConfiguration : IUtf8JsonSerializable, IJsonModel<StopOnDisconnectConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StopOnDisconnectConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StopOnDisconnectConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StopOnDisconnectConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StopOnDisconnectConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WritePropertyName("gracePeriodMinutes"u8);
                 writer.WriteNumberValue(GracePeriodMinutes.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StopOnDisconnectConfiguration DeserializeStopOnDisconnectConfiguration(JsonElement element)
+        StopOnDisconnectConfiguration IJsonModel<StopOnDisconnectConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStopOnDisconnectConfiguration(document.RootElement, options);
+        }
+
+        internal static StopOnDisconnectConfiguration DeserializeStopOnDisconnectConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<StopOnDisconnectEnableStatus> status = default;
             Optional<int> gracePeriodMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.DevCenter.Models
                     gracePeriodMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StopOnDisconnectConfiguration(Optional.ToNullable(status), Optional.ToNullable(gracePeriodMinutes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StopOnDisconnectConfiguration(Optional.ToNullable(status), Optional.ToNullable(gracePeriodMinutes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StopOnDisconnectConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StopOnDisconnectConfiguration IPersistableModel<StopOnDisconnectConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StopOnDisconnectConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStopOnDisconnectConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<StopOnDisconnectConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Information about a Windows OS. </summary>
     internal partial class WindowsOSInfo
     {
-        /// <summary> Initializes a new instance of WindowsOSInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WindowsOSInfo"/>. </summary>
         public WindowsOSInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsOSInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsOSInfo"/>. </summary>
         /// <param name="windowsOSState"> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </param>
-        internal WindowsOSInfo(WindowsOSState? windowsOSState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsOSInfo(WindowsOSState? windowsOSState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WindowsOSState = windowsOSState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </summary>

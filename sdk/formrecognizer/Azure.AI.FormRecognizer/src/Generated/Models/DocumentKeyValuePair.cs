@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -13,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing a form field with distinct field label (key) and field value (may be empty). </summary>
     public partial class DocumentKeyValuePair
     {
-        /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyValuePair"/>. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -25,15 +29,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentKeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyValuePair"/>. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="value"> Field value of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
-        internal DocumentKeyValuePair(DocumentKeyValueElement key, DocumentKeyValueElement value, float confidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentKeyValuePair(DocumentKeyValueElement key, DocumentKeyValueElement value, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
             Confidence = confidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentKeyValuePair"/> for deserialization. </summary>
+        internal DocumentKeyValuePair()
+        {
         }
 
         /// <summary> Field label of the key-value pair. </summary>

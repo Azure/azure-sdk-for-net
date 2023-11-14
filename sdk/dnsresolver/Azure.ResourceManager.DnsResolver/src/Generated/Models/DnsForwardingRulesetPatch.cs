@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,11 +15,25 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a DNS forwarding ruleset PATCH operation. </summary>
     public partial class DnsForwardingRulesetPatch
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetPatch"/>. </summary>
         public DnsForwardingRulesetPatch()
         {
             DnsResolverOutboundEndpoints = new ChangeTrackingList<WritableSubResource>();
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetPatch"/>. </summary>
+        /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
+        /// <param name="tags"> Tags for DNS Resolver. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsForwardingRulesetPatch(IList<WritableSubResource> dnsResolverOutboundEndpoints, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints;
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </summary>

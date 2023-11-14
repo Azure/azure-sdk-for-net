@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The compute isolation properties. </summary>
     public partial class HDInsightComputeIsolationProperties
     {
-        /// <summary> Initializes a new instance of HDInsightComputeIsolationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightComputeIsolationProperties"/>. </summary>
         public HDInsightComputeIsolationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightComputeIsolationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightComputeIsolationProperties"/>. </summary>
         /// <param name="enableComputeIsolation"> The flag indicates whether enable compute isolation or not. </param>
         /// <param name="hostSku"> The host sku. </param>
-        internal HDInsightComputeIsolationProperties(bool? enableComputeIsolation, string hostSku)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightComputeIsolationProperties(bool? enableComputeIsolation, string hostSku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnableComputeIsolation = enableComputeIsolation;
             HostSku = hostSku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The flag indicates whether enable compute isolation or not. </summary>

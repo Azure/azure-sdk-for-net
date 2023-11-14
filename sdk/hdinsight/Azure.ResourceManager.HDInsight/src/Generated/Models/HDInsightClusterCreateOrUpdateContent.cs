@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,11 +15,31 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The CreateCluster request parameters. </summary>
     public partial class HDInsightClusterCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateContent"/>. </summary>
         public HDInsightClusterCreateOrUpdateContent()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The location of the cluster. </param>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="properties"> The cluster create parameters. </param>
+        /// <param name="identity"> The identity of the cluster, if configured. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterCreateOrUpdateContent(AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Location = location;
+            Tags = tags;
+            Zones = zones;
+            Properties = properties;
+            Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The location of the cluster. </summary>

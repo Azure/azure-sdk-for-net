@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of an artifact. </summary>
     public partial class DevTestLabArtifactInstallInfo
     {
-        /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactInstallInfo"/>. </summary>
         public DevTestLabArtifactInstallInfo()
         {
             Parameters = new ChangeTrackingList<DevTestLabArtifactParameter>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArtifactInstallInfo"/>. </summary>
         /// <param name="artifactId"> The artifact's identifier. </param>
         /// <param name="artifactTitle"> The artifact's title. </param>
         /// <param name="parameters"> The parameters of the artifact. </param>
@@ -28,7 +31,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="deploymentStatusMessage"> The status message from the deployment. </param>
         /// <param name="vmExtensionStatusMessage"> The status message from the virtual machine extension. </param>
         /// <param name="installOn"> The time that the artifact starts to install on the virtual machine. </param>
-        internal DevTestLabArtifactInstallInfo(string artifactId, string artifactTitle, IList<DevTestLabArtifactParameter> parameters, string status, string deploymentStatusMessage, string vmExtensionStatusMessage, DateTimeOffset? installOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArtifactInstallInfo(string artifactId, string artifactTitle, IList<DevTestLabArtifactParameter> parameters, string status, string deploymentStatusMessage, string vmExtensionStatusMessage, DateTimeOffset? installOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactId = artifactId;
             ArtifactTitle = artifactTitle;
@@ -37,6 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DeploymentStatusMessage = deploymentStatusMessage;
             VmExtensionStatusMessage = vmExtensionStatusMessage;
             InstallOn = installOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The artifact's identifier. </summary>

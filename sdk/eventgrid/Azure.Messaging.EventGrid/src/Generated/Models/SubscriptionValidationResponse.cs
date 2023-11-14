@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> To complete an event subscription validation handshake, a subscriber can use either the validationCode or the validationUrl received in a SubscriptionValidationEvent. When the validationCode is used, the SubscriptionValidationResponse can be used to build the response. </summary>
     public partial class SubscriptionValidationResponse
     {
-        /// <summary> Initializes a new instance of SubscriptionValidationResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationResponse"/>. </summary>
         public SubscriptionValidationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionValidationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationResponse"/>. </summary>
         /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
-        internal SubscriptionValidationResponse(string validationResponse)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionValidationResponse(string validationResponse, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationResponse = validationResponse;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </summary>

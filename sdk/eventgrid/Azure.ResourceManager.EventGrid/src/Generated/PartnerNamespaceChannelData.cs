@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerNamespaceChannelData : ResourceData
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         public PartnerNamespaceChannelData()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +46,8 @@ namespace Azure.ResourceManager.EventGrid
         /// Expiration time of the channel. If this timer expires while the corresponding partner topic is never activated,
         /// the channel and corresponding partner topic are deleted.
         /// </param>
-        internal PartnerNamespaceChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PartnerNamespaceChannelType? channelType, PartnerTopicInfo partnerTopicInfo, PartnerDestinationInfo partnerDestinationInfo, string messageForActivation, PartnerNamespaceChannelProvisioningState? provisioningState, PartnerTopicReadinessState? readinessState, DateTimeOffset? expireOnIfNotActivated) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerNamespaceChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PartnerNamespaceChannelType? channelType, PartnerTopicInfo partnerTopicInfo, PartnerDestinationInfo partnerDestinationInfo, string messageForActivation, PartnerNamespaceChannelProvisioningState? provisioningState, PartnerTopicReadinessState? readinessState, DateTimeOffset? expireOnIfNotActivated, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ChannelType = channelType;
             PartnerTopicInfo = partnerTopicInfo;
@@ -51,6 +56,7 @@ namespace Azure.ResourceManager.EventGrid
             ProvisioningState = provisioningState;
             ReadinessState = readinessState;
             ExpireOnIfNotActivated = expireOnIfNotActivated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the event channel which represents the direction flow of events. </summary>

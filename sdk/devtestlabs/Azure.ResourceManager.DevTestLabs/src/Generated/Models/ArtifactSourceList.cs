@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DevTestLabs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> The response of a list operation. </summary>
     internal partial class ArtifactSourceList
     {
-        /// <summary> Initializes a new instance of ArtifactSourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactSourceList"/>. </summary>
         internal ArtifactSourceList()
         {
             Value = new ChangeTrackingList<DevTestLabArtifactSourceData>();
         }
 
-        /// <summary> Initializes a new instance of ArtifactSourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactSourceList"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link for next set of results. </param>
-        internal ArtifactSourceList(IReadOnlyList<DevTestLabArtifactSourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactSourceList(IReadOnlyList<DevTestLabArtifactSourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Results of the list operation. </summary>

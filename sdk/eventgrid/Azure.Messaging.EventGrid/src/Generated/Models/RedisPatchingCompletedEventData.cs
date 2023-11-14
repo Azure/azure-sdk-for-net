@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Cache.PatchingCompleted event. </summary>
     public partial class RedisPatchingCompletedEventData
     {
-        /// <summary> Initializes a new instance of RedisPatchingCompletedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisPatchingCompletedEventData"/>. </summary>
         internal RedisPatchingCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisPatchingCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPatchingCompletedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="name"> The name of this event. </param>
         /// <param name="status"> The status of this event. Failed or  succeeded. </param>
-        internal RedisPatchingCompletedEventData(DateTimeOffset? timestamp, string name, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisPatchingCompletedEventData(DateTimeOffset? timestamp, string name, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             Name = name;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time at which the event occurred. </summary>

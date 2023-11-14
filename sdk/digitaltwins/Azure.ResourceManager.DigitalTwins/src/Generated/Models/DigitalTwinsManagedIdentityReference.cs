@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The properties of the Managed Identity. </summary>
     public partial class DigitalTwinsManagedIdentityReference
     {
-        /// <summary> Initializes a new instance of DigitalTwinsManagedIdentityReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsManagedIdentityReference"/>. </summary>
         public DigitalTwinsManagedIdentityReference()
         {
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsManagedIdentityReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsManagedIdentityReference"/>. </summary>
         /// <param name="identityType"> The type of managed identity used. </param>
         /// <param name="userAssignedIdentity"> The user identity ARM resource id if the managed identity type is 'UserAssigned'. </param>
-        internal DigitalTwinsManagedIdentityReference(DigitalTwinsManagedIdentityType? identityType, string userAssignedIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsManagedIdentityReference(DigitalTwinsManagedIdentityType? identityType, string userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssignedIdentity = userAssignedIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of managed identity used. </summary>

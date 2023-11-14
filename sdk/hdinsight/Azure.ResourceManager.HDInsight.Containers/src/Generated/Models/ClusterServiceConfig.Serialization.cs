@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterServiceConfig : IUtf8JsonSerializable
+    public partial class ClusterServiceConfig : IUtf8JsonSerializable, IJsonModel<ClusterServiceConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServiceConfig>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ClusterServiceConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ClusterServiceConfig>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ClusterServiceConfig>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("component"u8);
             writer.WriteStringValue(Component);
@@ -25,17 +35,48 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterServiceConfig DeserializeClusterServiceConfig(JsonElement element)
+        ClusterServiceConfig IJsonModel<ClusterServiceConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterServiceConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterServiceConfig(document.RootElement, options);
+        }
+
+        internal static ClusterServiceConfig DeserializeClusterServiceConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string component = default;
             IList<ClusterConfigFile> files = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("component"u8))
@@ -53,8 +94,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     files = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterServiceConfig(component, files);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterServiceConfig(component, files, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterServiceConfig>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterServiceConfig)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClusterServiceConfig IPersistableModel<ClusterServiceConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterServiceConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClusterServiceConfig(document.RootElement, options);
+        }
+
+        string IPersistableModel<ClusterServiceConfig>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

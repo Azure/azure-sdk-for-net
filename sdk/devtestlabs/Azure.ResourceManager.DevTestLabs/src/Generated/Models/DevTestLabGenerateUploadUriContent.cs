@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties for generating an upload URI. </summary>
     public partial class DevTestLabGenerateUploadUriContent
     {
-        /// <summary> Initializes a new instance of DevTestLabGenerateUploadUriContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGenerateUploadUriContent"/>. </summary>
         public DevTestLabGenerateUploadUriContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGenerateUploadUriContent"/>. </summary>
+        /// <param name="blobName"> The blob name of the upload URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabGenerateUploadUriContent(string blobName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BlobName = blobName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The blob name of the upload URI. </summary>

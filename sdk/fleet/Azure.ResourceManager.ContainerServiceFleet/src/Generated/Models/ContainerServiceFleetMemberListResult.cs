@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The response of a FleetMember list operation. </summary>
     internal partial class ContainerServiceFleetMemberListResult
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberListResult"/>. </summary>
         /// <param name="value"> The FleetMember items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ContainerServiceFleetMemberListResult(IEnumerable<ContainerServiceFleetMemberData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetMemberListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberListResult"/>. </summary>
         /// <param name="value"> The FleetMember items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal ContainerServiceFleetMemberListResult(IReadOnlyList<ContainerServiceFleetMemberData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetMemberListResult(IReadOnlyList<ContainerServiceFleetMemberData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMemberListResult"/> for deserialization. </summary>
+        internal ContainerServiceFleetMemberListResult()
+        {
         }
 
         /// <summary> The FleetMember items on this page. </summary>

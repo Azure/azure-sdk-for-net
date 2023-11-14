@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Describes a script action on a running cluster. </summary>
     public partial class RuntimeScriptAction
     {
-        /// <summary> Initializes a new instance of RuntimeScriptAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RuntimeScriptAction"/>. </summary>
         /// <param name="name"> The name of the script action. </param>
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="roles"> The list of roles where script will be executed. </param>
@@ -31,19 +34,26 @@ namespace Azure.ResourceManager.HDInsight.Models
             Roles = roles.ToList();
         }
 
-        /// <summary> Initializes a new instance of RuntimeScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeScriptAction"/>. </summary>
         /// <param name="name"> The name of the script action. </param>
         /// <param name="uri"> The URI to the script. </param>
         /// <param name="parameters"> The parameters for the script. </param>
         /// <param name="roles"> The list of roles where script will be executed. </param>
         /// <param name="applicationName"> The application name of the script action, if any. </param>
-        internal RuntimeScriptAction(string name, Uri uri, string parameters, IList<string> roles, string applicationName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RuntimeScriptAction(string name, Uri uri, string parameters, IList<string> roles, string applicationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Uri = uri;
             Parameters = parameters;
             Roles = roles;
             ApplicationName = applicationName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RuntimeScriptAction"/> for deserialization. </summary>
+        internal RuntimeScriptAction()
+        {
         }
 
         /// <summary> The name of the script action. </summary>

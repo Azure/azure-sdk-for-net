@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Mapping of user object ID to role assignments. </summary>
     public partial class DevCenterUserRoleAssignments
     {
-        /// <summary> Initializes a new instance of DevCenterUserRoleAssignments. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterUserRoleAssignments"/>. </summary>
         public DevCenterUserRoleAssignments()
         {
             Roles = new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
         }
 
-        /// <summary> Initializes a new instance of DevCenterUserRoleAssignments. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterUserRoleAssignments"/>. </summary>
         /// <param name="roles"> A map of roles to assign to the parent user. </param>
-        internal DevCenterUserRoleAssignments(IDictionary<string, DevCenterEnvironmentRole> roles)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterUserRoleAssignments(IDictionary<string, DevCenterEnvironmentRole> roles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Roles = roles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A map of roles to assign to the parent user. </summary>

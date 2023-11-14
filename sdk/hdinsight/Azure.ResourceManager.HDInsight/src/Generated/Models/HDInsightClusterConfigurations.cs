@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The configuration object for the specified cluster. </summary>
     public partial class HDInsightClusterConfigurations
     {
-        /// <summary> Initializes a new instance of HDInsightClusterConfigurations. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterConfigurations"/>. </summary>
         internal HDInsightClusterConfigurations()
         {
             Configurations = new ChangeTrackingDictionary<string, IDictionary<string, string>>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterConfigurations"/>. </summary>
         /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
-        internal HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Configurations = configurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The configuration object for the specified configuration for the specified cluster. </summary>

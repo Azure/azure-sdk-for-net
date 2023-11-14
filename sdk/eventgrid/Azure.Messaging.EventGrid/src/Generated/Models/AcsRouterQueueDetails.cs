@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Router Queue Details. </summary>
     public partial class AcsRouterQueueDetails
     {
-        /// <summary> Initializes a new instance of AcsRouterQueueDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AcsRouterQueueDetails"/>. </summary>
         internal AcsRouterQueueDetails()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterQueueDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterQueueDetails"/>. </summary>
         /// <param name="id"> Router Queue Id. </param>
         /// <param name="name"> Router Queue Name. </param>
         /// <param name="labels"> Router Queue Labels. </param>
-        internal AcsRouterQueueDetails(string id, string name, IReadOnlyDictionary<string, string> labels)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsRouterQueueDetails(string id, string name, IReadOnlyDictionary<string, string> labels, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Labels = labels;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Router Queue Id. </summary>

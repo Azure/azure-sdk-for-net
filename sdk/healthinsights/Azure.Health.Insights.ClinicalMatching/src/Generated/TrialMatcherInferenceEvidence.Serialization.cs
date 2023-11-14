@@ -5,16 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
-    public partial class TrialMatcherInferenceEvidence
+    public partial class TrialMatcherInferenceEvidence : IUtf8JsonSerializable, IJsonModel<TrialMatcherInferenceEvidence>
     {
-        internal static TrialMatcherInferenceEvidence DeserializeTrialMatcherInferenceEvidence(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherInferenceEvidence>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TrialMatcherInferenceEvidence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TrialMatcherInferenceEvidence>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TrialMatcherInferenceEvidence>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EligibilityCriteriaEvidence))
+            {
+                writer.WritePropertyName("eligibilityCriteriaEvidence"u8);
+                writer.WriteStringValue(EligibilityCriteriaEvidence);
+            }
+            if (Optional.IsDefined(PatientDataEvidence))
+            {
+                writer.WritePropertyName("patientDataEvidence"u8);
+                writer.WriteObjectValue(PatientDataEvidence);
+            }
+            if (Optional.IsDefined(PatientInfoEvidence))
+            {
+                writer.WritePropertyName("patientInfoEvidence"u8);
+                writer.WriteObjectValue(PatientInfoEvidence);
+            }
+            if (Optional.IsDefined(Importance))
+            {
+                writer.WritePropertyName("importance"u8);
+                writer.WriteNumberValue(Importance.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TrialMatcherInferenceEvidence IJsonModel<TrialMatcherInferenceEvidence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrialMatcherInferenceEvidence(document.RootElement, options);
+        }
+
+        internal static TrialMatcherInferenceEvidence DeserializeTrialMatcherInferenceEvidence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +89,8 @@ namespace Azure.Health.Insights.ClinicalMatching
             Optional<ClinicalNoteEvidence> patientDataEvidence = default;
             Optional<ClinicalCodedElement> patientInfoEvidence = default;
             Optional<float> importance = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eligibilityCriteriaEvidence"u8))
@@ -57,16 +125,54 @@ namespace Azure.Health.Insights.ClinicalMatching
                     importance = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TrialMatcherInferenceEvidence(eligibilityCriteriaEvidence.Value, patientDataEvidence.Value, patientInfoEvidence.Value, Optional.ToNullable(importance), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TrialMatcherInferenceEvidence>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TrialMatcherInferenceEvidence IPersistableModel<TrialMatcherInferenceEvidence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTrialMatcherInferenceEvidence(document.RootElement, options);
+        }
+
+        string IPersistableModel<TrialMatcherInferenceEvidence>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TrialMatcherInferenceEvidence FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTrialMatcherInferenceEvidence(document.RootElement);
+            return DeserializeTrialMatcherInferenceEvidence(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

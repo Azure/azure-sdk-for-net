@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Billing plan information. </summary>
     public partial class DynatraceBillingPlanInfo
     {
-        /// <summary> Initializes a new instance of DynatraceBillingPlanInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceBillingPlanInfo"/>. </summary>
         public DynatraceBillingPlanInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceBillingPlanInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceBillingPlanInfo"/>. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. this could be enum. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
         /// <param name="planDetails"> plan id as published by Dynatrace. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
-        internal DynatraceBillingPlanInfo(string usageType, string billingCycle, string planDetails, DateTimeOffset? effectiveOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceBillingPlanInfo(string usageType, string billingCycle, string planDetails, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UsageType = usageType;
             BillingCycle = billingCycle;
             PlanDetails = planDetails;
             EffectiveOn = effectiveOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> different usage type like PAYG/COMMITTED. this could be enum. </summary>

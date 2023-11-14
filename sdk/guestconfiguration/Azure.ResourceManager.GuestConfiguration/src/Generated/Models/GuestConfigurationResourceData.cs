@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,24 +15,29 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> The core properties of guest configuration resources. </summary>
     public partial class GuestConfigurationResourceData
     {
-        /// <summary> Initializes a new instance of GuestConfigurationResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
         public GuestConfigurationResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationResourceData"/>. </summary>
         /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
         /// <param name="name"> Name of the guest configuration assignment. </param>
         /// <param name="location"> Region where the VM is located. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        internal GuestConfigurationResourceData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationResourceData(ResourceIdentifier id, string name, AzureLocation? location, ResourceType? resourceType, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Location = location;
             ResourceType = resourceType;
             SystemData = systemData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM resource id of the guest configuration assignment. </summary>

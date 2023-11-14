@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines contents of a web application rule. </summary>
     public partial class WebApplicationCustomRule
     {
-        /// <summary> Initializes a new instance of WebApplicationCustomRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebApplicationCustomRule"/>. </summary>
         /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="ruleType"> Describes type of rule. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of WebApplicationCustomRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationCustomRule"/>. </summary>
         /// <param name="name"> Describes the name of the rule. </param>
         /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>
@@ -40,7 +43,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rateLimitThreshold"> Number of allowed requests per client within the time window. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="action"> Describes what action to be applied when rule matches. </param>
-        internal WebApplicationCustomRule(string name, int priority, CustomRuleEnabledState? enabledState, WebApplicationRuleType ruleType, int? rateLimitDurationInMinutes, int? rateLimitThreshold, IList<WebApplicationRuleMatchCondition> matchConditions, RuleMatchActionType action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationCustomRule(string name, int priority, CustomRuleEnabledState? enabledState, WebApplicationRuleType ruleType, int? rateLimitDurationInMinutes, int? rateLimitThreshold, IList<WebApplicationRuleMatchCondition> matchConditions, RuleMatchActionType action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Priority = priority;
@@ -50,6 +54,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RateLimitThreshold = rateLimitThreshold;
             MatchConditions = matchConditions;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebApplicationCustomRule"/> for deserialization. </summary>
+        internal WebApplicationCustomRule()
+        {
         }
 
         /// <summary> Describes the name of the rule. </summary>

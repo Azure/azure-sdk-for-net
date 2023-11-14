@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The storage profile. </summary>
     public partial class FlinkStorageProfile
     {
-        /// <summary> Initializes a new instance of FlinkStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlinkStorageProfile"/>. </summary>
         /// <param name="storageUriString"> Storage account uri which is used for savepoint and checkpoint state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageUriString"/> is null. </exception>
         public FlinkStorageProfile(string storageUriString)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             StorageUriString = storageUriString;
         }
 
-        /// <summary> Initializes a new instance of FlinkStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkStorageProfile"/>. </summary>
         /// <param name="storageUriString"> Storage account uri which is used for savepoint and checkpoint state. </param>
         /// <param name="storagekey"> Storage key is only required for wasb(s) storage. </param>
-        internal FlinkStorageProfile(string storageUriString, string storagekey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlinkStorageProfile(string storageUriString, string storagekey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageUriString = storageUriString;
             Storagekey = storagekey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlinkStorageProfile"/> for deserialization. </summary>
+        internal FlinkStorageProfile()
+        {
         }
 
         /// <summary> Storage account uri which is used for savepoint and checkpoint state. </summary>

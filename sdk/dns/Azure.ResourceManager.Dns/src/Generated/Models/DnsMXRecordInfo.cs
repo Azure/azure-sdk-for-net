@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> An MX record. </summary>
     public partial class DnsMXRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsMXRecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsMXRecordInfo"/>. </summary>
         public DnsMXRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsMXRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsMXRecordInfo"/>. </summary>
         /// <param name="preference"> The preference value for this MX record. </param>
         /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
-        internal DnsMXRecordInfo(int? preference, string exchange)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsMXRecordInfo(int? preference, string exchange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Preference = preference;
             Exchange = exchange;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The preference value for this MX record. </summary>

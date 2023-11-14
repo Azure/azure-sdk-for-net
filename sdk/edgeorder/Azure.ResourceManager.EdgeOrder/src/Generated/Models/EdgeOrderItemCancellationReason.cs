@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Reason for cancellation. </summary>
     public partial class EdgeOrderItemCancellationReason
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemCancellationReason. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemCancellationReason"/>. </summary>
         /// <param name="reason"> Reason for cancellation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reason"/> is null. </exception>
         public EdgeOrderItemCancellationReason(string reason)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Argument.AssertNotNull(reason, nameof(reason));
 
             Reason = reason;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemCancellationReason"/>. </summary>
+        /// <param name="reason"> Reason for cancellation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderItemCancellationReason(string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemCancellationReason"/> for deserialization. </summary>
+        internal EdgeOrderItemCancellationReason()
+        {
         }
 
         /// <summary> Reason for cancellation. </summary>

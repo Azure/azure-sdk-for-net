@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A data disks attached to a virtual machine. </summary>
     public partial class ComputeDataDisk
     {
-        /// <summary> Initializes a new instance of ComputeDataDisk. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeDataDisk"/>. </summary>
         internal ComputeDataDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of ComputeDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeDataDisk"/>. </summary>
         /// <param name="name"> Gets data disk name. </param>
         /// <param name="diskUri"> When backed by a blob, the URI of underlying blob. </param>
         /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>
         /// <param name="diskSizeGiB"> Gets data disk size in GiB. </param>
-        internal ComputeDataDisk(string name, Uri diskUri, string managedDiskId, int? diskSizeGiB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeDataDisk(string name, Uri diskUri, string managedDiskId, int? diskSizeGiB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DiskUri = diskUri;
             ManagedDiskId = managedDiskId;
             DiskSizeGiB = diskSizeGiB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets data disk name. </summary>

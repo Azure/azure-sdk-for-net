@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> Enterprise settings of a Grafana instance. </summary>
     public partial class EnterpriseConfigurations
     {
-        /// <summary> Initializes a new instance of EnterpriseConfigurations. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnterpriseConfigurations"/>. </summary>
         public EnterpriseConfigurations()
         {
         }
 
-        /// <summary> Initializes a new instance of EnterpriseConfigurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterpriseConfigurations"/>. </summary>
         /// <param name="marketplacePlanId"> The Plan Id of the Azure Marketplace subscription for the Enterprise plugins. </param>
         /// <param name="marketplaceAutoRenew"> The AutoRenew setting of the Enterprise subscription. </param>
-        internal EnterpriseConfigurations(string marketplacePlanId, MarketplaceAutoRenew? marketplaceAutoRenew)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnterpriseConfigurations(string marketplacePlanId, MarketplaceAutoRenew? marketplaceAutoRenew, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplacePlanId = marketplacePlanId;
             MarketplaceAutoRenew = marketplaceAutoRenew;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Plan Id of the Azure Marketplace subscription for the Enterprise plugins. </summary>

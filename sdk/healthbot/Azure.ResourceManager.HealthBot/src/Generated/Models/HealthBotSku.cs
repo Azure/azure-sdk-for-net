@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthBot.Models
 {
     /// <summary> The resource model definition representing SKU. </summary>
     public partial class HealthBotSku
     {
-        /// <summary> Initializes a new instance of HealthBotSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthBotSku"/>. </summary>
         /// <param name="name"> The name of the Azure Health Bot SKU. </param>
         public HealthBotSku(HealthBotSkuName name)
         {
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthBotSku"/>. </summary>
+        /// <param name="name"> The name of the Azure Health Bot SKU. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthBotSku(HealthBotSkuName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthBotSku"/> for deserialization. </summary>
+        internal HealthBotSku()
+        {
         }
 
         /// <summary> The name of the Azure Health Bot SKU. </summary>

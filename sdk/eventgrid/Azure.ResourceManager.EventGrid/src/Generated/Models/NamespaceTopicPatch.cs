@@ -5,14 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the namespace topic update. </summary>
     public partial class NamespaceTopicPatch
     {
-        /// <summary> Initializes a new instance of NamespaceTopicPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicPatch"/>. </summary>
         public NamespaceTopicPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceTopicPatch"/>. </summary>
+        /// <param name="eventRetentionInDays">
+        /// Event retention for the namespace topic expressed in days. The property default value is 1 day.
+        /// Min event retention duration value is 1 day and max event retention duration value is 1 day.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceTopicPatch(int? eventRetentionInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EventRetentionInDays = eventRetentionInDays;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

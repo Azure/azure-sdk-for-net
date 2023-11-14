@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Information about the extracted key-value pair. </summary>
     internal partial class KeyValuePair
     {
-        /// <summary> Initializes a new instance of KeyValuePair. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/>. </summary>
         /// <param name="key"> Information about the extracted key in a key-value pair. </param>
         /// <param name="value"> Information about the extracted value in a key-value pair. </param>
         /// <param name="confidence"> Confidence value. </param>
@@ -28,17 +32,24 @@ namespace Azure.AI.FormRecognizer.Models
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of KeyValuePair. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/>. </summary>
         /// <param name="label"> A user defined label for the key/value pair entry. </param>
         /// <param name="key"> Information about the extracted key in a key-value pair. </param>
         /// <param name="value"> Information about the extracted value in a key-value pair. </param>
         /// <param name="confidence"> Confidence value. </param>
-        internal KeyValuePair(string label, KeyValueElement key, KeyValueElement value, float confidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyValuePair(string label, KeyValueElement key, KeyValueElement value, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Label = label;
             Key = key;
             Value = value;
             Confidence = confidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyValuePair"/> for deserialization. </summary>
+        internal KeyValuePair()
+        {
         }
 
         /// <summary> A user defined label for the key/value pair entry. </summary>

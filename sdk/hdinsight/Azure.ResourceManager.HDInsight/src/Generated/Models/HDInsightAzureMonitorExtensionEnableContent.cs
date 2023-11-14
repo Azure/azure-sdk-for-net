@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The azure monitor parameters. </summary>
     public partial class HDInsightAzureMonitorExtensionEnableContent
     {
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorExtensionEnableContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorExtensionEnableContent"/>. </summary>
         public HDInsightAzureMonitorExtensionEnableContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorExtensionEnableContent"/>. </summary>
+        /// <param name="workspaceId"> The Log Analytics workspace ID. </param>
+        /// <param name="primaryKey"> The Log Analytics workspace key. </param>
+        /// <param name="selectedConfigurations"> The selected configurations. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightAzureMonitorExtensionEnableContent(string workspaceId, string primaryKey, HDInsightAzureMonitorSelectedConfigurations selectedConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            WorkspaceId = workspaceId;
+            PrimaryKey = primaryKey;
+            SelectedConfigurations = selectedConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Log Analytics workspace ID. </summary>

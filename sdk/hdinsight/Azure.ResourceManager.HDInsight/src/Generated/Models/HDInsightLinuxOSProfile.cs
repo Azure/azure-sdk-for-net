@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -12,20 +13,25 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The ssh username, password, and ssh public key. </summary>
     public partial class HDInsightLinuxOSProfile
     {
-        /// <summary> Initializes a new instance of HDInsightLinuxOSProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinuxOSProfile"/>. </summary>
         public HDInsightLinuxOSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightLinuxOSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightLinuxOSProfile"/>. </summary>
         /// <param name="username"> The username. </param>
         /// <param name="password"> The password. </param>
         /// <param name="sshProfile"> The SSH profile. </param>
-        internal HDInsightLinuxOSProfile(string username, string password, SshProfile sshProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightLinuxOSProfile(string username, string password, SshProfile sshProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             SshProfile = sshProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The username. </summary>

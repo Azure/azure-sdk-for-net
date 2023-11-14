@@ -6,20 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A ShareSubscriptionSynchronization data transfer object. </summary>
     public partial class ShareSubscriptionSynchronization
     {
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronization"/>. </summary>
         /// <param name="synchronizationId"> Synchronization id. </param>
         public ShareSubscriptionSynchronization(Guid synchronizationId)
         {
             SynchronizationId = synchronizationId;
         }
 
-        /// <summary> Initializes a new instance of ShareSubscriptionSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronization"/>. </summary>
         /// <param name="durationInMilliSeconds"> Synchronization duration. </param>
         /// <param name="endOn"> End time of synchronization. </param>
         /// <param name="message"> message of Synchronization. </param>
@@ -27,7 +31,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="status"> Raw Status. </param>
         /// <param name="synchronizationId"> Synchronization id. </param>
         /// <param name="synchronizationMode"> Synchronization Mode. </param>
-        internal ShareSubscriptionSynchronization(int? durationInMilliSeconds, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, Guid synchronizationId, SynchronizationMode? synchronizationMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareSubscriptionSynchronization(int? durationInMilliSeconds, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, Guid synchronizationId, SynchronizationMode? synchronizationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DurationInMilliSeconds = durationInMilliSeconds;
             EndOn = endOn;
@@ -36,6 +41,12 @@ namespace Azure.ResourceManager.DataShare.Models
             Status = status;
             SynchronizationId = synchronizationId;
             SynchronizationMode = synchronizationMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShareSubscriptionSynchronization"/> for deserialization. </summary>
+        internal ShareSubscriptionSynchronization()
+        {
         }
 
         /// <summary> Synchronization duration. </summary>

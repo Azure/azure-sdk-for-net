@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The Resize Cluster request parameters. </summary>
     public partial class HDInsightClusterResizeContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterResizeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterResizeContent"/>. </summary>
         public HDInsightClusterResizeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterResizeContent"/>. </summary>
+        /// <param name="targetInstanceCount"> The target instance count for the operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterResizeContent(int? targetInstanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetInstanceCount = targetInstanceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The target instance count for the operation. </summary>

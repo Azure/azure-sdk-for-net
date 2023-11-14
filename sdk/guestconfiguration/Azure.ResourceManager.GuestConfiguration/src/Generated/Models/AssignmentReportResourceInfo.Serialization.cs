@@ -7,16 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class AssignmentReportResourceInfo : IUtf8JsonSerializable
+    public partial class AssignmentReportResourceInfo : IUtf8JsonSerializable, IJsonModel<AssignmentReportResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentReportResourceInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AssignmentReportResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AssignmentReportResourceInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AssignmentReportResourceInfo>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ComplianceStatus))
+                {
+                    writer.WritePropertyName("complianceStatus"u8);
+                    writer.WriteStringValue(ComplianceStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AssignmentResourceSettingName))
+                {
+                    writer.WritePropertyName("resourceId"u8);
+                    writer.WriteStringValue(AssignmentResourceSettingName);
+                }
+            }
             if (Optional.IsCollectionDefined(Reasons))
             {
                 writer.WritePropertyName("reasons"u8);
@@ -27,11 +52,55 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Properties))
+                {
+                    writer.WritePropertyName("properties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Properties);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(Properties))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AssignmentReportResourceInfo DeserializeAssignmentReportResourceInfo(JsonElement element)
+        AssignmentReportResourceInfo IJsonModel<AssignmentReportResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssignmentReportResourceInfo(document.RootElement, options);
+        }
+
+        internal static AssignmentReportResourceInfo DeserializeAssignmentReportResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +109,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<string> resourceId = default;
             Optional<IList<AssignmentReportResourceComplianceReason>> reasons = default;
             Optional<BinaryData> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceStatus"u8))
@@ -79,8 +150,38 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssignmentReportResourceInfo(Optional.ToNullable(complianceStatus), resourceId.Value, Optional.ToList(reasons), properties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AssignmentReportResourceInfo(Optional.ToNullable(complianceStatus), resourceId.Value, Optional.ToList(reasons), properties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AssignmentReportResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AssignmentReportResourceInfo IPersistableModel<AssignmentReportResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AssignmentReportResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAssignmentReportResourceInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<AssignmentReportResourceInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

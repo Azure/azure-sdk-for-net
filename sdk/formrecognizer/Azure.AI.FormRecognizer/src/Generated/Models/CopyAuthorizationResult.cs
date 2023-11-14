@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -13,7 +14,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Request parameter that contains authorization claims for copy operation. </summary>
     internal partial class CopyAuthorizationResult
     {
-        /// <summary> Initializes a new instance of CopyAuthorizationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyAuthorizationResult"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
         /// <param name="accessToken"> Token claim used to authorize the request. </param>
         /// <param name="expirationDateTimeTicks"> The time when the access token expires. The date is represented as the number of seconds from 1970-01-01T0:0:0Z UTC until the expiration time. </param>
@@ -26,6 +30,24 @@ namespace Azure.AI.FormRecognizer.Models
             ModelId = modelId;
             AccessToken = accessToken;
             ExpirationDateTimeTicks = expirationDateTimeTicks;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyAuthorizationResult"/>. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="accessToken"> Token claim used to authorize the request. </param>
+        /// <param name="expirationDateTimeTicks"> The time when the access token expires. The date is represented as the number of seconds from 1970-01-01T0:0:0Z UTC until the expiration time. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyAuthorizationResult(string modelId, string accessToken, long expirationDateTimeTicks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ModelId = modelId;
+            AccessToken = accessToken;
+            ExpirationDateTimeTicks = expirationDateTimeTicks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyAuthorizationResult"/> for deserialization. </summary>
+        internal CopyAuthorizationResult()
+        {
         }
 
         /// <summary> Model identifier. </summary>

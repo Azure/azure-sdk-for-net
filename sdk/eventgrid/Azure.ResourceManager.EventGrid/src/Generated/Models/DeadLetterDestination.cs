@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class DeadLetterDestination
     {
-        /// <summary> Initializes a new instance of DeadLetterDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeadLetterDestination"/>. </summary>
         protected DeadLetterDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of DeadLetterDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeadLetterDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
-        internal DeadLetterDestination(DeadLetterEndPointType endpointType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeadLetterDestination(DeadLetterEndPointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointType = endpointType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the endpoint for the dead letter destination. </summary>

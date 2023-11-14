@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsResolverData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DnsResolverData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolverData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="virtualNetwork"> The reference to the virtual network. This cannot be changed after creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetwork"/> is null. </exception>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.DnsResolver
             VirtualNetwork = virtualNetwork;
         }
 
-        /// <summary> Initializes a new instance of DnsResolverData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,13 +47,20 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsResolverState"> The current status of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
-        internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsResolverData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, WritableSubResource virtualNetwork, DnsResolverState? dnsResolverState, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             VirtualNetwork = virtualNetwork;
             DnsResolverState = dnsResolverState;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolverData"/> for deserialization. </summary>
+        internal DnsResolverData()
+        {
         }
 
         /// <summary> ETag of the DNS resolver. </summary>

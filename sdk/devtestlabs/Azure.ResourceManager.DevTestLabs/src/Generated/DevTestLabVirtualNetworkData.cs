@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabVirtualNetworkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVirtualNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabVirtualNetworkData(AzureLocation location) : base(location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.DevTestLabs
             SubnetOverrides = new ChangeTrackingList<DevTestLabSubnetOverride>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="createdOn"> The creation date of the virtual network. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<DevTestLabSubnet> allowedSubnets, string description, string externalProviderResourceId, IReadOnlyList<DevTestLabExternalSubnet> externalSubnets, IList<DevTestLabSubnetOverride> subnetOverrides, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<DevTestLabSubnet> allowedSubnets, string description, string externalProviderResourceId, IReadOnlyList<DevTestLabExternalSubnet> externalSubnets, IList<DevTestLabSubnetOverride> subnetOverrides, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AllowedSubnets = allowedSubnets;
             Description = description;
@@ -53,6 +57,12 @@ namespace Azure.ResourceManager.DevTestLabs
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabVirtualNetworkData"/> for deserialization. </summary>
+        internal DevTestLabVirtualNetworkData()
+        {
         }
 
         /// <summary> The allowed subnets of the virtual network. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Routing identity info for topic spaces configuration. </summary>
     public partial class RoutingIdentityInfo
     {
-        /// <summary> Initializes a new instance of RoutingIdentityInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoutingIdentityInfo"/>. </summary>
         public RoutingIdentityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RoutingIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingIdentityInfo"/>. </summary>
         /// <param name="identityType"></param>
         /// <param name="userAssignedIdentity"></param>
-        internal RoutingIdentityInfo(RoutingIdentityType? identityType, string userAssignedIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingIdentityInfo(RoutingIdentityType? identityType, string userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssignedIdentity = userAssignedIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the identity type. </summary>

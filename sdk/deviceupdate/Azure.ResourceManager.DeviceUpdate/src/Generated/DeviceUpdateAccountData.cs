@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.DeviceUpdate
     /// </summary>
     public partial class DeviceUpdateAccountData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DeviceUpdateAccountData(AzureLocation location) : base(location)
         {
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             Locations = new ChangeTrackingList<DeviceUpdateAccountLocationDetail>();
         }
 
-        /// <summary> Initializes a new instance of DeviceUpdateAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the account. </param>
         /// <param name="sku"> Device Update Sku. </param>
         /// <param name="locations"> Device Update account primary and failover location details. </param>
-        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, DeviceUpdateSku? sku, IReadOnlyList<DeviceUpdateAccountLocationDetail> locations) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceUpdateAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ProvisioningState? provisioningState, string hostName, PublicNetworkAccess? publicNetworkAccess, IList<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections, DeviceUpdateSku? sku, IReadOnlyList<DeviceUpdateAccountLocationDetail> locations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -49,6 +54,12 @@ namespace Azure.ResourceManager.DeviceUpdate
             PrivateEndpointConnections = privateEndpointConnections;
             Sku = sku;
             Locations = locations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeviceUpdateAccountData"/> for deserialization. </summary>
+        internal DeviceUpdateAccountData()
+        {
         }
 
         /// <summary> The type of identity used for the resource. </summary>

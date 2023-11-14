@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Gets the application HTTP endpoints. </summary>
     public partial class HDInsightApplicationHttpsEndpoint
     {
-        /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationHttpsEndpoint"/>. </summary>
         public HDInsightApplicationHttpsEndpoint()
         {
             AccessModes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightApplicationHttpsEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightApplicationHttpsEndpoint"/>. </summary>
         /// <param name="accessModes"> The list of access modes for the application. </param>
         /// <param name="endpointLocation"> The location of the endpoint. </param>
         /// <param name="destinationPort"> The destination port to connect to. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
         /// <param name="subDomainSuffix"> The subdomain suffix of the application. </param>
         /// <param name="disableGatewayAuth"> The value indicates whether to disable GatewayAuth. </param>
-        internal HDInsightApplicationHttpsEndpoint(IList<string> accessModes, string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress, string subDomainSuffix, bool? disableGatewayAuth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightApplicationHttpsEndpoint(IList<string> accessModes, string endpointLocation, int? destinationPort, int? publicPort, IPAddress privateIPAddress, string subDomainSuffix, bool? disableGatewayAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessModes = accessModes;
             EndpointLocation = endpointLocation;
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             PrivateIPAddress = privateIPAddress;
             SubDomainSuffix = subDomainSuffix;
             DisableGatewayAuth = disableGatewayAuth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of access modes for the application. </summary>

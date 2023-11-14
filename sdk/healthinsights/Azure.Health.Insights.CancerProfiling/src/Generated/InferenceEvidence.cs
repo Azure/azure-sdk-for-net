@@ -5,28 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Health.Insights.CancerProfiling
 {
     /// <summary> A piece of evidence corresponding to an inference. </summary>
     public partial class InferenceEvidence
     {
-        /// <summary> Initializes a new instance of InferenceEvidence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InferenceEvidence"/>. </summary>
         internal InferenceEvidence()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of InferenceEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="InferenceEvidence"/>. </summary>
         /// <param name="patientDataEvidence"> A piece of evidence from a clinical note (text document). </param>
         /// <param name="patientInfoEvidence">
         /// A piece of clinical information, expressed as a code in a clinical coding
         /// system.
         /// </param>
         /// <param name="importance"> A value indicating how important this piece of evidence is for the inference. </param>
-        internal InferenceEvidence(ClinicalNoteEvidence patientDataEvidence, ClinicalCodedElement patientInfoEvidence, float? importance)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InferenceEvidence(ClinicalNoteEvidence patientDataEvidence, ClinicalCodedElement patientInfoEvidence, float? importance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatientDataEvidence = patientDataEvidence;
             PatientInfoEvidence = patientInfoEvidence;
             Importance = importance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A piece of evidence from a clinical note (text document). </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Pre-provisioned and readily available Event Hubs Cluster count per region. </summary>
     public partial class AvailableCluster
     {
-        /// <summary> Initializes a new instance of AvailableCluster. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableCluster"/>. </summary>
         internal AvailableCluster()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailableCluster. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableCluster"/>. </summary>
         /// <param name="location"> Location fo the Available Cluster. </param>
-        internal AvailableCluster(AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableCluster(AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location fo the Available Cluster. </summary>

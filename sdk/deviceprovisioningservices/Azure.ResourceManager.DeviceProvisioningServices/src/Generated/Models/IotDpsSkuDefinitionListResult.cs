@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> List of available SKUs. </summary>
     internal partial class IotDpsSkuDefinitionListResult
     {
-        /// <summary> Initializes a new instance of IotDpsSkuDefinitionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotDpsSkuDefinitionListResult"/>. </summary>
         internal IotDpsSkuDefinitionListResult()
         {
             Value = new ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>();
         }
 
-        /// <summary> Initializes a new instance of IotDpsSkuDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotDpsSkuDefinitionListResult"/>. </summary>
         /// <param name="value"> The list of SKUs. </param>
         /// <param name="nextLink"> The next link. </param>
-        internal IotDpsSkuDefinitionListResult(IReadOnlyList<DeviceProvisioningServicesSkuDefinition> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotDpsSkuDefinitionListResult(IReadOnlyList<DeviceProvisioningServicesSkuDefinition> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of SKUs. </summary>

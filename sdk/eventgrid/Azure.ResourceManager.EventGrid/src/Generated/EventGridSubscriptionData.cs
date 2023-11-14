@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridSubscriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridSubscriptionData"/>. </summary>
         public EventGridSubscriptionData()
         {
             Labels = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventGridSubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,7 +60,8 @@ namespace Azure.ResourceManager.EventGrid
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </param>
-        internal EventGridSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string topic, EventSubscriptionProvisioningState? provisioningState, EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expireOn, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string topic, EventSubscriptionProvisioningState? provisioningState, EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expireOn, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Topic = topic;
             ProvisioningState = provisioningState;
@@ -70,6 +74,7 @@ namespace Azure.ResourceManager.EventGrid
             RetryPolicy = retryPolicy;
             DeadLetterDestination = deadLetterDestination;
             DeadLetterWithResourceIdentity = deadLetterWithResourceIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the topic of the event subscription. </summary>

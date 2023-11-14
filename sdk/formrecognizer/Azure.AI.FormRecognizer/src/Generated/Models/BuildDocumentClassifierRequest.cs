@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Request body to build a new custom document classifier. </summary>
     internal partial class BuildDocumentClassifierRequest
     {
-        /// <summary> Initializes a new instance of BuildDocumentClassifierRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="docTypes"/> is null. </exception>
@@ -25,6 +28,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             ClassifierId = classifierId;
             DocTypes = docTypes;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/>. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="docTypes"> List of document types to classify against. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BuildDocumentClassifierRequest(string classifierId, string description, IDictionary<string, ClassifierDocumentTypeDetails> docTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClassifierId = classifierId;
+            Description = description;
+            DocTypes = docTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/> for deserialization. </summary>
+        internal BuildDocumentClassifierRequest()
+        {
         }
 
         /// <summary> Unique document classifier name. </summary>

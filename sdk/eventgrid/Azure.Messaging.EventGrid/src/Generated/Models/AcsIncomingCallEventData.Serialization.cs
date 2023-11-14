@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,87 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(AcsIncomingCallEventDataConverter))]
-    public partial class AcsIncomingCallEventData
+    public partial class AcsIncomingCallEventData : IUtf8JsonSerializable, IJsonModel<AcsIncomingCallEventData>
     {
-        internal static AcsIncomingCallEventData DeserializeAcsIncomingCallEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsIncomingCallEventData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AcsIncomingCallEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AcsIncomingCallEventData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AcsIncomingCallEventData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ToCommunicationIdentifier))
+            {
+                writer.WritePropertyName("to"u8);
+                writer.WriteObjectValue(ToCommunicationIdentifier);
+            }
+            if (Optional.IsDefined(FromCommunicationIdentifier))
+            {
+                writer.WritePropertyName("from"u8);
+                writer.WriteObjectValue(FromCommunicationIdentifier);
+            }
+            if (Optional.IsDefined(ServerCallId))
+            {
+                writer.WritePropertyName("serverCallId"u8);
+                writer.WriteStringValue(ServerCallId);
+            }
+            if (Optional.IsDefined(CallerDisplayName))
+            {
+                writer.WritePropertyName("callerDisplayName"u8);
+                writer.WriteStringValue(CallerDisplayName);
+            }
+            if (Optional.IsDefined(CustomContext))
+            {
+                writer.WritePropertyName("customContext"u8);
+                writer.WriteObjectValue(CustomContext);
+            }
+            if (Optional.IsDefined(IncomingCallContext))
+            {
+                writer.WritePropertyName("incomingCallContext"u8);
+                writer.WriteStringValue(IncomingCallContext);
+            }
+            if (Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AcsIncomingCallEventData IJsonModel<AcsIncomingCallEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsIncomingCallEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsIncomingCallEventData(document.RootElement, options);
+        }
+
+        internal static AcsIncomingCallEventData DeserializeAcsIncomingCallEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +108,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<AcsIncomingCallCustomContext> customContext = default;
             Optional<string> incomingCallContext = default;
             Optional<string> correlationId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("to"u8))
@@ -77,15 +159,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsIncomingCallEventData(to.Value, @from.Value, serverCallId.Value, callerDisplayName.Value, customContext.Value, incomingCallContext.Value, correlationId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsIncomingCallEventData(to.Value, @from.Value, serverCallId.Value, callerDisplayName.Value, customContext.Value, incomingCallContext.Value, correlationId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsIncomingCallEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsIncomingCallEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsIncomingCallEventData IPersistableModel<AcsIncomingCallEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsIncomingCallEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsIncomingCallEventData(document.RootElement, options);
+        }
+
+        string IPersistableModel<AcsIncomingCallEventData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsIncomingCallEventDataConverter : JsonConverter<AcsIncomingCallEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsIncomingCallEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override AcsIncomingCallEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

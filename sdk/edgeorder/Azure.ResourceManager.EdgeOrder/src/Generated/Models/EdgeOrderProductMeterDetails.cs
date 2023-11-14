@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary>
@@ -14,20 +17,25 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// </summary>
     public abstract partial class EdgeOrderProductMeterDetails
     {
-        /// <summary> Initializes a new instance of EdgeOrderProductMeterDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeterDetails"/>. </summary>
         protected EdgeOrderProductMeterDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderProductMeterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProductMeterDetails"/>. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
-        internal EdgeOrderProductMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeOrderProductMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BillingType = billingType;
             Multiplier = multiplier;
             ChargingType = chargingType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents billing type. </summary>
