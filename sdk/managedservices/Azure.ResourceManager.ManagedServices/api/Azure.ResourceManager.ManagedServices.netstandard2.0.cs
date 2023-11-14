@@ -30,11 +30,16 @@ namespace Azure.ResourceManager.ManagedServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedServicesMarketplaceRegistrationData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagedServicesMarketplaceRegistrationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>
     {
         internal ManagedServicesMarketplaceRegistrationData() { }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan Plan { get { throw null; } }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties Properties { get { throw null; } }
+        Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedServicesMarketplaceRegistrationResource : Azure.ResourceManager.ArmResource
     {
@@ -63,10 +68,15 @@ namespace Azure.ResourceManager.ManagedServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedServicesRegistrationAssignmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagedServicesRegistrationAssignmentData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>
     {
         public ManagedServicesRegistrationAssignmentData() { }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationAssignmentData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedServicesRegistrationAssignmentResource : Azure.ResourceManager.ArmResource
     {
@@ -99,11 +109,16 @@ namespace Azure.ResourceManager.ManagedServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedServicesRegistrationData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagedServicesRegistrationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>
     {
         public ManagedServicesRegistrationData() { }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan Plan { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedServicesRegistrationResource : Azure.ResourceManager.ArmResource
     {
@@ -152,36 +167,56 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public static Azure.ResourceManager.ManagedServices.ManagedServicesRegistrationData ManagedServicesRegistrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties properties = null, Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan plan = null) { throw null; }
         public static Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties ManagedServicesRegistrationProperties(string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization> authorizations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization> eligibleAuthorizations = null, string registrationDefinitionName = null, System.Guid managedByTenantId = default(System.Guid), Azure.ResourceManager.ManagedServices.Models.ManagedServicesProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedServices.Models.ManagedServicesProvisioningState?), System.Guid? manageeTenantId = default(System.Guid?), string manageeTenantName = null, string managedByTenantName = null) { throw null; }
     }
-    public partial class ManagedServicesAuthorization
+    public partial class ManagedServicesAuthorization : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization>
     {
         public ManagedServicesAuthorization(System.Guid principalId, string roleDefinitionId) { }
         public System.Collections.Generic.IList<System.Guid> DelegatedRoleDefinitionIds { get { throw null; } }
         public System.Guid PrincipalId { get { throw null; } set { } }
         public string PrincipalIdDisplayName { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesEligibleApprover
+    public partial class ManagedServicesEligibleApprover : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover>
     {
         public ManagedServicesEligibleApprover(System.Guid principalId) { }
         public System.Guid PrincipalId { get { throw null; } set { } }
         public string PrincipalIdDisplayName { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesEligibleAuthorization
+    public partial class ManagedServicesEligibleAuthorization : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization>
     {
         public ManagedServicesEligibleAuthorization(System.Guid principalId, string roleDefinitionId) { }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy JustInTimeAccessPolicy { get { throw null; } set { } }
         public System.Guid PrincipalId { get { throw null; } set { } }
         public string PrincipalIdDisplayName { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleAuthorization>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesJustInTimeAccessPolicy
+    public partial class ManagedServicesJustInTimeAccessPolicy : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy>
     {
         public ManagedServicesJustInTimeAccessPolicy(Azure.ResourceManager.ManagedServices.Models.MultiFactorAuthProvider multiFactorAuthProvider) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedServices.Models.ManagedServicesEligibleApprover> ManagedByTenantApprovers { get { throw null; } }
         public System.TimeSpan? MaximumActivationDuration { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedServices.Models.MultiFactorAuthProvider MultiFactorAuthProvider { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesMarketplaceRegistrationProperties
+    public partial class ManagedServicesMarketplaceRegistrationProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties>
     {
         internal ManagedServicesMarketplaceRegistrationProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization> Authorizations { get { throw null; } }
@@ -190,14 +225,24 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public string OfferDisplayName { get { throw null; } }
         public string PlanDisplayName { get { throw null; } }
         public string PublisherDisplayName { get { throw null; } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesMarketplaceRegistrationProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesPlan
+    public partial class ManagedServicesPlan : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan>
     {
         public ManagedServicesPlan(string name, string publisher, string product, string version) { }
         public string Name { get { throw null; } set { } }
         public string Product { get { throw null; } set { } }
         public string Publisher { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedServicesProvisioningState : System.IEquatable<Azure.ResourceManager.ManagedServices.Models.ManagedServicesProvisioningState>
@@ -227,20 +272,30 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public static bool operator !=(Azure.ResourceManager.ManagedServices.Models.ManagedServicesProvisioningState left, Azure.ResourceManager.ManagedServices.Models.ManagedServicesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedServicesRegistrationAssignmentProperties
+    public partial class ManagedServicesRegistrationAssignmentProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties>
     {
         public ManagedServicesRegistrationAssignmentProperties(Azure.Core.ResourceIdentifier registrationId) { }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData RegistrationDefinition { get { throw null; } }
         public Azure.Core.ResourceIdentifier RegistrationId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesRegistrationAssignmentRegistrationData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagedServicesRegistrationAssignmentRegistrationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData>
     {
         internal ManagedServicesRegistrationAssignmentRegistrationData() { }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesPlan Plan { get { throw null; } }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties Properties { get { throw null; } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesRegistrationAssignmentRegistrationProperties
+    public partial class ManagedServicesRegistrationAssignmentRegistrationProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties>
     {
         internal ManagedServicesRegistrationAssignmentRegistrationProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization> Authorizations { get { throw null; } }
@@ -252,8 +307,13 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public string ManageeTenantName { get { throw null; } }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesProvisioningState? ProvisioningState { get { throw null; } }
         public string RegistrationDefinitionName { get { throw null; } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationAssignmentRegistrationProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedServicesRegistrationProperties
+    public partial class ManagedServicesRegistrationProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties>
     {
         public ManagedServicesRegistrationProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization> authorizations, System.Guid managedByTenantId) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedServices.Models.ManagedServicesAuthorization> Authorizations { get { throw null; } }
@@ -265,6 +325,11 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public string ManageeTenantName { get { throw null; } }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesProvisioningState? ProvisioningState { get { throw null; } }
         public string RegistrationDefinitionName { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagedServices.Models.ManagedServicesRegistrationProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MultiFactorAuthProvider : System.IEquatable<Azure.ResourceManager.ManagedServices.Models.MultiFactorAuthProvider>

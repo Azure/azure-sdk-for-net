@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.WebPubSubResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebPubSubData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class WebPubSubData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubData>
     {
         public WebPubSubData(Azure.Core.AzureLocation location) { }
         public string ExternalIP { get { throw null; } }
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.WebPubSub
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData> SharedPrivateLinkResources { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.BillingInfoSku Sku { get { throw null; } set { } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.WebPubSubData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.WebPubSubData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class WebPubSubExtensions
     {
@@ -72,10 +77,15 @@ namespace Azure.ResourceManager.WebPubSub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.WebPubSubHubResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubHubResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebPubSubHubData : Azure.ResourceManager.Models.ResourceData
+    public partial class WebPubSubHubData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubHubData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubHubData>
     {
         public WebPubSubHubData(Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties properties) { }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.WebPubSubHubData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubHubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubHubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.WebPubSubHubData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubHubData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubHubData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubHubData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WebPubSubHubResource : Azure.ResourceManager.ArmResource
     {
@@ -108,13 +118,18 @@ namespace Azure.ResourceManager.WebPubSub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebPubSubPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class WebPubSubPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData>
     {
         public WebPubSubPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WebPubSubPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -186,7 +201,7 @@ namespace Azure.ResourceManager.WebPubSub
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebPubSubSharedPrivateLinkData : Azure.ResourceManager.Models.ResourceData
+    public partial class WebPubSubSharedPrivateLinkData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData>
     {
         public WebPubSubSharedPrivateLinkData() { }
         public string GroupId { get { throw null; } set { } }
@@ -194,6 +209,11 @@ namespace Azure.ResourceManager.WebPubSub
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus? Status { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WebPubSubSharedPrivateLinkResource : Azure.ResourceManager.ArmResource
     {
@@ -273,7 +293,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static Azure.ResourceManager.WebPubSub.Models.WebPubSubSku WebPubSubSku(Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.WebPubSub.Models.BillingInfoSku sku = null, Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity capacity = null) { throw null; }
         public static Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity WebPubSubSkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? @default = default(int?), System.Collections.Generic.IEnumerable<int> allowedValues = null, Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType? scaleType = default(Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType?)) { throw null; }
     }
-    public partial class BillingInfoSku
+    public partial class BillingInfoSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.BillingInfoSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.BillingInfoSku>
     {
         public BillingInfoSku(string name) { }
         public int? Capacity { get { throw null; } set { } }
@@ -281,50 +301,91 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier? Tier { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.BillingInfoSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.BillingInfoSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.BillingInfoSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.BillingInfoSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.BillingInfoSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.BillingInfoSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.BillingInfoSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LiveTraceCategory
+    public partial class LiveTraceCategory : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory>
     {
         public LiveTraceCategory() { }
         public bool? IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LiveTraceConfiguration
+    public partial class LiveTraceConfiguration : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration>
     {
         public LiveTraceConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.LiveTraceCategory> Categories { get { throw null; } }
         public bool? IsEnabled { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.LiveTraceConfiguration>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateEndpointAcl : Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls
+    public partial class PrivateEndpointAcl : Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl>
     {
         public PrivateEndpointAcl(string name) { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PublicNetworkAcls
+    public partial class PublicNetworkAcls : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public PublicNetworkAcls() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType> Allow { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType> Deny { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceLogCategory
+    public partial class ResourceLogCategory : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory>
     {
         public ResourceLogCategory() { }
         public string Enabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ResourceLogCategory>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareablePrivateLinkProperties
+    public partial class ShareablePrivateLinkProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties>
     {
         public ShareablePrivateLinkProperties() { }
         public string Description { get { throw null; } set { } }
         public string GroupId { get { throw null; } set { } }
         public string ShareablePrivateLinkPropertiesType { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareablePrivateLinkType
+    public partial class ShareablePrivateLinkType : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType>
     {
         public ShareablePrivateLinkType() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRServiceUsage
+    public partial class SignalRServiceUsage : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage>
     {
         internal SignalRServiceUsage() { }
         public long? CurrentValue { get { throw null; } }
@@ -332,18 +393,33 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName Name { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRServiceUsageName
+    public partial class SignalRServiceUsageName : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName>
     {
         internal SignalRServiceUsageName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsageName>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UpstreamAuthSettings
+    public partial class UpstreamAuthSettings : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings>
     {
         public UpstreamAuthSettings() { }
         public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType? AuthType { get { throw null; } set { } }
         public string ManagedIdentityResource { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UpstreamAuthType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType>
@@ -363,27 +439,42 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType left, Azure.ResourceManager.WebPubSub.Models.UpstreamAuthType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebPubSubEventHandler
+    public partial class WebPubSubEventHandler : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler>
     {
         public WebPubSubEventHandler(string urlTemplate) { }
         public Azure.ResourceManager.WebPubSub.Models.UpstreamAuthSettings Auth { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SystemEvents { get { throw null; } }
         public string UrlTemplate { get { throw null; } set { } }
         public string UserEventPattern { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebPubSubHubProperties
+    public partial class WebPubSubHubProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties>
     {
         public WebPubSubHubProperties() { }
         public string AnonymousConnectPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubEventHandler> EventHandlers { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubHubProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebPubSubKeys
+    public partial class WebPubSubKeys : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>
     {
         internal WebPubSubKeys() { }
         public string PrimaryConnectionString { get { throw null; } }
         public string PrimaryKey { get { throw null; } }
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeys>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WebPubSubKeyType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType>
@@ -404,40 +495,65 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType left, Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebPubSubNameAvailability
+    public partial class WebPubSubNameAvailability : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability>
     {
         internal WebPubSubNameAvailability() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public string Reason { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebPubSubNameAvailabilityContent
+    public partial class WebPubSubNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent>
     {
         public WebPubSubNameAvailabilityContent(string resourceType, string name) { }
         public string Name { get { throw null; } }
         public string ResourceType { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebPubSubNetworkAcls
+    public partial class WebPubSubNetworkAcls : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls>
     {
         public WebPubSubNetworkAcls() { }
         public Azure.ResourceManager.WebPubSub.Models.AclAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl> PrivateEndpoints { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls PublicNetwork { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebPubSubPrivateLink : Azure.ResourceManager.Models.ResourceData
+    public partial class WebPubSubPrivateLink : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink>
     {
         public WebPubSubPrivateLink() { }
         public string GroupId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.ShareablePrivateLinkType> ShareablePrivateLinkTypes { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLink>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebPubSubPrivateLinkServiceConnectionState
+    public partial class WebPubSubPrivateLinkServiceConnectionState : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState>
     {
         public WebPubSubPrivateLinkServiceConnectionState() { }
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionState>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WebPubSubPrivateLinkServiceConnectionStatus : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubPrivateLinkServiceConnectionStatus>
@@ -484,10 +600,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubProvisioningState left, Azure.ResourceManager.WebPubSub.Models.WebPubSubProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebPubSubRegenerateKeyContent
+    public partial class WebPubSubRegenerateKeyContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent>
     {
         public WebPubSubRegenerateKeyContent() { }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubKeyType? KeyType { get { throw null; } set { } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubRegenerateKeyContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WebPubSubRequestType : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubRequestType>
@@ -549,14 +670,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator !=(Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus left, Azure.ResourceManager.WebPubSub.Models.WebPubSubSharedPrivateLinkStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WebPubSubSku
+    public partial class WebPubSubSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSku>
     {
         internal WebPubSubSku() { }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity Capacity { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.BillingInfoSku Sku { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebPubSubSkuCapacity
+    public partial class WebPubSubSkuCapacity : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity>
     {
         internal WebPubSubSkuCapacity() { }
         public System.Collections.Generic.IReadOnlyList<int> AllowedValues { get { throw null; } }
@@ -564,6 +690,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public int? Maximum { get { throw null; } }
         public int? Minimum { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.WebPubSubScaleType? ScaleType { get { throw null; } }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuCapacity>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WebPubSubSkuTier : System.IEquatable<Azure.ResourceManager.WebPubSub.Models.WebPubSubSkuTier>

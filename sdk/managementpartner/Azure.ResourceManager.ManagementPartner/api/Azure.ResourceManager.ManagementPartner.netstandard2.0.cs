@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagementPartner
         public virtual Azure.NullableResponse<Azure.ResourceManager.ManagementPartner.PartnerResponseResource> GetIfExists(string partnerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagementPartner.PartnerResponseResource>> GetIfExistsAsync(string partnerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PartnerResponseData : Azure.ResourceManager.Models.ResourceData
+    public partial class PartnerResponseData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>
     {
         internal PartnerResponseData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.ManagementPartner
         public System.Guid? TenantId { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public int? Version { get { throw null; } }
+        Azure.ResourceManager.ManagementPartner.PartnerResponseData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagementPartner.PartnerResponseData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.PartnerResponseData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PartnerResponseResource : Azure.ResourceManager.ArmResource
     {
@@ -92,19 +97,29 @@ namespace Azure.ResourceManager.ManagementPartner.Models
         public static bool operator !=(Azure.ResourceManager.ManagementPartner.Models.ManagementPartnerState left, Azure.ResourceManager.ManagementPartner.Models.ManagementPartnerState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OperationDisplay
+    public partial class OperationDisplay : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>
     {
         internal OperationDisplay() { }
         public string Description { get { throw null; } }
         public string Operation { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
+        Azure.ResourceManager.ManagementPartner.Models.OperationDisplay System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagementPartner.Models.OperationDisplay System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationDisplay>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationResponse
+    public partial class OperationResponse : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>
     {
         internal OperationResponse() { }
         public Azure.ResourceManager.ManagementPartner.Models.OperationDisplay Display { get { throw null; } }
         public string Name { get { throw null; } }
         public string Origin { get { throw null; } }
+        Azure.ResourceManager.ManagementPartner.Models.OperationResponse System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagementPartner.Models.OperationResponse System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ManagementPartner.Models.OperationResponse>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

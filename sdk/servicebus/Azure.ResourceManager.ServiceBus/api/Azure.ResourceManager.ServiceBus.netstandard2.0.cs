@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MigrationConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class MigrationConfigurationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>
     {
         public MigrationConfigurationData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.ServiceBus
         public string PostMigrationName { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetServiceBusNamespace { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.MigrationConfigurationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.MigrationConfigurationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.MigrationConfigurationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MigrationConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -45,11 +50,16 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.MigrationConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.MigrationConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ServiceBusAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>
     {
         public ServiceBusAuthorizationRuleData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessRight> Rights { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusAuthorizationRuleData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusDisasterRecoveryAuthorizationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleResource>, System.Collections.IEnumerable
     {
@@ -95,7 +105,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusDisasterRecoveryData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusDisasterRecoveryData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>
     {
         public ServiceBusDisasterRecoveryData() { }
         public string AlternateName { get { throw null; } set { } }
@@ -104,6 +114,11 @@ namespace Azure.ResourceManager.ServiceBus
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusDisasterRecoveryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusDisasterRecoveryRole? Role { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusDisasterRecoveryResource : Azure.ResourceManager.ArmResource
     {
@@ -201,7 +216,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>
     {
         public ServiceBusNamespaceData(Azure.Core.AzureLocation location) { }
         public string AlternateName { get { throw null; } set { } }
@@ -220,6 +235,11 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusNamespaceResource : Azure.ResourceManager.ArmResource
     {
@@ -264,7 +284,7 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> Update(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> UpdateAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ServiceBusNetworkRuleSetData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusNetworkRuleSetData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>
     {
         public ServiceBusNetworkRuleSetData() { }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction? DefaultAction { get { throw null; } set { } }
@@ -273,6 +293,11 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusNetworkRuleSetResource : Azure.ResourceManager.ArmResource
     {
@@ -303,13 +328,18 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>
     {
         public ServiceBusPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -377,7 +407,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusQueueResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusQueueResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusQueueData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusQueueData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>
     {
         public ServiceBusQueueData() { }
         public System.DateTimeOffset? AccessedOn { get { throw null; } }
@@ -403,6 +433,11 @@ namespace Azure.ResourceManager.ServiceBus
         public long? SizeInBytes { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.ServiceBusQueueData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusQueueData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusQueueResource : Azure.ResourceManager.ArmResource
     {
@@ -438,7 +473,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusRuleData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>
     {
         public ServiceBusRuleData() { }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction Action { get { throw null; } set { } }
@@ -446,6 +481,11 @@ namespace Azure.ResourceManager.ServiceBus
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterType? FilterType { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter SqlFilter { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.ServiceBusRuleData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusRuleData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusRuleData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -478,7 +518,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusSubscriptionData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusSubscriptionData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>
     {
         public ServiceBusSubscriptionData() { }
         public System.DateTimeOffset? AccessedOn { get { throw null; } }
@@ -501,6 +541,11 @@ namespace Azure.ResourceManager.ServiceBus
         public bool? RequiresSession { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusSubscriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -571,7 +616,7 @@ namespace Azure.ResourceManager.ServiceBus
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceBus.ServiceBusTopicResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusTopicResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceBusTopicData : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusTopicData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>
     {
         public ServiceBusTopicData() { }
         public System.DateTimeOffset? AccessedOn { get { throw null; } }
@@ -592,6 +637,11 @@ namespace Azure.ResourceManager.ServiceBus
         public int? SubscriptionCount { get { throw null; } }
         public bool? SupportOrdering { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.ServiceBusTopicData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.ServiceBusTopicData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceBusTopicResource : Azure.ResourceManager.ArmResource
     {
@@ -665,16 +715,22 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource ServiceBusPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusQueueData ServiceBusQueueData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ServiceBus.Models.MessageCountDetails countDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? accessedOn = default(System.DateTimeOffset?), long? sizeInBytes = default(long?), long? messageCount = default(long?), System.TimeSpan? lockDuration = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), long? maxMessageSizeInKilobytes = default(long?), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? status = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?), string forwardTo = null, string forwardDeadLetteredMessagesTo = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent ServiceBusRegenerateAccessKeyContent(Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeyType keyType = Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeyType.PrimaryKey, string key = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusRuleData ServiceBusRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction action = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterType? filterType = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterType?), Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter sqlFilter = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter correlationFilter = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData ServiceBusSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, long? messageCount = default(long?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? accessedOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ServiceBus.Models.MessageCountDetails countDetails = null, System.TimeSpan? lockDuration = default(System.TimeSpan?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? status = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), string forwardTo = null, string forwardDeadLetteredMessagesTo = null, bool? isClientAffine = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties clientAffineProperties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusTopicData ServiceBusTopicData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, long? sizeInBytes = default(long?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.DateTimeOffset? accessedOn = default(System.DateTimeOffset?), int? subscriptionCount = default(int?), Azure.ResourceManager.ServiceBus.Models.MessageCountDetails countDetails = null, System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), long? maxMessageSizeInKilobytes = default(long?), bool? requiresDuplicateDetection = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), bool? enableBatchedOperations = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus? status = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusMessagingEntityStatus?), bool? supportOrdering = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
     }
-    public partial class FailoverProperties
+    public partial class FailoverProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>
     {
         public FailoverProperties() { }
         public bool? IsSafeFailover { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.FailoverProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.FailoverProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.FailoverProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MessageCountDetails
+    public partial class MessageCountDetails : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>
     {
         internal MessageCountDetails() { }
         public long? ActiveMessageCount { get { throw null; } }
@@ -682,6 +738,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public long? ScheduledMessageCount { get { throw null; } }
         public long? TransferDeadLetterMessageCount { get { throw null; } }
         public long? TransferMessageCount { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.Models.MessageCountDetails System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.MessageCountDetails System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.MessageCountDetails>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MigrationConfigurationName : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName>
@@ -700,7 +761,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName left, Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusAccessKeys
+    public partial class ServiceBusAccessKeys : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>
     {
         internal ServiceBusAccessKeys() { }
         public string AliasPrimaryConnectionString { get { throw null; } }
@@ -710,6 +771,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string PrimaryKey { get { throw null; } }
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ServiceBusAccessKeyType
     {
@@ -722,14 +788,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Send = 1,
         Listen = 2,
     }
-    public partial class ServiceBusClientAffineProperties
+    public partial class ServiceBusClientAffineProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>
     {
         public ServiceBusClientAffineProperties() { }
         public string ClientId { get { throw null; } set { } }
         public bool? IsDurable { get { throw null; } set { } }
         public bool? IsShared { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusCorrelationFilter
+    public partial class ServiceBusCorrelationFilter : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>
     {
         public ServiceBusCorrelationFilter() { }
         public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
@@ -742,6 +813,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string SendTo { get { throw null; } set { } }
         public string SessionId { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ServiceBusDisasterRecoveryProvisioningState
     {
@@ -755,12 +831,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
         PrimaryNotReplicating = 1,
         Secondary = 2,
     }
-    public partial class ServiceBusEncryption
+    public partial class ServiceBusEncryption : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>
     {
         public ServiceBusEncryption() { }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryptionKeySource? KeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceBusEncryptionKeySource : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryptionKeySource>
@@ -779,25 +860,36 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryptionKeySource left, Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryptionKeySource right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusFilterAction
+    public partial class ServiceBusFilterAction : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public ServiceBusFilterAction() { }
         public int? CompatibilityLevel { get { throw null; } set { } }
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SqlExpression { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusFilterAction>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ServiceBusFilterType
     {
         SqlFilter = 0,
         CorrelationFilter = 1,
     }
-    public partial class ServiceBusKeyVaultProperties
+    public partial class ServiceBusKeyVaultProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>
     {
         public ServiceBusKeyVaultProperties() { }
         public string KeyName { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusKeyVaultProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ServiceBusMessagingEntityStatus
     {
@@ -830,19 +922,29 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion left, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusNameAvailabilityContent
+    public partial class ServiceBusNameAvailabilityContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>
     {
         public ServiceBusNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusNameAvailabilityResult
+    public partial class ServiceBusNameAvailabilityResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>
     {
         internal ServiceBusNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusNamespacePatch : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ServiceBusNamespacePatch : Azure.ResourceManager.Models.TrackedResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>
     {
         public ServiceBusNamespacePatch(Azure.Core.AzureLocation location) { }
         public string AlternateName { get { throw null; } set { } }
@@ -857,6 +959,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ServiceBusNameUnavailableReason
     {
@@ -902,17 +1009,27 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction left, Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusNetworkRuleSetIPRules
+    public partial class ServiceBusNetworkRuleSetIPRules : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>
     {
         public ServiceBusNetworkRuleSetIPRules() { }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleIPAction? Action { get { throw null; } set { } }
         public string IPMask { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusNetworkRuleSetVirtualNetworkRules
+    public partial class ServiceBusNetworkRuleSetVirtualNetworkRules : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>
     {
         public ServiceBusNetworkRuleSetVirtualNetworkRules() { }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceBusPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState>
@@ -956,18 +1073,28 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkConnectionStatus left, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
+    public partial class ServiceBusPrivateLinkResource : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>
     {
         internal ServiceBusPrivateLinkResource() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusPrivateLinkServiceConnectionState
+    public partial class ServiceBusPrivateLinkServiceConnectionState : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>
     {
         public ServiceBusPrivateLinkServiceConnectionState() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceBusPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess>
@@ -1006,18 +1133,28 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag left, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ServiceBusRegenerateAccessKeyContent
+    public partial class ServiceBusRegenerateAccessKeyContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>
     {
         public ServiceBusRegenerateAccessKeyContent(Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeyType KeyType { get { throw null; } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceBusSku
+    public partial class ServiceBusSku : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>
     {
         public ServiceBusSku(Azure.ResourceManager.ServiceBus.Models.ServiceBusSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusSkuTier? Tier { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusSku System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusSku System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ServiceBusSkuName
     {
@@ -1031,11 +1168,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Standard = 1,
         Premium = 2,
     }
-    public partial class ServiceBusSqlFilter
+    public partial class ServiceBusSqlFilter : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>
     {
         public ServiceBusSqlFilter() { }
         public int? CompatibilityLevel { get { throw null; } set { } }
         public bool? RequiresPreprocessing { get { throw null; } set { } }
         public string SqlExpression { get { throw null; } set { } }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSqlFilter>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

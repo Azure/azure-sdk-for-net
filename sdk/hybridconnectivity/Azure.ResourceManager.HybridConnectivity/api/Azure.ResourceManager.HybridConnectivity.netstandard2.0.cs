@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridConnectivity.EndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridConnectivity.EndpointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EndpointResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class EndpointResourceData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.HybridConnectivity.EndpointResourceData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.HybridConnectivity.EndpointResourceData>
     {
         public EndpointResourceData() { }
         public string CreatedBy { get { throw null; } set { } }
@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
         public string ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.HybridConnectivity.EndpointResourceData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.HybridConnectivity.EndpointResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.HybridConnectivity.EndpointResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.EndpointResourceData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.HybridConnectivity.EndpointResourceData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.HybridConnectivity.EndpointResourceData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.HybridConnectivity.EndpointResourceData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class HybridConnectivityExtensions
     {
@@ -110,7 +115,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static bool operator !=(Azure.ResourceManager.HybridConnectivity.Models.EndpointType left, Azure.ResourceManager.HybridConnectivity.Models.EndpointType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TargetResourceEndpointAccess
+    public partial class TargetResourceEndpointAccess : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>
     {
         internal TargetResourceEndpointAccess() { }
         public string AccessKey { get { throw null; } }
@@ -118,5 +123,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public string HybridConnectionName { get { throw null; } }
         public string NamespaceName { get { throw null; } }
         public string NamespaceNameSuffix { get { throw null; } }
+        Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.HybridConnectivity.Models.TargetResourceEndpointAccess>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -15,13 +15,18 @@ namespace Azure.ResourceManager.Reservations
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Reservations.QuotaRequestDetailResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class QuotaRequestDetailData : Azure.ResourceManager.Models.ResourceData
+    public partial class QuotaRequestDetailData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>
     {
         internal QuotaRequestDetailData() { }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.QuotaRequestState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SubContent> QuotaRequestValue { get { throw null; } }
         public System.DateTimeOffset? RequestSubmitOn { get { throw null; } }
+        Azure.ResourceManager.Reservations.QuotaRequestDetailData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.QuotaRequestDetailData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.QuotaRequestDetailData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class QuotaRequestDetailResource : Azure.ResourceManager.ArmResource
     {
@@ -50,7 +55,7 @@ namespace Azure.ResourceManager.Reservations
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Reservations.ReservationDetailResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Reservations.ReservationDetailResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ReservationDetailData : Azure.ResourceManager.Models.ResourceData
+    public partial class ReservationDetailData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationDetailData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>
     {
         internal ReservationDetailData() { }
         public Azure.ResourceManager.Reservations.Models.ReservationKind? Kind { get { throw null; } }
@@ -58,6 +63,11 @@ namespace Azure.ResourceManager.Reservations
         public Azure.ResourceManager.Reservations.Models.ReservationProperties Properties { get { throw null; } }
         public string SkuName { get { throw null; } }
         public int? Version { get { throw null; } }
+        Azure.ResourceManager.Reservations.ReservationDetailData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.ReservationDetailData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationDetailData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ReservationDetailResource : Azure.ResourceManager.ArmResource
     {
@@ -94,7 +104,7 @@ namespace Azure.ResourceManager.Reservations
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Reservations.ReservationOrderResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Reservations.ReservationOrderResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ReservationOrderData : Azure.ResourceManager.Models.ResourceData
+    public partial class ReservationOrderData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationOrderData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>
     {
         internal ReservationOrderData() { }
         public System.DateTimeOffset? BenefitStartOn { get { throw null; } }
@@ -111,6 +121,11 @@ namespace Azure.ResourceManager.Reservations
         public System.DateTimeOffset? ReviewOn { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationTerm? Term { get { throw null; } }
         public int? Version { get { throw null; } }
+        Azure.ResourceManager.Reservations.ReservationOrderData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.ReservationOrderData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationOrderData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ReservationOrderResource : Azure.ResourceManager.ArmResource
     {
@@ -158,10 +173,15 @@ namespace Azure.ResourceManager.Reservations
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Reservations.ReservationQuotaResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Reservations.ReservationQuotaResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ReservationQuotaData : Azure.ResourceManager.Models.ResourceData
+    public partial class ReservationQuotaData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationQuotaData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>
     {
         public ReservationQuotaData() { }
         public Azure.ResourceManager.Reservations.Models.QuotaProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.ReservationQuotaData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.ReservationQuotaData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.ReservationQuotaData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ReservationQuotaResource : Azure.ResourceManager.ArmResource
     {
@@ -254,18 +274,28 @@ namespace Azure.ResourceManager.Reservations.Mocking
 }
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class AppliedReservationData : Azure.ResourceManager.Models.ResourceData
+    public partial class AppliedReservationData : Azure.ResourceManager.Models.ResourceData, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>
     {
         internal AppliedReservationData() { }
         public Azure.ResourceManager.Reservations.Models.AppliedReservationList ReservationOrderIds { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.AppliedReservationData System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.AppliedReservationData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationData>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AppliedReservationList
+    public partial class AppliedReservationList : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>
     {
         internal AppliedReservationList() { }
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Value { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.AppliedReservationList System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.AppliedReservationList System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedReservationList>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AppliedScopeProperties
+    public partial class AppliedScopeProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>
     {
         public AppliedScopeProperties() { }
         public string DisplayName { get { throw null; } set { } }
@@ -273,6 +303,11 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubscriptionId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.AppliedScopeProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.AppliedScopeProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AppliedScopeProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppliedScopeType : System.IEquatable<Azure.ResourceManager.Reservations.Models.AppliedScopeType>
@@ -349,20 +384,35 @@ namespace Azure.ResourceManager.Reservations.Models
         public static Azure.ResourceManager.Reservations.Models.SkuRestriction SkuRestriction(string skuRestrictionType = null, System.Collections.Generic.IEnumerable<string> values = null, string reasonCode = null) { throw null; }
         public static Azure.ResourceManager.Reservations.Models.SubContent SubContent(int? limit = default(int?), Azure.ResourceManager.Reservations.Models.ReservationResourceName name = null, string resourceType = null, string unit = null, Azure.ResourceManager.Reservations.Models.QuotaRequestState? provisioningState = default(Azure.ResourceManager.Reservations.Models.QuotaRequestState?), string message = null, System.Guid? subRequestId = default(System.Guid?)) { throw null; }
     }
-    public partial class AvailableScopesContent
+    public partial class AvailableScopesContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>
     {
         public AvailableScopesContent() { }
         public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.AvailableScopesContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.AvailableScopesContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AvailableScopesProperties
+    public partial class AvailableScopesProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>
     {
         internal AvailableScopesProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ScopeProperties> Scopes { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.AvailableScopesProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.AvailableScopesProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.AvailableScopesProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BenefitsCommitment : Azure.ResourceManager.Reservations.Models.PurchasePrice
+    public partial class BenefitsCommitment : Azure.ResourceManager.Reservations.Models.PurchasePrice, System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>
     {
         public BenefitsCommitment() { }
         public Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain? Grain { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.BenefitsCommitment System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.BenefitsCommitment System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.BenefitsCommitment>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BenefitsCommitmentGrain : System.IEquatable<Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain>
@@ -381,24 +431,39 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain left, Azure.ResourceManager.Reservations.Models.BenefitsCommitmentGrain right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BillingInformation
+    public partial class BillingInformation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.BillingInformation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.BillingInformation>
     {
         internal BillingInformation() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyProratedAmount { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyRemainingCommitmentAmount { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotalPaidAmount { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.BillingInformation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.BillingInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.BillingInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.BillingInformation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.BillingInformation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.BillingInformation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.BillingInformation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CalculateExchangeContent
+    public partial class CalculateExchangeContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>
     {
         public CalculateExchangeContent() { }
         public Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.CalculateExchangeContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.CalculateExchangeContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CalculateExchangeContentProperties
+    public partial class CalculateExchangeContentProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>
     {
         public CalculateExchangeContentProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.ReservationToReturn> ReservationsToExchange { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent> ReservationsToPurchase { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase> SavingsPlansToPurchase { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeContentProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CalculateExchangeOperationResultStatus : System.IEquatable<Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus>
@@ -420,7 +485,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus left, Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CalculateExchangeResult
+    public partial class CalculateExchangeResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>
     {
         internal CalculateExchangeResult() { }
         public Azure.ResourceManager.Reservations.Models.OperationResultError Error { get { throw null; } }
@@ -428,8 +493,13 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties Properties { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.CalculateExchangeOperationResultStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.CalculateExchangeResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.CalculateExchangeResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CalculateExchangeResultProperties
+    public partial class CalculateExchangeResultProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>
     {
         internal CalculateExchangeResultProperties() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice NetPayable { get { throw null; } }
@@ -440,13 +510,23 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange> ReservationsToPurchase { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange> SavingsPlansToPurchase { get { throw null; } }
         public System.Guid? SessionId { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculateExchangeResultProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CalculatePriceResult
+    public partial class CalculatePriceResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>
     {
         internal CalculatePriceResult() { }
         public Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.CalculatePriceResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.CalculatePriceResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CalculatePriceResultProperties
+    public partial class CalculatePriceResultProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>
     {
         internal CalculatePriceResultProperties() { }
         public Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal BillingCurrencyTotal { get { throw null; } }
@@ -460,42 +540,77 @@ namespace Azure.ResourceManager.Reservations.Models
         public string SkuDescription { get { throw null; } }
         public string SkuTitle { get { throw null; } }
         public double? TaxTotal { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CalculatePriceResultPropertiesBillingCurrencyTotal
+    public partial class CalculatePriceResultPropertiesBillingCurrencyTotal : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>
     {
         internal CalculatePriceResultPropertiesBillingCurrencyTotal() { }
         public double? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesBillingCurrencyTotal>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CalculatePriceResultPropertiesPricingCurrencyTotal
+    public partial class CalculatePriceResultPropertiesPricingCurrencyTotal : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>
     {
         internal CalculatePriceResultPropertiesPricingCurrencyTotal() { }
         public float? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.CalculatePriceResultPropertiesPricingCurrencyTotal>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ChangeDirectoryContent
+    public partial class ChangeDirectoryContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>
     {
         public ChangeDirectoryContent() { }
         public System.Guid? DestinationTenantId { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ChangeDirectoryDetail
+    public partial class ChangeDirectoryDetail : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>
     {
         internal ChangeDirectoryDetail() { }
         public Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult ReservationOrder { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult> Reservations { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryDetail>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ChangeDirectoryResult
+    public partial class ChangeDirectoryResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>
     {
         internal ChangeDirectoryResult() { }
         public string Error { get { throw null; } }
         public System.Guid? Id { get { throw null; } }
         public bool? IsSucceeded { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ChangeDirectoryResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExchangeContent
+    public partial class ExchangeContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>
     {
         public ExchangeContent() { }
         public System.Guid? ExchangeRequestSessionId { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ExchangeContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ExchangeContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExchangeOperationResultStatus : System.IEquatable<Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus>
@@ -518,13 +633,18 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus left, Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ExchangePolicyError
+    public partial class ExchangePolicyError : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>
     {
         internal ExchangePolicyError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ExchangePolicyError System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ExchangePolicyError System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangePolicyError>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExchangeResult
+    public partial class ExchangeResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>
     {
         internal ExchangeResult() { }
         public Azure.ResourceManager.Reservations.Models.OperationResultError Error { get { throw null; } }
@@ -532,8 +652,13 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ExchangeResultProperties Properties { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ExchangeOperationResultStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ExchangeResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ExchangeResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExchangeResultProperties
+    public partial class ExchangeResultProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>
     {
         internal ExchangeResultProperties() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice NetPayable { get { throw null; } }
@@ -544,12 +669,22 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange> ReservationsToPurchase { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange> SavingsPlansToPurchase { get { throw null; } }
         public System.Guid? SessionId { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ExchangeResultProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ExchangeResultProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExchangeResultProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExtendedStatusInfo
+    public partial class ExtendedStatusInfo : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>
     {
         internal ExtendedStatusInfo() { }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationStatusCode? StatusCode { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ExtendedStatusInfo>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InstanceFlexibility : System.IEquatable<Azure.ResourceManager.Reservations.Models.InstanceFlexibility>
@@ -569,18 +704,28 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.InstanceFlexibility left, Azure.ResourceManager.Reservations.Models.InstanceFlexibility right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MergeContent
+    public partial class MergeContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.MergeContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.MergeContent>
     {
         public MergeContent() { }
         public System.Collections.Generic.IList<string> Sources { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.MergeContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.MergeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.MergeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.MergeContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.MergeContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.MergeContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.MergeContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationResultError
+    public partial class OperationResultError : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.OperationResultError>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.OperationResultError>
     {
         internal OperationResultError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.OperationResultError System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.OperationResultError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.OperationResultError>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.OperationResultError System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.OperationResultError>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.OperationResultError>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.OperationResultError>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PaymentDetail
+    public partial class PaymentDetail : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>
     {
         internal PaymentDetail() { }
         public string BillingAccount { get { throw null; } }
@@ -590,6 +735,11 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.DateTimeOffset? PayOn { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice PricingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PaymentStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.PaymentDetail System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.PaymentDetail System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.PaymentDetail>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PaymentStatus : System.IEquatable<Azure.ResourceManager.Reservations.Models.PaymentStatus>
@@ -611,13 +761,19 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.PaymentStatus left, Azure.ResourceManager.Reservations.Models.PaymentStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PurchasePrice
+    public partial class PurchasePrice : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>
     {
+        protected internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
         public PurchasePrice() { }
         public double? Amount { get { throw null; } set { } }
         public string CurrencyCode { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.PurchasePrice System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.PurchasePrice System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.PurchasePrice>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QuotaProperties
+    public partial class QuotaProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>
     {
         public QuotaProperties() { }
         public int? CurrentValue { get { throw null; } }
@@ -627,6 +783,11 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.ReservationResourceName ResourceName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ResourceTypeName? ResourceTypeName { get { throw null; } set { } }
         public string Unit { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.QuotaProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.QuotaProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.QuotaProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QuotaRequestState : System.IEquatable<Azure.ResourceManager.Reservations.Models.QuotaRequestState>
@@ -649,24 +810,39 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.QuotaRequestState left, Azure.ResourceManager.Reservations.Models.QuotaRequestState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RenewProperties
+    public partial class RenewProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewProperties>
     {
         internal RenewProperties() { }
         public Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal BillingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal PricingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent PurchaseProperties { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.RenewProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.RenewProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RenewPropertiesBillingCurrencyTotal
+    public partial class RenewPropertiesBillingCurrencyTotal : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>
     {
         internal RenewPropertiesBillingCurrencyTotal() { }
         public float? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesBillingCurrencyTotal>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RenewPropertiesPricingCurrencyTotal
+    public partial class RenewPropertiesPricingCurrencyTotal : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>
     {
         internal RenewPropertiesPricingCurrencyTotal() { }
         public float? Amount { get { throw null; } }
         public string CurrencyCode { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.RenewPropertiesPricingCurrencyTotal>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReservationBillingPlan : System.IEquatable<Azure.ResourceManager.Reservations.Models.ReservationBillingPlan>
@@ -686,26 +862,41 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationBillingPlan left, Azure.ResourceManager.Reservations.Models.ReservationBillingPlan right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReservationCalculateRefundContent
+    public partial class ReservationCalculateRefundContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>
     {
         public ReservationCalculateRefundContent() { }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationCalculateRefundRequestProperties
+    public partial class ReservationCalculateRefundRequestProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>
     {
         public ReservationCalculateRefundRequestProperties() { }
         public Azure.ResourceManager.Reservations.Models.ReservationToReturn ReservationToReturn { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundRequestProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationCalculateRefundResult
+    public partial class ReservationCalculateRefundResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>
     {
         internal ReservationCalculateRefundResult() { }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCalculateRefundResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class ReservationCatalog
+    public partial class ReservationCatalog : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>
     {
         internal ReservationCatalog() { }
         public string AppliedResourceType { get { throw null; } }
@@ -720,15 +911,25 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.SkuProperty> SkuProperties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationTerm> Terms { get { throw null; } }
         public string Tier { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationCatalog System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationCatalog System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalog>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationCatalogMsrp
+    public partial class ReservationCatalogMsrp : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>
     {
         internal ReservationCatalogMsrp() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice P1Y { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice P3Y { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice P5Y { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationCatalogMsrp>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationDetailPatch
+    public partial class ReservationDetailPatch : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>
     {
         public ReservationDetailPatch() { }
         public Azure.ResourceManager.Reservations.Models.AppliedScopeProperties AppliedScopeProperties { get { throw null; } set { } }
@@ -739,6 +940,11 @@ namespace Azure.ResourceManager.Reservations.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent RenewPurchaseProperties { get { throw null; } set { } }
         public System.DateTimeOffset? ReviewOn { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ReservationDetailPatch System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationDetailPatch System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationDetailPatch>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReservationErrorResponseCode : System.IEquatable<Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode>
@@ -831,11 +1037,16 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationKind left, Azure.ResourceManager.Reservations.Models.ReservationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReservationMergeProperties
+    public partial class ReservationMergeProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>
     {
         internal ReservationMergeProperties() { }
         public string MergeDestination { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> MergeSources { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationMergeProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationMergeProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationMergeProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReservationOperationStatus : System.IEquatable<Azure.ResourceManager.Reservations.Models.ReservationOperationStatus>
@@ -857,15 +1068,20 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationOperationStatus left, Azure.ResourceManager.Reservations.Models.ReservationOperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReservationOrderBillingPlanInformation
+    public partial class ReservationOrderBillingPlanInformation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>
     {
         internal ReservationOrderBillingPlanInformation() { }
         public System.DateTimeOffset? NextPaymentDueOn { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice PricingCurrencyTotal { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.PaymentDetail> Transactions { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationOrderBillingPlanInformation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationProperties
+    public partial class ReservationProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>
     {
         internal ReservationProperties() { }
         public Azure.ResourceManager.Reservations.Models.AppliedScopeProperties AppliedScopeProperties { get { throw null; } }
@@ -903,12 +1119,22 @@ namespace Azure.ResourceManager.Reservations.Models
         public string UserFriendlyAppliedScopeType { get { throw null; } }
         public string UserFriendlyRenewState { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization Utilization { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationPropertiesUtilization
+    public partial class ReservationPropertiesUtilization : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>
     {
         internal ReservationPropertiesUtilization() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates> Aggregates { get { throw null; } }
         public string Trend { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPropertiesUtilization>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReservationProvisioningState : System.IEquatable<Azure.ResourceManager.Reservations.Models.ReservationProvisioningState>
@@ -939,7 +1165,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationProvisioningState left, Azure.ResourceManager.Reservations.Models.ReservationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReservationPurchaseContent
+    public partial class ReservationPurchaseContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>
     {
         public ReservationPurchaseContent() { }
         public Azure.ResourceManager.Reservations.Models.AppliedScopeProperties AppliedScopeProperties { get { throw null; } set { } }
@@ -956,8 +1182,13 @@ namespace Azure.ResourceManager.Reservations.Models
         public System.DateTimeOffset? ReviewOn { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ReservationTerm? Term { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationRefundBillingInformation
+    public partial class ReservationRefundBillingInformation : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>
     {
         internal ReservationRefundBillingInformation() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyProratedAmount { get { throw null; } }
@@ -966,34 +1197,59 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.ReservationBillingPlan? BillingPlan { get { throw null; } }
         public int? CompletedTransactions { get { throw null; } }
         public int? TotalTransactions { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationRefundContent
+    public partial class ReservationRefundContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>
     {
         public ReservationRefundContent() { }
         public Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationRefundPolicyError
+    public partial class ReservationRefundPolicyError : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>
     {
         internal ReservationRefundPolicyError() { }
         public Azure.ResourceManager.Reservations.Models.ReservationErrorResponseCode? Code { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationRefundPolicyResultProperty
+    public partial class ReservationRefundPolicyResultProperty : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>
     {
         internal ReservationRefundPolicyResultProperty() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice ConsumedRefundsTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice MaxRefundLimit { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyError> PolicyErrors { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundPolicyResultProperty>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationRefundRequestProperties
+    public partial class ReservationRefundRequestProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>
     {
         public ReservationRefundRequestProperties() { }
         public Azure.ResourceManager.Reservations.Models.ReservationToReturn ReservationToReturn { get { throw null; } set { } }
         public string ReturnReason { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
         public System.Guid? SessionId { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundRequestProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationRefundResponseProperties
+    public partial class ReservationRefundResponseProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>
     {
         internal ReservationRefundResponseProperties() { }
         public Azure.ResourceManager.Reservations.Models.ReservationRefundBillingInformation BillingInformation { get { throw null; } }
@@ -1002,25 +1258,45 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.PurchasePrice PricingRefundAmount { get { throw null; } }
         public int? Quantity { get { throw null; } }
         public System.Guid? SessionId { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class ReservationRefundResult
+    public partial class ReservationRefundResult : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>
     {
         internal ReservationRefundResult() { }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationRefundResponseProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundResult System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationRefundResult System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationRefundResult>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationResourceName
+    public partial class ReservationResourceName : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>
     {
         public ReservationResourceName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ReservationResourceName System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationResourceName System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationResourceName>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationSplitProperties
+    public partial class ReservationSplitProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>
     {
         internal ReservationSplitProperties() { }
         public System.Collections.Generic.IReadOnlyList<string> SplitDestinations { get { throw null; } }
         public string SplitSource { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationSplitProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationSplitProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSplitProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReservationStatusCode : System.IEquatable<Azure.ResourceManager.Reservations.Models.ReservationStatusCode>
@@ -1048,11 +1324,16 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationStatusCode left, Azure.ResourceManager.Reservations.Models.ReservationStatusCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReservationSwapProperties
+    public partial class ReservationSwapProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>
     {
         internal ReservationSwapProperties() { }
         public string SwapDestination { get { throw null; } }
         public string SwapSource { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationSwapProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationSwapProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationSwapProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReservationTerm : System.IEquatable<Azure.ResourceManager.Reservations.Models.ReservationTerm>
@@ -1073,21 +1354,31 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.ReservationTerm left, Azure.ResourceManager.Reservations.Models.ReservationTerm right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReservationToExchange
+    public partial class ReservationToExchange : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>
     {
         internal ReservationToExchange() { }
         public Azure.ResourceManager.Reservations.Models.BillingInformation BillingInformation { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingRefundAmount { get { throw null; } }
         public int? Quantity { get { throw null; } }
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationToExchange System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationToExchange System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToExchange>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationToPurchaseCalculateExchange
+    public partial class ReservationToPurchaseCalculateExchange : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>
     {
         internal ReservationToPurchaseCalculateExchange() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent Properties { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseCalculateExchange>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationToPurchaseExchange
+    public partial class ReservationToPurchaseExchange : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>
     {
         internal ReservationToPurchaseExchange() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotal { get { throw null; } }
@@ -1095,14 +1386,24 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } }
         public Azure.Core.ResourceIdentifier ReservationOrderId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationOperationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToPurchaseExchange>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationToReturn
+    public partial class ReservationToReturn : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>
     {
         public ReservationToReturn() { }
         public int? Quantity { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.ReservationToReturn System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationToReturn System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturn>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationToReturnForExchange
+    public partial class ReservationToReturnForExchange : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>
     {
         internal ReservationToReturnForExchange() { }
         public Azure.ResourceManager.Reservations.Models.BillingInformation BillingInformation { get { throw null; } }
@@ -1110,14 +1411,24 @@ namespace Azure.ResourceManager.Reservations.Models
         public int? Quantity { get { throw null; } }
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationOperationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationToReturnForExchange>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReservationUtilizationAggregates
+    public partial class ReservationUtilizationAggregates : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>
     {
         internal ReservationUtilizationAggregates() { }
         public float? Grain { get { throw null; } }
         public string GrainUnit { get { throw null; } }
         public float? Value { get { throw null; } }
         public string ValueUnit { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ReservationUtilizationAggregates>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReservedResourceType : System.IEquatable<Azure.ResourceManager.Reservations.Models.ReservedResourceType>
@@ -1199,7 +1510,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.SavingsPlanBillingPlan left, Azure.ResourceManager.Reservations.Models.SavingsPlanBillingPlan right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SavingsPlanPurchase
+    public partial class SavingsPlanPurchase : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>
     {
         public SavingsPlanPurchase() { }
         public Azure.ResourceManager.Reservations.Models.AppliedScopeProperties AppliedScopeProperties { get { throw null; } set { } }
@@ -1210,6 +1521,11 @@ namespace Azure.ResourceManager.Reservations.Models
         public string DisplayName { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.SavingsPlanTerm? Term { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SavingsPlanTerm : System.IEquatable<Azure.ResourceManager.Reservations.Models.SavingsPlanTerm>
@@ -1229,13 +1545,18 @@ namespace Azure.ResourceManager.Reservations.Models
         public static bool operator !=(Azure.ResourceManager.Reservations.Models.SavingsPlanTerm left, Azure.ResourceManager.Reservations.Models.SavingsPlanTerm right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SavingsPlanToPurchaseCalculateExchange
+    public partial class SavingsPlanToPurchaseCalculateExchange : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>
     {
         internal SavingsPlanToPurchaseCalculateExchange() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotal { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.SavingsPlanPurchase Properties { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseCalculateExchange>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SavingsPlanToPurchaseExchange
+    public partial class SavingsPlanToPurchaseExchange : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>
     {
         internal SavingsPlanToPurchaseExchange() { }
         public Azure.ResourceManager.Reservations.Models.PurchasePrice BillingCurrencyTotal { get { throw null; } }
@@ -1243,39 +1564,69 @@ namespace Azure.ResourceManager.Reservations.Models
         public string SavingsPlanId { get { throw null; } }
         public string SavingsPlanOrderId { get { throw null; } }
         public Azure.ResourceManager.Reservations.Models.ReservationOperationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SavingsPlanToPurchaseExchange>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScopeProperties
+    public partial class ScopeProperties : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>
     {
         internal ScopeProperties() { }
         public bool? IsValid { get { throw null; } }
         public string Scope { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.ScopeProperties System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.ScopeProperties System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.ScopeProperties>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SkuCapability
+    public partial class SkuCapability : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuCapability>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuCapability>
     {
         internal SkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.SkuCapability System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.SkuCapability System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuCapability>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuCapability>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuCapability>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SkuProperty
+    public partial class SkuProperty : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuProperty>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuProperty>
     {
         internal SkuProperty() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.SkuProperty System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.SkuProperty System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuProperty>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuProperty>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuProperty>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SkuRestriction
+    public partial class SkuRestriction : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>
     {
         internal SkuRestriction() { }
         public string ReasonCode { get { throw null; } }
         public string SkuRestrictionType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.SkuRestriction System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.SkuRestriction System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SkuRestriction>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SplitContent
+    public partial class SplitContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SplitContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SplitContent>
     {
         public SplitContent() { }
         public System.Collections.Generic.IList<int> Quantities { get { throw null; } }
         public Azure.Core.ResourceIdentifier ReservationId { get { throw null; } set { } }
+        Azure.ResourceManager.Reservations.Models.SplitContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SplitContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SplitContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.SplitContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SplitContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SplitContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SplitContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SubContent
+    public partial class SubContent : System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SubContent>, System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SubContent>
     {
         internal SubContent() { }
         public int? Limit { get { throw null; } }
@@ -1285,6 +1636,11 @@ namespace Azure.ResourceManager.Reservations.Models
         public string ResourceType { get { throw null; } }
         public System.Guid? SubRequestId { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.Reservations.Models.SubContent System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SubContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        void System.Net.ClientModel.Core.IJsonModel<Azure.ResourceManager.Reservations.Models.SubContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Reservations.Models.SubContent System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SubContent>.Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        string System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SubContent>.GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.Net.ClientModel.Core.IPersistableModel<Azure.ResourceManager.Reservations.Models.SubContent>.Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SubscriptionResourceGetCatalogOptions
     {
