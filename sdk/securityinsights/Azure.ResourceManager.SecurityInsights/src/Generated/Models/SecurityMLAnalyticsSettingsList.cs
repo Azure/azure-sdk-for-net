@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the SecurityMLAnalyticsSettings. </summary>
     internal partial class SecurityMLAnalyticsSettingsList
     {
-        /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsList"/>. </summary>
         /// <param name="value">
         /// Array of SecurityMLAnalyticsSettings
         /// Please note <see cref="SecurityMLAnalyticsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -30,17 +33,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of SecurityMLAnalyticsSettings. </param>
         /// <param name="value">
         /// Array of SecurityMLAnalyticsSettings
         /// Please note <see cref="SecurityMLAnalyticsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AnomalySecurityMLAnalyticsSettings"/>.
         /// </param>
-        internal SecurityMLAnalyticsSettingsList(string nextLink, IReadOnlyList<SecurityMLAnalyticsSettingData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityMLAnalyticsSettingsList(string nextLink, IReadOnlyList<SecurityMLAnalyticsSettingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsList"/> for deserialization. </summary>
+        internal SecurityMLAnalyticsSettingsList()
+        {
         }
 
         /// <summary> URL to fetch the next set of SecurityMLAnalyticsSettings. </summary>

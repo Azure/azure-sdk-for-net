@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input to apply recovery point. </summary>
     public partial class SiteRecoveryApplyRecoveryPointContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryApplyRecoveryPointContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplyRecoveryPointContent"/>. </summary>
         /// <param name="properties"> The input properties to apply recovery point. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryApplyRecoveryPointContent(SiteRecoveryApplyRecoveryPointProperties properties)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplyRecoveryPointContent"/>. </summary>
+        /// <param name="properties"> The input properties to apply recovery point. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryApplyRecoveryPointContent(SiteRecoveryApplyRecoveryPointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryApplyRecoveryPointContent"/> for deserialization. </summary>
+        internal SiteRecoveryApplyRecoveryPointContent()
+        {
         }
 
         /// <summary> The input properties to apply recovery point. </summary>

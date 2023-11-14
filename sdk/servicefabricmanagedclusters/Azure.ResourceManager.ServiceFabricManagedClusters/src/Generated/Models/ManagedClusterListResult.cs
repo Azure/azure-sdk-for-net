@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Managed Cluster list results. </summary>
     internal partial class ManagedClusterListResult
     {
-        /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         internal ManagedClusterListResult()
         {
             Value = new ChangeTrackingList<ServiceFabricManagedClusterData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ManagedClusterListResult(IReadOnlyList<ServiceFabricManagedClusterData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterListResult(IReadOnlyList<ServiceFabricManagedClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

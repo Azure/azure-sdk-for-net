@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper-V Managed disk details. </summary>
     public partial class HyperVReplicaAzureManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of HyperVReplicaAzureManagedDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureManagedDiskDetails"/>. </summary>
         internal HyperVReplicaAzureManagedDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of HyperVReplicaAzureManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="seedManagedDiskId"> Seed managed disk Id. </param>
         /// <param name="replicaDiskType"> The replica disk type. </param>
         /// <param name="diskEncryptionSetId"> The disk encryption set ARM Id. </param>
-        internal HyperVReplicaAzureManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVReplicaAzureManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             SeedManagedDiskId = seedManagedDiskId;
             ReplicaDiskType = replicaDiskType;
             DiskEncryptionSetId = diskEncryptionSetId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk Id. </summary>

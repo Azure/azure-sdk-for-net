@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The resource storage details. </summary>
     public partial class BackupResourceConfigProperties
     {
-        /// <summary> Initializes a new instance of BackupResourceConfigProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupResourceConfigProperties"/>. </summary>
         public BackupResourceConfigProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceConfigProperties"/>. </summary>
         /// <param name="storageModelType"> Storage type. </param>
         /// <param name="storageType"> Storage type. </param>
         /// <param name="storageTypeState"> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </param>
         /// <param name="enableCrossRegionRestore"> Opt in details of Cross Region Restore feature. </param>
         /// <param name="dedupState"> Vault Dedup state. </param>
         /// <param name="xcoolState"> Vault x-cool state. </param>
-        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, bool? enableCrossRegionRestore, VaultDedupState? dedupState, VaultXcoolState? xcoolState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupResourceConfigProperties(BackupStorageType? storageModelType, BackupStorageType? storageType, BackupStorageTypeState? storageTypeState, bool? enableCrossRegionRestore, VaultDedupState? dedupState, VaultXcoolState? xcoolState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageModelType = storageModelType;
             StorageType = storageType;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             EnableCrossRegionRestore = enableCrossRegionRestore;
             DedupState = dedupState;
             XcoolState = xcoolState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage type. </summary>

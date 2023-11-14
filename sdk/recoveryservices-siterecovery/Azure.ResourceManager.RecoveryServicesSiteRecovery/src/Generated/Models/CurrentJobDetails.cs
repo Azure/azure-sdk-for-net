@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Current job details of the migration item. </summary>
     public partial class CurrentJobDetails
     {
-        /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CurrentJobDetails"/>. </summary>
         internal CurrentJobDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CurrentJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CurrentJobDetails"/>. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="jobId"> The ARM Id of the job being executed. </param>
         /// <param name="startOn"> The start time of the job. </param>
-        internal CurrentJobDetails(string jobName, ResourceIdentifier jobId, DateTimeOffset? startOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CurrentJobDetails(string jobName, ResourceIdentifier jobId, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobName = jobName;
             JobId = jobId;
             StartOn = startOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The job name. </summary>

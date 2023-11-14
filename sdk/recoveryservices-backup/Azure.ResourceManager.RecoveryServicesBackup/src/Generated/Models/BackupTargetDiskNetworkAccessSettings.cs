@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Specifies target network access settings for disks of VM to be restored. </summary>
     public partial class BackupTargetDiskNetworkAccessSettings
     {
-        /// <summary> Initializes a new instance of BackupTargetDiskNetworkAccessSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupTargetDiskNetworkAccessSettings"/>. </summary>
         public BackupTargetDiskNetworkAccessSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupTargetDiskNetworkAccessSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupTargetDiskNetworkAccessSettings"/>. </summary>
         /// <param name="targetDiskNetworkAccessOption"> Network access settings to be used for restored disks. </param>
         /// <param name="targetDiskAccessId"> Gets or sets the ARM resource ID of the target disk access to be used when TargetDiskNetworkAccessOption is set to TargetDiskNetworkAccessOption.UseNew. </param>
-        internal BackupTargetDiskNetworkAccessSettings(BackupTargetDiskNetworkAccessOption? targetDiskNetworkAccessOption, ResourceIdentifier targetDiskAccessId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupTargetDiskNetworkAccessSettings(BackupTargetDiskNetworkAccessOption? targetDiskNetworkAccessOption, ResourceIdentifier targetDiskAccessId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetDiskNetworkAccessOption = targetDiskNetworkAccessOption;
             TargetDiskAccessId = targetDiskAccessId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Network access settings to be used for restored disks. </summary>

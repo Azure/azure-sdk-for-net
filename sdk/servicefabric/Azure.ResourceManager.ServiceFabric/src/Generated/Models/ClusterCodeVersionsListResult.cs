@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The list results of the Service Fabric runtime versions. </summary>
     internal partial class ClusterCodeVersionsListResult
     {
-        /// <summary> Initializes a new instance of ClusterCodeVersionsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterCodeVersionsListResult"/>. </summary>
         internal ClusterCodeVersionsListResult()
         {
             Value = new ChangeTrackingList<ClusterCodeVersionsResult>();
         }
 
-        /// <summary> Initializes a new instance of ClusterCodeVersionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCodeVersionsListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ClusterCodeVersionsListResult(IReadOnlyList<ClusterCodeVersionsResult> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterCodeVersionsListResult(IReadOnlyList<ClusterCodeVersionsResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

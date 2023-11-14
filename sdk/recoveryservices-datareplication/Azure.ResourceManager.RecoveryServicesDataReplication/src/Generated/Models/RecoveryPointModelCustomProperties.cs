@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// </summary>
     public abstract partial class RecoveryPointModelCustomProperties
     {
-        /// <summary> Initializes a new instance of RecoveryPointModelCustomProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointModelCustomProperties"/>. </summary>
         protected RecoveryPointModelCustomProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPointModelCustomProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal RecoveryPointModelCustomProperties(string instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the instance type. </summary>

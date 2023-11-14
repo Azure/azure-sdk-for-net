@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,17 +16,55 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityAssessmentData : IUtf8JsonSerializable
+    public partial class SecurityAssessmentData : IUtf8JsonSerializable, IJsonModel<SecurityAssessmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SecurityAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityAssessmentData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityAssessmentData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteObjectValue(ResourceDetails);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
             }
             if (Optional.IsCollectionDefined(AdditionalData))
             {
@@ -35,6 +76,14 @@ namespace Azure.ResourceManager.SecurityCenter
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Links))
+                {
+                    writer.WritePropertyName("links"u8);
+                    writer.WriteObjectValue(Links);
+                }
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -52,11 +101,40 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteObjectValue(Status);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityAssessmentData DeserializeSecurityAssessmentData(JsonElement element)
+        SecurityAssessmentData IJsonModel<SecurityAssessmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAssessmentData(document.RootElement, options);
+        }
+
+        internal static SecurityAssessmentData DeserializeSecurityAssessmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +150,8 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SecurityAssessmentMetadataProperties> metadata = default;
             Optional<SecurityAssessmentPartner> partnersData = default;
             Optional<SecurityAssessmentStatusResult> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -174,8 +254,38 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityAssessmentData(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, Optional.ToDictionary(additionalData), links.Value, metadata.Value, partnersData.Value, status.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityAssessmentData(id, name, type, systemData.Value, resourceDetails.Value, displayName.Value, Optional.ToDictionary(additionalData), links.Value, metadata.Value, partnersData.Value, status.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityAssessmentData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityAssessmentData IPersistableModel<SecurityAssessmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityAssessmentData(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityAssessmentData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

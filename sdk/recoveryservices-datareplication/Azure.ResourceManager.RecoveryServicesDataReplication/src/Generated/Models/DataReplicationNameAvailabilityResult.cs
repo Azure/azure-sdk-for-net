@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Check name availability response model. </summary>
     public partial class DataReplicationNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DataReplicationNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationNameAvailabilityResult"/>. </summary>
         internal DataReplicationNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Gets or sets a value indicating whether resource name is available or not. </param>
         /// <param name="reason"> Gets or sets the reason for resource name unavailability. </param>
         /// <param name="message"> Gets or sets the message for resource name unavailability. </param>
-        internal DataReplicationNameAvailabilityResult(bool? isNameAvailable, string reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationNameAvailabilityResult(bool? isNameAvailable, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a value indicating whether resource name is available or not. </summary>

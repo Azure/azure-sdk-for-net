@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,20 +18,25 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class EndpointCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of EndpointCertificateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointCertificateData"/>. </summary>
         public EndpointCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="publicBlob"> The certificate public blob. </param>
-        internal EndpointCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publicBlob) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publicBlob, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PublicBlob = publicBlob;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The certificate public blob. </summary>

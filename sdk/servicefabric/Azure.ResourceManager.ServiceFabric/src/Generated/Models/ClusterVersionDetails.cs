@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> The detail of the Service Fabric runtime version result. </summary>
     public partial class ClusterVersionDetails
     {
-        /// <summary> Initializes a new instance of ClusterVersionDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterVersionDetails"/>. </summary>
         internal ClusterVersionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterVersionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterVersionDetails"/>. </summary>
         /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
         /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="environment"> Indicates if this version is for Windows or Linux operating system. </param>
-        internal ClusterVersionDetails(string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterVersionDetails(string codeVersion, DateTimeOffset? supportExpireOn, ClusterEnvironment? environment, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CodeVersion = codeVersion;
             SupportExpireOn = supportExpireOn;
             Environment = environment;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Service Fabric runtime version of the cluster. </summary>

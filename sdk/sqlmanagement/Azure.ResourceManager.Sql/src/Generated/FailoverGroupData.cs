@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class FailoverGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
         public FailoverGroupData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.Sql
             FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
         /// <param name="failoverDatabases"> List of databases in the failover group. </param>
-        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<ResourceIdentifier> failoverDatabases) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, FailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerServerInfo> partnerServers, IList<ResourceIdentifier> failoverDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -49,6 +54,7 @@ namespace Azure.ResourceManager.Sql
             ReplicationState = replicationState;
             PartnerServers = partnerServers;
             FailoverDatabases = failoverDatabases;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource location. </summary>

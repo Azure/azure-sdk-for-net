@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
@@ -12,24 +14,29 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> CalculateExchange operation result. </summary>
     public partial class CalculateExchangeResult
     {
-        /// <summary> Initializes a new instance of CalculateExchangeResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeResult"/>. </summary>
         internal CalculateExchangeResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CalculateExchangeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateExchangeResult"/>. </summary>
         /// <param name="id"> It should match what is used to GET the operation result. </param>
         /// <param name="name"> It must match the last segment of the id field, and will typically be a GUID / system generated value. </param>
         /// <param name="status"> Status of the operation. </param>
         /// <param name="properties"> CalculateExchange response properties. </param>
         /// <param name="error"> Required if status == failed or status == canceled. </param>
-        internal CalculateExchangeResult(ResourceIdentifier id, string name, CalculateExchangeOperationResultStatus? status, CalculateExchangeResultProperties properties, OperationResultError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CalculateExchangeResult(ResourceIdentifier id, string name, CalculateExchangeOperationResultStatus? status, CalculateExchangeResultProperties properties, OperationResultError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Status = status;
             Properties = properties;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> It should match what is used to GET the operation result. </summary>

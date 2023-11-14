@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Subnets of the network. </summary>
     public partial class SiteRecoverySubnet
     {
-        /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySubnet"/>. </summary>
         internal SiteRecoverySubnet()
         {
             AddressList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySubnet"/>. </summary>
         /// <param name="name"> The subnet name. </param>
         /// <param name="friendlyName"> The subnet friendly name. </param>
         /// <param name="addressList"> The list of addresses for the subnet. </param>
-        internal SiteRecoverySubnet(string name, string friendlyName, IReadOnlyList<string> addressList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoverySubnet(string name, string friendlyName, IReadOnlyList<string> addressList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FriendlyName = friendlyName;
             AddressList = addressList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The subnet name. </summary>

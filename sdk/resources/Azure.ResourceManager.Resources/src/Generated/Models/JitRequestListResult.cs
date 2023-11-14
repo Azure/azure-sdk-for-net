@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of JIT requests. </summary>
     internal partial class JitRequestListResult
     {
-        /// <summary> Initializes a new instance of JitRequestListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitRequestListResult"/>. </summary>
         internal JitRequestListResult()
         {
             Value = new ChangeTrackingList<JitRequestData>();
         }
 
-        /// <summary> Initializes a new instance of JitRequestListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestListResult"/>. </summary>
         /// <param name="value"> The array of Jit request definition. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal JitRequestListResult(IReadOnlyList<JitRequestData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitRequestListResult(IReadOnlyList<JitRequestData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The array of Jit request definition. </summary>

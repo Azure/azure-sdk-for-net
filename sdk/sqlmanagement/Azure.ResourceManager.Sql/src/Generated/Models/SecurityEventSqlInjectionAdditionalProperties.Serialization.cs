@@ -5,15 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SecurityEventSqlInjectionAdditionalProperties
+    public partial class SecurityEventSqlInjectionAdditionalProperties : IUtf8JsonSerializable, IJsonModel<SecurityEventSqlInjectionAdditionalProperties>
     {
-        internal static SecurityEventSqlInjectionAdditionalProperties DeserializeSecurityEventSqlInjectionAdditionalProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityEventSqlInjectionAdditionalProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SecurityEventSqlInjectionAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityEventSqlInjectionAdditionalProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThreatId))
+                {
+                    writer.WritePropertyName("threatId"u8);
+                    writer.WriteStringValue(ThreatId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Statement))
+                {
+                    writer.WritePropertyName("statement"u8);
+                    writer.WriteStringValue(Statement);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StatementHighlightOffset))
+                {
+                    writer.WritePropertyName("statementHighlightOffset"u8);
+                    writer.WriteNumberValue(StatementHighlightOffset.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StatementHighlightLength))
+                {
+                    writer.WritePropertyName("statementHighlightLength"u8);
+                    writer.WriteNumberValue(StatementHighlightLength.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorCode))
+                {
+                    writer.WritePropertyName("errorCode"u8);
+                    writer.WriteNumberValue(ErrorCode.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorSeverity))
+                {
+                    writer.WritePropertyName("errorSeverity"u8);
+                    writer.WriteNumberValue(ErrorSeverity.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SecurityEventSqlInjectionAdditionalProperties IJsonModel<SecurityEventSqlInjectionAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityEventSqlInjectionAdditionalProperties(document.RootElement, options);
+        }
+
+        internal static SecurityEventSqlInjectionAdditionalProperties DeserializeSecurityEventSqlInjectionAdditionalProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +127,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> errorCode = default;
             Optional<int> errorSeverity = default;
             Optional<string> errorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("threatId"u8))
@@ -78,8 +182,38 @@ namespace Azure.ResourceManager.Sql.Models
                     errorMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityEventSqlInjectionAdditionalProperties(threatId.Value, statement.Value, Optional.ToNullable(statementHighlightOffset), Optional.ToNullable(statementHighlightLength), Optional.ToNullable(errorCode), Optional.ToNullable(errorSeverity), errorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityEventSqlInjectionAdditionalProperties(threatId.Value, statement.Value, Optional.ToNullable(statementHighlightOffset), Optional.ToNullable(statementHighlightLength), Optional.ToNullable(errorCode), Optional.ToNullable(errorSeverity), errorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityEventSqlInjectionAdditionalProperties IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityEventSqlInjectionAdditionalProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

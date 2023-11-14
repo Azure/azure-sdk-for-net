@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerKeyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerKeyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerKeyData"/>. </summary>
         public SqlServerKeyData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="createdOn"> The server key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.Sql
             Thumbprint = thumbprint;
             CreatedOn = createdOn;
             IsAutoRotationEnabled = isAutoRotationEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>

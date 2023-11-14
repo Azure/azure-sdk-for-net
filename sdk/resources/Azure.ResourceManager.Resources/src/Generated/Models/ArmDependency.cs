@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Deployment dependency information. </summary>
     public partial class ArmDependency
     {
-        /// <summary> Initializes a new instance of ArmDependency. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDependency"/>. </summary>
         internal ArmDependency()
         {
             DependsOn = new ChangeTrackingList<BasicArmDependency>();
         }
 
-        /// <summary> Initializes a new instance of ArmDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDependency"/>. </summary>
         /// <param name="dependsOn"> The list of dependencies. </param>
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
-        internal ArmDependency(IReadOnlyList<BasicArmDependency> dependsOn, string id, ResourceType? resourceType, string resourceName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDependency(IReadOnlyList<BasicArmDependency> dependsOn, string id, ResourceType? resourceType, string resourceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DependsOn = dependsOn;
             Id = id;
             ResourceType = resourceType;
             ResourceName = resourceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of dependencies. </summary>

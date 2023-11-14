@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Update policy input. </summary>
     public partial class SiteRecoveryPolicyPatch
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyPatch"/>. </summary>
         public SiteRecoveryPolicyPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyPatch"/>. </summary>
+        /// <param name="properties"> The ReplicationProviderSettings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryPolicyPatch(UpdatePolicyContentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ReplicationProviderSettings. </summary>

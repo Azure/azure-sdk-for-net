@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointConnectionData"/>. </summary>
         public SignalRPrivateEndpointConnectionData()
         {
             GroupIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +38,14 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="privateEndpoint"> Private endpoint. </param>
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
-        internal SignalRPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SignalRProvisioningState? provisioningState, WritableSubResource privateEndpoint, IReadOnlyList<string> groupIds, SignalRPrivateLinkServiceConnectionState connectionState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SignalRProvisioningState? provisioningState, WritableSubResource privateEndpoint, IReadOnlyList<string> groupIds, SignalRPrivateLinkServiceConnectionState connectionState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
             ConnectionState = connectionState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the resource. </summary>

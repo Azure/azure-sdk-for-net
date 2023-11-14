@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Resolve health input properties. </summary>
     internal partial class ResolveHealthContentProperties
     {
-        /// <summary> Initializes a new instance of ResolveHealthContentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthContentProperties"/>. </summary>
         public ResolveHealthContentProperties()
         {
             HealthErrors = new ChangeTrackingList<ResolveHealthError>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResolveHealthContentProperties"/>. </summary>
+        /// <param name="healthErrors"> Health errors. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResolveHealthContentProperties(IList<ResolveHealthError> healthErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HealthErrors = healthErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Health errors. </summary>

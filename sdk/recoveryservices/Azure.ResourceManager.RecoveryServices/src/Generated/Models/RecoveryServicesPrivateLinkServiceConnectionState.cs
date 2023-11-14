@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Gets or sets private link service connection state. </summary>
     public partial class RecoveryServicesPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateLinkServiceConnectionState"/>. </summary>
         internal RecoveryServicesPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Gets or sets the status. </param>
         /// <param name="description"> Gets or sets description. </param>
         /// <param name="actionsRequired"> Gets or sets actions required. </param>
-        internal RecoveryServicesPrivateLinkServiceConnectionState(RecoveryServicesPrivateEndpointConnectionStatus? status, string description, string actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesPrivateLinkServiceConnectionState(RecoveryServicesPrivateEndpointConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the status. </summary>

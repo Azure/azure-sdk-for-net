@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
@@ -19,12 +20,15 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereCertificateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateData"/>. </summary>
         public SphereCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,7 +61,8 @@ namespace Azure.ResourceManager.Sphere
         /// The status of the last operation.
         /// Serialized Name: Certificate.properties.provisioningState
         /// </param>
-        internal SphereCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Certificate = certificate;
             Status = status;
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.Sphere
             ExpiryUtc = expiryUtc;
             NotBeforeUtc = notBeforeUtc;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

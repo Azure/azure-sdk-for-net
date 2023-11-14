@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class AuthBaseInfo : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownAuthInfoBase))]
+    public partial class AuthBaseInfo : IUtf8JsonSerializable, IJsonModel<AuthBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthBaseInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AuthBaseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AuthBaseInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AuthBaseInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AuthBaseInfo DeserializeAuthBaseInfo(JsonElement element)
+        AuthBaseInfo IJsonModel<AuthBaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthBaseInfo(document.RootElement, options);
+        }
+
+        internal static AuthBaseInfo DeserializeAuthBaseInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,5 +79,30 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             return UnknownAuthInfoBase.DeserializeUnknownAuthInfoBase(element);
         }
+
+        BinaryData IPersistableModel<AuthBaseInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AuthBaseInfo IPersistableModel<AuthBaseInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AuthBaseInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAuthBaseInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<AuthBaseInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

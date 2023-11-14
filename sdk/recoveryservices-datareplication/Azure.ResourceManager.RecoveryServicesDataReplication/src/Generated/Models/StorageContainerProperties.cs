@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Storage container properties. </summary>
     public partial class StorageContainerProperties
     {
-        /// <summary> Initializes a new instance of StorageContainerProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageContainerProperties"/>. </summary>
         /// <param name="name"> Gets or sets the Name. </param>
         /// <param name="clusterSharedVolumePath"> Gets or sets the ClusterSharedVolumePath. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="clusterSharedVolumePath"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             Name = name;
             ClusterSharedVolumePath = clusterSharedVolumePath;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageContainerProperties"/>. </summary>
+        /// <param name="name"> Gets or sets the Name. </param>
+        /// <param name="clusterSharedVolumePath"> Gets or sets the ClusterSharedVolumePath. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageContainerProperties(string name, string clusterSharedVolumePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ClusterSharedVolumePath = clusterSharedVolumePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageContainerProperties"/> for deserialization. </summary>
+        internal StorageContainerProperties()
+        {
         }
 
         /// <summary> Gets or sets the Name. </summary>

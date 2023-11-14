@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
     /// <summary> Appliance ArtifactProfile definition. </summary>
     public partial class ApplianceArtifactProfile
     {
-        /// <summary> Initializes a new instance of ApplianceArtifactProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplianceArtifactProfile"/>. </summary>
         internal ApplianceArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplianceArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplianceArtifactProfile"/>. </summary>
         /// <param name="endpoint"> Endpoint is the URL to upload artifacts to. </param>
-        internal ApplianceArtifactProfile(string endpoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplianceArtifactProfile(string endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Endpoint = endpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Endpoint is the URL to upload artifacts to. </summary>

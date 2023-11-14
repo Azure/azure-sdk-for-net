@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityConnectorEnvironment : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownEnvironmentData))]
+    public partial class SecurityConnectorEnvironment : IUtf8JsonSerializable, IJsonModel<SecurityConnectorEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorEnvironment>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SecurityConnectorEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SecurityConnectorEnvironment>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SecurityConnectorEnvironment>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("environmentType"u8);
             writer.WriteStringValue(EnvironmentType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityConnectorEnvironment DeserializeSecurityConnectorEnvironment(JsonElement element)
+        SecurityConnectorEnvironment IJsonModel<SecurityConnectorEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityConnectorEnvironment(document.RootElement, options);
+        }
+
+        internal static SecurityConnectorEnvironment DeserializeSecurityConnectorEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,5 +78,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             return UnknownEnvironmentData.DeserializeUnknownEnvironmentData(element);
         }
+
+        BinaryData IPersistableModel<SecurityConnectorEnvironment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SecurityConnectorEnvironment IPersistableModel<SecurityConnectorEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSecurityConnectorEnvironment(document.RootElement, options);
+        }
+
+        string IPersistableModel<SecurityConnectorEnvironment>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

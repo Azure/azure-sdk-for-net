@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,30 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure storage specific error information. </summary>
     public partial class WorkloadErrorInfo
     {
-        /// <summary> Initializes a new instance of WorkloadErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadErrorInfo"/>. </summary>
         public WorkloadErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadErrorInfo"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="errorTitle"> Title: Typically, the entity that the error pertains to. </param>
         /// <param name="recommendations"> List of localized recommendations for above error code. </param>
         /// <param name="additionalDetails"> Additional details for above error code. </param>
-        internal WorkloadErrorInfo(int? errorCode, string errorString, string errorTitle, IList<string> recommendations, string additionalDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadErrorInfo(int? errorCode, string errorString, string errorTitle, IList<string> recommendations, string additionalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             ErrorString = errorString;
             ErrorTitle = errorTitle;
             Recommendations = recommendations;
             AdditionalDetails = additionalDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code. </summary>

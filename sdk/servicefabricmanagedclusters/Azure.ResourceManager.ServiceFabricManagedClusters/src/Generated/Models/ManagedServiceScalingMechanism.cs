@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public abstract partial class ManagedServiceScalingMechanism
     {
-        /// <summary> Initializes a new instance of ManagedServiceScalingMechanism. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingMechanism"/>. </summary>
         protected ManagedServiceScalingMechanism()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceScalingMechanism. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingMechanism"/>. </summary>
         /// <param name="kind"> Specifies the mechanism associated with this scaling policy. </param>
-        internal ManagedServiceScalingMechanism(ServiceScalingMechanismKind kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceScalingMechanism(ServiceScalingMechanismKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the mechanism associated with this scaling policy. </summary>

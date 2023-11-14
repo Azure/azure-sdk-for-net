@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerBlobAuditingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerBlobAuditingPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerBlobAuditingPolicyData"/>. </summary>
         public SqlServerBlobAuditingPolicyData()
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SqlServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -138,7 +141,8 @@ namespace Azure.ResourceManager.Sql
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
         /// </param>
         /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
-        internal SqlServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isDevopsAuditEnabled, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isDevopsAuditEnabled, int? retentionDays, IList<string> auditActionsAndGroups, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isManagedIdentityInUse, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, Guid? storageAccountSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsDevopsAuditEnabled = isDevopsAuditEnabled;
             RetentionDays = retentionDays;
@@ -151,6 +155,7 @@ namespace Azure.ResourceManager.Sql
             StorageEndpoint = storageEndpoint;
             StorageAccountAccessKey = storageAccountAccessKey;
             StorageAccountSubscriptionId = storageAccountSubscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

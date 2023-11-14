@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Request to add a physical machine as a protectable item in a container. </summary>
     public partial class DiscoverProtectableItemContent
     {
-        /// <summary> Initializes a new instance of DiscoverProtectableItemContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiscoverProtectableItemContent"/>. </summary>
         public DiscoverProtectableItemContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiscoverProtectableItemContent"/>. </summary>
+        /// <param name="properties"> The properties of a discover protectable item request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiscoverProtectableItemContent(DiscoverProtectableItemProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The properties of a discover protectable item request. </summary>

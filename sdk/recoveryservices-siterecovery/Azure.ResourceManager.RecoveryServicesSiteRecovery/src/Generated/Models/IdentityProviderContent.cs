@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Identity provider input. </summary>
     public partial class IdentityProviderContent
     {
-        /// <summary> Initializes a new instance of IdentityProviderContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderContent"/>. </summary>
         /// <param name="tenantId"> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="applicationId"> The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
         /// <param name="objectId"> The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
@@ -32,6 +36,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ObjectId = objectId;
             Audience = audience;
             AadAuthority = aadAuthority;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderContent"/>. </summary>
+        /// <param name="tenantId"> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
+        /// <param name="applicationId"> The application/client Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
+        /// <param name="objectId"> The object Id of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
+        /// <param name="audience"> The intended Audience of the service principal with which the on-premise management/data plane components would communicate with our Azure services. </param>
+        /// <param name="aadAuthority"> The base authority for Azure Active Directory authentication. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdentityProviderContent(Guid tenantId, string applicationId, string objectId, string audience, string aadAuthority, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TenantId = tenantId;
+            ApplicationId = applicationId;
+            ObjectId = objectId;
+            Audience = audience;
+            AadAuthority = aadAuthority;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IdentityProviderContent"/> for deserialization. </summary>
+        internal IdentityProviderContent()
+        {
         }
 
         /// <summary> The tenant Id for the service principal with which the on-premise management/data plane components would communicate with our Azure services. </summary>

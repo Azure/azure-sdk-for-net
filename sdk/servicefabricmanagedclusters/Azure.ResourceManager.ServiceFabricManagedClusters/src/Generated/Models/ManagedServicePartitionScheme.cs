@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public abstract partial class ManagedServicePartitionScheme
     {
-        /// <summary> Initializes a new instance of ManagedServicePartitionScheme. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicePartitionScheme"/>. </summary>
         protected ManagedServicePartitionScheme()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServicePartitionScheme. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicePartitionScheme"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        internal ManagedServicePartitionScheme(PartitionScheme partitionScheme)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicePartitionScheme(PartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PartitionScheme = partitionScheme;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies how the service is partitioned. </summary>

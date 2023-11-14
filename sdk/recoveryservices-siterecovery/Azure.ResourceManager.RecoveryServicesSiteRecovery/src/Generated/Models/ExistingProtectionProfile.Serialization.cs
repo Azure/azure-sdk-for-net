@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ExistingProtectionProfile : IUtf8JsonSerializable
+    public partial class ExistingProtectionProfile : IUtf8JsonSerializable, IJsonModel<ExistingProtectionProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExistingProtectionProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ExistingProtectionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExistingProtectionProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExistingProtectionProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("protectionProfileId"u8);
             writer.WriteStringValue(ProtectionProfileId);
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExistingProtectionProfile DeserializeExistingProtectionProfile(JsonElement element)
+        ExistingProtectionProfile IJsonModel<ExistingProtectionProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExistingProtectionProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExistingProtectionProfile(document.RootElement, options);
+        }
+
+        internal static ExistingProtectionProfile DeserializeExistingProtectionProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string protectionProfileId = default;
             string resourceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionProfileId"u8))
@@ -42,8 +84,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resourceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExistingProtectionProfile(resourceType, protectionProfileId);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExistingProtectionProfile(resourceType, serializedAdditionalRawData, protectionProfileId);
         }
+
+        BinaryData IPersistableModel<ExistingProtectionProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExistingProtectionProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExistingProtectionProfile IPersistableModel<ExistingProtectionProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExistingProtectionProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExistingProtectionProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExistingProtectionProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

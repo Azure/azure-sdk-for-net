@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ServiceEmergingIssueData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceEmergingIssueData"/>. </summary>
         internal ServiceEmergingIssueData()
         {
             StatusBanners = new ChangeTrackingList<EmergingIssueBannerType>();
             StatusActiveEvents = new ChangeTrackingList<EmergingIssueActiveEventType>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEmergingIssueData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEmergingIssueData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +37,13 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="refreshedOn"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
         /// <param name="statusBanners"> The list of emerging issues of banner type. </param>
         /// <param name="statusActiveEvents"> The list of emerging issues of active event type. </param>
-        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshedOn, IReadOnlyList<EmergingIssueBannerType> statusBanners, IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceEmergingIssueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? refreshedOn, IReadOnlyList<EmergingIssueBannerType> statusBanners, IReadOnlyList<EmergingIssueActiveEventType> statusActiveEvents, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RefreshedOn = refreshedOn;
             StatusBanners = statusBanners;
             StatusActiveEvents = statusActiveEvents;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Timestamp for when last time refreshed for ongoing emerging issue. </summary>

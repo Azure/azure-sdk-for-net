@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Pricing information about the sku. </summary>
     public partial class ReservationCatalogMsrp
     {
-        /// <summary> Initializes a new instance of ReservationCatalogMsrp. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationCatalogMsrp"/>. </summary>
         internal ReservationCatalogMsrp()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationCatalogMsrp. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationCatalogMsrp"/>. </summary>
         /// <param name="p1Y"> Amount in pricing currency. Tax not included. </param>
         /// <param name="p3Y"> Amount in pricing currency. Tax not included. </param>
         /// <param name="p5Y"> Amount in pricing currency. Tax not included. </param>
-        internal ReservationCatalogMsrp(PurchasePrice p1Y, PurchasePrice p3Y, PurchasePrice p5Y)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationCatalogMsrp(PurchasePrice p1Y, PurchasePrice p3Y, PurchasePrice p5Y, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             P1Y = p1Y;
             P3Y = p3Y;
             P5Y = p5Y;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Amount in pricing currency. Tax not included. </summary>

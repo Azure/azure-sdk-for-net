@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Volume details. </summary>
     public partial class SiteRecoveryDiskVolumeDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDiskVolumeDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskVolumeDetails"/>. </summary>
         internal SiteRecoveryDiskVolumeDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDiskVolumeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskVolumeDetails"/>. </summary>
         /// <param name="label"> The volume label. </param>
         /// <param name="name"> The volume name. </param>
-        internal SiteRecoveryDiskVolumeDetails(string label, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryDiskVolumeDetails(string label, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Label = label;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The volume label. </summary>

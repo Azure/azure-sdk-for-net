@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The AutomationRulesList. </summary>
     internal partial class AutomationRulesList
     {
-        /// <summary> Initializes a new instance of AutomationRulesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRulesList"/>. </summary>
         internal AutomationRulesList()
         {
             Value = new ChangeTrackingList<SecurityInsightsAutomationRuleData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRulesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulesList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal AutomationRulesList(IReadOnlyList<SecurityInsightsAutomationRuleData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRulesList(IReadOnlyList<SecurityInsightsAutomationRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

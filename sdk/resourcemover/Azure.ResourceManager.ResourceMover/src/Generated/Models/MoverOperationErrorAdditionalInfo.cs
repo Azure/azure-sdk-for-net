@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -12,18 +13,23 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> The operation error info. </summary>
     public partial class MoverOperationErrorAdditionalInfo
     {
-        /// <summary> Initializes a new instance of MoverOperationErrorAdditionalInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverOperationErrorAdditionalInfo"/>. </summary>
         internal MoverOperationErrorAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverOperationErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverOperationErrorAdditionalInfo"/>. </summary>
         /// <param name="operationErrorAdditionalInfoType"> The error type. </param>
         /// <param name="info"> The operation error info. </param>
-        internal MoverOperationErrorAdditionalInfo(string operationErrorAdditionalInfoType, MoveErrorInfo info)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverOperationErrorAdditionalInfo(string operationErrorAdditionalInfoType, MoveErrorInfo info, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationErrorAdditionalInfoType = operationErrorAdditionalInfoType;
             Info = info;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error type. </summary>

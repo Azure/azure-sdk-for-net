@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -19,12 +20,15 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsIncidentCommentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentCommentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentCommentData"/>. </summary>
         public SecurityInsightsIncidentCommentData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentCommentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentCommentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +38,15 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="message"> The comment message. </param>
         /// <param name="author"> Describes the client that created the comment. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsIncidentCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string message, SecurityInsightsClientInfo author, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string message, SecurityInsightsClientInfo author, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Message = message;
             Author = author;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time the comment was created. </summary>

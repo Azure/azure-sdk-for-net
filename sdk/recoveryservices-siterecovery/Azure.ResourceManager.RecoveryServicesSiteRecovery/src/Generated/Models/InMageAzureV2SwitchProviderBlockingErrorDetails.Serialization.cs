@@ -5,16 +5,121 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2SwitchProviderBlockingErrorDetails
+    public partial class InMageAzureV2SwitchProviderBlockingErrorDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2SwitchProviderBlockingErrorDetails>
     {
-        internal static InMageAzureV2SwitchProviderBlockingErrorDetails DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2SwitchProviderBlockingErrorDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<InMageAzureV2SwitchProviderBlockingErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InMageAzureV2SwitchProviderBlockingErrorDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InMageAzureV2SwitchProviderBlockingErrorDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorCode))
+                {
+                    writer.WritePropertyName("errorCode"u8);
+                    writer.WriteStringValue(ErrorCode);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PossibleCauses))
+                {
+                    writer.WritePropertyName("possibleCauses"u8);
+                    writer.WriteStringValue(PossibleCauses);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RecommendedAction))
+                {
+                    writer.WritePropertyName("recommendedAction"u8);
+                    writer.WriteStringValue(RecommendedAction);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ErrorMessageParameters))
+                {
+                    writer.WritePropertyName("errorMessageParameters"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ErrorMessageParameters)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ErrorTags))
+                {
+                    writer.WritePropertyName("errorTags"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in ErrorTags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageAzureV2SwitchProviderBlockingErrorDetails IJsonModel<InMageAzureV2SwitchProviderBlockingErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderBlockingErrorDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(document.RootElement, options);
+        }
+
+        internal static InMageAzureV2SwitchProviderBlockingErrorDetails DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +130,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recommendedAction = default;
             Optional<IReadOnlyDictionary<string, string>> errorMessageParameters = default;
             Optional<IReadOnlyDictionary<string, string>> errorTags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -75,8 +182,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     errorTags = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageAzureV2SwitchProviderBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToDictionary(errorMessageParameters), Optional.ToDictionary(errorTags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageAzureV2SwitchProviderBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToDictionary(errorMessageParameters), Optional.ToDictionary(errorTags), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InMageAzureV2SwitchProviderBlockingErrorDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderBlockingErrorDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InMageAzureV2SwitchProviderBlockingErrorDetails IPersistableModel<InMageAzureV2SwitchProviderBlockingErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderBlockingErrorDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInMageAzureV2SwitchProviderBlockingErrorDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<InMageAzureV2SwitchProviderBlockingErrorDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

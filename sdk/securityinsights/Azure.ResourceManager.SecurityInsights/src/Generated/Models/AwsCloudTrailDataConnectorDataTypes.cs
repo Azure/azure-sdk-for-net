@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The available data types for Amazon Web Services CloudTrail data connector. </summary>
     internal partial class AwsCloudTrailDataConnectorDataTypes
     {
-        /// <summary> Initializes a new instance of AwsCloudTrailDataConnectorDataTypes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AwsCloudTrailDataConnectorDataTypes"/>. </summary>
         public AwsCloudTrailDataConnectorDataTypes()
         {
         }
 
-        /// <summary> Initializes a new instance of AwsCloudTrailDataConnectorDataTypes. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsCloudTrailDataConnectorDataTypes"/>. </summary>
         /// <param name="logs"> Logs data type. </param>
-        internal AwsCloudTrailDataConnectorDataTypes(AwsCloudTrailDataConnectorDataTypesLogs logs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AwsCloudTrailDataConnectorDataTypes(AwsCloudTrailDataConnectorDataTypesLogs logs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Logs = logs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Logs data type. </summary>

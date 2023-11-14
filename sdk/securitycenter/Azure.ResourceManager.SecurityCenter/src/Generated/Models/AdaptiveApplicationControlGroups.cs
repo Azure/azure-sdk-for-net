@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Represents a list of VM/server groups and set of rules that are Recommended by Microsoft Defender for Cloud to be allowed. </summary>
     internal partial class AdaptiveApplicationControlGroups
     {
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlGroups. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlGroups"/>. </summary>
         internal AdaptiveApplicationControlGroups()
         {
             Value = new ChangeTrackingList<AdaptiveApplicationControlGroupData>();
         }
 
-        /// <summary> Initializes a new instance of AdaptiveApplicationControlGroups. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdaptiveApplicationControlGroups"/>. </summary>
         /// <param name="value"></param>
-        internal AdaptiveApplicationControlGroups(IReadOnlyList<AdaptiveApplicationControlGroupData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdaptiveApplicationControlGroups(IReadOnlyList<AdaptiveApplicationControlGroupData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

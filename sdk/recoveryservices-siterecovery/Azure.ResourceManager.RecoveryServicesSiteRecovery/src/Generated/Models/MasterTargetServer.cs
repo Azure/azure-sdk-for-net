@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of a Master Target Server. </summary>
     public partial class MasterTargetServer
     {
-        /// <summary> Initializes a new instance of MasterTargetServer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MasterTargetServer"/>. </summary>
         internal MasterTargetServer()
         {
             RetentionVolumes = new ChangeTrackingList<SiteRecoveryRetentionVolume>();
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of MasterTargetServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="MasterTargetServer"/>. </summary>
         /// <param name="id"> The server Id. </param>
         /// <param name="ipAddress"> The IP address of the server. </param>
         /// <param name="name"> The server name. </param>
@@ -43,7 +46,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="marsAgentExpireOn"> MARS agent expiry date. </param>
         /// <param name="agentVersionDetails"> Agent version details. </param>
         /// <param name="marsAgentVersionDetails"> Mars agent version details. </param>
-        internal MasterTargetServer(string id, IPAddress ipAddress, string name, string osType, string agentVersion, DateTimeOffset? lastHeartbeatReceivedOn, string versionStatus, IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes, IReadOnlyList<SiteRecoveryDataStore> dataStores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? diskCount, string osVersion, DateTimeOffset? agentExpireOn, string marsAgentVersion, DateTimeOffset? marsAgentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, SiteRecoveryVersionDetails marsAgentVersionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MasterTargetServer(string id, IPAddress ipAddress, string name, string osType, string agentVersion, DateTimeOffset? lastHeartbeatReceivedOn, string versionStatus, IReadOnlyList<SiteRecoveryRetentionVolume> retentionVolumes, IReadOnlyList<SiteRecoveryDataStore> dataStores, IReadOnlyList<SiteRecoveryHealthError> validationErrors, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? diskCount, string osVersion, DateTimeOffset? agentExpireOn, string marsAgentVersion, DateTimeOffset? marsAgentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, SiteRecoveryVersionDetails marsAgentVersionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             IPAddress = ipAddress;
@@ -63,6 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsAgentExpireOn = marsAgentExpireOn;
             AgentVersionDetails = agentVersionDetails;
             MarsAgentVersionDetails = marsAgentVersionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The server Id. </summary>

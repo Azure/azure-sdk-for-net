@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryEventProviderSpecificDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEventProviderSpecificDetails"/>. </summary>
         protected SiteRecoveryEventProviderSpecificDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEventProviderSpecificDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEventProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        internal SiteRecoveryEventProviderSpecificDetails(string instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryEventProviderSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the class type. Overridden in derived classes. </summary>

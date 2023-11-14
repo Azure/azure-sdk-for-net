@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Namespace/ServiceBus Connection String. </summary>
     public partial class ServiceBusAccessKeys
     {
-        /// <summary> Initializes a new instance of ServiceBusAccessKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusAccessKeys"/>. </summary>
         internal ServiceBusAccessKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusAccessKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusAccessKeys"/>. </summary>
         /// <param name="primaryConnectionString"> Primary connection string of the created namespace authorization rule. </param>
         /// <param name="secondaryConnectionString"> Secondary connection string of the created namespace authorization rule. </param>
         /// <param name="aliasPrimaryConnectionString"> Primary connection string of the alias if GEO DR is enabled. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="primaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
         /// <param name="secondaryKey"> A base64-encoded 256-bit primary key for signing and validating the SAS token. </param>
         /// <param name="keyName"> A string that describes the authorization rule. </param>
-        internal ServiceBusAccessKeys(string primaryConnectionString, string secondaryConnectionString, string aliasPrimaryConnectionString, string aliasSecondaryConnectionString, string primaryKey, string secondaryKey, string keyName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusAccessKeys(string primaryConnectionString, string secondaryConnectionString, string aliasPrimaryConnectionString, string aliasSecondaryConnectionString, string primaryKey, string secondaryKey, string keyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             KeyName = keyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Primary connection string of the created namespace authorization rule. </summary>

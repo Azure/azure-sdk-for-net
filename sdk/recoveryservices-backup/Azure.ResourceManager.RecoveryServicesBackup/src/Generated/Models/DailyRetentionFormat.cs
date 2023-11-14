@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Daily retention format. </summary>
     internal partial class DailyRetentionFormat
     {
-        /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DailyRetentionFormat"/>. </summary>
         public DailyRetentionFormat()
         {
             DaysOfTheMonth = new ChangeTrackingList<BackupDay>();
         }
 
-        /// <summary> Initializes a new instance of DailyRetentionFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DailyRetentionFormat"/>. </summary>
         /// <param name="daysOfTheMonth"> List of days of the month. </param>
-        internal DailyRetentionFormat(IList<BackupDay> daysOfTheMonth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DailyRetentionFormat(IList<BackupDay> daysOfTheMonth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DaysOfTheMonth = daysOfTheMonth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of days of the month. </summary>

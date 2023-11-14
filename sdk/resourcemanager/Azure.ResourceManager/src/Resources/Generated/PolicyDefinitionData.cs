@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class PolicyDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionData"/>. </summary>
         public PolicyDefinitionData()
         {
             Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameter>();
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +40,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="policyRule"> The policy rule. </param>
         /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
         /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string mode, string displayName, string description, BinaryData policyRule, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PolicyType = policyType;
             Mode = mode;
@@ -46,6 +50,7 @@ namespace Azure.ResourceManager.Resources
             PolicyRule = policyRule;
             Metadata = metadata;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </summary>

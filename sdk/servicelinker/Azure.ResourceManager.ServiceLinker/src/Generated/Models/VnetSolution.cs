@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The VNet solution for linker. </summary>
     internal partial class VnetSolution
     {
-        /// <summary> Initializes a new instance of VnetSolution. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VnetSolution"/>. </summary>
         public VnetSolution()
         {
         }
 
-        /// <summary> Initializes a new instance of VnetSolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="VnetSolution"/>. </summary>
         /// <param name="solutionType"> Type of VNet solution. </param>
-        internal VnetSolution(VnetSolutionType? solutionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VnetSolution(VnetSolutionType? solutionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionType = solutionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of VNet solution. </summary>

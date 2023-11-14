@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     /// </summary>
     public partial class DataReplicationVaultData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataReplicationVaultData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataReplicationVaultData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationVaultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,9 +36,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Vault properties. </param>
-        internal DataReplicationVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataReplicationVaultProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationVaultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataReplicationVaultProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationVaultData"/> for deserialization. </summary>
+        internal DataReplicationVaultData()
+        {
         }
 
         /// <summary> Vault properties. </summary>

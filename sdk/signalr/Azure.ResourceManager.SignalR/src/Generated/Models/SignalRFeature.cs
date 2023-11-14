@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Feature of a resource, which controls the runtime behavior. </summary>
     public partial class SignalRFeature
     {
-        /// <summary> Initializes a new instance of SignalRFeature. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRFeature"/>. </summary>
         /// <param name="flag">
         /// FeatureFlags is the supported features of Azure SignalR service.
         /// - ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SignalRFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRFeature"/>. </summary>
         /// <param name="flag">
         /// FeatureFlags is the supported features of Azure SignalR service.
         /// - ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.
@@ -43,11 +46,18 @@ namespace Azure.ResourceManager.SignalR.Models
         /// </param>
         /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
         /// <param name="properties"> Optional properties related to this feature. </param>
-        internal SignalRFeature(SignalRFeatureFlag flag, string value, IDictionary<string, string> properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRFeature(SignalRFeatureFlag flag, string value, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Flag = flag;
             Value = value;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRFeature"/> for deserialization. </summary>
+        internal SignalRFeature()
+        {
         }
 
         /// <summary>

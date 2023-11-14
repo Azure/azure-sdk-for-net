@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,9 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Common input details for network mapping operation. </summary>
     public partial class UpdateNetworkMappingProperties
     {
-        /// <summary> Initializes a new instance of UpdateNetworkMappingProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateNetworkMappingProperties"/>. </summary>
         public UpdateNetworkMappingProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateNetworkMappingProperties"/>. </summary>
+        /// <param name="recoveryFabricName"> Recovery fabric name. </param>
+        /// <param name="recoveryNetworkId"> Recovery network Id. </param>
+        /// <param name="fabricSpecificDetails">
+        /// Fabrics specific input network Id.
+        /// Please note <see cref="FabricSpecificUpdateNetworkMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AUpdateNetworkMappingContent"/>, <see cref="VmmToAzureUpdateNetworkMappingContent"/> and <see cref="VmmToVmmUpdateNetworkMappingContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateNetworkMappingProperties(string recoveryFabricName, ResourceIdentifier recoveryNetworkId, FabricSpecificUpdateNetworkMappingContent fabricSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RecoveryFabricName = recoveryFabricName;
+            RecoveryNetworkId = recoveryNetworkId;
+            FabricSpecificDetails = fabricSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Recovery fabric name. </summary>

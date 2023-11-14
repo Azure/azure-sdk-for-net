@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> The name of usage. </summary>
     public partial class VaultUsageNameInfo
     {
-        /// <summary> Initializes a new instance of VaultUsageNameInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultUsageNameInfo"/>. </summary>
         internal VaultUsageNameInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultUsageNameInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUsageNameInfo"/>. </summary>
         /// <param name="value"> Value of usage. </param>
         /// <param name="localizedValue"> Localized value of usage. </param>
-        internal VaultUsageNameInfo(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultUsageNameInfo(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of usage. </summary>

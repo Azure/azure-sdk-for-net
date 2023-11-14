@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Container pairing update input. </summary>
     internal partial class UpdateProtectionContainerMappingContentProperties
     {
-        /// <summary> Initializes a new instance of UpdateProtectionContainerMappingContentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateProtectionContainerMappingContentProperties"/>. </summary>
         public UpdateProtectionContainerMappingContentProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateProtectionContainerMappingContentProperties"/>. </summary>
+        /// <param name="providerSpecificContent">
+        /// Provider specific input for updating protection container mapping.
+        /// Please note <see cref="ReplicationProviderSpecificUpdateContainerMappingContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AUpdateContainerMappingContent"/> and <see cref="InMageRcmUpdateContainerMappingContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateProtectionContainerMappingContentProperties(ReplicationProviderSpecificUpdateContainerMappingContent providerSpecificContent, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ProviderSpecificContent = providerSpecificContent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereDeploymentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereDeploymentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereDeploymentData"/>. </summary>
         public SphereDeploymentData()
         {
             DeployedImages = new ChangeTrackingList<SphereImageData>();
         }
 
-        /// <summary> Initializes a new instance of SphereDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,12 +50,14 @@ namespace Azure.ResourceManager.Sphere
         /// The status of the last operation.
         /// Serialized Name: Deployment.properties.provisioningState
         /// </param>
-        internal SphereDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, IList<SphereImageData> deployedImages, DateTimeOffset? deploymentDateUtc, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, IList<SphereImageData> deployedImages, DateTimeOffset? deploymentDateUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeploymentId = deploymentId;
             DeployedImages = deployedImages;
             DeploymentDateUtc = deploymentDateUtc;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

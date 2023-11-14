@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The action to be executed by a job step. </summary>
     public partial class JobStepAction
     {
-        /// <summary> Initializes a new instance of JobStepAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobStepAction"/>. </summary>
         /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobStepAction(string value)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of JobStepAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobStepAction"/>. </summary>
         /// <param name="actionType"> Type of action being executed by the job step. </param>
         /// <param name="source"> The source of the action to execute. </param>
         /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>
-        internal JobStepAction(JobStepActionType? actionType, JobStepActionSource? source, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobStepAction(JobStepActionType? actionType, JobStepActionSource? source, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
             Source = source;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobStepAction"/> for deserialization. </summary>
+        internal JobStepAction()
+        {
         }
 
         /// <summary> Type of action being executed by the job step. </summary>

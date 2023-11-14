@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -16,13 +17,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// <summary> A class representing the ResourceGuardProxy data model. </summary>
     public partial class ResourceGuardProxyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ResourceGuardProxyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ResourceGuardProxyData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,10 +35,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="location"> The location. </param>
         /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal ResourceGuardProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProxyProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardProxyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceGuardProxyProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyData"/> for deserialization. </summary>
+        internal ResourceGuardProxyData()
+        {
         }
 
         /// <summary> ResourceGuardProxyBaseResource properties. </summary>

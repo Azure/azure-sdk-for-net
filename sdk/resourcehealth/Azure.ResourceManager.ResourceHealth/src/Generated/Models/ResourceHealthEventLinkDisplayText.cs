@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Display text of link. </summary>
     public partial class ResourceHealthEventLinkDisplayText
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventLinkDisplayText. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLinkDisplayText"/>. </summary>
         internal ResourceHealthEventLinkDisplayText()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventLinkDisplayText. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventLinkDisplayText"/>. </summary>
         /// <param name="value"> Display text of link. </param>
         /// <param name="localizedValue"> Localized display text of link. </param>
-        internal ResourceHealthEventLinkDisplayText(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventLinkDisplayText(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display text of link. </summary>

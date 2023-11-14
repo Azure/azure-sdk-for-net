@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> DNSZone information. </summary>
     public partial class DnsZone
     {
-        /// <summary> Initializes a new instance of DnsZone. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsZone"/>. </summary>
         public DnsZone()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsZone. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsZone"/>. </summary>
         /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
-        internal DnsZone(VaultSubResourceType? subResource)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsZone(VaultSubResourceType? subResource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubResource = subResource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </summary>

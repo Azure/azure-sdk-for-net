@@ -14,19 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Extended info class details. </summary>
     public partial class WorkloadSqlRecoveryPointExtendedInfo
     {
-        /// <summary> Initializes a new instance of WorkloadSqlRecoveryPointExtendedInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
         public WorkloadSqlRecoveryPointExtendedInfo()
         {
             DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadSqlRecoveryPointExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
         /// <param name="dataDirectoryInfoCapturedOn"> UTC time at which data directory info was captured. </param>
         /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
-        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataDirectoryInfoCapturedOn = dataDirectoryInfoCapturedOn;
             DataDirectoryPaths = dataDirectoryPaths;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> UTC time at which data directory info was captured. </summary>

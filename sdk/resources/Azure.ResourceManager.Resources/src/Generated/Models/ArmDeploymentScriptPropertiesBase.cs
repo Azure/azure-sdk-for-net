@@ -6,15 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common properties for the deployment script. </summary>
     internal partial class ArmDeploymentScriptPropertiesBase
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptPropertiesBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPropertiesBase"/>. </summary>
         internal ArmDeploymentScriptPropertiesBase()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPropertiesBase"/>. </summary>
+        /// <param name="containerSettings"> Container settings. </param>
+        /// <param name="storageAccountSettings"> Storage Account settings. </param>
+        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
+        /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
+        /// <param name="status"> Contains the results of script execution. </param>
+        /// <param name="outputs"> List of script outputs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentScriptPropertiesBase(ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContainerSettings = containerSettings;
+            StorageAccountSettings = storageAccountSettings;
+            CleanupPreference = cleanupPreference;
+            ProvisioningState = provisioningState;
+            Status = status;
+            Outputs = outputs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Container settings. </summary>

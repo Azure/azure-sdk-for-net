@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -16,12 +17,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// </summary>
     public abstract partial class ResourceCertificateDetails
     {
-        /// <summary> Initializes a new instance of ResourceCertificateDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/>. </summary>
         protected ResourceCertificateDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceCertificateDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceCertificateDetails"/>. </summary>
         /// <param name="authType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
         /// <param name="friendlyName"> Certificate friendly name. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
-        internal ResourceCertificateDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceCertificateDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
             Certificate = certificate;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Thumbprint = thumbprint;
             ValidStartOn = validStartOn;
             ValidEndOn = validEndOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>

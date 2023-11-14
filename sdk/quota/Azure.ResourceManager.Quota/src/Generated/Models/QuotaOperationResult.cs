@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> The QuotaOperationResult. </summary>
     public partial class QuotaOperationResult
     {
-        /// <summary> Initializes a new instance of QuotaOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaOperationResult"/>. </summary>
         internal QuotaOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaOperationResult"/>. </summary>
         /// <param name="name"></param>
         /// <param name="display"></param>
         /// <param name="origin"></param>
-        internal QuotaOperationResult(string name, QuotaOperationDisplay display, string origin)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaOperationResult(string name, QuotaOperationDisplay display, string origin, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Display = display;
             Origin = origin;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

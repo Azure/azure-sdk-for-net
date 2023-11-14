@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SphereCatalogCatalogsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SphereCatalogCatalogsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), SphereCatalogCatalogsClientDiagnostics, Pipeline, "MockableSphereSubscriptionResource.GetSphereCatalogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), SphereCatalogCatalogsClientDiagnostics, Pipeline, "MockableSphereSubscriptionResource.GetSphereCatalogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sphere.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SphereCatalogCatalogsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SphereCatalogCatalogsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), SphereCatalogCatalogsClientDiagnostics, Pipeline, "MockableSphereSubscriptionResource.GetSphereCatalogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereCatalogResource(Client, SphereCatalogData.DeserializeSphereCatalogData(e)), SphereCatalogCatalogsClientDiagnostics, Pipeline, "MockableSphereSubscriptionResource.GetSphereCatalogs", "value", "nextLink", cancellationToken);
         }
     }
 }

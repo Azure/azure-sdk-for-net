@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,19 +16,274 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class ManagedDatabaseRestoreDetailData : IUtf8JsonSerializable
+    public partial class ManagedDatabaseRestoreDetailData : IUtf8JsonSerializable, IJsonModel<ManagedDatabaseRestoreDetailData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDatabaseRestoreDetailData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedDatabaseRestoreDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedDatabaseRestoreDetailData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedDatabaseRestoreDetailData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RestoreType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(RestoreType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BlockReason))
+                {
+                    writer.WritePropertyName("blockReason"u8);
+                    writer.WriteStringValue(BlockReason);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastUploadedFileName))
+                {
+                    writer.WritePropertyName("lastUploadedFileName"u8);
+                    writer.WriteStringValue(LastUploadedFileName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastUploadedFileOn))
+                {
+                    writer.WritePropertyName("lastUploadedFileTime"u8);
+                    writer.WriteStringValue(LastUploadedFileOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastRestoredFileName))
+                {
+                    writer.WritePropertyName("lastRestoredFileName"u8);
+                    writer.WriteStringValue(LastRestoredFileName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastRestoredFileOn))
+                {
+                    writer.WritePropertyName("lastRestoredFileTime"u8);
+                    writer.WriteStringValue(LastRestoredFileOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CompletedPercent))
+                {
+                    writer.WritePropertyName("percentCompleted"u8);
+                    writer.WriteNumberValue(CompletedPercent.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentRestoredSizeInMB))
+                {
+                    writer.WritePropertyName("currentRestoredSizeMB"u8);
+                    writer.WriteNumberValue(CurrentRestoredSizeInMB.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentRestorePlanSizeInMB))
+                {
+                    writer.WritePropertyName("currentRestorePlanSizeMB"u8);
+                    writer.WriteNumberValue(CurrentRestorePlanSizeInMB.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentBackupType))
+                {
+                    writer.WritePropertyName("currentBackupType"u8);
+                    writer.WriteStringValue(CurrentBackupType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentRestoringFileName))
+                {
+                    writer.WritePropertyName("currentRestoringFileName"u8);
+                    writer.WriteStringValue(CurrentRestoringFileName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfFilesFound))
+                {
+                    writer.WritePropertyName("numberOfFilesDetected"u8);
+                    writer.WriteNumberValue(NumberOfFilesFound.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfFilesQueued))
+                {
+                    writer.WritePropertyName("numberOfFilesQueued"u8);
+                    writer.WriteNumberValue(NumberOfFilesQueued.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfFilesSkipped))
+                {
+                    writer.WritePropertyName("numberOfFilesSkipped"u8);
+                    writer.WriteNumberValue(NumberOfFilesSkipped.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfFilesRestoring))
+                {
+                    writer.WritePropertyName("numberOfFilesRestoring"u8);
+                    writer.WriteNumberValue(NumberOfFilesRestoring.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfFilesRestored))
+                {
+                    writer.WritePropertyName("numberOfFilesRestored"u8);
+                    writer.WriteNumberValue(NumberOfFilesRestored.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NumberOfFilesUnrestorable))
+                {
+                    writer.WritePropertyName("numberOfFilesUnrestorable"u8);
+                    writer.WriteNumberValue(NumberOfFilesUnrestorable.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(FullBackupSets))
+                {
+                    writer.WritePropertyName("fullBackupSets"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in FullBackupSets)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(DiffBackupSets))
+                {
+                    writer.WritePropertyName("diffBackupSets"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in DiffBackupSets)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(LogBackupSets))
+                {
+                    writer.WritePropertyName("logBackupSets"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in LogBackupSets)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(UnrestorableFileList))
+                {
+                    writer.WritePropertyName("unrestorableFiles"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in UnrestorableFileList)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedDatabaseRestoreDetailData DeserializeManagedDatabaseRestoreDetailData(JsonElement element)
+        ManagedDatabaseRestoreDetailData IJsonModel<ManagedDatabaseRestoreDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedDatabaseRestoreDetailData(document.RootElement, options);
+        }
+
+        internal static ManagedDatabaseRestoreDetailData DeserializeManagedDatabaseRestoreDetailData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +314,8 @@ namespace Azure.ResourceManager.Sql
             Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> diffBackupSets = default;
             Optional<IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties>> logBackupSets = default;
             Optional<IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>> unrestorableFiles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -285,8 +544,38 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedDatabaseRestoreDetailData(id, name, type, systemData.Value, type0.Value, status.Value, blockReason.Value, lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToNullable(currentRestoredSizeMB), Optional.ToNullable(currentRestorePlanSizeMB), currentBackupType.Value, currentRestoringFileName.Value, Optional.ToNullable(numberOfFilesDetected), Optional.ToNullable(numberOfFilesQueued), Optional.ToNullable(numberOfFilesSkipped), Optional.ToNullable(numberOfFilesRestoring), Optional.ToNullable(numberOfFilesRestored), Optional.ToNullable(numberOfFilesUnrestorable), Optional.ToList(fullBackupSets), Optional.ToList(diffBackupSets), Optional.ToList(logBackupSets), Optional.ToList(unrestorableFiles));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedDatabaseRestoreDetailData(id, name, type, systemData.Value, type0.Value, status.Value, blockReason.Value, lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToNullable(currentRestoredSizeMB), Optional.ToNullable(currentRestorePlanSizeMB), currentBackupType.Value, currentRestoringFileName.Value, Optional.ToNullable(numberOfFilesDetected), Optional.ToNullable(numberOfFilesQueued), Optional.ToNullable(numberOfFilesSkipped), Optional.ToNullable(numberOfFilesRestoring), Optional.ToNullable(numberOfFilesRestored), Optional.ToNullable(numberOfFilesUnrestorable), Optional.ToList(fullBackupSets), Optional.ToList(diffBackupSets), Optional.ToList(logBackupSets), Optional.ToList(unrestorableFiles), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedDatabaseRestoreDetailData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedDatabaseRestoreDetailData IPersistableModel<ManagedDatabaseRestoreDetailData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedDatabaseRestoreDetailData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedDatabaseRestoreDetailData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

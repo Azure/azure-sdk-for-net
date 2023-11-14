@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Security Settings of the vault. </summary>
     public partial class RecoveryServicesSecuritySettings
     {
-        /// <summary> Initializes a new instance of RecoveryServicesSecuritySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSecuritySettings"/>. </summary>
         public RecoveryServicesSecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSecuritySettings"/>. </summary>
         /// <param name="immutabilitySettings"> Immutability Settings of a vault. </param>
         /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
         /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
-        internal RecoveryServicesSecuritySettings(ImmutabilitySettings immutabilitySettings, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesSecuritySettings(ImmutabilitySettings immutabilitySettings, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImmutabilitySettings = immutabilitySettings;
             SoftDeleteSettings = softDeleteSettings;
             MultiUserAuthorization = multiUserAuthorization;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Immutability Settings of a vault. </summary>

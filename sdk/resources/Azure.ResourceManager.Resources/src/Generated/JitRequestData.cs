@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class JitRequestData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of JitRequestData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitRequestData"/>. </summary>
         /// <param name="location"> The location. </param>
         public JitRequestData(AzureLocation location) : base(location)
         {
             JitAuthorizationPolicies = new ChangeTrackingList<JitAuthorizationPolicies>();
         }
 
-        /// <summary> Initializes a new instance of JitRequestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="JitRequestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestState"> The JIT request state. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal JitRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, Guid? publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ResourcesProvisioningState? provisioningState, JitRequestState? jitRequestState, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, Guid? publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ResourcesProvisioningState? provisioningState, JitRequestState? jitRequestState, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ApplicationResourceId = applicationResourceId;
             PublisherTenantId = publisherTenantId;
@@ -51,6 +55,12 @@ namespace Azure.ResourceManager.Resources
             JitRequestState = jitRequestState;
             CreatedBy = createdBy;
             UpdatedBy = updatedBy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitRequestData"/> for deserialization. </summary>
+        internal JitRequestData()
+        {
         }
 
         /// <summary> The parent application id. </summary>

@@ -5,28 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Common settings field for backup management. </summary>
     public partial class BackupCommonSettings
     {
-        /// <summary> Initializes a new instance of BackupCommonSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupCommonSettings"/>. </summary>
         public BackupCommonSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupCommonSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupCommonSettings"/>. </summary>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="isSqlCompression"> SQL compression flag. </param>
         /// <param name="isCompression">
         /// Workload compression flag. This has been added so that 'isSqlCompression'
         /// will be deprecated once clients upgrade to consider this flag.
         /// </param>
-        internal BackupCommonSettings(string timeZone, bool? isSqlCompression, bool? isCompression)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupCommonSettings(string timeZone, bool? isSqlCompression, bool? isCompression, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeZone = timeZone;
             IsSqlCompression = isSqlCompression;
             IsCompression = isCompression;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </summary>

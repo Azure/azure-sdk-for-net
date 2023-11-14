@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Metadata resource. </summary>
     public partial class SelfHelpSolutionMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         public SelfHelpSolutionMetadata()
         {
             Solutions = new ChangeTrackingList<SolutionMetadataProperties>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="solutions"> List of metadata. </param>
-        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SolutionMetadataProperties> solutions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SolutionMetadataProperties> solutions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Solutions = solutions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of metadata. </summary>

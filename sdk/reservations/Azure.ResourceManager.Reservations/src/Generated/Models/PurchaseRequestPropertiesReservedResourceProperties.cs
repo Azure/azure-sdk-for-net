@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
     internal partial class PurchaseRequestPropertiesReservedResourceProperties
     {
-        /// <summary> Initializes a new instance of PurchaseRequestPropertiesReservedResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurchaseRequestPropertiesReservedResourceProperties"/>. </summary>
         public PurchaseRequestPropertiesReservedResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of PurchaseRequestPropertiesReservedResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchaseRequestPropertiesReservedResourceProperties"/>. </summary>
         /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
-        internal PurchaseRequestPropertiesReservedResourceProperties(InstanceFlexibility? instanceFlexibility)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurchaseRequestPropertiesReservedResourceProperties(InstanceFlexibility? instanceFlexibility, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceFlexibility = instanceFlexibility;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>

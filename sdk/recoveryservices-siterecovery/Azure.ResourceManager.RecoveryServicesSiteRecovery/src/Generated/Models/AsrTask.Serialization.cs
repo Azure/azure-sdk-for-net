@@ -7,15 +7,129 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class AsrTask
+    public partial class AsrTask : IUtf8JsonSerializable, IJsonModel<AsrTask>
     {
-        internal static AsrTask DeserializeAsrTask(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AsrTask>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AsrTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AsrTask>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AsrTask>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TaskId))
+            {
+                writer.WritePropertyName("taskId"u8);
+                writer.WriteStringValue(TaskId);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(AllowedActions))
+            {
+                writer.WritePropertyName("allowedActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (Optional.IsDefined(StateDescription))
+            {
+                writer.WritePropertyName("stateDescription"u8);
+                writer.WriteStringValue(StateDescription);
+            }
+            if (Optional.IsDefined(TaskType))
+            {
+                writer.WritePropertyName("taskType"u8);
+                writer.WriteStringValue(TaskType);
+            }
+            if (Optional.IsDefined(CustomDetails))
+            {
+                writer.WritePropertyName("customDetails"u8);
+                writer.WriteObjectValue(CustomDetails);
+            }
+            if (Optional.IsDefined(GroupTaskCustomDetails))
+            {
+                writer.WritePropertyName("groupTaskCustomDetails"u8);
+                writer.WriteObjectValue(GroupTaskCustomDetails);
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AsrTask IJsonModel<AsrTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AsrTask)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAsrTask(document.RootElement, options);
+        }
+
+        internal static AsrTask DeserializeAsrTask(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +146,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<SiteRecoveryTaskTypeDetails> customDetails = default;
             Optional<SiteRecoveryGroupTaskDetails> groupTaskCustomDetails = default;
             Optional<IReadOnlyList<SiteRecoveryJobErrorDetails>> errors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskId"u8))
@@ -128,8 +244,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     errors = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AsrTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, Optional.ToList(errors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AsrTask(taskId.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(allowedActions), friendlyName.Value, state.Value, stateDescription.Value, taskType.Value, customDetails.Value, groupTaskCustomDetails.Value, Optional.ToList(errors), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AsrTask>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AsrTask)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AsrTask IPersistableModel<AsrTask>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AsrTask)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAsrTask(document.RootElement, options);
+        }
+
+        string IPersistableModel<AsrTask>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

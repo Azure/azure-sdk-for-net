@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,9 +14,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Storage mapping input properties. </summary>
     internal partial class StorageMappingProperties
     {
-        /// <summary> Initializes a new instance of StorageMappingProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageMappingProperties"/>. </summary>
         public StorageMappingProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageMappingProperties"/>. </summary>
+        /// <param name="targetStorageClassificationId"> The ID of the storage object. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMappingProperties(ResourceIdentifier targetStorageClassificationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetStorageClassificationId = targetStorageClassificationId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the storage object. </summary>

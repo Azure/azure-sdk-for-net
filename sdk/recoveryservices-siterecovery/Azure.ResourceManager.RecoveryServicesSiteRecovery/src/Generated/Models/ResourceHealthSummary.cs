@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Base class to define the health summary of the resources contained under an Arm resource. </summary>
     public partial class ResourceHealthSummary
     {
-        /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthSummary"/>. </summary>
         internal ResourceHealthSummary()
         {
             Issues = new ChangeTrackingList<HealthErrorSummary>();
             CategorizedResourceCounts = new ChangeTrackingDictionary<string, int>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthSummary"/>. </summary>
         /// <param name="resourceCount"> The count of total resources under the container. </param>
         /// <param name="issues"> The list of summary of health errors across the resources under the container. </param>
         /// <param name="categorizedResourceCounts"> The categorized resource counts. </param>
-        internal ResourceHealthSummary(int? resourceCount, IReadOnlyList<HealthErrorSummary> issues, IReadOnlyDictionary<string, int> categorizedResourceCounts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthSummary(int? resourceCount, IReadOnlyList<HealthErrorSummary> issues, IReadOnlyDictionary<string, int> categorizedResourceCounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceCount = resourceCount;
             Issues = issues;
             CategorizedResourceCounts = categorizedResourceCounts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The count of total resources under the container. </summary>

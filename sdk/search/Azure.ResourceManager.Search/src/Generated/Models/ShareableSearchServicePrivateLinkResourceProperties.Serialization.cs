@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class ShareableSearchServicePrivateLinkResourceProperties
+    public partial class ShareableSearchServicePrivateLinkResourceProperties : IUtf8JsonSerializable, IJsonModel<ShareableSearchServicePrivateLinkResourceProperties>
     {
-        internal static ShareableSearchServicePrivateLinkResourceProperties DeserializeShareableSearchServicePrivateLinkResourceProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareableSearchServicePrivateLinkResourceProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ShareableSearchServicePrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ShareableSearchServicePrivateLinkResourceProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ShareableSearchServicePrivateLinkResourceProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ShareablePrivateLinkResourcePropertiesType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ShareablePrivateLinkResourcePropertiesType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(GroupId))
+                {
+                    writer.WritePropertyName("groupId"u8);
+                    writer.WriteStringValue(GroupId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ShareableSearchServicePrivateLinkResourceProperties IJsonModel<ShareableSearchServicePrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeShareableSearchServicePrivateLinkResourceProperties(document.RootElement, options);
+        }
+
+        internal static ShareableSearchServicePrivateLinkResourceProperties DeserializeShareableSearchServicePrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.Search.Models
             Optional<string> type = default;
             Optional<string> groupId = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -38,8 +110,38 @@ namespace Azure.ResourceManager.Search.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ShareableSearchServicePrivateLinkResourceProperties(type.Value, groupId.Value, description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ShareableSearchServicePrivateLinkResourceProperties(type.Value, groupId.Value, description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ShareableSearchServicePrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ShareableSearchServicePrivateLinkResourceProperties IPersistableModel<ShareableSearchServicePrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ShareableSearchServicePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeShareableSearchServicePrivateLinkResourceProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ShareableSearchServicePrivateLinkResourceProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SqlAvailabilityGroupWorkloadProtectionContainer : IUtf8JsonSerializable
+    public partial class SqlAvailabilityGroupWorkloadProtectionContainer : IUtf8JsonSerializable, IJsonModel<SqlAvailabilityGroupWorkloadProtectionContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlAvailabilityGroupWorkloadProtectionContainer>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlAvailabilityGroupWorkloadProtectionContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlAvailabilityGroupWorkloadProtectionContainer>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlAvailabilityGroupWorkloadProtectionContainer>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceResourceId))
             {
@@ -68,11 +78,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlAvailabilityGroupWorkloadProtectionContainer DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(JsonElement element)
+        SqlAvailabilityGroupWorkloadProtectionContainer IJsonModel<SqlAvailabilityGroupWorkloadProtectionContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(document.RootElement, options);
+        }
+
+        internal static SqlAvailabilityGroupWorkloadProtectionContainer DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +127,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> healthStatus = default;
             ProtectableContainerType containerType = default;
             Optional<string> protectableObjectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceId"u8))
@@ -169,8 +210,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlAvailabilityGroupWorkloadProtectionContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, sourceResourceId.Value, Optional.ToNullable(lastUpdatedTime), extendedInfo.Value, Optional.ToNullable(workloadType), Optional.ToNullable(operationType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlAvailabilityGroupWorkloadProtectionContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, sourceResourceId.Value, Optional.ToNullable(lastUpdatedTime), extendedInfo.Value, Optional.ToNullable(workloadType), Optional.ToNullable(operationType));
         }
+
+        BinaryData IPersistableModel<SqlAvailabilityGroupWorkloadProtectionContainer>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlAvailabilityGroupWorkloadProtectionContainer IPersistableModel<SqlAvailabilityGroupWorkloadProtectionContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlAvailabilityGroupWorkloadProtectionContainer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlAvailabilityGroupWorkloadProtectionContainer(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlAvailabilityGroupWorkloadProtectionContainer>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

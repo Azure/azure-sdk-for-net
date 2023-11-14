@@ -5,14 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryTaskTypeDetails
+    [PersistableModelProxy(typeof(UnknownTaskTypeDetails))]
+    public partial class SiteRecoveryTaskTypeDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryTaskTypeDetails>
     {
-        internal static SiteRecoveryTaskTypeDetails DeserializeSiteRecoveryTaskTypeDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryTaskTypeDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SiteRecoveryTaskTypeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SiteRecoveryTaskTypeDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SiteRecoveryTaskTypeDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryTaskTypeDetails IJsonModel<SiteRecoveryTaskTypeDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryTaskTypeDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryTaskTypeDetails DeserializeSiteRecoveryTaskTypeDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,5 +82,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             return UnknownTaskTypeDetails.DeserializeUnknownTaskTypeDetails(element);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryTaskTypeDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryTaskTypeDetails IPersistableModel<SiteRecoveryTaskTypeDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryTaskTypeDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryTaskTypeDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<SiteRecoveryTaskTypeDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

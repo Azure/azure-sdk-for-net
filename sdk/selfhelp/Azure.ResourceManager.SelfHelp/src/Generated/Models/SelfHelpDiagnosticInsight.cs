@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Detailed insights(s) obtained via the invocation of an insight diagnostic. </summary>
     public partial class SelfHelpDiagnosticInsight
     {
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInsight"/>. </summary>
         public SelfHelpDiagnosticInsight()
         {
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiagnosticInsight. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiagnosticInsight"/>. </summary>
         /// <param name="id"> Article id. </param>
         /// <param name="title"> This insight's title. </param>
         /// <param name="results"> Detailed result content. </param>
         /// <param name="insightImportanceLevel"> Importance level of the insight. </param>
-        internal SelfHelpDiagnosticInsight(string id, string title, string results, SelfHelpImportanceLevel? insightImportanceLevel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpDiagnosticInsight(string id, string title, string results, SelfHelpImportanceLevel? insightImportanceLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Title = title;
             Results = results;
             InsightImportanceLevel = insightImportanceLevel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Article id. </summary>

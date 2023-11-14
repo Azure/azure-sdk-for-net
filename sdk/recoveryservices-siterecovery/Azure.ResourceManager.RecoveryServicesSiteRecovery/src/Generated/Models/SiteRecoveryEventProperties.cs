@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of a monitoring event. </summary>
     public partial class SiteRecoveryEventProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryEventProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEventProperties"/>. </summary>
         internal SiteRecoveryEventProperties()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEventProperties"/>. </summary>
         /// <param name="eventCode"> The Id of the monitoring event. </param>
         /// <param name="description"> The event name. </param>
         /// <param name="eventType"> The type of the event. for example: VM Health, Server Health, Job Failure etc. </param>
@@ -40,7 +43,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The available derived classes include <see cref="SiteRecoveryJobStatusEventDetails"/>.
         /// </param>
         /// <param name="healthErrors"> The list of errors / warnings capturing details associated with the issue(s). </param>
-        internal SiteRecoveryEventProperties(string eventCode, string description, string eventType, string affectedObjectFriendlyName, string affectedObjectCorrelationId, string severity, DateTimeOffset? occurredOn, ResourceIdentifier fabricId, SiteRecoveryEventProviderSpecificDetails providerSpecificDetails, SiteRecoveryEventSpecificDetails eventSpecificDetails, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryEventProperties(string eventCode, string description, string eventType, string affectedObjectFriendlyName, string affectedObjectCorrelationId, string severity, DateTimeOffset? occurredOn, ResourceIdentifier fabricId, SiteRecoveryEventProviderSpecificDetails providerSpecificDetails, SiteRecoveryEventSpecificDetails eventSpecificDetails, IReadOnlyList<SiteRecoveryHealthError> healthErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventCode = eventCode;
             Description = description;
@@ -53,6 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
             EventSpecificDetails = eventSpecificDetails;
             HealthErrors = healthErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Id of the monitoring event. </summary>

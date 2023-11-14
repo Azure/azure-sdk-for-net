@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Failover properties of the protected item. </summary>
     public partial class FailoverProtectedItemProperties
     {
-        /// <summary> Initializes a new instance of FailoverProtectedItemProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FailoverProtectedItemProperties"/>. </summary>
         internal FailoverProtectedItemProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FailoverProtectedItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverProtectedItemProperties"/>. </summary>
         /// <param name="protectedItemName"> Gets or sets the protected item name. </param>
         /// <param name="vmName"> Gets or sets the VM name. </param>
         /// <param name="testVmName"> Gets or sets the test VM name. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="recoveryPointOn"> Gets or sets the recovery point time. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>
         /// <param name="subnet"> Gets or sets the network subnet. </param>
-        internal FailoverProtectedItemProperties(string protectedItemName, string vmName, string testVmName, string recoveryPointId, DateTimeOffset? recoveryPointOn, string networkName, string subnet)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverProtectedItemProperties(string protectedItemName, string vmName, string testVmName, string recoveryPointId, DateTimeOffset? recoveryPointOn, string networkName, string subnet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtectedItemName = protectedItemName;
             VmName = vmName;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             RecoveryPointOn = recoveryPointOn;
             NetworkName = networkName;
             Subnet = subnet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the protected item name. </summary>

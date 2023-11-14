@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An RefreshExternalGovernanceStatus operation result resource. </summary>
     public partial class RefreshExternalGovernanceStatusOperationResult : ResourceData
     {
-        /// <summary> Initializes a new instance of RefreshExternalGovernanceStatusOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RefreshExternalGovernanceStatusOperationResult"/>. </summary>
         public RefreshExternalGovernanceStatusOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RefreshExternalGovernanceStatusOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RefreshExternalGovernanceStatusOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> Server name. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="errorMessage"> Error message. </param>
-        internal RefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string requestType, string queuedTime, string serverName, string status, string errorMessage) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string requestType, string queuedTime, string serverName, string status, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RequestId = requestId;
             RequestType = requestType;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
             ServerName = serverName;
             Status = status;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Request Id. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of Compliance objects response. </summary>
     internal partial class ComplianceList
     {
-        /// <summary> Initializes a new instance of ComplianceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComplianceList"/>. </summary>
         internal ComplianceList()
         {
             Value = new ChangeTrackingList<SecurityComplianceData>();
         }
 
-        /// <summary> Initializes a new instance of ComplianceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceList"/>. </summary>
         /// <param name="value"> List of Compliance objects. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal ComplianceList(IReadOnlyList<SecurityComplianceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComplianceList(IReadOnlyList<SecurityComplianceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Compliance objects. </summary>

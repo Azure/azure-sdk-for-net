@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Node type update request. </summary>
     public partial class ServiceFabricManagedNodeTypePatch
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypePatch"/>. </summary>
         public ServiceFabricManagedNodeTypePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNodeTypePatch"/>. </summary>
+        /// <param name="tags"> Node type update parameters. </param>
+        /// <param name="sku"> The node type sku. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedNodeTypePatch(IDictionary<string, string> tags, NodeTypeSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Node type update parameters. </summary>

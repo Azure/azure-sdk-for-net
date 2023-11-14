@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
@@ -13,7 +14,10 @@ namespace Azure.Data.SchemaRegistry.Models
     /// <summary> Object received from the registry containing schema identifiers. </summary>
     internal readonly partial struct SchemaId
     {
-        /// <summary> Initializes a new instance of SchemaId. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SchemaId"/>. </summary>
         /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal SchemaId(string id)
@@ -21,6 +25,20 @@ namespace Azure.Data.SchemaRegistry.Models
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SchemaId"/>. </summary>
+        /// <param name="id"> Schema ID that uniquely identifies a schema in the registry namespace. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaId(string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SchemaId"/> for deserialization. </summary>
+        public SchemaId()
+        {
         }
 
         /// <summary> Schema ID that uniquely identifies a schema in the registry namespace. </summary>

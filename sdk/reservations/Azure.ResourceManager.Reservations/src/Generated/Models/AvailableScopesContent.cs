@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
@@ -12,9 +13,21 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Available scope. </summary>
     public partial class AvailableScopesContent
     {
-        /// <summary> Initializes a new instance of AvailableScopesContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableScopesContent"/>. </summary>
         public AvailableScopesContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvailableScopesContent"/>. </summary>
+        /// <param name="properties"> Available scope request properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableScopesContent(AvailableScopeRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Available scope request properties. </summary>

@@ -5,16 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderExtendedLocation
+    public partial class ProviderExtendedLocation : IUtf8JsonSerializable, IJsonModel<ProviderExtendedLocation>
     {
-        internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderExtendedLocation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ProviderExtendedLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ProviderExtendedLocation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ProviderExtendedLocation>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (Optional.IsDefined(ProviderExtendedLocationType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ProviderExtendedLocationType);
+            }
+            if (Optional.IsCollectionDefined(ExtendedLocations))
+            {
+                writer.WritePropertyName("extendedLocations"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExtendedLocations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProviderExtendedLocation IJsonModel<ProviderExtendedLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProviderExtendedLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderExtendedLocation(document.RootElement, options);
+        }
+
+        internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +87,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<AzureLocation> location = default;
             Optional<string> type = default;
             Optional<IReadOnlyList<string>> extendedLocations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -52,8 +119,38 @@ namespace Azure.ResourceManager.Resources.Models
                     extendedLocations = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProviderExtendedLocation(Optional.ToNullable(location), type.Value, Optional.ToList(extendedLocations));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProviderExtendedLocation(Optional.ToNullable(location), type.Value, Optional.ToList(extendedLocations), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderExtendedLocation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProviderExtendedLocation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProviderExtendedLocation IPersistableModel<ProviderExtendedLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProviderExtendedLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProviderExtendedLocation(document.RootElement, options);
+        }
+
+        string IPersistableModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

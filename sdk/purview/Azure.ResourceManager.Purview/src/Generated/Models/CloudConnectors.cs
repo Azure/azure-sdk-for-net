@@ -5,24 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> External Cloud Service connectors. </summary>
     internal partial class CloudConnectors
     {
-        /// <summary> Initializes a new instance of CloudConnectors. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudConnectors"/>. </summary>
         public CloudConnectors()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudConnectors. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudConnectors"/>. </summary>
         /// <param name="awsExternalId">
         /// AWS external identifier.
         /// Configured in AWS to allow use of the role arn used for scanning
         /// </param>
-        internal CloudConnectors(string awsExternalId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudConnectors(string awsExternalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AwsExternalId = awsExternalId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

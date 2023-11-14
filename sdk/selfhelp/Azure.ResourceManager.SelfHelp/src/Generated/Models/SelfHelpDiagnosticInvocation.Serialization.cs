@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpDiagnosticInvocation : IUtf8JsonSerializable
+    public partial class SelfHelpDiagnosticInvocation : IUtf8JsonSerializable, IJsonModel<SelfHelpDiagnosticInvocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpDiagnosticInvocation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SelfHelpDiagnosticInvocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SelfHelpDiagnosticInvocation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SelfHelpDiagnosticInvocation>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SolutionId))
             {
@@ -32,17 +42,48 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SelfHelpDiagnosticInvocation DeserializeSelfHelpDiagnosticInvocation(JsonElement element)
+        SelfHelpDiagnosticInvocation IJsonModel<SelfHelpDiagnosticInvocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHelpDiagnosticInvocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelfHelpDiagnosticInvocation(document.RootElement, options);
+        }
+
+        internal static SelfHelpDiagnosticInvocation DeserializeSelfHelpDiagnosticInvocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> solutionId = default;
             Optional<IDictionary<string, string>> additionalParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -64,8 +105,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     additionalParameters = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SelfHelpDiagnosticInvocation(solutionId.Value, Optional.ToDictionary(additionalParameters));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SelfHelpDiagnosticInvocation(solutionId.Value, Optional.ToDictionary(additionalParameters), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SelfHelpDiagnosticInvocation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHelpDiagnosticInvocation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SelfHelpDiagnosticInvocation IPersistableModel<SelfHelpDiagnosticInvocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SelfHelpDiagnosticInvocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSelfHelpDiagnosticInvocation(document.RootElement, options);
+        }
+
+        string IPersistableModel<SelfHelpDiagnosticInvocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

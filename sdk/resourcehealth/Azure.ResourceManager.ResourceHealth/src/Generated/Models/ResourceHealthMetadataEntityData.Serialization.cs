@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,10 +16,113 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    public partial class ResourceHealthMetadataEntityData
+    public partial class ResourceHealthMetadataEntityData : IUtf8JsonSerializable, IJsonModel<ResourceHealthMetadataEntityData>
     {
-        internal static ResourceHealthMetadataEntityData DeserializeResourceHealthMetadataEntityData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthMetadataEntityData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ResourceHealthMetadataEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ResourceHealthMetadataEntityData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ResourceHealthMetadataEntityData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsCollectionDefined(DependsOn))
+            {
+                writer.WritePropertyName("dependsOn"u8);
+                writer.WriteStartArray();
+                foreach (var item in DependsOn)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ApplicableScenarios))
+            {
+                writer.WritePropertyName("applicableScenarios"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplicableScenarios)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SupportedValues))
+            {
+                writer.WritePropertyName("supportedValues"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedValues)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResourceHealthMetadataEntityData IJsonModel<ResourceHealthMetadataEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceHealthMetadataEntityData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthMetadataEntityData(document.RootElement, options);
+        }
+
+        internal static ResourceHealthMetadataEntityData DeserializeResourceHealthMetadataEntityData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +135,8 @@ namespace Azure.ResourceManager.ResourceHealth
             Optional<IReadOnlyList<string>> dependsOn = default;
             Optional<IReadOnlyList<MetadataEntityScenario>> applicableScenarios = default;
             Optional<IReadOnlyList<MetadataSupportedValueDetail>> supportedValues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -114,8 +222,38 @@ namespace Azure.ResourceManager.ResourceHealth
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceHealthMetadataEntityData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(dependsOn), Optional.ToList(applicableScenarios), Optional.ToList(supportedValues));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceHealthMetadataEntityData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(dependsOn), Optional.ToList(applicableScenarios), Optional.ToList(supportedValues), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceHealthMetadataEntityData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceHealthMetadataEntityData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourceHealthMetadataEntityData IPersistableModel<ResourceHealthMetadataEntityData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceHealthMetadataEntityData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourceHealthMetadataEntityData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ResourceHealthMetadataEntityData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

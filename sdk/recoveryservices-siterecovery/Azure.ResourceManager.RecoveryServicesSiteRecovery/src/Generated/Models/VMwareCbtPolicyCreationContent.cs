@@ -5,15 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> VMware Cbt policy creation input. </summary>
     public partial class VMwareCbtPolicyCreationContent : PolicyProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of VMwareCbtPolicyCreationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtPolicyCreationContent"/>. </summary>
         public VMwareCbtPolicyCreationContent()
         {
             InstanceType = "VMwareCbt";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtPolicyCreationContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
+        /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
+        /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
+        internal VMwareCbtPolicyCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? recoveryPointHistoryInMinutes, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes) : base(instanceType, serializedAdditionalRawData)
+        {
+            RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
+            CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
+            AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
+            InstanceType = instanceType ?? "VMwareCbt";
         }
 
         /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>

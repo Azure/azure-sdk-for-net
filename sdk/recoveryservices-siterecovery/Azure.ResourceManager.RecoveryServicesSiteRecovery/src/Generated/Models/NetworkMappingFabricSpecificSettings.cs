@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class NetworkMappingFabricSpecificSettings
     {
-        /// <summary> Initializes a new instance of NetworkMappingFabricSpecificSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkMappingFabricSpecificSettings"/>. </summary>
         protected NetworkMappingFabricSpecificSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkMappingFabricSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkMappingFabricSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        internal NetworkMappingFabricSpecificSettings(string instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkMappingFabricSpecificSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the Instance type. </summary>

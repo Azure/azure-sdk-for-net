@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Frequently asked question for the service health event. </summary>
     public partial class ResourceHealthEventFaq
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventFaq. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventFaq"/>. </summary>
         internal ResourceHealthEventFaq()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventFaq. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventFaq"/>. </summary>
         /// <param name="question"> FAQ question for the service health event. </param>
         /// <param name="answer"> FAQ answer for the service health event. </param>
         /// <param name="localeCode"> FAQ locale for the service health event. </param>
-        internal ResourceHealthEventFaq(string question, string answer, string localeCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventFaq(string question, string answer, string localeCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Question = question;
             Answer = answer;
             LocaleCode = localeCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> FAQ question for the service health event. </summary>

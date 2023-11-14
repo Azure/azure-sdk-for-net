@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The storage account type capability. </summary>
     public partial class StorageCapability
     {
-        /// <summary> Initializes a new instance of StorageCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCapability"/>. </summary>
         internal StorageCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCapability"/>. </summary>
         /// <param name="storageAccountType"> The storage account type for the database's backups. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal StorageCapability(StorageCapabilityStorageAccountType? storageAccountType, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCapability(StorageCapabilityStorageAccountType? storageAccountType, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountType = storageAccountType;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The storage account type for the database's backups. </summary>

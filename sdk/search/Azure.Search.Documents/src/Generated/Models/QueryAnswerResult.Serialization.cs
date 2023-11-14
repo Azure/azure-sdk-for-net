@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class QueryAnswerResult
+    public partial class QueryAnswerResult : IUtf8JsonSerializable, IJsonModel<QueryAnswerResult>
     {
-        internal static QueryAnswerResult DeserializeQueryAnswerResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryAnswerResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<QueryAnswerResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<QueryAnswerResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<QueryAnswerResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Score))
+                {
+                    writer.WritePropertyName("score"u8);
+                    writer.WriteNumberValue(Score.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Key))
+                {
+                    writer.WritePropertyName("key"u8);
+                    writer.WriteStringValue(Key);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Text))
+                {
+                    writer.WritePropertyName("text"u8);
+                    writer.WriteStringValue(Text);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Highlights))
+                {
+                    if (Highlights != null)
+                    {
+                        writer.WritePropertyName("highlights"u8);
+                        writer.WriteStringValue(Highlights);
+                    }
+                    else
+                    {
+                        writer.WriteNull("highlights");
+                    }
+                }
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue(item.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        QueryAnswerResult IJsonModel<QueryAnswerResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryAnswerResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryAnswerResult(document.RootElement, options);
+        }
+
+        internal static QueryAnswerResult DeserializeQueryAnswerResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,5 +135,30 @@ namespace Azure.Search.Documents.Models
             additionalProperties = additionalPropertiesDictionary;
             return new QueryAnswerResult(Optional.ToNullable(score), key.Value, text.Value, highlights.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<QueryAnswerResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryAnswerResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QueryAnswerResult IPersistableModel<QueryAnswerResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryAnswerResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQueryAnswerResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<QueryAnswerResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

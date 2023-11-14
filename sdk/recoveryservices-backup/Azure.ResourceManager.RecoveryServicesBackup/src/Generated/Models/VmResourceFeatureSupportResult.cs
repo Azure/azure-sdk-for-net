@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Response for feature support requests for Azure IaasVm. </summary>
     public partial class VmResourceFeatureSupportResult
     {
-        /// <summary> Initializes a new instance of VmResourceFeatureSupportResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportResult"/>. </summary>
         internal VmResourceFeatureSupportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of VmResourceFeatureSupportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmResourceFeatureSupportResult"/>. </summary>
         /// <param name="supportStatus"> Support status of feature. </param>
-        internal VmResourceFeatureSupportResult(VmResourceFeatureSupportStatus? supportStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmResourceFeatureSupportResult(VmResourceFeatureSupportStatus? supportStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SupportStatus = supportStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Support status of feature. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class ComplianceResultData : ResourceData
     {
-        /// <summary> Initializes a new instance of ComplianceResultData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComplianceResultData"/>. </summary>
         public ComplianceResultData()
         {
         }
 
-        /// <summary> Initializes a new instance of ComplianceResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resourceStatus"> The status of the resource regarding a single assessment. </param>
-        internal ComplianceResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAssessmentResourceStatus? resourceStatus) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComplianceResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityAssessmentResourceStatus? resourceStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceStatus = resourceStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the resource regarding a single assessment. </summary>

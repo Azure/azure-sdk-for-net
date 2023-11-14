@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesAwsOfferingRds : IUtf8JsonSerializable
+    public partial class DefenderForDatabasesAwsOfferingRds : IUtf8JsonSerializable, IJsonModel<DefenderForDatabasesAwsOfferingRds>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForDatabasesAwsOfferingRds>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DefenderForDatabasesAwsOfferingRds>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DefenderForDatabasesAwsOfferingRds>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DefenderForDatabasesAwsOfferingRds>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("cloudRoleArn"u8);
                 writer.WriteStringValue(CloudRoleArn);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForDatabasesAwsOfferingRds DeserializeDefenderForDatabasesAwsOfferingRds(JsonElement element)
+        DefenderForDatabasesAwsOfferingRds IJsonModel<DefenderForDatabasesAwsOfferingRds>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingRds)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForDatabasesAwsOfferingRds(document.RootElement, options);
+        }
+
+        internal static DefenderForDatabasesAwsOfferingRds DeserializeDefenderForDatabasesAwsOfferingRds(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enabled = default;
             Optional<string> cloudRoleArn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -52,8 +94,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     cloudRoleArn = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForDatabasesAwsOfferingRds(Optional.ToNullable(enabled), cloudRoleArn.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DefenderForDatabasesAwsOfferingRds(Optional.ToNullable(enabled), cloudRoleArn.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefenderForDatabasesAwsOfferingRds>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingRds)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DefenderForDatabasesAwsOfferingRds IPersistableModel<DefenderForDatabasesAwsOfferingRds>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingRds)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDefenderForDatabasesAwsOfferingRds(document.RootElement, options);
+        }
+
+        string IPersistableModel<DefenderForDatabasesAwsOfferingRds>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

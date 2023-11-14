@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Guest disk signature based disk exclusion option when doing enable protection of virtual machine in InMage provider. </summary>
     public partial class InMageDiskSignatureExclusionOptions
     {
-        /// <summary> Initializes a new instance of InMageDiskSignatureExclusionOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageDiskSignatureExclusionOptions"/>. </summary>
         public InMageDiskSignatureExclusionOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageDiskSignatureExclusionOptions"/>. </summary>
+        /// <param name="diskSignature"> The guest signature of disk to be excluded from replication. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageDiskSignatureExclusionOptions(string diskSignature, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DiskSignature = diskSignature;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The guest signature of disk to be excluded from replication. </summary>

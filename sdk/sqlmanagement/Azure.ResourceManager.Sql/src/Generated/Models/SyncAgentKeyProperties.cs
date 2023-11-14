@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of an Azure SQL Database sync agent key. </summary>
     public partial class SyncAgentKeyProperties
     {
-        /// <summary> Initializes a new instance of SyncAgentKeyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncAgentKeyProperties"/>. </summary>
         internal SyncAgentKeyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncAgentKeyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentKeyProperties"/>. </summary>
         /// <param name="syncAgentKey"> Key of sync agent. </param>
-        internal SyncAgentKeyProperties(string syncAgentKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncAgentKeyProperties(string syncAgentKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SyncAgentKey = syncAgentKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key of sync agent. </summary>

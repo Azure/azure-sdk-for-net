@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
@@ -13,7 +14,10 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> The properties of a rendering session. </summary>
     public partial class RenderingSession
     {
-        /// <summary> Initializes a new instance of RenderingSession. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RenderingSession"/>. </summary>
         /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
         /// <param name="size"> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </param>
         /// <param name="status"> The status of the rendering session. Terminal states are 'Error', 'Expired', and 'Stopped'. </param>
@@ -27,7 +31,7 @@ namespace Azure.MixedReality.RemoteRendering
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of RenderingSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenderingSession"/>. </summary>
         /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
         /// <param name="arrInspectorPort"> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </param>
         /// <param name="handshakePort"> The TCP port used for the handshake when establishing a connection. </param>
@@ -39,7 +43,8 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="teraflops"> The computational power of the rendering session GPU measured in teraflops. </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="createdOn"> The time when the rendering session was created. Date and time in ISO 8601 format. </param>
-        internal RenderingSession(string sessionId, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string host, int? maxLeaseTimeMinutes, RenderingServerSize size, RenderingSessionStatus status, float? teraflops, RemoteRenderingServiceError error, DateTimeOffset? createdOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RenderingSession(string sessionId, int? arrInspectorPort, int? handshakePort, int? elapsedTimeMinutes, string host, int? maxLeaseTimeMinutes, RenderingServerSize size, RenderingSessionStatus status, float? teraflops, RemoteRenderingServiceError error, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             ArrInspectorPort = arrInspectorPort;
@@ -52,6 +57,12 @@ namespace Azure.MixedReality.RemoteRendering
             Teraflops = teraflops;
             Error = error;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RenderingSession"/> for deserialization. </summary>
+        internal RenderingSession()
+        {
         }
         /// <summary> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </summary>
         public int? ArrInspectorPort { get; }

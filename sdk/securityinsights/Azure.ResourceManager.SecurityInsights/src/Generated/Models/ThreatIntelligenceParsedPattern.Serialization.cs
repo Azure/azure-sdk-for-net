@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceParsedPattern : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceParsedPattern : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceParsedPattern>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceParsedPattern>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ThreatIntelligenceParsedPattern>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ThreatIntelligenceParsedPattern>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ThreatIntelligenceParsedPattern>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PatternTypeKey))
             {
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThreatIntelligenceParsedPattern DeserializeThreatIntelligenceParsedPattern(JsonElement element)
+        ThreatIntelligenceParsedPattern IJsonModel<ThreatIntelligenceParsedPattern>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreatIntelligenceParsedPattern(document.RootElement, options);
+        }
+
+        internal static ThreatIntelligenceParsedPattern DeserializeThreatIntelligenceParsedPattern(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> patternTypeKey = default;
             Optional<IList<ThreatIntelligenceParsedPatternTypeValue>> patternTypeValues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patternTypeKey"u8))
@@ -63,8 +104,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     patternTypeValues = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ThreatIntelligenceParsedPattern(patternTypeKey.Value, Optional.ToList(patternTypeValues));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ThreatIntelligenceParsedPattern(patternTypeKey.Value, Optional.ToList(patternTypeValues), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ThreatIntelligenceParsedPattern>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ThreatIntelligenceParsedPattern IPersistableModel<ThreatIntelligenceParsedPattern>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceParsedPattern)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeThreatIntelligenceParsedPattern(document.RootElement, options);
+        }
+
+        string IPersistableModel<ThreatIntelligenceParsedPattern>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

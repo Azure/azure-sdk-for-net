@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
@@ -16,7 +17,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class ProofOfPossessionNonceContent
     {
-        /// <summary> Initializes a new instance of ProofOfPossessionNonceContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceContent"/>. </summary>
         /// <param name="proofOfPossessionNonce">
         /// The proof of possession nonce
         /// Serialized Name: ProofOfPossessionNonceRequest.proofOfPossessionNonce
@@ -27,6 +31,23 @@ namespace Azure.ResourceManager.Sphere.Models
             Argument.AssertNotNull(proofOfPossessionNonce, nameof(proofOfPossessionNonce));
 
             ProofOfPossessionNonce = proofOfPossessionNonce;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceContent"/>. </summary>
+        /// <param name="proofOfPossessionNonce">
+        /// The proof of possession nonce
+        /// Serialized Name: ProofOfPossessionNonceRequest.proofOfPossessionNonce
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProofOfPossessionNonceContent(string proofOfPossessionNonce, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ProofOfPossessionNonce = proofOfPossessionNonce;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceContent"/> for deserialization. </summary>
+        internal ProofOfPossessionNonceContent()
+        {
         }
 
         /// <summary>

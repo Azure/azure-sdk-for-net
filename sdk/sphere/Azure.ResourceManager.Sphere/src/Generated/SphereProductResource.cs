@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductResource.GenerateDefaultDeviceGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductResource.GenerateDefaultDeviceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereProductProductsRestClient.CreateGenerateDefaultDeviceGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductResource.GenerateDefaultDeviceGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SphereDeviceGroupResource(Client, SphereDeviceGroupData.DeserializeSphereDeviceGroupData(e)), _sphereProductProductsClientDiagnostics, Pipeline, "SphereProductResource.GenerateDefaultDeviceGroups", "value", "nextLink", cancellationToken);
         }
     }
 }

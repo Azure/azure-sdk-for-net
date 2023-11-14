@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Describes a  resource type that has been onboarded to private link service. </summary>
     public partial class ShareablePrivateLinkResourceType
     {
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkResourceType"/>. </summary>
         public ShareablePrivateLinkResourceType()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareablePrivateLinkResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkResourceType"/>. </summary>
         /// <param name="name"> The name of the resource type that has been onboarded to private link service. </param>
         /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service. </param>
-        internal ShareablePrivateLinkResourceType(string name, ShareablePrivateLinkResourceProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareablePrivateLinkResourceType(string name, ShareablePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource type that has been onboarded to private link service. </summary>

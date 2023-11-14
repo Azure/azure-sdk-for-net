@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Managed application management policy. </summary>
     internal partial class ArmApplicationManagementPolicy
     {
-        /// <summary> Initializes a new instance of ArmApplicationManagementPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationManagementPolicy"/>. </summary>
         public ArmApplicationManagementPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationManagementPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationManagementPolicy"/>. </summary>
         /// <param name="mode"> The managed application management mode. </param>
-        internal ArmApplicationManagementPolicy(ArmApplicationManagementMode? mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationManagementPolicy(ArmApplicationManagementMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed application management mode. </summary>

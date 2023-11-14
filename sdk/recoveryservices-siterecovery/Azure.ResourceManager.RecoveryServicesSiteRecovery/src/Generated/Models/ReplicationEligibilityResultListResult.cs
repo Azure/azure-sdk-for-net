@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication eligibility results collection response model. </summary>
     internal partial class ReplicationEligibilityResultListResult
     {
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultListResult"/>. </summary>
         internal ReplicationEligibilityResultListResult()
         {
             Value = new ChangeTrackingList<ReplicationEligibilityResultData>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultListResult"/>. </summary>
         /// <param name="value"> The replication eligibility results details. </param>
-        internal ReplicationEligibilityResultListResult(IReadOnlyList<ReplicationEligibilityResultData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationEligibilityResultListResult(IReadOnlyList<ReplicationEligibilityResultData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The replication eligibility results details. </summary>

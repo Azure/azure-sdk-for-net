@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceGroupSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGroupSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ResourceGroupSecurityTaskResource(Client, SecurityTaskData.DeserializeSecurityTaskData(e)), _resourceGroupSecurityTaskTasksClientDiagnostics, Pipeline, "ResourceGroupSecurityTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

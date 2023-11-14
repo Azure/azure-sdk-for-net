@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class SecurityCenterResourceDetails
     {
-        /// <summary> Initializes a new instance of SecurityCenterResourceDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
         protected SecurityCenterResourceDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCenterResourceDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
-        internal SecurityCenterResourceDetails(Source source)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCenterResourceDetails(Source source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The platform where the assessed resource resides. </summary>

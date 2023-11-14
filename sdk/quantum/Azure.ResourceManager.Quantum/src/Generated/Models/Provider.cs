@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Information about a Provider. A Provider is an entity that offers Targets to run Azure Quantum Jobs. </summary>
     public partial class Provider
     {
-        /// <summary> Initializes a new instance of Provider. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Provider"/>. </summary>
         public Provider()
         {
         }
 
-        /// <summary> Initializes a new instance of Provider. </summary>
+        /// <summary> Initializes a new instance of <see cref="Provider"/>. </summary>
         /// <param name="providerId"> Unique id of this provider. </param>
         /// <param name="providerSku"> The sku associated with pricing information for this provider. </param>
         /// <param name="instanceUri"> A Uri identifying the specific instance of this provider. </param>
         /// <param name="applicationName"> The provider's marketplace application display name. </param>
         /// <param name="provisioningState"> Provisioning status field. </param>
         /// <param name="resourceUsageId"> Id to track resource usage for the provider. </param>
-        internal Provider(string providerId, string providerSku, Uri instanceUri, string applicationName, Status? provisioningState, string resourceUsageId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Provider(string providerId, string providerSku, Uri instanceUri, string applicationName, Status? provisioningState, string resourceUsageId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderId = providerId;
             ProviderSku = providerSku;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Quantum.Models
             ApplicationName = applicationName;
             ProvisioningState = provisioningState;
             ResourceUsageId = resourceUsageId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique id of this provider. </summary>

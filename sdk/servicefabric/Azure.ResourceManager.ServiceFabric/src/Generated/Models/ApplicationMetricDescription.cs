@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary>
@@ -13,12 +16,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ApplicationMetricDescription
     {
-        /// <summary> Initializes a new instance of ApplicationMetricDescription. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationMetricDescription"/>. </summary>
         public ApplicationMetricDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationMetricDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationMetricDescription"/>. </summary>
         /// <param name="name"> The name of the metric. </param>
         /// <param name="maximumCapacity">
         /// The maximum node capacity for Service Fabric application.
@@ -42,12 +48,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// When creating a new application with application capacity defined, the product of MaximumNodes and MaximumCapacity must always be smaller than or equal to this value.
         ///
         /// </param>
-        internal ApplicationMetricDescription(string name, long? maximumCapacity, long? reservationCapacity, long? totalApplicationCapacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationMetricDescription(string name, long? maximumCapacity, long? reservationCapacity, long? totalApplicationCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             MaximumCapacity = maximumCapacity;
             ReservationCapacity = reservationCapacity;
             TotalApplicationCapacity = totalApplicationCapacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the metric. </summary>

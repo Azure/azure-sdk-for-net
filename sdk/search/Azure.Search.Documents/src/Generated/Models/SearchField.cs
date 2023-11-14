@@ -14,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents a field in an index definition, which describes the name, data type, and search behavior of a field. </summary>
     public partial class SearchField
     {
-        /// <summary> Initializes a new instance of SearchField. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchField"/>. </summary>
         /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
         /// <param name="type"> The data type of the field. </param>
         /// <param name="isKey"> A value indicating whether the field uniquely identifies documents in the index. Exactly one top-level field in each index must be chosen as the key field and it must be of type Edm.String. Key fields can be used to look up documents directly and update or delete specific documents. Default is false for simple fields and null for complex fields. </param>
@@ -30,7 +33,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="vectorSearchProfileName"> The name of the vector search profile that specifies the algorithm to use when searching the vector field. </param>
         /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
-        internal SearchField(string name, SearchFieldDataType type, bool? isKey, bool? isRetrievable, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, int? vectorSearchDimensions, string vectorSearchProfileName, IList<string> synonymMapNames, IList<SearchField> fields)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchField(string name, SearchFieldDataType type, bool? isKey, bool? isRetrievable, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, int? vectorSearchDimensions, string vectorSearchProfileName, IList<string> synonymMapNames, IList<SearchField> fields, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
@@ -47,6 +51,12 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorSearchProfileName = vectorSearchProfileName;
             SynonymMapNames = synonymMapNames;
             Fields = fields;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchField"/> for deserialization. </summary>
+        internal SearchField()
+        {
         }
         /// <summary> The dimensionality of the vector field. </summary>
         public int? VectorSearchDimensions { get; set; }

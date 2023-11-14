@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Discovery response. </summary>
     internal partial class SelfHelpDiscoverySolutionResult
     {
-        /// <summary> Initializes a new instance of SelfHelpDiscoverySolutionResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiscoverySolutionResult"/>. </summary>
         internal SelfHelpDiscoverySolutionResult()
         {
             Value = new ChangeTrackingList<SelfHelpSolutionMetadata>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpDiscoverySolutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpDiscoverySolutionResult"/>. </summary>
         /// <param name="value"> The list of metadata. </param>
         /// <param name="nextLink"> The link used to get the next page of solution metadata. </param>
-        internal SelfHelpDiscoverySolutionResult(IReadOnlyList<SelfHelpSolutionMetadata> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpDiscoverySolutionResult(IReadOnlyList<SelfHelpSolutionMetadata> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of metadata. </summary>

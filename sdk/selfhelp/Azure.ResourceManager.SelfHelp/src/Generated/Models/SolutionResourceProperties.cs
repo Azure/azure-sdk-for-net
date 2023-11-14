@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solution result. </summary>
     public partial class SolutionResourceProperties
     {
-        /// <summary> Initializes a new instance of SolutionResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SolutionResourceProperties"/>. </summary>
         public SolutionResourceProperties()
         {
             TriggerCriteria = new ChangeTrackingList<TriggerCriterion>();
@@ -21,7 +25,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Sections = new ChangeTrackingList<SelfHelpSection>();
         }
 
-        /// <summary> Initializes a new instance of SolutionResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionResourceProperties"/>. </summary>
         /// <param name="triggerCriteria"> Solution request trigger criteria. </param>
         /// <param name="parameters"> Client input parameters to run Solution. </param>
         /// <param name="solutionId"> Solution Id to identify single solution. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
-        internal SolutionResourceProperties(IList<TriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, ReplacementMaps replacementMaps, IList<SelfHelpSection> sections)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SolutionResourceProperties(IList<TriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, ReplacementMaps replacementMaps, IList<SelfHelpSection> sections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TriggerCriteria = triggerCriteria;
             Parameters = parameters;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Content = content;
             ReplacementMaps = replacementMaps;
             Sections = sections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution request trigger criteria. </summary>

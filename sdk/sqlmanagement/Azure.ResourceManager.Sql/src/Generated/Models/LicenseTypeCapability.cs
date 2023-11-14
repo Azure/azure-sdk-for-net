@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The license type capability. </summary>
     public partial class LicenseTypeCapability
     {
-        /// <summary> Initializes a new instance of LicenseTypeCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LicenseTypeCapability"/>. </summary>
         internal LicenseTypeCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of LicenseTypeCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="LicenseTypeCapability"/>. </summary>
         /// <param name="name"> License type identifier. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal LicenseTypeCapability(string name, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LicenseTypeCapability(string name, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> License type identifier. </summary>

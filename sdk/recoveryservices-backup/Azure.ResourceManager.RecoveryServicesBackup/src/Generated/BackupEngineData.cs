@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     public partial class BackupEngineData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of BackupEngineData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupEngineData"/>. </summary>
         /// <param name="location"> The location. </param>
         public BackupEngineData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of BackupEngineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupEngineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,10 +42,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// The available derived classes include <see cref="BackupServerEngine"/> and <see cref="DpmBackupEngine"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal BackupEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericEngine properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupEngineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupGenericEngine properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupEngineData"/> for deserialization. </summary>
+        internal BackupEngineData()
+        {
         }
 
         /// <summary>

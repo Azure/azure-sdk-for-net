@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,12 +14,32 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A failover group update request. </summary>
     public partial class FailoverGroupPatch
     {
-        /// <summary> Initializes a new instance of FailoverGroupPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupPatch"/>. </summary>
         public FailoverGroupPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
             PartnerServers = new ChangeTrackingList<PartnerServerInfo>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
+        /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
+        /// <param name="failoverDatabases"> List of databases in the failover group. </param>
+        /// <param name="partnerServers"> List of partner server information for the failover group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverGroupPatch(IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, IList<ResourceIdentifier> failoverDatabases, IList<PartnerServerInfo> partnerServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            ReadWriteEndpoint = readWriteEndpoint;
+            ReadOnlyEndpoint = readOnlyEndpoint;
+            FailoverDatabases = failoverDatabases;
+            PartnerServers = partnerServers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

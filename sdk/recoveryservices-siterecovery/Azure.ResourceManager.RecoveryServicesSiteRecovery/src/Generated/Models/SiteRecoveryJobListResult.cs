@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of jobs. </summary>
     internal partial class SiteRecoveryJobListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobListResult"/>. </summary>
         internal SiteRecoveryJobListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryJobData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobListResult"/>. </summary>
         /// <param name="value"> The list of jobs. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryJobListResult(IReadOnlyList<SiteRecoveryJobData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobListResult(IReadOnlyList<SiteRecoveryJobData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of jobs. </summary>

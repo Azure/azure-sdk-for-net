@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Capabilities properties in response. </summary>
     internal partial class CapabilitiesResultProperties
     {
-        /// <summary> Initializes a new instance of CapabilitiesResultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResultProperties"/>. </summary>
         public CapabilitiesResultProperties()
         {
             DnsZones = new ChangeTrackingList<DnsZoneResult>();
         }
 
-        /// <summary> Initializes a new instance of CapabilitiesResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilitiesResultProperties"/>. </summary>
         /// <param name="dnsZones"></param>
-        internal CapabilitiesResultProperties(IList<DnsZoneResult> dnsZones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CapabilitiesResultProperties(IList<DnsZoneResult> dnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DnsZones = dnsZones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the dns zones. </summary>

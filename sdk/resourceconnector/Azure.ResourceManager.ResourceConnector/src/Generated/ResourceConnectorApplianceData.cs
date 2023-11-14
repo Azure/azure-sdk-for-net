@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.ResourceConnector
     /// </summary>
     public partial class ResourceConnectorApplianceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ResourceConnectorApplianceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceConnectorApplianceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ResourceConnectorApplianceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceConnectorApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceConnectorApplianceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <param name="publicKey"> Certificates pair used to download MSI certificate from HIS. Can only be set once. </param>
         /// <param name="status"> Appliance’s health and state of connection to on-prem. </param>
         /// <param name="version"> Version of the Appliance. </param>
-        internal ResourceConnectorApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceConnectorDistro? distro, AppliancePropertiesInfrastructureConfig infrastructureConfig, string provisioningState, string publicKey, ResourceConnectorStatus? status, string version) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceConnectorApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ResourceConnectorDistro? distro, AppliancePropertiesInfrastructureConfig infrastructureConfig, string provisioningState, string publicKey, ResourceConnectorStatus? status, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Distro = distro;
@@ -47,6 +52,12 @@ namespace Azure.ResourceManager.ResourceConnector
             PublicKey = publicKey;
             Status = status;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceConnectorApplianceData"/> for deserialization. </summary>
+        internal ResourceConnectorApplianceData()
+        {
         }
 
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None. </summary>

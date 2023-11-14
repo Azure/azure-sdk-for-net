@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownRecoveryVirtualNetworkCustomDetails. </summary>
     internal partial class UnknownRecoveryVirtualNetworkCustomDetails : RecoveryVirtualNetworkCustomDetails
     {
-        /// <summary> Initializes a new instance of UnknownRecoveryVirtualNetworkCustomDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryVirtualNetworkCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        internal UnknownRecoveryVirtualNetworkCustomDetails(string resourceType) : base(resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRecoveryVirtualNetworkCustomDetails(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, serializedAdditionalRawData)
         {
             ResourceType = resourceType ?? "Unknown";
         }

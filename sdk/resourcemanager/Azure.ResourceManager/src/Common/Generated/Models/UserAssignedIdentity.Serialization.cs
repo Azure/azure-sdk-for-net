@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,16 +15,53 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(UserAssignedIdentityConverter))]
-    public partial class UserAssignedIdentity : IUtf8JsonSerializable
+    public partial class UserAssignedIdentity : IUtf8JsonSerializable, IJsonModel<UserAssignedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentity>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<UserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<UserAssignedIdentity>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<UserAssignedIdentity>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrincipalId))
+                {
+                    writer.WritePropertyName("principalId"u8);
+                    writer.WriteStringValue(PrincipalId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ClientId))
+                {
+                    writer.WritePropertyName("clientId"u8);
+                    writer.WriteStringValue(ClientId.Value);
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element)
+        UserAssignedIdentity IJsonModel<UserAssignedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserAssignedIdentity(document.RootElement, options);
+        }
+
+        internal static UserAssignedIdentity DeserializeUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +91,31 @@ namespace Azure.ResourceManager.Models
             }
             return new UserAssignedIdentity(Optional.ToNullable(principalId), Optional.ToNullable(clientId));
         }
+
+        BinaryData IPersistableModel<UserAssignedIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        UserAssignedIdentity IPersistableModel<UserAssignedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(UserAssignedIdentity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUserAssignedIdentity(document.RootElement, options);
+        }
+
+        string IPersistableModel<UserAssignedIdentity>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class UserAssignedIdentityConverter : JsonConverter<UserAssignedIdentity>
         {

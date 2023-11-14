@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary>
@@ -13,12 +16,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// </summary>
     public partial class ArmServiceTypeHealthPolicy
     {
-        /// <summary> Initializes a new instance of ArmServiceTypeHealthPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmServiceTypeHealthPolicy"/>. </summary>
         public ArmServiceTypeHealthPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmServiceTypeHealthPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmServiceTypeHealthPolicy"/>. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum percentage of services allowed to be unhealthy before your application is considered in error.
         ///
@@ -31,11 +37,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// The maximum percentage of replicas per partition allowed to be unhealthy before your application is considered in error.
         ///
         /// </param>
-        internal ArmServiceTypeHealthPolicy(int? maxPercentUnhealthyServices, int? maxPercentUnhealthyPartitionsPerService, int? maxPercentUnhealthyReplicasPerPartition)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmServiceTypeHealthPolicy(int? maxPercentUnhealthyServices, int? maxPercentUnhealthyPartitionsPerService, int? maxPercentUnhealthyReplicasPerPartition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxPercentUnhealthyServices = maxPercentUnhealthyServices;
             MaxPercentUnhealthyPartitionsPerService = maxPercentUnhealthyPartitionsPerService;
             MaxPercentUnhealthyReplicasPerPartition = maxPercentUnhealthyReplicasPerPartition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

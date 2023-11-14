@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the client certificate details using thumbprint. </summary>
     public partial class ClusterClientCertificateThumbprint
     {
-        /// <summary> Initializes a new instance of ClusterClientCertificateThumbprint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterClientCertificateThumbprint"/>. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="certificateThumbprint"> The thumbprint of the client certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateThumbprint"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
             IsAdmin = isAdmin;
             CertificateThumbprint = certificateThumbprint;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterClientCertificateThumbprint"/>. </summary>
+        /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
+        /// <param name="certificateThumbprint"> The thumbprint of the client certificate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterClientCertificateThumbprint(bool isAdmin, BinaryData certificateThumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsAdmin = isAdmin;
+            CertificateThumbprint = certificateThumbprint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterClientCertificateThumbprint"/> for deserialization. </summary>
+        internal ClusterClientCertificateThumbprint()
+        {
         }
 
         /// <summary> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </summary>

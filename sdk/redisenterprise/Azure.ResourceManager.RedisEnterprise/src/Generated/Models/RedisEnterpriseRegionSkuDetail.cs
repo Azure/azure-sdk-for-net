@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Details about the location requested and the available skus in the location. </summary>
     public partial class RedisEnterpriseRegionSkuDetail
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseRegionSkuDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRegionSkuDetail"/>. </summary>
         internal RedisEnterpriseRegionSkuDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseRegionSkuDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRegionSkuDetail"/>. </summary>
         /// <param name="resourceType"> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </param>
         /// <param name="locationInfo"> Details about location and its capabilities. </param>
         /// <param name="skuDetails"> Details about available skus. </param>
-        internal RedisEnterpriseRegionSkuDetail(ResourceType? resourceType, RedisEnterpriseLocationInfo locationInfo, SkuDetail skuDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseRegionSkuDetail(ResourceType? resourceType, RedisEnterpriseLocationInfo locationInfo, SkuDetail skuDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             LocationInfo = locationInfo;
             SkuDetails = skuDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </summary>

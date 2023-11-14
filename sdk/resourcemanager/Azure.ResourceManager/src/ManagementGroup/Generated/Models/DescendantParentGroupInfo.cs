@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> The ID of the parent management group. </summary>
     internal partial class DescendantParentGroupInfo
     {
-        /// <summary> Initializes a new instance of DescendantParentGroupInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DescendantParentGroupInfo"/>. </summary>
         internal DescendantParentGroupInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DescendantParentGroupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DescendantParentGroupInfo"/>. </summary>
         /// <param name="id"> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </param>
-        internal DescendantParentGroupInfo(ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DescendantParentGroupInfo(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>

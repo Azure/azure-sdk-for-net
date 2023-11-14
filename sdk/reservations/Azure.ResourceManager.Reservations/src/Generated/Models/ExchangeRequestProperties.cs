@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Exchange request properties. </summary>
     internal partial class ExchangeRequestProperties
     {
-        /// <summary> Initializes a new instance of ExchangeRequestProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExchangeRequestProperties"/>. </summary>
         public ExchangeRequestProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExchangeRequestProperties"/>. </summary>
+        /// <param name="sessionId"> SessionId that was returned by CalculateExchange API. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExchangeRequestProperties(Guid? sessionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SessionId = sessionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SessionId that was returned by CalculateExchange API. </summary>

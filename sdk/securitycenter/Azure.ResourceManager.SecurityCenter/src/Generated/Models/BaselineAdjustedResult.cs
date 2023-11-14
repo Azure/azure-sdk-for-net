@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The rule result adjusted with baseline. </summary>
     public partial class BaselineAdjustedResult
     {
-        /// <summary> Initializes a new instance of BaselineAdjustedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
         public BaselineAdjustedResult()
         {
             ResultsNotInBaseline = new ChangeTrackingList<IList<string>>();
             ResultsOnlyInBaseline = new ChangeTrackingList<IList<string>>();
         }
 
-        /// <summary> Initializes a new instance of BaselineAdjustedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BaselineAdjustedResult"/>. </summary>
         /// <param name="baseline"> Baseline details. </param>
         /// <param name="status"> The rule result status. </param>
         /// <param name="resultsNotInBaseline"> Results the are not in baseline. </param>
         /// <param name="resultsOnlyInBaseline"> Results the are in baseline. </param>
-        internal BaselineAdjustedResult(SqlVulnerabilityAssessmentBaseline baseline, SqlVulnerabilityAssessmentScanResultRuleStatus? status, IList<IList<string>> resultsNotInBaseline, IList<IList<string>> resultsOnlyInBaseline)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BaselineAdjustedResult(SqlVulnerabilityAssessmentBaseline baseline, SqlVulnerabilityAssessmentScanResultRuleStatus? status, IList<IList<string>> resultsNotInBaseline, IList<IList<string>> resultsOnlyInBaseline, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Baseline = baseline;
             Status = status;
             ResultsNotInBaseline = resultsNotInBaseline;
             ResultsOnlyInBaseline = resultsOnlyInBaseline;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Baseline details. </summary>

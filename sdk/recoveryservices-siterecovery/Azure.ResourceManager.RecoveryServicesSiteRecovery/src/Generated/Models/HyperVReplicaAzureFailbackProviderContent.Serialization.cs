@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureFailbackProviderContent : IUtf8JsonSerializable
+    public partial class HyperVReplicaAzureFailbackProviderContent : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzureFailbackProviderContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureFailbackProviderContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HyperVReplicaAzureFailbackProviderContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HyperVReplicaAzureFailbackProviderContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HyperVReplicaAzureFailbackProviderContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DataSyncOption))
             {
@@ -32,7 +43,104 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        HyperVReplicaAzureFailbackProviderContent IJsonModel<HyperVReplicaAzureFailbackProviderContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureFailbackProviderContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaAzureFailbackProviderContent(document.RootElement, options);
+        }
+
+        internal static HyperVReplicaAzureFailbackProviderContent DeserializeHyperVReplicaAzureFailbackProviderContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> dataSyncOption = default;
+            Optional<string> recoveryVmCreationOption = default;
+            Optional<string> providerIdForAlternateRecovery = default;
+            string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("dataSyncOption"u8))
+                {
+                    dataSyncOption = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("recoveryVmCreationOption"u8))
+                {
+                    recoveryVmCreationOption = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("providerIdForAlternateRecovery"u8))
+                {
+                    providerIdForAlternateRecovery = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HyperVReplicaAzureFailbackProviderContent(instanceType, serializedAdditionalRawData, dataSyncOption.Value, recoveryVmCreationOption.Value, providerIdForAlternateRecovery.Value);
+        }
+
+        BinaryData IPersistableModel<HyperVReplicaAzureFailbackProviderContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureFailbackProviderContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HyperVReplicaAzureFailbackProviderContent IPersistableModel<HyperVReplicaAzureFailbackProviderContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureFailbackProviderContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHyperVReplicaAzureFailbackProviderContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<HyperVReplicaAzureFailbackProviderContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

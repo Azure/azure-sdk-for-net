@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Description for what data to store in Azure Tables. </summary>
     public partial class KnowledgeStoreTableProjectionSelector : KnowledgeStoreProjectionSelector
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreTableProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/>. </summary>
         /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public KnowledgeStoreTableProjectionSelector(string tableName)
@@ -24,16 +24,22 @@ namespace Azure.Search.Documents.Indexes.Models
             TableName = tableName;
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreTableProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tableName"> Name of the Azure table to store projected data in. </param>
-        internal KnowledgeStoreTableProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string tableName) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs)
+        internal KnowledgeStoreTableProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, serializedAdditionalRawData)
         {
             TableName = tableName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreTableProjectionSelector"/> for deserialization. </summary>
+        internal KnowledgeStoreTableProjectionSelector()
+        {
         }
 
         /// <summary> Name of the Azure table to store projected data in. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisLinkedServerWithPropertyData : ResourceData
     {
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
         public RedisLinkedServerWithPropertyData()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +38,8 @@ namespace Azure.ResourceManager.Redis
         /// <param name="geoReplicatedPrimaryHostName"> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </param>
         /// <param name="primaryHostName"> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </param>
         /// <param name="provisioningState"> Terminal state of the link between primary and secondary redis cache. </param>
-        internal RedisLinkedServerWithPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedRedisCacheId, AzureLocation? linkedRedisCacheLocation, RedisLinkedServerRole? serverRole, string geoReplicatedPrimaryHostName, string primaryHostName, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisLinkedServerWithPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedRedisCacheId, AzureLocation? linkedRedisCacheLocation, RedisLinkedServerRole? serverRole, string geoReplicatedPrimaryHostName, string primaryHostName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LinkedRedisCacheId = linkedRedisCacheId;
             LinkedRedisCacheLocation = linkedRedisCacheLocation;
@@ -41,6 +47,7 @@ namespace Azure.ResourceManager.Redis
             GeoReplicatedPrimaryHostName = geoReplicatedPrimaryHostName;
             PrimaryHostName = primaryHostName;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fully qualified resourceId of the linked redis cache. </summary>

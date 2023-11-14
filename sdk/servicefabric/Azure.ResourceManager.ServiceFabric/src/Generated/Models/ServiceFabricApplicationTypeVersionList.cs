@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceFabric;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> The list of application type version resources for the specified application type name resource. </summary>
     internal partial class ServiceFabricApplicationTypeVersionList
     {
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionList"/>. </summary>
         internal ServiceFabricApplicationTypeVersionList()
         {
             Value = new ChangeTrackingList<ServiceFabricApplicationTypeVersionData>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricApplicationTypeVersionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricApplicationTypeVersionList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of application type version list results if there are any. </param>
-        internal ServiceFabricApplicationTypeVersionList(IReadOnlyList<ServiceFabricApplicationTypeVersionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricApplicationTypeVersionList(IReadOnlyList<ServiceFabricApplicationTypeVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

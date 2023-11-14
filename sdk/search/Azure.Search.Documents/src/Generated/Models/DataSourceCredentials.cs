@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents credentials that can be used to connect to a datasource. </summary>
     internal partial class DataSourceCredentials
     {
-        /// <summary> Initializes a new instance of DataSourceCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
         public DataSourceCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of DataSourceCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentials"/>. </summary>
         /// <param name="connectionString"> The connection string for the datasource. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </param>
-        internal DataSourceCredentials(string connectionString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourceCredentials(string connectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The connection string for the datasource. Set to `&lt;unchanged&gt;` (with brackets) if you don't want the connection string updated. Set to `&lt;redacted&gt;` if you want to remove the connection string value from the datasource. </summary>

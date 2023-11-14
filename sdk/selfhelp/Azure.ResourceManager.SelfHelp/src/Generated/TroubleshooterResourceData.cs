@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class TroubleshooterResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of TroubleshooterResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterResourceData"/>. </summary>
         public TroubleshooterResourceData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
             Steps = new ChangeTrackingList<SelfHelpStep>();
         }
 
-        /// <summary> Initializes a new instance of TroubleshooterResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +38,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="parameters"> Client input parameters to run Troubleshooter Resource. </param>
         /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
         /// <param name="steps"> List of step object. </param>
-        internal TroubleshooterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<SelfHelpStep> steps) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshooterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<SelfHelpStep> steps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SolutionId = solutionId;
             Parameters = parameters;
             ProvisioningState = provisioningState;
             Steps = steps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution Id to identify single troubleshooter. </summary>

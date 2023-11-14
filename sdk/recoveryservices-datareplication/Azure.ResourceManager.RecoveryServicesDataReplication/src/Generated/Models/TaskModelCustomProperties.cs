@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Task model custom properties. </summary>
     internal partial class TaskModelCustomProperties
     {
-        /// <summary> Initializes a new instance of TaskModelCustomProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TaskModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceType"/> is null. </exception>
         internal TaskModelCustomProperties(string instanceType)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Argument.AssertNotNull(instanceType, nameof(instanceType));
 
             InstanceType = instanceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TaskModelCustomProperties"/>. </summary>
+        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TaskModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TaskModelCustomProperties"/> for deserialization. </summary>
+        internal TaskModelCustomProperties()
+        {
         }
 
         /// <summary> Gets or sets the instance type. </summary>

@@ -8,15 +8,273 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryProcessServer
+    public partial class SiteRecoveryProcessServer : IUtf8JsonSerializable, IJsonModel<SiteRecoveryProcessServer>
     {
-        internal static SiteRecoveryProcessServer DeserializeSiteRecoveryProcessServer(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryProcessServer>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SiteRecoveryProcessServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SiteRecoveryProcessServer>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SiteRecoveryProcessServer>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(IPAddress))
+            {
+                writer.WritePropertyName("ipAddress"u8);
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                writer.WritePropertyName("lastHeartbeat"u8);
+                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(VersionStatus))
+            {
+                writer.WritePropertyName("versionStatus"u8);
+                writer.WriteStringValue(VersionStatus);
+            }
+            if (Optional.IsCollectionDefined(MobilityServiceUpdates))
+            {
+                writer.WritePropertyName("mobilityServiceUpdates"u8);
+                writer.WriteStartArray();
+                foreach (var item in MobilityServiceUpdates)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HostId))
+            {
+                writer.WritePropertyName("hostId"u8);
+                writer.WriteStringValue(HostId);
+            }
+            if (Optional.IsDefined(MachineCount))
+            {
+                writer.WritePropertyName("machineCount"u8);
+                writer.WriteStringValue(MachineCount);
+            }
+            if (Optional.IsDefined(ReplicationPairCount))
+            {
+                writer.WritePropertyName("replicationPairCount"u8);
+                writer.WriteStringValue(ReplicationPairCount);
+            }
+            if (Optional.IsDefined(SystemLoad))
+            {
+                writer.WritePropertyName("systemLoad"u8);
+                writer.WriteStringValue(SystemLoad);
+            }
+            if (Optional.IsDefined(SystemLoadStatus))
+            {
+                writer.WritePropertyName("systemLoadStatus"u8);
+                writer.WriteStringValue(SystemLoadStatus);
+            }
+            if (Optional.IsDefined(CpuLoad))
+            {
+                writer.WritePropertyName("cpuLoad"u8);
+                writer.WriteStringValue(CpuLoad);
+            }
+            if (Optional.IsDefined(CpuLoadStatus))
+            {
+                writer.WritePropertyName("cpuLoadStatus"u8);
+                writer.WriteStringValue(CpuLoadStatus);
+            }
+            if (Optional.IsDefined(TotalMemoryInBytes))
+            {
+                writer.WritePropertyName("totalMemoryInBytes"u8);
+                writer.WriteNumberValue(TotalMemoryInBytes.Value);
+            }
+            if (Optional.IsDefined(AvailableMemoryInBytes))
+            {
+                writer.WritePropertyName("availableMemoryInBytes"u8);
+                writer.WriteNumberValue(AvailableMemoryInBytes.Value);
+            }
+            if (Optional.IsDefined(MemoryUsageStatus))
+            {
+                writer.WritePropertyName("memoryUsageStatus"u8);
+                writer.WriteStringValue(MemoryUsageStatus);
+            }
+            if (Optional.IsDefined(TotalSpaceInBytes))
+            {
+                writer.WritePropertyName("totalSpaceInBytes"u8);
+                writer.WriteNumberValue(TotalSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(AvailableSpaceInBytes))
+            {
+                writer.WritePropertyName("availableSpaceInBytes"u8);
+                writer.WriteNumberValue(AvailableSpaceInBytes.Value);
+            }
+            if (Optional.IsDefined(SpaceUsageStatus))
+            {
+                writer.WritePropertyName("spaceUsageStatus"u8);
+                writer.WriteStringValue(SpaceUsageStatus);
+            }
+            if (Optional.IsDefined(PsServiceStatus))
+            {
+                writer.WritePropertyName("psServiceStatus"u8);
+                writer.WriteStringValue(PsServiceStatus);
+            }
+            if (Optional.IsDefined(SslCertExpireOn))
+            {
+                writer.WritePropertyName("sslCertExpiryDate"u8);
+                writer.WriteStringValue(SslCertExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(SslCertExpiryRemainingDays))
+            {
+                writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
+                writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
+            }
+            if (Optional.IsDefined(OSVersion))
+            {
+                writer.WritePropertyName("osVersion"u8);
+                writer.WriteStringValue(OSVersion);
+            }
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                writer.WritePropertyName("healthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                writer.WritePropertyName("agentExpiryDate"u8);
+                writer.WriteStringValue(AgentExpireOn.Value, "O");
+            }
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                writer.WritePropertyName("agentVersionDetails"u8);
+                writer.WriteObjectValue(AgentVersionDetails);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Health))
+                {
+                    writer.WritePropertyName("health"u8);
+                    writer.WriteStringValue(Health.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PsStatsRefreshOn))
+                {
+                    writer.WritePropertyName("psStatsRefreshTime"u8);
+                    writer.WriteStringValue(PsStatsRefreshOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThroughputUploadPendingDataInBytes))
+                {
+                    writer.WritePropertyName("throughputUploadPendingDataInBytes"u8);
+                    writer.WriteNumberValue(ThroughputUploadPendingDataInBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThroughputInMBps))
+                {
+                    writer.WritePropertyName("throughputInMBps"u8);
+                    writer.WriteNumberValue(ThroughputInMBps.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThroughputInBytes))
+                {
+                    writer.WritePropertyName("throughputInBytes"u8);
+                    writer.WriteNumberValue(ThroughputInBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ThroughputStatus))
+                {
+                    writer.WritePropertyName("throughputStatus"u8);
+                    writer.WriteStringValue(ThroughputStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MarsCommunicationStatus))
+                {
+                    writer.WritePropertyName("marsCommunicationStatus"u8);
+                    writer.WriteStringValue(MarsCommunicationStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MarsRegistrationStatus))
+                {
+                    writer.WritePropertyName("marsRegistrationStatus"u8);
+                    writer.WriteStringValue(MarsRegistrationStatus);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryProcessServer IJsonModel<SiteRecoveryProcessServer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryProcessServer DeserializeSiteRecoveryProcessServer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +315,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> throughputStatus = default;
             Optional<string> marsCommunicationStatus = default;
             Optional<string> marsRegistrationStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -317,8 +577,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     marsRegistrationStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryProcessServer>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryProcessServer IPersistableModel<SiteRecoveryProcessServer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
+        }
+
+        string IPersistableModel<SiteRecoveryProcessServer>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

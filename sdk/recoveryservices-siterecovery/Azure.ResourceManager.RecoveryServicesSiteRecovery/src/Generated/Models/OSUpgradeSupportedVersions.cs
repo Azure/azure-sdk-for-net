@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Supported OS upgrade versions. </summary>
     public partial class OSUpgradeSupportedVersions
     {
-        /// <summary> Initializes a new instance of OSUpgradeSupportedVersions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSUpgradeSupportedVersions"/>. </summary>
         internal OSUpgradeSupportedVersions()
         {
             SupportedTargetOSVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OSUpgradeSupportedVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSUpgradeSupportedVersions"/>. </summary>
         /// <param name="supportedSourceOSVersion"> The source OS version name. </param>
         /// <param name="supportedTargetOSVersions"> The target OS version names. </param>
-        internal OSUpgradeSupportedVersions(string supportedSourceOSVersion, IReadOnlyList<string> supportedTargetOSVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSUpgradeSupportedVersions(string supportedSourceOSVersion, IReadOnlyList<string> supportedTargetOSVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SupportedSourceOSVersion = supportedSourceOSVersion;
             SupportedTargetOSVersions = supportedTargetOSVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The source OS version name. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerJobExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerJobExecutionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionData"/>. </summary>
         public SqlServerJobExecutionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +45,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="currentAttemptStartOn"> Start time of the current attempt. </param>
         /// <param name="lastMessage"> The last status or error message. </param>
         /// <param name="target"> The target that this execution is executed on. </param>
-        internal SqlServerJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, JobExecutionProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startOn, DateTimeOffset? endOn, int? currentAttempts, DateTimeOffset? currentAttemptStartOn, string lastMessage, JobExecutionTarget target) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, JobExecutionProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startOn, DateTimeOffset? endOn, int? currentAttempts, DateTimeOffset? currentAttemptStartOn, string lastMessage, JobExecutionTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             JobVersion = jobVersion;
             StepName = stepName;
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.Sql
             CurrentAttemptStartOn = currentAttemptStartOn;
             LastMessage = lastMessage;
             Target = target;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The job version number. </summary>

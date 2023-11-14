@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
@@ -19,12 +20,15 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereImageData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereImageData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereImageData"/>. </summary>
         public SphereImageData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +69,8 @@ namespace Azure.ResourceManager.Sphere
         /// The status of the last operation.
         /// Serialized Name: Image.properties.provisioningState
         /// </param>
-        internal SphereImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string imageId, string imageName, RegionalDataBoundary? regionalDataBoundary, Uri uri, string description, string componentId, SphereImageType? imageType, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string imageId, string imageName, RegionalDataBoundary? regionalDataBoundary, Uri uri, string description, string componentId, SphereImageType? imageType, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Image = image;
             ImageId = imageId;
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.Sphere
             ComponentId = componentId;
             ImageType = imageType;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

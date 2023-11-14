@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The kinesis to s3 connection configuration. </summary>
     internal partial class DefenderForContainersAwsOfferingKinesisToS3
     {
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKinesisToS3. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKinesisToS3"/>. </summary>
         public DefenderForContainersAwsOfferingKinesisToS3()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKinesisToS3. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKinesisToS3"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS used by Kinesis to transfer data into S3. </param>
-        internal DefenderForContainersAwsOfferingKinesisToS3(string cloudRoleArn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForContainersAwsOfferingKinesisToS3(string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cloud role ARN in AWS used by Kinesis to transfer data into S3. </summary>

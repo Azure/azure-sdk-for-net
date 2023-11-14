@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Vault Job specific error information. </summary>
     public partial class VaultBackupJobErrorInfo
     {
-        /// <summary> Initializes a new instance of VaultBackupJobErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultBackupJobErrorInfo"/>. </summary>
         public VaultBackupJobErrorInfo()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VaultBackupJobErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultBackupJobErrorInfo"/>. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorString"> Localized error string. </param>
         /// <param name="recommendations"> List of localized recommendations for above error code. </param>
-        internal VaultBackupJobErrorInfo(int? errorCode, string errorString, IList<string> recommendations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultBackupJobErrorInfo(int? errorCode, string errorString, IList<string> recommendations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorCode = errorCode;
             ErrorString = errorString;
             Recommendations = recommendations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error code. </summary>

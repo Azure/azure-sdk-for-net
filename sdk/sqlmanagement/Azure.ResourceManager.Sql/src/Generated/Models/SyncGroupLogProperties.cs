@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of an Azure SQL Database sync group log. </summary>
     public partial class SyncGroupLogProperties
     {
-        /// <summary> Initializes a new instance of SyncGroupLogProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncGroupLogProperties"/>. </summary>
         internal SyncGroupLogProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncGroupLogProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupLogProperties"/>. </summary>
         /// <param name="timestamp"> Timestamp of the sync group log. </param>
         /// <param name="logType"> Type of the sync group log. </param>
         /// <param name="source"> Source of the sync group log. </param>
         /// <param name="details"> Details of the sync group log. </param>
         /// <param name="tracingId"> TracingId of the sync group log. </param>
         /// <param name="operationStatus"> OperationStatus of the sync group log. </param>
-        internal SyncGroupLogProperties(DateTimeOffset? timestamp, SyncGroupLogType? logType, string source, string details, Guid? tracingId, string operationStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncGroupLogProperties(DateTimeOffset? timestamp, SyncGroupLogType? logType, string source, string details, Guid? tracingId, string operationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timestamp = timestamp;
             LogType = logType;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
             Details = details;
             TracingId = tracingId;
             OperationStatus = operationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Timestamp of the sync group log. </summary>

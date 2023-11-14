@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of Security analytics of your IoT Security solution. </summary>
     internal partial class IotSecuritySolutionAnalyticsModelList
     {
-        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelList"/>. </summary>
         /// <param name="value"> List of Security analytics of your IoT Security solution. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IotSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IotSecuritySolutionAnalyticsModelList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelList"/>. </summary>
         /// <param name="value"> List of Security analytics of your IoT Security solution. </param>
         /// <param name="nextLink"> When there is too much alert data for one page, use this URI to fetch the next page. </param>
-        internal IotSecuritySolutionAnalyticsModelList(IReadOnlyList<IotSecuritySolutionAnalyticsModelData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecuritySolutionAnalyticsModelList(IReadOnlyList<IotSecuritySolutionAnalyticsModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelList"/> for deserialization. </summary>
+        internal IotSecuritySolutionAnalyticsModelList()
+        {
         }
 
         /// <summary> List of Security analytics of your IoT Security solution. </summary>

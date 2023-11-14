@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for get security pin request body. </summary>
     public partial class SecurityPinContent
     {
-        /// <summary> Initializes a new instance of SecurityPinContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityPinContent"/>. </summary>
         public SecurityPinContent()
         {
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityPinContent"/>. </summary>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityPinContent(IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceGuardOperationRequests = resourceGuardOperationRequests;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ResourceGuard Operation Requests. </summary>

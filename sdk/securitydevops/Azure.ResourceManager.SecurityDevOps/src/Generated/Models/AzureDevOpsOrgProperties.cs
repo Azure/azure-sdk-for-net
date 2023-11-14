@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     /// <summary> AzureDevOps Org properties. </summary>
     public partial class AzureDevOpsOrgProperties
     {
-        /// <summary> Initializes a new instance of AzureDevOpsOrgProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgProperties"/>. </summary>
         public AzureDevOpsOrgProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsOrgProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsOrgProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="autoDiscovery"></param>
-        internal AzureDevOpsOrgProperties(ProvisioningState? provisioningState, AutoDiscovery? autoDiscovery)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsOrgProperties(ProvisioningState? provisioningState, AutoDiscovery? autoDiscovery, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             AutoDiscovery = autoDiscovery;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

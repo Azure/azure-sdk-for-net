@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information about a single resource change predicted by What-If operation. </summary>
     public partial class WhatIfChange
     {
-        /// <summary> Initializes a new instance of WhatIfChange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WhatIfChange"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
@@ -27,14 +30,15 @@ namespace Azure.ResourceManager.Resources.Models
             Delta = new ChangeTrackingList<WhatIfPropertyChange>();
         }
 
-        /// <summary> Initializes a new instance of WhatIfChange. </summary>
+        /// <summary> Initializes a new instance of <see cref="WhatIfChange"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
         /// <param name="unsupportedReason"> The explanation about why the resource is unsupported by What-If. </param>
         /// <param name="before"> The snapshot of the resource before the deployment is executed. </param>
         /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to resource properties. </param>
-        internal WhatIfChange(string resourceId, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WhatIfChange(string resourceId, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ChangeType = changeType;
@@ -42,6 +46,12 @@ namespace Azure.ResourceManager.Resources.Models
             Before = before;
             After = after;
             Delta = delta;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WhatIfChange"/> for deserialization. </summary>
+        internal WhatIfChange()
+        {
         }
 
         /// <summary> Resource ID. </summary>

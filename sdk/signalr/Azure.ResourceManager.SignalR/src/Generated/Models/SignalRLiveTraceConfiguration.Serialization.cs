@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRLiveTraceConfiguration : IUtf8JsonSerializable
+    public partial class SignalRLiveTraceConfiguration : IUtf8JsonSerializable, IJsonModel<SignalRLiveTraceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRLiveTraceConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SignalRLiveTraceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SignalRLiveTraceConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SignalRLiveTraceConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SignalRLiveTraceConfiguration DeserializeSignalRLiveTraceConfiguration(JsonElement element)
+        SignalRLiveTraceConfiguration IJsonModel<SignalRLiveTraceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRLiveTraceConfiguration(document.RootElement, options);
+        }
+
+        internal static SignalRLiveTraceConfiguration DeserializeSignalRLiveTraceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> enabled = default;
             Optional<IList<SignalRLiveTraceCategory>> categories = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -63,8 +104,38 @@ namespace Azure.ResourceManager.SignalR.Models
                     categories = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SignalRLiveTraceConfiguration(enabled.Value, Optional.ToList(categories));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SignalRLiveTraceConfiguration(enabled.Value, Optional.ToList(categories), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SignalRLiveTraceConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SignalRLiveTraceConfiguration IPersistableModel<SignalRLiveTraceConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSignalRLiveTraceConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<SignalRLiveTraceConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
