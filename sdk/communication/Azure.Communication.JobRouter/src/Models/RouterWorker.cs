@@ -11,8 +11,8 @@ namespace Azure.Communication.JobRouter
 {
     public partial class RouterWorker : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
-        /// <param name="workerId"> Id of the policy. </param>
+        /// <summary> Initializes a new instance of a worker. </summary>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         public RouterWorker(string workerId)
         {
@@ -34,16 +34,16 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
+        /// <summary> Collection of channel(s) this worker can handle and their impact on the workers capacity. </summary>
         public IList<RouterChannel> Channels { get; } = new List<RouterChannel>();
 
-        /// <summary> The queue(s) that this worker can receive work from. </summary>
+        /// <summary> Collection of queue(s) that this worker can receive work from. </summary>
         public IList<string> Queues { get; } = new List<string>();
 
         /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
         public int? Capacity { get; set; }
 
-        /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
+        /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
         public bool? AvailableForOffers { get; set; }
 
         [CodeGenMember("Labels")]
@@ -101,7 +101,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Concurrency Token. </summary>
+        /// <summary> The entity tag for this resource. </summary>
         public ETag ETag { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

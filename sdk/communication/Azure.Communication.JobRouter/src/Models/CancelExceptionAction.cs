@@ -16,13 +16,13 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// (Optional) A note that will be appended to the jobs' Notes collection with the
+        /// A note that will be appended to the jobs' Notes collection with the
         /// current timestamp.
         /// </summary>
         public string Note { get; set; }
 
         /// <summary>
-        /// (Optional) Indicates the outcome of the job, populate this field with your own
+        /// Indicates the outcome of the job, populate this field with your own
         /// custom values.
         /// </summary>
         public string DispositionCode { get; set; }

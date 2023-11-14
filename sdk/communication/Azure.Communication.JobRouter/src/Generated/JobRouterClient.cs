@@ -39,7 +39,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -79,7 +79,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -110,7 +110,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves an existing job by Id. </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -124,7 +124,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves an existing job by Id. </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -152,7 +152,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -191,7 +191,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -226,7 +226,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -261,7 +261,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -286,7 +286,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Reclassify a job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="options"> Request object for reclassifying a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -302,7 +302,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Reclassify a job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="options"> Request object for reclassifying a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -332,7 +332,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -372,7 +372,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -398,7 +398,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="options"> Request model for cancelling job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -414,7 +414,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Submits request to cancel an existing job by Id while supplying free-form cancellation reason. </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="options"> Request model for cancelling job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -444,7 +444,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -484,7 +484,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
@@ -510,8 +510,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Completes an assigned job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="options"> Request model for completing job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -528,8 +528,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Completes an assigned job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="options"> Request model for completing job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -560,8 +560,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -602,8 +602,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -630,8 +630,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Closes a completed job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="options"> Request model for closing job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -648,8 +648,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Closes a completed job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="options"> Request model for closing job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -680,8 +680,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -722,8 +722,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -855,9 +855,9 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Un-assign a job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <summary> Unassign a job. </summary>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="options"> Request body for unassign route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -873,9 +873,9 @@ namespace Azure.Communication.JobRouter
             return Response.FromValue(UnassignJobResult.FromResponse(response), response);
         }
 
-        /// <summary> Un-assign a job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <summary> Unassign a job. </summary>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="options"> Request body for unassign route. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -892,7 +892,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// [Protocol Method] Un-assign a job.
+        /// [Protocol Method] Unassign a job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -906,8 +906,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -934,7 +934,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// [Protocol Method] Un-assign a job.
+        /// [Protocol Method] Unassign a job.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -948,8 +948,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
@@ -976,8 +976,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already. </summary>
-        /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="offerId"> Id of an offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -992,8 +992,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Accepts an offer to work on a job and returns a 409/Conflict if another agent accepted the job already. </summary>
-        /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="offerId"> Id of an offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1022,8 +1022,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="offerId"> Id of an offer. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1063,8 +1063,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="offerId"> Id of an offer. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1090,8 +1090,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
-        /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="offerId"> Id of an offer. </param>
         /// <param name="options"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
@@ -1108,8 +1108,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Declines an offer to work on a job. </summary>
-        /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="offerId"> Id of an offer. </param>
         /// <param name="options"> Request model for declining offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
@@ -1140,8 +1140,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="offerId"> Id of an offer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
@@ -1182,8 +1182,8 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
-        /// <param name="offerId"> The Id of the offer. </param>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <param name="offerId"> Id of an offer. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> or <paramref name="offerId"/> is null. </exception>
@@ -1325,7 +1325,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1365,7 +1365,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1396,7 +1396,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves an existing worker by Id. </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1410,7 +1410,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Retrieves an existing worker by Id. </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1438,7 +1438,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1477,7 +1477,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1512,7 +1512,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1547,7 +1547,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workerId"/> is an empty string, and was expected to be non-empty. </exception>

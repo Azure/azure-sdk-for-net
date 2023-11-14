@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter
         #region public constructors - all arguments need null check
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="connectionString">Connection string acquired from your Communication resource. </param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterClient(string connectionString, JobRouterClientOptions options = default)
             : this(
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of your Communication resource. </param>
         /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterClient(Uri endpoint, AzureKeyCredential credential, JobRouterClientOptions options = default)
@@ -41,7 +41,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouterClient"/>.</summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of your Communication resource. </param>
         /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public JobRouterClient(Uri endpoint, TokenCredential credential, JobRouterClientOptions options = default)
@@ -426,7 +426,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> The id of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -466,7 +466,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="jobId"> The id of the job. </param>
+        /// <param name="jobId"> The id of a job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -497,8 +497,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Reclassify a job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="jobId"> The id of a job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/></exception>
         ///<exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> ReclassifyJobAsync(string jobId, CancellationToken cancellationToken = default)
@@ -512,8 +512,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Reclassify a job. </summary>
-        /// <param name="jobId"> The id of the job. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="jobId"> The id of a job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/></exception>
         ///<exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response ReclassifyJob(string jobId, CancellationToken cancellationToken = default)
@@ -644,8 +644,8 @@ namespace Azure.Communication.JobRouter
                 cancellationToken: cancellationToken).GetRawResponse();
         }
 
-        /// <summary> Un-assign a job. </summary>
-        /// <param name="options"> Options for un-assigning a job. </param>
+        /// <summary> Unassign a job. </summary>
+        /// <param name="options"> Options for unassigning a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(UnassignJobOptions options, CancellationToken cancellationToken = default)
@@ -659,8 +659,8 @@ namespace Azure.Communication.JobRouter
                 cancellationToken: cancellationToken).ConfigureAwait(false));
         }
 
-        /// <summary> Un-assign a job. </summary>
-        /// <param name="options"> Options for un-assigning a job. </param>
+        /// <summary> Unassign a job. </summary>
+        /// <param name="options"> Options for unassigning a job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public virtual Response<UnassignJobResult> UnassignJob(UnassignJobOptions options, CancellationToken cancellationToken = default)
@@ -713,7 +713,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Create or update a worker to process jobs. </summary>
         /// <param name="options"> Options for creating a router worker. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterWorker>> CreateWorkerAsync(
             CreateWorkerOptions options,
@@ -760,7 +760,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Create or update a worker to process jobs. </summary>
         /// <param name="options"> Options for creating a router worker. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterWorker> CreateWorker(
             CreateWorkerOptions options,
@@ -807,7 +807,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Update a worker to process jobs. </summary>
         /// <param name="worker"> Worker to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterWorker>> UpdateWorkerAsync(
             RouterWorker worker, RequestConditions requestConditions = default,
@@ -836,7 +836,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Update a worker to process jobs. </summary>
         /// <param name="worker"> Worker to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterWorker> UpdateWorker(
             RouterWorker worker, RequestConditions requestConditions = default,
@@ -871,7 +871,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -911,7 +911,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="workerId"> Id of the worker. </param>
+        /// <param name="workerId"> Id of a worker. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -998,41 +998,5 @@ namespace Azure.Communication.JobRouter
             request.Headers.Add("Accept", "application/json");
             return message;
         }
-
-        // /// <summary> Un-assign a job. </summary>
-        // /// <param name="id"> Id of the job to un-assign. </param>
-        // /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
-        // /// <param name="unassignJobRequest"> Request body for unassign route. </param>
-        // /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        // /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        // /// <include file="../Generated/Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJobAsync(string,string,UnassignJobRequest,CancellationToken)']/*" />
-        // internal virtual async Task<Response<UnassignJobResult>> UnassignJobAsync(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
-        // {
-        //     Argument.AssertNotNullOrEmpty(id, nameof(id));
-        //     Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
-        //
-        //     RequestContext context = FromCancellationToken(cancellationToken);
-        //     Response response = await UnassignJobAsync(id, assignmentId, unassignJobRequest?.ToRequestContent(), context).ConfigureAwait(false);
-        //     return Response.FromValue(UnassignJobResult.FromResponse(response), response);
-        // }
-        //
-        // /// <summary> Un-assign a job. </summary>
-        // /// <param name="id"> Id of the job to un-assign. </param>
-        // /// <param name="assignmentId"> Id of the assignment to un-assign. </param>
-        // /// <param name="unassignJobRequest"> Request body for unassign route. </param>
-        // /// <param name="cancellationToken"> The cancellation token to use. </param>
-        // /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="assignmentId"/> is null. </exception>
-        // /// <exception cref="ArgumentException"> <paramref name="id"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        // /// <include file="../Generated/Docs/JobRouterClient.xml" path="doc/members/member[@name='UnassignJob(string,string,UnassignJobRequest,CancellationToken)']/*" />
-        // internal virtual Response<UnassignJobResult> UnassignJob(string id, string assignmentId, UnassignJobRequest unassignJobRequest = null, CancellationToken cancellationToken = default)
-        // {
-        //     Argument.AssertNotNullOrEmpty(id, nameof(id));
-        //     Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
-        //
-        //     RequestContext context = FromCancellationToken(cancellationToken);
-        //     Response response = UnassignJob(id, assignmentId, unassignJobRequest?.ToRequestContent(), context);
-        //     return Response.FromValue(UnassignJobResult.FromResponse(response), response);
-        // }
     }
 }

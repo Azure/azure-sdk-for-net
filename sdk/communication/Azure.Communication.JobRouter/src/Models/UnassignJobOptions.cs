@@ -16,8 +16,8 @@ namespace Azure.Communication.JobRouter
         {
         }
 
-        /// <param name="jobId"> Id of the job. </param>
-        /// <param name="assignmentId"> Id of the assignment. </param>
+        /// <param name="jobId"> Id of a job. </param>
+        /// <param name="assignmentId"> Id of a job assignment to unassign. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="assignmentId"/> is an empty string, and was expected to be non-empty. </exception>
 
@@ -31,18 +31,17 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// Id of the job to un-assign.
+        /// Id of a job to unassign.
         /// </summary>
         public string JobId { get; }
 
         /// <summary>
-        /// Id of the assignment to un-assign.
+        /// Id of a job assignment to unassign.
         /// </summary>
         public string AssignmentId { get; }
 
         /// <summary>
-        /// If SuspendMatching is true, then the job is not queued for re-matching with a
-        /// worker.
+        /// If SuspendMatching is true, then the job is not queued for rematching with a worker.
         /// </summary>
         public bool? SuspendMatching { get; set; }
     }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Supported queue selector attachment types. </summary>
+    /// <summary> Discriminators for supported queue selector attachment types. </summary>
     public readonly partial struct QueueSelectorAttachmentKind : IEquatable<QueueSelectorAttachmentKind>
     {
         private readonly string _value;

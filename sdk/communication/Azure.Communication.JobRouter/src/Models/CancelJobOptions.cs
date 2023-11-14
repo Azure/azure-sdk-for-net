@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
         {
         }
 
-        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="jobId"> Id of a job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         public CancelJobOptions(string jobId)
@@ -28,15 +28,15 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// Id of the job.
+        /// Id of a job.
         /// </summary>
         public string JobId { get; }
 
-        /// <summary> Reason code for cancelled or closed jobs. </summary>
+        /// <summary> Indicates the outcome of a job, populate this field with your own custom values. If not provided, default value of "Cancelled" is set. </summary>
         public string DispositionCode { get; set; }
 
         /// <summary>
-        /// Custom supplied note, e.g., cancellation reason.
+        /// A note that will be appended to a job's Notes collection with the current timestamp.
         /// </summary>
         public string Note { get; set; }
     }

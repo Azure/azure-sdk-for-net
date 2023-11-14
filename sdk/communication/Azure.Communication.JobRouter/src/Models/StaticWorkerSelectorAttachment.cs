@@ -10,10 +10,7 @@ namespace Azure.Communication.JobRouter
     public partial class StaticWorkerSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
-        /// <param name="workerSelector">
-        /// Describes a condition that must be met against a set of labels for worker
-        /// selection
-        /// </param>
+        /// <param name="workerSelector"> Describes a condition that must be met against a set of labels for worker selection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workerSelector"/> is null. </exception>
         public StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector)
         {
