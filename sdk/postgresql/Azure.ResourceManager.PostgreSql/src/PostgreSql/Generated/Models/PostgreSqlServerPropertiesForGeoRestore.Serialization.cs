@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    public partial class PostgreSqlServerPropertiesForGeoRestore : IUtf8JsonSerializable
+    public partial class PostgreSqlServerPropertiesForGeoRestore : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerPropertiesForGeoRestore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerPropertiesForGeoRestore>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PostgreSqlServerPropertiesForGeoRestore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PostgreSqlServerPropertiesForGeoRestore>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PostgreSqlServerPropertiesForGeoRestore>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourceServerId"u8);
             writer.WriteStringValue(SourceServerId);
@@ -49,7 +60,152 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PostgreSqlServerPropertiesForGeoRestore IJsonModel<PostgreSqlServerPropertiesForGeoRestore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlServerPropertiesForGeoRestore(document.RootElement, options);
+        }
+
+        internal static PostgreSqlServerPropertiesForGeoRestore DeserializePostgreSqlServerPropertiesForGeoRestore(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier sourceServerId = default;
+            Optional<PostgreSqlServerVersion> version = default;
+            Optional<PostgreSqlSslEnforcementEnum> sslEnforcement = default;
+            Optional<PostgreSqlMinimalTlsVersionEnum> minimalTlsVersion = default;
+            Optional<PostgreSqlInfrastructureEncryption> infrastructureEncryption = default;
+            Optional<PostgreSqlPublicNetworkAccessEnum> publicNetworkAccess = default;
+            Optional<PostgreSqlStorageProfile> storageProfile = default;
+            PostgreSqlCreateMode createMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceServerId"u8))
+                {
+                    sourceServerId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    version = new PostgreSqlServerVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sslEnforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sslEnforcement = property.Value.GetString().ToPostgreSqlSslEnforcementEnum();
+                    continue;
+                }
+                if (property.NameEquals("minimalTlsVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimalTlsVersion = new PostgreSqlMinimalTlsVersionEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("infrastructureEncryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    infrastructureEncryption = new PostgreSqlInfrastructureEncryption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new PostgreSqlPublicNetworkAccessEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new PostgreSqlCreateMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostgreSqlServerPropertiesForGeoRestore(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData, sourceServerId);
+        }
+
+        BinaryData IPersistableModel<PostgreSqlServerPropertiesForGeoRestore>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PostgreSqlServerPropertiesForGeoRestore IPersistableModel<PostgreSqlServerPropertiesForGeoRestore>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForGeoRestore)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePostgreSqlServerPropertiesForGeoRestore(document.RootElement, options);
+        }
+
+        string IPersistableModel<PostgreSqlServerPropertiesForGeoRestore>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

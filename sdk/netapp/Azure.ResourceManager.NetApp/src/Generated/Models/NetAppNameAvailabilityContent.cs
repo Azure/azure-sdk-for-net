@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Resource name availability request content. </summary>
     public partial class NetAppNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of NetAppNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
@@ -26,6 +30,24 @@ namespace Azure.ResourceManager.NetApp.Models
             Name = name;
             ResourceType = resourceType;
             ResourceGroup = resourceGroup;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="resourceGroup"> Resource group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppNameAvailabilityContent(string name, NetAppNameAvailabilityResourceType resourceType, string resourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            ResourceGroup = resourceGroup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppNameAvailabilityContent"/> for deserialization. </summary>
+        internal NetAppNameAvailabilityContent()
+        {
         }
 
         /// <summary> Resource name to verify. </summary>

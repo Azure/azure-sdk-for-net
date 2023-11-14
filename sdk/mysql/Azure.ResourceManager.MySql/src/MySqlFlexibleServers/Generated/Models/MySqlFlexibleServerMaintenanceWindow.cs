@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Maintenance window of a server. </summary>
     public partial class MySqlFlexibleServerMaintenanceWindow
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerMaintenanceWindow. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceWindow"/>. </summary>
         public MySqlFlexibleServerMaintenanceWindow()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerMaintenanceWindow. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceWindow"/>. </summary>
         /// <param name="customWindow"> indicates whether custom window is enabled or disabled. </param>
         /// <param name="startHour"> start hour for maintenance window. </param>
         /// <param name="startMinute"> start minute for maintenance window. </param>
         /// <param name="dayOfWeek"> day of week for maintenance window. </param>
-        internal MySqlFlexibleServerMaintenanceWindow(string customWindow, int? startHour, int? startMinute, int? dayOfWeek)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerMaintenanceWindow(string customWindow, int? startHour, int? startMinute, int? dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomWindow = customWindow;
             StartHour = startHour;
             StartMinute = startMinute;
             DayOfWeek = dayOfWeek;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> indicates whether custom window is enabled or disabled. </summary>

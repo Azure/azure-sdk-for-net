@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The LoggingRule. </summary>
     public partial class LoggingRule
     {
-        /// <summary> Initializes a new instance of LoggingRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoggingRule"/>. </summary>
         /// <param name="action"></param>
         /// <param name="direction"></param>
         /// <param name="detailLevel"></param>
@@ -27,17 +31,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
             DetailLevel = detailLevel;
         }
 
-        /// <summary> Initializes a new instance of LoggingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoggingRule"/>. </summary>
         /// <param name="action"></param>
         /// <param name="direction"></param>
         /// <param name="detailLevel"></param>
         /// <param name="hiddenPropertyPaths"></param>
-        internal LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel, LoggingHiddenPropertyPaths hiddenPropertyPaths)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoggingRule(string action, LoggingDirection direction, LoggingDetail detailLevel, LoggingHiddenPropertyPaths hiddenPropertyPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             Direction = direction;
             DetailLevel = detailLevel;
             HiddenPropertyPaths = hiddenPropertyPaths;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoggingRule"/> for deserialization. </summary>
+        internal LoggingRule()
+        {
         }
 
         /// <summary> Gets or sets the action. </summary>

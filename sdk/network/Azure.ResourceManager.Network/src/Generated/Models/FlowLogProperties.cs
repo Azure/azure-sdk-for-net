@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the flow log format. </summary>
     public partial class FlowLogProperties
     {
-        /// <summary> Initializes a new instance of FlowLogProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowLogProperties"/>. </summary>
         public FlowLogProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowLogProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogProperties"/>. </summary>
         /// <param name="formatType"> The file type of flow log. </param>
         /// <param name="version"> The version (revision) of the flow log. </param>
-        internal FlowLogProperties(FlowLogFormatType? formatType, int? version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowLogProperties(FlowLogFormatType? formatType, int? version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FormatType = formatType;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The file type of flow log. </summary>

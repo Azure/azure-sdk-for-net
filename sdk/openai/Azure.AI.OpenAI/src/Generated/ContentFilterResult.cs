@@ -5,18 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Information about filtered content severity level and if it has been filtered or not. </summary>
     public partial class ContentFilterResult
     {
-        /// <summary> Initializes a new instance of ContentFilterResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResult"/>. </summary>
         /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
         internal ContentFilterResult(ContentFilterSeverity severity, bool filtered)
         {
             Severity = severity;
             Filtered = filtered;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResult"/>. </summary>
+        /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentFilterResult(ContentFilterSeverity severity, bool filtered, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Severity = severity;
+            Filtered = filtered;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentFilterResult"/> for deserialization. </summary>
+        internal ContentFilterResult()
+        {
         }
 
         /// <summary> Ratings for the intensity and risk level of filtered content. </summary>

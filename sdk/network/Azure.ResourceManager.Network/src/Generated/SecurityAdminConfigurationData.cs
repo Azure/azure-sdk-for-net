@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class SecurityAdminConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAdminConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationData"/>. </summary>
         public SecurityAdminConfigurationData()
         {
             ApplyOnNetworkIntentPolicyBasedServices = new ChangeTrackingList<NetworkIntentPolicyBasedService>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAdminConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,13 +39,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal SecurityAdminConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAdminConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IList<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ApplyOnNetworkIntentPolicyBasedServices = applyOnNetworkIntentPolicyBasedServices;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A description of the security configuration. </summary>

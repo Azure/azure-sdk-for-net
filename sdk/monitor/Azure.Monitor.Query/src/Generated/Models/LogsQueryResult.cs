@@ -16,7 +16,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
     public partial class LogsQueryResult
     {
-        /// <summary> Initializes a new instance of LogsQueryResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
         internal LogsQueryResult(IEnumerable<LogsTable> allTables)
@@ -26,17 +29,24 @@ namespace Azure.Monitor.Query.Models
             AllTables = allTables.ToList();
         }
 
-        /// <summary> Initializes a new instance of LogsQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
         /// <param name="allTables"> The list of tables, columns and rows. </param>
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        internal LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogsQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement statistics, JsonElement visualization, JsonElement error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllTables = allTables;
             _statistics = statistics;
             _visualization = visualization;
             _error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/> for deserialization. </summary>
+        internal LogsQueryResult()
+        {
         }
     }
 }

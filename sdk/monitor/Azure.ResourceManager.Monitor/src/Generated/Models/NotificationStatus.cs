@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The details of the test notification results. </summary>
     public partial class NotificationStatus
     {
-        /// <summary> Initializes a new instance of NotificationStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationStatus"/>. </summary>
         /// <param name="state"> The overall state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="state"/> is null. </exception>
         internal NotificationStatus(string state)
@@ -25,19 +28,26 @@ namespace Azure.ResourceManager.Monitor.Models
             ActionDetails = new ChangeTrackingList<NotificationActionDetail>();
         }
 
-        /// <summary> Initializes a new instance of NotificationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationStatus"/>. </summary>
         /// <param name="context"> The context info. </param>
         /// <param name="state"> The overall state. </param>
         /// <param name="completedOn"> The completed time. </param>
         /// <param name="createdOn"> The created time. </param>
         /// <param name="actionDetails"> The list of action detail. </param>
-        internal NotificationStatus(NotificationContext context, string state, DateTimeOffset? completedOn, DateTimeOffset? createdOn, IReadOnlyList<NotificationActionDetail> actionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationStatus(NotificationContext context, string state, DateTimeOffset? completedOn, DateTimeOffset? createdOn, IReadOnlyList<NotificationActionDetail> actionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Context = context;
             State = state;
             CompletedOn = completedOn;
             CreatedOn = createdOn;
             ActionDetails = actionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationStatus"/> for deserialization. </summary>
+        internal NotificationStatus()
+        {
         }
 
         /// <summary> The context info. </summary>

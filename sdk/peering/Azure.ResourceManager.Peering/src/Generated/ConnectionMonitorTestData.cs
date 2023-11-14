@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Peering
     /// </summary>
     public partial class ConnectionMonitorTestData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTestData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestData"/>. </summary>
         public ConnectionMonitorTestData()
         {
             Path = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="isTestSuccessful"> The flag that indicates if the Connection Monitor test is successful or not. </param>
         /// <param name="path"> The path representing the Connection Monitor test. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ConnectionMonitorTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceAgent, string destination, int? destinationPort, int? testFrequencyInSec, bool? isTestSuccessful, IReadOnlyList<string> path, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceAgent, string destination, int? destinationPort, int? testFrequencyInSec, bool? isTestSuccessful, IReadOnlyList<string> path, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SourceAgent = sourceAgent;
             Destination = destination;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.Peering
             IsTestSuccessful = isTestSuccessful;
             Path = path;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Connection Monitor test source agent. </summary>

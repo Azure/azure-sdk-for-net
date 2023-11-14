@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list VpnSites. It contains a list of VpnSites and a URL nextLink to get the next set of results. </summary>
     internal partial class ListVpnSitesResult
     {
-        /// <summary> Initializes a new instance of ListVpnSitesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListVpnSitesResult"/>. </summary>
         internal ListVpnSitesResult()
         {
             Value = new ChangeTrackingList<VpnSiteData>();
         }
 
-        /// <summary> Initializes a new instance of ListVpnSitesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnSitesResult"/>. </summary>
         /// <param name="value"> List of VpnSites. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListVpnSitesResult(IReadOnlyList<VpnSiteData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListVpnSitesResult(IReadOnlyList<VpnSiteData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of VpnSites. </summary>

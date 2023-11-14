@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Represents server restart parameters. </summary>
     public partial class PostgreSqlFlexibleServerRestartParameter
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerRestartParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRestartParameter"/>. </summary>
         public PostgreSqlFlexibleServerRestartParameter()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRestartParameter"/>. </summary>
+        /// <param name="restartWithFailover"> Indicates whether to restart the server with failover. </param>
+        /// <param name="failoverMode"> Failover mode. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerRestartParameter(bool? restartWithFailover, PostgreSqlFlexibleServerFailoverMode? failoverMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RestartWithFailover = restartWithFailover;
+            FailoverMode = failoverMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether to restart the server with failover. </summary>

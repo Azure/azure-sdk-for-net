@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TrafficRegions. </summary>
     public partial class TrafficRegions
     {
-        /// <summary> Initializes a new instance of TrafficRegions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrafficRegions"/>. </summary>
         public TrafficRegions()
         {
             Regions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of TrafficRegions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficRegions"/>. </summary>
         /// <param name="regions"></param>
-        internal TrafficRegions(IList<AzureLocation> regions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrafficRegions(IList<AzureLocation> regions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Regions = regions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the regions. </summary>

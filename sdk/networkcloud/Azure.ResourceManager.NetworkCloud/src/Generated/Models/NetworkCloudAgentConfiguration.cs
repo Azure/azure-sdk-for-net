@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AgentOptions are configurations that will be applied to each agent in an agent pool. </summary>
     public partial class NetworkCloudAgentConfiguration
     {
-        /// <summary> Initializes a new instance of NetworkCloudAgentConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentConfiguration"/>. </summary>
         /// <param name="hugepagesCount"> The number of hugepages to allocate. </param>
         public NetworkCloudAgentConfiguration(long hugepagesCount)
         {
             HugepagesCount = hugepagesCount;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudAgentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentConfiguration"/>. </summary>
         /// <param name="hugepagesCount"> The number of hugepages to allocate. </param>
         /// <param name="hugepagesSize"> The size of the hugepages to allocate. </param>
-        internal NetworkCloudAgentConfiguration(long hugepagesCount, HugepagesSize? hugepagesSize)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudAgentConfiguration(long hugepagesCount, HugepagesSize? hugepagesSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HugepagesCount = hugepagesCount;
             HugepagesSize = hugepagesSize;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentConfiguration"/> for deserialization. </summary>
+        internal NetworkCloudAgentConfiguration()
+        {
         }
 
         /// <summary> The number of hugepages to allocate. </summary>

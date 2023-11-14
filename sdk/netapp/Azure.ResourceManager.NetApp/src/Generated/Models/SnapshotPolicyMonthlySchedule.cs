@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Monthly Schedule properties. </summary>
     public partial class SnapshotPolicyMonthlySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyMonthlySchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyMonthlySchedule"/>. </summary>
         public SnapshotPolicyMonthlySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyMonthlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyMonthlySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Monthly snapshot count to keep. </param>
         /// <param name="daysOfMonth"> Indicates which days of the month snapshot should be taken. A comma delimited string. </param>
         /// <param name="hour"> Indicates which hour in UTC timezone a snapshot should be taken. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        internal SnapshotPolicyMonthlySchedule(int? snapshotsToKeep, string daysOfMonth, int? hour, int? minute, long? usedBytes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPolicyMonthlySchedule(int? snapshotsToKeep, string daysOfMonth, int? hour, int? minute, long? usedBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SnapshotsToKeep = snapshotsToKeep;
             DaysOfMonth = daysOfMonth;
             Hour = hour;
             Minute = minute;
             UsedBytes = usedBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Monthly snapshot count to keep. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> VirtualMachinePowerOffParameters represents the body of the request to power off virtual machine. </summary>
     public partial class VirtualMachinePowerOffContent
     {
-        /// <summary> Initializes a new instance of VirtualMachinePowerOffContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePowerOffContent"/>. </summary>
         public VirtualMachinePowerOffContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePowerOffContent"/>. </summary>
+        /// <param name="skipShutdown"> The indicator of whether to skip the graceful OS shutdown and power off the virtual machine immediately. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachinePowerOffContent(SkipShutdown? skipShutdown, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SkipShutdown = skipShutdown;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The indicator of whether to skip the graceful OS shutdown and power off the virtual machine immediately. </summary>

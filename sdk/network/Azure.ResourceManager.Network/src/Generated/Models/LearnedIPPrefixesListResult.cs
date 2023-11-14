@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of SNAT IP Prefixes learnt by firewall to not SNAT. </summary>
     public partial class LearnedIPPrefixesListResult
     {
-        /// <summary> Initializes a new instance of LearnedIPPrefixesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LearnedIPPrefixesListResult"/>. </summary>
         internal LearnedIPPrefixesListResult()
         {
             IPPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LearnedIPPrefixesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LearnedIPPrefixesListResult"/>. </summary>
         /// <param name="ipPrefixes"> IP Prefix value. </param>
-        internal LearnedIPPrefixesListResult(IReadOnlyList<string> ipPrefixes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LearnedIPPrefixesListResult(IReadOnlyList<string> ipPrefixes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPPrefixes = ipPrefixes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP Prefix value. </summary>

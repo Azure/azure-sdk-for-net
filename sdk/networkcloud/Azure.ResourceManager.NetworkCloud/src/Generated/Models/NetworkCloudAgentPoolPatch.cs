@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> AgentPoolPatchParameters represents the body of the request to patch the Kubernetes cluster agent pool. </summary>
     public partial class NetworkCloudAgentPoolPatch
     {
-        /// <summary> Initializes a new instance of NetworkCloudAgentPoolPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolPatch"/>. </summary>
         public NetworkCloudAgentPoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudAgentPoolPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        /// <param name="count"> The number of virtual machines that use this configuration. </param>
+        /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudAgentPoolPatch(IDictionary<string, string> tags, long? count, AgentPoolUpgradeSettings upgradeSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Count = count;
+            UpgradeSettings = upgradeSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>

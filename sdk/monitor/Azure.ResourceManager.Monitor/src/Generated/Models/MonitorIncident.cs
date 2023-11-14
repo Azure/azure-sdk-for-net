@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An alert incident indicates the activation status of an alert rule. </summary>
     public partial class MonitorIncident
     {
-        /// <summary> Initializes a new instance of MonitorIncident. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorIncident"/>. </summary>
         internal MonitorIncident()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorIncident. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorIncident"/>. </summary>
         /// <param name="name"> Incident name. </param>
         /// <param name="ruleName"> Rule name that is associated with the incident. </param>
         /// <param name="isActive"> A boolean to indicate whether the incident is active or resolved. </param>
         /// <param name="activatedOn"> The time at which the incident was activated in ISO8601 format. </param>
         /// <param name="resolvedOn"> The time at which the incident was resolved in ISO8601 format. If null, it means the incident is still active. </param>
-        internal MonitorIncident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedOn, DateTimeOffset? resolvedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorIncident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedOn, DateTimeOffset? resolvedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             RuleName = ruleName;
             IsActive = isActive;
             ActivatedOn = activatedOn;
             ResolvedOn = resolvedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Incident name. </summary>

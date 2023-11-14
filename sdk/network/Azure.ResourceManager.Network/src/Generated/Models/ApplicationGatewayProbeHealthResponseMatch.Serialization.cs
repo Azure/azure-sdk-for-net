@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayProbeHealthResponseMatch : IUtf8JsonSerializable
+    public partial class ApplicationGatewayProbeHealthResponseMatch : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayProbeHealthResponseMatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayProbeHealthResponseMatch>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ApplicationGatewayProbeHealthResponseMatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ApplicationGatewayProbeHealthResponseMatch>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ApplicationGatewayProbeHealthResponseMatch>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Body))
             {
@@ -39,17 +48,48 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element)
+        ApplicationGatewayProbeHealthResponseMatch IJsonModel<ApplicationGatewayProbeHealthResponseMatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayProbeHealthResponseMatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayProbeHealthResponseMatch(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BinaryData> body = default;
             Optional<IList<string>> statusCodes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("body"u8))
@@ -75,8 +115,38 @@ namespace Azure.ResourceManager.Network.Models
                     statusCodes = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, Optional.ToList(statusCodes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationGatewayProbeHealthResponseMatch(body.Value, Optional.ToList(statusCodes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayProbeHealthResponseMatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayProbeHealthResponseMatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApplicationGatewayProbeHealthResponseMatch IPersistableModel<ApplicationGatewayProbeHealthResponseMatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayProbeHealthResponseMatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApplicationGatewayProbeHealthResponseMatch(document.RootElement, options);
+        }
+
+        string IPersistableModel<ApplicationGatewayProbeHealthResponseMatch>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

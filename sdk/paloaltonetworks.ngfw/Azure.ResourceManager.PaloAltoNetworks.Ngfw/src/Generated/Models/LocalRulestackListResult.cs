@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The response of a LocalRulestackResource list operation. </summary>
     internal partial class LocalRulestackListResult
     {
-        /// <summary> Initializes a new instance of LocalRulestackListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LocalRulestackListResult(IEnumerable<LocalRulestackData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal LocalRulestackListResult(IReadOnlyList<LocalRulestackData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalRulestackListResult(IReadOnlyList<LocalRulestackData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackListResult"/> for deserialization. </summary>
+        internal LocalRulestackListResult()
+        {
         }
 
         /// <summary> The items on this page. </summary>

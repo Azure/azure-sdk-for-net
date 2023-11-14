@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudStorageApplianceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudStorageApplianceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud
             StorageApplianceSkuId = storageApplianceSkuId;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudStorageApplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +70,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="remoteVendorManagementStatus"> The indicator of whether the remote vendor management feature is enabled or disabled, or unsupported if it is an unsupported feature. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
         /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
-        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, string serialNumber, string storageApplianceSkuId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, string serialNumber, string storageApplianceSkuId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AdministratorCredentials = administratorCredentials;
@@ -84,6 +88,12 @@ namespace Azure.ResourceManager.NetworkCloud
             RemoteVendorManagementStatus = remoteVendorManagementStatus;
             SerialNumber = serialNumber;
             StorageApplianceSkuId = storageApplianceSkuId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/> for deserialization. </summary>
+        internal NetworkCloudStorageApplianceData()
+        {
         }
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>

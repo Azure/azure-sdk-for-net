@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The TemplateDeploymentPolicy. </summary>
     public partial class TemplateDeploymentPolicy
     {
-        /// <summary> Initializes a new instance of TemplateDeploymentPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
         /// <param name="capabilities"></param>
         /// <param name="preflightOptions"></param>
         internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)
         {
             Capabilities = capabilities;
             PreflightOptions = preflightOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
+        /// <param name="capabilities"></param>
+        /// <param name="preflightOptions"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Capabilities = capabilities;
+            PreflightOptions = preflightOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/> for deserialization. </summary>
+        internal TemplateDeploymentPolicy()
+        {
         }
 
         /// <summary> Gets the capabilities. </summary>

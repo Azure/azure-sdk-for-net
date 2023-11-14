@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlWaitStatisticData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlWaitStatisticData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticData"/>. </summary>
         public MySqlWaitStatisticData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlWaitStatisticData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlWaitStatisticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.MySql
         /// <param name="userId"> Database user identifier. </param>
         /// <param name="count"> Wait event count observed in this time interval. </param>
         /// <param name="totalTimeInMinutes"> Total time of wait in milliseconds in this time interval. </param>
-        internal MySqlWaitStatisticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, string eventName, string eventTypeName, long? queryId, string databaseName, long? userId, long? count, double? totalTimeInMinutes) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlWaitStatisticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, string eventName, string eventTypeName, long? queryId, string databaseName, long? userId, long? count, double? totalTimeInMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.MySql
             UserId = userId;
             Count = count;
             TotalTimeInMinutes = totalTimeInMinutes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Observation start time. </summary>

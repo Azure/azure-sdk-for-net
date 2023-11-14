@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicMetricsStatusResult
+    public partial class NewRelicMetricsStatusResult : IUtf8JsonSerializable, IJsonModel<NewRelicMetricsStatusResult>
     {
-        internal static NewRelicMetricsStatusResult DeserializeNewRelicMetricsStatusResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicMetricsStatusResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NewRelicMetricsStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NewRelicMetricsStatusResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NewRelicMetricsStatusResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(AzureResourceIds))
+            {
+                writer.WritePropertyName("azureResourceIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in AzureResourceIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NewRelicMetricsStatusResult IJsonModel<NewRelicMetricsStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NewRelicMetricsStatusResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicMetricsStatusResult(document.RootElement, options);
+        }
+
+        internal static NewRelicMetricsStatusResult DeserializeNewRelicMetricsStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<string>> azureResourceIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureResourceIds"u8))
@@ -36,8 +93,38 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     azureResourceIds = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NewRelicMetricsStatusResult(Optional.ToList(azureResourceIds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NewRelicMetricsStatusResult(Optional.ToList(azureResourceIds), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NewRelicMetricsStatusResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NewRelicMetricsStatusResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NewRelicMetricsStatusResult IPersistableModel<NewRelicMetricsStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NewRelicMetricsStatusResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNewRelicMetricsStatusResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<NewRelicMetricsStatusResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -12,15 +13,16 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Failover configuration on this endpoint. This property is READ-ONLY. </summary>
     public partial class DataCollectionEndpointFailoverConfiguration : DataCollectionRuleBcdrFailoverConfigurationSpec
     {
-        /// <summary> Initializes a new instance of DataCollectionEndpointFailoverConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointFailoverConfiguration"/>. </summary>
         internal DataCollectionEndpointFailoverConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionEndpointFailoverConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointFailoverConfiguration"/>. </summary>
         /// <param name="activeLocation"> Active location where data flow will occur. </param>
         /// <param name="locations"> Locations that are configured for failover. </param>
-        internal DataCollectionEndpointFailoverConfiguration(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations) : base(activeLocation, locations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionEndpointFailoverConfiguration(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(activeLocation, locations, serializedAdditionalRawData)
         {
         }
     }

@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The number of instances that can be used during this profile. </summary>
     public partial class MonitorScaleCapacity
     {
-        /// <summary> Initializes a new instance of MonitorScaleCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorScaleCapacity"/>. </summary>
         /// <param name="minimum"> the minimum number of instances for the resource. </param>
         /// <param name="maximum"> the maximum number of instances for the resource. The actual maximum number of instances is limited by the cores that are available in the subscription. </param>
         /// <param name="default"> the number of instances that will be set if metrics are not available for evaluation. The default is only used if the current instance count is lower than the default. </param>
@@ -19,6 +25,24 @@ namespace Azure.ResourceManager.Monitor.Models
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorScaleCapacity"/>. </summary>
+        /// <param name="minimum"> the minimum number of instances for the resource. </param>
+        /// <param name="maximum"> the maximum number of instances for the resource. The actual maximum number of instances is limited by the cores that are available in the subscription. </param>
+        /// <param name="default"> the number of instances that will be set if metrics are not available for evaluation. The default is only used if the current instance count is lower than the default. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorScaleCapacity(int minimum, int maximum, int @default, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Minimum = minimum;
+            Maximum = maximum;
+            Default = @default;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorScaleCapacity"/> for deserialization. </summary>
+        internal MonitorScaleCapacity()
+        {
         }
 
         /// <summary> the minimum number of instances for the resource. </summary>

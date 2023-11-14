@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,30 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The NginxDeploymentPatch. </summary>
     public partial class NginxDeploymentPatch
     {
-        /// <summary> Initializes a new instance of NginxDeploymentPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
         public NginxDeploymentPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentPatch"/>. </summary>
+        /// <param name="identity"> Gets or sets the identity. </param>
+        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="sku"></param>
+        /// <param name="location"></param>
+        /// <param name="properties"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ResourceSku sku, AzureLocation? location, NginxDeploymentUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Identity = identity;
+            Tags = tags;
+            Sku = sku;
+            Location = location;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the identity. </summary>

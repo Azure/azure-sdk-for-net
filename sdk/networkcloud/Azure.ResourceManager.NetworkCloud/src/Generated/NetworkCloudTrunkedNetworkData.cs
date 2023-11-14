@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudTrunkedNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudTrunkedNetworkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudTrunkedNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="isolationDomainIds"> The list of resource IDs representing the Network Fabric isolation domains. It can be any combination of l2IsolationDomain and l3IsolationDomain resources. </param>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Vlans = vlans.ToList();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudTrunkedNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudTrunkedNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,7 +62,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="provisioningState"> The provisioning state of the trunked network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this trunked network. </param>
         /// <param name="vlans"> The list of vlans that are selected from the isolation domains for trunking. </param>
-        internal NetworkCloudTrunkedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> associatedResourceIds, ResourceIdentifier clusterId, TrunkedNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, IList<ResourceIdentifier> isolationDomainIds, TrunkedNetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, IList<long> vlans) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudTrunkedNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<string> associatedResourceIds, ResourceIdentifier clusterId, TrunkedNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, IList<ResourceIdentifier> isolationDomainIds, TrunkedNetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, IList<long> vlans, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AssociatedResourceIds = associatedResourceIds;
@@ -73,6 +77,12 @@ namespace Azure.ResourceManager.NetworkCloud
             ProvisioningState = provisioningState;
             VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
             Vlans = vlans;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudTrunkedNetworkData"/> for deserialization. </summary>
+        internal NetworkCloudTrunkedNetworkData()
+        {
         }
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>

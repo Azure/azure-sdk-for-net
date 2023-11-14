@@ -15,7 +15,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The result data of a query. </summary>
     public partial class QueryBatchMetric
     {
-        /// <summary> Initializes a new instance of QueryBatchMetric. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetric"/>. </summary>
         /// <param name="id"> The metric Id. </param>
         /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Description of this metric. </param>
@@ -39,7 +42,7 @@ namespace Azure.Monitor.Query.Models
             Timeseries = timeseries.ToList();
         }
 
-        /// <summary> Initializes a new instance of QueryBatchMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetric"/>. </summary>
         /// <param name="id"> The metric Id. </param>
         /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Description of this metric. </param>
@@ -48,7 +51,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="timeseries"> The time series returned when a data query is performed. </param>
         /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
-        internal QueryBatchMetric(string id, QueryBatchLocalizableString name, string displayDescription, string type, QueryBatchMetricUnit unit, IReadOnlyList<QueryBatchTimeSeriesElement> timeseries, string errorCode, string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryBatchMetric(string id, QueryBatchLocalizableString name, string displayDescription, string type, QueryBatchMetricUnit unit, IReadOnlyList<QueryBatchTimeSeriesElement> timeseries, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -58,6 +62,12 @@ namespace Azure.Monitor.Query.Models
             Timeseries = timeseries;
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryBatchMetric"/> for deserialization. </summary>
+        internal QueryBatchMetric()
+        {
         }
 
         /// <summary> The metric Id. </summary>

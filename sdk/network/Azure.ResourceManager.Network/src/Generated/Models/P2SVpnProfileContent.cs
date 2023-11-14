@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Vpn Client Parameters for package generation. </summary>
     public partial class P2SVpnProfileContent
     {
-        /// <summary> Initializes a new instance of P2SVpnProfileContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnProfileContent"/>. </summary>
         public P2SVpnProfileContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="P2SVpnProfileContent"/>. </summary>
+        /// <param name="authenticationMethod"> VPN client authentication method. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal P2SVpnProfileContent(NetworkAuthenticationMethod? authenticationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AuthenticationMethod = authenticationMethod;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> VPN client authentication method. </summary>

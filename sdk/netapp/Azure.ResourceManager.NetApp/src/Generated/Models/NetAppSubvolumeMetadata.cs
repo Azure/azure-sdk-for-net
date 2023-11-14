@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Result of the post subvolume and action is to get metadata of the subvolume. </summary>
     public partial class NetAppSubvolumeMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of NetAppSubvolumeMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeMetadata"/>. </summary>
         internal NetAppSubvolumeMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppSubvolumeMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="modifiedOn"> Most recent modification time and date. </param>
         /// <param name="changedOn"> Most recent change time and date. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal NetAppSubvolumeMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string parentPath, long? size, long? bytesUsed, string permissions, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? modifiedOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppSubvolumeMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, string parentPath, long? size, long? bytesUsed, string permissions, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? modifiedOn, DateTimeOffset? changedOn, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Path = path;
             ParentPath = parentPath;
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ModifiedOn = modifiedOn;
             ChangedOn = changedOn;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Path to the subvolume. </summary>

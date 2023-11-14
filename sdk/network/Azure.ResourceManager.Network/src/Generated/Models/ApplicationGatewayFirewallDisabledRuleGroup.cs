@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Allows to disable rules within a rule group or an entire rule group. </summary>
     public partial class ApplicationGatewayFirewallDisabledRuleGroup
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallDisabledRuleGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallDisabledRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The name of the rule group that will be disabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> is null. </exception>
         public ApplicationGatewayFirewallDisabledRuleGroup(string ruleGroupName)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.Network.Models
             Rules = new ChangeTrackingList<int>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallDisabledRuleGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallDisabledRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The name of the rule group that will be disabled. </param>
         /// <param name="rules"> The list of rules that will be disabled. If null, all rules of the rule group will be disabled. </param>
-        internal ApplicationGatewayFirewallDisabledRuleGroup(string ruleGroupName, IList<int> rules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayFirewallDisabledRuleGroup(string ruleGroupName, IList<int> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleGroupName = ruleGroupName;
             Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallDisabledRuleGroup"/> for deserialization. </summary>
+        internal ApplicationGatewayFirewallDisabledRuleGroup()
+        {
         }
 
         /// <summary> The name of the rule group that will be disabled. </summary>

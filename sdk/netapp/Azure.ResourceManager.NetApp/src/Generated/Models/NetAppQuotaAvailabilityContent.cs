@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Quota availability request content. </summary>
     public partial class NetAppQuotaAvailabilityContent
     {
-        /// <summary> Initializes a new instance of NetAppQuotaAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityContent"/>. </summary>
         /// <param name="name"> Name of the resource to verify. </param>
         /// <param name="availabilityResourceType"> Resource type used for verification. </param>
         /// <param name="resourceGroup"> Resource group name. </param>
@@ -26,6 +30,24 @@ namespace Azure.ResourceManager.NetApp.Models
             Name = name;
             AvailabilityResourceType = availabilityResourceType;
             ResourceGroup = resourceGroup;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityContent"/>. </summary>
+        /// <param name="name"> Name of the resource to verify. </param>
+        /// <param name="availabilityResourceType"> Resource type used for verification. </param>
+        /// <param name="resourceGroup"> Resource group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppQuotaAvailabilityContent(string name, NetAppQuotaAvailabilityResourceType availabilityResourceType, string resourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            AvailabilityResourceType = availabilityResourceType;
+            ResourceGroup = resourceGroup;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppQuotaAvailabilityContent"/> for deserialization. </summary>
+        internal NetAppQuotaAvailabilityContent()
+        {
         }
 
         /// <summary> Name of the resource to verify. </summary>

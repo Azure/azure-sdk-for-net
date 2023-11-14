@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.EnergyServices.Models
     /// <summary> List of data partitions. </summary>
     public partial class DataPartitionsListResult
     {
-        /// <summary> Initializes a new instance of DataPartitionsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataPartitionsListResult"/>. </summary>
         internal DataPartitionsListResult()
         {
             DataPartitionInfo = new ChangeTrackingList<DataPartition>();
         }
 
-        /// <summary> Initializes a new instance of DataPartitionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPartitionsListResult"/>. </summary>
         /// <param name="dataPartitionInfo"> List of data partitions along with their properties in a given OEP resource. </param>
-        internal DataPartitionsListResult(IReadOnlyList<DataPartition> dataPartitionInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataPartitionsListResult(IReadOnlyList<DataPartition> dataPartitionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataPartitionInfo = dataPartitionInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of data partitions along with their properties in a given OEP resource. </summary>

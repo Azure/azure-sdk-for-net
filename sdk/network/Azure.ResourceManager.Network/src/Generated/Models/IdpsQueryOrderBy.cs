@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes a column to sort. </summary>
     public partial class IdpsQueryOrderBy
     {
-        /// <summary> Initializes a new instance of IdpsQueryOrderBy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryOrderBy"/>. </summary>
         public IdpsQueryOrderBy()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IdpsQueryOrderBy"/>. </summary>
+        /// <param name="field"> Describes the actual column name to sort by. </param>
+        /// <param name="order"> Describes if results should be in ascending/descending order. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IdpsQueryOrderBy(string field, FirewallPolicyIdpsQuerySortOrder? order, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Field = field;
+            Order = order;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the actual column name to sort by. </summary>

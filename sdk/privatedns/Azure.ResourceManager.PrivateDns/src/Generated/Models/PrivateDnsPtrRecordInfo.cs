@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> A PTR record. </summary>
     public partial class PrivateDnsPtrRecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsPtrRecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsPtrRecordInfo"/>. </summary>
         public PrivateDnsPtrRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsPtrRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsPtrRecordInfo"/>. </summary>
         /// <param name="ptrDomainName"> The PTR target domain name for this PTR record. </param>
-        internal PrivateDnsPtrRecordInfo(string ptrDomainName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateDnsPtrRecordInfo(string ptrDomainName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PtrDomainName = ptrDomainName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The PTR target domain name for this PTR record. </summary>

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary>
@@ -14,16 +18,20 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatChoice
     {
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
         internal ChatChoice(int index, CompletionsFinishReason? finishReason)
         {
             Index = index;
             FinishReason = finishReason;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatChoice"/>. </summary>
         /// <param name="message"> The chat message for a given chat completions prompt. </param>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
@@ -33,13 +41,20 @@ namespace Azure.AI.OpenAI
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
         /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
         /// </param>
-        internal ChatChoice(ChatMessage message, int index, CompletionsFinishReason? finishReason, ChatMessage internalStreamingDeltaMessage, ContentFilterResults contentFilterResults)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatChoice(ChatMessage message, int index, CompletionsFinishReason? finishReason, ChatMessage internalStreamingDeltaMessage, ContentFilterResults contentFilterResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             Index = index;
             FinishReason = finishReason;
             InternalStreamingDeltaMessage = internalStreamingDeltaMessage;
             ContentFilterResults = contentFilterResults;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatChoice"/> for deserialization. </summary>
+        internal ChatChoice()
+        {
         }
 
         /// <summary> The chat message for a given chat completions prompt. </summary>

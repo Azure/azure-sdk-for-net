@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Properties of the web application firewall rule set. </summary>
     public partial class ApplicationGatewayFirewallManifestRuleSet
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallManifestRuleSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallManifestRuleSet"/>. </summary>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
@@ -32,19 +35,26 @@ namespace Azure.ResourceManager.Network.Models
             RuleGroups = ruleGroups.ToList();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallManifestRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallManifestRuleSet"/>. </summary>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="status"> The rule set status. </param>
         /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
-        internal ApplicationGatewayFirewallManifestRuleSet(string ruleSetType, string ruleSetVersion, ApplicationGatewayRuleSetStatusOption? status, IReadOnlyList<ApplicationGatewayTierType> tiers, IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayFirewallManifestRuleSet(string ruleSetType, string ruleSetVersion, ApplicationGatewayRuleSetStatusOption? status, IReadOnlyList<ApplicationGatewayTierType> tiers, IReadOnlyList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             Status = status;
             Tiers = tiers;
             RuleGroups = ruleGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallManifestRuleSet"/> for deserialization. </summary>
+        internal ApplicationGatewayFirewallManifestRuleSet()
+        {
         }
 
         /// <summary> The type of the web application firewall rule set. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class SnapshotPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SnapshotPolicyData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
         /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
-        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             HourlySchedule = hourlySchedule;
@@ -48,6 +53,12 @@ namespace Azure.ResourceManager.NetApp
             MonthlySchedule = monthlySchedule;
             IsEnabled = isEnabled;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyData"/> for deserialization. </summary>
+        internal SnapshotPolicyData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

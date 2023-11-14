@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the TCP configuration. </summary>
     public partial class ConnectionMonitorTcpConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTcpConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTcpConfiguration"/>. </summary>
         public ConnectionMonitorTcpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTcpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTcpConfiguration"/>. </summary>
         /// <param name="port"> The port to connect to. </param>
         /// <param name="disableTraceRoute"> Value indicating whether path evaluation with trace route should be disabled. </param>
         /// <param name="destinationPortBehavior"> Destination port behavior. </param>
-        internal ConnectionMonitorTcpConfiguration(int? port, bool? disableTraceRoute, DestinationPortBehavior? destinationPortBehavior)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorTcpConfiguration(int? port, bool? disableTraceRoute, DestinationPortBehavior? destinationPortBehavior, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             DisableTraceRoute = disableTraceRoute;
             DestinationPortBehavior = destinationPortBehavior;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The port to connect to. </summary>

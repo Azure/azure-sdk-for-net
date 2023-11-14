@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The service tag information. </summary>
     public partial class ServiceTagInformation
     {
-        /// <summary> Initializes a new instance of ServiceTagInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceTagInformation"/>. </summary>
         internal ServiceTagInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceTagInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceTagInformation"/>. </summary>
         /// <param name="properties"> Properties of the service tag information. </param>
         /// <param name="name"> The name of service tag. </param>
         /// <param name="id"> The ID of service tag. </param>
         /// <param name="serviceTagChangeNumber"> The iteration number of service tag object for region. </param>
-        internal ServiceTagInformation(ServiceTagInformationPropertiesFormat properties, string name, string id, string serviceTagChangeNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceTagInformation(ServiceTagInformationPropertiesFormat properties, string name, string id, string serviceTagChangeNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
             Id = id;
             ServiceTagChangeNumber = serviceTagChangeNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of the service tag information. </summary>

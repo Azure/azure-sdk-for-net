@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Define match variables. </summary>
     public partial class MatchVariable
     {
-        /// <summary> Initializes a new instance of MatchVariable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MatchVariable"/>. </summary>
         /// <param name="variableName"> Match Variable. </param>
         public MatchVariable(WebApplicationFirewallMatchVariable variableName)
         {
             VariableName = variableName;
         }
 
-        /// <summary> Initializes a new instance of MatchVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchVariable"/>. </summary>
         /// <param name="variableName"> Match Variable. </param>
         /// <param name="selector"> The selector of match variable. </param>
-        internal MatchVariable(WebApplicationFirewallMatchVariable variableName, string selector)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MatchVariable(WebApplicationFirewallMatchVariable variableName, string selector, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VariableName = variableName;
             Selector = selector;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MatchVariable"/> for deserialization. </summary>
+        internal MatchVariable()
+        {
         }
 
         /// <summary> Match Variable. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspacePurgeFilter : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspacePurgeFilter : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspacePurgeFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspacePurgeFilter>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OperationalInsightsWorkspacePurgeFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OperationalInsightsWorkspacePurgeFilter>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OperationalInsightsWorkspacePurgeFilter>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Column))
             {
@@ -42,7 +53,108 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        OperationalInsightsWorkspacePurgeFilter IJsonModel<OperationalInsightsWorkspacePurgeFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspacePurgeFilter(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsWorkspacePurgeFilter DeserializeOperationalInsightsWorkspacePurgeFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> column = default;
+            Optional<string> @operator = default;
+            Optional<BinaryData> value = default;
+            Optional<string> key = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("column"u8))
+                {
+                    column = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("operator"u8))
+                {
+                    @operator = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("value"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    value = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("key"u8))
+                {
+                    key = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsWorkspacePurgeFilter(column.Value, @operator.Value, value.Value, key.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<OperationalInsightsWorkspacePurgeFilter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeFilter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OperationalInsightsWorkspacePurgeFilter IPersistableModel<OperationalInsightsWorkspacePurgeFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsWorkspacePurgeFilter(document.RootElement, options);
+        }
+
+        string IPersistableModel<OperationalInsightsWorkspacePurgeFilter>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

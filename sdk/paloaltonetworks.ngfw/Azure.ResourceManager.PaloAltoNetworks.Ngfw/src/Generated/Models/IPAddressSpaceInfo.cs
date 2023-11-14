@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> IP Address Space. </summary>
     public partial class IPAddressSpaceInfo
     {
-        /// <summary> Initializes a new instance of IPAddressSpaceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPAddressSpaceInfo"/>. </summary>
         public IPAddressSpaceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of IPAddressSpaceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAddressSpaceInfo"/>. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="addressSpace"> Address Space. </param>
-        internal IPAddressSpaceInfo(ResourceIdentifier resourceId, string addressSpace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPAddressSpaceInfo(ResourceIdentifier resourceId, string addressSpace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             AddressSpace = addressSpace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Id. </summary>

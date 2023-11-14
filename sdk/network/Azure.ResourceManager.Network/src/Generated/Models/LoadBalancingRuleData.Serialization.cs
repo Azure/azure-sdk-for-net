@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -14,11 +17,26 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class LoadBalancingRuleData : IUtf8JsonSerializable
+    public partial class LoadBalancingRuleData : IUtf8JsonSerializable, IJsonModel<LoadBalancingRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancingRuleData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LoadBalancingRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LoadBalancingRuleData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LoadBalancingRuleData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -28,6 +46,14 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(ResourceType.Value);
+                }
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -96,12 +122,49 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("disableOutboundSnat"u8);
                 writer.WriteBooleanValue(DisableOutboundSnat.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancingRuleData DeserializeLoadBalancingRuleData(JsonElement element)
+        LoadBalancingRuleData IJsonModel<LoadBalancingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadBalancingRuleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancingRuleData(document.RootElement, options);
+        }
+
+        internal static LoadBalancingRuleData DeserializeLoadBalancingRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,6 +186,8 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableTcpReset = default;
             Optional<bool> disableOutboundSnat = default;
             Optional<NetworkProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -291,8 +356,38 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, Optional.ToList(backendAddressPools), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, Optional.ToList(backendAddressPools), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
         }
+
+        BinaryData IPersistableModel<LoadBalancingRuleData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadBalancingRuleData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LoadBalancingRuleData IPersistableModel<LoadBalancingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LoadBalancingRuleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLoadBalancingRuleData(document.RootElement, options);
+        }
+
+        string IPersistableModel<LoadBalancingRuleData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

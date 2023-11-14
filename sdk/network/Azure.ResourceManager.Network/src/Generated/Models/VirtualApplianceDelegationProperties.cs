@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the delegation. </summary>
     public partial class VirtualApplianceDelegationProperties
     {
-        /// <summary> Initializes a new instance of VirtualApplianceDelegationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceDelegationProperties"/>. </summary>
         public VirtualApplianceDelegationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualApplianceDelegationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualApplianceDelegationProperties"/>. </summary>
         /// <param name="serviceName"> The service name to which the NVA is delegated. </param>
         /// <param name="provisioningState"> The current provisioning state. </param>
-        internal VirtualApplianceDelegationProperties(string serviceName, NetworkProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplianceDelegationProperties(string serviceName, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceName = serviceName;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The service name to which the NVA is delegated. </summary>

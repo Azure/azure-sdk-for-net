@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.EnergyServices.Models
     /// <summary> The resource model definition used for updating a tracked ARM resource. </summary>
     public partial class EnergyServicePatch
     {
-        /// <summary> Initializes a new instance of EnergyServicePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnergyServicePatch"/>. </summary>
         public EnergyServicePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EnergyServicePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnergyServicePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

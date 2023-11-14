@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration of the protocol. </summary>
     internal partial class ProtocolConfiguration
     {
-        /// <summary> Initializes a new instance of ProtocolConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProtocolConfiguration"/>. </summary>
         public ProtocolConfiguration()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProtocolConfiguration"/>. </summary>
+        /// <param name="httpProtocolConfiguration"> HTTP configuration of the connectivity check. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProtocolConfiguration(NetworkHttpConfiguration httpProtocolConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HttpProtocolConfiguration = httpProtocolConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> HTTP configuration of the connectivity check. </summary>

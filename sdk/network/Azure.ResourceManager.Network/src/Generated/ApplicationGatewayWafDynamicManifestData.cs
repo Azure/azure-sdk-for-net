@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ApplicationGatewayWafDynamicManifestData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestData"/>. </summary>
         internal ApplicationGatewayWafDynamicManifestData()
         {
             AvailableRuleSets = new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,11 +36,13 @@ namespace Azure.ResourceManager.Network
         /// <param name="availableRuleSets"> The available rulesets. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
-        internal ApplicationGatewayWafDynamicManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets, string ruleSetType, string ruleSetVersion) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayWafDynamicManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets, string ruleSetType, string ruleSetVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AvailableRuleSets = availableRuleSets;
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The available rulesets. </summary>

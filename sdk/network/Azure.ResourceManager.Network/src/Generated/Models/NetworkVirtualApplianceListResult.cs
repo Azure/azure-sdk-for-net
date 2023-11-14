@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListNetworkVirtualAppliances API service call. </summary>
     internal partial class NetworkVirtualApplianceListResult
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceListResult"/>. </summary>
         internal NetworkVirtualApplianceListResult()
         {
             Value = new ChangeTrackingList<NetworkVirtualApplianceData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceListResult"/>. </summary>
         /// <param name="value"> List of Network Virtual Appliances. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal NetworkVirtualApplianceListResult(IReadOnlyList<NetworkVirtualApplianceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkVirtualApplianceListResult(IReadOnlyList<NetworkVirtualApplianceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Network Virtual Appliances. </summary>

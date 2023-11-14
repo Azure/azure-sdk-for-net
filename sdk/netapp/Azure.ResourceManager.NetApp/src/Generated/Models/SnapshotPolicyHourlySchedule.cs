@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Hourly Schedule properties. </summary>
     public partial class SnapshotPolicyHourlySchedule
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyHourlySchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyHourlySchedule"/>. </summary>
         public SnapshotPolicyHourlySchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyHourlySchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyHourlySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Hourly snapshot count to keep. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="usedBytes"> Resource size in bytes, current storage usage for the volume in bytes. </param>
-        internal SnapshotPolicyHourlySchedule(int? snapshotsToKeep, int? minute, long? usedBytes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPolicyHourlySchedule(int? snapshotsToKeep, int? minute, long? usedBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SnapshotsToKeep = snapshotsToKeep;
             Minute = minute;
             UsedBytes = usedBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Hourly snapshot count to keep. </summary>

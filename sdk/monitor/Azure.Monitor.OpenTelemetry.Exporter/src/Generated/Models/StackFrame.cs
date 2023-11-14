@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -13,7 +14,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Stack frame information. </summary>
     internal partial class StackFrame
     {
-        /// <summary> Initializes a new instance of StackFrame. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StackFrame"/>. </summary>
         /// <param name="level"></param>
         /// <param name="method"> Method name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="method"/> is null. </exception>
@@ -23,6 +27,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Level = level;
             Method = method;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StackFrame"/>. </summary>
+        /// <param name="level"></param>
+        /// <param name="method"> Method name. </param>
+        /// <param name="assembly"> Name of the assembly (dll, jar, etc.) containing this function. </param>
+        /// <param name="fileName"> File name or URL of the method implementation. </param>
+        /// <param name="line"> Line number of the code implementation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StackFrame(int level, string method, string assembly, string fileName, int? line, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Level = level;
+            Method = method;
+            Assembly = assembly;
+            FileName = fileName;
+            Line = line;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StackFrame"/> for deserialization. </summary>
+        internal StackFrame()
+        {
         }
 
         /// <summary> Gets the level. </summary>

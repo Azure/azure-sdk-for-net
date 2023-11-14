@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Value object for schema results. </summary>
     public partial class OperationalInsightsSearchSchemaValue
     {
-        /// <summary> Initializes a new instance of OperationalInsightsSearchSchemaValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/>. </summary>
         /// <param name="indexed"> The boolean that indicates the field is searchable as free text. </param>
         /// <param name="stored"> The boolean that indicates whether or not the field is stored. </param>
         /// <param name="facet"> The boolean that indicates whether or not the field is a facet. </param>
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             OwnerType = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsSearchSchemaValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/>. </summary>
         /// <param name="name"> The name of the schema. </param>
         /// <param name="displayName"> The display name of the schema. </param>
         /// <param name="searchSchemaValueType"> The type. </param>
@@ -33,7 +37,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="stored"> The boolean that indicates whether or not the field is stored. </param>
         /// <param name="facet"> The boolean that indicates whether or not the field is a facet. </param>
         /// <param name="ownerType"> The array of workflows containing the field. </param>
-        internal OperationalInsightsSearchSchemaValue(string name, string displayName, string searchSchemaValueType, bool indexed, bool stored, bool facet, IReadOnlyList<string> ownerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsSearchSchemaValue(string name, string displayName, string searchSchemaValueType, bool indexed, bool stored, bool facet, IReadOnlyList<string> ownerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
@@ -42,6 +47,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Stored = stored;
             Facet = facet;
             OwnerType = ownerType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/> for deserialization. </summary>
+        internal OperationalInsightsSearchSchemaValue()
+        {
         }
 
         /// <summary> The name of the schema. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveRoutesContent : IUtf8JsonSerializable
+    public partial class EffectiveRoutesContent : IUtf8JsonSerializable, IJsonModel<EffectiveRoutesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveRoutesContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EffectiveRoutesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EffectiveRoutesContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EffectiveRoutesContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
@@ -25,7 +36,96 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("virtualWanResourceType"u8);
                 writer.WriteStringValue(VirtualWanResourceType);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        EffectiveRoutesContent IJsonModel<EffectiveRoutesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveRoutesContent(document.RootElement, options);
+        }
+
+        internal static EffectiveRoutesContent DeserializeEffectiveRoutesContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<string> virtualWanResourceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("virtualWanResourceType"u8))
+                {
+                    virtualWanResourceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EffectiveRoutesContent(resourceId.Value, virtualWanResourceType.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EffectiveRoutesContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EffectiveRoutesContent IPersistableModel<EffectiveRoutesContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEffectiveRoutesContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<EffectiveRoutesContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

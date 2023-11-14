@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultSecurityRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultSecurityRuleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefaultSecurityRuleResource(Client, SecurityRuleData.DeserializeSecurityRuleData(e)), _defaultSecurityRuleClientDiagnostics, Pipeline, "DefaultSecurityRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DefaultSecurityRuleResource(Client, SecurityRuleData.DeserializeSecurityRuleData(e)), _defaultSecurityRuleClientDiagnostics, Pipeline, "DefaultSecurityRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultSecurityRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultSecurityRuleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefaultSecurityRuleResource(Client, SecurityRuleData.DeserializeSecurityRuleData(e)), _defaultSecurityRuleClientDiagnostics, Pipeline, "DefaultSecurityRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DefaultSecurityRuleResource(Client, SecurityRuleData.DeserializeSecurityRuleData(e)), _defaultSecurityRuleClientDiagnostics, Pipeline, "DefaultSecurityRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

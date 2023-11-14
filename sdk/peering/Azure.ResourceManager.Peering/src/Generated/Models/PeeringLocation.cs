@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> Peering location is where connectivity could be established to the Microsoft Cloud Edge. </summary>
     public partial class PeeringLocation : ResourceData
     {
-        /// <summary> Initializes a new instance of PeeringLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringLocation"/>. </summary>
         public PeeringLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringLocation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,7 +34,8 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="peeringLocationValue"> The name of the peering location. </param>
         /// <param name="country"> The country in which the peering location exists. </param>
         /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
-        internal PeeringLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PeeringKind? kind, DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string peeringLocationValue, string country, AzureLocation? azureRegion) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PeeringKind? kind, DirectPeeringLocationProperties direct, PeeringLocationPropertiesExchange exchange, string peeringLocationValue, string country, AzureLocation? azureRegion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Direct = direct;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.Peering.Models
             PeeringLocationValue = peeringLocationValue;
             Country = country;
             AzureRegion = azureRegion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The kind of peering that the peering location supports. </summary>

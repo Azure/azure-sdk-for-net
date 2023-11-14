@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The SIMs to upload. </summary>
     public partial class SimUploadList
     {
-        /// <summary> Initializes a new instance of SimUploadList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SimUploadList"/>. </summary>
         /// <param name="sims"> A list of SIMs to upload. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sims"/> is null. </exception>
         public SimUploadList(IEnumerable<SimNameAndProperties> sims)
@@ -23,6 +26,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Argument.AssertNotNull(sims, nameof(sims));
 
             Sims = sims.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SimUploadList"/>. </summary>
+        /// <param name="sims"> A list of SIMs to upload. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SimUploadList(IList<SimNameAndProperties> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Sims = sims;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SimUploadList"/> for deserialization. </summary>
+        internal SimUploadList()
+        {
         }
 
         /// <summary> A list of SIMs to upload. </summary>

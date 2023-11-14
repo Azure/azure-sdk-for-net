@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A rule that provide the triggers and parameters for the scaling action. </summary>
     public partial class AutoscaleRule
     {
-        /// <summary> Initializes a new instance of AutoscaleRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRule"/>. </summary>
         /// <param name="metricTrigger"> the trigger that results in a scaling action. </param>
         /// <param name="scaleAction"> the parameters for the scaling action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricTrigger"/> or <paramref name="scaleAction"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Monitor.Models
 
             MetricTrigger = metricTrigger;
             ScaleAction = scaleAction;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRule"/>. </summary>
+        /// <param name="metricTrigger"> the trigger that results in a scaling action. </param>
+        /// <param name="scaleAction"> the parameters for the scaling action. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoscaleRule(MetricTrigger metricTrigger, MonitorScaleAction scaleAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MetricTrigger = metricTrigger;
+            ScaleAction = scaleAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoscaleRule"/> for deserialization. </summary>
+        internal AutoscaleRule()
+        {
         }
 
         /// <summary> the trigger that results in a scaling action. </summary>

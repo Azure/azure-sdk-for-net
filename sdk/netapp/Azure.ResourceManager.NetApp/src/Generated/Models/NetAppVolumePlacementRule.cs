@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Application specific parameters for the placement of volumes in the volume group. </summary>
     public partial class NetAppVolumePlacementRule
     {
-        /// <summary> Initializes a new instance of NetAppVolumePlacementRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePlacementRule"/>. </summary>
         /// <param name="key"> Key for an application specific parameter for the placement of volumes in the volume group. </param>
         /// <param name="value"> Value for an application specific parameter for the placement of volumes in the volume group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.NetApp.Models
 
             Key = key;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePlacementRule"/>. </summary>
+        /// <param name="key"> Key for an application specific parameter for the placement of volumes in the volume group. </param>
+        /// <param name="value"> Value for an application specific parameter for the placement of volumes in the volume group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumePlacementRule(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Key = key;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePlacementRule"/> for deserialization. </summary>
+        internal NetAppVolumePlacementRule()
+        {
         }
 
         /// <summary> Key for an application specific parameter for the placement of volumes in the volume group. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Effective Virtual Networks Parameter. </summary>
     public partial class ActiveConfigurationContent
     {
-        /// <summary> Initializes a new instance of ActiveConfigurationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActiveConfigurationContent"/>. </summary>
         public ActiveConfigurationContent()
         {
             Regions = new ChangeTrackingList<AzureLocation>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ActiveConfigurationContent"/>. </summary>
+        /// <param name="regions"> List of regions. </param>
+        /// <param name="skipToken"> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActiveConfigurationContent(IList<AzureLocation> regions, string skipToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Regions = regions;
+            SkipToken = skipToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of regions. </summary>

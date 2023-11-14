@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for the ListIpGroups API service call. </summary>
     internal partial class IPGroupListResult
     {
-        /// <summary> Initializes a new instance of IPGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IPGroupListResult"/>. </summary>
         internal IPGroupListResult()
         {
             Value = new ChangeTrackingList<IPGroupData>();
         }
 
-        /// <summary> Initializes a new instance of IPGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPGroupListResult"/>. </summary>
         /// <param name="value"> The list of IpGroups information resources. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal IPGroupListResult(IReadOnlyList<IPGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IPGroupListResult(IReadOnlyList<IPGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of IpGroups information resources. </summary>

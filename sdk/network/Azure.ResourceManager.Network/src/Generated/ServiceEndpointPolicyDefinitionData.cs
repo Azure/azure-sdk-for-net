@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,22 +19,23 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ServiceEndpointPolicyDefinitionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionData"/>. </summary>
         public ServiceEndpointPolicyDefinitionData()
         {
             ServiceResources = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="service"> Service endpoint name. </param>
         /// <param name="serviceResources"> A list of service resources. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
-        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string description, string service, IList<ResourceIdentifier> serviceResources, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string description, string service, IList<ResourceIdentifier> serviceResources, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Description = description;

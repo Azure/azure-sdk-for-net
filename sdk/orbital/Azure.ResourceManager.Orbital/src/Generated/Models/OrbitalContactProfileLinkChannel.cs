@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Contact Profile Link Channel. </summary>
     public partial class OrbitalContactProfileLinkChannel
     {
-        /// <summary> Initializes a new instance of OrbitalContactProfileLinkChannel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLinkChannel"/>. </summary>
         /// <param name="name"> Channel name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Orbital.Models
             EndPoint = endPoint;
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactProfileLinkChannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLinkChannel"/>. </summary>
         /// <param name="name"> Channel name. </param>
         /// <param name="centerFrequencyMHz"> Center Frequency in MHz. </param>
         /// <param name="bandwidthMHz"> Bandwidth in MHz. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <param name="demodulationConfiguration"> Copy of the modem configuration file such as Kratos QRadio or Kratos QuantumRx. Only valid for downlink directions. If provided, the modem connects to the customer endpoint and sends demodulated data instead of a VITA.49 stream. </param>
         /// <param name="encodingConfiguration"> Currently unused. </param>
         /// <param name="decodingConfiguration"> Currently unused. </param>
-        internal OrbitalContactProfileLinkChannel(string name, float centerFrequencyMHz, float bandwidthMHz, OrbitalContactEndpoint endPoint, string modulationConfiguration, string demodulationConfiguration, string encodingConfiguration, string decodingConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalContactProfileLinkChannel(string name, float centerFrequencyMHz, float bandwidthMHz, OrbitalContactEndpoint endPoint, string modulationConfiguration, string demodulationConfiguration, string encodingConfiguration, string decodingConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             CenterFrequencyMHz = centerFrequencyMHz;
@@ -49,6 +54,12 @@ namespace Azure.ResourceManager.Orbital.Models
             DemodulationConfiguration = demodulationConfiguration;
             EncodingConfiguration = encodingConfiguration;
             DecodingConfiguration = decodingConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileLinkChannel"/> for deserialization. </summary>
+        internal OrbitalContactProfileLinkChannel()
+        {
         }
 
         /// <summary> Channel name. </summary>

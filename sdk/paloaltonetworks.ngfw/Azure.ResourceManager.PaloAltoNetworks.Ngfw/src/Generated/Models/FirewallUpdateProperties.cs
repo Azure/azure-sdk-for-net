@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -14,10 +15,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The updatable properties of the FirewallResource. </summary>
     public partial class FirewallUpdateProperties
     {
-        /// <summary> Initializes a new instance of FirewallUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallUpdateProperties"/>. </summary>
         public FirewallUpdateProperties()
         {
             FrontEndSettings = new ChangeTrackingList<FirewallFrontendSetting>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallUpdateProperties"/>. </summary>
+        /// <param name="panETag"> panEtag info. </param>
+        /// <param name="networkProfile"> Network settings. </param>
+        /// <param name="isPanoramaManaged"> Panorama Managed: Default is False. Default will be CloudSec managed. </param>
+        /// <param name="panoramaConfig"> Panorama Configuration. </param>
+        /// <param name="associatedRulestack"> Associated Rulestack. </param>
+        /// <param name="dnsSettings"> DNS settings for Firewall. </param>
+        /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallUpdateProperties(ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallPanoramaConfiguration panoramaConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PanETag = panETag;
+            NetworkProfile = networkProfile;
+            IsPanoramaManaged = isPanoramaManaged;
+            PanoramaConfig = panoramaConfig;
+            AssociatedRulestack = associatedRulestack;
+            DnsSettings = dnsSettings;
+            FrontEndSettings = frontEndSettings;
+            PlanData = planData;
+            MarketplaceDetails = marketplaceDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> panEtag info. </summary>

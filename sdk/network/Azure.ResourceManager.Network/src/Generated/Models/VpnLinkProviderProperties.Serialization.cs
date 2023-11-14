@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnLinkProviderProperties : IUtf8JsonSerializable
+    public partial class VpnLinkProviderProperties : IUtf8JsonSerializable, IJsonModel<VpnLinkProviderProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnLinkProviderProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VpnLinkProviderProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VpnLinkProviderProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VpnLinkProviderProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkProviderName))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("linkSpeedInMbps"u8);
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VpnLinkProviderProperties DeserializeVpnLinkProviderProperties(JsonElement element)
+        VpnLinkProviderProperties IJsonModel<VpnLinkProviderProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnLinkProviderProperties(document.RootElement, options);
+        }
+
+        internal static VpnLinkProviderProperties DeserializeVpnLinkProviderProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> linkProviderName = default;
             Optional<int> linkSpeedInMbps = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkProviderName"u8))
@@ -52,8 +94,38 @@ namespace Azure.ResourceManager.Network.Models
                     linkSpeedInMbps = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VpnLinkProviderProperties(linkProviderName.Value, Optional.ToNullable(linkSpeedInMbps));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VpnLinkProviderProperties(linkProviderName.Value, Optional.ToNullable(linkSpeedInMbps), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VpnLinkProviderProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VpnLinkProviderProperties IPersistableModel<VpnLinkProviderProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVpnLinkProviderProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<VpnLinkProviderProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> A List of databases. </summary>
     internal partial class MySqlDatabaseListResult
     {
-        /// <summary> Initializes a new instance of MySqlDatabaseListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlDatabaseListResult"/>. </summary>
         internal MySqlDatabaseListResult()
         {
             Value = new ChangeTrackingList<MySqlDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlDatabaseListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlDatabaseListResult"/>. </summary>
         /// <param name="value"> The list of databases housed in a server. </param>
-        internal MySqlDatabaseListResult(IReadOnlyList<MySqlDatabaseData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlDatabaseListResult(IReadOnlyList<MySqlDatabaseData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of databases housed in a server. </summary>

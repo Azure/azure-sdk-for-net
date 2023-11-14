@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Connection draining allows open connections to a backend server to be active for a specified time after the backend server got removed from the configuration. </summary>
     public partial class ApplicationGatewayConnectionDraining
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayConnectionDraining. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayConnectionDraining"/>. </summary>
         /// <param name="enabled"> Whether connection draining is enabled or not. </param>
         /// <param name="drainTimeoutInSeconds"> The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds. </param>
         public ApplicationGatewayConnectionDraining(bool enabled, int drainTimeoutInSeconds)
         {
             Enabled = enabled;
             DrainTimeoutInSeconds = drainTimeoutInSeconds;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayConnectionDraining"/>. </summary>
+        /// <param name="enabled"> Whether connection draining is enabled or not. </param>
+        /// <param name="drainTimeoutInSeconds"> The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayConnectionDraining(bool enabled, int drainTimeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Enabled = enabled;
+            DrainTimeoutInSeconds = drainTimeoutInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayConnectionDraining"/> for deserialization. </summary>
+        internal ApplicationGatewayConnectionDraining()
+        {
         }
 
         /// <summary> Whether connection draining is enabled or not. </summary>

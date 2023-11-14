@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Describes a storage account connection. </summary>
     public partial class OperationalInsightsStorageAccount
     {
-        /// <summary> Initializes a new instance of OperationalInsightsStorageAccount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsStorageAccount"/>. </summary>
         /// <param name="id"> The Azure Resource Manager ID of the storage account resource. </param>
         /// <param name="key"> The storage account key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="key"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
             Id = id;
             Key = key;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsStorageAccount"/>. </summary>
+        /// <param name="id"> The Azure Resource Manager ID of the storage account resource. </param>
+        /// <param name="key"> The storage account key. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsStorageAccount(ResourceIdentifier id, string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Key = key;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsStorageAccount"/> for deserialization. </summary>
+        internal OperationalInsightsStorageAccount()
+        {
         }
 
         /// <summary> The Azure Resource Manager ID of the storage account resource. </summary>

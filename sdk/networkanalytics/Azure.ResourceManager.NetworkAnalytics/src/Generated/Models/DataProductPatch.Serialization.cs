@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class DataProductPatch : IUtf8JsonSerializable
+    public partial class DataProductPatch : IUtf8JsonSerializable, IJsonModel<DataProductPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductPatch>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataProductPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataProductPatch>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataProductPatch>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -64,7 +76,160 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 writer.WriteStringValue(CurrentMinorVersion);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DataProductPatch IJsonModel<DataProductPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProductPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProductPatch(document.RootElement, options);
+        }
+
+        internal static DataProductPatch DeserializeDataProductPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<IList<string>> owners = default;
+            Optional<string> purviewAccount = default;
+            Optional<string> purviewCollection = default;
+            Optional<DataProductControlState> privateLinksEnabled = default;
+            Optional<string> currentMinorVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("owners"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            owners = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("purviewAccount"u8))
+                        {
+                            purviewAccount = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("purviewCollection"u8))
+                        {
+                            purviewCollection = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinksEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateLinksEnabled = new DataProductControlState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("currentMinorVersion"u8))
+                        {
+                            currentMinorVersion = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataProductPatch(identity, Optional.ToDictionary(tags), Optional.ToList(owners), purviewAccount.Value, purviewCollection.Value, Optional.ToNullable(privateLinksEnabled), currentMinorVersion.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DataProductPatch>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProductPatch)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataProductPatch IPersistableModel<DataProductPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProductPatch)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataProductPatch(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataProductPatch>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

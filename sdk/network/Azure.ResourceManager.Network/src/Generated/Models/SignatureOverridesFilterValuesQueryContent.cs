@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the filter values possibles for a given column. </summary>
     public partial class SignatureOverridesFilterValuesQueryContent
     {
-        /// <summary> Initializes a new instance of SignatureOverridesFilterValuesQueryContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignatureOverridesFilterValuesQueryContent"/>. </summary>
         public SignatureOverridesFilterValuesQueryContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignatureOverridesFilterValuesQueryContent"/>. </summary>
+        /// <param name="filterName"> Describes the name of the column which values will be returned. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignatureOverridesFilterValuesQueryContent(string filterName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FilterName = filterName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the name of the column which values will be returned. </summary>

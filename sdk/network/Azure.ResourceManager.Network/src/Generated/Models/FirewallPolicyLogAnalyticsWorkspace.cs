@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,18 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Log Analytics Workspace for Firewall Policy Insights. </summary>
     public partial class FirewallPolicyLogAnalyticsWorkspace
     {
-        /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsWorkspace. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLogAnalyticsWorkspace"/>. </summary>
         public FirewallPolicyLogAnalyticsWorkspace()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyLogAnalyticsWorkspace"/>. </summary>
         /// <param name="region"> Region to configure the Workspace. </param>
         /// <param name="workspaceId"> The workspace Id for Firewall Policy Insights. </param>
-        internal FirewallPolicyLogAnalyticsWorkspace(string region, WritableSubResource workspaceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyLogAnalyticsWorkspace(string region, WritableSubResource workspaceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Region = region;
             WorkspaceId = workspaceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Region to configure the Workspace. </summary>

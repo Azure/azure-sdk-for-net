@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ResourceProviderCapabilities. </summary>
     public partial class ResourceProviderCapabilities
     {
-        /// <summary> Initializes a new instance of ResourceProviderCapabilities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/>. </summary>
         /// <param name="quotaId"></param>
         /// <param name="effect"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
@@ -27,15 +30,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/>. </summary>
         /// <param name="quotaId"></param>
         /// <param name="effect"></param>
         /// <param name="requiredFeatures"></param>
-        internal ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect, IList<string> requiredFeatures)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect, IList<string> requiredFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuotaId = quotaId;
             Effect = effect;
             RequiredFeatures = requiredFeatures;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/> for deserialization. </summary>
+        internal ResourceProviderCapabilities()
+        {
         }
 
         /// <summary> Gets or sets the quota id. </summary>

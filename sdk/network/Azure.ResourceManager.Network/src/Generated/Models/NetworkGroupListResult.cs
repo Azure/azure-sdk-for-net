@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Result of the request to list NetworkGroup. It contains a list of groups and a URL link to get the next set of results. </summary>
     internal partial class NetworkGroupListResult
     {
-        /// <summary> Initializes a new instance of NetworkGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkGroupListResult"/>. </summary>
         internal NetworkGroupListResult()
         {
             Value = new ChangeTrackingList<NetworkGroupData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkGroupListResult"/>. </summary>
         /// <param name="value"> Gets a page of NetworkGroup. </param>
         /// <param name="nextLink"> Gets the URL to get the next set of results. </param>
-        internal NetworkGroupListResult(IReadOnlyList<NetworkGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkGroupListResult(IReadOnlyList<NetworkGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets a page of NetworkGroup. </summary>

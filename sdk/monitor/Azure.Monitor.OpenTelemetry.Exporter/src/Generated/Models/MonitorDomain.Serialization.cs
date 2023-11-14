@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class MonitorDomain : IUtf8JsonSerializable
+    internal partial class MonitorDomain : IUtf8JsonSerializable, IJsonModel<MonitorDomain>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorDomain>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MonitorDomain>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MonitorDomain>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MonitorDomain>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("ver"u8);
             writer.WriteNumberValue(Version);
@@ -24,5 +35,66 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             writer.WriteEndObject();
         }
+
+        MonitorDomain IJsonModel<MonitorDomain>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorDomain)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorDomain(document.RootElement, options);
+        }
+
+        internal static MonitorDomain DeserializeMonitorDomain(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            int ver = default;
+            IDictionary<string, object> additionalProperties = default;
+            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("ver"u8))
+                {
+                    ver = property.Value.GetInt32();
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new MonitorDomain(ver, additionalProperties);
+        }
+
+        BinaryData IPersistableModel<MonitorDomain>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorDomain)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MonitorDomain IPersistableModel<MonitorDomain>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MonitorDomain)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMonitorDomain(document.RootElement, options);
+        }
+
+        string IPersistableModel<MonitorDomain>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

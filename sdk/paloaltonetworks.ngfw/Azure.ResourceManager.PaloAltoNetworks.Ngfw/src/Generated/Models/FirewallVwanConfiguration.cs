@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> VwanInfo for Firewall Networking. </summary>
     public partial class FirewallVwanConfiguration
     {
-        /// <summary> Initializes a new instance of FirewallVwanConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallVwanConfiguration"/>. </summary>
         /// <param name="vhub"> vHub Address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vhub"/> is null. </exception>
         public FirewallVwanConfiguration(IPAddressSpaceInfo vhub)
@@ -23,19 +27,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Vhub = vhub;
         }
 
-        /// <summary> Initializes a new instance of FirewallVwanConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallVwanConfiguration"/>. </summary>
         /// <param name="networkVirtualApplianceId"> Network Virtual Appliance resource ID. </param>
         /// <param name="vhub"> vHub Address. </param>
         /// <param name="trustSubnet"> Trust Subnet. </param>
         /// <param name="unTrustSubnet"> Untrust Subnet. </param>
         /// <param name="ipOfTrustSubnetForUdr"> IP of trust subnet for UDR. </param>
-        internal FirewallVwanConfiguration(string networkVirtualApplianceId, IPAddressSpaceInfo vhub, IPAddressSpaceInfo trustSubnet, IPAddressSpaceInfo unTrustSubnet, IPAddressInfo ipOfTrustSubnetForUdr)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallVwanConfiguration(string networkVirtualApplianceId, IPAddressSpaceInfo vhub, IPAddressSpaceInfo trustSubnet, IPAddressSpaceInfo unTrustSubnet, IPAddressInfo ipOfTrustSubnetForUdr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkVirtualApplianceId = networkVirtualApplianceId;
             Vhub = vhub;
             TrustSubnet = trustSubnet;
             UnTrustSubnet = unTrustSubnet;
             IPOfTrustSubnetForUdr = ipOfTrustSubnetForUdr;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallVwanConfiguration"/> for deserialization. </summary>
+        internal FirewallVwanConfiguration()
+        {
         }
 
         /// <summary> Network Virtual Appliance resource ID. </summary>

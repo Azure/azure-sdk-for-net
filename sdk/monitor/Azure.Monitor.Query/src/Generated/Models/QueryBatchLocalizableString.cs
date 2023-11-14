@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -13,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The localizable string class. </summary>
     public partial class QueryBatchLocalizableString
     {
-        /// <summary> Initializes a new instance of QueryBatchLocalizableString. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryBatchLocalizableString"/>. </summary>
         /// <param name="value"> The invariant value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal QueryBatchLocalizableString(string value)
@@ -23,13 +27,20 @@ namespace Azure.Monitor.Query.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of QueryBatchLocalizableString. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBatchLocalizableString"/>. </summary>
         /// <param name="value"> The invariant value. </param>
         /// <param name="localizedValue"> The display name. </param>
-        internal QueryBatchLocalizableString(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryBatchLocalizableString(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryBatchLocalizableString"/> for deserialization. </summary>
+        internal QueryBatchLocalizableString()
+        {
         }
 
         /// <summary> The invariant value. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Expiry times of inactive NAPT pinholes, in seconds. All timers must be at least 1 second. </summary>
     public partial class PinholeTimeouts
     {
-        /// <summary> Initializes a new instance of PinholeTimeouts. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PinholeTimeouts"/>. </summary>
         public PinholeTimeouts()
         {
         }
 
-        /// <summary> Initializes a new instance of PinholeTimeouts. </summary>
+        /// <summary> Initializes a new instance of <see cref="PinholeTimeouts"/>. </summary>
         /// <param name="tcp"> Pinhole timeout for TCP pinholes in seconds. Default for TCP is 3 minutes. </param>
         /// <param name="udp"> Pinhole timeout for UDP pinholes in seconds. Default for UDP is 30 seconds. </param>
         /// <param name="icmp"> Pinhole timeout for ICMP pinholes in seconds. Default for ICMP Echo is 30 seconds. </param>
-        internal PinholeTimeouts(int? tcp, int? udp, int? icmp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PinholeTimeouts(int? tcp, int? udp, int? icmp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tcp = tcp;
             Udp = udp;
             Icmp = icmp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Pinhole timeout for TCP pinholes in seconds. Default for TCP is 3 minutes. </summary>

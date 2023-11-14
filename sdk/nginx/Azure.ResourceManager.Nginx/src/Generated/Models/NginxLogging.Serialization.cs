@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    internal partial class NginxLogging : IUtf8JsonSerializable
+    internal partial class NginxLogging : IUtf8JsonSerializable, IJsonModel<NginxLogging>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxLogging>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NginxLogging>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NginxLogging>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NginxLogging>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NginxLogging DeserializeNginxLogging(JsonElement element)
+        NginxLogging IJsonModel<NginxLogging>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NginxLogging)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNginxLogging(document.RootElement, options);
+        }
+
+        internal static NginxLogging DeserializeNginxLogging(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<NginxStorageAccount> storageAccount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccount"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.Nginx.Models
                     storageAccount = NginxStorageAccount.DeserializeNginxStorageAccount(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NginxLogging(storageAccount.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NginxLogging(storageAccount.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NginxLogging>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NginxLogging)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NginxLogging IPersistableModel<NginxLogging>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NginxLogging)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNginxLogging(document.RootElement, options);
+        }
+
+        string IPersistableModel<NginxLogging>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class MonitorPrivateLinkScopedResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedResourceData"/>. </summary>
         public MonitorPrivateLinkScopedResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
-        internal MonitorPrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedResourceId, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorPrivateLinkScopedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier linkedResourceId, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LinkedResourceId = linkedResourceId;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id of the scoped Azure monitor resource. </summary>

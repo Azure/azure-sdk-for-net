@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Custom error of an application gateway. </summary>
     public partial class ApplicationGatewayCustomError
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayCustomError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayCustomError"/>. </summary>
         public ApplicationGatewayCustomError()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayCustomError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayCustomError"/>. </summary>
         /// <param name="statusCode"> Status code of the application gateway custom error. </param>
         /// <param name="customErrorPageUri"> Error page URL of the application gateway custom error. </param>
-        internal ApplicationGatewayCustomError(ApplicationGatewayCustomErrorStatusCode? statusCode, Uri customErrorPageUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayCustomError(ApplicationGatewayCustomErrorStatusCode? statusCode, Uri customErrorPageUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StatusCode = statusCode;
             CustomErrorPageUri = customErrorPageUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status code of the application gateway custom error. </summary>

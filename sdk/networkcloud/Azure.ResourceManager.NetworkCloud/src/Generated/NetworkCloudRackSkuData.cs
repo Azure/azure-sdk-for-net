@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudRackSkuData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkCloudRackSkuData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackSkuData"/>. </summary>
         public NetworkCloudRackSkuData()
         {
             ComputeMachines = new ChangeTrackingList<MachineSkuSlot>();
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
             SupportedRackSkuIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudRackSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="rackType"> The type of the rack. </param>
         /// <param name="storageAppliances"> The list of appliance SKUs and associated rack slot for the storage appliance(s) in this rack model. </param>
         /// <param name="supportedRackSkuIds"> The list of supported SKUs if the rack is an aggregator. </param>
-        internal NetworkCloudRackSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<MachineSkuSlot> computeMachines, IReadOnlyList<MachineSkuSlot> controllerMachines, string description, long? maxClusterSlots, RackSkuProvisioningState? provisioningState, RackSkuType? rackType, IReadOnlyList<StorageApplianceSkuSlot> storageAppliances, IReadOnlyList<string> supportedRackSkuIds) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudRackSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<MachineSkuSlot> computeMachines, IReadOnlyList<MachineSkuSlot> controllerMachines, string description, long? maxClusterSlots, RackSkuProvisioningState? provisioningState, RackSkuType? rackType, IReadOnlyList<StorageApplianceSkuSlot> storageAppliances, IReadOnlyList<string> supportedRackSkuIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ComputeMachines = computeMachines;
             ControllerMachines = controllerMachines;
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud
             RackType = rackType;
             StorageAppliances = storageAppliances;
             SupportedRackSkuIds = supportedRackSkuIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of machine SKUs and associated rack slot for the compute-dedicated machines in this rack model. </summary>

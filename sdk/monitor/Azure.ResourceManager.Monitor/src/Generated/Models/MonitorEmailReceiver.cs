@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An email receiver. </summary>
     public partial class MonitorEmailReceiver
     {
-        /// <summary> Initializes a new instance of MonitorEmailReceiver. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorEmailReceiver"/>. </summary>
         /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="emailAddress"> The email address of this receiver. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="emailAddress"/> is null. </exception>
@@ -26,17 +30,24 @@ namespace Azure.ResourceManager.Monitor.Models
             EmailAddress = emailAddress;
         }
 
-        /// <summary> Initializes a new instance of MonitorEmailReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorEmailReceiver"/>. </summary>
         /// <param name="name"> The name of the email receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="emailAddress"> The email address of this receiver. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
         /// <param name="status"> The receiver status of the e-mail. </param>
-        internal MonitorEmailReceiver(string name, string emailAddress, bool? useCommonAlertSchema, MonitorReceiverStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorEmailReceiver(string name, string emailAddress, bool? useCommonAlertSchema, MonitorReceiverStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EmailAddress = emailAddress;
             UseCommonAlertSchema = useCommonAlertSchema;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorEmailReceiver"/> for deserialization. </summary>
+        internal MonitorEmailReceiver()
+        {
         }
 
         /// <summary> The name of the email receiver. Names must be unique across all receivers within an action group. </summary>

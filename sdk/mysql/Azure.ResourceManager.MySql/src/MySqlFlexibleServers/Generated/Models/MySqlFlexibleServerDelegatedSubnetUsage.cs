@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Delegated subnet usage data. </summary>
     public partial class MySqlFlexibleServerDelegatedSubnetUsage
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDelegatedSubnetUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDelegatedSubnetUsage"/>. </summary>
         internal MySqlFlexibleServerDelegatedSubnetUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDelegatedSubnetUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDelegatedSubnetUsage"/>. </summary>
         /// <param name="subnetName"> name of the subnet. </param>
         /// <param name="usage"> Number of used delegated subnets. </param>
-        internal MySqlFlexibleServerDelegatedSubnetUsage(string subnetName, long? usage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerDelegatedSubnetUsage(string subnetName, long? usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetName = subnetName;
             Usage = usage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> name of the subnet. </summary>

@@ -14,21 +14,26 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> An alert status properties. </summary>
     public partial class MetricAlertStatusProperties
     {
-        /// <summary> Initializes a new instance of MetricAlertStatusProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatusProperties"/>. </summary>
         internal MetricAlertStatusProperties()
         {
             Dimensions = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatusProperties"/>. </summary>
         /// <param name="dimensions"> An object describing the type of the dimensions. </param>
         /// <param name="status"> status value. </param>
         /// <param name="timestamp"> UTC time when the status was checked. </param>
-        internal MetricAlertStatusProperties(IReadOnlyDictionary<string, string> dimensions, string status, DateTimeOffset? timestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricAlertStatusProperties(IReadOnlyDictionary<string, string> dimensions, string status, DateTimeOffset? timestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Dimensions = dimensions;
             Status = status;
             Timestamp = timestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An object describing the type of the dimensions. </summary>

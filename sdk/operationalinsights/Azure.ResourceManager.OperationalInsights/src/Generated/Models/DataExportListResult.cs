@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> Result of the request to list data exports. </summary>
     internal partial class DataExportListResult
     {
-        /// <summary> Initializes a new instance of DataExportListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataExportListResult"/>. </summary>
         internal DataExportListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsDataExportData>();
         }
 
-        /// <summary> Initializes a new instance of DataExportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataExportListResult"/>. </summary>
         /// <param name="value"> List of data export instances within a workspace.. </param>
-        internal DataExportListResult(IReadOnlyList<OperationalInsightsDataExportData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataExportListResult(IReadOnlyList<OperationalInsightsDataExportData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of data export instances within a workspace.. </summary>

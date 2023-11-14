@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> PAN Rulestack Describe Object. </summary>
     public partial class GlobalRulestackInfo
     {
-        /// <summary> Initializes a new instance of GlobalRulestackInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackInfo"/>. </summary>
         /// <param name="azureId"> rulestack description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureId"/> is null. </exception>
         internal GlobalRulestackInfo(string azureId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Argument.AssertNotNull(azureId, nameof(azureId));
 
             AzureId = azureId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackInfo"/>. </summary>
+        /// <param name="azureId"> rulestack description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GlobalRulestackInfo(string azureId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AzureId = azureId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackInfo"/> for deserialization. </summary>
+        internal GlobalRulestackInfo()
+        {
         }
 
         /// <summary> rulestack description. </summary>

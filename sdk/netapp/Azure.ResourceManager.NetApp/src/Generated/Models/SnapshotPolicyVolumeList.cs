@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Volumes associated with snapshot policy. </summary>
     internal partial class SnapshotPolicyVolumeList
     {
-        /// <summary> Initializes a new instance of SnapshotPolicyVolumeList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
         internal SnapshotPolicyVolumeList()
         {
             Value = new ChangeTrackingList<NetAppVolumeData>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotPolicyVolumeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
         /// <param name="value"> List of volumes. </param>
-        internal SnapshotPolicyVolumeList(IReadOnlyList<NetAppVolumeData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPolicyVolumeList(IReadOnlyList<NetAppVolumeData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of volumes. </summary>

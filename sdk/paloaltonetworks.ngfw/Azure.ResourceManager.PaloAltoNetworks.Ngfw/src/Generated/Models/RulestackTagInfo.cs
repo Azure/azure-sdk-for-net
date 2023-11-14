@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Tag. </summary>
     public partial class RulestackTagInfo
     {
-        /// <summary> Initializes a new instance of RulestackTagInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulestackTagInfo"/>. </summary>
         /// <param name="key"> tag name. </param>
         /// <param name="value"> tag value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
             Key = key;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulestackTagInfo"/>. </summary>
+        /// <param name="key"> tag name. </param>
+        /// <param name="value"> tag value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackTagInfo(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Key = key;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulestackTagInfo"/> for deserialization. </summary>
+        internal RulestackTagInfo()
+        {
         }
 
         /// <summary> tag name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes an object containing an array with a single item. </summary>
     internal partial class PolicySignaturesOverridesForIdpsListResult
     {
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsListResult"/>. </summary>
         internal PolicySignaturesOverridesForIdpsListResult()
         {
             Value = new ChangeTrackingList<PolicySignaturesOverridesForIdpsData>();
         }
 
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsListResult"/>. </summary>
         /// <param name="value"> Describes a list consisting exactly one item describing the policy's signature override status. </param>
-        internal PolicySignaturesOverridesForIdpsListResult(IReadOnlyList<PolicySignaturesOverridesForIdpsData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySignaturesOverridesForIdpsListResult(IReadOnlyList<PolicySignaturesOverridesForIdpsData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes a list consisting exactly one item describing the policy's signature override status. </summary>

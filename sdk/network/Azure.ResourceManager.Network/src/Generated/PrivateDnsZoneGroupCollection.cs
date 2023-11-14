@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateDnsZoneGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateDnsZoneGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneGroupResource(Client, PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(e)), _privateDnsZoneGroupClientDiagnostics, Pipeline, "PrivateDnsZoneGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new PrivateDnsZoneGroupResource(Client, PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(e)), _privateDnsZoneGroupClientDiagnostics, Pipeline, "PrivateDnsZoneGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateDnsZoneGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateDnsZoneGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateDnsZoneGroupResource(Client, PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(e)), _privateDnsZoneGroupClientDiagnostics, Pipeline, "PrivateDnsZoneGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new PrivateDnsZoneGroupResource(Client, PrivateDnsZoneGroupData.DeserializePrivateDnsZoneGroupData(e)), _privateDnsZoneGroupClientDiagnostics, Pipeline, "PrivateDnsZoneGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

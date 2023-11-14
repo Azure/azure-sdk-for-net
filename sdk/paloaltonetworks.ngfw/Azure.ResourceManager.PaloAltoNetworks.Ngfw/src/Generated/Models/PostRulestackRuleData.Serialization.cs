@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -14,11 +17,41 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class PostRulestackRuleData : IUtf8JsonSerializable
+    public partial class PostRulestackRuleData : IUtf8JsonSerializable, IJsonModel<PostRulestackRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostRulestackRuleData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PostRulestackRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PostRulestackRuleData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PostRulestackRuleData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
@@ -28,6 +61,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Priority))
+                {
+                    writer.WritePropertyName("priority"u8);
+                    writer.WriteNumberValue(Priority.Value);
+                }
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -123,12 +164,49 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostRulestackRuleData DeserializePostRulestackRuleData(JsonElement element)
+        PostRulestackRuleData IJsonModel<PostRulestackRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostRulestackRuleData(document.RootElement, options);
+        }
+
+        internal static PostRulestackRuleData DeserializePostRulestackRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,6 +235,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             Optional<DecryptionRuleType> decryptionRuleType = default;
             Optional<IList<RulestackTagInfo>> tags = default;
             Optional<FirewallProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -370,8 +450,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostRulestackRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), ruleName, Optional.ToNullable(priority), description.Value, Optional.ToNullable(ruleState), source.Value, Optional.ToNullable(negateSource), destination.Value, Optional.ToNullable(negateDestination), Optional.ToList(applications), category.Value, protocol.Value, Optional.ToList(protocolPortList), inboundInspectionCertificate.Value, auditComment.Value, Optional.ToNullable(actionType), Optional.ToNullable(enableLogging), Optional.ToNullable(decryptionRuleType), Optional.ToList(tags), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostRulestackRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), ruleName, Optional.ToNullable(priority), description.Value, Optional.ToNullable(ruleState), source.Value, Optional.ToNullable(negateSource), destination.Value, Optional.ToNullable(negateDestination), Optional.ToList(applications), category.Value, protocol.Value, Optional.ToList(protocolPortList), inboundInspectionCertificate.Value, auditComment.Value, Optional.ToNullable(actionType), Optional.ToNullable(enableLogging), Optional.ToNullable(decryptionRuleType), Optional.ToList(tags), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PostRulestackRuleData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PostRulestackRuleData IPersistableModel<PostRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePostRulestackRuleData(document.RootElement, options);
+        }
+
+        string IPersistableModel<PostRulestackRuleData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

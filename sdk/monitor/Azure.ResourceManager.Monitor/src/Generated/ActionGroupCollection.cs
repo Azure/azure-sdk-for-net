@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<ActionGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _actionGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<ActionGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _actionGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

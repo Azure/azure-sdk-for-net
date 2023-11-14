@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class IPAddressSpaceInfo : IUtf8JsonSerializable
+    public partial class IPAddressSpaceInfo : IUtf8JsonSerializable, IJsonModel<IPAddressSpaceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPAddressSpaceInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<IPAddressSpaceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IPAddressSpaceInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IPAddressSpaceInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteStringValue(AddressSpace);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPAddressSpaceInfo DeserializeIPAddressSpaceInfo(JsonElement element)
+        IPAddressSpaceInfo IJsonModel<IPAddressSpaceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IPAddressSpaceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPAddressSpaceInfo(document.RootElement, options);
+        }
+
+        internal static IPAddressSpaceInfo DeserializeIPAddressSpaceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> addressSpace = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -52,8 +94,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     addressSpace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IPAddressSpaceInfo(resourceId.Value, addressSpace.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IPAddressSpaceInfo(resourceId.Value, addressSpace.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IPAddressSpaceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IPAddressSpaceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IPAddressSpaceInfo IPersistableModel<IPAddressSpaceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IPAddressSpaceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIPAddressSpaceInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<IPAddressSpaceInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

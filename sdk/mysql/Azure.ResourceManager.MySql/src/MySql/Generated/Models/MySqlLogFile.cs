@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Represents a log file. </summary>
     public partial class MySqlLogFile : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlLogFile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlLogFile"/>. </summary>
         public MySqlLogFile()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,13 +33,15 @@ namespace Azure.ResourceManager.MySql.Models
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
         /// <param name="logFileType"> Type of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
-        internal MySqlLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string logFileType, Uri uri) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlLogFile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? sizeInKB, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string logFileType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SizeInKB = sizeInKB;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             LogFileType = logFileType;
             Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Size of the log file. </summary>

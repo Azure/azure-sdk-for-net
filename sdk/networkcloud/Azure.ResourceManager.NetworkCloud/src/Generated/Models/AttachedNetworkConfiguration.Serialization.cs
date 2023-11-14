@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class AttachedNetworkConfiguration : IUtf8JsonSerializable
+    public partial class AttachedNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<AttachedNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttachedNetworkConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AttachedNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AttachedNetworkConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AttachedNetworkConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(L2Networks))
             {
@@ -46,11 +56,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AttachedNetworkConfiguration DeserializeAttachedNetworkConfiguration(JsonElement element)
+        AttachedNetworkConfiguration IJsonModel<AttachedNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAttachedNetworkConfiguration(document.RootElement, options);
+        }
+
+        internal static AttachedNetworkConfiguration DeserializeAttachedNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +97,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<IList<L2NetworkAttachmentConfiguration>> l2Networks = default;
             Optional<IList<L3NetworkAttachmentConfiguration>> l3Networks = default;
             Optional<IList<TrunkedNetworkAttachmentConfiguration>> trunkedNetworks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("l2Networks"u8))
@@ -102,8 +143,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     trunkedNetworks = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AttachedNetworkConfiguration(Optional.ToList(l2Networks), Optional.ToList(l3Networks), Optional.ToList(trunkedNetworks));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AttachedNetworkConfiguration(Optional.ToList(l2Networks), Optional.ToList(l3Networks), Optional.ToList(trunkedNetworks), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AttachedNetworkConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AttachedNetworkConfiguration IPersistableModel<AttachedNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAttachedNetworkConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<AttachedNetworkConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

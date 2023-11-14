@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Represents a collection of alert rule resources. </summary>
     internal partial class MetricAlertStatusCollection
     {
-        /// <summary> Initializes a new instance of MetricAlertStatusCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatusCollection"/>. </summary>
         internal MetricAlertStatusCollection()
         {
             Value = new ChangeTrackingList<MetricAlertStatus>();
         }
 
-        /// <summary> Initializes a new instance of MetricAlertStatusCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricAlertStatusCollection"/>. </summary>
         /// <param name="value"> the values for the alert rule resources. </param>
-        internal MetricAlertStatusCollection(IReadOnlyList<MetricAlertStatus> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricAlertStatusCollection(IReadOnlyList<MetricAlertStatus> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the values for the alert rule resources. </summary>

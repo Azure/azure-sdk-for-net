@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Details of Consumption Properties. </summary>
     public partial class ConsumptionEndpointsProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionEndpointsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionEndpointsProperties"/>. </summary>
         internal ConsumptionEndpointsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionEndpointsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionEndpointsProperties"/>. </summary>
         /// <param name="ingestionUri"> Ingestion url to upload the data. </param>
         /// <param name="ingestionResourceId"> Resource Id of ingestion endpoint. </param>
         /// <param name="fileAccessUri"> Url to consume file type. </param>
         /// <param name="fileAccessResourceId"> Resource Id of file access endpoint. </param>
         /// <param name="queryUri"> Url to consume the processed data. </param>
         /// <param name="queryResourceId"> Resource Id of query endpoint. </param>
-        internal ConsumptionEndpointsProperties(Uri ingestionUri, ResourceIdentifier ingestionResourceId, Uri fileAccessUri, ResourceIdentifier fileAccessResourceId, Uri queryUri, ResourceIdentifier queryResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionEndpointsProperties(Uri ingestionUri, ResourceIdentifier ingestionResourceId, Uri fileAccessUri, ResourceIdentifier fileAccessResourceId, Uri queryUri, ResourceIdentifier queryResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IngestionUri = ingestionUri;
             IngestionResourceId = ingestionResourceId;
@@ -33,6 +38,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             FileAccessResourceId = fileAccessResourceId;
             QueryUri = queryUri;
             QueryResourceId = queryResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Ingestion url to upload the data. </summary>

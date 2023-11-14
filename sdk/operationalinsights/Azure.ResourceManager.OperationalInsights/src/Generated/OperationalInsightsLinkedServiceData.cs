@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsLinkedServiceData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedServiceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedServiceData"/>. </summary>
         public OperationalInsightsLinkedServiceData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +37,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceId"> The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require read access. </param>
         /// <param name="writeAccessResourceId"> The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require write access. </param>
         /// <param name="provisioningState"> The provisioning state of the linked service. </param>
-        internal OperationalInsightsLinkedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, ResourceIdentifier resourceId, ResourceIdentifier writeAccessResourceId, OperationalInsightsLinkedServiceEntityStatus? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsLinkedServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, ResourceIdentifier resourceId, ResourceIdentifier writeAccessResourceId, OperationalInsightsLinkedServiceEntityStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             ResourceId = resourceId;
             WriteAccessResourceId = writeAccessResourceId;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

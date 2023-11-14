@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _baseAdminRuleAdminRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _baseAdminRuleAdminRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BaseAdminRuleResource(Client, BaseAdminRuleData.DeserializeBaseAdminRuleData(e)), _baseAdminRuleAdminRulesClientDiagnostics, Pipeline, "BaseAdminRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BaseAdminRuleResource(Client, BaseAdminRuleData.DeserializeBaseAdminRuleData(e)), _baseAdminRuleAdminRulesClientDiagnostics, Pipeline, "BaseAdminRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _baseAdminRuleAdminRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _baseAdminRuleAdminRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BaseAdminRuleResource(Client, BaseAdminRuleData.DeserializeBaseAdminRuleData(e)), _baseAdminRuleAdminRulesClientDiagnostics, Pipeline, "BaseAdminRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BaseAdminRuleResource(Client, BaseAdminRuleData.DeserializeBaseAdminRuleData(e)), _baseAdminRuleAdminRulesClientDiagnostics, Pipeline, "BaseAdminRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

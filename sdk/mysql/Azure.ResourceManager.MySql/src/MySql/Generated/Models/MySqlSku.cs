@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Billing information related properties of a server. </summary>
     public partial class MySqlSku
     {
-        /// <summary> Initializes a new instance of MySqlSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MySqlSku(string name)
@@ -23,19 +27,26 @@ namespace Azure.ResourceManager.MySql.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of MySqlSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. Basic. </param>
         /// <param name="capacity"> The scale up/out capacity, representing server's compute units. </param>
         /// <param name="size"> The size code, to be interpreted by resource as appropriate. </param>
         /// <param name="family"> The family of hardware. </param>
-        internal MySqlSku(string name, MySqlSkuTier? tier, int? capacity, string size, string family)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlSku(string name, MySqlSkuTier? tier, int? capacity, string size, string family, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             Capacity = capacity;
             Size = size;
             Family = family;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlSku"/> for deserialization. </summary>
+        internal MySqlSku()
+        {
         }
 
         /// <summary> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </summary>

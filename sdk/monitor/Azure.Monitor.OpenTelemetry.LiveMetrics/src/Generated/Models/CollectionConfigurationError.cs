@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,28 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Represents an error while SDK parsing and applying an instance of CollectionConfigurationInfo. </summary>
     internal partial class CollectionConfigurationError
     {
-        /// <summary> Initializes a new instance of CollectionConfigurationError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectionConfigurationError"/>. </summary>
         public CollectionConfigurationError()
         {
             Data = new ChangeTrackingList<KeyValuePairString>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CollectionConfigurationError"/>. </summary>
+        /// <param name="collectionConfigurationErrorType"> Collection configuration error type reported by SDK. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="fullException"> Exception that leads to the creation of the configuration error. </param>
+        /// <param name="data"> Custom properties to add more information to the error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionConfigurationError(CollectionConfigurationErrorType? collectionConfigurationErrorType, string message, string fullException, IList<KeyValuePairString> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CollectionConfigurationErrorType = collectionConfigurationErrorType;
+            Message = message;
+            FullException = fullException;
+            Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection configuration error type reported by SDK. </summary>

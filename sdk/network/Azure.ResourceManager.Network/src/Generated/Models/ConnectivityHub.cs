@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Hub Item. </summary>
     public partial class ConnectivityHub
     {
-        /// <summary> Initializes a new instance of ConnectivityHub. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityHub"/>. </summary>
         public ConnectivityHub()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectivityHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityHub"/>. </summary>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="resourceType"> Resource Type. </param>
-        internal ConnectivityHub(ResourceIdentifier resourceId, ResourceType? resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityHub(ResourceIdentifier resourceId, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource Id. </summary>

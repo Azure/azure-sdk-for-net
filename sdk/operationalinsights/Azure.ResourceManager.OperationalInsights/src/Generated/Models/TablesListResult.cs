@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list tables operation response. </summary>
     internal partial class TablesListResult
     {
-        /// <summary> Initializes a new instance of TablesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TablesListResult"/>. </summary>
         internal TablesListResult()
         {
             Value = new ChangeTrackingList<OperationalInsightsTableData>();
         }
 
-        /// <summary> Initializes a new instance of TablesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TablesListResult"/>. </summary>
         /// <param name="value"> A list of data tables. </param>
-        internal TablesListResult(IReadOnlyList<OperationalInsightsTableData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TablesListResult(IReadOnlyList<OperationalInsightsTableData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of data tables. </summary>

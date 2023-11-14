@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,34 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> The type used for update operations of the NewRelicMonitorResource. </summary>
     public partial class NewRelicMonitorResourcePatch
     {
-        /// <summary> Initializes a new instance of NewRelicMonitorResourcePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourcePatch"/>. </summary>
         public NewRelicMonitorResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourcePatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
+        /// <param name="userInfo"> User Info. </param>
+        /// <param name="planData"> Plan details. </param>
+        /// <param name="orgCreationSource"> Source of org creation. </param>
+        /// <param name="accountCreationSource"> Source of account creation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicMonitorResourcePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NewRelicAccountProperties newRelicAccountProperties, NewRelicObservabilityUserInfo userInfo, NewRelicPlanDetails planData, NewRelicObservabilityOrgCreationSource? orgCreationSource, NewRelicObservabilityAccountCreationSource? accountCreationSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Identity = identity;
+            Tags = tags;
+            NewRelicAccountProperties = newRelicAccountProperties;
+            UserInfo = userInfo;
+            PlanData = planData;
+            OrgCreationSource = orgCreationSource;
+            AccountCreationSource = accountCreationSource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>

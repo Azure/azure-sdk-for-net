@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,11 +17,26 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class CapacityPoolData : IUtf8JsonSerializable
+    public partial class CapacityPoolData : IUtf8JsonSerializable, IJsonModel<CapacityPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityPoolData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CapacityPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CapacityPoolData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CapacityPoolData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -33,12 +50,67 @@ namespace Azure.ResourceManager.NetApp
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PoolId))
+                {
+                    writer.WritePropertyName("poolId"u8);
+                    writer.WriteStringValue(PoolId.Value);
+                }
+            }
             writer.WritePropertyName("size"u8);
             writer.WriteNumberValue(Size);
             writer.WritePropertyName("serviceLevel"u8);
             writer.WriteStringValue(ServiceLevel.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TotalThroughputMibps))
+                {
+                    writer.WritePropertyName("totalThroughputMibps"u8);
+                    writer.WriteNumberValue(TotalThroughputMibps.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UtilizedThroughputMibps))
+                {
+                    writer.WritePropertyName("utilizedThroughputMibps"u8);
+                    writer.WriteNumberValue(UtilizedThroughputMibps.Value);
+                }
+            }
             if (Optional.IsDefined(QosType))
             {
                 writer.WritePropertyName("qosType"u8);
@@ -62,11 +134,40 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CapacityPoolData DeserializeCapacityPoolData(JsonElement element)
+        CapacityPoolData IJsonModel<CapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CapacityPoolData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapacityPoolData(document.RootElement, options);
+        }
+
+        internal static CapacityPoolData DeserializeCapacityPoolData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +188,8 @@ namespace Azure.ResourceManager.NetApp
             Optional<CapacityPoolQosType> qosType = default;
             Optional<bool> coolAccess = default;
             Optional<CapacityPoolEncryptionType?> encryptionType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -223,8 +326,38 @@ namespace Azure.ResourceManager.NetApp
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CapacityPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(poolId), size, serviceLevel, provisioningState.Value, Optional.ToNullable(totalThroughputMibps), Optional.ToNullable(utilizedThroughputMibps), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), Optional.ToNullable(encryptionType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CapacityPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(poolId), size, serviceLevel, provisioningState.Value, Optional.ToNullable(totalThroughputMibps), Optional.ToNullable(utilizedThroughputMibps), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), Optional.ToNullable(encryptionType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CapacityPoolData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CapacityPoolData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CapacityPoolData IPersistableModel<CapacityPoolData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CapacityPoolData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCapacityPoolData(document.RootElement, options);
+        }
+
+        string IPersistableModel<CapacityPoolData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

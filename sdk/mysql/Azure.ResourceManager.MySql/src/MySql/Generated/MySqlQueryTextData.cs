@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.MySql
     /// </summary>
     public partial class MySqlQueryTextData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlQueryTextData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryTextData"/>. </summary>
         public MySqlQueryTextData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlQueryTextData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlQueryTextData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="queryId"> Query identifier unique to the server. </param>
         /// <param name="queryText"> Query text. </param>
-        internal MySqlQueryTextData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string queryId, string queryText) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlQueryTextData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string queryId, string queryText, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             QueryId = queryId;
             QueryText = queryText;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Query identifier unique to the server. </summary>

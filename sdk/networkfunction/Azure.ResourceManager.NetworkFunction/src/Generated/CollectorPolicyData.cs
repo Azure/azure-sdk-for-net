@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,14 +20,17 @@ namespace Azure.ResourceManager.NetworkFunction
     /// </summary>
     public partial class CollectorPolicyData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CollectorPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CollectorPolicyData(AzureLocation location) : base(location)
         {
             EmissionPolicies = new ChangeTrackingList<EmissionPoliciesPropertiesFormat>();
         }
 
-        /// <summary> Initializes a new instance of CollectorPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,12 +41,19 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <param name="ingestionPolicy"> Ingestion policies. </param>
         /// <param name="emissionPolicies"> Emission policies. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IngestionPolicyPropertiesFormat ingestionPolicy, IList<EmissionPoliciesPropertiesFormat> emissionPolicies, CollectorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             IngestionPolicy = ingestionPolicy;
             EmissionPolicies = emissionPolicies;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CollectorPolicyData"/> for deserialization. </summary>
+        internal CollectorPolicyData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

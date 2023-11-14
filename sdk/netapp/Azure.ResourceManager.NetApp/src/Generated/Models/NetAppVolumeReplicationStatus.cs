@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Replication status. </summary>
     public partial class NetAppVolumeReplicationStatus
     {
-        /// <summary> Initializes a new instance of NetAppVolumeReplicationStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplicationStatus"/>. </summary>
         internal NetAppVolumeReplicationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of NetAppVolumeReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeReplicationStatus"/>. </summary>
         /// <param name="isHealthy"> Replication health check. </param>
         /// <param name="relationshipStatus"> Status of the mirror relationship. </param>
         /// <param name="mirrorState"> The status of the replication. </param>
         /// <param name="totalProgress"> The progress of the replication. </param>
         /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
-        internal NetAppVolumeReplicationStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string totalProgress, string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeReplicationStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string totalProgress, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsHealthy = isHealthy;
             RelationshipStatus = relationshipStatus;
             MirrorState = mirrorState;
             TotalProgress = totalProgress;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Replication health check. </summary>

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary>
@@ -14,7 +18,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class CompletionsUsage
     {
-        /// <summary> Initializes a new instance of CompletionsUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/>. </summary>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
@@ -23,6 +30,25 @@ namespace Azure.AI.OpenAI
             CompletionTokens = completionTokens;
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/>. </summary>
+        /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
+        /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
+        /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompletionsUsage(int completionTokens, int promptTokens, int totalTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CompletionTokens = completionTokens;
+            PromptTokens = promptTokens;
+            TotalTokens = totalTokens;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/> for deserialization. </summary>
+        internal CompletionsUsage()
+        {
         }
 
         /// <summary> The number of tokens generated across all completions emissions. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Sku capability. </summary>
     public partial class SkuCapabilityV2
     {
-        /// <summary> Initializes a new instance of SkuCapabilityV2. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SkuCapabilityV2"/>. </summary>
         internal SkuCapabilityV2()
         {
             SupportedZones = new ChangeTrackingList<string>();
             SupportedHAMode = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SkuCapabilityV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuCapabilityV2"/>. </summary>
         /// <param name="name"> vCore name. </param>
         /// <param name="vCores"> supported vCores. </param>
         /// <param name="supportedIops"> supported IOPS. </param>
         /// <param name="supportedMemoryPerVCoreMB"> supported memory per vCore in MB. </param>
         /// <param name="supportedZones"> Supported zones. </param>
         /// <param name="supportedHAMode"> Supported high availability mode. </param>
-        internal SkuCapabilityV2(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreMB, IReadOnlyList<string> supportedZones, IReadOnlyList<string> supportedHAMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SkuCapabilityV2(string name, long? vCores, long? supportedIops, long? supportedMemoryPerVCoreMB, IReadOnlyList<string> supportedZones, IReadOnlyList<string> supportedHAMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             VCores = vCores;
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             SupportedMemoryPerVCoreMB = supportedMemoryPerVCoreMB;
             SupportedZones = supportedZones;
             SupportedHAMode = supportedHAMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> vCore name. </summary>

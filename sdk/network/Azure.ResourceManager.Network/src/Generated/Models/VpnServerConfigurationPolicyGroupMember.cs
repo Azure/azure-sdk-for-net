@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VpnServerConfiguration PolicyGroup member. </summary>
     public partial class VpnServerConfigurationPolicyGroupMember
     {
-        /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupMember. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupMember"/>. </summary>
         public VpnServerConfigurationPolicyGroupMember()
         {
         }
 
-        /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupMember. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupMember"/>. </summary>
         /// <param name="name"> Name of the VpnServerConfigurationPolicyGroupMember. </param>
         /// <param name="attributeType"> The Vpn Policy member attribute type. </param>
         /// <param name="attributeValue"> The value of Attribute used for this VpnServerConfigurationPolicyGroupMember. </param>
-        internal VpnServerConfigurationPolicyGroupMember(string name, VpnPolicyMemberAttributeType? attributeType, string attributeValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnServerConfigurationPolicyGroupMember(string name, VpnPolicyMemberAttributeType? attributeType, string attributeValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AttributeType = attributeType;
             AttributeValue = attributeValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the VpnServerConfigurationPolicyGroupMember. </summary>

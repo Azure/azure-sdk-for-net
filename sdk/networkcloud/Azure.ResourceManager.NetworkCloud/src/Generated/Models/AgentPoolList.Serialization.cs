@@ -5,23 +5,85 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    internal partial class AgentPoolList
+    internal partial class AgentPoolList : IUtf8JsonSerializable, IJsonModel<AgentPoolList>
     {
-        internal static AgentPoolList DeserializeAgentPoolList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolList>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AgentPoolList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AgentPoolList>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AgentPoolList>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AgentPoolList IJsonModel<AgentPoolList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolList)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolList(document.RootElement, options);
+        }
+
+        internal static AgentPoolList DeserializeAgentPoolList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<NetworkCloudAgentPoolData>> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -43,8 +105,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     value = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentPoolList(nextLink.Value, Optional.ToList(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AgentPoolList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgentPoolList>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolList)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AgentPoolList IPersistableModel<AgentPoolList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AgentPoolList)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAgentPoolList(document.RootElement, options);
+        }
+
+        string IPersistableModel<AgentPoolList>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

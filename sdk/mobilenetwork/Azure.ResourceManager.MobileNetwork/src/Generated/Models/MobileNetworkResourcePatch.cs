@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Identity and Tags object for patch operations. </summary>
     public partial class MobileNetworkResourcePatch
     {
-        /// <summary> Initializes a new instance of MobileNetworkResourcePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkResourcePatch"/>. </summary>
         public MobileNetworkResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkResourcePatch"/>. </summary>
+        /// <param name="userAssignedIdentity"> The managed service identity associated with this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkResourcePatch(MobileNetworkManagedServiceIdentity userAssignedIdentity, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            UserAssignedIdentity = userAssignedIdentity;
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed service identity associated with this resource. </summary>

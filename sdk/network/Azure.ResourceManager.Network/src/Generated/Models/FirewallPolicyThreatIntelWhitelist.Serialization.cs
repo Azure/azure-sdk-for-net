@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyThreatIntelWhitelist : IUtf8JsonSerializable
+    public partial class FirewallPolicyThreatIntelWhitelist : IUtf8JsonSerializable, IJsonModel<FirewallPolicyThreatIntelWhitelist>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyThreatIntelWhitelist>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FirewallPolicyThreatIntelWhitelist>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FirewallPolicyThreatIntelWhitelist>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FirewallPolicyThreatIntelWhitelist>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IPAddresses))
             {
@@ -36,17 +46,48 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FirewallPolicyThreatIntelWhitelist DeserializeFirewallPolicyThreatIntelWhitelist(JsonElement element)
+        FirewallPolicyThreatIntelWhitelist IJsonModel<FirewallPolicyThreatIntelWhitelist>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallPolicyThreatIntelWhitelist(document.RootElement, options);
+        }
+
+        internal static FirewallPolicyThreatIntelWhitelist DeserializeFirewallPolicyThreatIntelWhitelist(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> ipAddresses = default;
             Optional<IList<string>> fqdns = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddresses"u8))
@@ -77,8 +118,38 @@ namespace Azure.ResourceManager.Network.Models
                     fqdns = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FirewallPolicyThreatIntelWhitelist(Optional.ToList(ipAddresses), Optional.ToList(fqdns));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FirewallPolicyThreatIntelWhitelist(Optional.ToList(ipAddresses), Optional.ToList(fqdns), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FirewallPolicyThreatIntelWhitelist>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FirewallPolicyThreatIntelWhitelist IPersistableModel<FirewallPolicyThreatIntelWhitelist>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FirewallPolicyThreatIntelWhitelist)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFirewallPolicyThreatIntelWhitelist(document.RootElement, options);
+        }
+
+        string IPersistableModel<FirewallPolicyThreatIntelWhitelist>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

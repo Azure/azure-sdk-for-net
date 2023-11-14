@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class NaptConfiguration : IUtf8JsonSerializable
+    public partial class NaptConfiguration : IUtf8JsonSerializable, IJsonModel<NaptConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NaptConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NaptConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NaptConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NaptConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("pinholeTimeouts"u8);
                 writer.WriteObjectValue(PinholeTimeouts);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NaptConfiguration DeserializeNaptConfiguration(JsonElement element)
+        NaptConfiguration IJsonModel<NaptConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNaptConfiguration(document.RootElement, options);
+        }
+
+        internal static NaptConfiguration DeserializeNaptConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<MobileNetworkPortReuseHoldTimes> portReuseHoldTime = default;
             Optional<int> pinholeLimits = default;
             Optional<PinholeTimeouts> pinholeTimeouts = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -101,8 +143,38 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     pinholeTimeouts = PinholeTimeouts.DeserializePinholeTimeouts(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NaptConfiguration(Optional.ToNullable(enabled), portRange.Value, portReuseHoldTime.Value, Optional.ToNullable(pinholeLimits), pinholeTimeouts.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NaptConfiguration(Optional.ToNullable(enabled), portRange.Value, portReuseHoldTime.Value, Optional.ToNullable(pinholeLimits), pinholeTimeouts.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NaptConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NaptConfiguration IPersistableModel<NaptConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NaptConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNaptConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<NaptConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

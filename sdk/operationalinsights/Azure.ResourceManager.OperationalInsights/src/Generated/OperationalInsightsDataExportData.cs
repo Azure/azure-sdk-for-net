@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsDataExportData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataExportData"/>. </summary>
         public OperationalInsightsDataExportData()
         {
             TableNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsDataExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsDataExportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceId"> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </param>
         /// <param name="destinationType"> The type of the destination resource. </param>
         /// <param name="eventHubName"> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </param>
-        internal OperationalInsightsDataExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataExportId, IList<string> tableNames, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, ResourceIdentifier resourceId, OperationalInsightsDataExportDestinationType? destinationType, string eventHubName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsDataExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? dataExportId, IList<string> tableNames, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, ResourceIdentifier resourceId, OperationalInsightsDataExportDestinationType? destinationType, string eventHubName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DataExportId = dataExportId;
             TableNames = tableNames;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceId = resourceId;
             DestinationType = destinationType;
             EventHubName = eventHubName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The data export rule ID. </summary>

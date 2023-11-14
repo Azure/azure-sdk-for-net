@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -13,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The MetadataPermissionsApplicationsItem. </summary>
     internal partial class MetadataPermissionsApplicationsItem
     {
-        /// <summary> Initializes a new instance of MetadataPermissionsApplicationsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissionsApplicationsItem"/>. </summary>
         /// <param name="resourceId"> The resource ID on the permission indication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         internal MetadataPermissionsApplicationsItem(string resourceId)
@@ -21,6 +25,20 @@ namespace Azure.Monitor.Query.Models
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissionsApplicationsItem"/>. </summary>
+        /// <param name="resourceId"> The resource ID on the permission indication. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataPermissionsApplicationsItem(string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataPermissionsApplicationsItem"/> for deserialization. </summary>
+        internal MetadataPermissionsApplicationsItem()
+        {
         }
 
         /// <summary> The resource ID on the permission indication. </summary>
