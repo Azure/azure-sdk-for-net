@@ -111,8 +111,8 @@ namespace Azure.Communication.JobRouter
         #region ClassificationPolicy
 
         /// <summary> Creates a classification policy. </summary>
-        /// <param name="options"> (Optional) Options for creating classification policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="options"> Options for creating classification policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ClassificationPolicy>> CreateClassificationPolicyAsync(
             CreateClassificationPolicyOptions options,
@@ -149,8 +149,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Creates or updates a classification policy. </summary>
-        /// <param name="options"> (Optional) Options for creating classification policy. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="options"> Options for creating classification policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ClassificationPolicy> CreateClassificationPolicy(
             CreateClassificationPolicyOptions options,
@@ -188,7 +188,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Updates classification policy. </summary>
         /// <param name="classificationPolicy"> Classification policy to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ClassificationPolicy>> UpdateClassificationPolicyAsync(
             ClassificationPolicy classificationPolicy, RequestConditions requestConditions = default,
@@ -217,7 +217,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Updates classification policy. </summary>
         /// <param name="classificationPolicy"> Classification policy to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ClassificationPolicy> UpdateClassificationPolicy(
             ClassificationPolicy classificationPolicy, RequestConditions requestConditions = default,
@@ -252,7 +252,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classificationPolicyId"> Unique identifier of this policy. </param>
+        /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -292,7 +292,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classificationPolicyId"> Unique identifier of this policy. </param>
+        /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -342,7 +342,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Creates a distribution policy. </summary>
         /// <param name="options"> Additional options that can be used while creating distribution policy. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<DistributionPolicy>> CreateDistributionPolicyAsync(
             CreateDistributionPolicyOptions options,
@@ -374,8 +374,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Creates a distribution policy. </summary>
-        /// <param name="options"> Additional options that can be used while creating distribution policy. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="options"> Options for creating a distribution policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<DistributionPolicy> CreateDistributionPolicy(
             CreateDistributionPolicyOptions options,
@@ -408,7 +408,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Updates a distribution policy. </summary>
         /// <param name="distributionPolicy"> The distribution policy to update. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<DistributionPolicy>> UpdateDistributionPolicyAsync(
             DistributionPolicy distributionPolicy, RequestConditions requestConditions = default,
@@ -437,7 +437,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Updates a distribution policy. </summary>
         /// <param name="distributionPolicy"> The distribution policy to update. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<DistributionPolicy> UpdateDistributionPolicy(
             DistributionPolicy distributionPolicy, RequestConditions requestConditions = default,
@@ -472,7 +472,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="distributionPolicyId"> The unique identifier of the policy. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -512,7 +512,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="distributionPolicyId"> The unique identifier of the policy. </param>
+        /// <param name="distributionPolicyId"> Id of a distribution policy. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -561,8 +561,8 @@ namespace Azure.Communication.JobRouter
         #region ExceptionPolicy
 
         /// <summary> Creates a new exception policy. </summary>
-        /// <param name="options"> (Optional) Options for creating an exception policy. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="options"> Options for creating an exception policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ExceptionPolicy>> CreateExceptionPolicyAsync(
             CreateExceptionPolicyOptions options,
@@ -596,8 +596,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Creates or updates a exception policy. </summary>
-        /// <param name="options"> (Optional) Options for creating an exception policy. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="options"> Options for creating an exception policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ExceptionPolicy> CreateExceptionPolicy(
             CreateExceptionPolicyOptions options = default,
@@ -632,7 +632,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Creates a new exception policy. </summary>
         /// <param name="exceptionPolicy"> Exception policy to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ExceptionPolicy>> UpdateExceptionPolicyAsync(
             ExceptionPolicy exceptionPolicy, RequestConditions requestConditions = default,
@@ -661,7 +661,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Creates a new exception policy. </summary>
         /// <param name="exceptionPolicy"> Exception policy to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ExceptionPolicy> UpdateExceptionPolicy(
             ExceptionPolicy exceptionPolicy, RequestConditions requestConditions = default,
@@ -696,7 +696,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="exceptionPolicyId"> The Id of the exception policy. </param>
+        /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -736,7 +736,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="exceptionPolicyId"> The Id of the exception policy. </param>
+        /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -785,8 +785,8 @@ namespace Azure.Communication.JobRouter
         #region Queue
 
         /// <summary> Creates a queue. </summary>
-        /// <param name="options"> Options for creating a job queue. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="options"> Options for creating a queue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterQueue>> CreateQueueAsync(
             CreateQueueOptions options,
@@ -825,8 +825,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Creates a queue. </summary>
-        /// <param name="options"> Options for creating a job queue. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="options"> Options for creating a queue. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterQueue> CreateQueue(
             CreateQueueOptions options,
@@ -866,7 +866,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Updates a queue. </summary>
         /// <param name="queue"> Queue to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterQueue>> UpdateQueueAsync(
@@ -896,7 +896,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Updates a queue. </summary>
         /// <param name="queue"> Queue to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>/// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterQueue> UpdateQueue(
             RouterQueue queue, RequestConditions requestConditions = default,
@@ -931,7 +931,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queueId"> The Id of this queue. </param>
+        /// <param name="queueId"> Id of a queue. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -971,7 +971,7 @@ namespace Azure.Communication.JobRouter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queueId"> The Id of this queue. </param>
+        /// <param name="queueId"> Id of a queue. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>

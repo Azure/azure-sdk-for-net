@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Describes a worker selector that will be attached to the job. </summary>
+    /// <summary> Describes a worker selector that will be attached to a job. </summary>
     public partial class StaticWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>

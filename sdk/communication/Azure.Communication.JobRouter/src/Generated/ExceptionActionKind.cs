@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Supported exception action types. </summary>
+    /// <summary> Discriminators for supported exception action types. </summary>
     public readonly partial struct ExceptionActionKind : IEquatable<ExceptionActionKind>
     {
         private readonly string _value;

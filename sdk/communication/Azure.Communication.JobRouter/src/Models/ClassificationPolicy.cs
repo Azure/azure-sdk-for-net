@@ -12,7 +12,7 @@ namespace Azure.Communication.JobRouter
     public partial class ClassificationPolicy: IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        /// <param name="classificationPolicyId"> Id of the policy. </param>
+        /// <param name="classificationPolicyId"> Id of a classification policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
         public ClassificationPolicy(string classificationPolicyId)
         {
@@ -21,28 +21,20 @@ namespace Azure.Communication.JobRouter
             Id = classificationPolicyId;
         }
 
-        /// <summary> The queue selector attachments used to resolve a queue for a given job. </summary>
+        /// <summary> Queue selector attachments used to resolve a queue for a job. </summary>
         public IList<QueueSelectorAttachment> QueueSelectorAttachments { get; } = new List<QueueSelectorAttachment>();
 
-        /// <summary> The worker selector attachments used to attach worker selectors to a given job. </summary>
+        /// <summary> Worker selector attachments used to attach worker selectors to a job. </summary>
         public IList<WorkerSelectorAttachment> WorkerSelectorAttachments { get; } = new List<WorkerSelectorAttachment>();
 
-        /// <summary> (Optional) The name of the classification policy. </summary>
+        /// <summary> Friendly name of this policy. </summary>
         public string Name { get; set; }
 
-        /// <summary> The fallback queue to select if the queue selector attachments fail to resolve a queue for a given job. </summary>
+        /// <summary> Id of a fallback queue to select if queue selector attachments doesn't find a match. </summary>
         public string FallbackQueueId { get; set; }
 
         /// <summary>
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule providing static rules that always return the same result, regardless of input.
-        /// DirectMapRule:  A rule that return the same labels as the input labels.
-        /// ExpressionRule: A rule providing inline expression rules.
-        /// AzureFunctionRule: A rule providing a binding to an HTTP Triggered Azure Function.
-        /// WebhookRule: A rule providing a binding to a webserver following OAuth2.0 authentication protocol.
-        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
+        /// A rule to determine a priority score for a job.
         /// </summary>
         public RouterRule PrioritizationRule { get; set; }
 
@@ -59,7 +51,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Concurrency Token. </summary>
+        /// <summary> The entity tag for this resource. </summary>
         public ETag ETag { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

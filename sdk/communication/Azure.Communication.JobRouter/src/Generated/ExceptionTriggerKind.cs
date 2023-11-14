@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Supported exception trigger types. </summary>
+    /// <summary> Discriminators for supported exception trigger types. </summary>
     public readonly partial struct ExceptionTriggerKind : IEquatable<ExceptionTriggerKind>
     {
         private readonly string _value;
