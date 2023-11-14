@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 
-namespace System.Net.ClientModel.Tests;
+namespace System.ClientModel.Tests;
 
 public class ClientPipelineTests
 {
@@ -19,6 +19,20 @@ public class ClientPipelineTests
 
         Assert.Throws<NotSupportedException>(() => { ClientPipeline.GetPipeline(clientB, options); });
     }
+
+    // Test that users can't pass a list of policies where the last policy is not a transport
+
+    // Tests for invalid inputs to all public methods
+
+    // Tests that the correct pipeline is constructed for different variants of PipelineOptions
+
+    // Tests that the correct pipeline is constructed for different variants of RequestOptions
+
+    // Tests that pipeline is frozen as expected by the various GetPipeline methods
+
+    // TODO: Test Pipeline.CreateMessage
+
+    // TODO: Test Pipeline.Send and Pipeline.SendAsync
 
     #region Helpers
     private class ClientA { }

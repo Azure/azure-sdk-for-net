@@ -83,7 +83,7 @@ public class ClientPipeline
 
     // Builder from options: lets a client-author specify policies without modifying
     // client-user's passed-in options.
-    internal static ClientPipeline Create(
+    private static ClientPipeline Create(
         Type clientType,
         PipelineOptions options,
         ReadOnlySpan<PipelinePolicy> perCallPolicies,

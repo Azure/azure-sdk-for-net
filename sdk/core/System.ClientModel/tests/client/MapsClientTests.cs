@@ -12,6 +12,9 @@ namespace System.ClientModel.Tests;
 
 public class MapsClientTests
 {
+    // TODO: Consider whether we want to add recorded tests to have toy clients
+    // that validate usage patterns from ClientModel clients.
+
     // This is a "TestSupportProject", so these tests will never be run as part of CIs.
     // It's here now for quick manual validation of client functionality, but we can revisit
     // this story going forward.

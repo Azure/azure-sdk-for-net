@@ -77,6 +77,8 @@ public class RequestOptions
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
     {
+        if (policy is null) throw new ArgumentNullException(nameof(policy));
+
         switch (position)
         {
             case PipelinePosition.PerCall:
@@ -98,8 +100,8 @@ public class RequestOptions
         }
         else
         {
-            var perCallPolicies = new PipelinePolicy[policies.Length + 1];
-            policies.CopyTo(perCallPolicies.AsSpan());
+            PipelinePolicy[] policiesProperty = new PipelinePolicy[policies.Length + 1];
+            policies.CopyTo(policiesProperty.AsSpan());
         }
 
         policies[policies.Length - 1] = policy;
