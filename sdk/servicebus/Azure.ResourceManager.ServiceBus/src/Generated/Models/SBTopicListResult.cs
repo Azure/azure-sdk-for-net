@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceBus;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The response to the List Topics operation. </summary>
     internal partial class SBTopicListResult
     {
-        /// <summary> Initializes a new instance of SBTopicListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SBTopicListResult"/>. </summary>
         internal SBTopicListResult()
         {
             Value = new ChangeTrackingList<ServiceBusTopicData>();
         }
 
-        /// <summary> Initializes a new instance of SBTopicListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SBTopicListResult"/>. </summary>
         /// <param name="value"> Result of the List Topics operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of topics. </param>
-        internal SBTopicListResult(IReadOnlyList<ServiceBusTopicData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SBTopicListResult(IReadOnlyList<ServiceBusTopicData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the List Topics operation. </summary>

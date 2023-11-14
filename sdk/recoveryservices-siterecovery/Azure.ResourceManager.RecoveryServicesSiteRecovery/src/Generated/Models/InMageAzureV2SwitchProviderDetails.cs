@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,22 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 switch provider details. </summary>
     public partial class InMageAzureV2SwitchProviderDetails
     {
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderDetails"/>. </summary>
         internal InMageAzureV2SwitchProviderDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of InMageAzureV2SwitchProviderDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2SwitchProviderDetails"/>. </summary>
         /// <param name="targetVaultId"> The target vault Id. </param>
         /// <param name="targetResourceId"> The target resource Id. </param>
         /// <param name="targetFabricId"> The target fabric Id. </param>
         /// <param name="targetApplianceId"> The target appliance Id. </param>
-        internal InMageAzureV2SwitchProviderDetails(ResourceIdentifier targetVaultId, ResourceIdentifier targetResourceId, ResourceIdentifier targetFabricId, string targetApplianceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAzureV2SwitchProviderDetails(ResourceIdentifier targetVaultId, ResourceIdentifier targetResourceId, ResourceIdentifier targetFabricId, string targetApplianceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetVaultId = targetVaultId;
             TargetResourceId = targetResourceId;
             TargetFabricId = targetFabricId;
             TargetApplianceId = targetApplianceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The target vault Id. </summary>

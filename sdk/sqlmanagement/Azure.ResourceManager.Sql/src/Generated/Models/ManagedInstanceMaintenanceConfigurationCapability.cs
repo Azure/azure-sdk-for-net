@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The maintenance configuration capability. </summary>
     public partial class ManagedInstanceMaintenanceConfigurationCapability
     {
-        /// <summary> Initializes a new instance of ManagedInstanceMaintenanceConfigurationCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceMaintenanceConfigurationCapability"/>. </summary>
         internal ManagedInstanceMaintenanceConfigurationCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceMaintenanceConfigurationCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceMaintenanceConfigurationCapability"/>. </summary>
         /// <param name="name"> Maintenance configuration name. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ManagedInstanceMaintenanceConfigurationCapability(string name, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceMaintenanceConfigurationCapability(string name, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Maintenance configuration name. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Request containing information needed for returning reservation. </summary>
     public partial class ReservationRefundContent
     {
-        /// <summary> Initializes a new instance of ReservationRefundContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundContent"/>. </summary>
         public ReservationRefundContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundContent"/>. </summary>
+        /// <param name="properties"> Properties needed for refund request including the session id from calculate refund, the scope, the reservation to be returned and the return reason. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationRefundContent(ReservationRefundRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties needed for refund request including the session id from calculate refund, the scope, the reservation to be returned and the return reason. </summary>

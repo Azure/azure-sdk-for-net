@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlAdvisorData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlAdvisorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlAdvisorData"/>. </summary>
         public SqlAdvisorData()
         {
             RecommendedActions = new ChangeTrackingList<RecommendedActionData>();
         }
 
-        /// <summary> Initializes a new instance of SqlAdvisorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlAdvisorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +41,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, 'Ok' (Recommendations available),LowActivity (not enough workload to analyze), 'DbSeemsTuned' (Database is doing well), etc. </param>
         /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
-        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SqlAdvisorStatus? advisorStatus, AutoExecuteStatus? autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.Sql
             RecommendationsStatus = recommendationsStatus;
             LastCheckedOn = lastCheckedOn;
             RecommendedActions = recommendedActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource kind. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Partner region information for the failover group. </summary>
     public partial class PartnerRegionInfo
     {
-        /// <summary> Initializes a new instance of PartnerRegionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerRegionInfo"/>. </summary>
         public PartnerRegionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerRegionInfo"/>. </summary>
         /// <param name="location"> Geo location of the partner managed instances. </param>
         /// <param name="replicationRole"> Replication role of the partner managed instances. </param>
-        internal PartnerRegionInfo(AzureLocation? location, InstanceFailoverGroupReplicationRole? replicationRole)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerRegionInfo(AzureLocation? location, InstanceFailoverGroupReplicationRole? replicationRole, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             ReplicationRole = replicationRole;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Geo location of the partner managed instances. </summary>

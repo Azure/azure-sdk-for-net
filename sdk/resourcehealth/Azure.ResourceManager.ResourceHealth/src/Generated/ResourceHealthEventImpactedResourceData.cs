@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ResourceHealthEventImpactedResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceData"/>. </summary>
         internal ResourceHealthEventImpactedResourceData()
         {
             Info = new ChangeTrackingList<ResourceHealthKeyValueItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventImpactedResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventImpactedResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="maintenanceStartTime"> Start time of maintenance for the impacted resource. </param>
         /// <param name="maintenanceEndTime"> End time of maintenance for the impacted resource. </param>
         /// <param name="info"> Additional information. </param>
-        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, string resourceName, string resourceGroup, string status, string maintenanceStartTime, string maintenanceEndTime, IReadOnlyList<ResourceHealthKeyValueItem> info) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventImpactedResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceType? targetResourceType, ResourceIdentifier targetResourceId, string targetRegion, string resourceName, string resourceGroup, string status, string maintenanceStartTime, string maintenanceEndTime, IReadOnlyList<ResourceHealthKeyValueItem> info, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TargetResourceType = targetResourceType;
             TargetResourceId = targetResourceId;
@@ -49,6 +54,7 @@ namespace Azure.ResourceManager.ResourceHealth
             MaintenanceStartTime = maintenanceStartTime;
             MaintenanceEndTime = maintenanceEndTime;
             Info = info;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource type within Microsoft cloud. </summary>

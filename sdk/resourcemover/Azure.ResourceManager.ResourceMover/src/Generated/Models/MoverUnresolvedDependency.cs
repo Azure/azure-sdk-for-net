@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Unresolved dependency. </summary>
     public partial class MoverUnresolvedDependency
     {
-        /// <summary> Initializes a new instance of MoverUnresolvedDependency. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverUnresolvedDependency"/>. </summary>
         internal MoverUnresolvedDependency()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverUnresolvedDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverUnresolvedDependency"/>. </summary>
         /// <param name="count"> Gets or sets the count. </param>
         /// <param name="id"> Gets or sets the arm id of the dependency. </param>
-        internal MoverUnresolvedDependency(int? count, ResourceIdentifier id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverUnresolvedDependency(int? count, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the count. </summary>

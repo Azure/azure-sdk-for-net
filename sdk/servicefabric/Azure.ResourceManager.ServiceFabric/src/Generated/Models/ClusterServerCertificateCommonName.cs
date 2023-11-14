@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     /// <summary> Describes the server certificate details using common name. </summary>
     public partial class ClusterServerCertificateCommonName
     {
-        /// <summary> Initializes a new instance of ClusterServerCertificateCommonName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonName"/>. </summary>
         /// <param name="certificateCommonName"> The common name of the server certificate. </param>
         /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the server certificate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateCommonName"/> or <paramref name="certificateIssuerThumbprint"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
             CertificateCommonName = certificateCommonName;
             CertificateIssuerThumbprint = certificateIssuerThumbprint;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonName"/>. </summary>
+        /// <param name="certificateCommonName"> The common name of the server certificate. </param>
+        /// <param name="certificateIssuerThumbprint"> The issuer thumbprint of the server certificate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterServerCertificateCommonName(string certificateCommonName, BinaryData certificateIssuerThumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CertificateCommonName = certificateCommonName;
+            CertificateIssuerThumbprint = certificateIssuerThumbprint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServerCertificateCommonName"/> for deserialization. </summary>
+        internal ClusterServerCertificateCommonName()
+        {
         }
 
         /// <summary> The common name of the server certificate. </summary>

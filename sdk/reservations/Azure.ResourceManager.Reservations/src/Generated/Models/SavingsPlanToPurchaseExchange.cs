@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Savings plan purchase details. </summary>
     public partial class SavingsPlanToPurchaseExchange
     {
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseExchange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanToPurchaseExchange"/>. </summary>
         internal SavingsPlanToPurchaseExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanToPurchaseExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanToPurchaseExchange"/>. </summary>
         /// <param name="savingsPlanOrderId"> Fully qualified id of the savings plan order being purchased. </param>
         /// <param name="savingsPlanId"> Fully qualified id of the savings plan being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
         /// <param name="properties"> Request body for savings plan purchase. </param>
         /// <param name="billingCurrencyTotal"> Pricing information containing the amount and the currency code. </param>
         /// <param name="status"> Status of the individual operation. </param>
-        internal SavingsPlanToPurchaseExchange(string savingsPlanOrderId, string savingsPlanId, SavingsPlanPurchase properties, PurchasePrice billingCurrencyTotal, ReservationOperationStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SavingsPlanToPurchaseExchange(string savingsPlanOrderId, string savingsPlanId, SavingsPlanPurchase properties, PurchasePrice billingCurrencyTotal, ReservationOperationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SavingsPlanOrderId = savingsPlanOrderId;
             SavingsPlanId = savingsPlanId;
             Properties = properties;
             BillingCurrencyTotal = billingCurrencyTotal;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fully qualified id of the savings plan order being purchased. </summary>

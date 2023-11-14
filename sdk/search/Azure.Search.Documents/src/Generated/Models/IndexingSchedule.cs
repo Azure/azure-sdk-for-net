@@ -6,26 +6,37 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents a schedule for indexer execution. </summary>
     public partial class IndexingSchedule
     {
-        /// <summary> Initializes a new instance of IndexingSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IndexingSchedule"/>. </summary>
         /// <param name="interval"> The interval of time between indexer executions. </param>
         public IndexingSchedule(TimeSpan interval)
         {
             Interval = interval;
         }
 
-        /// <summary> Initializes a new instance of IndexingSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexingSchedule"/>. </summary>
         /// <param name="interval"> The interval of time between indexer executions. </param>
         /// <param name="startTime"> The time when an indexer should start running. </param>
-        internal IndexingSchedule(TimeSpan interval, DateTimeOffset? startTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IndexingSchedule(TimeSpan interval, DateTimeOffset? startTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Interval = interval;
             StartTime = startTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IndexingSchedule"/> for deserialization. </summary>
+        internal IndexingSchedule()
+        {
         }
 
         /// <summary> The interval of time between indexer executions. </summary>

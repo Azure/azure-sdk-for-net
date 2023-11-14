@@ -5,28 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    internal partial class UnknownScalingMechanism : IUtf8JsonSerializable
+    internal partial class UnknownScalingMechanism : IUtf8JsonSerializable, IJsonModel<ManagedServiceScalingMechanism>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceScalingMechanism>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedServiceScalingMechanism>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedServiceScalingMechanism>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedServiceScalingMechanism>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownScalingMechanism DeserializeUnknownScalingMechanism(JsonElement element)
+        ManagedServiceScalingMechanism IJsonModel<ManagedServiceScalingMechanism>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServiceScalingMechanism)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownScalingMechanism(document.RootElement, options);
+        }
+
+        internal static UnknownScalingMechanism DeserializeUnknownScalingMechanism(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ServiceScalingMechanismKind kind = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -34,8 +76,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     kind = new ServiceScalingMechanismKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownScalingMechanism(kind);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownScalingMechanism(kind, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedServiceScalingMechanism>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServiceScalingMechanism)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedServiceScalingMechanism IPersistableModel<ManagedServiceScalingMechanism>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedServiceScalingMechanism)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownScalingMechanism(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedServiceScalingMechanism>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> The ApplicationUserAssignedIdentityInfo. </summary>
     public partial class ApplicationUserAssignedIdentityInfo
     {
-        /// <summary> Initializes a new instance of ApplicationUserAssignedIdentityInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationUserAssignedIdentityInfo"/>. </summary>
         /// <param name="name"> The friendly name of user assigned identity. </param>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="principalId"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             Name = name;
             PrincipalId = principalId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationUserAssignedIdentityInfo"/>. </summary>
+        /// <param name="name"> The friendly name of user assigned identity. </param>
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationUserAssignedIdentityInfo(string name, string principalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            PrincipalId = principalId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationUserAssignedIdentityInfo"/> for deserialization. </summary>
+        internal ApplicationUserAssignedIdentityInfo()
+        {
         }
 
         /// <summary> The friendly name of user assigned identity. </summary>

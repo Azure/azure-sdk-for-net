@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Persistence-related configuration for the RedisEnterprise database. </summary>
     public partial class RedisPersistenceSettings
     {
-        /// <summary> Initializes a new instance of RedisPersistenceSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisPersistenceSettings"/>. </summary>
         public RedisPersistenceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of RedisPersistenceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPersistenceSettings"/>. </summary>
         /// <param name="isAofEnabled"> Sets whether AOF is enabled. </param>
         /// <param name="isRdbEnabled"> Sets whether RDB is enabled. </param>
         /// <param name="aofFrequency"> Sets the frequency at which data is written to disk. </param>
         /// <param name="rdbFrequency"> Sets the frequency at which a snapshot of the database is created. </param>
-        internal RedisPersistenceSettings(bool? isAofEnabled, bool? isRdbEnabled, PersistenceSettingAofFrequency? aofFrequency, PersistenceSettingRdbFrequency? rdbFrequency)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisPersistenceSettings(bool? isAofEnabled, bool? isRdbEnabled, PersistenceSettingAofFrequency? aofFrequency, PersistenceSettingRdbFrequency? rdbFrequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsAofEnabled = isAofEnabled;
             IsRdbEnabled = isRdbEnabled;
             AofFrequency = aofFrequency;
             RdbFrequency = rdbFrequency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sets whether AOF is enabled. </summary>

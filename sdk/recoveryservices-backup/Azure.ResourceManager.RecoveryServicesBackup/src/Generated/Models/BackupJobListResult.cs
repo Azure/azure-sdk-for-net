@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> List of Job resources. </summary>
     internal partial class BackupJobListResult
     {
-        /// <summary> Initializes a new instance of BackupJobListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupJobListResult"/>. </summary>
         internal BackupJobListResult()
         {
             Value = new ChangeTrackingList<BackupJobData>();
         }
 
-        /// <summary> Initializes a new instance of BackupJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobListResult"/>. </summary>
         /// <param name="value"> List of resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
-        internal BackupJobListResult(IReadOnlyList<BackupJobData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupJobListResult(IReadOnlyList<BackupJobData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of resources. </summary>

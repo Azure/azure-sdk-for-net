@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class AveragePartitionLoadScalingTrigger : IUtf8JsonSerializable
+    public partial class AveragePartitionLoadScalingTrigger : IUtf8JsonSerializable, IJsonModel<AveragePartitionLoadScalingTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AveragePartitionLoadScalingTrigger>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AveragePartitionLoadScalingTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AveragePartitionLoadScalingTrigger>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AveragePartitionLoadScalingTrigger>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
@@ -25,11 +36,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(ScaleInterval);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AveragePartitionLoadScalingTrigger DeserializeAveragePartitionLoadScalingTrigger(JsonElement element)
+        AveragePartitionLoadScalingTrigger IJsonModel<AveragePartitionLoadScalingTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AveragePartitionLoadScalingTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAveragePartitionLoadScalingTrigger(document.RootElement, options);
+        }
+
+        internal static AveragePartitionLoadScalingTrigger DeserializeAveragePartitionLoadScalingTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             double upperLoadThreshold = default;
             string scaleInterval = default;
             ServiceScalingTriggerKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricName"u8))
@@ -66,8 +108,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     kind = new ServiceScalingTriggerKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AveragePartitionLoadScalingTrigger(kind, metricName, lowerLoadThreshold, upperLoadThreshold, scaleInterval);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AveragePartitionLoadScalingTrigger(kind, serializedAdditionalRawData, metricName, lowerLoadThreshold, upperLoadThreshold, scaleInterval);
         }
+
+        BinaryData IPersistableModel<AveragePartitionLoadScalingTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AveragePartitionLoadScalingTrigger)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AveragePartitionLoadScalingTrigger IPersistableModel<AveragePartitionLoadScalingTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AveragePartitionLoadScalingTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAveragePartitionLoadScalingTrigger(document.RootElement, options);
+        }
+
+        string IPersistableModel<AveragePartitionLoadScalingTrigger>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,13 +16,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for restore request. Workload-specific restore requests are derived from this class. </summary>
     public partial class TriggerRestoreContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of TriggerRestoreContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggerRestoreContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public TriggerRestoreContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of TriggerRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerRestoreContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,10 +38,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The available derived classes include <see cref="FileShareRestoreContent"/>, <see cref="WorkloadPointInTimeRestoreContent"/>, <see cref="WorkloadRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSapHanaRestoreContent"/>, <see cref="WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlPointInTimeRestoreContent"/>, <see cref="WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="WorkloadSqlRestoreContent"/>, <see cref="WorkloadSqlRestoreWithRehydrateContent"/>, <see cref="IaasVmRestoreContent"/> and <see cref="IaasVmRestoreWithRehydrationContent"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal TriggerRestoreContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestoreContent properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerRestoreContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestoreContent properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerRestoreContent"/> for deserialization. </summary>
+        internal TriggerRestoreContent()
+        {
         }
 
         /// <summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,22 +15,27 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Information to be stored in Vault properties as an element of privateEndpointConnections List. </summary>
     public partial class RecoveryServicesPrivateEndpointConnectionVaultProperties : ResourceData
     {
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnectionVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
         internal RecoveryServicesPrivateEndpointConnectionVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesPrivateEndpointConnectionVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Private Endpoint Connection Response Properties. </param>
         /// <param name="location"> The location of the private Endpoint connection. </param>
-        internal RecoveryServicesPrivateEndpointConnectionVaultProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecoveryServicesPrivateEndpointConnection properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesPrivateEndpointConnectionVaultProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecoveryServicesPrivateEndpointConnection properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Private Endpoint Connection Response Properties. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The kubernetes to scuba connection configuration. </summary>
     internal partial class DefenderForContainersAwsOfferingKubernetesScubaReader
     {
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKubernetesScubaReader. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKubernetesScubaReader"/>. </summary>
         public DefenderForContainersAwsOfferingKubernetesScubaReader()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKubernetesScubaReader. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKubernetesScubaReader"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature used for reading data. </param>
-        internal DefenderForContainersAwsOfferingKubernetesScubaReader(string cloudRoleArn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForContainersAwsOfferingKubernetesScubaReader(string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cloud role ARN in AWS for this feature used for reading data. </summary>

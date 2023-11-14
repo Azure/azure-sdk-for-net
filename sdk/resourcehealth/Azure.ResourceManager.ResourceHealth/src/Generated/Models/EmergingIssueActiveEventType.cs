@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Active event type of emerging issue. </summary>
     public partial class EmergingIssueActiveEventType
     {
-        /// <summary> Initializes a new instance of EmergingIssueActiveEventType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueActiveEventType"/>. </summary>
         internal EmergingIssueActiveEventType()
         {
             Impacts = new ChangeTrackingList<EmergingIssueImpact>();
         }
 
-        /// <summary> Initializes a new instance of EmergingIssueActiveEventType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueActiveEventType"/>. </summary>
         /// <param name="title"> The active event title. </param>
         /// <param name="description"> The details of active event. </param>
         /// <param name="trackingId"> The tracking id of this active event. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="isPublished"> The boolean value of this active event if published or not. </param>
         /// <param name="lastModifiedOn"> The last time modified on this banner. </param>
         /// <param name="impacts"> The list of emerging issues impacts. </param>
-        internal EmergingIssueActiveEventType(string title, string description, string trackingId, DateTimeOffset? startOn, string cloud, ResourceHealthEventSeverityLevel? severity, ResourceHealthEventStageValue? stage, bool? isPublished, DateTimeOffset? lastModifiedOn, IReadOnlyList<EmergingIssueImpact> impacts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmergingIssueActiveEventType(string title, string description, string trackingId, DateTimeOffset? startOn, string cloud, ResourceHealthEventSeverityLevel? severity, ResourceHealthEventStageValue? stage, bool? isPublished, DateTimeOffset? lastModifiedOn, IReadOnlyList<EmergingIssueImpact> impacts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;
@@ -43,6 +47,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             IsPublished = isPublished;
             LastModifiedOn = lastModifiedOn;
             Impacts = impacts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The active event title. </summary>

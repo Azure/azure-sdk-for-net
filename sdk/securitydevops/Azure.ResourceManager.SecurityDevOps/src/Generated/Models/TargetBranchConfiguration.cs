@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> Branch onboarding info. </summary>
     internal partial class TargetBranchConfiguration
     {
-        /// <summary> Initializes a new instance of TargetBranchConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetBranchConfiguration"/>. </summary>
         public TargetBranchConfiguration()
         {
             Names = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TargetBranchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetBranchConfiguration"/>. </summary>
         /// <param name="names">
         /// Gets or sets branches that should have annotations.
         ///
         /// For Ignite, we will be supporting a single default branch configuration in the UX.
         /// </param>
-        internal TargetBranchConfiguration(IList<string> names)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetBranchConfiguration(IList<string> names, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Names = names;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

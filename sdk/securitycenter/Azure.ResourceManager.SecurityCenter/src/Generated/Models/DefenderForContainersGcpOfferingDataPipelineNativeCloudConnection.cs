@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The native cloud connection configuration. </summary>
     public partial class DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection
     {
-        /// <summary> Initializes a new instance of DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection"/>. </summary>
         public DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection"/>. </summary>
         /// <param name="serviceAccountEmailAddress"> The data collection service account email address in GCP for this offering. </param>
         /// <param name="workloadIdentityProviderId"> The data collection GCP workload identity provider id for this offering. </param>
-        internal DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(string serviceAccountEmailAddress, string workloadIdentityProviderId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(string serviceAccountEmailAddress, string workloadIdentityProviderId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceAccountEmailAddress = serviceAccountEmailAddress;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The data collection service account email address in GCP for this offering. </summary>

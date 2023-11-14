@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
@@ -14,12 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// </summary>
     public abstract partial class BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of BackupGenericProtectionContainer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionContainer"/>. </summary>
         protected BackupGenericProtectionContainer()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupGenericProtectionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupGenericProtectionContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
@@ -31,7 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        internal BackupGenericProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupGenericProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -39,6 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             HealthStatus = healthStatus;
             ContainerType = containerType;
             ProtectableObjectType = protectableObjectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Friendly name of the container. </summary>

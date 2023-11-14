@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CefSolutionProperties : IUtf8JsonSerializable
+    public partial class CefSolutionProperties : IUtf8JsonSerializable, IJsonModel<CefSolutionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CefSolutionProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CefSolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CefSolutionProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CefSolutionProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Hostname))
             {
@@ -63,8 +72,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static CefSolutionProperties DeserializeCefSolutionProperties(JsonElement element)
+        CefSolutionProperties IJsonModel<CefSolutionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CefSolutionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCefSolutionProperties(document.RootElement, options);
+        }
+
+        internal static CefSolutionProperties DeserializeCefSolutionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -118,5 +141,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CefSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, hostname.Value, agent.Value, lastEventReceived.Value);
         }
+
+        BinaryData IPersistableModel<CefSolutionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CefSolutionProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CefSolutionProperties IPersistableModel<CefSolutionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CefSolutionProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCefSolutionProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<CefSolutionProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

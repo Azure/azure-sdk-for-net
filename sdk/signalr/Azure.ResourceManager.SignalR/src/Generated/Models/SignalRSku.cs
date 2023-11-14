@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Describes an available sku.". </summary>
     public partial class SignalRSku
     {
-        /// <summary> Initializes a new instance of SignalRSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRSku"/>. </summary>
         internal SignalRSku()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRSku"/>. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
-        internal SignalRSku(ResourceType? resourceType, SignalRResourceSku sku, SignalRSkuCapacity capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRSku(ResourceType? resourceType, SignalRResourceSku sku, SignalRSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource type that this object applies to. </summary>

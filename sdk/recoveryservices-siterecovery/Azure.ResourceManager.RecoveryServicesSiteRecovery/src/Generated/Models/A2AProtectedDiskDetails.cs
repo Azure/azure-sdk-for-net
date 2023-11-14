@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A protected disk details. </summary>
     public partial class A2AProtectedDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AProtectedDiskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AProtectedDiskDetails"/>. </summary>
         internal A2AProtectedDiskDetails()
         {
             AllowedDiskLevelOperation = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of A2AProtectedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectedDiskDetails"/>. </summary>
         /// <param name="diskUri"> The disk uri. </param>
         /// <param name="recoveryAzureStorageAccountId"> The recovery disk storage account. </param>
         /// <param name="primaryDiskAzureStorageAccountId"> The primary disk storage account. </param>
@@ -44,7 +47,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
         /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
         /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
-        internal A2AProtectedDiskDetails(Uri diskUri, ResourceIdentifier recoveryAzureStorageAccountId, ResourceIdentifier primaryDiskAzureStorageAccountId, Uri recoveryDiskUri, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AProtectedDiskDetails(Uri diskUri, ResourceIdentifier recoveryAzureStorageAccountId, ResourceIdentifier primaryDiskAzureStorageAccountId, Uri recoveryDiskUri, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskUri = diskUri;
             RecoveryAzureStorageAccountId = recoveryAzureStorageAccountId;
@@ -69,6 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             KekKeyVaultArmId = kekKeyVaultArmId;
             FailoverDiskName = failoverDiskName;
             TfoDiskName = tfoDiskName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk uri. </summary>

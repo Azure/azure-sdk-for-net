@@ -5,32 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable, IJsonModel<VectorSearchAlgorithmConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorSearchAlgorithmConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VectorSearchAlgorithmConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VectorSearchAlgorithmConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VectorSearchAlgorithmConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownVectorSearchAlgorithmConfiguration DeserializeUnknownVectorSearchAlgorithmConfiguration(JsonElement element)
+        VectorSearchAlgorithmConfiguration IJsonModel<VectorSearchAlgorithmConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VectorSearchAlgorithmConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownVectorSearchAlgorithmConfiguration(document.RootElement, options);
+        }
+
+        internal static UnknownVectorSearchAlgorithmConfiguration DeserializeUnknownVectorSearchAlgorithmConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             VectorSearchAlgorithmKind kind = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,8 +85,38 @@ namespace Azure.Search.Documents.Models
                     kind = new VectorSearchAlgorithmKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownVectorSearchAlgorithmConfiguration(name, kind);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownVectorSearchAlgorithmConfiguration(name, kind, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VectorSearchAlgorithmConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VectorSearchAlgorithmConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VectorSearchAlgorithmConfiguration IPersistableModel<VectorSearchAlgorithmConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VectorSearchAlgorithmConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownVectorSearchAlgorithmConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<VectorSearchAlgorithmConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The AutomationRuleRunPlaybookActionProperties. </summary>
     public partial class AutomationRuleRunPlaybookActionProperties
     {
-        /// <summary> Initializes a new instance of AutomationRuleRunPlaybookActionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/>. </summary>
         /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logicAppResourceId"/> is null. </exception>
         public AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             LogicAppResourceId = logicAppResourceId;
         }
 
-        /// <summary> Initializes a new instance of AutomationRuleRunPlaybookActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/>. </summary>
         /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
         /// <param name="tenantId"> The tenant id of the playbook resource. </param>
-        internal AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRuleRunPlaybookActionProperties(ResourceIdentifier logicAppResourceId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogicAppResourceId = logicAppResourceId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookActionProperties"/> for deserialization. </summary>
+        internal AutomationRuleRunPlaybookActionProperties()
+        {
         }
 
         /// <summary> The resource id of the playbook resource. </summary>

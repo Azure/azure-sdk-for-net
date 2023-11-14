@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,19 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class contains the minimal job details required to navigate to the desired drill down. </summary>
     public partial class SiteRecoveryJobEntity
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobEntity"/>. </summary>
         internal SiteRecoveryJobEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobEntity"/>. </summary>
         /// <param name="jobId"> The job id. </param>
         /// <param name="jobFriendlyName"> The job display name. </param>
         /// <param name="targetObjectId"> The object id. </param>
         /// <param name="targetObjectName"> The object name. </param>
         /// <param name="targetInstanceType"> The workflow affected object type. </param>
         /// <param name="jobScenarioName"> The job name. Enum type ScenarioName. </param>
-        internal SiteRecoveryJobEntity(ResourceIdentifier jobId, string jobFriendlyName, string targetObjectId, string targetObjectName, string targetInstanceType, string jobScenarioName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobEntity(ResourceIdentifier jobId, string jobFriendlyName, string targetObjectId, string targetObjectName, string targetInstanceType, string jobScenarioName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             JobFriendlyName = jobFriendlyName;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetObjectName = targetObjectName;
             TargetInstanceType = targetInstanceType;
             JobScenarioName = jobScenarioName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The job id. </summary>

@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class CrossSubscriptionRestoreSettings : IUtf8JsonSerializable
+    internal partial class CrossSubscriptionRestoreSettings : IUtf8JsonSerializable, IJsonModel<CrossSubscriptionRestoreSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CrossSubscriptionRestoreSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CrossSubscriptionRestoreSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CrossSubscriptionRestoreSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CrossSubscriptionRestoreSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CrossSubscriptionRestoreState))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreState"u8);
                 writer.WriteStringValue(CrossSubscriptionRestoreState.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CrossSubscriptionRestoreSettings DeserializeCrossSubscriptionRestoreSettings(JsonElement element)
+        CrossSubscriptionRestoreSettings IJsonModel<CrossSubscriptionRestoreSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CrossSubscriptionRestoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCrossSubscriptionRestoreSettings(document.RootElement, options);
+        }
+
+        internal static CrossSubscriptionRestoreSettings DeserializeCrossSubscriptionRestoreSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CrossSubscriptionRestoreState> crossSubscriptionRestoreState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("crossSubscriptionRestoreState"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     crossSubscriptionRestoreState = new CrossSubscriptionRestoreState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CrossSubscriptionRestoreSettings(Optional.ToNullable(crossSubscriptionRestoreState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CrossSubscriptionRestoreSettings(Optional.ToNullable(crossSubscriptionRestoreState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CrossSubscriptionRestoreSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CrossSubscriptionRestoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CrossSubscriptionRestoreSettings IPersistableModel<CrossSubscriptionRestoreSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CrossSubscriptionRestoreSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCrossSubscriptionRestoreSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<CrossSubscriptionRestoreSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

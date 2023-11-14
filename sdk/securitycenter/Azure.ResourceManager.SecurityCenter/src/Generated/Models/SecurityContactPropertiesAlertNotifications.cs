@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Defines whether to send email notifications about new security alerts. </summary>
     public partial class SecurityContactPropertiesAlertNotifications
     {
-        /// <summary> Initializes a new instance of SecurityContactPropertiesAlertNotifications. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesAlertNotifications"/>. </summary>
         public SecurityContactPropertiesAlertNotifications()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityContactPropertiesAlertNotifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityContactPropertiesAlertNotifications"/>. </summary>
         /// <param name="state"> Defines if email notifications will be sent about new security alerts. </param>
         /// <param name="minimalSeverity"> Defines the minimal alert severity which will be sent as email notifications. </param>
-        internal SecurityContactPropertiesAlertNotifications(SecurityAlertNotificationState? state, SecurityAlertMinimalSeverity? minimalSeverity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityContactPropertiesAlertNotifications(SecurityAlertNotificationState? state, SecurityAlertMinimalSeverity? minimalSeverity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             MinimalSeverity = minimalSeverity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines if email notifications will be sent about new security alerts. </summary>

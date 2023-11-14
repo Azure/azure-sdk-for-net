@@ -5,19 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanUnplannedFailoverContent : IUtf8JsonSerializable
+    public partial class RecoveryPlanUnplannedFailoverContent : IUtf8JsonSerializable, IJsonModel<RecoveryPlanUnplannedFailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanUnplannedFailoverContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RecoveryPlanUnplannedFailoverContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecoveryPlanUnplannedFailoverContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecoveryPlanUnplannedFailoverContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RecoveryPlanUnplannedFailoverContent IJsonModel<RecoveryPlanUnplannedFailoverContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanUnplannedFailoverContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanUnplannedFailoverContent(document.RootElement, options);
+        }
+
+        internal static RecoveryPlanUnplannedFailoverContent DeserializeRecoveryPlanUnplannedFailoverContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            RecoveryPlanUnplannedFailoverProperties properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = RecoveryPlanUnplannedFailoverProperties.DeserializeRecoveryPlanUnplannedFailoverProperties(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecoveryPlanUnplannedFailoverContent(properties, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RecoveryPlanUnplannedFailoverContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanUnplannedFailoverContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecoveryPlanUnplannedFailoverContent IPersistableModel<RecoveryPlanUnplannedFailoverContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanUnplannedFailoverContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecoveryPlanUnplannedFailoverContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecoveryPlanUnplannedFailoverContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Required if status == failed or status == canceled. </summary>
     public partial class OperationResultError
     {
-        /// <summary> Initializes a new instance of OperationResultError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationResultError"/>. </summary>
         internal OperationResultError()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationResultError. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResultError"/>. </summary>
         /// <param name="code"> Required if status == failed or status == cancelled. If status == failed, provide an invariant error code used for error troubleshooting, aggregation, and analysis. </param>
         /// <param name="message"> Required if status == failed. Localized. If status == failed, provide an actionable error message indicating what error occurred, and what the user can do to address the issue. </param>
-        internal OperationResultError(string code, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationResultError(string code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Required if status == failed or status == cancelled. If status == failed, provide an invariant error code used for error troubleshooting, aggregation, and analysis. </summary>

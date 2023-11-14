@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecuritySolutionsReferenceDataList. </summary>
     internal partial class SecuritySolutionsReferenceDataList
     {
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceDataList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceDataList"/>. </summary>
         internal SecuritySolutionsReferenceDataList()
         {
             Value = new ChangeTrackingList<SecuritySolutionsReferenceData>();
         }
 
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceDataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceDataList"/>. </summary>
         /// <param name="value"></param>
-        internal SecuritySolutionsReferenceDataList(IReadOnlyList<SecuritySolutionsReferenceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySolutionsReferenceDataList(IReadOnlyList<SecuritySolutionsReferenceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

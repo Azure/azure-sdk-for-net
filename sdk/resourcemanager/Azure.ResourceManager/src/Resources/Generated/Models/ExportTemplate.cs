@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Export resource group template request parameters. </summary>
     public partial class ExportTemplate
     {
-        /// <summary> Initializes a new instance of ExportTemplate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportTemplate"/>. </summary>
         public ExportTemplate()
         {
             Resources = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportTemplate"/>. </summary>
+        /// <param name="resources"> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry '*'. </param>
+        /// <param name="options"> The export template options. A CSV-formatted list containing zero or more of the following: 'IncludeParameterDefaultValue', 'IncludeComments', 'SkipResourceNameParameterization', 'SkipAllParameterization'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportTemplate(IList<string> resources, string options, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Resources = resources;
+            Options = options;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IDs of the resources to filter the export by. To export all resources, supply an array with single entry '*'. </summary>

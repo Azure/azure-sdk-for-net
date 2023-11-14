@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadPointInTimeRestoreContent : IUtf8JsonSerializable
+    public partial class WorkloadPointInTimeRestoreContent : IUtf8JsonSerializable, IJsonModel<WorkloadPointInTimeRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadPointInTimeRestoreContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<WorkloadPointInTimeRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WorkloadPointInTimeRestoreContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WorkloadPointInTimeRestoreContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PointInTime))
             {
@@ -60,11 +69,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadPointInTimeRestoreContent DeserializeWorkloadPointInTimeRestoreContent(JsonElement element)
+        WorkloadPointInTimeRestoreContent IJsonModel<WorkloadPointInTimeRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadPointInTimeRestoreContent(document.RootElement, options);
+        }
+
+        internal static WorkloadPointInTimeRestoreContent DeserializeWorkloadPointInTimeRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +115,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RecoveryMode> recoveryMode = default;
             Optional<ResourceIdentifier> targetVirtualMachineId = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pointInTime"u8))
@@ -152,8 +192,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkloadPointInTimeRestoreContent(objectType, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(pointInTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkloadPointInTimeRestoreContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToDictionary(propertyBag), targetInfo.Value, Optional.ToNullable(recoveryMode), targetVirtualMachineId.Value, Optional.ToNullable(pointInTime));
         }
+
+        BinaryData IPersistableModel<WorkloadPointInTimeRestoreContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WorkloadPointInTimeRestoreContent IPersistableModel<WorkloadPointInTimeRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadPointInTimeRestoreContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWorkloadPointInTimeRestoreContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<WorkloadPointInTimeRestoreContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

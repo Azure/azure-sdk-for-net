@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The SecuritySolutionsReferenceData. </summary>
     public partial class SecuritySolutionsReferenceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceData"/>. </summary>
         /// <param name="securityFamily"> The security family of the security solution. </param>
         /// <param name="alertVendorName"> The security solutions' vendor name. </param>
         /// <param name="packageInfoUri"> The security solutions' package info url. </param>
@@ -41,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Template = template;
         }
 
-        /// <summary> Initializes a new instance of SecuritySolutionsReferenceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +58,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="publisherDisplayName"> The security solutions' publisher display name. </param>
         /// <param name="template"> The security solutions' template. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal SecuritySolutionsReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily securityFamily, string alertVendorName, Uri packageInfoUri, string productName, string publisher, string publisherDisplayName, string template, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySolutionsReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily securityFamily, string alertVendorName, Uri packageInfoUri, string productName, string publisher, string publisherDisplayName, string template, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SecurityFamily = securityFamily;
             AlertVendorName = alertVendorName;
@@ -64,6 +69,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             PublisherDisplayName = publisherDisplayName;
             Template = template;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceData"/> for deserialization. </summary>
+        internal SecuritySolutionsReferenceData()
+        {
         }
 
         /// <summary> The security family of the security solution. </summary>

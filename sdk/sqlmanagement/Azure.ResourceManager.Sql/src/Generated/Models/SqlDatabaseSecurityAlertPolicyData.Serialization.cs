@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,11 +16,41 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseSecurityAlertPolicyData : IUtf8JsonSerializable
+    public partial class SqlDatabaseSecurityAlertPolicyData : IUtf8JsonSerializable, IJsonModel<SqlDatabaseSecurityAlertPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseSecurityAlertPolicyData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlDatabaseSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlDatabaseSecurityAlertPolicyData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlDatabaseSecurityAlertPolicyData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
@@ -66,12 +98,49 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDatabaseSecurityAlertPolicyData DeserializeSqlDatabaseSecurityAlertPolicyData(JsonElement element)
+        SqlDatabaseSecurityAlertPolicyData IJsonModel<SqlDatabaseSecurityAlertPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDatabaseSecurityAlertPolicyData(document.RootElement, options);
+        }
+
+        internal static SqlDatabaseSecurityAlertPolicyData DeserializeSqlDatabaseSecurityAlertPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +157,8 @@ namespace Azure.ResourceManager.Sql
             Optional<string> storageAccountAccessKey = default;
             Optional<int> retentionDays = default;
             Optional<DateTimeOffset> creationTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -200,8 +271,38 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDatabaseSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlDatabaseSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlDatabaseSecurityAlertPolicyData IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseSecurityAlertPolicyData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlDatabaseSecurityAlertPolicyData(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlDatabaseSecurityAlertPolicyData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

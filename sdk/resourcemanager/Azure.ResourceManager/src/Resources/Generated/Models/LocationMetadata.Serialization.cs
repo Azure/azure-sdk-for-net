@@ -5,16 +5,135 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class LocationMetadata
+    public partial class LocationMetadata : IUtf8JsonSerializable, IJsonModel<LocationMetadata>
     {
-        internal static LocationMetadata DeserializeLocationMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocationMetadata>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LocationMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LocationMetadata>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LocationMetadata>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RegionType))
+                {
+                    writer.WritePropertyName("regionType"u8);
+                    writer.WriteStringValue(RegionType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RegionCategory))
+                {
+                    writer.WritePropertyName("regionCategory"u8);
+                    writer.WriteStringValue(RegionCategory.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Geography))
+                {
+                    writer.WritePropertyName("geography"u8);
+                    writer.WriteStringValue(Geography);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(GeographyGroup))
+                {
+                    writer.WritePropertyName("geographyGroup"u8);
+                    writer.WriteStringValue(GeographyGroup);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Longitude))
+                {
+                    writer.WritePropertyName("longitude"u8);
+                    WriteLongitude(writer);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Latitude))
+                {
+                    writer.WritePropertyName("latitude"u8);
+                    WriteLatitude(writer);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PhysicalLocation))
+                {
+                    writer.WritePropertyName("physicalLocation"u8);
+                    writer.WriteStringValue(PhysicalLocation);
+                }
+            }
+            if (Optional.IsCollectionDefined(PairedRegions))
+            {
+                writer.WritePropertyName("pairedRegion"u8);
+                writer.WriteStartArray();
+                foreach (var item in PairedRegions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HomeLocation))
+                {
+                    writer.WritePropertyName("homeLocation"u8);
+                    writer.WriteStringValue(HomeLocation);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LocationMetadata IJsonModel<LocationMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLocationMetadata(document.RootElement, options);
+        }
+
+        internal static LocationMetadata DeserializeLocationMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +147,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> physicalLocation = default;
             Optional<IReadOnlyList<PairedRegion>> pairedRegion = default;
             Optional<string> homeLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regionType"u8))
@@ -92,8 +213,38 @@ namespace Azure.ResourceManager.Resources.Models
                     homeLocation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geography.Value, geographyGroup.Value, Optional.ToNullable(longitude), Optional.ToNullable(latitude), physicalLocation.Value, Optional.ToList(pairedRegion), homeLocation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geography.Value, geographyGroup.Value, Optional.ToNullable(longitude), Optional.ToNullable(latitude), physicalLocation.Value, Optional.ToList(pairedRegion), homeLocation.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LocationMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LocationMetadata IPersistableModel<LocationMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LocationMetadata)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLocationMetadata(document.RootElement, options);
+        }
+
+        string IPersistableModel<LocationMetadata>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Protection Policy input. </summary>
     public partial class SiteRecoveryPolicyCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyCreateOrUpdateContent"/>. </summary>
         public SiteRecoveryPolicyCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Policy creation properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryPolicyCreateOrUpdateContent(SiteRecoveryCreatePolicyProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Policy creation properties. </summary>

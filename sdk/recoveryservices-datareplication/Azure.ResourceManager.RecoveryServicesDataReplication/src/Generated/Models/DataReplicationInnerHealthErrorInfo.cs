@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Inner health error model. </summary>
     public partial class DataReplicationInnerHealthErrorInfo
     {
-        /// <summary> Initializes a new instance of DataReplicationInnerHealthErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationInnerHealthErrorInfo"/>. </summary>
         internal DataReplicationInnerHealthErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationInnerHealthErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationInnerHealthErrorInfo"/>. </summary>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="healthCategory"> Gets or sets the health category. </param>
         /// <param name="category"> Gets or sets the error category. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="message"> Gets or sets the error message. </param>
         /// <param name="causes"> Gets or sets possible causes of the error. </param>
         /// <param name="recommendation"> Gets or sets recommended action to resolve the error. </param>
-        internal DataReplicationInnerHealthErrorInfo(string code, string healthCategory, string category, string severity, string source, DateTimeOffset? createdOn, bool? isCustomerResolvable, string summary, string message, string causes, string recommendation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationInnerHealthErrorInfo(string code, string healthCategory, string category, string severity, string source, DateTimeOffset? createdOn, bool? isCustomerResolvable, string summary, string message, string causes, string recommendation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             HealthCategory = healthCategory;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Message = message;
             Causes = causes;
             Recommendation = recommendation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the error code. </summary>

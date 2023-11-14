@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The TopologySingleResourceParent. </summary>
     public partial class TopologySingleResourceParent
     {
-        /// <summary> Initializes a new instance of TopologySingleResourceParent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResourceParent"/>. </summary>
         internal TopologySingleResourceParent()
         {
         }
 
-        /// <summary> Initializes a new instance of TopologySingleResourceParent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopologySingleResourceParent"/>. </summary>
         /// <param name="resourceId"> Azure resource id which serves as parent resource in topology view. </param>
-        internal TopologySingleResourceParent(ResourceIdentifier resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopologySingleResourceParent(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure resource id which serves as parent resource in topology view. </summary>

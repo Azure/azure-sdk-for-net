@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information regarding paired region. </summary>
     public partial class PairedRegion
     {
-        /// <summary> Initializes a new instance of PairedRegion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PairedRegion"/>. </summary>
         internal PairedRegion()
         {
         }
 
-        /// <summary> Initializes a new instance of PairedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="PairedRegion"/>. </summary>
         /// <param name="name"> The name of the paired region. </param>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
-        internal PairedRegion(string name, string id, string subscriptionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PairedRegion(string name, string id, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
             SubscriptionId = subscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the paired region. </summary>

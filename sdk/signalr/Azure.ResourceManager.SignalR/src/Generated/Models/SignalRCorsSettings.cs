@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
     internal partial class SignalRCorsSettings
     {
-        /// <summary> Initializes a new instance of SignalRCorsSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRCorsSettings"/>. </summary>
         public SignalRCorsSettings()
         {
             AllowedOrigins = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SignalRCorsSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCorsSettings"/>. </summary>
         /// <param name="allowedOrigins"> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </param>
-        internal SignalRCorsSettings(IList<string> allowedOrigins)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRCorsSettings(IList<string> allowedOrigins, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowedOrigins = allowedOrigins;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>

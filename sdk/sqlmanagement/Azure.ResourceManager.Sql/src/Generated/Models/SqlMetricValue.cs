@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents database metrics. </summary>
     public partial class SqlMetricValue
     {
-        /// <summary> Initializes a new instance of SqlMetricValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlMetricValue"/>. </summary>
         internal SqlMetricValue()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlMetricValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMetricValue"/>. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>
         /// <param name="minimum"> The min value of the metric. </param>
         /// <param name="timestamp"> The metric timestamp (ISO-8601 format). </param>
         /// <param name="total"> The total value of the metric. </param>
-        internal SqlMetricValue(int? count, double? average, double? maximum, double? minimum, DateTimeOffset? timestamp, double? total)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlMetricValue(int? count, double? average, double? maximum, double? minimum, DateTimeOffset? timestamp, double? total, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             Average = average;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
             Minimum = minimum;
             Timestamp = timestamp;
             Total = total;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of values for the metric. </summary>

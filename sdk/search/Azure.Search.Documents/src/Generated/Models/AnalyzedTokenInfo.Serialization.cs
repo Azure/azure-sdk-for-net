@@ -5,14 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AnalyzedTokenInfo
+    public partial class AnalyzedTokenInfo : IUtf8JsonSerializable, IJsonModel<AnalyzedTokenInfo>
     {
-        internal static AnalyzedTokenInfo DeserializeAnalyzedTokenInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzedTokenInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AnalyzedTokenInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AnalyzedTokenInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AnalyzedTokenInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("token"u8);
+                writer.WriteStringValue(Token);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("startOffset"u8);
+                writer.WriteNumberValue(StartOffset);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("endOffset"u8);
+                writer.WriteNumberValue(EndOffset);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("position"u8);
+                writer.WriteNumberValue(Position);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzedTokenInfo IJsonModel<AnalyzedTokenInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzedTokenInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzedTokenInfo(document.RootElement, options);
+        }
+
+        internal static AnalyzedTokenInfo DeserializeAnalyzedTokenInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +88,8 @@ namespace Azure.Search.Documents.Indexes.Models
             int startOffset = default;
             int endOffset = default;
             int position = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("token"u8))
@@ -43,8 +112,38 @@ namespace Azure.Search.Documents.Indexes.Models
                     position = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalyzedTokenInfo(token, startOffset, endOffset, position);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalyzedTokenInfo(token, startOffset, endOffset, position, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalyzedTokenInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzedTokenInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnalyzedTokenInfo IPersistableModel<AnalyzedTokenInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalyzedTokenInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnalyzedTokenInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<AnalyzedTokenInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

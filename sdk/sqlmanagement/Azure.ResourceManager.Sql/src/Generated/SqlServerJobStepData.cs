@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerJobStepData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerJobStepData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobStepData"/>. </summary>
         public SqlServerJobStepData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobStepData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobStepData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +38,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="action"> The action payload of the job step. </param>
         /// <param name="output"> Output destination properties of the job step. </param>
         /// <param name="executionOptions"> Execution options for the job step. </param>
-        internal SqlServerJobStepData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? stepId, string targetGroup, string credential, JobStepAction action, JobStepOutput output, JobStepExecutionOptions executionOptions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerJobStepData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? stepId, string targetGroup, string credential, JobStepAction action, JobStepOutput output, JobStepExecutionOptions executionOptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StepId = stepId;
             TargetGroup = targetGroup;
@@ -41,6 +47,7 @@ namespace Azure.ResourceManager.Sql
             Action = action;
             Output = output;
             ExecutionOptions = executionOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The job step's index within the job. If not specified when creating the job step, it will be created as the last step. If not specified when updating the job step, the step id is not modified. </summary>

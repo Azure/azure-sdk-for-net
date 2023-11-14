@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Request to update the mobility service on a protected item. </summary>
     public partial class UpdateMobilityServiceContent
     {
-        /// <summary> Initializes a new instance of UpdateMobilityServiceContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceContent"/>. </summary>
         public UpdateMobilityServiceContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateMobilityServiceContent"/>. </summary>
+        /// <param name="properties"> The properties of the update mobility service request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateMobilityServiceContent(UpdateMobilityServiceRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The properties of the update mobility service request. </summary>

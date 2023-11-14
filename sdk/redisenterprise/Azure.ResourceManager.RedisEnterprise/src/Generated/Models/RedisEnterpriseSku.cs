@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> SKU parameters supplied to the create RedisEnterprise operation. </summary>
     public partial class RedisEnterpriseSku
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSku"/>. </summary>
         /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
         public RedisEnterpriseSku(RedisEnterpriseSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSku"/>. </summary>
         /// <param name="name"> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </param>
         /// <param name="capacity"> The size of the RedisEnterprise cluster. Defaults to 2 or 3 depending on SKU. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for Flash SKUs. </param>
-        internal RedisEnterpriseSku(RedisEnterpriseSkuName name, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseSku(RedisEnterpriseSkuName name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseSku"/> for deserialization. </summary>
+        internal RedisEnterpriseSku()
+        {
         }
 
         /// <summary> The type of RedisEnterprise cluster to deploy. Possible values: (Enterprise_E10, EnterpriseFlash_F300 etc.). </summary>

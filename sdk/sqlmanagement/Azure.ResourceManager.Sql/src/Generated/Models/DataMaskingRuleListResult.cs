@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The response to a list data masking rules request. </summary>
     internal partial class DataMaskingRuleListResult
     {
-        /// <summary> Initializes a new instance of DataMaskingRuleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMaskingRuleListResult"/>. </summary>
         internal DataMaskingRuleListResult()
         {
             Value = new ChangeTrackingList<DataMaskingRule>();
         }
 
-        /// <summary> Initializes a new instance of DataMaskingRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMaskingRuleListResult"/>. </summary>
         /// <param name="value"> The list of database data masking rules. </param>
-        internal DataMaskingRuleListResult(IReadOnlyList<DataMaskingRule> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMaskingRuleListResult(IReadOnlyList<DataMaskingRule> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of database data masking rules. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A rule set which evaluates all its rules upon an event interception. Only when all the included rules in the rule set will be evaluated as 'true', will the event trigger the defined actions. </summary>
     public partial class SecurityAutomationRuleSet
     {
-        /// <summary> Initializes a new instance of SecurityAutomationRuleSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationRuleSet"/>. </summary>
         public SecurityAutomationRuleSet()
         {
             Rules = new ChangeTrackingList<SecurityAutomationTriggeringRule>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationRuleSet"/>. </summary>
         /// <param name="rules"></param>
-        internal SecurityAutomationRuleSet(IList<SecurityAutomationTriggeringRule> rules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAutomationRuleSet(IList<SecurityAutomationTriggeringRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the rules. </summary>

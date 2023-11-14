@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The governance email weekly notification configuration. </summary>
     public partial class GovernanceEmailNotification
     {
-        /// <summary> Initializes a new instance of GovernanceEmailNotification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GovernanceEmailNotification"/>. </summary>
         public GovernanceEmailNotification()
         {
         }
 
-        /// <summary> Initializes a new instance of GovernanceEmailNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceEmailNotification"/>. </summary>
         /// <param name="isManagerEmailNotificationDisabled"> Exclude manager from weekly email notification. </param>
         /// <param name="isOwnerEmailNotificationDisabled"> Exclude  owner from weekly email notification. </param>
-        internal GovernanceEmailNotification(bool? isManagerEmailNotificationDisabled, bool? isOwnerEmailNotificationDisabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceEmailNotification(bool? isManagerEmailNotificationDisabled, bool? isOwnerEmailNotificationDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsManagerEmailNotificationDisabled = isManagerEmailNotificationDisabled;
             IsOwnerEmailNotificationDisabled = isOwnerEmailNotificationDisabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Exclude manager from weekly email notification. </summary>

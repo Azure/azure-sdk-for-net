@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class TemplateSpecData : ResourceData
     {
-        /// <summary> Initializes a new instance of TemplateSpecData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecData"/>. </summary>
         /// <param name="location"> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </param>
         public TemplateSpecData(AzureLocation location)
         {
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Resources
             Versions = new ChangeTrackingDictionary<string, TemplateSpecVersionInfo>();
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="displayName"> Template Spec display name. </param>
         /// <param name="metadata"> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
         /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to 'versions'. </param>
-        internal TemplateSpecData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IDictionary<string, string> tags, string description, string displayName, BinaryData metadata, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateSpecData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IDictionary<string, string> tags, string description, string displayName, BinaryData metadata, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -47,6 +51,12 @@ namespace Azure.ResourceManager.Resources
             DisplayName = displayName;
             Metadata = metadata;
             Versions = versions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecData"/> for deserialization. </summary>
+        internal TemplateSpecData()
+        {
         }
 
         /// <summary> The location of the Template Spec. It cannot be changed after Template Spec creation. It must be one of the supported Azure locations. </summary>

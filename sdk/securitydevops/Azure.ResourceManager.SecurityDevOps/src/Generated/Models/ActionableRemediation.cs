@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The ActionableRemediation. </summary>
     public partial class ActionableRemediation
     {
-        /// <summary> Initializes a new instance of ActionableRemediation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActionableRemediation"/>. </summary>
         public ActionableRemediation()
         {
             SeverityLevels = new ChangeTrackingList<string>();
             Categories = new ChangeTrackingList<ActionableRemediationRuleCategory>();
         }
 
-        /// <summary> Initializes a new instance of ActionableRemediation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionableRemediation"/>. </summary>
         /// <param name="state"></param>
         /// <param name="severityLevels"></param>
         /// <param name="categories"></param>
         /// <param name="branchConfiguration"> Branch onboarding info. </param>
-        internal ActionableRemediation(ActionableRemediationState? state, IList<string> severityLevels, IList<ActionableRemediationRuleCategory> categories, TargetBranchConfiguration branchConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionableRemediation(ActionableRemediationState? state, IList<string> severityLevels, IList<ActionableRemediationRuleCategory> categories, TargetBranchConfiguration branchConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             SeverityLevels = severityLevels;
             Categories = categories;
             BranchConfiguration = branchConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the state. </summary>

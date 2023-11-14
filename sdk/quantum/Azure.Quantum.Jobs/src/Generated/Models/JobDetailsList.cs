@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> List of job details. </summary>
     internal partial class JobDetailsList
     {
-        /// <summary> Initializes a new instance of JobDetailsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobDetailsList"/>. </summary>
         internal JobDetailsList()
         {
             Value = new ChangeTrackingList<JobDetails>();
         }
 
-        /// <summary> Initializes a new instance of JobDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDetailsList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="count"> Total records count number. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal JobDetailsList(IReadOnlyList<JobDetails> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobDetailsList(IReadOnlyList<JobDetails> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

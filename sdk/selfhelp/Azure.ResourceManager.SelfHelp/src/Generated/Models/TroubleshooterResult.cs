@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> User Response for Troubleshooter continue request. </summary>
     public partial class TroubleshooterResult
     {
-        /// <summary> Initializes a new instance of TroubleshooterResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterResult"/>. </summary>
         public TroubleshooterResult()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TroubleshooterResult"/>. </summary>
+        /// <param name="questionId"> id of the question. </param>
+        /// <param name="questionType"> Text Input. Will be a single line input. </param>
+        /// <param name="response"> Response key for SingleInput. For Multi-line test/open ended question it is free form text. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshooterResult(string questionId, QuestionType? questionType, string response, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            QuestionId = questionId;
+            QuestionType = questionType;
+            Response = response;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> id of the question. </summary>

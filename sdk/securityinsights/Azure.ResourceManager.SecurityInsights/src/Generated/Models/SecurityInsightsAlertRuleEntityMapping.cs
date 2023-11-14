@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Single entity mapping for the alert rule. </summary>
     public partial class SecurityInsightsAlertRuleEntityMapping
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleEntityMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleEntityMapping"/>. </summary>
         public SecurityInsightsAlertRuleEntityMapping()
         {
             FieldMappings = new ChangeTrackingList<SecurityInsightsFieldMapping>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleEntityMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleEntityMapping"/>. </summary>
         /// <param name="entityType"> The V3 type of the mapped entity. </param>
         /// <param name="fieldMappings"> array of field mappings for the given entity mapping. </param>
-        internal SecurityInsightsAlertRuleEntityMapping(SecurityInsightsAlertRuleEntityMappingType? entityType, IList<SecurityInsightsFieldMapping> fieldMappings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsAlertRuleEntityMapping(SecurityInsightsAlertRuleEntityMappingType? entityType, IList<SecurityInsightsFieldMapping> fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityType = entityType;
             FieldMappings = fieldMappings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The V3 type of the mapped entity. </summary>

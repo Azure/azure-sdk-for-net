@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> Collection administrator update. </summary>
     public partial class CollectionAdminUpdateContent
     {
-        /// <summary> Initializes a new instance of CollectionAdminUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CollectionAdminUpdateContent"/>. </summary>
         public CollectionAdminUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CollectionAdminUpdateContent"/>. </summary>
+        /// <param name="adminObjectId"> Gets or sets the object identifier of the admin. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CollectionAdminUpdateContent(string adminObjectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AdminObjectId = adminObjectId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the object identifier of the admin. </summary>

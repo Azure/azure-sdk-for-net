@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Supported operating system details. </summary>
     public partial class SiteRecoverySupportedOSDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOSDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSDetails"/>. </summary>
         internal SiteRecoverySupportedOSDetails()
         {
             OSVersions = new ChangeTrackingList<SiteRecoveryOSVersionWrapper>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOSDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSDetails"/>. </summary>
         /// <param name="osName"> The name. </param>
         /// <param name="osType"> The type. </param>
         /// <param name="osVersions"> The list of version for operating system. </param>
-        internal SiteRecoverySupportedOSDetails(string osName, string osType, IReadOnlyList<SiteRecoveryOSVersionWrapper> osVersions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoverySupportedOSDetails(string osName, string osType, IReadOnlyList<SiteRecoveryOSVersionWrapper> osVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSName = osName;
             OSType = osType;
             OSVersions = osVersions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Details needed if the VM was encrypted at the time of backup. </summary>
     public partial class VmEncryptionDetails
     {
-        /// <summary> Initializes a new instance of VmEncryptionDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmEncryptionDetails"/>. </summary>
         public VmEncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VmEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmEncryptionDetails"/>. </summary>
         /// <param name="isEncryptionEnabled"> Identifies whether this backup copy represents an encrypted VM at the time of backup. </param>
         /// <param name="kekUri"> Key Url. </param>
         /// <param name="secretKeyUri"> Secret Url. </param>
         /// <param name="kekVaultId"> ID of Key Vault where KEK is stored. </param>
         /// <param name="secretKeyVaultId"> ID of Key Vault where Secret is stored. </param>
-        internal VmEncryptionDetails(bool? isEncryptionEnabled, Uri kekUri, Uri secretKeyUri, ResourceIdentifier kekVaultId, ResourceIdentifier secretKeyVaultId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmEncryptionDetails(bool? isEncryptionEnabled, Uri kekUri, Uri secretKeyUri, ResourceIdentifier kekVaultId, ResourceIdentifier secretKeyVaultId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEncryptionEnabled = isEncryptionEnabled;
             KekUri = kekUri;
             SecretKeyUri = secretKeyUri;
             KekVaultId = kekVaultId;
             SecretKeyVaultId = secretKeyVaultId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identifies whether this backup copy represents an encrypted VM at the time of backup. </summary>

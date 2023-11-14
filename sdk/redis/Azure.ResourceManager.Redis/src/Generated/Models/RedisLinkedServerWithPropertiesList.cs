@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Redis;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> List of linked servers (with properties) of a Redis cache. </summary>
     internal partial class RedisLinkedServerWithPropertiesList
     {
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertiesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertiesList"/>. </summary>
         internal RedisLinkedServerWithPropertiesList()
         {
             Value = new ChangeTrackingList<RedisLinkedServerWithPropertyData>();
         }
 
-        /// <summary> Initializes a new instance of RedisLinkedServerWithPropertiesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisLinkedServerWithPropertiesList"/>. </summary>
         /// <param name="value"> List of linked servers (with properties) of a Redis cache. </param>
         /// <param name="nextLink"> Link for next set. </param>
-        internal RedisLinkedServerWithPropertiesList(IReadOnlyList<RedisLinkedServerWithPropertyData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisLinkedServerWithPropertiesList(IReadOnlyList<RedisLinkedServerWithPropertyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of linked servers (with properties) of a Redis cache. </summary>

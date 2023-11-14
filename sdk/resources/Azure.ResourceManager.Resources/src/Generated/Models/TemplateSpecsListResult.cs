@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of Template Specs. </summary>
     internal partial class TemplateSpecsListResult
     {
-        /// <summary> Initializes a new instance of TemplateSpecsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecsListResult"/>. </summary>
         internal TemplateSpecsListResult()
         {
             Value = new ChangeTrackingList<TemplateSpecData>();
         }
 
-        /// <summary> Initializes a new instance of TemplateSpecsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TemplateSpecsListResult"/>. </summary>
         /// <param name="value"> An array of Template Specs. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal TemplateSpecsListResult(IReadOnlyList<TemplateSpecData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TemplateSpecsListResult(IReadOnlyList<TemplateSpecData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of Template Specs. </summary>

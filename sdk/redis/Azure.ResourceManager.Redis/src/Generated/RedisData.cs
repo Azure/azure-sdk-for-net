@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RedisData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.Redis
             PrivateEndpointConnections = new ChangeTrackingList<RedisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of RedisData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +69,8 @@ namespace Azure.ResourceManager.Redis
         /// <param name="linkedServers"> List of the linked servers associated with the cache. </param>
         /// <param name="instances"> List of the Redis instances associated with the cache. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified redis cache. </param>
-        internal RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ManagedServiceIdentity identity, RedisCommonConfiguration redisConfiguration, string redisVersion, bool? enableNonSslPort, int? replicasPerMaster, int? replicasPerPrimary, IDictionary<string, string> tenantSettings, int? shardCount, RedisTlsVersion? minimumTlsVersion, RedisPublicNetworkAccess? publicNetworkAccess, RedisSku sku, ResourceIdentifier subnetId, IPAddress staticIP, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Zones = zones;
             Identity = identity;
@@ -90,6 +94,12 @@ namespace Azure.ResourceManager.Redis
             LinkedServers = linkedServers;
             Instances = instances;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedisData"/> for deserialization. </summary>
+        internal RedisData()
+        {
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>

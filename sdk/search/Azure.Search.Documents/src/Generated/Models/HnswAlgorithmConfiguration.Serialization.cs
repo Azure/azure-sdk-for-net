@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class HnswAlgorithmConfiguration : IUtf8JsonSerializable
+    public partial class HnswAlgorithmConfiguration : IUtf8JsonSerializable, IJsonModel<HnswAlgorithmConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HnswAlgorithmConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HnswAlgorithmConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HnswAlgorithmConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HnswAlgorithmConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Parameters))
             {
@@ -24,11 +35,40 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HnswAlgorithmConfiguration DeserializeHnswAlgorithmConfiguration(JsonElement element)
+        HnswAlgorithmConfiguration IJsonModel<HnswAlgorithmConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HnswAlgorithmConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHnswAlgorithmConfiguration(document.RootElement, options);
+        }
+
+        internal static HnswAlgorithmConfiguration DeserializeHnswAlgorithmConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<HnswParameters> hnswParameters = default;
             string name = default;
             VectorSearchAlgorithmKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hnswParameters"u8))
@@ -57,8 +99,38 @@ namespace Azure.Search.Documents.Indexes.Models
                     kind = new VectorSearchAlgorithmKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HnswAlgorithmConfiguration(name, kind, hnswParameters.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HnswAlgorithmConfiguration(name, kind, serializedAdditionalRawData, hnswParameters.Value);
         }
+
+        BinaryData IPersistableModel<HnswAlgorithmConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HnswAlgorithmConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HnswAlgorithmConfiguration IPersistableModel<HnswAlgorithmConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HnswAlgorithmConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHnswAlgorithmConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<HnswAlgorithmConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

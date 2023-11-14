@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class SiteRecoveryTaskTypeDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryTaskTypeDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryTaskTypeDetails"/>. </summary>
         protected SiteRecoveryTaskTypeDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryTaskTypeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryTaskTypeDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
-        internal SiteRecoveryTaskTypeDetails(string instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryTaskTypeDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of task details. </summary>

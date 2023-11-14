@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Redis;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> The response of list firewall rules Redis operation. </summary>
     internal partial class RedisFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of RedisFirewallRuleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleListResult"/>. </summary>
         internal RedisFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<RedisFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of RedisFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleListResult"/>. </summary>
         /// <param name="value"> Results of the list firewall rules operation. </param>
         /// <param name="nextLink"> Link for next page of results. </param>
-        internal RedisFirewallRuleListResult(IReadOnlyList<RedisFirewallRuleData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisFirewallRuleListResult(IReadOnlyList<RedisFirewallRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Results of the list firewall rules operation. </summary>

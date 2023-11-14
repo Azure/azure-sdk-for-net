@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Defines the type of sku available for a node type. </summary>
     public partial class NodeTypeAvailableSku
     {
-        /// <summary> Initializes a new instance of NodeTypeAvailableSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeTypeAvailableSku"/>. </summary>
         internal NodeTypeAvailableSku()
         {
         }
 
-        /// <summary> Initializes a new instance of NodeTypeAvailableSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeAvailableSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the sku applies to.  &lt;br /&gt;&lt;br /&gt;Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </param>
         /// <param name="sku"> The supported SKU for a for node type. </param>
         /// <param name="capacity"> Provides information about how the node count can be scaled. </param>
-        internal NodeTypeAvailableSku(ResourceType? resourceType, NodeTypeSupportedSku sku, NodeTypeSkuCapacity capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeAvailableSku(ResourceType? resourceType, NodeTypeSupportedSku sku, NodeTypeSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of resource the sku applies to.  &lt;br /&gt;&lt;br /&gt;Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </summary>

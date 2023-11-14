@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// </summary>
     public abstract partial class ManagedServiceScalingTrigger
     {
-        /// <summary> Initializes a new instance of ManagedServiceScalingTrigger. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingTrigger"/>. </summary>
         protected ManagedServiceScalingTrigger()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServiceScalingTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceScalingTrigger"/>. </summary>
         /// <param name="kind"> Specifies the trigger associated with this scaling policy. </param>
-        internal ManagedServiceScalingTrigger(ServiceScalingTriggerKind kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceScalingTrigger(ServiceScalingTriggerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the trigger associated with this scaling policy. </summary>

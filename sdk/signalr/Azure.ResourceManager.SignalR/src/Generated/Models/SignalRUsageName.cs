@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Localizable String object containing the name and a localized value. </summary>
     public partial class SignalRUsageName
     {
-        /// <summary> Initializes a new instance of SignalRUsageName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRUsageName"/>. </summary>
         internal SignalRUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRUsageName"/>. </summary>
         /// <param name="value"> The identifier of the usage. </param>
         /// <param name="localizedValue"> Localized name of the usage. </param>
-        internal SignalRUsageName(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRUsageName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identifier of the usage. </summary>

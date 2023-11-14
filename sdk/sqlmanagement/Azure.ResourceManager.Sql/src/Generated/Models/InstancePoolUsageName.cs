@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> ARM Usage Name. </summary>
     public partial class InstancePoolUsageName
     {
-        /// <summary> Initializes a new instance of InstancePoolUsageName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstancePoolUsageName"/>. </summary>
         internal InstancePoolUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of InstancePoolUsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolUsageName"/>. </summary>
         /// <param name="value"> Usage name value. </param>
         /// <param name="localizedValue"> Usage name localized value. </param>
-        internal InstancePoolUsageName(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancePoolUsageName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Usage name value. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public partial class ExternalSecuritySolution : ResourceData
     {
-        /// <summary> Initializes a new instance of ExternalSecuritySolution. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolution"/>. </summary>
         public ExternalSecuritySolution()
         {
         }
 
-        /// <summary> Initializes a new instance of ExternalSecuritySolution. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolution"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal ExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }

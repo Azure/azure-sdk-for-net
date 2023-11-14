@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryEventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryEventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryEventResource(Client, SiteRecoveryEventData.DeserializeSiteRecoveryEventData(e)), _siteRecoveryEventReplicationEventsClientDiagnostics, Pipeline, "SiteRecoveryEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteRecoveryEventResource(Client, SiteRecoveryEventData.DeserializeSiteRecoveryEventData(e)), _siteRecoveryEventReplicationEventsClientDiagnostics, Pipeline, "SiteRecoveryEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryEventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryEventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryEventResource(Client, SiteRecoveryEventData.DeserializeSiteRecoveryEventData(e)), _siteRecoveryEventReplicationEventsClientDiagnostics, Pipeline, "SiteRecoveryEventCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteRecoveryEventResource(Client, SiteRecoveryEventData.DeserializeSiteRecoveryEventData(e)), _siteRecoveryEventReplicationEventsClientDiagnostics, Pipeline, "SiteRecoveryEventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the move resource status. </summary>
     public partial class MoverResourceStatus
     {
-        /// <summary> Initializes a new instance of MoverResourceStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceStatus"/>. </summary>
         internal MoverResourceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceStatus"/>. </summary>
         /// <param name="moveState"> Defines the MoveResource states. </param>
         /// <param name="jobStatus"> Defines the job status. </param>
         /// <param name="errors"> An error response from the azure resource mover service. </param>
-        internal MoverResourceStatus(MoverResourceMoveState? moveState, MoverResourceJobStatus jobStatus, MoveResourceError errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverResourceStatus(MoverResourceMoveState? moveState, MoverResourceJobStatus jobStatus, MoveResourceError errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MoveState = moveState;
             JobStatus = jobStatus;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the MoveResource states. </summary>

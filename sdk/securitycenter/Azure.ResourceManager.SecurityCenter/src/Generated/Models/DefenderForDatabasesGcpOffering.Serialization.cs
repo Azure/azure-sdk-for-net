@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForDatabasesGcpOffering : IUtf8JsonSerializable
+    public partial class DefenderForDatabasesGcpOffering : IUtf8JsonSerializable, IJsonModel<DefenderForDatabasesGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForDatabasesGcpOffering>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DefenderForDatabasesGcpOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DefenderForDatabasesGcpOffering>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DefenderForDatabasesGcpOffering>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
@@ -27,11 +38,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForDatabasesGcpOffering DeserializeDefenderForDatabasesGcpOffering(JsonElement element)
+        DefenderForDatabasesGcpOffering IJsonModel<DefenderForDatabasesGcpOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForDatabasesGcpOffering(document.RootElement, options);
+        }
+
+        internal static DefenderForDatabasesGcpOffering DeserializeDefenderForDatabasesGcpOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +88,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<GcpDefenderForDatabasesArcAutoProvisioning> defenderForDatabasesArcAutoProvisioning = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arcAutoProvisioning"u8))
@@ -70,8 +120,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForDatabasesGcpOffering(offeringType, description.Value, arcAutoProvisioning.Value, defenderForDatabasesArcAutoProvisioning.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DefenderForDatabasesGcpOffering(offeringType, description.Value, serializedAdditionalRawData, arcAutoProvisioning.Value, defenderForDatabasesArcAutoProvisioning.Value);
         }
+
+        BinaryData IPersistableModel<DefenderForDatabasesGcpOffering>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DefenderForDatabasesGcpOffering IPersistableModel<DefenderForDatabasesGcpOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DefenderForDatabasesGcpOffering)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDefenderForDatabasesGcpOffering(document.RootElement, options);
+        }
+
+        string IPersistableModel<DefenderForDatabasesGcpOffering>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

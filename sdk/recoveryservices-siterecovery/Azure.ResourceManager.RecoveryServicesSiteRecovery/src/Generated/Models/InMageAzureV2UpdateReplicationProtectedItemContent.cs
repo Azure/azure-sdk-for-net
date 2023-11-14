@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage Azure V2 input to update replication protected item. </summary>
     public partial class InMageAzureV2UpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2UpdateReplicationProtectedItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2UpdateReplicationProtectedItemContent"/>. </summary>
         public InMageAzureV2UpdateReplicationProtectedItemContent()
         {
             TargetVmTags = new ChangeTrackingDictionary<string, string>();
@@ -21,6 +22,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetNicTags = new ChangeTrackingDictionary<string, string>();
             VmDisks = new ChangeTrackingList<UpdateDiskContent>();
             InstanceType = "InMageAzureV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2UpdateReplicationProtectedItemContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="recoveryAzureV1ResourceGroupId"> The recovery Azure resource group Id for classic deployment. </param>
+        /// <param name="recoveryAzureV2ResourceGroupId"> The recovery Azure resource group Id for resource manager deployment. </param>
+        /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
+        /// <param name="targetProximityPlacementGroupId"> The target proximity placement group Id. </param>
+        /// <param name="targetAvailabilityZone"> The target availability zone. </param>
+        /// <param name="targetVmTags"> The target VM tags. </param>
+        /// <param name="targetManagedDiskTags"> The tags for the target managed disks. </param>
+        /// <param name="targetNicTags"> The tags for the target NICs. </param>
+        /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
+        /// <param name="vmDisks"> The list of disk update properties. </param>
+        internal InMageAzureV2UpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryAzureV1ResourceGroupId, ResourceIdentifier recoveryAzureV2ResourceGroupId, string useManagedDisks, ResourceIdentifier targetProximityPlacementGroupId, string targetAvailabilityZone, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, IList<UpdateDiskContent> vmDisks) : base(instanceType, serializedAdditionalRawData)
+        {
+            RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
+            RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;
+            UseManagedDisks = useManagedDisks;
+            TargetProximityPlacementGroupId = targetProximityPlacementGroupId;
+            TargetAvailabilityZone = targetAvailabilityZone;
+            TargetVmTags = targetVmTags;
+            TargetManagedDiskTags = targetManagedDiskTags;
+            TargetNicTags = targetNicTags;
+            SqlServerLicenseType = sqlServerLicenseType;
+            VmDisks = vmDisks;
+            InstanceType = instanceType ?? "InMageAzureV2";
         }
 
         /// <summary> The recovery Azure resource group Id for classic deployment. </summary>

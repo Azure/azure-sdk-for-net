@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
@@ -12,12 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> HyperVToAzStackHCI protected disk properties. </summary>
     public partial class HyperVToAzStackHciProtectedDiskProperties
     {
-        /// <summary> Initializes a new instance of HyperVToAzStackHciProtectedDiskProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedDiskProperties"/>. </summary>
         internal HyperVToAzStackHciProtectedDiskProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HyperVToAzStackHciProtectedDiskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVToAzStackHciProtectedDiskProperties"/>. </summary>
         /// <param name="storageContainerId"> Gets or sets the ARM Id of the storage container. </param>
         /// <param name="storageContainerLocalPath"> Gets or sets the local path of the storage container. </param>
         /// <param name="sourceDiskId"> Gets or sets the source disk Id. </param>
@@ -32,7 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// disk.
         /// </param>
         /// <param name="diskType"> Gets or sets the disk type. </param>
-        internal HyperVToAzStackHciProtectedDiskProperties(ResourceIdentifier storageContainerId, string storageContainerLocalPath, string sourceDiskId, string sourceDiskName, string seedDiskName, string testMigrateDiskName, string migrateDiskName, bool? isOSDisk, long? capacityInBytes, bool? isDynamic, string diskType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HyperVToAzStackHciProtectedDiskProperties(ResourceIdentifier storageContainerId, string storageContainerLocalPath, string sourceDiskId, string sourceDiskName, string seedDiskName, string testMigrateDiskName, string migrateDiskName, bool? isOSDisk, long? capacityInBytes, bool? isDynamic, string diskType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageContainerId = storageContainerId;
             StorageContainerLocalPath = storageContainerLocalPath;
@@ -45,6 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CapacityInBytes = capacityInBytes;
             IsDynamic = isDynamic;
             DiskType = diskType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the ARM Id of the storage container. </summary>

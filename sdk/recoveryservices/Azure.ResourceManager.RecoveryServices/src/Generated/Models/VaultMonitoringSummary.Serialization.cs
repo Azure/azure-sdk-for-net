@@ -5,15 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class VaultMonitoringSummary
+    public partial class VaultMonitoringSummary : IUtf8JsonSerializable, IJsonModel<VaultMonitoringSummary>
     {
-        internal static VaultMonitoringSummary DeserializeVaultMonitoringSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultMonitoringSummary>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VaultMonitoringSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VaultMonitoringSummary>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VaultMonitoringSummary>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UnHealthyVmCount))
+            {
+                writer.WritePropertyName("unHealthyVmCount"u8);
+                writer.WriteNumberValue(UnHealthyVmCount.Value);
+            }
+            if (Optional.IsDefined(UnHealthyProviderCount))
+            {
+                writer.WritePropertyName("unHealthyProviderCount"u8);
+                writer.WriteNumberValue(UnHealthyProviderCount.Value);
+            }
+            if (Optional.IsDefined(EventsCount))
+            {
+                writer.WritePropertyName("eventsCount"u8);
+                writer.WriteNumberValue(EventsCount.Value);
+            }
+            if (Optional.IsDefined(DeprecatedProviderCount))
+            {
+                writer.WritePropertyName("deprecatedProviderCount"u8);
+                writer.WriteNumberValue(DeprecatedProviderCount.Value);
+            }
+            if (Optional.IsDefined(SupportedProviderCount))
+            {
+                writer.WritePropertyName("supportedProviderCount"u8);
+                writer.WriteNumberValue(SupportedProviderCount.Value);
+            }
+            if (Optional.IsDefined(UnsupportedProviderCount))
+            {
+                writer.WritePropertyName("unsupportedProviderCount"u8);
+                writer.WriteNumberValue(UnsupportedProviderCount.Value);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VaultMonitoringSummary IJsonModel<VaultMonitoringSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVaultMonitoringSummary(document.RootElement, options);
+        }
+
+        internal static VaultMonitoringSummary DeserializeVaultMonitoringSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +100,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<int> deprecatedProviderCount = default;
             Optional<int> supportedProviderCount = default;
             Optional<int> unsupportedProviderCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unHealthyVmCount"u8))
@@ -80,8 +158,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     unsupportedProviderCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VaultMonitoringSummary(Optional.ToNullable(unHealthyVmCount), Optional.ToNullable(unHealthyProviderCount), Optional.ToNullable(eventsCount), Optional.ToNullable(deprecatedProviderCount), Optional.ToNullable(supportedProviderCount), Optional.ToNullable(unsupportedProviderCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VaultMonitoringSummary(Optional.ToNullable(unHealthyVmCount), Optional.ToNullable(unHealthyProviderCount), Optional.ToNullable(eventsCount), Optional.ToNullable(deprecatedProviderCount), Optional.ToNullable(supportedProviderCount), Optional.ToNullable(unsupportedProviderCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VaultMonitoringSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VaultMonitoringSummary IPersistableModel<VaultMonitoringSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVaultMonitoringSummary(document.RootElement, options);
+        }
+
+        string IPersistableModel<VaultMonitoringSummary>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

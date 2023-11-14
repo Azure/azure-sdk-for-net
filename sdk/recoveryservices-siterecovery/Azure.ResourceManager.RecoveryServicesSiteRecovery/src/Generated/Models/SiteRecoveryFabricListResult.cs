@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of fabric details. </summary>
     internal partial class SiteRecoveryFabricListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryFabricListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricListResult"/>. </summary>
         internal SiteRecoveryFabricListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryFabricData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryFabricListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryFabricListResult"/>. </summary>
         /// <param name="value"> The fabric details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryFabricListResult(IReadOnlyList<SiteRecoveryFabricData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryFabricListResult(IReadOnlyList<SiteRecoveryFabricData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The fabric details. </summary>

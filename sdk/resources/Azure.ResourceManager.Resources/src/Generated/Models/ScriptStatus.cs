@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -13,19 +14,23 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Generic object modeling results of script execution. </summary>
     public partial class ScriptStatus
     {
-        /// <summary> Initializes a new instance of ScriptStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptStatus"/>. </summary>
         internal ScriptStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptStatus"/>. </summary>
         /// <param name="containerInstanceId"> ACI resource Id. </param>
         /// <param name="storageAccountId"> Storage account resource Id. </param>
         /// <param name="startOn"> Start time of the script execution. </param>
         /// <param name="endOn"> End time of the script execution. </param>
         /// <param name="expireOn"> Time the deployment script resource will expire. </param>
         /// <param name="error"> Error that is relayed from the script execution. </param>
-        internal ScriptStatus(string containerInstanceId, string storageAccountId, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? expireOn, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptStatus(string containerInstanceId, string storageAccountId, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? expireOn, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerInstanceId = containerInstanceId;
             StorageAccountId = storageAccountId;
@@ -33,6 +38,7 @@ namespace Azure.ResourceManager.Resources.Models
             EndOn = endOn;
             ExpireOn = expireOn;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ACI resource Id. </summary>

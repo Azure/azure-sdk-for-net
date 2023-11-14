@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> SKU for the resource. </summary>
     public partial class ArmApplicationSku
     {
-        /// <summary> Initializes a new instance of ArmApplicationSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationSku"/>. </summary>
         /// <param name="name"> The SKU name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ArmApplicationSku(string name)
@@ -23,14 +27,15 @@ namespace Azure.ResourceManager.Resources.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationSku"/>. </summary>
         /// <param name="name"> The SKU name. </param>
         /// <param name="tier"> The SKU tier. </param>
         /// <param name="size"> The SKU size. </param>
         /// <param name="family"> The SKU family. </param>
         /// <param name="model"> The SKU model. </param>
         /// <param name="capacity"> The SKU capacity. </param>
-        internal ArmApplicationSku(string name, string tier, string size, string family, string model, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationSku(string name, string tier, string size, string family, string model, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
@@ -38,6 +43,12 @@ namespace Azure.ResourceManager.Resources.Models
             Family = family;
             Model = model;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationSku"/> for deserialization. </summary>
+        internal ArmApplicationSku()
+        {
         }
 
         /// <summary> The SKU name. </summary>

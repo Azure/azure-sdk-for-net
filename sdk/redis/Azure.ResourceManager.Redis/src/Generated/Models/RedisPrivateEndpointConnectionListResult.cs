@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Redis;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class RedisPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of RedisPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisPrivateEndpointConnectionListResult"/>. </summary>
         internal RedisPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<RedisPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of RedisPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal RedisPrivateEndpointConnectionListResult(IReadOnlyList<RedisPrivateEndpointConnectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisPrivateEndpointConnectionListResult(IReadOnlyList<RedisPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

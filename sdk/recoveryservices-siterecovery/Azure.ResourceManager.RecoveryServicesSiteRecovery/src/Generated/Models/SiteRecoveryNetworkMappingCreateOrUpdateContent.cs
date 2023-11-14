@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Create network mappings input. </summary>
     public partial class SiteRecoveryNetworkMappingCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkMappingCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Input properties for creating network mapping. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryNetworkMappingCreateOrUpdateContent(SiteRecoveryCreateReplicationNetworkMappingProperties properties)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingCreateOrUpdateContent"/>. </summary>
+        /// <param name="properties"> Input properties for creating network mapping. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryNetworkMappingCreateOrUpdateContent(SiteRecoveryCreateReplicationNetworkMappingProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkMappingCreateOrUpdateContent"/> for deserialization. </summary>
+        internal SiteRecoveryNetworkMappingCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Input properties for creating network mapping. </summary>

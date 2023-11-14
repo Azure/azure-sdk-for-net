@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityAlertData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityAlertData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertData"/>. </summary>
         public SecurityAlertData()
         {
             ResourceIdentifiers = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
             SubTechniques = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +70,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="techniques"> kill chain related techniques behind the alert. </param>
         /// <param name="subTechniques"> Kill chain related sub-techniques behind the alert. </param>
         /// <param name="supportingEvidence"> Changing set of properties depending on the supportingEvidence type. </param>
-        internal SecurityAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, SecurityAlertSeverity? severity, KillChainIntent? intent, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, SecurityAlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, Uri alertUri, DateTimeOffset? generatedOn, string productName, DateTimeOffset? processingEndOn, IReadOnlyList<SecurityAlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, SecurityAlertSupportingEvidence supportingEvidence) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, string alertType, string systemAlertId, string productComponentName, string alertDisplayName, string description, SecurityAlertSeverity? severity, KillChainIntent? intent, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<SecurityAlertResourceIdentifier> resourceIdentifiers, IReadOnlyList<string> remediationSteps, string vendorName, SecurityAlertStatus? status, IReadOnlyList<IDictionary<string, string>> extendedLinks, Uri alertUri, DateTimeOffset? generatedOn, string productName, DateTimeOffset? processingEndOn, IReadOnlyList<SecurityAlertEntity> entities, bool? isIncident, string correlationKey, IDictionary<string, string> extendedProperties, string compromisedEntity, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques, SecurityAlertSupportingEvidence supportingEvidence, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Version = version;
             AlertType = alertType;
@@ -96,6 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Techniques = techniques;
             SubTechniques = subTechniques;
             SupportingEvidence = supportingEvidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Schema version. </summary>

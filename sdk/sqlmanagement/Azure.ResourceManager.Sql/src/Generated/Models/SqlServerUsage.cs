@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents server metrics. </summary>
     public partial class SqlServerUsage
     {
-        /// <summary> Initializes a new instance of SqlServerUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerUsage"/>. </summary>
         internal SqlServerUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerUsage"/>. </summary>
         /// <param name="name"> Name of the server usage metric. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="displayName"> The metric display name. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="limit"> The current limit of the metric. </param>
         /// <param name="unit"> The units of the metric. </param>
         /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
-        internal SqlServerUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceName = resourceName;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
             Limit = limit;
             Unit = unit;
             NextResetOn = nextResetOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the server usage metric. </summary>

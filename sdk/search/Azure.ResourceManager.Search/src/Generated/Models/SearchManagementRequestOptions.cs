@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Parameter group. </summary>
     public partial class SearchManagementRequestOptions
     {
-        /// <summary> Initializes a new instance of SearchManagementRequestOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchManagementRequestOptions"/>. </summary>
         public SearchManagementRequestOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchManagementRequestOptions"/>. </summary>
+        /// <param name="clientRequestId"> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchManagementRequestOptions(Guid? clientRequestId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClientRequestId = clientRequestId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A client-generated GUID value that identifies this request. If specified, this will be included in response information as a way to track the request. </summary>

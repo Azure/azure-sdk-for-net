@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The alias type. </summary>
     public partial class ResourceTypeAlias
     {
-        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAlias"/>. </summary>
         internal ResourceTypeAlias()
         {
             Paths = new ChangeTrackingList<ResourceTypeAliasPath>();
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeAlias"/>. </summary>
         /// <param name="name"> The alias name. </param>
         /// <param name="paths"> The paths for an alias. </param>
         /// <param name="aliasType"> The type of the alias. </param>
         /// <param name="defaultPath"> The default path for an alias. </param>
         /// <param name="defaultPattern"> The default pattern for an alias. </param>
         /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
-        internal ResourceTypeAlias(string name, IReadOnlyList<ResourceTypeAliasPath> paths, ResourceTypeAliasType? aliasType, string defaultPath, ResourceTypeAliasPattern defaultPattern, ResourceTypeAliasPathMetadata defaultMetadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeAlias(string name, IReadOnlyList<ResourceTypeAliasPath> paths, ResourceTypeAliasType? aliasType, string defaultPath, ResourceTypeAliasPattern defaultPattern, ResourceTypeAliasPathMetadata defaultMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Paths = paths;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
             DefaultPath = defaultPath;
             DefaultPattern = defaultPattern;
             DefaultMetadata = defaultMetadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The alias name. </summary>

@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The deployment export result. </summary>
     public partial class ArmDeploymentExportResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentExportResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExportResult"/>. </summary>
         internal ArmDeploymentExportResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentExportResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExportResult"/>. </summary>
         /// <param name="template"> The template content. </param>
-        internal ArmDeploymentExportResult(BinaryData template)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentExportResult(BinaryData template, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Template = template;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

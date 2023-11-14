@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Tag information. </summary>
     public partial class PredefinedTagValue
     {
-        /// <summary> Initializes a new instance of PredefinedTagValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagValue"/>. </summary>
         internal PredefinedTagValue()
         {
         }
 
-        /// <summary> Initializes a new instance of PredefinedTagValue. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredefinedTagValue"/>. </summary>
         /// <param name="id"> The tag value ID. </param>
         /// <param name="tagValue"> The tag value. </param>
         /// <param name="count"> The tag value count. </param>
-        internal PredefinedTagValue(string id, string tagValue, PredefinedTagCount count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredefinedTagValue(string id, string tagValue, PredefinedTagCount count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             TagValue = tagValue;
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The tag value ID. </summary>

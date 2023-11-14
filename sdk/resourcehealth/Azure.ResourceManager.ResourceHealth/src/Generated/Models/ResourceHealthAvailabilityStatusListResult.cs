@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> The List availabilityStatus operation response. </summary>
     internal partial class ResourceHealthAvailabilityStatusListResult
     {
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusListResult"/>. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ResourceHealthAvailabilityStatusListResult(IEnumerable<ResourceHealthAvailabilityStatus> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusListResult"/>. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
         /// <param name="nextLink"> The URI to fetch the next page of availabilityStatuses. Call ListNext() with this URI to fetch the next page of availabilityStatuses. </param>
-        internal ResourceHealthAvailabilityStatusListResult(IReadOnlyList<ResourceHealthAvailabilityStatus> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthAvailabilityStatusListResult(IReadOnlyList<ResourceHealthAvailabilityStatus> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusListResult"/> for deserialization. </summary>
+        internal ResourceHealthAvailabilityStatusListResult()
+        {
         }
 
         /// <summary> The list of availabilityStatuses. </summary>

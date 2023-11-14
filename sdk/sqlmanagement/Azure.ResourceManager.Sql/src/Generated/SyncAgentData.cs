@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SyncAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncAgentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncAgentData"/>. </summary>
         public SyncAgentData()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isUpToDate"> If the sync agent version is up to date. </param>
         /// <param name="expireOn"> Expiration time of the sync agent version. </param>
         /// <param name="version"> Version of the sync agent. </param>
-        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SyncDatabaseId = syncDatabaseId;
             LastAliveOn = lastAliveOn;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.Sql
             IsUpToDate = isUpToDate;
             ExpireOn = expireOn;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM resource id of the sync database in the sync agent. </summary>

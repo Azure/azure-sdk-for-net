@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Resource information. </summary>
     public partial class ArmApplicationResourceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ArmApplicationResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationResourceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ArmApplicationResourceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,10 +33,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="location"> The location. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
-        internal ArmApplicationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ManagedBy = managedBy;
             Sku = sku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationResourceData"/> for deserialization. </summary>
+        internal ArmApplicationResourceData()
+        {
         }
 
         /// <summary> ID of the resource that manages this resource. </summary>

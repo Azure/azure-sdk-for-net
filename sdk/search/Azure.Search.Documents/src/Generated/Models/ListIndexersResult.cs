@@ -15,7 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Response from a List Indexers request. If successful, it includes the full definitions of all indexers. </summary>
     internal partial class ListIndexersResult
     {
-        /// <summary> Initializes a new instance of ListIndexersResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListIndexersResult"/>. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="indexers"/> is null. </exception>
         internal ListIndexersResult(IEnumerable<SearchIndexer> indexers)
@@ -25,11 +28,18 @@ namespace Azure.Search.Documents.Indexes.Models
             Indexers = indexers.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListIndexersResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListIndexersResult"/>. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
-        internal ListIndexersResult(IReadOnlyList<SearchIndexer> indexers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListIndexersResult(IReadOnlyList<SearchIndexer> indexers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Indexers = indexers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListIndexersResult"/> for deserialization. </summary>
+        internal ListIndexersResult()
+        {
         }
 
         /// <summary> The indexers in the Search service. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Vault Job for CMK - has CMK specific info. </summary>
     internal partial class VaultBackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of VaultBackupJobExtendedInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultBackupJobExtendedInfo"/>. </summary>
         public VaultBackupJobExtendedInfo()
         {
             PropertyBag = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of VaultBackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultBackupJobExtendedInfo"/>. </summary>
         /// <param name="propertyBag"> Job properties. </param>
-        internal VaultBackupJobExtendedInfo(IDictionary<string, string> propertyBag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultBackupJobExtendedInfo(IDictionary<string, string> propertyBag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PropertyBag = propertyBag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Job properties. </summary>

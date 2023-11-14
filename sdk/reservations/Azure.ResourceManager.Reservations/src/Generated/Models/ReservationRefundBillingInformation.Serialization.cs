@@ -5,15 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationRefundBillingInformation
+    public partial class ReservationRefundBillingInformation : IUtf8JsonSerializable, IJsonModel<ReservationRefundBillingInformation>
     {
-        internal static ReservationRefundBillingInformation DeserializeReservationRefundBillingInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundBillingInformation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ReservationRefundBillingInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ReservationRefundBillingInformation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ReservationRefundBillingInformation>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BillingPlan))
+            {
+                writer.WritePropertyName("billingPlan"u8);
+                writer.WriteStringValue(BillingPlan.Value.ToString());
+            }
+            if (Optional.IsDefined(CompletedTransactions))
+            {
+                writer.WritePropertyName("completedTransactions"u8);
+                writer.WriteNumberValue(CompletedTransactions.Value);
+            }
+            if (Optional.IsDefined(TotalTransactions))
+            {
+                writer.WritePropertyName("totalTransactions"u8);
+                writer.WriteNumberValue(TotalTransactions.Value);
+            }
+            if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
+            {
+                writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
+                writer.WriteObjectValue(BillingCurrencyTotalPaidAmount);
+            }
+            if (Optional.IsDefined(BillingCurrencyProratedAmount))
+            {
+                writer.WritePropertyName("billingCurrencyProratedAmount"u8);
+                writer.WriteObjectValue(BillingCurrencyProratedAmount);
+            }
+            if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
+            {
+                writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
+                writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReservationRefundBillingInformation IJsonModel<ReservationRefundBillingInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationRefundBillingInformation(document.RootElement, options);
+        }
+
+        internal static ReservationRefundBillingInformation DeserializeReservationRefundBillingInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +100,8 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> billingCurrencyTotalPaidAmount = default;
             Optional<PurchasePrice> billingCurrencyProratedAmount = default;
             Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingPlan"u8))
@@ -80,8 +158,38 @@ namespace Azure.ResourceManager.Reservations.Models
                     billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationRefundBillingInformation(Optional.ToNullable(billingPlan), Optional.ToNullable(completedTransactions), Optional.ToNullable(totalTransactions), billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReservationRefundBillingInformation(Optional.ToNullable(billingPlan), Optional.ToNullable(completedTransactions), Optional.ToNullable(totalTransactions), billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationRefundBillingInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReservationRefundBillingInformation IPersistableModel<ReservationRefundBillingInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReservationRefundBillingInformation(document.RootElement, options);
+        }
+
+        string IPersistableModel<ReservationRefundBillingInformation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

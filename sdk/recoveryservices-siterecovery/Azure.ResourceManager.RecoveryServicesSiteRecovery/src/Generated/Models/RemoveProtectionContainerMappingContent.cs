@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Container unpairing input. </summary>
     public partial class RemoveProtectionContainerMappingContent
     {
-        /// <summary> Initializes a new instance of RemoveProtectionContainerMappingContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemoveProtectionContainerMappingContent"/>. </summary>
         public RemoveProtectionContainerMappingContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoveProtectionContainerMappingContent"/>. </summary>
+        /// <param name="properties"> Configure protection input properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemoveProtectionContainerMappingContent(RemoveProtectionContainerMappingProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Configure protection input properties. </summary>

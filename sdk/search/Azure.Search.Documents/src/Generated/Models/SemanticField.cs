@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A field that is used as part of the semantic configuration. </summary>
     public partial class SemanticField
     {
-        /// <summary> Initializes a new instance of SemanticField. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SemanticField"/>. </summary>
         /// <param name="fieldName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> is null. </exception>
         public SemanticField(string fieldName)
@@ -21,6 +25,20 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(fieldName, nameof(fieldName));
 
             FieldName = fieldName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SemanticField"/>. </summary>
+        /// <param name="fieldName"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SemanticField(string fieldName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FieldName = fieldName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SemanticField"/> for deserialization. </summary>
+        internal SemanticField()
+        {
         }
 
         /// <summary> Gets or sets the field name. </summary>

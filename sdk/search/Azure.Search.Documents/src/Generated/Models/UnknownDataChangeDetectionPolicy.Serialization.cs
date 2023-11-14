@@ -5,28 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownDataChangeDetectionPolicy : IUtf8JsonSerializable
+    internal partial class UnknownDataChangeDetectionPolicy : IUtf8JsonSerializable, IJsonModel<DataChangeDetectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataChangeDetectionPolicy>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataChangeDetectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataChangeDetectionPolicy>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataChangeDetectionPolicy>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownDataChangeDetectionPolicy DeserializeUnknownDataChangeDetectionPolicy(JsonElement element)
+        DataChangeDetectionPolicy IJsonModel<DataChangeDetectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownDataChangeDetectionPolicy(document.RootElement, options);
+        }
+
+        internal static UnknownDataChangeDetectionPolicy DeserializeUnknownDataChangeDetectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string odataType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -34,8 +77,38 @@ namespace Azure.Search.Documents.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownDataChangeDetectionPolicy(odataType);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownDataChangeDetectionPolicy(odataType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataChangeDetectionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataChangeDetectionPolicy IPersistableModel<DataChangeDetectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataChangeDetectionPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownDataChangeDetectionPolicy(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataChangeDetectionPolicy>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

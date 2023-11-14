@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource group properties. </summary>
     internal partial class ResourceGroupProperties
     {
-        /// <summary> Initializes a new instance of ResourceGroupProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupProperties"/>. </summary>
         public ResourceGroupProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal ResourceGroupProperties(string provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGroupProperties(string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state. </summary>

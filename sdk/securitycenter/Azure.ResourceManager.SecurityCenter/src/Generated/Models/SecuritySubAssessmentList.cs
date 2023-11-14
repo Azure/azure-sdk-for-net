@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of security sub-assessments. </summary>
     internal partial class SecuritySubAssessmentList
     {
-        /// <summary> Initializes a new instance of SecuritySubAssessmentList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentList"/>. </summary>
         internal SecuritySubAssessmentList()
         {
             Value = new ChangeTrackingList<SecuritySubAssessmentData>();
         }
 
-        /// <summary> Initializes a new instance of SecuritySubAssessmentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal SecuritySubAssessmentList(IReadOnlyList<SecuritySubAssessmentData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySubAssessmentList(IReadOnlyList<SecuritySubAssessmentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

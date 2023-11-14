@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
@@ -13,12 +14,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Details for upgrading vault. </summary>
     public partial class VaultUpgradeDetails
     {
-        /// <summary> Initializes a new instance of VaultUpgradeDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VaultUpgradeDetails"/>. </summary>
         public VaultUpgradeDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultUpgradeDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUpgradeDetails"/>. </summary>
         /// <param name="operationId"> ID of the vault upgrade operation. </param>
         /// <param name="startOn"> UTC time at which the upgrade operation has started. </param>
         /// <param name="lastUpdatedOn"> UTC time at which the upgrade operation status was last updated. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="triggerType"> The way the vault upgrade was triggered. </param>
         /// <param name="upgradedResourceId"> Resource ID of the upgraded vault. </param>
         /// <param name="previousResourceId"> Resource ID of the vault before the upgrade. </param>
-        internal VaultUpgradeDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? endOn, VaultUpgradeState? status, string message, VaultUpgradeTriggerType? triggerType, ResourceIdentifier upgradedResourceId, ResourceIdentifier previousResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VaultUpgradeDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? endOn, VaultUpgradeState? status, string message, VaultUpgradeTriggerType? triggerType, ResourceIdentifier upgradedResourceId, ResourceIdentifier previousResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             StartOn = startOn;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             TriggerType = triggerType;
             UpgradedResourceId = upgradedResourceId;
             PreviousResourceId = previousResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of the vault upgrade operation. </summary>

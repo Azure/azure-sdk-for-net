@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> VM Sizes properties. </summary>
     internal partial class VmSize
     {
-        /// <summary> Initializes a new instance of VmSize. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmSize"/>. </summary>
         internal VmSize()
         {
         }
 
-        /// <summary> Initializes a new instance of VmSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmSize"/>. </summary>
         /// <param name="size"> VM Size name. </param>
-        internal VmSize(string size)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmSize(string size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Size = size;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> VM Size name. </summary>

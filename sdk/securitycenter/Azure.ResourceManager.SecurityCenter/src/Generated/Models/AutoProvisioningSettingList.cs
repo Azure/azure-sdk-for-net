@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of all the auto provisioning settings response. </summary>
     internal partial class AutoProvisioningSettingList
     {
-        /// <summary> Initializes a new instance of AutoProvisioningSettingList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutoProvisioningSettingList"/>. </summary>
         internal AutoProvisioningSettingList()
         {
             Value = new ChangeTrackingList<AutoProvisioningSettingData>();
         }
 
-        /// <summary> Initializes a new instance of AutoProvisioningSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoProvisioningSettingList"/>. </summary>
         /// <param name="value"> List of all the auto provisioning settings. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal AutoProvisioningSettingList(IReadOnlyList<AutoProvisioningSettingData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutoProvisioningSettingList(IReadOnlyList<AutoProvisioningSettingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of all the auto provisioning settings. </summary>

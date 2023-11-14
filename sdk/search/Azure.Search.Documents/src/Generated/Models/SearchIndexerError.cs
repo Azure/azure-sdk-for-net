@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents an item- or document-level indexing error. </summary>
     public partial class SearchIndexerError
     {
-        /// <summary> Initializes a new instance of SearchIndexerError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerError"/>. </summary>
         /// <param name="errorMessage"> The message describing the error that occurred while processing the item. </param>
         /// <param name="statusCode"> The status code indicating why the indexing operation failed. Possible values include: 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>
@@ -25,14 +29,15 @@ namespace Azure.Search.Documents.Indexes.Models
             StatusCode = statusCode;
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerError"/>. </summary>
         /// <param name="key"> The key of the item for which indexing failed. </param>
         /// <param name="errorMessage"> The message describing the error that occurred while processing the item. </param>
         /// <param name="statusCode"> The status code indicating why the indexing operation failed. Possible values include: 400 for a malformed input document, 404 for document not found, 409 for a version conflict, 422 when the index is temporarily unavailable, or 503 for when the service is too busy. </param>
         /// <param name="name"> The name of the source at which the error originated. For example, this could refer to a particular skill in the attached skillset. This may not be always available. </param>
         /// <param name="details"> Additional, verbose details about the error to assist in debugging the indexer. This may not be always available. </param>
         /// <param name="documentationLink"> A link to a troubleshooting guide for these classes of errors. This may not be always available. </param>
-        internal SearchIndexerError(string key, string errorMessage, int statusCode, string name, string details, string documentationLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchIndexerError(string key, string errorMessage, int statusCode, string name, string details, string documentationLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             ErrorMessage = errorMessage;
@@ -40,6 +45,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
             Details = details;
             DocumentationLink = documentationLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerError"/> for deserialization. </summary>
+        internal SearchIndexerError()
+        {
         }
 
         /// <summary> The key of the item for which indexing failed. </summary>

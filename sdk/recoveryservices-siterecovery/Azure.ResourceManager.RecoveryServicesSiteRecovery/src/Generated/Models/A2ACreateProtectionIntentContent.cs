@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A create protection intent input. </summary>
     public partial class A2ACreateProtectionIntentContent : SiteRecoveryCreateProtectionIntentProviderDetail
     {
-        /// <summary> Initializes a new instance of A2ACreateProtectionIntentContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2ACreateProtectionIntentContent"/>. </summary>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
         /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>
@@ -37,6 +37,87 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VmDisks = new ChangeTrackingList<A2AProtectionIntentDiskDetails>();
             VmManagedDisks = new ChangeTrackingList<A2AProtectionIntentManagedDiskDetails>();
             InstanceType = "A2A";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2ACreateProtectionIntentContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
+        /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
+        /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>
+        /// <param name="recoverySubscriptionId"> The recovery subscription Id of the virtual machine. </param>
+        /// <param name="recoveryAvailabilityType"> The recovery availability type of the virtual machine. </param>
+        /// <param name="protectionProfileCustomContent">
+        /// The protection profile custom inputs.
+        /// Please note <see cref="ProtectionProfileCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExistingProtectionProfile"/> and <see cref="NewProtectionProfile"/>.
+        /// </param>
+        /// <param name="recoveryResourceGroupId"> The recovery resource group Id. Valid for V2 scenarios. </param>
+        /// <param name="primaryStagingStorageAccountCustomContent">
+        /// The primary staging storage account input.
+        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExistingStorageAccount"/>.
+        /// </param>
+        /// <param name="recoveryAvailabilitySetCustomContent">
+        /// The recovery availability set input.
+        /// Please note <see cref="RecoveryAvailabilitySetCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExistingRecoveryAvailabilitySet"/>.
+        /// </param>
+        /// <param name="recoveryVirtualNetworkCustomContent">
+        /// The recovery virtual network input.
+        /// Please note <see cref="RecoveryVirtualNetworkCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExistingRecoveryVirtualNetwork"/> and <see cref="NewRecoveryVirtualNetwork"/>.
+        /// </param>
+        /// <param name="recoveryProximityPlacementGroupCustomContent">
+        /// The recovery proximity placement group custom input.
+        /// Please note <see cref="RecoveryProximityPlacementGroupCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExistingRecoveryProximityPlacementGroup"/>.
+        /// </param>
+        /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
+        /// <param name="vmDisks"> The list of vm disk inputs. </param>
+        /// <param name="vmManagedDisks"> The list of vm managed disk inputs. </param>
+        /// <param name="multiVmGroupName"> The multi vm group name. </param>
+        /// <param name="multiVmGroupId"> The multi vm group id. </param>
+        /// <param name="recoveryBootDiagStorageAccount">
+        /// The boot diagnostic storage account.
+        /// Please note <see cref="StorageAccountCustomDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExistingStorageAccount"/>.
+        /// </param>
+        /// <param name="diskEncryptionInfo"> The recovery disk encryption information (for two pass flows). </param>
+        /// <param name="recoveryAvailabilityZone"> The recovery availability zone. </param>
+        /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
+        /// <param name="automationAccountAuthenticationType"> A value indicating the authentication type for automation account. The default value is "RunAsAccount". </param>
+        /// <param name="automationAccountArmId"> The automation account arm id. </param>
+        internal A2ACreateProtectionIntentContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, AzureLocation primaryLocation, AzureLocation recoveryLocation, string recoverySubscriptionId, A2ARecoveryAvailabilityType recoveryAvailabilityType, ProtectionProfileCustomDetails protectionProfileCustomContent, ResourceIdentifier recoveryResourceGroupId, StorageAccountCustomDetails primaryStagingStorageAccountCustomContent, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySetCustomContent, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetworkCustomContent, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroupCustomContent, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, IList<A2AProtectionIntentDiskDetails> vmDisks, IList<A2AProtectionIntentManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, StorageAccountCustomDetails recoveryBootDiagStorageAccount, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, AutomationAccountAuthenticationType? automationAccountAuthenticationType, ResourceIdentifier automationAccountArmId) : base(instanceType, serializedAdditionalRawData)
+        {
+            FabricObjectId = fabricObjectId;
+            PrimaryLocation = primaryLocation;
+            RecoveryLocation = recoveryLocation;
+            RecoverySubscriptionId = recoverySubscriptionId;
+            RecoveryAvailabilityType = recoveryAvailabilityType;
+            ProtectionProfileCustomContent = protectionProfileCustomContent;
+            RecoveryResourceGroupId = recoveryResourceGroupId;
+            PrimaryStagingStorageAccountCustomContent = primaryStagingStorageAccountCustomContent;
+            RecoveryAvailabilitySetCustomContent = recoveryAvailabilitySetCustomContent;
+            RecoveryVirtualNetworkCustomContent = recoveryVirtualNetworkCustomContent;
+            RecoveryProximityPlacementGroupCustomContent = recoveryProximityPlacementGroupCustomContent;
+            AutoProtectionOfDataDisk = autoProtectionOfDataDisk;
+            VmDisks = vmDisks;
+            VmManagedDisks = vmManagedDisks;
+            MultiVmGroupName = multiVmGroupName;
+            MultiVmGroupId = multiVmGroupId;
+            RecoveryBootDiagStorageAccount = recoveryBootDiagStorageAccount;
+            DiskEncryptionInfo = diskEncryptionInfo;
+            RecoveryAvailabilityZone = recoveryAvailabilityZone;
+            AgentAutoUpdateStatus = agentAutoUpdateStatus;
+            AutomationAccountAuthenticationType = automationAccountAuthenticationType;
+            AutomationAccountArmId = automationAccountArmId;
+            InstanceType = instanceType ?? "A2A";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2ACreateProtectionIntentContent"/> for deserialization. </summary>
+        internal A2ACreateProtectionIntentContent()
+        {
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterServerCertificateCommonNames : IUtf8JsonSerializable
+    public partial class ClusterServerCertificateCommonNames : IUtf8JsonSerializable, IJsonModel<ClusterServerCertificateCommonNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServerCertificateCommonNames>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ClusterServerCertificateCommonNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ClusterServerCertificateCommonNames>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ClusterServerCertificateCommonNames>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CommonNames))
             {
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("x509StoreName"u8);
                 writer.WriteStringValue(X509StoreName.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterServerCertificateCommonNames DeserializeClusterServerCertificateCommonNames(JsonElement element)
+        ClusterServerCertificateCommonNames IJsonModel<ClusterServerCertificateCommonNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterServerCertificateCommonNames(document.RootElement, options);
+        }
+
+        internal static ClusterServerCertificateCommonNames DeserializeClusterServerCertificateCommonNames(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<ClusterServerCertificateCommonName>> commonNames = default;
             Optional<ClusterCertificateStoreName> x509StoreName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commonNames"u8))
@@ -67,8 +108,38 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     x509StoreName = new ClusterCertificateStoreName(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterServerCertificateCommonNames(Optional.ToList(commonNames), Optional.ToNullable(x509StoreName));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterServerCertificateCommonNames(Optional.ToList(commonNames), Optional.ToNullable(x509StoreName), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterServerCertificateCommonNames>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClusterServerCertificateCommonNames IPersistableModel<ClusterServerCertificateCommonNames>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterServerCertificateCommonNames)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClusterServerCertificateCommonNames(document.RootElement, options);
+        }
+
+        string IPersistableModel<ClusterServerCertificateCommonNames>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

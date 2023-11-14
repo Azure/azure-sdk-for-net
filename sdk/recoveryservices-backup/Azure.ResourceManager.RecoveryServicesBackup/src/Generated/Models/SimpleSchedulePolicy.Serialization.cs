@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SimpleSchedulePolicy : IUtf8JsonSerializable
+    public partial class SimpleSchedulePolicy : IUtf8JsonSerializable, IJsonModel<SimpleSchedulePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimpleSchedulePolicy>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SimpleSchedulePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SimpleSchedulePolicy>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SimpleSchedulePolicy>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ScheduleRunFrequency))
             {
@@ -54,11 +63,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SimpleSchedulePolicy DeserializeSimpleSchedulePolicy(JsonElement element)
+        SimpleSchedulePolicy IJsonModel<SimpleSchedulePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimpleSchedulePolicy(document.RootElement, options);
+        }
+
+        internal static SimpleSchedulePolicy DeserializeSimpleSchedulePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +107,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<BackupHourlySchedule> hourlySchedule = default;
             Optional<int> scheduleWeeklyFrequency = default;
             string schedulePolicyType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleRunFrequency"u8))
@@ -131,8 +171,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     schedulePolicyType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SimpleSchedulePolicy(schedulePolicyType, Optional.ToNullable(scheduleRunFrequency), Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), hourlySchedule.Value, Optional.ToNullable(scheduleWeeklyFrequency));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SimpleSchedulePolicy(schedulePolicyType, serializedAdditionalRawData, Optional.ToNullable(scheduleRunFrequency), Optional.ToList(scheduleRunDays), Optional.ToList(scheduleRunTimes), hourlySchedule.Value, Optional.ToNullable(scheduleWeeklyFrequency));
         }
+
+        BinaryData IPersistableModel<SimpleSchedulePolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SimpleSchedulePolicy IPersistableModel<SimpleSchedulePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimpleSchedulePolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSimpleSchedulePolicy(document.RootElement, options);
+        }
+
+        string IPersistableModel<SimpleSchedulePolicy>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

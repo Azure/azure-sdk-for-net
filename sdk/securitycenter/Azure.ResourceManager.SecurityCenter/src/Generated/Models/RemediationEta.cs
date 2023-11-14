@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The ETA (estimated time of arrival) for remediation. </summary>
     public partial class RemediationEta
     {
-        /// <summary> Initializes a new instance of RemediationEta. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemediationEta"/>. </summary>
         /// <param name="eta"> ETA for remediation. </param>
         /// <param name="justification"> Justification for change of Eta. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="justification"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
             Eta = eta;
             Justification = justification;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemediationEta"/>. </summary>
+        /// <param name="eta"> ETA for remediation. </param>
+        /// <param name="justification"> Justification for change of Eta. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemediationEta(DateTimeOffset eta, string justification, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Eta = eta;
+            Justification = justification;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemediationEta"/> for deserialization. </summary>
+        internal RemediationEta()
+        {
         }
 
         /// <summary> ETA for remediation. </summary>

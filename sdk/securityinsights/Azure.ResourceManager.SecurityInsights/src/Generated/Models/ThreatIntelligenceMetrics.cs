@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Threat intelligence metrics. </summary>
     public partial class ThreatIntelligenceMetrics
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetrics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetrics"/>. </summary>
         internal ThreatIntelligenceMetrics()
         {
         }
 
-        /// <summary> Initializes a new instance of ThreatIntelligenceMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetrics"/>. </summary>
         /// <param name="properties"> Threat intelligence metrics. </param>
-        internal ThreatIntelligenceMetrics(ThreatIntelligenceMetric properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceMetrics(ThreatIntelligenceMetric properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Threat intelligence metrics. </summary>

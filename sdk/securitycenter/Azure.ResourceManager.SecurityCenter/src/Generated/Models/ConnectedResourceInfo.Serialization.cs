@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ConnectedResourceInfo
+    public partial class ConnectedResourceInfo : IUtf8JsonSerializable, IJsonModel<ConnectedResourceInfo>
     {
-        internal static ConnectedResourceInfo DeserializeConnectedResourceInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedResourceInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConnectedResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectedResourceInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectedResourceInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConnectedResourceId))
+                {
+                    writer.WritePropertyName("connectedResourceId"u8);
+                    writer.WriteStringValue(ConnectedResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TcpPorts))
+                {
+                    writer.WritePropertyName("tcpPorts"u8);
+                    writer.WriteStringValue(TcpPorts);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UdpPorts))
+                {
+                    writer.WritePropertyName("udpPorts"u8);
+                    writer.WriteStringValue(UdpPorts);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectedResourceInfo IJsonModel<ConnectedResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectedResourceInfo(document.RootElement, options);
+        }
+
+        internal static ConnectedResourceInfo DeserializeConnectedResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<ResourceIdentifier> connectedResourceId = default;
             Optional<string> tcpPorts = default;
             Optional<string> udpPorts = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectedResourceId"u8))
@@ -42,8 +114,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     udpPorts = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectedResourceInfo(connectedResourceId.Value, tcpPorts.Value, udpPorts.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectedResourceInfo(connectedResourceId.Value, tcpPorts.Value, udpPorts.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectedResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectedResourceInfo IPersistableModel<ConnectedResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectedResourceInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectedResourceInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

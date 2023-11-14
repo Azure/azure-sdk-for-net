@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -15,12 +16,15 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class SphereCertificateProperties
     {
-        /// <summary> Initializes a new instance of SphereCertificateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateProperties"/>. </summary>
         internal SphereCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereCertificateProperties"/>. </summary>
         /// <param name="certificate">
         /// The certificate as a UTF-8 encoded base 64 string.
         /// Serialized Name: CertificateProperties.certificate
@@ -49,7 +53,8 @@ namespace Azure.ResourceManager.Sphere.Models
         /// The status of the last operation.
         /// Serialized Name: CertificateProperties.provisioningState
         /// </param>
-        internal SphereCertificateProperties(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereCertificateProperties(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Certificate = certificate;
             Status = status;
@@ -58,6 +63,7 @@ namespace Azure.ResourceManager.Sphere.Models
             ExpiryUtc = expiryUtc;
             NotBeforeUtc = notBeforeUtc;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

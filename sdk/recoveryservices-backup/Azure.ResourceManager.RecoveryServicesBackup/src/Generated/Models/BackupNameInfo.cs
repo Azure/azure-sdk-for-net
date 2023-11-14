@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The name of usage. </summary>
     public partial class BackupNameInfo
     {
-        /// <summary> Initializes a new instance of BackupNameInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupNameInfo"/>. </summary>
         internal BackupNameInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupNameInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupNameInfo"/>. </summary>
         /// <param name="value"> Value of usage. </param>
         /// <param name="localizedValue"> Localized value of usage. </param>
-        internal BackupNameInfo(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupNameInfo(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of usage. </summary>

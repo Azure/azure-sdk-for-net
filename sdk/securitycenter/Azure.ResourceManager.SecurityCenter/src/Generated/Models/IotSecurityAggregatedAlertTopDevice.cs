@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The IotSecurityAggregatedAlertTopDevice. </summary>
     public partial class IotSecurityAggregatedAlertTopDevice
     {
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertTopDevice. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertTopDevice"/>. </summary>
         internal IotSecurityAggregatedAlertTopDevice()
         {
         }
 
-        /// <summary> Initializes a new instance of IotSecurityAggregatedAlertTopDevice. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertTopDevice"/>. </summary>
         /// <param name="deviceId"> Name of the device. </param>
         /// <param name="alertsCount"> Number of alerts raised for this device. </param>
         /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>
-        internal IotSecurityAggregatedAlertTopDevice(string deviceId, long? alertsCount, string lastOccurrence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecurityAggregatedAlertTopDevice(string deviceId, long? alertsCount, string lastOccurrence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceId = deviceId;
             AlertsCount = alertsCount;
             LastOccurrence = lastOccurrence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the device. </summary>

@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class GovernanceRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleData"/>. </summary>
         public GovernanceRuleData()
         {
             ExcludedScopes = new ChangeTrackingList<string>();
             ConditionSets = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="ownerSource"> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </param>
         /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
         /// <param name="metadata"> The governance rule metadata. </param>
-        internal GovernanceRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, string description, string remediationTimeframe, bool? isGracePeriod, int? rulePriority, bool? isDisabled, GovernanceRuleType? ruleType, GovernanceRuleSourceResourceType? sourceResourceType, IList<string> excludedScopes, IList<BinaryData> conditionSets, bool? includeMemberScopes, GovernanceRuleOwnerSource ownerSource, GovernanceRuleEmailNotification governanceEmailNotification, GovernanceRuleMetadata metadata) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, string description, string remediationTimeframe, bool? isGracePeriod, int? rulePriority, bool? isDisabled, GovernanceRuleType? ruleType, GovernanceRuleSourceResourceType? sourceResourceType, IList<string> excludedScopes, IList<BinaryData> conditionSets, bool? includeMemberScopes, GovernanceRuleOwnerSource ownerSource, GovernanceRuleEmailNotification governanceEmailNotification, GovernanceRuleMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             DisplayName = displayName;
@@ -63,6 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter
             OwnerSource = ownerSource;
             GovernanceEmailNotification = governanceEmailNotification;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The tenantId (GUID). </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Collection of alerts. </summary>
     internal partial class SiteRecoveryAlertListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAlertListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertListResult"/>. </summary>
         internal SiteRecoveryAlertListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryAlertData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAlertListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAlertListResult"/>. </summary>
         /// <param name="value"> The list of alerts. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryAlertListResult(IReadOnlyList<SiteRecoveryAlertData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryAlertListResult(IReadOnlyList<SiteRecoveryAlertData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of alerts. </summary>

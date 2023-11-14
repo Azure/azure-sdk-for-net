@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The kubernetes service connection configuration. </summary>
     internal partial class DefenderForContainersAwsOfferingKubernetesService
     {
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKubernetesService. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKubernetesService"/>. </summary>
         public DefenderForContainersAwsOfferingKubernetesService()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderForContainersAwsOfferingKubernetesService. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForContainersAwsOfferingKubernetesService"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature used for provisioning resources. </param>
-        internal DefenderForContainersAwsOfferingKubernetesService(string cloudRoleArn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForContainersAwsOfferingKubernetesService(string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cloud role ARN in AWS for this feature used for provisioning resources. </summary>

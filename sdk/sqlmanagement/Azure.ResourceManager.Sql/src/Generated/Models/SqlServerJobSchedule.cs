@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Scheduling properties of a job. </summary>
     public partial class SqlServerJobSchedule
     {
-        /// <summary> Initializes a new instance of SqlServerJobSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobSchedule"/>. </summary>
         public SqlServerJobSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerJobSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobSchedule"/>. </summary>
         /// <param name="startOn"> Schedule start time. </param>
         /// <param name="endOn"> Schedule end time. </param>
         /// <param name="scheduleType"> Schedule interval type. </param>
         /// <param name="isEnabled"> Whether or not the schedule is enabled. </param>
         /// <param name="interval"> Value of the schedule's recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </param>
-        internal SqlServerJobSchedule(DateTimeOffset? startOn, DateTimeOffset? endOn, SqlServerJobScheduleType? scheduleType, bool? isEnabled, TimeSpan? interval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerJobSchedule(DateTimeOffset? startOn, DateTimeOffset? endOn, SqlServerJobScheduleType? scheduleType, bool? isEnabled, TimeSpan? interval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
             ScheduleType = scheduleType;
             IsEnabled = isEnabled;
             Interval = interval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Schedule start time. </summary>

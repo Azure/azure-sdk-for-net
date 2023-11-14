@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> The policy definition reference. </summary>
     public partial class PolicyDefinitionReference
     {
-        /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/>. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionId"/> is null. </exception>
         public PolicyDefinitionReference(string policyDefinitionId)
@@ -26,17 +29,24 @@ namespace Azure.ResourceManager.Resources.Models
             GroupNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/>. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
         /// <param name="parameters"> The parameter values for the referenced policy rule. The keys are the parameter names. </param>
         /// <param name="policyDefinitionReferenceId"> A unique id (within the policy set definition) for this policy definition reference. </param>
         /// <param name="groupNames"> The name of the groups that this policy definition reference belongs to. </param>
-        internal PolicyDefinitionReference(string policyDefinitionId, IDictionary<string, ArmPolicyParameterValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyDefinitionReference(string policyDefinitionId, IDictionary<string, ArmPolicyParameterValue> parameters, string policyDefinitionReferenceId, IList<string> groupNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyDefinitionId = policyDefinitionId;
             Parameters = parameters;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
             GroupNames = groupNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionReference"/> for deserialization. </summary>
+        internal PolicyDefinitionReference()
+        {
         }
 
         /// <summary> The ID of the policy definition or policy set definition. </summary>

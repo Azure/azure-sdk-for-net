@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Additional information on backup engine. </summary>
     public partial class BackupEngineExtendedInfo
     {
-        /// <summary> Initializes a new instance of BackupEngineExtendedInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupEngineExtendedInfo"/>. </summary>
         public BackupEngineExtendedInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupEngineExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupEngineExtendedInfo"/>. </summary>
         /// <param name="databaseName"> Database name of backup engine. </param>
         /// <param name="protectedItemsCount"> Number of protected items in the backup engine. </param>
         /// <param name="protectedServersCount"> Number of protected servers in the backup engine. </param>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="availableDiskSpace"> Disk space currently available in the backup engine. </param>
         /// <param name="refreshedOn"> Last refresh time in the backup engine. </param>
         /// <param name="azureProtectedInstances"> Protected instances in the backup engine. </param>
-        internal BackupEngineExtendedInfo(string databaseName, int? protectedItemsCount, int? protectedServersCount, int? diskCount, double? usedDiskSpace, double? availableDiskSpace, DateTimeOffset? refreshedOn, int? azureProtectedInstances)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupEngineExtendedInfo(string databaseName, int? protectedItemsCount, int? protectedServersCount, int? diskCount, double? usedDiskSpace, double? availableDiskSpace, DateTimeOffset? refreshedOn, int? azureProtectedInstances, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             ProtectedItemsCount = protectedItemsCount;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             AvailableDiskSpace = availableDiskSpace;
             RefreshedOn = refreshedOn;
             AzureProtectedInstances = azureProtectedInstances;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Database name of backup engine. </summary>

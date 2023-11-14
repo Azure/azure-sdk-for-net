@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Application type update request. </summary>
     public partial class ServiceFabricManagedApplicationTypePatch
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedApplicationTypePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypePatch"/>. </summary>
         public ServiceFabricManagedApplicationTypePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationTypePatch"/>. </summary>
+        /// <param name="tags"> Application type update parameters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedApplicationTypePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application type update parameters. </summary>

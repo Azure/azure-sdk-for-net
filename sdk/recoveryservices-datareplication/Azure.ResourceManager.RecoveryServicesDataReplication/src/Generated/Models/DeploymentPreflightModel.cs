@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Deployment preflight model. </summary>
     public partial class DeploymentPreflightModel
     {
-        /// <summary> Initializes a new instance of DeploymentPreflightModel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentPreflightModel"/>. </summary>
         public DeploymentPreflightModel()
         {
             Resources = new ChangeTrackingList<DeploymentPreflightResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentPreflightModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentPreflightModel"/>. </summary>
         /// <param name="resources"> Gets or sets the list of resources. </param>
-        internal DeploymentPreflightModel(IList<DeploymentPreflightResourceInfo> resources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentPreflightModel(IList<DeploymentPreflightResourceInfo> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Resources = resources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of resources. </summary>

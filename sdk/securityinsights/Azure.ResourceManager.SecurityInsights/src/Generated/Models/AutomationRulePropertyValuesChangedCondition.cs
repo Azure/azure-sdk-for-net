@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The AutomationRulePropertyValuesChangedCondition. </summary>
     public partial class AutomationRulePropertyValuesChangedCondition
     {
-        /// <summary> Initializes a new instance of AutomationRulePropertyValuesChangedCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyValuesChangedCondition"/>. </summary>
         public AutomationRulePropertyValuesChangedCondition()
         {
             PropertyValues = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AutomationRulePropertyValuesChangedCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyValuesChangedCondition"/>. </summary>
         /// <param name="propertyName"></param>
         /// <param name="changeType"></param>
         /// <param name="operator"></param>
         /// <param name="propertyValues"></param>
-        internal AutomationRulePropertyValuesChangedCondition(AutomationRulePropertyChangedConditionSupportedPropertyType? propertyName, AutomationRulePropertyChangedConditionSupportedChangedType? changeType, AutomationRulePropertyConditionSupportedOperator? @operator, IList<string> propertyValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRulePropertyValuesChangedCondition(AutomationRulePropertyChangedConditionSupportedPropertyType? propertyName, AutomationRulePropertyChangedConditionSupportedChangedType? changeType, AutomationRulePropertyConditionSupportedOperator? @operator, IList<string> propertyValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PropertyName = propertyName;
             ChangeType = changeType;
             Operator = @operator;
             PropertyValues = propertyValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the property name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Search.Models
     /// <summary> Describes the properties of a supported private link resource for the Azure Cognitive Search service. For a given API version, this represents the 'supported' groupIds when creating a shared private link resource. </summary>
     public partial class SearchPrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of SearchPrivateLinkResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkResourceProperties"/>. </summary>
         internal SearchPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
@@ -21,17 +25,19 @@ namespace Azure.ResourceManager.Search.Models
             ShareablePrivateLinkResourceTypes = new ChangeTrackingList<ShareableSearchServicePrivateLinkResourceType>();
         }
 
-        /// <summary> Initializes a new instance of SearchPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="requiredMembers"> The list of required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> The list of required DNS zone names of the private link resource. </param>
         /// <param name="shareablePrivateLinkResourceTypes"> The list of resources that are onboarded to private link service, that are supported by Azure Cognitive Search. </param>
-        internal SearchPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> shareablePrivateLinkResourceTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> shareablePrivateLinkResourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
             ShareablePrivateLinkResourceTypes = shareablePrivateLinkResourceTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The group ID of the private link resource. </summary>

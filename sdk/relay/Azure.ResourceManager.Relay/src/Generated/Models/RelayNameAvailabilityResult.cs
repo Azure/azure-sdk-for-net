@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Relay.Models
 {
     /// <summary> Description of the check name availability request properties. </summary>
     public partial class RelayNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of RelayNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelayNameAvailabilityResult"/>. </summary>
         internal RelayNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RelayNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNameAvailabilityResult"/>. </summary>
         /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
         /// <param name="isNameAvailable"> Value indicating namespace is available. Returns true if the namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a namespace. </param>
-        internal RelayNameAvailabilityResult(string message, bool? isNameAvailable, RelayNameUnavailableReason? reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelayNameAvailabilityResult(string message, bool? isNameAvailable, RelayNameUnavailableReason? reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The detailed info regarding the reason associated with the namespace. </summary>

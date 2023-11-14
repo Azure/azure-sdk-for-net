@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> HTTP message. </summary>
     internal partial class HttpMessage
     {
-        /// <summary> Initializes a new instance of HttpMessage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HttpMessage"/>. </summary>
         internal HttpMessage()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpMessage"/>. </summary>
         /// <param name="content"> HTTP message content. </param>
-        internal HttpMessage(BinaryData content)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HttpMessage(BinaryData content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

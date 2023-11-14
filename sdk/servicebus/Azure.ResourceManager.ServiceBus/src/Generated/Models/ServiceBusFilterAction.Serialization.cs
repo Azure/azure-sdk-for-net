@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusFilterAction : IUtf8JsonSerializable
+    public partial class ServiceBusFilterAction : IUtf8JsonSerializable, IJsonModel<ServiceBusFilterAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusFilterAction>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ServiceBusFilterAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServiceBusFilterAction>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServiceBusFilterAction>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlExpression))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceBusFilterAction DeserializeServiceBusFilterAction(JsonElement element)
+        ServiceBusFilterAction IJsonModel<ServiceBusFilterAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceBusFilterAction(document.RootElement, options);
+        }
+
+        internal static ServiceBusFilterAction DeserializeServiceBusFilterAction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<string> sqlExpression = default;
             Optional<int> compatibilityLevel = default;
             Optional<bool> requiresPreprocessing = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlExpression"u8))
@@ -67,8 +109,38 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     requiresPreprocessing = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceBusFilterAction(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceBusFilterAction(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceBusFilterAction>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServiceBusFilterAction IPersistableModel<ServiceBusFilterAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServiceBusFilterAction)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServiceBusFilterAction(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServiceBusFilterAction>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

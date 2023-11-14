@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Purview.Models;
@@ -18,12 +20,15 @@ namespace Azure.ResourceManager.Purview
     /// </summary>
     public partial class PurviewPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PurviewPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateEndpointConnectionData"/>. </summary>
         public PurviewPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +36,13 @@ namespace Azure.ResourceManager.Purview
         /// <param name="privateEndpoint"> The private endpoint information. </param>
         /// <param name="connectionState"> The private link service connection state. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal PurviewPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, PurviewPrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, PurviewPrivateLinkServiceConnectionState connectionState, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private endpoint information. </summary>

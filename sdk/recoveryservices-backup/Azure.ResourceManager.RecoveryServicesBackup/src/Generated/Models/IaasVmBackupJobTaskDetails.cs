@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure IaaS VM workload-specific job task details. </summary>
     public partial class IaasVmBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of IaasVmBackupJobTaskDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobTaskDetails"/>. </summary>
         public IaasVmBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of IaasVmBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVmBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="startOn"> The start time. </param>
         /// <param name="endOn"> The end time. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Details about execution of the task.
         /// eg: number of bytes transferred etc
         /// </param>
-        internal IaasVmBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, string instanceId, TimeSpan? duration, string status, double? progressPercentage, string taskExecutionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IaasVmBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, string instanceId, TimeSpan? duration, string status, double? progressPercentage, string taskExecutionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskId = taskId;
             StartOn = startOn;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Status = status;
             ProgressPercentage = progressPercentage;
             TaskExecutionDetails = taskExecutionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The task display name. </summary>

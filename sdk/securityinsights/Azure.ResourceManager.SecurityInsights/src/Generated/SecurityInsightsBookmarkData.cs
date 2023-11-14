@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsBookmarkData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkData"/>. </summary>
         public SecurityInsightsBookmarkData()
         {
             Labels = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsBookmarkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +48,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="queryEndOn"> The end time for the query. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsBookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsBookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             CreatedBy = createdBy;
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights
             QueryEndOn = queryEndOn;
             IncidentInfo = incidentInfo;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time the bookmark was created. </summary>

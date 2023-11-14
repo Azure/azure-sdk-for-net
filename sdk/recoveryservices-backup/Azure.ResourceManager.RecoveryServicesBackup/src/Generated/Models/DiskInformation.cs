@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Disk information. </summary>
     public partial class DiskInformation
     {
-        /// <summary> Initializes a new instance of DiskInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskInformation"/>. </summary>
         public DiskInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskInformation"/>. </summary>
         /// <param name="lun"></param>
         /// <param name="name"></param>
-        internal DiskInformation(int? lun, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskInformation(int? lun, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Lun = lun;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the lun. </summary>

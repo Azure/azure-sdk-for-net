@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,21 +14,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Encapsulates Managed Identity related information. </summary>
     public partial class BackupIdentityInfo
     {
-        /// <summary> Initializes a new instance of BackupIdentityInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupIdentityInfo"/>. </summary>
         public BackupIdentityInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupIdentityInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupIdentityInfo"/>. </summary>
         /// <param name="isSystemAssignedIdentity"> To differentiate if the managed identity is system assigned or user assigned. </param>
         /// <param name="managedIdentityResourceId">
         /// Managed Identity Resource Id
         /// Optional: Might not be required in the case of system assigned managed identity
         /// </param>
-        internal BackupIdentityInfo(bool? isSystemAssignedIdentity, ResourceIdentifier managedIdentityResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupIdentityInfo(bool? isSystemAssignedIdentity, ResourceIdentifier managedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsSystemAssignedIdentity = isSystemAssignedIdentity;
             ManagedIdentityResourceId = managedIdentityResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> To differentiate if the managed identity is system assigned or user assigned. </summary>

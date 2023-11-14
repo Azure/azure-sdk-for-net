@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan test failover cleanup input properties. </summary>
     public partial class RecoveryPlanTestFailoverCleanupProperties
     {
-        /// <summary> Initializes a new instance of RecoveryPlanTestFailoverCleanupProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanTestFailoverCleanupProperties"/>. </summary>
         public RecoveryPlanTestFailoverCleanupProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanTestFailoverCleanupProperties"/>. </summary>
+        /// <param name="comments"> The test failover cleanup comments. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPlanTestFailoverCleanupProperties(string comments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Comments = comments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The test failover cleanup comments. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Key Encryption Key (KEK) information. </summary>
     public partial class SiteRecoveryKeyEncryptionKeyInfo
     {
-        /// <summary> Initializes a new instance of SiteRecoveryKeyEncryptionKeyInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryKeyEncryptionKeyInfo"/>. </summary>
         public SiteRecoveryKeyEncryptionKeyInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryKeyEncryptionKeyInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryKeyEncryptionKeyInfo"/>. </summary>
         /// <param name="keyIdentifier"> The key URL / identifier. </param>
         /// <param name="keyVaultResourceArmId"> The KeyVault resource ARM Id for key. </param>
-        internal SiteRecoveryKeyEncryptionKeyInfo(string keyIdentifier, ResourceIdentifier keyVaultResourceArmId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryKeyEncryptionKeyInfo(string keyIdentifier, ResourceIdentifier keyVaultResourceArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyIdentifier = keyIdentifier;
             KeyVaultResourceArmId = keyVaultResourceArmId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The key URL / identifier. </summary>

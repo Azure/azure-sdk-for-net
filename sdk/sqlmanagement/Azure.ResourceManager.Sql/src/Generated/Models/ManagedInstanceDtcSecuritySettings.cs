@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The Security Settings of managed instance DTC. </summary>
     public partial class ManagedInstanceDtcSecuritySettings
     {
-        /// <summary> Initializes a new instance of ManagedInstanceDtcSecuritySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcSecuritySettings"/>. </summary>
         public ManagedInstanceDtcSecuritySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDtcSecuritySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcSecuritySettings"/>. </summary>
         /// <param name="transactionManagerCommunicationSettings"> Transaction Manager communication settings of managed instance DTC. </param>
         /// <param name="isXATransactionsEnabled"> Allow XA Transactions to managed instance DTC. </param>
         /// <param name="snaLu6Point2TransactionsEnabled"> Allow SNA LU 6.2 Transactions to managed instance DTC. </param>
         /// <param name="xaTransactionsDefaultTimeoutInSeconds"> Default timeout for XA Transactions (in seconds). </param>
         /// <param name="xaTransactionsMaximumTimeoutInSeconds"> Maximum timeout for XA Transactions (in seconds). </param>
-        internal ManagedInstanceDtcSecuritySettings(ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings, bool? isXATransactionsEnabled, bool? snaLu6Point2TransactionsEnabled, int? xaTransactionsDefaultTimeoutInSeconds, int? xaTransactionsMaximumTimeoutInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceDtcSecuritySettings(ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings, bool? isXATransactionsEnabled, bool? snaLu6Point2TransactionsEnabled, int? xaTransactionsDefaultTimeoutInSeconds, int? xaTransactionsMaximumTimeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TransactionManagerCommunicationSettings = transactionManagerCommunicationSettings;
             IsXATransactionsEnabled = isXATransactionsEnabled;
             SnaLu6Point2TransactionsEnabled = snaLu6Point2TransactionsEnabled;
             XATransactionsDefaultTimeoutInSeconds = xaTransactionsDefaultTimeoutInSeconds;
             XATransactionsMaximumTimeoutInSeconds = xaTransactionsMaximumTimeoutInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Transaction Manager communication settings of managed instance DTC. </summary>

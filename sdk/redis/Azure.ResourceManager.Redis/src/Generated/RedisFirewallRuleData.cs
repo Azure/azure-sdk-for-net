@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of RedisFirewallRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/>. </summary>
         /// <param name="startIP"> lowest IP address included in the range. </param>
         /// <param name="endIP"> highest IP address included in the range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIP"/> or <paramref name="endIP"/> is null. </exception>
@@ -31,17 +35,24 @@ namespace Azure.ResourceManager.Redis
             EndIP = endIP;
         }
 
-        /// <summary> Initializes a new instance of RedisFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="startIP"> lowest IP address included in the range. </param>
         /// <param name="endIP"> highest IP address included in the range. </param>
-        internal RedisFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIP, IPAddress endIP) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIP, IPAddress endIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartIP = startIP;
             EndIP = endIP;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/> for deserialization. </summary>
+        internal RedisFirewallRuleData()
+        {
         }
 
         /// <summary> lowest IP address included in the range. </summary>

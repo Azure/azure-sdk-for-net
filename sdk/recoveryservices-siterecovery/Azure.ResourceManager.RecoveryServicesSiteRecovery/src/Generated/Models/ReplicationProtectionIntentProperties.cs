@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,12 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication protection intent custom data details. </summary>
     public partial class ReplicationProtectionIntentProperties
     {
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentProperties"/>. </summary>
         internal ReplicationProtectionIntentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationProtectionIntentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProtectionIntentProperties"/>. </summary>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="jobId"> The job Id. </param>
         /// <param name="jobState"> The job state. </param>
@@ -28,7 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="ReplicationProtectionIntentProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="A2AReplicationIntentDetails"/>.
         /// </param>
-        internal ReplicationProtectionIntentProperties(string friendlyName, ResourceIdentifier jobId, string jobState, bool? isActive, string createdOn, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProtectionIntentProperties(string friendlyName, ResourceIdentifier jobId, string jobState, bool? isActive, string createdOn, ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             JobId = jobId;
@@ -36,6 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsActive = isActive;
             CreatedOn = createdOn;
             ProviderSpecificDetails = providerSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name. </summary>

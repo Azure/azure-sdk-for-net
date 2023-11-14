@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// </summary>
     public abstract partial class TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetServiceBaseInfo"/>. </summary>
         protected TargetServiceBaseInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetServiceBaseInfo"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
-        internal TargetServiceBaseInfo(TargetServiceType targetServiceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetServiceBaseInfo(TargetServiceType targetServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetServiceType = targetServiceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The target service type. </summary>

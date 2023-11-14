@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedClusterLoadBalancingRule : IUtf8JsonSerializable
+    public partial class ManagedClusterLoadBalancingRule : IUtf8JsonSerializable, IJsonModel<ManagedClusterLoadBalancingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterLoadBalancingRule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedClusterLoadBalancingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedClusterLoadBalancingRule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedClusterLoadBalancingRule>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("frontendPort"u8);
             writer.WriteNumberValue(FrontendPort);
@@ -38,11 +49,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("loadDistribution"u8);
                 writer.WriteStringValue(LoadDistribution);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterLoadBalancingRule DeserializeManagedClusterLoadBalancingRule(JsonElement element)
+        ManagedClusterLoadBalancingRule IJsonModel<ManagedClusterLoadBalancingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterLoadBalancingRule(document.RootElement, options);
+        }
+
+        internal static ManagedClusterLoadBalancingRule DeserializeManagedClusterLoadBalancingRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ManagedClusterLoadBalanceProbeProtocol probeProtocol = default;
             Optional<string> probeRequestPath = default;
             Optional<string> loadDistribution = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frontendPort"u8))
@@ -95,8 +137,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     loadDistribution = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterLoadBalancingRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedClusterLoadBalancingRule IPersistableModel<ManagedClusterLoadBalancingRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedClusterLoadBalancingRule(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedClusterLoadBalancingRule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

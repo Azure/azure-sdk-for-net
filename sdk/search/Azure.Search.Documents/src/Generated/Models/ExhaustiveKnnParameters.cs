@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Contains the parameters specific to exhaustive KNN algorithm. </summary>
     public partial class ExhaustiveKnnParameters
     {
-        /// <summary> Initializes a new instance of ExhaustiveKnnParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnParameters"/>. </summary>
         public ExhaustiveKnnParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of ExhaustiveKnnParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExhaustiveKnnParameters"/>. </summary>
         /// <param name="metric"> The similarity metric to use for vector comparisons. </param>
-        internal ExhaustiveKnnParameters(VectorSearchAlgorithmMetric? metric)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExhaustiveKnnParameters(VectorSearchAlgorithmMetric? metric, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metric = metric;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The similarity metric to use for vector comparisons. </summary>

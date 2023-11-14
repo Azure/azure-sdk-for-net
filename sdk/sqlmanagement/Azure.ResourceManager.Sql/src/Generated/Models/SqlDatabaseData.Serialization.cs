@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,15 +16,38 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseData : IUtf8JsonSerializable
+    public partial class SqlDatabaseData : IUtf8JsonSerializable, IJsonModel<SqlDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlDatabaseData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlDatabaseData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    writer.WritePropertyName("kind"u8);
+                    writer.WriteStringValue(Kind);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ManagedBy))
+                {
+                    writer.WritePropertyName("managedBy"u8);
+                    writer.WriteStringValue(ManagedBy);
+                }
             }
             if (Optional.IsDefined(Identity))
             {
@@ -42,6 +67,29 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CreateMode))
@@ -73,6 +121,62 @@ namespace Azure.ResourceManager.Sql
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DatabaseId))
+                {
+                    writer.WritePropertyName("databaseId"u8);
+                    writer.WriteStringValue(DatabaseId.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationDate"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentServiceObjectiveName))
+                {
+                    writer.WritePropertyName("currentServiceObjectiveName"u8);
+                    writer.WriteStringValue(CurrentServiceObjectiveName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RequestedServiceObjectiveName))
+                {
+                    writer.WritePropertyName("requestedServiceObjectiveName"u8);
+                    writer.WriteStringValue(RequestedServiceObjectiveName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DefaultSecondaryLocation))
+                {
+                    writer.WritePropertyName("defaultSecondaryLocation"u8);
+                    writer.WriteStringValue(DefaultSecondaryLocation.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FailoverGroupId))
+                {
+                    writer.WritePropertyName("failoverGroupId"u8);
+                    writer.WriteStringValue(FailoverGroupId);
+                }
             }
             if (Optional.IsDefined(RestorePointInTime))
             {
@@ -119,6 +223,22 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MaxLogSizeBytes))
+                {
+                    writer.WritePropertyName("maxLogSizeBytes"u8);
+                    writer.WriteNumberValue(MaxLogSizeBytes.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EarliestRestoreOn))
+                {
+                    writer.WritePropertyName("earliestRestoreDate"u8);
+                    writer.WriteStringValue(EarliestRestoreOn.Value, "O");
+                }
+            }
             if (Optional.IsDefined(ReadScale))
             {
                 writer.WritePropertyName("readScale"u8);
@@ -134,10 +254,26 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentSku))
+                {
+                    writer.WritePropertyName("currentSku"u8);
+                    writer.WriteObjectValue(CurrentSku);
+                }
+            }
             if (Optional.IsDefined(AutoPauseDelay))
             {
                 writer.WritePropertyName("autoPauseDelay"u8);
                 writer.WriteNumberValue(AutoPauseDelay.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentBackupStorageRedundancy))
+                {
+                    writer.WritePropertyName("currentBackupStorageRedundancy"u8);
+                    writer.WriteStringValue(CurrentBackupStorageRedundancy.Value.ToString());
+                }
             }
             if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
@@ -149,6 +285,22 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PausedOn))
+                {
+                    writer.WritePropertyName("pausedDate"u8);
+                    writer.WriteStringValue(PausedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResumedOn))
+                {
+                    writer.WritePropertyName("resumedDate"u8);
+                    writer.WriteStringValue(ResumedOn.Value, "O");
+                }
+            }
             if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
@@ -158,6 +310,14 @@ namespace Azure.ResourceManager.Sql
             {
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsInfraEncryptionEnabled))
+                {
+                    writer.WritePropertyName("isInfraEncryptionEnabled"u8);
+                    writer.WriteBooleanValue(IsInfraEncryptionEnabled.Value);
+                }
             }
             if (Optional.IsDefined(FederatedClientId))
             {
@@ -221,11 +381,40 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
+        SqlDatabaseData IJsonModel<SqlDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDatabaseData(document.RootElement, options);
+        }
+
+        internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -288,6 +477,8 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> performCutover = default;
             Optional<SqlAvailabilityZoneType> availabilityZone = default;
             Optional<bool> encryptionProtectorAutoRotation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -794,8 +985,38 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(useFreeLimit), Optional.ToNullable(freeLimitExhaustionBehavior), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone), Optional.ToNullable(encryptionProtectorAutoRotation));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(useFreeLimit), Optional.ToNullable(freeLimitExhaustionBehavior), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone), Optional.ToNullable(encryptionProtectorAutoRotation), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlDatabaseData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlDatabaseData IPersistableModel<SqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlDatabaseData(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlDatabaseData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

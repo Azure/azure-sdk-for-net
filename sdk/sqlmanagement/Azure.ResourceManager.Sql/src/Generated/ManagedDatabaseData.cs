@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedDatabaseData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedDatabaseData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +57,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="lastBackupName"> Last backup file name for restore of this managed database. </param>
         /// <param name="crossSubscriptionTargetManagedInstanceId"> Target managed instance id used in cross-subscription restore. </param>
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
-        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Collation = collation;
             Status = status;
@@ -78,6 +82,12 @@ namespace Azure.ResourceManager.Sql
             LastBackupName = lastBackupName;
             CrossSubscriptionTargetManagedInstanceId = crossSubscriptionTargetManagedInstanceId;
             IsLedgerOn = isLedgerOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseData"/> for deserialization. </summary>
+        internal ManagedDatabaseData()
+        {
         }
 
         /// <summary> Collation of the managed database. </summary>

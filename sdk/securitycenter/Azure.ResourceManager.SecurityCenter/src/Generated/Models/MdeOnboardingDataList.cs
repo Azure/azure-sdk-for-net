@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of all MDE onboarding data resources. </summary>
     internal partial class MdeOnboardingDataList
     {
-        /// <summary> Initializes a new instance of MdeOnboardingDataList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MdeOnboardingDataList"/>. </summary>
         internal MdeOnboardingDataList()
         {
             Value = new ChangeTrackingList<MdeOnboarding>();
         }
 
-        /// <summary> Initializes a new instance of MdeOnboardingDataList. </summary>
+        /// <summary> Initializes a new instance of <see cref="MdeOnboardingDataList"/>. </summary>
         /// <param name="value"> List of the resources of the configuration or data needed to onboard the machine to MDE. </param>
-        internal MdeOnboardingDataList(IReadOnlyList<MdeOnboarding> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MdeOnboardingDataList(IReadOnlyList<MdeOnboarding> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of the resources of the configuration or data needed to onboard the machine to MDE. </summary>

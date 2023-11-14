@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </summary>
     public partial class AppliedScopeProperties
     {
-        /// <summary> Initializes a new instance of AppliedScopeProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppliedScopeProperties"/>. </summary>
         public AppliedScopeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AppliedScopeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedScopeProperties"/>. </summary>
         /// <param name="tenantId"> Tenant ID where the savings plan should apply benefit. </param>
         /// <param name="managementGroupId"> Fully-qualified identifier of the management group where the benefit must be applied. </param>
         /// <param name="subscriptionId"> Fully-qualified identifier of the subscription. </param>
         /// <param name="resourceGroupId"> Fully-qualified identifier of the resource group. </param>
         /// <param name="displayName"> Display name. </param>
-        internal AppliedScopeProperties(Guid? tenantId, ResourceIdentifier managementGroupId, ResourceIdentifier subscriptionId, ResourceIdentifier resourceGroupId, string displayName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppliedScopeProperties(Guid? tenantId, ResourceIdentifier managementGroupId, ResourceIdentifier subscriptionId, ResourceIdentifier resourceGroupId, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             ManagementGroupId = managementGroupId;
             SubscriptionId = subscriptionId;
             ResourceGroupId = resourceGroupId;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tenant ID where the savings plan should apply benefit. </summary>

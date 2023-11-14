@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The edition capability. </summary>
     public partial class EditionCapability
     {
-        /// <summary> Initializes a new instance of EditionCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EditionCapability"/>. </summary>
         internal EditionCapability()
         {
             SupportedServiceLevelObjectives = new ChangeTrackingList<ServiceObjectiveCapability>();
             SupportedStorageCapabilities = new ChangeTrackingList<StorageCapability>();
         }
 
-        /// <summary> Initializes a new instance of EditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="EditionCapability"/>. </summary>
         /// <param name="name"> The database edition name. </param>
         /// <param name="supportedServiceLevelObjectives"> The list of supported service objectives for the edition. </param>
         /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             SupportedServiceLevelObjectives = supportedServiceLevelObjectives;
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedStorageCapabilities = supportedStorageCapabilities;
             Status = status;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The database edition name. </summary>

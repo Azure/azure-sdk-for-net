@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The JIT scheduling policies. </summary>
     public partial class JitSchedulingPolicy
     {
-        /// <summary> Initializes a new instance of JitSchedulingPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JitSchedulingPolicy"/>. </summary>
         /// <param name="schedulingType"> The type of JIT schedule. </param>
         /// <param name="duration"> The required duration of the JIT request. </param>
         /// <param name="startOn"> The start time of the request. </param>
@@ -21,6 +25,24 @@ namespace Azure.ResourceManager.Resources.Models
             SchedulingType = schedulingType;
             Duration = duration;
             StartOn = startOn;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitSchedulingPolicy"/>. </summary>
+        /// <param name="schedulingType"> The type of JIT schedule. </param>
+        /// <param name="duration"> The required duration of the JIT request. </param>
+        /// <param name="startOn"> The start time of the request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JitSchedulingPolicy(JitSchedulingType schedulingType, TimeSpan duration, DateTimeOffset startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SchedulingType = schedulingType;
+            Duration = duration;
+            StartOn = startOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JitSchedulingPolicy"/> for deserialization. </summary>
+        internal JitSchedulingPolicy()
+        {
         }
 
         /// <summary> The type of JIT schedule. </summary>

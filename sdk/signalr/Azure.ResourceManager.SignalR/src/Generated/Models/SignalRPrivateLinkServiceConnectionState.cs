@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> Connection state of the private endpoint connection. </summary>
     public partial class SignalRPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of SignalRPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkServiceConnectionState"/>. </summary>
         public SignalRPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal SignalRPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus? status, string description, string actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRPrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>

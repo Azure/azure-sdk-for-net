@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesDataReplication;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Policy model collection. </summary>
     internal partial class DataReplicationPolicyListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationPolicyListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyListResult"/>. </summary>
         internal DataReplicationPolicyListResult()
         {
             Value = new ChangeTrackingList<DataReplicationPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of policies. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
-        internal DataReplicationPolicyListResult(IReadOnlyList<DataReplicationPolicyData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationPolicyListResult(IReadOnlyList<DataReplicationPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of policies. </summary>

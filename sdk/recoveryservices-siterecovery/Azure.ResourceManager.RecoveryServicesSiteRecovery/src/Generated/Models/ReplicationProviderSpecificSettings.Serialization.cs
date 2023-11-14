@@ -5,14 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReplicationProviderSpecificSettings
+    [PersistableModelProxy(typeof(UnknownReplicationProviderSpecificSettings))]
+    public partial class ReplicationProviderSpecificSettings : IUtf8JsonSerializable, IJsonModel<ReplicationProviderSpecificSettings>
     {
-        internal static ReplicationProviderSpecificSettings DeserializeReplicationProviderSpecificSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProviderSpecificSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ReplicationProviderSpecificSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ReplicationProviderSpecificSettings>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReplicationProviderSpecificSettings IJsonModel<ReplicationProviderSpecificSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationProviderSpecificSettings(document.RootElement, options);
+        }
+
+        internal static ReplicationProviderSpecificSettings DeserializeReplicationProviderSpecificSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,5 +84,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             return UnknownReplicationProviderSpecificSettings.DeserializeUnknownReplicationProviderSpecificSettings(element);
         }
+
+        BinaryData IPersistableModel<ReplicationProviderSpecificSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ReplicationProviderSpecificSettings IPersistableModel<ReplicationProviderSpecificSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeReplicationProviderSpecificSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<ReplicationProviderSpecificSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

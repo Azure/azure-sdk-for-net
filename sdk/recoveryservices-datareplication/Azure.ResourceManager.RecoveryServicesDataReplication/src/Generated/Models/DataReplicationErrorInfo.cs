@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Error model. </summary>
     public partial class DataReplicationErrorInfo
     {
-        /// <summary> Initializes a new instance of DataReplicationErrorInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationErrorInfo"/>. </summary>
         internal DataReplicationErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataReplicationErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationErrorInfo"/>. </summary>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="errorModelType"> Gets or sets the error type. </param>
         /// <param name="severity"> Gets or sets the error severity. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="message"> Gets or sets the error message. </param>
         /// <param name="causes"> Gets or sets the possible causes of error. </param>
         /// <param name="recommendation"> Gets or sets the recommended action to resolve error. </param>
-        internal DataReplicationErrorInfo(string code, string errorModelType, string severity, DateTimeOffset? createdOn, string message, string causes, string recommendation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationErrorInfo(string code, string errorModelType, string severity, DateTimeOffset? createdOn, string message, string causes, string recommendation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             ErrorModelType = errorModelType;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Message = message;
             Causes = causes;
             Recommendation = recommendation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the error code. </summary>
