@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.CoreWCF;
 using Azure.Storage.Queues;
 using Contracts;
 using CoreWCF.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CoreWCF.AzureQueueStorage.Tests
+namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
     public class Startup_BinaryServiceQueueTextClientQueue
     {

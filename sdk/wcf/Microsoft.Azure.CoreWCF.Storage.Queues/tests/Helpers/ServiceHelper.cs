@@ -6,7 +6,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace CoreWCF.AzureQueueStorage.Tests.Helpers
+namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers
 {
     public static class ServiceHelper
     {

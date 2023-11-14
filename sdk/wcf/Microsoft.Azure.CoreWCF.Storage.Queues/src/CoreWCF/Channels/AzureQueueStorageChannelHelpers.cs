@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using CoreWCF;
 
-namespace Azure.Storage.CoreWCF.Channels
+namespace Microsoft.CoreWCF.Azure.StorageQueues
 {
     internal static class AzureQueueStorageChannelHelpers
     {

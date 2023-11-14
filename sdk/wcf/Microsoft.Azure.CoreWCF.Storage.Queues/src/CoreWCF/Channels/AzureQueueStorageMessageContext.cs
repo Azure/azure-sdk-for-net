@@ -4,7 +4,7 @@
 using CoreWCF.Queue.Common;
 using System.Collections.Generic;
 
-namespace Azure.Storage.CoreWCF.Channels
+namespace Microsoft.CoreWCF.Azure.StorageQueues
 {
     internal class AzureQueueStorageMessageContext : QueueMessageContext
     {

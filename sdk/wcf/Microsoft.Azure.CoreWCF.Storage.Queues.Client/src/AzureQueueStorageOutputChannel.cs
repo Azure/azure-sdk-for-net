@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Queues;
 
-namespace Azure.Storage.WCF.Channels
+namespace Microsoft.WCF.Azure.StorageQueues
 {
     /// <summary>
     /// IOutputChannel implementation for AzureQueueStorage.

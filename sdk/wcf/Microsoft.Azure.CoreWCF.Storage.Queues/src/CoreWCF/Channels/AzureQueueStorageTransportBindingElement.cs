@@ -9,9 +9,8 @@ using CoreWCF.Queue.Common;
 using CoreWCF.Queue.Common.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
-namespace Azure.Storage.CoreWCF.Channels
+namespace Microsoft.CoreWCF.Azure.StorageQueues
 {
     /// <summary>
     /// Class that represents Azure Queue Storage transport binding element.

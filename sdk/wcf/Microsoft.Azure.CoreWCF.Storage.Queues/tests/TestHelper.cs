@@ -1,17 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.CoreWCF;
+using Azure.Core.Pipeline;
 using Azure.Storage.Queues;
-using Contracts;
 using CoreWCF.Configuration;
 using CoreWCF.Queue.Common.Configuration;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 
-namespace CoreWCF.AzureQueueStorage.Tests
+namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
     internal class TestHelper
     {
@@ -67,12 +65,13 @@ namespace CoreWCF.AzureQueueStorage.Tests
         }
 
         internal static QueueClient GetQueueClient(
-            Azure.Storage.Test.Shared.AzuriteFixture azuriteFixture,
+            HttpPipelineTransport transport,
+            string connectionString,
             string queueName,
             QueueMessageEncoding queueMessageEncoding)
         {
-            var transport = azuriteFixture.GetTransport();
-            var connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
+            //var transport = azuriteFixture.GetTransport();
+            //var connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
             var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport, MessageEncoding = queueMessageEncoding });
             queueClient.CreateIfNotExists();
             return queueClient;

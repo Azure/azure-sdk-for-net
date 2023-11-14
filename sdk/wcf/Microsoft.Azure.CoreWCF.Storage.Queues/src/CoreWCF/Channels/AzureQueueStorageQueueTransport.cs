@@ -12,13 +12,12 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using CoreWCF;
-using CoreWCF.Channels;
 using CoreWCF.Configuration;
 using CoreWCF.Queue.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Azure.Storage.CoreWCF.Channels
+namespace Microsoft.CoreWCF.Azure.StorageQueues
 {
     internal class AzureQueueStorageQueueTransport : IQueueTransport
     {

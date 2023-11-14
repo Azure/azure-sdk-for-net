@@ -1,10 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Queues;
 using System;
 using System.ServiceModel.Channels;
 
-namespace Azure.Storage.WCF.Channels
+namespace Microsoft.WCF.Azure.StorageQueues
 {
     /// <summary>
     /// Class that represents Azure Queue Storage transport binding element.
@@ -86,7 +87,7 @@ namespace Azure.Storage.WCF.Channels
         /// <summary>
         /// Gets the QueueMessageEncoding for the transport.
         /// </summary>
-        public Azure.Storage.Queues.QueueMessageEncoding QueueMessageEncoding { get; set; }
+        public QueueMessageEncoding QueueMessageEncoding { get; set; }
 
         /// <summary>
         /// Gets or sets the connection string of Azure queue Storage.

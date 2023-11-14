@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.Queues;
 using System;
 using System.Globalization;
 using System.ServiceModel;
 
-namespace Azure.Storage.WCF.Channels
+namespace Microsoft.WCF.Azure.StorageQueues
 {
     internal static class AzureQueueStorageChannelHelpers
     {
@@ -47,13 +48,13 @@ namespace Azure.Storage.WCF.Channels
             }
         }
 
-        internal static AzureQueueStorageMessageEncoding ConvertMessageEncoding(Azure.Storage.Queues.QueueMessageEncoding queueMessageEncoding)
+        internal static AzureQueueStorageMessageEncoding ConvertMessageEncoding(QueueMessageEncoding queueMessageEncoding)
         {
             switch (queueMessageEncoding)
             {
-                case Azure.Storage.Queues.QueueMessageEncoding.None:
+                case QueueMessageEncoding.None:
                     return AzureQueueStorageMessageEncoding.Text;
-                case Azure.Storage.Queues.QueueMessageEncoding.Base64:
+                case QueueMessageEncoding.Base64:
                     return AzureQueueStorageMessageEncoding.Binary;
                 default:
                     return AzureQueueStorageMessageEncoding.Text;

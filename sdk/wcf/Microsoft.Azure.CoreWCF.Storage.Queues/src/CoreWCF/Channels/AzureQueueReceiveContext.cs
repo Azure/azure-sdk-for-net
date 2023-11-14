@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.CoreWCF.Channels;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Storage.Queues.Models;
 using Microsoft.Extensions.Logging;
+using CoreWCF.Channels;
 
-namespace CoreWCF.Channels
+namespace Microsoft.CoreWCF.Azure.StorageQueues
 {
     internal class AzureQueueReceiveContext : ReceiveContext
     {

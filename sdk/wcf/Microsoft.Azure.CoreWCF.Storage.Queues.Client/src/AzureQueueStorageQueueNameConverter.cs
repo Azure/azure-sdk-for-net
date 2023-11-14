@@ -5,7 +5,7 @@ using System;
 using System.Net;
 using Azure.Storage.Queues;
 
-namespace Azure.Storage.WCF.Channels
+namespace Microsoft.WCF.Azure.StorageQueues
 {
     internal class AzureQueueStorageQueueNameConverter
     {

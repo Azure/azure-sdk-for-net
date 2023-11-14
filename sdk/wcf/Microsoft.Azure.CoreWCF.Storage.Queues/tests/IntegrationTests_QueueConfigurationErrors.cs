@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using CoreWCF.AzureQueueStorage.Tests.Helpers;
+using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using NUnit.Framework;
 
-namespace CoreWCF.AzureQueueStorage.Tests
+namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
     public class IntegrationTests_QueueConfigurationErrors
     {

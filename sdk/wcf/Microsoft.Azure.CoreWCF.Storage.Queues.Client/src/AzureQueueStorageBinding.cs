@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.WCF.Channels;
+using Azure.Storage.Queues;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 
-namespace Azure.Storage.WCF
+namespace Microsoft.WCF.Azure.StorageQueues
 {
     /// <summary>
     /// The class that contains the binding elements that specify the protocols, transports,
@@ -58,15 +58,15 @@ namespace Azure.Storage.WCF
             {
                 case AzureQueueStorageMessageEncoding.Binary:
                     elements.Add(_binaryMessageEncodingBindingElement);
-                    _transport.QueueMessageEncoding = Queues.QueueMessageEncoding.Base64;
+                    _transport.QueueMessageEncoding = QueueMessageEncoding.Base64;
                     break;
                 case AzureQueueStorageMessageEncoding.Text:
                     elements.Add(_textMessageEncodingBindingElement);
-                    _transport.QueueMessageEncoding = Queues.QueueMessageEncoding.None;
+                    _transport.QueueMessageEncoding = QueueMessageEncoding.None;
                     break;
                 default:
                     elements.Add(_textMessageEncodingBindingElement);
-                    _transport.QueueMessageEncoding = Queues.QueueMessageEncoding.None;
+                    _transport.QueueMessageEncoding = QueueMessageEncoding.None;
                     break;
             }
             elements.Add(_transport);

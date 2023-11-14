@@ -3,13 +3,13 @@
 
 using Azure.Storage.Queues;
 using Contracts;
-using CoreWCF.AzureQueueStorage.Tests.Helpers;
+using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace CoreWCF.AzureQueueStorage.Tests
+namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
     public class IntegrationTests_ReceiveMessage_Success
     {

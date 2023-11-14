@@ -3,7 +3,7 @@
 
 using System.ServiceModel.Channels;
 
-namespace Azure.Storage.WCF.Channels
+namespace Microsoft.WCF.Azure.StorageQueues
 {
     /// <summary>
     /// Collection of constants used by the AzureQueueStorage Channel classes

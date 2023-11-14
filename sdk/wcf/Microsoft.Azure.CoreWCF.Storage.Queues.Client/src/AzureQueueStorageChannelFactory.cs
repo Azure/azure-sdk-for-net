@@ -17,7 +17,7 @@ using System.ServiceModel.Security;
 using System.ServiceModel.Security.Tokens;
 using System.Threading.Tasks;
 
-namespace Azure.Storage.WCF.Channels
+namespace Microsoft.WCF.Azure.StorageQueues
 {
     /// <summary>
     /// IChannelFactory implementation for AzureQueueStorage.

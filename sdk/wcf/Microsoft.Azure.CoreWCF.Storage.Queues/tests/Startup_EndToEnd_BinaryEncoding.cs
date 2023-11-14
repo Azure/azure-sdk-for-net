@@ -1,17 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 #if NET6_0_OR_GREATER
-using Azure.Storage.CoreWCF;
 using Azure.Storage.Queues;
 using Contracts;
 using CoreWCF.Configuration;
-using CoreWCF.Queue.Common.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Net.Http;
 
-namespace CoreWCF.AzureQueueStorage.Tests
+namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
     public class Startup_EndToEnd_BinaryEncoding
     {

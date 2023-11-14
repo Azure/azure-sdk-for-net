@@ -3,10 +3,11 @@
 #if NET6_0_OR_GREATER
 
 using Contracts;
-using CoreWCF.AzureQueueStorage.Tests;
-using CoreWCF.AzureQueueStorage.Tests.Helpers;
+using Microsoft.CoreWCF.Azure.StorageQueues.Tests;
+using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.WCF.Azure.StorageQueues;
 using NUnit.Framework;
 using System;
 
@@ -42,7 +43,7 @@ namespace CoreWCF
             };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
 
-            Azure.Storage.WCF.AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, Azure.Storage.WCF.AzureQueueStorageMessageEncoding.Binary);
+            AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, AzureQueueStorageMessageEncoding.Binary);
             var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(
                 azureQueueStorageBinding,
                 new System.ServiceModel.EndpointAddress(endpointUrlString));
@@ -73,7 +74,7 @@ namespace CoreWCF
             };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
 
-            Azure.Storage.WCF.AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, Azure.Storage.WCF.AzureQueueStorageMessageEncoding.Text);
+            AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, AzureQueueStorageMessageEncoding.Text);
             var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(
                 azureQueueStorageBinding,
                 new System.ServiceModel.EndpointAddress(endpointUrlString));

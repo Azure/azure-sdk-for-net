@@ -4,13 +4,13 @@
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Contracts;
-using CoreWCF.AzureQueueStorage.Tests.Helpers;
+using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace CoreWCF.AzureQueueStorage.Tests
+namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
     public class IntegrationTests_Test_DeadLetterQueue
     {
@@ -39,7 +39,9 @@ namespace CoreWCF.AzureQueueStorage.Tests
 
             var testService = host.Services.GetRequiredService<TestService>();
             Assert.False(testService.ManualResetEvent.Wait(System.TimeSpan.FromSeconds(5)));
-            QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance, "deadletter-queue-name", QueueMessageEncoding.Base64);
+            var connectionString = AzuriteNUnitFixture.Instance.GetAzureAccount().ConnectionString;
+
+            QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance.GetTransport(), connectionString, "deadletter-queue-name", QueueMessageEncoding.Base64);
             QueueMessage message = await queueClient.ReceiveMessageAsync();
             Assert.AreEqual(inputMessage, message.MessageText);
         }

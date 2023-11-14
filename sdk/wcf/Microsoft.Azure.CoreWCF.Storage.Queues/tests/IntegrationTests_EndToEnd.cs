@@ -5,10 +5,11 @@
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using Contracts;
-using CoreWCF.AzureQueueStorage.Tests;
-using CoreWCF.AzureQueueStorage.Tests.Helpers;
+using Microsoft.CoreWCF.Azure.StorageQueues.Tests;
+using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.WCF.Azure.StorageQueues;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace CoreWCF
             };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
 
-            Azure.Storage.WCF.AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, Azure.Storage.WCF.AzureQueueStorageMessageEncoding.Text);
+            AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, AzureQueueStorageMessageEncoding.Text);
             var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(
                 azureQueueStorageBinding,
                 new System.ServiceModel.EndpointAddress(endpointUrlString));
@@ -76,7 +77,7 @@ namespace CoreWCF
             };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
 
-            Azure.Storage.WCF.AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, Azure.Storage.WCF.AzureQueueStorageMessageEncoding.Binary);
+            AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, AzureQueueStorageMessageEncoding.Binary);
             var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(
                 azureQueueStorageBinding,
                 new System.ServiceModel.EndpointAddress(endpointUrlString));
@@ -92,7 +93,7 @@ namespace CoreWCF
 
             var testService = host.Services.GetRequiredService<TestService_EndToEnd>();
             Assert.False(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
-            QueueClient queueClient = TestHelper.GetQueueClient(AzuriteNUnitFixture.Instance, "deadletter-queue-name", QueueMessageEncoding.Base64);
+            QueueClient queueClient = TestHelper.GetQueueClient(azuriteFixture.GetTransport(), connectionString, "deadletter-queue-name", QueueMessageEncoding.Base64);
             QueueMessage message = await queueClient.ReceiveMessageAsync();
             Assert.IsNotNull(message.MessageText);
         }

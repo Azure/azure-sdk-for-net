@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Storage.CoreWCF.Channels;
 using System;
 
-namespace Azure.Storage.CoreWCF
+namespace Microsoft.CoreWCF.Azure.StorageQueues
 {
     /// <summary>
     /// The class storing transport security information.

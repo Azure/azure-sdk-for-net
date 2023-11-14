@@ -5,7 +5,7 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CoreWCF.AzureQueueStorage.Tests.Helpers
+namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers
 {
     internal class DependencyResolverHelper
     {

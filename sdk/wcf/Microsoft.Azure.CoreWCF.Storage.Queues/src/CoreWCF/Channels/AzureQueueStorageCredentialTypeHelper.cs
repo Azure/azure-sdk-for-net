@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Storage.CoreWCF.Channels
+namespace Microsoft.CoreWCF.Azure.StorageQueues
 {
     /// <summary>
     /// The enum for Azure storage credentials

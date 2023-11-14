@@ -8,10 +8,10 @@ using System;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Threading;
-using Azure.Storage.WCF;
 using System.ServiceModel.Security;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Test.Shared;
+using Microsoft.WCF.Azure.StorageQueues;
 
 namespace WCF.AzureQueueStorage.Tests
 {
