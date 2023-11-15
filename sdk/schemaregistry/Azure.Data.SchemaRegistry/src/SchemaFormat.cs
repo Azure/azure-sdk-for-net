@@ -76,11 +76,11 @@ namespace Azure.Data.SchemaRegistry
 
         internal static SchemaFormat FromContentType(string contentTypeValue)
         {
-            var contentEquals = contentTypeValue.Split('=');
-            var contentParen = contentTypeValue.Split('/');
-            if (contentEquals.Length > 1)
+            var contentTypeParameterValue = contentTypeValue.Split('=');
+            var contentSubType = contentTypeValue.Split('/');
+            if (contentTypeParameterValue.Length > 1)
             {
-                switch (contentEquals[1])
+                switch (contentTypeParameterValue[1])
                 {
                     case AvroContentType:
                         return SchemaFormat.Avro;
@@ -90,7 +90,7 @@ namespace Azure.Data.SchemaRegistry
                         break;
                 }
             }
-            return contentParen[1] switch
+            return contentSubType[1] switch
             {
                 ProtobufContentType => SchemaFormat.Protobuf,
                 _ => SchemaFormat.Custom,
