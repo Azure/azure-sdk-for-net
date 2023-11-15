@@ -4,7 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.Globalization;
+using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 using Xunit;
@@ -81,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var activityTagsProcessor = new ActivityTagsProcessor();
 
-            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?> { ["somekey"] = "value" }; ;
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?> { ["somekey"] = "value" };
             using var activity = CreateTestActivity(tagObjects);
             activityTagsProcessor.CategorizeTags(activity);
 
@@ -342,6 +343,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal("TestUser", activityTagsProcessor.EndUserId);
+        }
+
+        [Theory]
+        [InlineData("en-US")] // French culture
+        [InlineData("de-DE")] // German culture
+        public void TagObjects_TestCulture(string cultureName)
+        {
+            var activityTagsProcessor = new ActivityTagsProcessor();
+            var originalCulture = Thread.CurrentThread.CurrentCulture;
+            var cultureInfo = new CultureInfo(cultureName);
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+
+            var doubleArray = new double[] { 1.1, 2.2, 3.3 };
+            var doubleValue = 123.45;
+
+            IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
+            {
+                ["doubleArray"] = doubleArray,
+                ["double"] = doubleValue,
+            };
+
+            using var activity = CreateTestActivity(tagObjects);
+            activityTagsProcessor.CategorizeTags(activity);
+
+            var result = doubleArray.ToCommaDelimitedString(cultureInfo);
+
+            Assert.NotEqual("1.1,2.2,3.3", result);
+            Assert.NotEqual("123.45", doubleValue.ToString(cultureInfo));
+
+            Assert.Equal("1.1,2.2,3.3", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "doubleArray"));
+            Assert.Equal("123.45", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "double"));
+
+            // Cleanup: Revert to the original culture
+            Thread.CurrentThread.CurrentCulture = originalCulture;
         }
 
         private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object?>>? additionalAttributes = null, ActivityKind activityKind = ActivityKind.Server)
