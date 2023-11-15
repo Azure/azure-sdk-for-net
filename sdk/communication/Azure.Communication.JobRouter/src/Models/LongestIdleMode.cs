@@ -4,14 +4,12 @@
 using System.Text.Json;
 using Azure.Core;
 
-#nullable disable
-
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are directed to the worker who has been idle longest. </summary>
     public partial class LongestIdleMode : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of LongestIdleModePolicy. </summary>
+        /// <summary> Initializes a new instance of LongestIdleMode. </summary>
         public LongestIdleMode()
         {
             Kind = DistributionModeKind.LongestIdle;

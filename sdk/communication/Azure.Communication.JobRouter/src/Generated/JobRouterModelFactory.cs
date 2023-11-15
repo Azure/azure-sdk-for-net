@@ -14,15 +14,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> Model factory for models. </summary>
     public static partial class JobRouterModelFactory
     {
-        /// <summary> Initializes a new instance of ExpressionRouterRule. </summary>
-        /// <param name="language"> The expression language to compile to and execute. </param>
-        /// <param name="expression"> The string containing the expression to evaluate. Should contain return statement with calculated values. </param>
-        /// <returns> A new <see cref="JobRouter.ExpressionRouterRule"/> instance for mocking. </returns>
-        public static ExpressionRouterRule ExpressionRouterRule(string language = null, string expression = null)
-        {
-            return new ExpressionRouterRule(RouterRuleKind.Expression, language, expression);
-        }
-
         /// <summary> Initializes a new instance of FunctionRouterRule. </summary>
         /// <param name="functionUri"> URL for Azure Function. </param>
         /// <param name="credential"> Credentials used to access Azure function rule. </param>
@@ -148,7 +139,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of ExceptionRule. </summary>
-        /// <param name="id"> Id of the exception rule. </param>
+        /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
         /// <param name="actions"> A collection of actions to perform once the exception is triggered. </param>
         /// <returns> A new <see cref="JobRouter.ExceptionRule"/> instance for mocking. </returns>
@@ -178,8 +169,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
         /// <param name="id"> Unique Id of the exception action. </param>
-        /// <param name="note"> A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
-        /// <param name="dispositionCode"> Indicates the outcome of the job, populate this field with your own custom values. </param>
+        /// <param name="note"> A note that will be appended to a job's notes collection with the current timestamp. </param>
+        /// <param name="dispositionCode"> Indicates the outcome of a job, populate this field with your own custom values. </param>
         /// <returns> A new <see cref="JobRouter.CancelExceptionAction"/> instance for mocking. </returns>
         public static CancelExceptionAction CancelExceptionAction(string id = null, string note = null, string dispositionCode = null)
         {
@@ -200,11 +191,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
-        /// <param name="assignmentId"> The Id of the job assignment. </param>
-        /// <param name="workerId"> The Id of the Worker assigned to the job. </param>
-        /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
-        /// <param name="completedAt"> The time the job was marked as completed after being assigned in UTC. </param>
-        /// <param name="closedAt"> The time the job was marked as closed after being completed in UTC. </param>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
+        /// <param name="workerId"> Id of the Worker assigned to the job. </param>
+        /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
+        /// <param name="completedAt"> Timestamp when the job was marked as completed after being assigned in UTC. </param>
+        /// <param name="closedAt"> Timestamp when the job was marked as closed after being completed in UTC. </param>
         /// <returns> A new <see cref="JobRouter.RouterJobAssignment"/> instance for mocking. </returns>
         public static RouterJobAssignment RouterJobAssignment(string assignmentId = null, string workerId = null, DateTimeOffset assignedAt = default, DateTimeOffset? completedAt = null, DateTimeOffset? closedAt = null)
         {
@@ -221,7 +212,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
-        /// <param name="scheduleAt"> Scheduled time. </param>
+        /// <param name="scheduleAt"> Requested schedule time. </param>
         /// <returns> A new <see cref="JobRouter.ScheduleAndSuspendMode"/> instance for mocking. </returns>
         public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset scheduleAt = default)
         {
@@ -229,7 +220,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of UnassignJobResult. </summary>
-        /// <param name="jobId"> The Id of the job unassigned. </param>
+        /// <param name="jobId"> Id of an unassigned job. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <returns> A new <see cref="JobRouter.UnassignJobResult"/> instance for mocking. </returns>
@@ -244,9 +235,9 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of AcceptJobOfferResult. </summary>
-        /// <param name="assignmentId"> The assignment Id that assigns a worker that has accepted an offer to a job. </param>
-        /// <param name="jobId"> The Id of the job assigned. </param>
-        /// <param name="workerId"> The Id of the worker that has been assigned this job. </param>
+        /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
+        /// <param name="jobId"> Id of the job assigned. </param>
+        /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/>, <paramref name="jobId"/> or <paramref name="workerId"/> is null. </exception>
         /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
         public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
@@ -268,7 +259,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of RouterChannel. </summary>
-        /// <param name="channelId"> Id of the channel. </param>
+        /// <param name="channelId"> Id of a channel. </param>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. </param>
         /// <returns> A new <see cref="JobRouter.RouterChannel"/> instance for mocking. </returns>
@@ -278,11 +269,11 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of RouterJobOffer. </summary>
-        /// <param name="offerId"> The Id of the offer. </param>
-        /// <param name="jobId"> The Id of the job. </param>
+        /// <param name="offerId"> Id of an offer. </param>
+        /// <param name="jobId"> Id of the job. </param>
         /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
-        /// <param name="offeredAt"> The time the offer was created in UTC. </param>
-        /// <param name="expiresAt"> The time that the offer will expire in UTC. </param>
+        /// <param name="offeredAt"> Timestamp when the offer was created in UTC. </param>
+        /// <param name="expiresAt"> Timestamp when the offer will expire in UTC. </param>
         /// <returns> A new <see cref="JobRouter.RouterJobOffer"/> instance for mocking. </returns>
         public static RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = default, DateTimeOffset? offeredAt = null, DateTimeOffset? expiresAt = null)
         {
@@ -290,8 +281,8 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of RouterWorkerAssignment. </summary>
-        /// <param name="assignmentId"> The Id of the assignment. </param>
-        /// <param name="jobId"> The Id of the Job assigned. </param>
+        /// <param name="assignmentId"> Id of the assignment. </param>
+        /// <param name="jobId"> Id of the job assigned. </param>
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
         /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> or <paramref name="jobId"/> is null. </exception>
