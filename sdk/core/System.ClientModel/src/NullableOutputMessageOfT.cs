@@ -14,7 +14,7 @@ public class NullableOutputMessage<T> : OutputMessage
     {
         if (response is null) throw new ArgumentNullException(nameof(response));
 
-        _response = response!;
+        _response = response;
         _value = value;
     }
 

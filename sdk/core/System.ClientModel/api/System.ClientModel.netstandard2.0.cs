@@ -66,6 +66,7 @@ namespace System.ClientModel
         public RequestOptions() { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
+        public virtual System.ClientModel.Primitives.MessageHeaders RequestHeaders { get { throw null; } }
         public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
     }
 }

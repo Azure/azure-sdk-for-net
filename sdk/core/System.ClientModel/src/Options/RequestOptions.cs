@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace System.ClientModel;
@@ -15,6 +16,11 @@ namespace System.ClientModel;
 // Note: I was calling this RequestOptions, but I'm changing it back to RequestOptions.
 public class RequestOptions : PipelineOptions
 {
+    public RequestOptions()
+    {
+        RequestHeaders = new PipelineRequestHeaders();
+    }
+
     public virtual void Apply(PipelineMessage message)
     {
         // Wire up options on message
@@ -28,7 +34,18 @@ public class RequestOptions : PipelineOptions
         {
             ResponseBufferingPolicy.SetNetworkTimeout(message, NetworkTimeout.Value);
         }
+
+        // Add headers to message
+        // TODO: improve this implementation
+        // TODO: Add tests for this - that it adds all headers, including ones whose values aren't collections
+        RequestHeaders.TryGetHeaders(out IEnumerable<KeyValuePair<string, string>> headers);
+        foreach (var header in headers)
+        {
+            message.Request.Headers.Add(header.Key, header.Value);
+        }
     }
+
+    public virtual MessageHeaders RequestHeaders { get; }
 
     public virtual ErrorBehavior ErrorBehavior { get; set; } = ErrorBehavior.Default;
 
