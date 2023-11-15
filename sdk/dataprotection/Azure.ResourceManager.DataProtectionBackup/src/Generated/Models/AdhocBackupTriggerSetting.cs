@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Adhoc backup trigger option. </summary>
     internal partial class AdhocBackupTriggerSetting
     {
-        /// <summary> Initializes a new instance of AdhocBackupTriggerSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupTriggerSetting"/>. </summary>
         public AdhocBackupTriggerSetting()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdhocBackupTriggerSetting"/>. </summary>
+        /// <param name="retentionTagOverride"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AdhocBackupTriggerSetting(string retentionTagOverride, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RetentionTagOverride = retentionTagOverride;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the retention tag override. </summary>

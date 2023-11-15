@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The AssignmentPrincipal. </summary>
     public partial class AssignmentPrincipal
     {
-        /// <summary> Initializes a new instance of AssignmentPrincipal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentPrincipal"/>. </summary>
         /// <param name="principalId"> The principal id being assigned to. </param>
         /// <param name="principalType"> The Type of the principal ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="principalType"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             PrincipalMetadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentPrincipal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentPrincipal"/>. </summary>
         /// <param name="principalId"> The principal id being assigned to. </param>
         /// <param name="principalType"> The Type of the principal ID. </param>
         /// <param name="principalMetadata"> Other metadata for the principal. </param>
-        internal AssignmentPrincipal(string principalId, string principalType, IDictionary<string, string> principalMetadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignmentPrincipal(string principalId, string principalType, IDictionary<string, string> principalMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalId = principalId;
             PrincipalType = principalType;
             PrincipalMetadata = principalMetadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssignmentPrincipal"/> for deserialization. </summary>
+        internal AssignmentPrincipal()
+        {
         }
 
         /// <summary> The principal id being assigned to. </summary>

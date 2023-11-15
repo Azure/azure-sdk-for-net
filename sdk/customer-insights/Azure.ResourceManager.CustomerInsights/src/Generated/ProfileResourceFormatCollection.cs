@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileResourceFormatProfilesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileResourceFormatProfilesRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _profileResourceFormatProfilesRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ProfileResourceFormatResource(Client, ProfileResourceFormatData.DeserializeProfileResourceFormatData(e)), _profileResourceFormatProfilesClientDiagnostics, Pipeline, "ProfileResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

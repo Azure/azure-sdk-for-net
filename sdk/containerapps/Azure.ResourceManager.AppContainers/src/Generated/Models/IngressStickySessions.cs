@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Sticky Sessions for Single Revision Mode. </summary>
     internal partial class IngressStickySessions
     {
-        /// <summary> Initializes a new instance of IngressStickySessions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngressStickySessions"/>. </summary>
         public IngressStickySessions()
         {
         }
 
-        /// <summary> Initializes a new instance of IngressStickySessions. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngressStickySessions"/>. </summary>
         /// <param name="affinity"> Sticky Session Affinity. </param>
-        internal IngressStickySessions(Affinity? affinity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngressStickySessions(Affinity? affinity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Affinity = affinity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sticky Session Affinity. </summary>

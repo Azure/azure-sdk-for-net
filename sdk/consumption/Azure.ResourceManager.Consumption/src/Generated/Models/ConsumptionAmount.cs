@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The amount plus currency . </summary>
     public partial class ConsumptionAmount
     {
-        /// <summary> Initializes a new instance of ConsumptionAmount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionAmount"/>. </summary>
         internal ConsumptionAmount()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionAmount. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionAmount"/>. </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
-        internal ConsumptionAmount(string currency, decimal? value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionAmount(string currency, decimal? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Currency = currency;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Amount currency. </summary>

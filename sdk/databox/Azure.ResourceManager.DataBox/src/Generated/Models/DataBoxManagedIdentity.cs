@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Managed identity properties. </summary>
     public partial class DataBoxManagedIdentity
     {
-        /// <summary> Initializes a new instance of DataBoxManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxManagedIdentity"/>. </summary>
         public DataBoxManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxManagedIdentity"/>. </summary>
         /// <param name="identityType"> Managed service identity type. </param>
         /// <param name="userAssigned"> User assigned identity properties. </param>
-        internal DataBoxManagedIdentity(string identityType, DataBoxUserAssignedIdentity userAssigned)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxManagedIdentity(string identityType, DataBoxUserAssignedIdentity userAssigned, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssigned = userAssigned;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Managed service identity type. </summary>

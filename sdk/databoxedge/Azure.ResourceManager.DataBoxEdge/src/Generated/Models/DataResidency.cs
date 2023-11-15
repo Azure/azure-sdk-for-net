@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Wraps data-residency related information for edge-resource and this should be used with ARM layer. </summary>
     internal partial class DataResidency
     {
-        /// <summary> Initializes a new instance of DataResidency. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataResidency"/>. </summary>
         public DataResidency()
         {
         }
 
-        /// <summary> Initializes a new instance of DataResidency. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataResidency"/>. </summary>
         /// <param name="residencyType"> DataResidencyType enum. </param>
-        internal DataResidency(DataBoxEdgeDataResidencyType? residencyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataResidency(DataBoxEdgeDataResidencyType? residencyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResidencyType = residencyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> DataResidencyType enum. </summary>

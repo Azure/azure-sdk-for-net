@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> The DominantSpeaker. </summary>
     public partial class DominantSpeaker : MediaInput
     {
-        /// <summary> Initializes a new instance of DominantSpeaker. </summary>
+        /// <summary> Initializes a new instance of <see cref="DominantSpeaker"/>. </summary>
         /// <param name="call"> The id of the teams meeting or call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="call"/> is null. </exception>
         public DominantSpeaker(string call)
@@ -25,14 +26,20 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaInputType.DominantSpeaker;
         }
 
-        /// <summary> Initializes a new instance of DominantSpeaker. </summary>
+        /// <summary> Initializes a new instance of <see cref="DominantSpeaker"/>. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="call"> The id of the teams meeting or call. </param>
-        internal DominantSpeaker(MediaInputType kind, string placeholderImageUri, string call) : base(kind, placeholderImageUri)
+        internal DominantSpeaker(MediaInputType kind, string placeholderImageUri, IDictionary<string, BinaryData> serializedAdditionalRawData, string call) : base(kind, placeholderImageUri, serializedAdditionalRawData)
         {
             Call = call;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DominantSpeaker"/> for deserialization. </summary>
+        internal DominantSpeaker()
+        {
         }
 
         /// <summary> The id of the teams meeting or call. </summary>

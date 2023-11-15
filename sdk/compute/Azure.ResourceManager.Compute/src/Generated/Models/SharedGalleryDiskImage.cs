@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the disk image base class. </summary>
     public partial class SharedGalleryDiskImage
     {
-        /// <summary> Initializes a new instance of SharedGalleryDiskImage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryDiskImage"/>. </summary>
         internal SharedGalleryDiskImage()
         {
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryDiskImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryDiskImage"/>. </summary>
         /// <param name="diskSizeGB"> This property indicates the size of the VHD to be created. </param>
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
-        internal SharedGalleryDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharedGalleryDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskSizeGB = diskSizeGB;
             HostCaching = hostCaching;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This property indicates the size of the VHD to be created. </summary>

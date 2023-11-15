@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The RestoreJobRecoveryPointDetails. </summary>
     public partial class RestoreJobRecoveryPointDetails
     {
-        /// <summary> Initializes a new instance of RestoreJobRecoveryPointDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestoreJobRecoveryPointDetails"/>. </summary>
         internal RestoreJobRecoveryPointDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RestoreJobRecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreJobRecoveryPointDetails"/>. </summary>
         /// <param name="recoveryPointId"></param>
         /// <param name="recoverOn"></param>
-        internal RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoverOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoverOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecoveryPointId = recoveryPointId;
             RecoverOn = recoverOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the recovery point id. </summary>

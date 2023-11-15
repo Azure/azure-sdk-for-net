@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> SSH configuration for Linux-based VMs running on Azure. </summary>
     public partial class ContainerServiceSshConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerServiceSshConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSshConfiguration"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicKeys"/> is null. </exception>
         public ContainerServiceSshConfiguration(IEnumerable<ContainerServiceSshPublicKey> publicKeys)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.ContainerService.Models
             PublicKeys = publicKeys.ToList();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceSshConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSshConfiguration"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
-        internal ContainerServiceSshConfiguration(IList<ContainerServiceSshPublicKey> publicKeys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceSshConfiguration(IList<ContainerServiceSshPublicKey> publicKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicKeys = publicKeys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSshConfiguration"/> for deserialization. </summary>
+        internal ContainerServiceSshConfiguration()
+        {
         }
 
         /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>

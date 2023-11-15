@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> IpAddressOrRange object. </summary>
     public partial class CosmosDBIPAddressOrRange
     {
-        /// <summary> Initializes a new instance of CosmosDBIPAddressOrRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBIPAddressOrRange"/>. </summary>
         public CosmosDBIPAddressOrRange()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBIPAddressOrRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBIPAddressOrRange"/>. </summary>
         /// <param name="ipAddressOrRange"> A single IPv4 address or a single IPv4 address range in CIDR format. Provided IPs must be well-formatted and cannot be contained in one of the following ranges: 10.0.0.0/8, 100.64.0.0/10, 172.16.0.0/12, 192.168.0.0/16, since these are not enforceable by the IP address filter. Example of valid inputs: “23.40.210.245” or “23.40.210.0/8”. </param>
-        internal CosmosDBIPAddressOrRange(string ipAddressOrRange)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBIPAddressOrRange(string ipAddressOrRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddressOrRange = ipAddressOrRange;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A single IPv4 address or a single IPv4 address range in CIDR format. Provided IPs must be well-formatted and cannot be contained in one of the following ranges: 10.0.0.0/8, 100.64.0.0/10, 172.16.0.0/12, 192.168.0.0/16, since these are not enforceable by the IP address filter. Example of valid inputs: “23.40.210.245” or “23.40.210.0/8”. </summary>

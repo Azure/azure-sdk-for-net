@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to Azure Database for PostgreSQL and target server requirements for Oracle source. </summary>
     internal partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
         public ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(PostgreSqlConnectionInfo targetConnectionInfo)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
 
             TargetConnectionInfo = targetConnectionInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput"/>. </summary>
+        /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(PostgreSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TargetConnectionInfo = targetConnectionInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput"/> for deserialization. </summary>
+        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput()
+        {
         }
 
         /// <summary> Connection information for target Azure Database for PostgreSQL server. </summary>

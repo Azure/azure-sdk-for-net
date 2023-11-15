@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     /// <summary> Object representing DeploymentType for Managed CCF. </summary>
     public partial class ConfidentialLedgerDeploymentType
     {
-        /// <summary> Initializes a new instance of ConfidentialLedgerDeploymentType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerDeploymentType"/>. </summary>
         public ConfidentialLedgerDeploymentType()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerDeploymentType. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialLedgerDeploymentType"/>. </summary>
         /// <param name="languageRuntime"> Unique name for the Managed CCF. </param>
         /// <param name="appSourceUri"> Source Uri containing ManagedCCF code. </param>
-        internal ConfidentialLedgerDeploymentType(ConfidentialLedgerLanguageRuntime? languageRuntime, Uri appSourceUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfidentialLedgerDeploymentType(ConfidentialLedgerLanguageRuntime? languageRuntime, Uri appSourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LanguageRuntime = languageRuntime;
             AppSourceUri = appSourceUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique name for the Managed CCF. </summary>

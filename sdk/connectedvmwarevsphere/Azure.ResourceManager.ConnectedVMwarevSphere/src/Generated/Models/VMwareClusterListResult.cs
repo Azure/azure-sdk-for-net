@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of Clusters. </summary>
     internal partial class VMwareClusterListResult
     {
-        /// <summary> Initializes a new instance of VMwareClusterListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterListResult"/>. </summary>
         /// <param name="value"> Array of Clusters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareClusterListResult(IEnumerable<VMwareClusterData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VMwareClusterListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of Clusters. </param>
         /// <param name="value"> Array of Clusters. </param>
-        internal VMwareClusterListResult(string nextLink, IReadOnlyList<VMwareClusterData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareClusterListResult(string nextLink, IReadOnlyList<VMwareClusterData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareClusterListResult"/> for deserialization. </summary>
+        internal VMwareClusterListResult()
+        {
         }
 
         /// <summary> Url to follow for getting next page of Clusters. </summary>

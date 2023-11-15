@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    internal partial class ConfidentialComputeProperties : IUtf8JsonSerializable
+    internal partial class ConfidentialComputeProperties : IUtf8JsonSerializable, IJsonModel<ConfidentialComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialComputeProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConfidentialComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConfidentialComputeProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConfidentialComputeProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CcePolicy))
             {
                 writer.WritePropertyName("ccePolicy"u8);
                 writer.WriteStringValue(CcePolicy);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfidentialComputeProperties DeserializeConfidentialComputeProperties(JsonElement element)
+        ConfidentialComputeProperties IJsonModel<ConfidentialComputeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfidentialComputeProperties(document.RootElement, options);
+        }
+
+        internal static ConfidentialComputeProperties DeserializeConfidentialComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ccePolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ccePolicy"u8))
@@ -37,8 +79,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     ccePolicy = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfidentialComputeProperties(ccePolicy.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConfidentialComputeProperties(ccePolicy.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfidentialComputeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConfidentialComputeProperties IPersistableModel<ConfidentialComputeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConfidentialComputeProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConfidentialComputeProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

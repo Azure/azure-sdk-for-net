@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual AsyncPageable<CosmosDBForPostgreSqlRoleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlRoleRolesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlRoleResource(Client, CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(e)), _cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlRoleCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CosmosDBForPostgreSqlRoleResource(Client, CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(e)), _cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlRoleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual Pageable<CosmosDBForPostgreSqlRoleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlRoleRolesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlRoleResource(Client, CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(e)), _cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlRoleCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CosmosDBForPostgreSqlRoleResource(Client, CosmosDBForPostgreSqlRoleData.DeserializeCosmosDBForPostgreSqlRoleData(e)), _cosmosDBForPostgreSqlRoleRolesClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlRoleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

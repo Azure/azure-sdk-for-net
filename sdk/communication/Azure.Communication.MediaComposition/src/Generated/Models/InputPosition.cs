@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.MediaComposition.Models
 {
     /// <summary> The (x,y) position on scene or input group. </summary>
     public partial class InputPosition
     {
-        /// <summary> Initializes a new instance of InputPosition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InputPosition"/>. </summary>
         /// <param name="x"> The x-position. </param>
         /// <param name="y"> The y-position. </param>
         public InputPosition(int x, int y)
         {
             X = x;
             Y = y;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InputPosition"/>. </summary>
+        /// <param name="x"> The x-position. </param>
+        /// <param name="y"> The y-position. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InputPosition(int x, int y, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            X = x;
+            Y = y;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InputPosition"/> for deserialization. </summary>
+        internal InputPosition()
+        {
         }
 
         /// <summary> The x-position. </summary>

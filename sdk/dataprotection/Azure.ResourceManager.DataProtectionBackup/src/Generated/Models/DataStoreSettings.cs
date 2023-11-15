@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -14,20 +17,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataStoreSettings
     {
-        /// <summary> Initializes a new instance of DataStoreSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/>. </summary>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         protected DataStoreSettings(DataStoreType dataStoreType)
         {
             DataStoreType = dataStoreType;
         }
 
-        /// <summary> Initializes a new instance of DataStoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
-        internal DataStoreSettings(string objectType, DataStoreType dataStoreType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataStoreSettings(string objectType, DataStoreType dataStoreType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ObjectType = objectType;
             DataStoreType = dataStoreType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/> for deserialization. </summary>
+        internal DataStoreSettings()
+        {
         }
 
         /// <summary> Type of the specific object - used for deserializing. </summary>

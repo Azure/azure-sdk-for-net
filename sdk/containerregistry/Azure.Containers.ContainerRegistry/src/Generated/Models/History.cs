@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> A list of unstructured historical data for v1 compatibility. </summary>
     internal partial class History
     {
-        /// <summary> Initializes a new instance of History. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="History"/>. </summary>
         internal History()
         {
         }
 
-        /// <summary> Initializes a new instance of History. </summary>
+        /// <summary> Initializes a new instance of <see cref="History"/>. </summary>
         /// <param name="v1Compatibility"> The raw v1 compatibility information. </param>
-        internal History(string v1Compatibility)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal History(string v1Compatibility, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             V1Compatibility = v1Compatibility;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The raw v1 compatibility information. </summary>

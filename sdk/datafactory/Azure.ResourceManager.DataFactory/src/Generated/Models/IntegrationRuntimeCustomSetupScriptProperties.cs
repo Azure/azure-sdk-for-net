@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,18 +14,23 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
     public partial class IntegrationRuntimeCustomSetupScriptProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeCustomSetupScriptProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         public IntegrationRuntimeCustomSetupScriptProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeCustomSetupScriptProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeCustomSetupScriptProperties"/>. </summary>
         /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
         /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
-        internal IntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, DataFactorySecretString sasToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, DataFactorySecretString sasToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobContainerUri = blobContainerUri;
             SasToken = sasToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The URI of the Azure blob container that contains the custom setup script. </summary>

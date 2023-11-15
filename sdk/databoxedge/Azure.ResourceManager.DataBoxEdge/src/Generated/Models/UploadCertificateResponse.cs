@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The upload registration certificate response. </summary>
     public partial class UploadCertificateResponse
     {
-        /// <summary> Initializes a new instance of UploadCertificateResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateResponse"/>. </summary>
         internal UploadCertificateResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of UploadCertificateResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadCertificateResponse"/>. </summary>
         /// <param name="authType"> Specifies authentication type. </param>
         /// <param name="resourceId"> The resource ID of the Data Box Edge/Gateway device. </param>
         /// <param name="aadAuthority"> Azure Active Directory tenant authority. </param>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="servicePrincipalObjectId"> Azure Active Directory service principal object ID. </param>
         /// <param name="azureManagementEndpointAudience"> The azure management endpoint audience. </param>
         /// <param name="aadAudience"> Identifier of the target resource that is the recipient of the requested token. </param>
-        internal UploadCertificateResponse(DataBoxEdgeAuthenticationType? authType, string resourceId, string aadAuthority, Guid? aadTenantId, Guid? servicePrincipalClientId, Guid? servicePrincipalObjectId, string azureManagementEndpointAudience, string aadAudience)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UploadCertificateResponse(DataBoxEdgeAuthenticationType? authType, string resourceId, string aadAuthority, Guid? aadTenantId, Guid? servicePrincipalClientId, Guid? servicePrincipalObjectId, string azureManagementEndpointAudience, string aadAudience, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
             ResourceId = resourceId;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ServicePrincipalObjectId = servicePrincipalObjectId;
             AzureManagementEndpointAudience = azureManagementEndpointAudience;
             AadAudience = aadAudience;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies authentication type. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedCosmosDBSqlStoredProcedureResourceInfo. </summary>
     public partial class ExtendedCosmosDBSqlStoredProcedureResourceInfo : CosmosDBSqlStoredProcedureResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlStoredProcedureResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
         /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         public ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName) : base(storedProcedureName)
@@ -22,17 +23,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(storedProcedureName, nameof(storedProcedureName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlStoredProcedureResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
         /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <param name="body"> Body of the Stored Procedure. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName, string body, string rid, float? timestamp, ETag? etag) : base(storedProcedureName, body)
+        internal ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName, string body, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(storedProcedureName, body, serializedAdditionalRawData)
         {
             Rid = rid;
             Timestamp = timestamp;
             ETag = etag;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlStoredProcedureResourceInfo"/> for deserialization. </summary>
+        internal ExtendedCosmosDBSqlStoredProcedureResourceInfo()
+        {
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

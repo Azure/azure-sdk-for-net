@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    public partial class EmailContent : IUtf8JsonSerializable
+    public partial class EmailContent : IUtf8JsonSerializable, IJsonModel<EmailContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EmailContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EmailContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EmailContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("subject"u8);
             writer.WriteStringValue(Subject);
@@ -27,7 +38,98 @@ namespace Azure.Communication.Email
                 writer.WritePropertyName("html"u8);
                 writer.WriteStringValue(Html);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        EmailContent IJsonModel<EmailContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EmailContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmailContent(document.RootElement, options);
+        }
+
+        internal static EmailContent DeserializeEmailContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string subject = default;
+            Optional<string> plainText = default;
+            Optional<string> html = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("subject"u8))
+                {
+                    subject = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("plainText"u8))
+                {
+                    plainText = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("html"u8))
+                {
+                    html = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EmailContent(subject, plainText.Value, html.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EmailContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EmailContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EmailContent IPersistableModel<EmailContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EmailContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEmailContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<EmailContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

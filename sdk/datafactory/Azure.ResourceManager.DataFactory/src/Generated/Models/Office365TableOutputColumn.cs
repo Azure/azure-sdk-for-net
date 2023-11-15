@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The columns to be read out from the Office 365 table. </summary>
     public partial class Office365TableOutputColumn
     {
-        /// <summary> Initializes a new instance of Office365TableOutputColumn. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Office365TableOutputColumn"/>. </summary>
         public Office365TableOutputColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of Office365TableOutputColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365TableOutputColumn"/>. </summary>
         /// <param name="name"> Name of the table column. Type: string. </param>
-        internal Office365TableOutputColumn(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Office365TableOutputColumn(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the table column. Type: string. </summary>

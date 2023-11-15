@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing reservation summaries. </summary>
     internal partial class ReservationSummariesListResult
     {
-        /// <summary> Initializes a new instance of ReservationSummariesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationSummariesListResult"/>. </summary>
         internal ReservationSummariesListResult()
         {
             Value = new ChangeTrackingList<ConsumptionReservationSummary>();
         }
 
-        /// <summary> Initializes a new instance of ReservationSummariesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationSummariesListResult"/>. </summary>
         /// <param name="value"> The list of reservation summaries. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ReservationSummariesListResult(IReadOnlyList<ConsumptionReservationSummary> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationSummariesListResult(IReadOnlyList<ConsumptionReservationSummary> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of reservation summaries. </summary>

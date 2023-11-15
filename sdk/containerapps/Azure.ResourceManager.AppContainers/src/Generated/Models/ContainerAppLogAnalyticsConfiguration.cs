@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Log Analytics configuration, must only be provided when destination is configured as 'log-analytics'. </summary>
     public partial class ContainerAppLogAnalyticsConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppLogAnalyticsConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogAnalyticsConfiguration"/>. </summary>
         public ContainerAppLogAnalyticsConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppLogAnalyticsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogAnalyticsConfiguration"/>. </summary>
         /// <param name="customerId"> Log analytics customer id. </param>
         /// <param name="sharedKey"> Log analytics customer key. </param>
-        internal ContainerAppLogAnalyticsConfiguration(string customerId, string sharedKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppLogAnalyticsConfiguration(string customerId, string sharedKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomerId = customerId;
             SharedKey = sharedKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Log analytics customer id. </summary>

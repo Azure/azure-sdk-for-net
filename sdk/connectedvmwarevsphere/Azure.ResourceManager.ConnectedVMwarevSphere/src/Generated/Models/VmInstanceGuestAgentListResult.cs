@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of GuestAgent. </summary>
     internal partial class VmInstanceGuestAgentListResult
     {
-        /// <summary> Initializes a new instance of VmInstanceGuestAgentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentListResult"/>. </summary>
         /// <param name="value"> Array of GuestAgent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VmInstanceGuestAgentListResult(IEnumerable<VmInstanceGuestAgentData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VmInstanceGuestAgentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of GuestAgent. </param>
         /// <param name="value"> Array of GuestAgent. </param>
-        internal VmInstanceGuestAgentListResult(string nextLink, IReadOnlyList<VmInstanceGuestAgentData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmInstanceGuestAgentListResult(string nextLink, IReadOnlyList<VmInstanceGuestAgentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentListResult"/> for deserialization. </summary>
+        internal VmInstanceGuestAgentListResult()
+        {
         }
 
         /// <summary> Url to follow for getting next page of GuestAgent. </summary>

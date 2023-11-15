@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The state of a private link service connection. </summary>
     public partial class ContainerServicePrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of ContainerServicePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkServiceConnectionState"/>. </summary>
         public ContainerServicePrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServicePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
-        internal ContainerServicePrivateLinkServiceConnectionState(ContainerServicePrivateLinkServiceConnectionStatus? status, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServicePrivateLinkServiceConnectionState(ContainerServicePrivateLinkServiceConnectionStatus? status, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private link service connection status. </summary>

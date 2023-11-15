@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
     public partial class VMwareStorageProfile
     {
-        /// <summary> Initializes a new instance of VMwareStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareStorageProfile"/>. </summary>
         public VMwareStorageProfile()
         {
             Disks = new ChangeTrackingList<VMwareVirtualDisk>();
             ScsiControllers = new ChangeTrackingList<VirtualScsiController>();
         }
 
-        /// <summary> Initializes a new instance of VMwareStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareStorageProfile"/>. </summary>
         /// <param name="disks"> Gets or sets the list of virtual disks associated with the virtual machine. </param>
         /// <param name="scsiControllers"> Gets or sets the list of virtual SCSI controllers associated with the virtual machine. </param>
-        internal VMwareStorageProfile(IList<VMwareVirtualDisk> disks, IReadOnlyList<VirtualScsiController> scsiControllers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareStorageProfile(IList<VMwareVirtualDisk> disks, IReadOnlyList<VirtualScsiController> scsiControllers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Disks = disks;
             ScsiControllers = scsiControllers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Specifies the network interfaces of the virtual machine. </summary>
     internal partial class VMwareNetworkProfileUpdate
     {
-        /// <summary> Initializes a new instance of VMwareNetworkProfileUpdate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareNetworkProfileUpdate"/>. </summary>
         public VMwareNetworkProfileUpdate()
         {
             NetworkInterfaces = new ChangeTrackingList<VMwareNetworkInterfaceUpdate>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareNetworkProfileUpdate"/>. </summary>
+        /// <param name="networkInterfaces"> Gets or sets the list of network interfaces associated with the virtual machine. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareNetworkProfileUpdate(IList<VMwareNetworkInterfaceUpdate> networkInterfaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NetworkInterfaces = networkInterfaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>

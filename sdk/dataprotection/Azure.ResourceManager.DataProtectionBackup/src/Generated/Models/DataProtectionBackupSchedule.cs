@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Schedule for backup. </summary>
     public partial class DataProtectionBackupSchedule
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSchedule"/>. </summary>
         /// <param name="repeatingTimeIntervals"> ISO 8601 repeating time interval format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repeatingTimeIntervals"/> is null. </exception>
         public DataProtectionBackupSchedule(IEnumerable<string> repeatingTimeIntervals)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RepeatingTimeIntervals = repeatingTimeIntervals.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSchedule"/>. </summary>
         /// <param name="repeatingTimeIntervals"> ISO 8601 repeating time interval format. </param>
         /// <param name="timeZone"> Time zone for a schedule. Example: Pacific Standard Time. </param>
-        internal DataProtectionBackupSchedule(IList<string> repeatingTimeIntervals, string timeZone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupSchedule(IList<string> repeatingTimeIntervals, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RepeatingTimeIntervals = repeatingTimeIntervals;
             TimeZone = timeZone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSchedule"/> for deserialization. </summary>
+        internal DataProtectionBackupSchedule()
+        {
         }
 
         /// <summary> ISO 8601 repeating time interval format. </summary>

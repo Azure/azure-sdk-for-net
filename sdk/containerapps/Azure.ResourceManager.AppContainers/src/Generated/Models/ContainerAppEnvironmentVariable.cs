@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App container environment variable. </summary>
     public partial class ContainerAppEnvironmentVariable
     {
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentVariable. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentVariable"/>. </summary>
         public ContainerAppEnvironmentVariable()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentVariable"/>. </summary>
         /// <param name="name"> Environment variable name. </param>
         /// <param name="value"> Non-secret environment variable value. </param>
         /// <param name="secretRef"> Name of the Container App secret from which to pull the environment variable value. </param>
-        internal ContainerAppEnvironmentVariable(string name, string value, string secretRef)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppEnvironmentVariable(string name, string value, string secretRef, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             SecretRef = secretRef;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Environment variable name. </summary>

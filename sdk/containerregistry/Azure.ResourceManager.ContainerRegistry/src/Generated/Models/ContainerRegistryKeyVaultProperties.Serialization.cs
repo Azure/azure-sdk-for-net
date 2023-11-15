@@ -6,31 +6,94 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryKeyVaultProperties : IUtf8JsonSerializable
+    public partial class ContainerRegistryKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<ContainerRegistryKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryKeyVaultProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerRegistryKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerRegistryKeyVaultProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerRegistryKeyVaultProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VersionedKeyIdentifier))
+                {
+                    writer.WritePropertyName("versionedKeyIdentifier"u8);
+                    writer.WriteStringValue(VersionedKeyIdentifier);
+                }
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsKeyRotationEnabled))
+                {
+                    writer.WritePropertyName("keyRotationEnabled"u8);
+                    writer.WriteBooleanValue(IsKeyRotationEnabled.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastKeyRotationTimestamp))
+                {
+                    writer.WritePropertyName("lastKeyRotationTimestamp"u8);
+                    writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryKeyVaultProperties DeserializeContainerRegistryKeyVaultProperties(JsonElement element)
+        ContainerRegistryKeyVaultProperties IJsonModel<ContainerRegistryKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryKeyVaultProperties(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryKeyVaultProperties DeserializeContainerRegistryKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +103,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<string> identity = default;
             Optional<bool> keyRotationEnabled = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyIdentifier"u8))
@@ -75,8 +140,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryKeyVaultProperties(keyIdentifier.Value, versionedKeyIdentifier.Value, identity.Value, Optional.ToNullable(keyRotationEnabled), Optional.ToNullable(lastKeyRotationTimestamp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryKeyVaultProperties(keyIdentifier.Value, versionedKeyIdentifier.Value, identity.Value, Optional.ToNullable(keyRotationEnabled), Optional.ToNullable(lastKeyRotationTimestamp), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerRegistryKeyVaultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerRegistryKeyVaultProperties IPersistableModel<ContainerRegistryKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryKeyVaultProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerRegistryKeyVaultProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

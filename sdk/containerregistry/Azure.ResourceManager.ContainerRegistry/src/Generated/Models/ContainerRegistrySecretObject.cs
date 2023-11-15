@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Describes the properties of a secret object value. </summary>
     public partial class ContainerRegistrySecretObject
     {
-        /// <summary> Initializes a new instance of ContainerRegistrySecretObject. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySecretObject"/>. </summary>
         public ContainerRegistrySecretObject()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistrySecretObject. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistrySecretObject"/>. </summary>
         /// <param name="value">
         /// The value of the secret. The format of this value will be determined
         /// based on the type of the secret object. If the type is Opaque, the value will be
@@ -25,10 +31,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// The type of the secret object which determines how the value of the secret object has to be
         /// interpreted.
         /// </param>
-        internal ContainerRegistrySecretObject(string value, ContainerRegistrySecretObjectType? objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistrySecretObject(string value, ContainerRegistrySecretObjectType? objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

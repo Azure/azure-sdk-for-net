@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     /// <summary>
@@ -13,19 +16,24 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsSasTokenInformation
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsSasTokenInformation"/>. </summary>
         internal DataLakeAnalyticsSasTokenInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsSasTokenInformation"/>. </summary>
         /// <param name="accessToken">
         /// The access token for the associated Azure Storage Container.
         /// Serialized Name: SasTokenInformation.accessToken
         /// </param>
-        internal DataLakeAnalyticsSasTokenInformation(string accessToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsSasTokenInformation(string accessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessToken = accessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

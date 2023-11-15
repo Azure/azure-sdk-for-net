@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Dapr component Secrets Collection for ListSecrets Action. </summary>
     internal partial class DaprSecretsCollection
     {
-        /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DaprSecretsCollection"/>. </summary>
         /// <param name="value"> Collection of secrets used by a Dapr component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DaprSecretsCollection(IEnumerable<ContainerAppDaprSecret> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DaprSecretsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="DaprSecretsCollection"/>. </summary>
         /// <param name="value"> Collection of secrets used by a Dapr component. </param>
-        internal DaprSecretsCollection(IReadOnlyList<ContainerAppDaprSecret> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DaprSecretsCollection(IReadOnlyList<ContainerAppDaprSecret> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DaprSecretsCollection"/> for deserialization. </summary>
+        internal DaprSecretsCollection()
+        {
         }
 
         /// <summary> Collection of secrets used by a Dapr component. </summary>

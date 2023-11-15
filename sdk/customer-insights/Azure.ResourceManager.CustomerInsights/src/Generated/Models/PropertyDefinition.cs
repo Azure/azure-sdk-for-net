@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Property definition. </summary>
     public partial class PropertyDefinition
     {
-        /// <summary> Initializes a new instance of PropertyDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PropertyDefinition"/>. </summary>
         /// <param name="fieldName"> Name of the property. </param>
         /// <param name="fieldType"> Type of the property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldName"/> or <paramref name="fieldType"/> is null. </exception>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             DataSourcePrecedenceRules = new ChangeTrackingList<DataSourcePrecedence>();
         }
 
-        /// <summary> Initializes a new instance of PropertyDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropertyDefinition"/>. </summary>
         /// <param name="arrayValueSeparator"> Array value separator for properties with isArray set. </param>
         /// <param name="enumValidValues"> Describes valid values for an enum property. </param>
         /// <param name="fieldName"> Name of the property. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <param name="maxLength"> Max length of string. Used only if type is string. </param>
         /// <param name="isAvailableInGraph"> Whether property is available in graph or not. </param>
         /// <param name="dataSourcePrecedenceRules"> This is specific to interactions modeled as activities. Data sources are used to determine where data is stored and also in precedence rules. </param>
-        internal PropertyDefinition(string arrayValueSeparator, IList<ProfileEnumValidValuesFormat> enumValidValues, string fieldName, string fieldType, bool? isArray, bool? isEnum, bool? isFlagEnum, bool? isImage, bool? isLocalizedString, bool? isName, bool? isRequired, string propertyId, string schemaItemPropLink, int? maxLength, bool? isAvailableInGraph, IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PropertyDefinition(string arrayValueSeparator, IList<ProfileEnumValidValuesFormat> enumValidValues, string fieldName, string fieldType, bool? isArray, bool? isEnum, bool? isFlagEnum, bool? isImage, bool? isLocalizedString, bool? isName, bool? isRequired, string propertyId, string schemaItemPropLink, int? maxLength, bool? isAvailableInGraph, IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArrayValueSeparator = arrayValueSeparator;
             EnumValidValues = enumValidValues;
@@ -64,6 +68,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             MaxLength = maxLength;
             IsAvailableInGraph = isAvailableInGraph;
             DataSourcePrecedenceRules = dataSourcePrecedenceRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PropertyDefinition"/> for deserialization. </summary>
+        internal PropertyDefinition()
+        {
         }
 
         /// <summary> Array value separator for properties with isArray set. </summary>

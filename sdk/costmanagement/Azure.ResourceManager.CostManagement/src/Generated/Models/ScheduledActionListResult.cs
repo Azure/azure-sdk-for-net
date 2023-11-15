@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Scheduled actions list result. It contains a list of scheduled actions. </summary>
     internal partial class ScheduledActionListResult
     {
-        /// <summary> Initializes a new instance of ScheduledActionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionListResult"/>. </summary>
         internal ScheduledActionListResult()
         {
             Value = new ChangeTrackingList<ScheduledActionData>();
         }
 
-        /// <summary> Initializes a new instance of ScheduledActionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionListResult"/>. </summary>
         /// <param name="value"> The list of scheduled actions. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal ScheduledActionListResult(IReadOnlyList<ScheduledActionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledActionListResult(IReadOnlyList<ScheduledActionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of scheduled actions. </summary>

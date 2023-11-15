@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -19,14 +20,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareDatastoreData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareDatastoreData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareDatastoreData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareDatastoreData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<VMwareResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VMwareDatastoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareDatastoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +49,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="capacityGB"> Gets or sets Maximum capacity of this datastore in GBs. </param>
         /// <param name="freeSpaceGB"> Gets or sets Available space of this datastore in GBs. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal VMwareDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<VMwareResourceStatus> statuses, string customResourceName, long? capacityGB, long? freeSpaceGB, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<VMwareResourceStatus> statuses, string customResourceName, long? capacityGB, long? freeSpaceGB, VMwareResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -59,6 +64,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             CapacityGB = capacityGB;
             FreeSpaceGB = freeSpaceGB;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareDatastoreData"/> for deserialization. </summary>
+        internal VMwareDatastoreData()
+        {
         }
 
         /// <summary> Gets or sets the extended location. </summary>

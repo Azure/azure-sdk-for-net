@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Fields for tracking resource move. </summary>
     public partial class DataBoxEdgeResourceMoveDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeResourceMoveDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeResourceMoveDetails"/>. </summary>
         internal DataBoxEdgeResourceMoveDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeResourceMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeResourceMoveDetails"/>. </summary>
         /// <param name="operationInProgress"> Denotes whether move operation is in progress. </param>
         /// <param name="operationInProgressLockTimeoutInUtc"> Denotes the timeout of the operation to finish. </param>
-        internal DataBoxEdgeResourceMoveDetails(DataBoxEdgeResourceMoveStatus? operationInProgress, DateTimeOffset? operationInProgressLockTimeoutInUtc)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeResourceMoveDetails(DataBoxEdgeResourceMoveStatus? operationInProgress, DateTimeOffset? operationInProgressLockTimeoutInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationInProgress = operationInProgress;
             OperationInProgressLockTimeoutInUtc = operationInProgressLockTimeoutInUtc;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Denotes whether move operation is in progress. </summary>

@@ -5,20 +5,75 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExposureControlBatchResult
+    public partial class ExposureControlBatchResult : IUtf8JsonSerializable, IJsonModel<ExposureControlBatchResult>
     {
-        internal static ExposureControlBatchResult DeserializeExposureControlBatchResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExposureControlBatchResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ExposureControlBatchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExposureControlBatchResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExposureControlBatchResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("exposureControlResponses"u8);
+            writer.WriteStartArray();
+            foreach (var item in ExposureControlResults)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExposureControlBatchResult IJsonModel<ExposureControlBatchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExposureControlBatchResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExposureControlBatchResult(document.RootElement, options);
+        }
+
+        internal static ExposureControlBatchResult DeserializeExposureControlBatchResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ExposureControlResult> exposureControlResponses = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exposureControlResponses"u8))
@@ -31,8 +86,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     exposureControlResponses = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExposureControlBatchResult(exposureControlResponses);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExposureControlBatchResult(exposureControlResponses, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExposureControlBatchResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExposureControlBatchResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExposureControlBatchResult IPersistableModel<ExposureControlBatchResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExposureControlBatchResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExposureControlBatchResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExposureControlBatchResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,15 +6,48 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The request payload to update an alert. </summary>
     public partial class CostManagementAlertPatch
     {
-        /// <summary> Initializes a new instance of CostManagementAlertPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertPatch"/>. </summary>
         public CostManagementAlertPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertPatch"/>. </summary>
+        /// <param name="definition"> defines the type of alert. </param>
+        /// <param name="description"> Alert description. </param>
+        /// <param name="source"> Source of alert. </param>
+        /// <param name="details"> Alert details. </param>
+        /// <param name="costEntityId"> related budget. </param>
+        /// <param name="status"> alert status. </param>
+        /// <param name="createdOn"> dateTime in which alert was created. </param>
+        /// <param name="closeOn"> dateTime in which alert was closed. </param>
+        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
+        /// <param name="statusModificationUserName"> User who last modified the alert. </param>
+        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementAlertPatch(AlertPropertiesDefinition definition, string description, CostManagementAlertSource? source, AlertPropertiesDetails details, string costEntityId, CostManagementAlertStatus? status, DateTimeOffset? createdOn, DateTimeOffset? closeOn, DateTimeOffset? modifiedOn, string statusModificationUserName, DateTimeOffset? statusModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Definition = definition;
+            Description = description;
+            Source = source;
+            Details = details;
+            CostEntityId = costEntityId;
+            Status = status;
+            CreatedOn = createdOn;
+            CloseOn = closeOn;
+            ModifiedOn = modifiedOn;
+            StatusModificationUserName = statusModificationUserName;
+            StatusModifiedOn = statusModifiedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> defines the type of alert. </summary>

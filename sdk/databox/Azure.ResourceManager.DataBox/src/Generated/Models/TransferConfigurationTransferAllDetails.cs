@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Map of filter type and the details to transfer all data. This field is required only if the TransferConfigurationType is given as TransferAll. </summary>
     internal partial class TransferConfigurationTransferAllDetails
     {
-        /// <summary> Initializes a new instance of TransferConfigurationTransferAllDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransferConfigurationTransferAllDetails"/>. </summary>
         public TransferConfigurationTransferAllDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TransferConfigurationTransferAllDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferConfigurationTransferAllDetails"/>. </summary>
         /// <param name="include"> Details to transfer all data. </param>
-        internal TransferConfigurationTransferAllDetails(TransferAllDetails include)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransferConfigurationTransferAllDetails(TransferAllDetails include, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Include = include;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Details to transfer all data. </summary>

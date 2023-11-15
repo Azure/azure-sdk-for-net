@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The size of the terminal. </summary>
     public partial class ContainerExecRequestTerminalSize
     {
-        /// <summary> Initializes a new instance of ContainerExecRequestTerminalSize. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerExecRequestTerminalSize"/>. </summary>
         public ContainerExecRequestTerminalSize()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerExecRequestTerminalSize"/>. </summary>
+        /// <param name="rows"> The row size of the terminal. </param>
+        /// <param name="cols"> The column size of the terminal. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerExecRequestTerminalSize(int? rows, int? cols, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Rows = rows;
+            Cols = cols;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The row size of the terminal. </summary>

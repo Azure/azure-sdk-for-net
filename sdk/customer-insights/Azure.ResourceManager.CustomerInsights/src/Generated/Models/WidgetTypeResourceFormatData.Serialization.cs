@@ -7,19 +7,59 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class WidgetTypeResourceFormatData : IUtf8JsonSerializable
+    public partial class WidgetTypeResourceFormatData : IUtf8JsonSerializable, IJsonModel<WidgetTypeResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WidgetTypeResourceFormatData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<WidgetTypeResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WidgetTypeResourceFormatData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WidgetTypeResourceFormatData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(WidgetTypeName))
+                {
+                    writer.WritePropertyName("widgetTypeName"u8);
+                    writer.WriteStringValue(WidgetTypeName);
+                }
+            }
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
@@ -46,17 +86,70 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("imageUrl"u8);
                 writer.WriteStringValue(ImageUri.AbsoluteUri);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
             if (Optional.IsDefined(WidgetVersion))
             {
                 writer.WritePropertyName("widgetVersion"u8);
                 writer.WriteStringValue(WidgetVersion);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Changed))
+                {
+                    writer.WritePropertyName("changed"u8);
+                    writer.WriteStringValue(Changed.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Created))
+                {
+                    writer.WritePropertyName("created"u8);
+                    writer.WriteStringValue(Created.Value, "O");
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WidgetTypeResourceFormatData DeserializeWidgetTypeResourceFormatData(JsonElement element)
+        WidgetTypeResourceFormatData IJsonModel<WidgetTypeResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WidgetTypeResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWidgetTypeResourceFormatData(document.RootElement, options);
+        }
+
+        internal static WidgetTypeResourceFormatData DeserializeWidgetTypeResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +167,8 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> widgetVersion = default;
             Optional<DateTimeOffset> changed = default;
             Optional<DateTimeOffset> created = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -182,8 +277,38 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WidgetTypeResourceFormatData(id, name, type, systemData.Value, widgetTypeName.Value, definition.Value, description.Value, Optional.ToDictionary(displayName), imageUrl.Value, Optional.ToNullable(tenantId), widgetVersion.Value, Optional.ToNullable(changed), Optional.ToNullable(created));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WidgetTypeResourceFormatData(id, name, type, systemData.Value, widgetTypeName.Value, definition.Value, description.Value, Optional.ToDictionary(displayName), imageUrl.Value, Optional.ToNullable(tenantId), widgetVersion.Value, Optional.ToNullable(changed), Optional.ToNullable(created), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WidgetTypeResourceFormatData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WidgetTypeResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WidgetTypeResourceFormatData IPersistableModel<WidgetTypeResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WidgetTypeResourceFormatData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWidgetTypeResourceFormatData(document.RootElement, options);
+        }
+
+        string IPersistableModel<WidgetTypeResourceFormatData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

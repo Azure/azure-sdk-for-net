@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Deletion Info. </summary>
     public partial class BackupInstanceDeletionInfo
     {
-        /// <summary> Initializes a new instance of BackupInstanceDeletionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceDeletionInfo"/>. </summary>
         internal BackupInstanceDeletionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupInstanceDeletionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceDeletionInfo"/>. </summary>
         /// <param name="deleteOn"> Specifies time of deletion. </param>
         /// <param name="billingEndOn"> Specifies billing end date. </param>
         /// <param name="scheduledPurgeOn"> Specifies purge time. </param>
         /// <param name="deleteActivityId"> Delete activity ID for troubleshooting purpose. </param>
-        internal BackupInstanceDeletionInfo(DateTimeOffset? deleteOn, DateTimeOffset? billingEndOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupInstanceDeletionInfo(DateTimeOffset? deleteOn, DateTimeOffset? billingEndOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeleteOn = deleteOn;
             BillingEndOn = billingEndOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             DeleteActivityId = deleteActivityId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies time of deletion. </summary>

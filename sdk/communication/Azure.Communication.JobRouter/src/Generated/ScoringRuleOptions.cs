@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,29 @@ namespace Azure.Communication.JobRouter
     /// <summary> Encapsulates all options that can be passed as parameters for scoring rule with BestWorkerMode. </summary>
     public partial class ScoringRuleOptions
     {
-        /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScoringRuleOptions"/>. </summary>
         internal ScoringRuleOptions()
         {
             ScoringParameters = new ChangeTrackingList<ScoringRuleParameterSelector>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ScoringRuleOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScoringRuleOptions"/>. </summary>
         /// <param name="batchSize"> Set batch size when 'isBatchScoringEnabled' is set to true. Defaults to 20 if not configured. </param>
         /// <param name="scoringParameters"> List of extra parameters from a job that will be sent as part of the payload to scoring rule. If not set, a job's labels (sent in the payload as `job`) and a job's worker selectors (sent in the payload as `selectors`) are added to the payload of the scoring rule by default. Note: Worker labels are always sent with scoring payload. </param>
         /// <param name="isBatchScoringEnabled"> If set to true, will score workers in batches, and the parameter name of the worker labels will be sent as `workers`. By default, set to false and the parameter name for the worker labels will be sent as `worker`. Note: If enabled, use 'batchSize' to set batch size. </param>
         /// <param name="descendingOrder"> If false, will sort scores by ascending order. By default, set to true. </param>
-        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? isBatchScoringEnabled, bool? descendingOrder)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? isBatchScoringEnabled, bool? descendingOrder, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BatchSize = batchSize;
             ScoringParameters = scoringParameters;
             IsBatchScoringEnabled = isBatchScoringEnabled;
             DescendingOrder = descendingOrder;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

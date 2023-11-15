@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Kube State Metrics for prometheus addon profile for the container service cluster. </summary>
     public partial class ManagedClusterMonitorProfileKubeStateMetrics
     {
-        /// <summary> Initializes a new instance of ManagedClusterMonitorProfileKubeStateMetrics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileKubeStateMetrics"/>. </summary>
         public ManagedClusterMonitorProfileKubeStateMetrics()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterMonitorProfileKubeStateMetrics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileKubeStateMetrics"/>. </summary>
         /// <param name="metricLabelsAllowlist"> Comma-separated list of Kubernetes annotations keys that will be used in the resource's labels metric. </param>
         /// <param name="metricAnnotationsAllowList"> Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric. </param>
-        internal ManagedClusterMonitorProfileKubeStateMetrics(string metricLabelsAllowlist, string metricAnnotationsAllowList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterMonitorProfileKubeStateMetrics(string metricLabelsAllowlist, string metricAnnotationsAllowList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MetricLabelsAllowlist = metricLabelsAllowlist;
             MetricAnnotationsAllowList = metricAnnotationsAllowList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Comma-separated list of Kubernetes annotations keys that will be used in the resource's labels metric. </summary>

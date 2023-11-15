@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The ManagedClusterPoolUpgradeProfileUpgradesItem. </summary>
     public partial class ManagedClusterPoolUpgradeProfileUpgradesItem
     {
-        /// <summary> Initializes a new instance of ManagedClusterPoolUpgradeProfileUpgradesItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
         internal ManagedClusterPoolUpgradeProfileUpgradesItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterPoolUpgradeProfileUpgradesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfileUpgradesItem"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
-        internal ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterPoolUpgradeProfileUpgradesItem(string kubernetesVersion, bool? isPreview, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KubernetesVersion = kubernetesVersion;
             IsPreview = isPreview;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>

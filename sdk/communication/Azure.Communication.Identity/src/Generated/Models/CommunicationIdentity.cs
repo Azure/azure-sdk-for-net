@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
@@ -13,7 +14,10 @@ namespace Azure.Communication.Identity.Models
     /// <summary> A communication identity. </summary>
     internal partial class CommunicationIdentity
     {
-        /// <summary> Initializes a new instance of CommunicationIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/>. </summary>
         /// <param name="id"> Identifier of the identity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal CommunicationIdentity(string id)
@@ -21,6 +25,20 @@ namespace Azure.Communication.Identity.Models
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/>. </summary>
+        /// <param name="id"> Identifier of the identity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationIdentity(string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/> for deserialization. </summary>
+        internal CommunicationIdentity()
+        {
         }
 
         /// <summary> Identifier of the identity. </summary>

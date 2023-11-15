@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class RelationshipLinkResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of RelationshipLinkResourceFormatData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkResourceFormatData"/>. </summary>
         public RelationshipLinkResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights
             RelatedProfilePropertyReferences = new ChangeTrackingList<ParticipantProfilePropertyReference>();
         }
 
-        /// <summary> Initializes a new instance of RelationshipLinkResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipLinkResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +48,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="relationshipName"> The Relationship associated with the Link. </param>
         /// <param name="relationshipGuidId"> The relationship guid id. </param>
         /// <param name="tenantId"> The hub name. </param>
-        internal RelationshipLinkResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> displayName, IDictionary<string, string> description, string interactionType, string linkName, IList<RelationshipLinkFieldMapping> mappings, IList<ParticipantProfilePropertyReference> profilePropertyReferences, ProvisioningState? provisioningState, IList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences, string relationshipName, string relationshipGuidId, Guid? tenantId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelationshipLinkResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> displayName, IDictionary<string, string> description, string interactionType, string linkName, IList<RelationshipLinkFieldMapping> mappings, IList<ParticipantProfilePropertyReference> profilePropertyReferences, ProvisioningState? provisioningState, IList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences, string relationshipName, string relationshipGuidId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
@@ -58,6 +62,7 @@ namespace Azure.ResourceManager.CustomerInsights
             RelationshipName = relationshipName;
             RelationshipGuidId = relationshipGuidId;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Localized display name for the Relationship Link. </summary>

@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A container group or container instance event. </summary>
     public partial class ContainerEvent
     {
-        /// <summary> Initializes a new instance of ContainerEvent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerEvent"/>. </summary>
         internal ContainerEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerEvent"/>. </summary>
         /// <param name="count"> The count of the event. </param>
         /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
         /// <param name="name"> The event name. </param>
         /// <param name="message"> The event message. </param>
         /// <param name="eventType"> The event type. </param>
-        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string eventType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerEvent(int? count, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, string name, string message, string eventType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             FirstTimestamp = firstTimestamp;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Name = name;
             Message = message;
             EventType = eventType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The count of the event. </summary>

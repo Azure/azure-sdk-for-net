@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> HTTP Proxy configuration for the VM. </summary>
     internal partial class HttpProxyConfiguration
     {
-        /// <summary> Initializes a new instance of HttpProxyConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HttpProxyConfiguration"/>. </summary>
         public HttpProxyConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HttpProxyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpProxyConfiguration"/>. </summary>
         /// <param name="httpsProxy"> Gets or sets httpsProxy url. </param>
-        internal HttpProxyConfiguration(string httpsProxy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HttpProxyConfiguration(string httpsProxy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HttpsProxy = httpsProxy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets httpsProxy url. </summary>

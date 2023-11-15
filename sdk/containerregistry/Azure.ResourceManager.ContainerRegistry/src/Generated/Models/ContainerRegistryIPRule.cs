@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
     public partial class ContainerRegistryIPRule
     {
-        /// <summary> Initializes a new instance of ContainerRegistryIPRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryIPRule"/>. </summary>
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddressOrRange"/> is null. </exception>
         public ContainerRegistryIPRule(string ipAddressOrRange)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IPAddressOrRange = ipAddressOrRange;
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryIPRule"/>. </summary>
         /// <param name="action"> The action of IP ACL rule. </param>
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
-        internal ContainerRegistryIPRule(ContainerRegistryIPRuleAction? action, string ipAddressOrRange)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryIPRule(ContainerRegistryIPRuleAction? action, string ipAddressOrRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             IPAddressOrRange = ipAddressOrRange;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryIPRule"/> for deserialization. </summary>
+        internal ContainerRegistryIPRule()
+        {
         }
 
         /// <summary> The action of IP ACL rule. </summary>

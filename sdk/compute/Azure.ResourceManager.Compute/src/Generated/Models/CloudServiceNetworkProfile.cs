@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Network Profile for the cloud service. </summary>
     public partial class CloudServiceNetworkProfile
     {
-        /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceNetworkProfile"/>. </summary>
         public CloudServiceNetworkProfile()
         {
             LoadBalancerConfigurations = new ChangeTrackingList<CloudServiceLoadBalancerConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceNetworkProfile"/>. </summary>
         /// <param name="loadBalancerConfigurations"> List of Load balancer configurations. Cloud service can have up to two load balancer configurations, corresponding to a Public Load Balancer and an Internal Load Balancer. </param>
         /// <param name="slotType">
         /// Slot type for the cloud service.
@@ -28,11 +32,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// If not specified, the default value is Production.
         /// </param>
         /// <param name="swappableCloudService"> The id reference of the cloud service containing the target IP with which the subject cloud service can perform a swap. This property cannot be updated once it is set. The swappable cloud service referred by this id must be present otherwise an error will be thrown. </param>
-        internal CloudServiceNetworkProfile(IList<CloudServiceLoadBalancerConfiguration> loadBalancerConfigurations, CloudServiceSlotType? slotType, WritableSubResource swappableCloudService)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceNetworkProfile(IList<CloudServiceLoadBalancerConfiguration> loadBalancerConfigurations, CloudServiceSlotType? slotType, WritableSubResource swappableCloudService, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoadBalancerConfigurations = loadBalancerConfigurations;
             SlotType = slotType;
             SwappableCloudService = swappableCloudService;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Load balancer configurations. Cloud service can have up to two load balancer configurations, corresponding to a Public Load Balancer and an Internal Load Balancer. </summary>

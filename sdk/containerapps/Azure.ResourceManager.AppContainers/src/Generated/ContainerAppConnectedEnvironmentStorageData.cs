@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentStorageData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentStorageData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentStorageData"/>. </summary>
         public ContainerAppConnectedEnvironmentStorageData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentStorageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentStorageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Storage properties. </param>
-        internal ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedEnvironmentStorageProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppConnectedEnvironmentStorageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectedEnvironmentStorageProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Storage properties. </summary>

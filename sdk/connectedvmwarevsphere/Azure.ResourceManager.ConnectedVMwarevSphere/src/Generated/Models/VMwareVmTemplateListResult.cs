@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VirtualMachineTemplates. </summary>
     internal partial class VMwareVmTemplateListResult
     {
-        /// <summary> Initializes a new instance of VMwareVmTemplateListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateListResult"/>. </summary>
         /// <param name="value"> Array of VirtualMachineTemplates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareVmTemplateListResult(IEnumerable<VMwareVmTemplateData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VMwareVmTemplateListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VirtualMachineTemplates. </param>
         /// <param name="value"> Array of VirtualMachineTemplates. </param>
-        internal VMwareVmTemplateListResult(string nextLink, IReadOnlyList<VMwareVmTemplateData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareVmTemplateListResult(string nextLink, IReadOnlyList<VMwareVmTemplateData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVmTemplateListResult"/> for deserialization. </summary>
+        internal VMwareVmTemplateListResult()
+        {
         }
 
         /// <summary> Url to follow for getting next page of VirtualMachineTemplates. </summary>

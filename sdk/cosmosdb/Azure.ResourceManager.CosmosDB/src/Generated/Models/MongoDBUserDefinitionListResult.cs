@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The relevant User Definition. </summary>
     internal partial class MongoDBUserDefinitionListResult
     {
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionListResult"/>. </summary>
         internal MongoDBUserDefinitionListResult()
         {
             Value = new ChangeTrackingList<MongoDBUserDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBUserDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBUserDefinitionListResult"/>. </summary>
         /// <param name="value"> List of User Definition and their properties. </param>
-        internal MongoDBUserDefinitionListResult(IReadOnlyList<MongoDBUserDefinitionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBUserDefinitionListResult(IReadOnlyList<MongoDBUserDefinitionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of User Definition and their properties. </summary>

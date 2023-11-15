@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Details of Job's Sub Task. </summary>
     public partial class BackupJobSubTask
     {
-        /// <summary> Initializes a new instance of BackupJobSubTask. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupJobSubTask"/>. </summary>
         /// <param name="taskId"> Task Id of the Sub Task. </param>
         /// <param name="taskName"> Name of the Sub Task. </param>
         /// <param name="taskStatus"> Status of the Sub Task. </param>
@@ -30,19 +33,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             TaskStatus = taskStatus;
         }
 
-        /// <summary> Initializes a new instance of BackupJobSubTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobSubTask"/>. </summary>
         /// <param name="additionalDetails"> Additional details of Sub Tasks. </param>
         /// <param name="taskId"> Task Id of the Sub Task. </param>
         /// <param name="taskName"> Name of the Sub Task. </param>
         /// <param name="taskProgress"> Progress of the Sub Task. </param>
         /// <param name="taskStatus"> Status of the Sub Task. </param>
-        internal BackupJobSubTask(IReadOnlyDictionary<string, string> additionalDetails, int taskId, string taskName, string taskProgress, string taskStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupJobSubTask(IReadOnlyDictionary<string, string> additionalDetails, int taskId, string taskName, string taskProgress, string taskStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdditionalDetails = additionalDetails;
             TaskId = taskId;
             TaskName = taskName;
             TaskProgress = taskProgress;
             TaskStatus = taskStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupJobSubTask"/> for deserialization. </summary>
+        internal BackupJobSubTask()
+        {
         }
 
         /// <summary> Additional details of Sub Tasks. </summary>

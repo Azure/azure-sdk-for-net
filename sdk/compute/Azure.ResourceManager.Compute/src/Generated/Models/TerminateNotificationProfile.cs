@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The TerminateNotificationProfile. </summary>
     public partial class TerminateNotificationProfile
     {
-        /// <summary> Initializes a new instance of TerminateNotificationProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TerminateNotificationProfile"/>. </summary>
         public TerminateNotificationProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of TerminateNotificationProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerminateNotificationProfile"/>. </summary>
         /// <param name="notBeforeTimeout"> Configurable length of time a Virtual Machine being deleted will have to potentially approve the Terminate Scheduled Event before the event is auto approved (timed out). The configuration must be specified in ISO 8601 format, the default value is 5 minutes (PT5M). </param>
         /// <param name="enable"> Specifies whether the Terminate Scheduled event is enabled or disabled. </param>
-        internal TerminateNotificationProfile(string notBeforeTimeout, bool? enable)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TerminateNotificationProfile(string notBeforeTimeout, bool? enable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NotBeforeTimeout = notBeforeTimeout;
             Enable = enable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Configurable length of time a Virtual Machine being deleted will have to potentially approve the Terminate Scheduled Event before the event is auto approved (timed out). The configuration must be specified in ISO 8601 format, the default value is 5 minutes (PT5M). </summary>

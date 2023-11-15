@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of trigger runs. </summary>
     internal partial class DataFactoryTriggerRunsQueryResult
     {
-        /// <summary> Initializes a new instance of DataFactoryTriggerRunsQueryResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerRunsQueryResult"/>. </summary>
         /// <param name="value"> List of trigger runs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataFactoryTriggerRunsQueryResult(IEnumerable<DataFactoryTriggerRun> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryTriggerRunsQueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerRunsQueryResult"/>. </summary>
         /// <param name="value"> List of trigger runs. </param>
         /// <param name="continuationToken"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
-        internal DataFactoryTriggerRunsQueryResult(IReadOnlyList<DataFactoryTriggerRun> value, string continuationToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryTriggerRunsQueryResult(IReadOnlyList<DataFactoryTriggerRun> value, string continuationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             ContinuationToken = continuationToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerRunsQueryResult"/> for deserialization. </summary>
+        internal DataFactoryTriggerRunsQueryResult()
+        {
         }
 
         /// <summary> List of trigger runs. </summary>

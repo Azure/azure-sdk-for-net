@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Connection string for the mongo cluster. </summary>
     public partial class CosmosDBConnectionString
     {
-        /// <summary> Initializes a new instance of CosmosDBConnectionString. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBConnectionString"/>. </summary>
         internal CosmosDBConnectionString()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBConnectionString. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBConnectionString"/>. </summary>
         /// <param name="connectionString"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
-        internal CosmosDBConnectionString(string connectionString, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBConnectionString(string connectionString, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionString = connectionString;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the connection string. </summary>

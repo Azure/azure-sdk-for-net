@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Database file specific information. </summary>
     public partial class DatabaseFileInfo
     {
-        /// <summary> Initializes a new instance of DatabaseFileInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseFileInfo"/>. </summary>
         internal DatabaseFileInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseFileInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseFileInfo"/>. </summary>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="id"> Unique identifier for database file. </param>
         /// <param name="logicalName"> Logical name of the file. </param>
@@ -23,7 +29,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="restoreFullName"> Suggested full path of the file for restoring. </param>
         /// <param name="fileType"> Database file type. </param>
         /// <param name="sizeMB"> Size of the file in megabytes. </param>
-        internal DatabaseFileInfo(string databaseName, string id, string logicalName, string physicalFullName, string restoreFullName, DatabaseFileType? fileType, double? sizeMB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseFileInfo(string databaseName, string id, string logicalName, string physicalFullName, string restoreFullName, DatabaseFileType? fileType, double? sizeMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             Id = id;
@@ -32,6 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             RestoreFullName = restoreFullName;
             FileType = fileType;
             SizeMB = sizeMB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the database. </summary>

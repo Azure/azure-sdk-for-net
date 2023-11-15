@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryDataFlowDebugPackageContent : IUtf8JsonSerializable
+    public partial class DataFactoryDataFlowDebugPackageContent : IUtf8JsonSerializable, IJsonModel<DataFactoryDataFlowDebugPackageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDataFlowDebugPackageContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataFactoryDataFlowDebugPackageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataFactoryDataFlowDebugPackageContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataFactoryDataFlowDebugPackageContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionId))
             {
@@ -79,5 +90,145 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WriteEndObject();
         }
+
+        DataFactoryDataFlowDebugPackageContent IJsonModel<DataFactoryDataFlowDebugPackageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugPackageContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryDataFlowDebugPackageContent(document.RootElement, options);
+        }
+
+        internal static DataFactoryDataFlowDebugPackageContent DeserializeDataFactoryDataFlowDebugPackageContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid> sessionId = default;
+            Optional<DataFactoryDataFlowDebugInfo> dataFlow = default;
+            Optional<IList<DataFactoryDataFlowDebugInfo>> dataFlows = default;
+            Optional<IList<DataFactoryDatasetDebugInfo>> datasets = default;
+            Optional<IList<DataFactoryLinkedServiceDebugInfo>> linkedServices = default;
+            Optional<DataFlowStagingInfo> staging = default;
+            Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sessionId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("dataFlow"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataFlow = DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("dataFlows"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryDataFlowDebugInfo> array = new List<DataFactoryDataFlowDebugInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(item));
+                    }
+                    dataFlows = array;
+                    continue;
+                }
+                if (property.NameEquals("datasets"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryDatasetDebugInfo> array = new List<DataFactoryDatasetDebugInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFactoryDatasetDebugInfo.DeserializeDataFactoryDatasetDebugInfo(item));
+                    }
+                    datasets = array;
+                    continue;
+                }
+                if (property.NameEquals("linkedServices"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryLinkedServiceDebugInfo> array = new List<DataFactoryLinkedServiceDebugInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFactoryLinkedServiceDebugInfo.DeserializeDataFactoryLinkedServiceDebugInfo(item));
+                    }
+                    linkedServices = array;
+                    continue;
+                }
+                if (property.NameEquals("staging"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    staging = DataFlowStagingInfo.DeserializeDataFlowStagingInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("debugSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    debugSettings = DataFlowDebugPackageDebugSettings.DeserializeDataFlowDebugPackageDebugSettings(property.Value);
+                    continue;
+                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+            }
+            additionalProperties = additionalPropertiesDictionary;
+            return new DataFactoryDataFlowDebugPackageContent(Optional.ToNullable(sessionId), dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+        }
+
+        BinaryData IPersistableModel<DataFactoryDataFlowDebugPackageContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugPackageContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFactoryDataFlowDebugPackageContent IPersistableModel<DataFactoryDataFlowDebugPackageContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryDataFlowDebugPackageContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFactoryDataFlowDebugPackageContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataFactoryDataFlowDebugPackageContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

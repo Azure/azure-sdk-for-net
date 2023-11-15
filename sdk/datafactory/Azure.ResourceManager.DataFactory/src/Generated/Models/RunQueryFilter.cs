@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Query filter option for listing runs. </summary>
     public partial class RunQueryFilter
     {
-        /// <summary> Initializes a new instance of RunQueryFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunQueryFilter"/>. </summary>
         /// <param name="operand"> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
         /// <param name="operator"> Operator to be used for filter. </param>
         /// <param name="values"> List of filter values. </param>
@@ -27,6 +30,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             Operand = operand;
             Operator = @operator;
             Values = values.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunQueryFilter"/>. </summary>
+        /// <param name="operand"> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
+        /// <param name="operator"> Operator to be used for filter. </param>
+        /// <param name="values"> List of filter values. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunQueryFilter(RunQueryFilterOperand operand, RunQueryFilterOperator @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Operand = operand;
+            Operator = @operator;
+            Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunQueryFilter"/> for deserialization. </summary>
+        internal RunQueryFilter()
+        {
         }
 
         /// <summary> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>

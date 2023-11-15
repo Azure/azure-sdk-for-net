@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
     internal partial class SoftDeletePolicy
     {
-        /// <summary> Initializes a new instance of SoftDeletePolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftDeletePolicy"/>. </summary>
         public SoftDeletePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftDeletePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftDeletePolicy"/>. </summary>
         /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
-        internal SoftDeletePolicy(bool? isSoftDeleteEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftDeletePolicy(bool? isSoftDeleteEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsSoftDeleteEnabled = isSoftDeleteEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </summary>

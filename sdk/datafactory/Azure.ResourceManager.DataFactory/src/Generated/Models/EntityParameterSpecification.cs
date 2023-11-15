@@ -6,26 +6,37 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Definition of a single parameter for an entity. </summary>
     public partial class EntityParameterSpecification
     {
-        /// <summary> Initializes a new instance of EntityParameterSpecification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EntityParameterSpecification"/>. </summary>
         /// <param name="parameterType"> Parameter type. </param>
         public EntityParameterSpecification(EntityParameterType parameterType)
         {
             ParameterType = parameterType;
         }
 
-        /// <summary> Initializes a new instance of EntityParameterSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityParameterSpecification"/>. </summary>
         /// <param name="parameterType"> Parameter type. </param>
         /// <param name="defaultValue"> Default value of parameter. </param>
-        internal EntityParameterSpecification(EntityParameterType parameterType, BinaryData defaultValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntityParameterSpecification(EntityParameterType parameterType, BinaryData defaultValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ParameterType = parameterType;
             DefaultValue = defaultValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntityParameterSpecification"/> for deserialization. </summary>
+        internal EntityParameterSpecification()
+        {
         }
 
         /// <summary> Parameter type. </summary>

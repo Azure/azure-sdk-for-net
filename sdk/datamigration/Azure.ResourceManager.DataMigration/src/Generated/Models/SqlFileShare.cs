@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> File share. </summary>
     public partial class SqlFileShare
     {
-        /// <summary> Initializes a new instance of SqlFileShare. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlFileShare"/>. </summary>
         public SqlFileShare()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlFileShare. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlFileShare"/>. </summary>
         /// <param name="path"> Location as SMB share or local drive where backups are placed. </param>
         /// <param name="username"> Username to access the file share location for backups. </param>
         /// <param name="password"> Password for username to access file share location. </param>
-        internal SqlFileShare(string path, string username, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlFileShare(string path, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             Username = username;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location as SMB share or local drive where backups are placed. </summary>

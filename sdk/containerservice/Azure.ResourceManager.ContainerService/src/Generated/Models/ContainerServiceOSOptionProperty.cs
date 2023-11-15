@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> OS option property. </summary>
     public partial class ContainerServiceOSOptionProperty
     {
-        /// <summary> Initializes a new instance of ContainerServiceOSOptionProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/>. </summary>
         /// <param name="osType"> The OS type. </param>
         /// <param name="enableFipsImage"> Whether the image is FIPS-enabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="osType"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             OSType = osType;
             EnableFipsImage = enableFipsImage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/>. </summary>
+        /// <param name="osType"> The OS type. </param>
+        /// <param name="enableFipsImage"> Whether the image is FIPS-enabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceOSOptionProperty(string osType, bool enableFipsImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OSType = osType;
+            EnableFipsImage = enableFipsImage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/> for deserialization. </summary>
+        internal ContainerServiceOSOptionProperty()
+        {
         }
 
         /// <summary> The OS type. </summary>

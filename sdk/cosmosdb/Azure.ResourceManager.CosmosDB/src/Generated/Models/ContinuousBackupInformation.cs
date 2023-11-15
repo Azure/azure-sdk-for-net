@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Information about the status of continuous backups. </summary>
     internal partial class ContinuousBackupInformation
     {
-        /// <summary> Initializes a new instance of ContinuousBackupInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContinuousBackupInformation"/>. </summary>
         internal ContinuousBackupInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ContinuousBackupInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousBackupInformation"/>. </summary>
         /// <param name="latestRestorableTimestamp"> The latest restorable timestamp for a resource. </param>
-        internal ContinuousBackupInformation(DateTimeOffset? latestRestorableTimestamp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuousBackupInformation(DateTimeOffset? latestRestorableTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LatestRestorableTimestamp = latestRestorableTimestamp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The latest restorable timestamp for a resource. </summary>

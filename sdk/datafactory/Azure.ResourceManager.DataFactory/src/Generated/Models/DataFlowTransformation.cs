@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A data flow transformation. </summary>
     public partial class DataFlowTransformation
     {
-        /// <summary> Initializes a new instance of DataFlowTransformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowTransformation"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataFlowTransformation(string name)
@@ -24,19 +28,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DataFlowTransformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowTransformation"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
-        internal DataFlowTransformation(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowTransformation(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             Dataset = dataset;
             LinkedService = linkedService;
             Flowlet = flowlet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowTransformation"/> for deserialization. </summary>
+        internal DataFlowTransformation()
+        {
         }
 
         /// <summary> Transformation name. </summary>

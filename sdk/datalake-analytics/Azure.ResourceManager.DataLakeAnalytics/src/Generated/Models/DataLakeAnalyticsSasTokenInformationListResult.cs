@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,13 +17,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     internal partial class DataLakeAnalyticsSasTokenInformationListResult
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsSasTokenInformationListResult"/>. </summary>
         internal DataLakeAnalyticsSasTokenInformationListResult()
         {
             Value = new ChangeTrackingList<DataLakeAnalyticsSasTokenInformation>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsSasTokenInformationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsSasTokenInformationListResult"/>. </summary>
         /// <param name="value">
         /// The results of the list operation.
         /// Serialized Name: SasTokenInformationListResult.value
@@ -31,10 +35,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The link (url) to the next page of results.
         /// Serialized Name: SasTokenInformationListResult.nextLink
         /// </param>
-        internal DataLakeAnalyticsSasTokenInformationListResult(IReadOnlyList<DataLakeAnalyticsSasTokenInformation> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsSasTokenInformationListResult(IReadOnlyList<DataLakeAnalyticsSasTokenInformation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

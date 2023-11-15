@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> The resource status information. </summary>
     public partial class VMwareResourceStatus
     {
-        /// <summary> Initializes a new instance of VMwareResourceStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareResourceStatus"/>. </summary>
         internal VMwareResourceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of VMwareResourceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareResourceStatus"/>. </summary>
         /// <param name="resourceStatusType"> The type of the condition. </param>
         /// <param name="status"> Status of the condition. </param>
         /// <param name="reason"> The reason for the condition's status. </param>
         /// <param name="message"> A human readable message indicating details about the status. </param>
         /// <param name="severity"> Severity with which to treat failures of this type of condition. </param>
         /// <param name="lastUpdatedOn"> The last update time for this condition. </param>
-        internal VMwareResourceStatus(string resourceStatusType, string status, string reason, string message, string severity, DateTimeOffset? lastUpdatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareResourceStatus(string resourceStatusType, string status, string reason, string message, string severity, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceStatusType = resourceStatusType;
             Status = status;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Message = message;
             Severity = severity;
             LastUpdatedOn = lastUpdatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the condition. </summary>

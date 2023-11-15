@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The connection state of a managed private endpoint. </summary>
     public partial class ConnectionStateProperties
     {
-        /// <summary> Initializes a new instance of ConnectionStateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionStateProperties"/>. </summary>
         public ConnectionStateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionStateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStateProperties"/>. </summary>
         /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>
         /// <param name="description"> The managed private endpoint description. </param>
         /// <param name="status"> The approval status. </param>
-        internal ConnectionStateProperties(string actionsRequired, string description, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionStateProperties(string actionsRequired, string description, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionsRequired = actionsRequired;
             Description = description;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The actions required on the managed private endpoint. </summary>

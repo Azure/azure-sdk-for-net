@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The response from the List Agent Pools operation. </summary>
     internal partial class ContainerServiceAgentPoolListResult
     {
-        /// <summary> Initializes a new instance of ContainerServiceAgentPoolListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolListResult"/>. </summary>
         internal ContainerServiceAgentPoolListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceAgentPoolData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceAgentPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceAgentPoolListResult"/>. </summary>
         /// <param name="value"> The list of agent pools. </param>
         /// <param name="nextLink"> The URL to get the next set of agent pool results. </param>
-        internal ContainerServiceAgentPoolListResult(IReadOnlyList<ContainerServiceAgentPoolData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceAgentPoolListResult(IReadOnlyList<ContainerServiceAgentPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of agent pools. </summary>

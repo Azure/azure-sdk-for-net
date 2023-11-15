@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Sync BackupInstance Request. </summary>
     public partial class BackupInstanceSyncContent
     {
-        /// <summary> Initializes a new instance of BackupInstanceSyncContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceSyncContent"/>. </summary>
         public BackupInstanceSyncContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupInstanceSyncContent"/>. </summary>
+        /// <param name="syncType"> Field indicating sync type e.g. to sync only in case of failure or in all cases. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupInstanceSyncContent(BackupInstanceSyncType? syncType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SyncType = syncType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Field indicating sync type e.g. to sync only in case of failure or in all cases. </summary>

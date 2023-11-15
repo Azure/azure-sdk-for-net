@@ -16,7 +16,10 @@ namespace Azure.Communication.Sms.Models
     /// <summary> Response for a successful or multi status send Sms request. </summary>
     internal partial class SmsSendResponse
     {
-        /// <summary> Initializes a new instance of SmsSendResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmsSendResponse"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SmsSendResponse(IEnumerable<SmsSendResult> value)
@@ -26,11 +29,18 @@ namespace Azure.Communication.Sms.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SmsSendResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmsSendResponse"/>. </summary>
         /// <param name="value"></param>
-        internal SmsSendResponse(IReadOnlyList<SmsSendResult> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmsSendResponse(IReadOnlyList<SmsSendResult> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmsSendResponse"/> for deserialization. </summary>
+        internal SmsSendResponse()
+        {
         }
 
         /// <summary> Gets the value. </summary>

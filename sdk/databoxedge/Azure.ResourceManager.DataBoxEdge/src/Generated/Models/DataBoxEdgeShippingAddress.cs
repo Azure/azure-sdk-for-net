@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The shipping address of the customer. </summary>
     public partial class DataBoxEdgeShippingAddress
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeShippingAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShippingAddress"/>. </summary>
         /// <param name="country"> The country name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="country"/> is null. </exception>
         public DataBoxEdgeShippingAddress(string country)
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Country = country;
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShippingAddress"/>. </summary>
         /// <param name="addressLine1"> The address line1. </param>
         /// <param name="addressLine2"> The address line2. </param>
         /// <param name="addressLine3"> The address line3. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="city"> The city name. </param>
         /// <param name="state"> The state name. </param>
         /// <param name="country"> The country name. </param>
-        internal DataBoxEdgeShippingAddress(string addressLine1, string addressLine2, string addressLine3, string postalCode, string city, string state, string country)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeShippingAddress(string addressLine1, string addressLine2, string addressLine3, string postalCode, string city, string state, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressLine1 = addressLine1;
             AddressLine2 = addressLine2;
@@ -40,6 +45,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             City = city;
             State = state;
             Country = country;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShippingAddress"/> for deserialization. </summary>
+        internal DataBoxEdgeShippingAddress()
+        {
         }
 
         /// <summary> The address line1. </summary>

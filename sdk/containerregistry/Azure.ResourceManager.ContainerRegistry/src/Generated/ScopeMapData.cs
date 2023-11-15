@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ScopeMapData : ResourceData
     {
-        /// <summary> Initializes a new instance of ScopeMapData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScopeMapData"/>. </summary>
         public ScopeMapData()
         {
             Actions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ScopeMapData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScopeMapData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,13 +42,15 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// E.g. repositories/repository-name/content/read,
         /// repositories/repository-name/metadata/write
         /// </param>
-        internal ScopeMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string scopeMapType, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IList<string> actions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScopeMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string scopeMapType, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IList<string> actions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ScopeMapType = scopeMapType;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
             Actions = actions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The user friendly description of the scope map. </summary>

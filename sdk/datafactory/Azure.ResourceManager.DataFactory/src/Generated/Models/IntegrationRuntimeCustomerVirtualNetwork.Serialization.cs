@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class IntegrationRuntimeCustomerVirtualNetwork : IUtf8JsonSerializable
+    internal partial class IntegrationRuntimeCustomerVirtualNetwork : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeCustomerVirtualNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeCustomerVirtualNetwork>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<IntegrationRuntimeCustomerVirtualNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IntegrationRuntimeCustomerVirtualNetwork>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IntegrationRuntimeCustomerVirtualNetwork>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeCustomerVirtualNetwork DeserializeIntegrationRuntimeCustomerVirtualNetwork(JsonElement element)
+        IntegrationRuntimeCustomerVirtualNetwork IJsonModel<IntegrationRuntimeCustomerVirtualNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeCustomerVirtualNetwork)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeCustomerVirtualNetwork(document.RootElement, options);
+        }
+
+        internal static IntegrationRuntimeCustomerVirtualNetwork DeserializeIntegrationRuntimeCustomerVirtualNetwork(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> subnetId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationRuntimeCustomerVirtualNetwork(subnetId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IntegrationRuntimeCustomerVirtualNetwork(subnetId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntimeCustomerVirtualNetwork>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeCustomerVirtualNetwork)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IntegrationRuntimeCustomerVirtualNetwork IPersistableModel<IntegrationRuntimeCustomerVirtualNetwork>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeCustomerVirtualNetwork)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIntegrationRuntimeCustomerVirtualNetwork(document.RootElement, options);
+        }
+
+        string IPersistableModel<IntegrationRuntimeCustomerVirtualNetwork>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

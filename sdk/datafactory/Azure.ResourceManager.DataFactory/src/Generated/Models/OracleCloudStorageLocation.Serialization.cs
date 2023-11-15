@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class OracleCloudStorageLocation : IUtf8JsonSerializable
+    public partial class OracleCloudStorageLocation : IUtf8JsonSerializable, IJsonModel<OracleCloudStorageLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleCloudStorageLocation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OracleCloudStorageLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OracleCloudStorageLocation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OracleCloudStorageLocation>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BucketName))
             {
@@ -55,8 +64,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static OracleCloudStorageLocation DeserializeOracleCloudStorageLocation(JsonElement element)
+        OracleCloudStorageLocation IJsonModel<OracleCloudStorageLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleCloudStorageLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOracleCloudStorageLocation(document.RootElement, options);
+        }
+
+        internal static OracleCloudStorageLocation DeserializeOracleCloudStorageLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,5 +139,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new OracleCloudStorageLocation(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
         }
+
+        BinaryData IPersistableModel<OracleCloudStorageLocation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleCloudStorageLocation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OracleCloudStorageLocation IPersistableModel<OracleCloudStorageLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleCloudStorageLocation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOracleCloudStorageLocation(document.RootElement, options);
+        }
+
+        string IPersistableModel<OracleCloudStorageLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Resource for a regional service location. </summary>
     public partial class CosmosDBRegionalService
     {
-        /// <summary> Initializes a new instance of CosmosDBRegionalService. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBRegionalService"/>. </summary>
         internal CosmosDBRegionalService()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBRegionalService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBRegionalService"/>. </summary>
         /// <param name="name"> The regional service name. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="status"> Describes the status of a service. </param>
-        internal CosmosDBRegionalService(string name, AzureLocation? location, CosmosDBServiceStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBRegionalService(string name, AzureLocation? location, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The regional service name. </summary>

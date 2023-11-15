@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Collection of Nodes. </summary>
     internal partial class DataBoxEdgeNodeList
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeNodeList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNodeList"/>. </summary>
         internal DataBoxEdgeNodeList()
         {
             Value = new ChangeTrackingList<DataBoxEdgeNode>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeNodeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeNodeList"/>. </summary>
         /// <param name="value"> The list of Nodes. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal DataBoxEdgeNodeList(IReadOnlyList<DataBoxEdgeNode> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeNodeList(IReadOnlyList<DataBoxEdgeNode> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Nodes. </summary>

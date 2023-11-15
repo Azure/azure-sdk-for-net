@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Specifies the operating system settings for the virtual machine. </summary>
     public partial class OSProfileForVmInstance
     {
-        /// <summary> Initializes a new instance of OSProfileForVmInstance. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSProfileForVmInstance"/>. </summary>
         public OSProfileForVmInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfileForVmInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfileForVmInstance"/>. </summary>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="adminUsername"> Gets or sets administrator username. </param>
         /// <param name="adminPassword"> Sets administrator password. </param>
@@ -25,7 +31,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="toolsRunningStatus"> Gets or sets the current running status of VMware Tools running in the guest operating system. </param>
         /// <param name="toolsVersionStatus"> Gets or sets the current version status of VMware Tools installed in the guest operating system. </param>
         /// <param name="toolsVersion"> Gets or sets the current version of VMware Tools. </param>
-        internal OSProfileForVmInstance(string computerName, string adminUsername, string adminPassword, string guestId, VMwareOSType? osType, string osSku, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSProfileForVmInstance(string computerName, string adminUsername, string adminPassword, string guestId, VMwareOSType? osType, string osSku, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             ToolsRunningStatus = toolsRunningStatus;
             ToolsVersionStatus = toolsVersionStatus;
             ToolsVersion = toolsVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets computer name. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to PostgreSQL and source server requirements. </summary>
     internal partial class ConnectToSourcePostgreSqlSyncTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToSourcePostgreSqlSyncTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourcePostgreSqlSyncTaskInput(PostgreSqlConnectionInfo sourceConnectionInfo)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
             SourceConnectionInfo = sourceConnectionInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskInput"/>. </summary>
+        /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourcePostgreSqlSyncTaskInput(PostgreSqlConnectionInfo sourceConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceConnectionInfo = sourceConnectionInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourcePostgreSqlSyncTaskInput"/> for deserialization. </summary>
+        internal ConnectToSourcePostgreSqlSyncTaskInput()
+        {
         }
 
         /// <summary> Connection information for source PostgreSQL server. </summary>

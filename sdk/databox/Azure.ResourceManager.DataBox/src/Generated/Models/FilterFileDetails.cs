@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Details of the filter files to be used for data transfer. </summary>
     public partial class FilterFileDetails
     {
-        /// <summary> Initializes a new instance of FilterFileDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilterFileDetails"/>. </summary>
         /// <param name="filterFileType"> Type of the filter file. </param>
         /// <param name="filterFilePath"> Path of the file that contains the details of all items to transfer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterFilePath"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataBox.Models
 
             FilterFileType = filterFileType;
             FilterFilePath = filterFilePath;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterFileDetails"/>. </summary>
+        /// <param name="filterFileType"> Type of the filter file. </param>
+        /// <param name="filterFilePath"> Path of the file that contains the details of all items to transfer. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilterFileDetails(FilterFileType filterFileType, string filterFilePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FilterFileType = filterFileType;
+            FilterFilePath = filterFilePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterFileDetails"/> for deserialization. </summary>
+        internal FilterFileDetails()
+        {
         }
 
         /// <summary> Type of the filter file. </summary>

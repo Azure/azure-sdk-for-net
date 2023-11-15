@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class ViewResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of ViewResourceFormatData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ViewResourceFormatData"/>. </summary>
         public ViewResourceFormatData()
         {
             DisplayName = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ViewResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ViewResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +39,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="definition"> View definition. </param>
         /// <param name="changed"> Date time when view was last modified. </param>
         /// <param name="created"> Date time when view was created. </param>
-        internal ViewResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string viewName, string userId, Guid? tenantId, IDictionary<string, string> displayName, string definition, DateTimeOffset? changed, DateTimeOffset? created) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ViewResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string viewName, string userId, Guid? tenantId, IDictionary<string, string> displayName, string definition, DateTimeOffset? changed, DateTimeOffset? created, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ViewName = viewName;
             UserId = userId;
@@ -45,6 +49,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Definition = definition;
             Changed = changed;
             Created = created;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the view. </summary>

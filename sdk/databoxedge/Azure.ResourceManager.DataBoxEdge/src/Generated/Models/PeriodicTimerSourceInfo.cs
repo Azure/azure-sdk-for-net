@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Periodic timer event source. </summary>
     public partial class PeriodicTimerSourceInfo
     {
-        /// <summary> Initializes a new instance of PeriodicTimerSourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeriodicTimerSourceInfo"/>. </summary>
         /// <param name="startOn"> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </param>
         /// <param name="schedule"> Periodic frequency at which timer event needs to be raised. Supports daily, hourly, minutes, and seconds. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
@@ -25,15 +29,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Schedule = schedule;
         }
 
-        /// <summary> Initializes a new instance of PeriodicTimerSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeriodicTimerSourceInfo"/>. </summary>
         /// <param name="startOn"> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </param>
         /// <param name="schedule"> Periodic frequency at which timer event needs to be raised. Supports daily, hourly, minutes, and seconds. </param>
         /// <param name="topic"> Topic where periodic events are published to IoT device. </param>
-        internal PeriodicTimerSourceInfo(DateTimeOffset startOn, string schedule, string topic)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeriodicTimerSourceInfo(DateTimeOffset startOn, string schedule, string topic, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             Schedule = schedule;
             Topic = topic;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeriodicTimerSourceInfo"/> for deserialization. </summary>
+        internal PeriodicTimerSourceInfo()
+        {
         }
 
         /// <summary> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </summary>

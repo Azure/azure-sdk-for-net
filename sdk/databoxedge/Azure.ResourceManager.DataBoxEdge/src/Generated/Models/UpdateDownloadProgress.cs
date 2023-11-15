@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Details about the download progress of update. </summary>
     public partial class UpdateDownloadProgress
     {
-        /// <summary> Initializes a new instance of UpdateDownloadProgress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateDownloadProgress"/>. </summary>
         internal UpdateDownloadProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of UpdateDownloadProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateDownloadProgress"/>. </summary>
         /// <param name="downloadPhase"> The download phase. </param>
         /// <param name="percentComplete"> Percentage of completion. </param>
         /// <param name="totalBytesToDownload"> Total bytes to download. </param>
         /// <param name="totalBytesDownloaded"> Total bytes downloaded. </param>
         /// <param name="numberOfUpdatesToDownload"> Number of updates to download. </param>
         /// <param name="numberOfUpdatesDownloaded"> Number of updates downloaded. </param>
-        internal UpdateDownloadProgress(DataBoxEdgeDownloadPhase? downloadPhase, int? percentComplete, double? totalBytesToDownload, double? totalBytesDownloaded, int? numberOfUpdatesToDownload, int? numberOfUpdatesDownloaded)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateDownloadProgress(DataBoxEdgeDownloadPhase? downloadPhase, int? percentComplete, double? totalBytesToDownload, double? totalBytesDownloaded, int? numberOfUpdatesToDownload, int? numberOfUpdatesDownloaded, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DownloadPhase = downloadPhase;
             PercentComplete = percentComplete;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             TotalBytesDownloaded = totalBytesDownloaded;
             NumberOfUpdatesToDownload = numberOfUpdatesToDownload;
             NumberOfUpdatesDownloaded = numberOfUpdatesDownloaded;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The download phase. </summary>

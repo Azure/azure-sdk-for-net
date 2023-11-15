@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Migration Validation Database level summary result. </summary>
     public partial class MigrationValidationDatabaseSummaryResult
     {
-        /// <summary> Initializes a new instance of MigrationValidationDatabaseSummaryResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationDatabaseSummaryResult"/>. </summary>
         internal MigrationValidationDatabaseSummaryResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrationValidationDatabaseSummaryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationValidationDatabaseSummaryResult"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="migrationId"> Migration Identifier. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="startedOn"> Validation start time. </param>
         /// <param name="endedOn"> Validation end time. </param>
         /// <param name="status"> Current status of validation at the database level. </param>
-        internal MigrationValidationDatabaseSummaryResult(string id, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ValidationStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrationValidationDatabaseSummaryResult(string id, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ValidationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             MigrationId = migrationId;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             StartedOn = startedOn;
             EndedOn = endedOn;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result identifier. </summary>

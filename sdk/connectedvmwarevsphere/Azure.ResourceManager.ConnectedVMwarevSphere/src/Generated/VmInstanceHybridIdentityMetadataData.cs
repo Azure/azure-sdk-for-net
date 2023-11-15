@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VmInstanceHybridIdentityMetadataData : ResourceData
     {
-        /// <summary> Initializes a new instance of VmInstanceHybridIdentityMetadataData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmInstanceHybridIdentityMetadataData"/>. </summary>
         public VmInstanceHybridIdentityMetadataData()
         {
         }
 
-        /// <summary> Initializes a new instance of VmInstanceHybridIdentityMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceHybridIdentityMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +35,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUid"> The unique identifier for the resource. </param>
         /// <param name="publicKey"> Gets or sets the Public Key. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal VmInstanceHybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceUid, string publicKey, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmInstanceHybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceUid, string publicKey, VMwareResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceUid = resourceUid;
             PublicKey = publicKey;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier for the resource. </summary>

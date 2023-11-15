@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -16,20 +18,25 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class JobSecrets
     {
-        /// <summary> Initializes a new instance of JobSecrets. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobSecrets"/>. </summary>
         protected JobSecrets()
         {
         }
 
-        /// <summary> Initializes a new instance of JobSecrets. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobSecrets"/>. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
-        internal JobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobSecretsType = jobSecretsType;
             DataCenterAccessSecurityCode = dataCenterAccessSecurityCode;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Used to indicate what type of job secrets object. </summary>

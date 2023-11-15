@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceFleetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerServiceFleetData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,11 +39,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
         /// <param name="provisioningState"> The provisioning state of the last accepted operation. </param>
-        internal ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ContainerServiceFleetHubProfile hubProfile, ContainerServiceFleetProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ContainerServiceFleetHubProfile hubProfile, ContainerServiceFleetProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             HubProfile = hubProfile;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetData"/> for deserialization. </summary>
+        internal ContainerServiceFleetData()
+        {
         }
 
         /// <summary> Resource Etag. </summary>

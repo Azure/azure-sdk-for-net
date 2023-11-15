@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> CrossSubscriptionRestore Settings. </summary>
     internal partial class CrossSubscriptionRestoreSettings
     {
-        /// <summary> Initializes a new instance of CrossSubscriptionRestoreSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CrossSubscriptionRestoreSettings"/>. </summary>
         public CrossSubscriptionRestoreSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CrossSubscriptionRestoreSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CrossSubscriptionRestoreSettings"/>. </summary>
         /// <param name="state"> CrossSubscriptionRestore state. </param>
-        internal CrossSubscriptionRestoreSettings(DataProtectionBackupCrossSubscriptionRestoreState? state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CrossSubscriptionRestoreSettings(DataProtectionBackupCrossSubscriptionRestoreState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> CrossSubscriptionRestore state. </summary>

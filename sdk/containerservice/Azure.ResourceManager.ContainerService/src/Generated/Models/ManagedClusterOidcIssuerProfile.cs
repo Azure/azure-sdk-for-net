@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The OIDC issuer profile of the Managed Cluster. </summary>
     public partial class ManagedClusterOidcIssuerProfile
     {
-        /// <summary> Initializes a new instance of ManagedClusterOidcIssuerProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterOidcIssuerProfile"/>. </summary>
         public ManagedClusterOidcIssuerProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterOidcIssuerProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterOidcIssuerProfile"/>. </summary>
         /// <param name="issuerUriInfo"> The OIDC issuer url of the Managed Cluster. </param>
         /// <param name="isEnabled"> Whether the OIDC issuer is enabled. </param>
-        internal ManagedClusterOidcIssuerProfile(string issuerUriInfo, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterOidcIssuerProfile(string issuerUriInfo, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssuerUriInfo = issuerUriInfo;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The OIDC issuer url of the Managed Cluster. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for the task that validates connection to SQL Server and also validates source server requirements. </summary>
     public partial class ConnectToSourceSqlServerTaskInput
     {
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo)
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
         }
 
-        /// <summary> Initializes a new instance of ConnectToSourceSqlServerTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for Source SQL Server. </param>
         /// <param name="checkPermissionsGroup"> Permission group for validations. </param>
         /// <param name="collectDatabases"> Flag for whether to collect databases from source server. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="collectTdeCertificateInfo"> Flag for whether to collect TDE Certificate names from source server. </param>
         /// <param name="validateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the source server. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
-        internal ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? collectDatabases, bool? collectLogins, bool? collectAgentJobs, bool? collectTdeCertificateInfo, bool? validateSsisCatalogOnly, string encryptedKeyForSecureFields)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? collectDatabases, bool? collectLogins, bool? collectAgentJobs, bool? collectTdeCertificateInfo, bool? validateSsisCatalogOnly, string encryptedKeyForSecureFields, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             CheckPermissionsGroup = checkPermissionsGroup;
@@ -42,6 +47,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             CollectTdeCertificateInfo = collectTdeCertificateInfo;
             ValidateSsisCatalogOnly = validateSsisCatalogOnly;
             EncryptedKeyForSecureFields = encryptedKeyForSecureFields;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectToSourceSqlServerTaskInput"/> for deserialization. </summary>
+        internal ConnectToSourceSqlServerTaskInput()
+        {
         }
 
         /// <summary> Connection information for Source SQL Server. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a capacity reservation that provides as snapshot of the runtime properties of the capacity reservation that is managed by the platform and can change outside of control plane operations. </summary>
     public partial class CapacityReservationInstanceView
     {
-        /// <summary> Initializes a new instance of CapacityReservationInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationInstanceView"/>. </summary>
         internal CapacityReservationInstanceView()
         {
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of CapacityReservationInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityReservationInstanceView"/>. </summary>
         /// <param name="utilizationInfo"> Unutilized capacity of the capacity reservation. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal CapacityReservationInstanceView(CapacityReservationUtilization utilizationInfo, IReadOnlyList<InstanceViewStatus> statuses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CapacityReservationInstanceView(CapacityReservationUtilization utilizationInfo, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UtilizationInfo = utilizationInfo;
             Statuses = statuses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unutilized capacity of the capacity reservation. </summary>

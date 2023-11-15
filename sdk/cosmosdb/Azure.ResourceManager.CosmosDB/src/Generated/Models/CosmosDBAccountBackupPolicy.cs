@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// </summary>
     public abstract partial class CosmosDBAccountBackupPolicy
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountBackupPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountBackupPolicy"/>. </summary>
         protected CosmosDBAccountBackupPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountBackupPolicy"/>. </summary>
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        internal CosmosDBAccountBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupPolicyType = backupPolicyType;
             MigrationState = migrationState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the mode of backups. </summary>

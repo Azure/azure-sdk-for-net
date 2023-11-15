@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of restorable table names. </summary>
     internal partial class RestorableTableResourcesListResult
     {
-        /// <summary> Initializes a new instance of RestorableTableResourcesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableTableResourcesListResult"/>. </summary>
         internal RestorableTableResourcesListResult()
         {
             Value = new ChangeTrackingList<RestorableTableResourceData>();
         }
 
-        /// <summary> Initializes a new instance of RestorableTableResourcesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableTableResourcesListResult"/>. </summary>
         /// <param name="value"> List of restorable table names. </param>
-        internal RestorableTableResourcesListResult(IReadOnlyList<RestorableTableResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableTableResourcesListResult(IReadOnlyList<RestorableTableResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of restorable table names. </summary>

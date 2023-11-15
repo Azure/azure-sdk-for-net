@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -13,7 +14,10 @@ namespace Azure.Communication.Messages
     /// <summary> The template bindings component for WhatsApp. </summary>
     internal partial class MessageTemplateBindingsWhatsAppComponent
     {
-        /// <summary> Initializes a new instance of MessageTemplateBindingsWhatsAppComponent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppComponent"/>. </summary>
         /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
         public MessageTemplateBindingsWhatsAppComponent(string refValue)
@@ -21,6 +25,20 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(refValue, nameof(refValue));
 
             RefValue = refValue;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppComponent"/>. </summary>
+        /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateBindingsWhatsAppComponent(string refValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RefValue = refValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppComponent"/> for deserialization. </summary>
+        internal MessageTemplateBindingsWhatsAppComponent()
+        {
         }
 
         /// <summary> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </summary>

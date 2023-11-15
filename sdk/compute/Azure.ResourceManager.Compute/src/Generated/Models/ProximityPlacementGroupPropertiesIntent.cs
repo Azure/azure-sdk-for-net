@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the user intent of the proximity placement group. </summary>
     internal partial class ProximityPlacementGroupPropertiesIntent
     {
-        /// <summary> Initializes a new instance of ProximityPlacementGroupPropertiesIntent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupPropertiesIntent"/>. </summary>
         public ProximityPlacementGroupPropertiesIntent()
         {
             VmSizes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ProximityPlacementGroupPropertiesIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupPropertiesIntent"/>. </summary>
         /// <param name="vmSizes"> Specifies possible sizes of virtual machines that can be created in the proximity placement group. </param>
-        internal ProximityPlacementGroupPropertiesIntent(IList<string> vmSizes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProximityPlacementGroupPropertiesIntent(IList<string> vmSizes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSizes = vmSizes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies possible sizes of virtual machines that can be created in the proximity placement group. </summary>

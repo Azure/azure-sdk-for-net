@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Offline configuration. </summary>
     public partial class OfflineConfiguration
     {
-        /// <summary> Initializes a new instance of OfflineConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OfflineConfiguration"/>. </summary>
         public OfflineConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of OfflineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="OfflineConfiguration"/>. </summary>
         /// <param name="offline"> Offline migration. </param>
         /// <param name="lastBackupName"> Last backup name for offline migration. This is optional for migrations from file share. If it is not provided, then the service will determine the last backup file name based on latest backup files present in file share. </param>
-        internal OfflineConfiguration(bool? offline, string lastBackupName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OfflineConfiguration(bool? offline, string lastBackupName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Offline = offline;
             LastBackupName = lastBackupName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Offline migration. </summary>

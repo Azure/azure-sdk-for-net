@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.DataLakeStore
     /// </summary>
     public partial class DataLakeStoreAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountData"/>. </summary>
         internal DataLakeStoreAccountData()
         {
             FirewallRules = new ChangeTrackingList<DataLakeStoreFirewallRuleData>();
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.DataLakeStore
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +57,8 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="currentTier"> The commitment tier in use for the current month. </param>
         /// <param name="location"> The resource location. </param>
         /// <param name="tags"> The resource tags. </param>
-        internal DataLakeStoreAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, Guid? accountId, DataLakeStoreAccountStatus? provisioningState, DataLakeStoreAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultGroup, DataLakeStoreAccountEncryptionConfig encryptionConfig, DataLakeStoreEncryptionState? encryptionState, DataLakeStoreEncryptionProvisioningState? encryptionProvisioningState, IReadOnlyList<DataLakeStoreFirewallRuleData> firewallRules, IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> virtualNetworkRules, DataLakeStoreFirewallState? firewallState, DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs, IReadOnlyList<DataLakeStoreTrustedIdProviderData> trustedIdProviders, DataLakeStoreTrustedIdProviderState? trustedIdProviderState, DataLakeStoreCommitmentTierType? newTier, DataLakeStoreCommitmentTierType? currentTier, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, Guid? accountId, DataLakeStoreAccountStatus? provisioningState, DataLakeStoreAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultGroup, DataLakeStoreAccountEncryptionConfig encryptionConfig, DataLakeStoreEncryptionState? encryptionState, DataLakeStoreEncryptionProvisioningState? encryptionProvisioningState, IReadOnlyList<DataLakeStoreFirewallRuleData> firewallRules, IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> virtualNetworkRules, DataLakeStoreFirewallState? firewallState, DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs, IReadOnlyList<DataLakeStoreTrustedIdProviderData> trustedIdProviders, DataLakeStoreTrustedIdProviderState? trustedIdProviderState, DataLakeStoreCommitmentTierType? newTier, DataLakeStoreCommitmentTierType? currentTier, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             AccountId = accountId;
@@ -77,6 +81,7 @@ namespace Azure.ResourceManager.DataLakeStore
             CurrentTier = currentTier;
             Location = location;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Key Vault encryption identity, if any. Current supported identity types: SystemAssigned. </summary>

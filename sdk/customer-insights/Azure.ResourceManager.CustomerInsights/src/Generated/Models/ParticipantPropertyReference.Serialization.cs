@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ParticipantPropertyReference : IUtf8JsonSerializable
+    public partial class ParticipantPropertyReference : IUtf8JsonSerializable, IJsonModel<ParticipantPropertyReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParticipantPropertyReference>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ParticipantPropertyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ParticipantPropertyReference>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ParticipantPropertyReference>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourcePropertyName"u8);
             writer.WriteStringValue(SourcePropertyName);
             writer.WritePropertyName("targetPropertyName"u8);
             writer.WriteStringValue(TargetPropertyName);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ParticipantPropertyReference DeserializeParticipantPropertyReference(JsonElement element)
+        ParticipantPropertyReference IJsonModel<ParticipantPropertyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParticipantPropertyReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParticipantPropertyReference(document.RootElement, options);
+        }
+
+        internal static ParticipantPropertyReference DeserializeParticipantPropertyReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string sourcePropertyName = default;
             string targetPropertyName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourcePropertyName"u8))
@@ -42,8 +84,38 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     targetPropertyName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ParticipantPropertyReference(sourcePropertyName, targetPropertyName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ParticipantPropertyReference(sourcePropertyName, targetPropertyName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ParticipantPropertyReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParticipantPropertyReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ParticipantPropertyReference IPersistableModel<ParticipantPropertyReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ParticipantPropertyReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeParticipantPropertyReference(document.RootElement, options);
+        }
+
+        string IPersistableModel<ParticipantPropertyReference>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

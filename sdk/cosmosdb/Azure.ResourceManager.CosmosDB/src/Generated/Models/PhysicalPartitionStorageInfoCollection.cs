@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> List of physical partitions and their properties returned by a merge operation. </summary>
     public partial class PhysicalPartitionStorageInfoCollection
     {
-        /// <summary> Initializes a new instance of PhysicalPartitionStorageInfoCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionStorageInfoCollection"/>. </summary>
         internal PhysicalPartitionStorageInfoCollection()
         {
             PhysicalPartitionStorageInfoCollectionValue = new ChangeTrackingList<PhysicalPartitionStorageInfo>();
         }
 
-        /// <summary> Initializes a new instance of PhysicalPartitionStorageInfoCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhysicalPartitionStorageInfoCollection"/>. </summary>
         /// <param name="physicalPartitionStorageInfoCollectionValue"> List of physical partitions and their properties. </param>
-        internal PhysicalPartitionStorageInfoCollection(IReadOnlyList<PhysicalPartitionStorageInfo> physicalPartitionStorageInfoCollectionValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhysicalPartitionStorageInfoCollection(IReadOnlyList<PhysicalPartitionStorageInfo> physicalPartitionStorageInfoCollectionValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PhysicalPartitionStorageInfoCollectionValue = physicalPartitionStorageInfoCollectionValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of physical partitions and their properties. </summary>

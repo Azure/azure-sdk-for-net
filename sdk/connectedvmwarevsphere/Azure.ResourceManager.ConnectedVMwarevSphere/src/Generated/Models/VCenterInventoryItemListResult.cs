@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of InventoryItems. </summary>
     internal partial class VCenterInventoryItemListResult
     {
-        /// <summary> Initializes a new instance of VCenterInventoryItemListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VCenterInventoryItemListResult"/>. </summary>
         /// <param name="value"> Array of InventoryItems. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VCenterInventoryItemListResult(IEnumerable<VCenterInventoryItemData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VCenterInventoryItemListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VCenterInventoryItemListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of InventoryItems. </param>
         /// <param name="value"> Array of InventoryItems. </param>
-        internal VCenterInventoryItemListResult(string nextLink, IReadOnlyList<VCenterInventoryItemData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VCenterInventoryItemListResult(string nextLink, IReadOnlyList<VCenterInventoryItemData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VCenterInventoryItemListResult"/> for deserialization. </summary>
+        internal VCenterInventoryItemListResult()
+        {
         }
 
         /// <summary> Url to follow for getting next page of InventoryItems. </summary>

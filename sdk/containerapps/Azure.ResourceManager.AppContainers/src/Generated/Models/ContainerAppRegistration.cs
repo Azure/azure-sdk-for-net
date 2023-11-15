@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the app registration for providers that have app ids and app secrets. </summary>
     public partial class ContainerAppRegistration
     {
-        /// <summary> Initializes a new instance of ContainerAppRegistration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistration"/>. </summary>
         public ContainerAppRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppRegistration"/>. </summary>
         /// <param name="appId"> The App ID of the app used for login. </param>
         /// <param name="appSecretSettingName"> The app setting name that contains the app secret. </param>
-        internal ContainerAppRegistration(string appId, string appSecretSettingName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppRegistration(string appId, string appSecretSettingName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppId = appId;
             AppSecretSettingName = appSecretSettingName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The App ID of the app used for login. </summary>

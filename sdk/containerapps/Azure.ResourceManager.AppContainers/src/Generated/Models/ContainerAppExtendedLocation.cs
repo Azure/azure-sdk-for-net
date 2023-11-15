@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The complex type of the extended location. </summary>
     public partial class ContainerAppExtendedLocation
     {
-        /// <summary> Initializes a new instance of ContainerAppExtendedLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppExtendedLocation"/>. </summary>
         public ContainerAppExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppExtendedLocation"/>. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
-        internal ContainerAppExtendedLocation(string name, ContainerAppExtendedLocationType? extendedLocationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppExtendedLocation(string name, ContainerAppExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ExtendedLocationType = extendedLocationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the extended location. </summary>

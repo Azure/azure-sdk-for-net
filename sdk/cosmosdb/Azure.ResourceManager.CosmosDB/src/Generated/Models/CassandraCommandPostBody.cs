@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Specification of which command to run where. </summary>
     public partial class CassandraCommandPostBody
     {
-        /// <summary> Initializes a new instance of CassandraCommandPostBody. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraCommandPostBody"/>. </summary>
         /// <param name="command"> The command which should be run. </param>
         /// <param name="host"> IP address of the cassandra host to run the command on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="host"/> is null. </exception>
@@ -26,6 +29,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Command = command;
             Arguments = new ChangeTrackingDictionary<string, string>();
             Host = host;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CassandraCommandPostBody"/>. </summary>
+        /// <param name="command"> The command which should be run. </param>
+        /// <param name="arguments"> The arguments for the command to be run. </param>
+        /// <param name="host"> IP address of the cassandra host to run the command on. </param>
+        /// <param name="cassandraStopStart"> If true, stops cassandra before executing the command and then start it again. </param>
+        /// <param name="allowWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraCommandPostBody(string command, IDictionary<string, string> arguments, string host, bool? cassandraStopStart, bool? allowWrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Command = command;
+            Arguments = arguments;
+            Host = host;
+            CassandraStopStart = cassandraStopStart;
+            AllowWrite = allowWrite;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CassandraCommandPostBody"/> for deserialization. </summary>
+        internal CassandraCommandPostBody()
+        {
         }
 
         /// <summary> The command which should be run. </summary>

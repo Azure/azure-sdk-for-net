@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The response of list connector operation. </summary>
     internal partial class ConnectorListResult
     {
-        /// <summary> Initializes a new instance of ConnectorListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorListResult"/>. </summary>
         internal ConnectorListResult()
         {
             Value = new ChangeTrackingList<ConnectorResourceFormatData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectorListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorListResult"/>. </summary>
         /// <param name="value"> Results of the list operation. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ConnectorListResult(IReadOnlyList<ConnectorResourceFormatData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorListResult(IReadOnlyList<ConnectorResourceFormatData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Results of the list operation. </summary>

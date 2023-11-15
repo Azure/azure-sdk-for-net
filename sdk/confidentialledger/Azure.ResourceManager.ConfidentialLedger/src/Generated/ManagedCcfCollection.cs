@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), _managedCcfManagedCcfClientDiagnostics, Pipeline, "ManagedCcfCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), _managedCcfManagedCcfClientDiagnostics, Pipeline, "ManagedCcfCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedCcfManagedCcfRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), _managedCcfManagedCcfClientDiagnostics, Pipeline, "ManagedCcfCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ManagedCcfResource(Client, ManagedCcfData.DeserializeManagedCcfData(e)), _managedCcfManagedCcfClientDiagnostics, Pipeline, "ManagedCcfCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

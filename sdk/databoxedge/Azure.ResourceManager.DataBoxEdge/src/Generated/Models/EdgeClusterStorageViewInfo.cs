@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Cluster Storage Data. </summary>
     public partial class EdgeClusterStorageViewInfo
     {
-        /// <summary> Initializes a new instance of EdgeClusterStorageViewInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterStorageViewInfo"/>. </summary>
         public EdgeClusterStorageViewInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeClusterStorageViewInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeClusterStorageViewInfo"/>. </summary>
         /// <param name="clusterTotalStorageInMB"> Total storage on the cluster in MB. </param>
         /// <param name="clusterFreeStorageInMB"> The available or free storage on the cluster in MB. </param>
-        internal EdgeClusterStorageViewInfo(double? clusterTotalStorageInMB, double? clusterFreeStorageInMB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeClusterStorageViewInfo(double? clusterTotalStorageInMB, double? clusterFreeStorageInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterTotalStorageInMB = clusterTotalStorageInMB;
             ClusterFreeStorageInMB = clusterFreeStorageInMB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Total storage on the cluster in MB. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The Azure SQL Server database dataset. </summary>
     public partial class AzureSqlTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AzureSqlTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureSqlTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "AzureSqlTable";
         }
 
-        /// <summary> Initializes a new instance of AzureSqlTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             DatasetType = datasetType ?? "AzureSqlTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSqlTableDataset"/> for deserialization. </summary>
+        internal AzureSqlTableDataset()
+        {
         }
 
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>

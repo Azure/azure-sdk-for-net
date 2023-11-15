@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,26 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Parameters for updating a factory resource. </summary>
     public partial class DataFactoryPatch
     {
-        /// <summary> Initializes a new instance of DataFactoryPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPatch"/>. </summary>
         public DataFactoryPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPatch"/>. </summary>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="identity"> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DataFactoryPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource tags. </summary>

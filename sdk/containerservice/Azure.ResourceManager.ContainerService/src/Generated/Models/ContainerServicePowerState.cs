@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Describes the Power State of the cluster. </summary>
     internal partial class ContainerServicePowerState
     {
-        /// <summary> Initializes a new instance of ContainerServicePowerState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePowerState"/>. </summary>
         public ContainerServicePowerState()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServicePowerState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServicePowerState"/>. </summary>
         /// <param name="code"> Tells whether the cluster is Running or Stopped. </param>
-        internal ContainerServicePowerState(ContainerServiceStateCode? code)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServicePowerState(ContainerServiceStateCode? code, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>

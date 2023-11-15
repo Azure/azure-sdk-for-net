@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. </summary>
     public partial class PurchasePlan
     {
-        /// <summary> Initializes a new instance of PurchasePlan. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurchasePlan"/>. </summary>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="name"> The plan ID. </param>
         /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
@@ -27,6 +31,24 @@ namespace Azure.ResourceManager.Compute.Models
             Publisher = publisher;
             Name = name;
             Product = product;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurchasePlan"/>. </summary>
+        /// <param name="publisher"> The publisher ID. </param>
+        /// <param name="name"> The plan ID. </param>
+        /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurchasePlan(string publisher, string name, string product, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Publisher = publisher;
+            Name = name;
+            Product = product;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PurchasePlan"/> for deserialization. </summary>
+        internal PurchasePlan()
+        {
         }
 
         /// <summary> The publisher ID. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     /// <summary>
@@ -13,9 +16,29 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
     /// </summary>
     public partial class DataLakeAnalyticsStorageAccountInformationPatch
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsStorageAccountInformationPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationPatch"/>. </summary>
         public DataLakeAnalyticsStorageAccountInformationPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsStorageAccountInformationPatch"/>. </summary>
+        /// <param name="accessKey">
+        /// The updated access key associated with this Azure Storage account that will be used to connect to it.
+        /// Serialized Name: UpdateStorageAccountParameters.properties.accessKey
+        /// </param>
+        /// <param name="suffix">
+        /// The optional suffix for the storage account.
+        /// Serialized Name: UpdateStorageAccountParameters.properties.suffix
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsStorageAccountInformationPatch(string accessKey, string suffix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AccessKey = accessKey;
+            Suffix = suffix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Configuration to bind a ContainerApp to a dev ContainerApp Service. </summary>
     public partial class ContainerAppServiceBind
     {
-        /// <summary> Initializes a new instance of ContainerAppServiceBind. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppServiceBind"/>. </summary>
         public ContainerAppServiceBind()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppServiceBind. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppServiceBind"/>. </summary>
         /// <param name="serviceId"> Resource id of the target service. </param>
         /// <param name="name"> Name of the service bind. </param>
-        internal ContainerAppServiceBind(ResourceIdentifier serviceId, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppServiceBind(ResourceIdentifier serviceId, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceId = serviceId;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource id of the target service. </summary>

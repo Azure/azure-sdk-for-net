@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The object representing periodic mode backup policy. </summary>
     public partial class PeriodicModeBackupPolicy : CosmosDBAccountBackupPolicy
     {
-        /// <summary> Initializes a new instance of PeriodicModeBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeriodicModeBackupPolicy"/>. </summary>
         public PeriodicModeBackupPolicy()
         {
             BackupPolicyType = BackupPolicyType.Periodic;
         }
 
-        /// <summary> Initializes a new instance of PeriodicModeBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeriodicModeBackupPolicy"/>. </summary>
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="periodicModeProperties"> Configuration values for periodic mode backup. </param>
-        internal PeriodicModeBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, PeriodicModeProperties periodicModeProperties) : base(backupPolicyType, migrationState)
+        internal PeriodicModeBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> serializedAdditionalRawData, PeriodicModeProperties periodicModeProperties) : base(backupPolicyType, migrationState, serializedAdditionalRawData)
         {
             PeriodicModeProperties = periodicModeProperties;
             BackupPolicyType = backupPolicyType;

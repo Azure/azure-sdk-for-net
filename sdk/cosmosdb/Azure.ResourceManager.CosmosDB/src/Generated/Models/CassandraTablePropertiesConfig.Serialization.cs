@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraTablePropertiesConfig : IUtf8JsonSerializable
+    public partial class CassandraTablePropertiesConfig : IUtf8JsonSerializable, IJsonModel<CassandraTablePropertiesConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraTablePropertiesConfig>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CassandraTablePropertiesConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CassandraTablePropertiesConfig>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CassandraTablePropertiesConfig>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CassandraTablePropertiesConfig DeserializeCassandraTablePropertiesConfig(JsonElement element)
+        CassandraTablePropertiesConfig IJsonModel<CassandraTablePropertiesConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraTablePropertiesConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraTablePropertiesConfig(document.RootElement, options);
+        }
+
+        internal static CassandraTablePropertiesConfig DeserializeCassandraTablePropertiesConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> throughput = default;
             Optional<AutoscaleSettings> autoscaleSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CassandraTablePropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CassandraTablePropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CassandraTablePropertiesConfig>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraTablePropertiesConfig)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CassandraTablePropertiesConfig IPersistableModel<CassandraTablePropertiesConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraTablePropertiesConfig)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCassandraTablePropertiesConfig(document.RootElement, options);
+        }
+
+        string IPersistableModel<CassandraTablePropertiesConfig>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlClientEncryptionKeyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateListClientEncryptionKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlClientEncryptionKeyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlClientEncryptionKeySqlResourcesRestClient.CreateListClientEncryptionKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CosmosDBSqlClientEncryptionKeyResource(Client, CosmosDBSqlClientEncryptionKeyData.DeserializeCosmosDBSqlClientEncryptionKeyData(e)), _cosmosDBSqlClientEncryptionKeySqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlClientEncryptionKeyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Managed cluster Access Profile. </summary>
     public partial class ManagedClusterAccessProfile : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ManagedClusterAccessProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAccessProfile"/>. </summary>
         /// <param name="location"> The location. </param>
         public ManagedClusterAccessProfile(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterAccessProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAccessProfile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,9 +32,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kubeConfig"> Base64-encoded Kubernetes configuration file. </param>
-        internal ManagedClusterAccessProfile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, byte[] kubeConfig) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterAccessProfile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, byte[] kubeConfig, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             KubeConfig = kubeConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterAccessProfile"/> for deserialization. </summary>
+        internal ManagedClusterAccessProfile()
+        {
         }
 
         /// <summary> Base64-encoded Kubernetes configuration file. </summary>

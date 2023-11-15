@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Pipeline reference type. </summary>
     public partial class DataFactoryPipelineReference
     {
-        /// <summary> Initializes a new instance of DataFactoryPipelineReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineReference"/>. </summary>
         /// <param name="referenceType"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -25,15 +29,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryPipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineReference"/>. </summary>
         /// <param name="referenceType"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <param name="name"> Reference name. </param>
-        internal DataFactoryPipelineReference(DataFactoryPipelineReferenceType referenceType, string referenceName, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryPipelineReference(DataFactoryPipelineReferenceType referenceType, string referenceName, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferenceType = referenceType;
             ReferenceName = referenceName;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPipelineReference"/> for deserialization. </summary>
+        internal DataFactoryPipelineReference()
+        {
         }
 
         /// <summary> Pipeline reference type. </summary>

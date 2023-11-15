@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxValidationContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownValidationRequest))]
+    public partial class DataBoxValidationContent : IUtf8JsonSerializable, IJsonModel<DataBoxValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidationContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataBoxValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataBoxValidationContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataBoxValidationContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("validationCategory"u8);
             writer.WriteStringValue(ValidationCategory.ToString());
@@ -24,7 +35,77 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DataBoxValidationContent IJsonModel<DataBoxValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxValidationContent(document.RootElement, options);
+        }
+
+        internal static DataBoxValidationContent DeserializeDataBoxValidationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("validationCategory", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "JobCreationValidation": return CreateJobValidationContent.DeserializeCreateJobValidationContent(element);
+                }
+            }
+            return UnknownValidationRequest.DeserializeUnknownValidationRequest(element);
+        }
+
+        BinaryData IPersistableModel<DataBoxValidationContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataBoxValidationContent IPersistableModel<DataBoxValidationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataBoxValidationContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataBoxValidationContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

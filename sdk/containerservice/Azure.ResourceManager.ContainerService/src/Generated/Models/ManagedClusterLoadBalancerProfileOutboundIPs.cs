@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Desired outbound IP resources for the cluster load balancer. </summary>
     internal partial class ManagedClusterLoadBalancerProfileOutboundIPs
     {
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileOutboundIPs. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPs"/>. </summary>
         public ManagedClusterLoadBalancerProfileOutboundIPs()
         {
             PublicIPs = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterLoadBalancerProfileOutboundIPs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerProfileOutboundIPs"/>. </summary>
         /// <param name="publicIPs"> A list of public IP resources. </param>
-        internal ManagedClusterLoadBalancerProfileOutboundIPs(IList<WritableSubResource> publicIPs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterLoadBalancerProfileOutboundIPs(IList<WritableSubResource> publicIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicIPs = publicIPs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of public IP resources. </summary>

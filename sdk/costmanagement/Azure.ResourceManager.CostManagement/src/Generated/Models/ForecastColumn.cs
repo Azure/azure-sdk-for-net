@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Forecast column properties. </summary>
     public partial class ForecastColumn
     {
-        /// <summary> Initializes a new instance of ForecastColumn. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastColumn"/>. </summary>
         internal ForecastColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of ForecastColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastColumn"/>. </summary>
         /// <param name="name"> The name of column. </param>
         /// <param name="forecastColumnType"> The type of column. </param>
-        internal ForecastColumn(string name, string forecastColumnType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastColumn(string name, string forecastColumnType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ForecastColumnType = forecastColumnType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of column. </summary>

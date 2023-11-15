@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Contains all the contact details of the customer. </summary>
     public partial class DataBoxEdgeContactDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeContactDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/>. </summary>
         /// <param name="contactPerson"> The contact person name. </param>
         /// <param name="companyName"> The name of the company. </param>
         /// <param name="phone"> The phone number. </param>
@@ -34,17 +37,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             EmailList = emailList.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/>. </summary>
         /// <param name="contactPerson"> The contact person name. </param>
         /// <param name="companyName"> The name of the company. </param>
         /// <param name="phone"> The phone number. </param>
         /// <param name="emailList"> The email list. </param>
-        internal DataBoxEdgeContactDetails(string contactPerson, string companyName, string phone, IList<string> emailList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeContactDetails(string contactPerson, string companyName, string phone, IList<string> emailList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactPerson = contactPerson;
             CompanyName = companyName;
             Phone = phone;
             EmailList = emailList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/> for deserialization. </summary>
+        internal DataBoxEdgeContactDetails()
+        {
         }
 
         /// <summary> The contact person name. </summary>

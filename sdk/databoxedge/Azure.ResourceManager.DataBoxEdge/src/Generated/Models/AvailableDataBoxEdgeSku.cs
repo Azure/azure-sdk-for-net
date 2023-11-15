@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Sku information. </summary>
     public partial class AvailableDataBoxEdgeSku
     {
-        /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableDataBoxEdgeSku"/>. </summary>
         internal AvailableDataBoxEdgeSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Capabilities = new ChangeTrackingList<DataBoxEdgeSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of AvailableDataBoxEdgeSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableDataBoxEdgeSku"/>. </summary>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="name"> The Sku name. </param>
         /// <param name="kind"> The Sku kind. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="availability"> Links to the next set of results. </param>
         /// <param name="shipmentTypes"> List of Shipment Types supported by this SKU. </param>
         /// <param name="capabilities"> The capability info of the SKU. </param>
-        internal AvailableDataBoxEdgeSku(string resourceType, DataBoxEdgeSkuName? name, string kind, DataBoxEdgeSkuTier? tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> apiVersions, IReadOnlyList<DataBoxEdgeSkuLocationInfo> locationInfo, IReadOnlyList<DataBoxEdgeSkuCost> costs, DataBoxEdgeSkuSignupOption? signupOption, DataBoxEdgeSkuVersion? version, DataBoxEdgeSkuAvailability? availability, IReadOnlyList<DataBoxEdgeShipmentType> shipmentTypes, IReadOnlyList<DataBoxEdgeSkuCapability> capabilities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableDataBoxEdgeSku(string resourceType, DataBoxEdgeSkuName? name, string kind, DataBoxEdgeSkuTier? tier, string size, string family, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> apiVersions, IReadOnlyList<DataBoxEdgeSkuLocationInfo> locationInfo, IReadOnlyList<DataBoxEdgeSkuCost> costs, DataBoxEdgeSkuSignupOption? signupOption, DataBoxEdgeSkuVersion? version, DataBoxEdgeSkuAvailability? availability, IReadOnlyList<DataBoxEdgeShipmentType> shipmentTypes, IReadOnlyList<DataBoxEdgeSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -57,6 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Availability = availability;
             ShipmentTypes = shipmentTypes;
             Capabilities = capabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the resource. </summary>

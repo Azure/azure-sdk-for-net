@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> A list of SQL Migration Service. </summary>
     internal partial class SqlMigrationListResult
     {
-        /// <summary> Initializes a new instance of SqlMigrationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationListResult"/>. </summary>
         internal SqlMigrationListResult()
         {
             Value = new ChangeTrackingList<SqlMigrationServiceData>();
         }
 
-        /// <summary> Initializes a new instance of SqlMigrationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlMigrationListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal SqlMigrationListResult(IReadOnlyList<SqlMigrationServiceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlMigrationListResult(IReadOnlyList<SqlMigrationServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

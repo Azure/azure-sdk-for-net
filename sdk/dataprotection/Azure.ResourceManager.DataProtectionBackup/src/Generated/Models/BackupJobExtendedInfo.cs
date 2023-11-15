@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Extended Information about the job. </summary>
     public partial class BackupJobExtendedInfo
     {
-        /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
         internal BackupJobExtendedInfo()
         {
             AdditionalDetails = new ChangeTrackingDictionary<string, string>();
             SubTasks = new ChangeTrackingList<BackupJobSubTask>();
         }
 
-        /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
         /// <param name="additionalDetails"> Job's Additional Details. </param>
         /// <param name="backupInstanceState"> State of the Backup Instance. </param>
         /// <param name="dataTransferredInBytes"> Number of bytes transferred. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceRecoverPoint"> Details of the Source Recovery Point. </param>
         /// <param name="subTasks"> List of Sub Tasks of the job. </param>
         /// <param name="targetRecoverPoint"> Details of the Target Recovery Point. </param>
-        internal BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails, string backupInstanceState, double? dataTransferredInBytes, string recoveryDestination, RestoreJobRecoveryPointDetails sourceRecoverPoint, IReadOnlyList<BackupJobSubTask> subTasks, RestoreJobRecoveryPointDetails targetRecoverPoint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupJobExtendedInfo(IReadOnlyDictionary<string, string> additionalDetails, string backupInstanceState, double? dataTransferredInBytes, string recoveryDestination, RestoreJobRecoveryPointDetails sourceRecoverPoint, IReadOnlyList<BackupJobSubTask> subTasks, RestoreJobRecoveryPointDetails targetRecoverPoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdditionalDetails = additionalDetails;
             BackupInstanceState = backupInstanceState;
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             SourceRecoverPoint = sourceRecoverPoint;
             SubTasks = subTasks;
             TargetRecoverPoint = targetRecoverPoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Job's Additional Details. </summary>

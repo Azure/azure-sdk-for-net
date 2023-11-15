@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The DatadogLogsAgent. </summary>
     internal partial class DatadogLogsAgent
     {
-        /// <summary> Initializes a new instance of DatadogLogsAgent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogLogsAgent"/>. </summary>
         internal DatadogLogsAgent()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogLogsAgent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogLogsAgent"/>. </summary>
         /// <param name="transport"> The transport. </param>
-        internal DatadogLogsAgent(string transport)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogLogsAgent(string transport, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Transport = transport;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The transport. </summary>

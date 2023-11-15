@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -19,14 +20,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareVirtualNetworkData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareVirtualNetworkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareVirtualNetworkData(AzureLocation location) : base(location)
         {
             Statuses = new ChangeTrackingList<VMwareResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VMwareVirtualNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -43,7 +47,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal VMwareVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, string customResourceName, IReadOnlyList<VMwareResourceStatus> statuses, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, string customResourceName, IReadOnlyList<VMwareResourceStatus> statuses, VMwareResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -55,6 +60,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             CustomResourceName = customResourceName;
             Statuses = statuses;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkData"/> for deserialization. </summary>
+        internal VMwareVirtualNetworkData()
+        {
         }
 
         /// <summary> Gets or sets the extended location. </summary>

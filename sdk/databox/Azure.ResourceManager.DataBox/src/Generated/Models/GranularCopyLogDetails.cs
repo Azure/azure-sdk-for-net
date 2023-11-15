@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class GranularCopyLogDetails
     {
-        /// <summary> Initializes a new instance of GranularCopyLogDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GranularCopyLogDetails"/>. </summary>
         protected GranularCopyLogDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of GranularCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="GranularCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        internal GranularCopyLogDetails(DataBoxOrderType copyLogDetailsType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GranularCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CopyLogDetailsType = copyLogDetailsType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates the type of job details. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Settings for migrating schema from source to target. </summary>
     public partial class SchemaMigrationSetting
     {
-        /// <summary> Initializes a new instance of SchemaMigrationSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SchemaMigrationSetting"/>. </summary>
         public SchemaMigrationSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of SchemaMigrationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="SchemaMigrationSetting"/>. </summary>
         /// <param name="schemaOption"> Option on how to migrate the schema. </param>
         /// <param name="fileId"> Resource Identifier of a file resource containing the uploaded schema file. </param>
         /// <param name="fileName"> Name of the file resource containing the uploaded schema file. </param>
-        internal SchemaMigrationSetting(SchemaMigrationOption? schemaOption, string fileId, string fileName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaMigrationSetting(SchemaMigrationOption? schemaOption, string fileId, string fileName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SchemaOption = schemaOption;
             FileId = fileId;
             FileName = fileName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Option on how to migrate the schema. </summary>

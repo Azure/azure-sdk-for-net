@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentCertificateResource(Client, ContainerAppCertificateData.DeserializeContainerAppCertificateData(e)), _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerAppConnectedEnvironmentCertificateResource(Client, ContainerAppCertificateData.DeserializeContainerAppCertificateData(e)), _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentCertificateResource(Client, ContainerAppCertificateData.DeserializeContainerAppCertificateData(e)), _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new ContainerAppConnectedEnvironmentCertificateResource(Client, ContainerAppCertificateData.DeserializeContainerAppCertificateData(e)), _containerAppConnectedEnvironmentCertificateConnectedEnvironmentsCertificatesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
