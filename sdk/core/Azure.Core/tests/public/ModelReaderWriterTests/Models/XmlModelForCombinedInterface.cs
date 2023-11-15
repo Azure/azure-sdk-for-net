@@ -50,22 +50,22 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(xmlModelForCombinedInterface, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(xmlModelForCombinedInterface, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator XmlModelForCombinedInterface(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            return DeserializeXmlModelForCombinedInterface(XElement.Load(response.ContentStream), ModelReaderWriterOptions.Wire);
+            return DeserializeXmlModelForCombinedInterface(XElement.Load(response.ContentStream), ModelReaderWriterHelper.WireOptions);
         }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+            Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -128,7 +128,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.Wire;
+                options ??= ModelReaderWriterHelper.WireOptions;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -211,8 +211,8 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelReaderWriterOptions.Wire);
+            Serialize(writer, ModelReaderWriterHelper.WireOptions);
 
-        string IPersistableModel<XmlModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<XmlModelForCombinedInterface>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

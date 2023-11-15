@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(envelope, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(envelope, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator Envelope<T>(Response response)
@@ -53,11 +53,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeEnvelope(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeEnvelope(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Envelope<T>>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Envelope<T>>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<Envelope<T>>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<Envelope<T>>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Envelope<T>>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         #endregion
     }
 }

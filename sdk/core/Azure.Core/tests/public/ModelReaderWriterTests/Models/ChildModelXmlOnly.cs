@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.ClientModel;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -35,7 +36,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+            Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -57,7 +58,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static ChildModelXmlOnly DeserializeChildModelXmlOnly(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (options.Format != "W")
                 throw new NotSupportedException($"{nameof(ChildModelXmlOnly)} does not support '{options.Format}' format");
@@ -80,7 +81,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<ChildModelXmlOnly>.Write(ModelReaderWriterOptions options)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream);
             Serialize(writer, options, null);
@@ -95,6 +96,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
         }
 
-        string IPersistableModel<ChildModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ChildModelXmlOnly>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

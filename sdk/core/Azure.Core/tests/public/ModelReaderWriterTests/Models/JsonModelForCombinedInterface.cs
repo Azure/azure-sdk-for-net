@@ -44,11 +44,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public string Value { get; set; }
         public string ReadOnlyProperty { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonModelForCombinedInterface>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonModelForCombinedInterface>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -129,6 +129,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<JsonModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<JsonModelForCombinedInterface>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

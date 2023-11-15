@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Internal;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
-using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core.Serialization;
 using NUnit.Framework;
@@ -174,12 +175,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         {
             if (ModelInstance is IJsonModel<T> jsonModel && IsXmlWireFormat)
             {
-                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterOptions.Wire));
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterHelper.WireOptions));
                 Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });
                 bool exceptionCaught = false;
                 try
                 {
-                    jsonModel.Create(ref reader, ModelReaderWriterOptions.Wire);
+                    jsonModel.Create(ref reader, ModelReaderWriterHelper.WireOptions);
                 }
                 catch (InvalidOperationException)
                 {

@@ -183,7 +183,7 @@ namespace System.ClientModel.Internal
                     writer.WriteNullValue();
                     break;
                 case IJsonModel<object> writeable:
-                    writeable.Write(writer, ModelReaderWriterOptions.Wire);
+                    writeable.Write(writer, ModelReaderWriterHelper.WireOptions);
                     break;
                 case byte[] bytes:
                     writer.WriteBase64StringValue(bytes);

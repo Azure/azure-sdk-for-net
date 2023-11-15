@@ -16,7 +16,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,6 +101,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ZoneMapping>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ZoneMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -91,7 +91,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -273,6 +273,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,7 +11,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void AllInstancesInMapShouldBeFrozen()
         {
-            ValidateFrozenInstance(ModelReaderWriterOptions.Wire, true);
             ValidateFrozenInstance(ModelReaderWriterOptions.Json, true);
             ValidateFrozenInstance(ModelReaderWriterOptions.Xml, true);
         }

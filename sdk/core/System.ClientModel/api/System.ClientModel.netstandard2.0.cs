@@ -36,7 +36,6 @@ namespace System.ClientModel
         public ModelReaderWriterOptions(string format) { }
         public string Format { get { throw null; } }
         public static System.ClientModel.ModelReaderWriterOptions Json { get { throw null; } }
-        public static System.ClientModel.ModelReaderWriterOptions Wire { get { throw null; } }
         public static System.ClientModel.ModelReaderWriterOptions Xml { get { throw null; } }
     }
     public partial class NullableOutputMessage<T> : System.ClientModel.OutputMessage
@@ -107,6 +106,7 @@ namespace System.ClientModel.Internal
     }
     public static partial class ModelReaderWriterHelper
     {
+        public static System.ClientModel.ModelReaderWriterOptions WireOptions { get { throw null; } }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat(System.ClientModel.Primitives.IPersistableModel<object> model, string format) { }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat<T>(System.ClientModel.Primitives.IPersistableModel<T> model, string format) { }
     }
@@ -258,7 +258,7 @@ namespace System.ClientModel.Primitives
     public partial interface IPersistableModel<out T>
     {
         T Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options);
-        string GetWireFormat(System.ClientModel.ModelReaderWriterOptions options);
+        string GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.ModelReaderWriterOptions options);
     }
     public partial class KeyCredentialAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy

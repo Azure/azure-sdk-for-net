@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
-using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
+using System.ClientModel.Primitives;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +25,7 @@ namespace System.ClientModel
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="InputContent"/> that wraps a <see cref="IPersistableModel{T}"/>.</returns>
         public static InputContent Create(IPersistableModel<object> model, ModelReaderWriterOptions? options = default)
-            => new ModelMessageBody(model, options ?? ModelReaderWriterOptions.Wire);
+            => new ModelMessageBody(model, options ?? ModelReaderWriterHelper.WireOptions);
 
         /// <summary>
         /// Attempts to compute the length of the underlying body content, if available.

@@ -53,19 +53,19 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(modelXml, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(modelXml, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator ModelXml(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelReaderWriterOptions.Wire);
+            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelReaderWriterHelper.WireOptions);
         }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static ModelXml DeserializeModelXml(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -140,7 +140,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.Wire;
+                options ??= ModelReaderWriterHelper.WireOptions;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelXml DeserializeModelXml(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -226,8 +226,8 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return DeserializeModelXml(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterHelper.WireOptions);
 
-        string IPersistableModel<ModelXml>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ModelXml>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

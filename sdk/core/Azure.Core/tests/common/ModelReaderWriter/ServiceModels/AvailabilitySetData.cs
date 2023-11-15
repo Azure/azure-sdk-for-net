@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System.ClientModel.Internal;
 using System.Collections.Generic;
-using System.ClientModel;
 using System.Text.Json;
 using Azure.Core.Tests.Models.ResourceManager.Resources;
 
@@ -27,7 +27,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
                 return null;
             }
 
-            return RequestContent.Create(availabilitySetData, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(availabilitySetData, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator AvailabilitySetData(Response response)
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>

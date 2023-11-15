@@ -16,7 +16,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,6 +162,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

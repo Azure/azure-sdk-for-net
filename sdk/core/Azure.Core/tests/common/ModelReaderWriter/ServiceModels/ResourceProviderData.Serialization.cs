@@ -18,7 +18,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
     {
         public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +91,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderData>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
@@ -169,6 +169,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

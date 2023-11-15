@@ -38,7 +38,7 @@ public class CountryRegion : IJsonModel<CountryRegion>
         return new CountryRegion(isoCode);
     }
 
-    public string GetWireFormat(ModelReaderWriterOptions options)
+    public string GetFormatFromOptions(ModelReaderWriterOptions options)
         => "J";
 
     public CountryRegion Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

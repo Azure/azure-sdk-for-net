@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModel<AvailabilitySetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetData>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -280,6 +280,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

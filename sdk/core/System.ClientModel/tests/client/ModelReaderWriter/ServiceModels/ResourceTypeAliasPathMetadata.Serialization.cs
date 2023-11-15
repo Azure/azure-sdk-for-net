@@ -15,7 +15,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     {
         internal static ResourceTypeAliasPathMetadata DeserializeResourceTypeAliasPathMetadata(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,6 +109,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ResourceTypeAliasPathMetadata>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceTypeAliasPathMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

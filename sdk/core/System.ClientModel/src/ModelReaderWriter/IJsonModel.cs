@@ -17,7 +17,6 @@ namespace System.ClientModel.Primitives
         /// <param name="writer">The <see cref="Utf8JsonWriter"/> to write into.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
-        /// <exception cref="InvalidOperationException">If <see cref="ModelReaderWriterOptions.Wire"/> format is passed in and the model does not use JSON for its wire format.</exception>
         void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options);
 
         /// <summary>
@@ -27,7 +26,6 @@ namespace System.ClientModel.Primitives
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>A <typeparamref name="T"/> representation of the JSON value.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
-        /// <exception cref="InvalidOperationException">If <see cref="ModelReaderWriterOptions.Wire"/> format is passed in and the model does not use JSON for its wire format.</exception>
         T Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options);
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         public static implicit operator RequestContent(ModelX modelX)
         {
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(modelX, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(modelX, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator ModelX(Response response)
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         void IJsonModel<ModelX>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -118,7 +118,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -210,6 +210,6 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelX>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

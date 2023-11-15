@@ -52,7 +52,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,6 +106,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelY>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

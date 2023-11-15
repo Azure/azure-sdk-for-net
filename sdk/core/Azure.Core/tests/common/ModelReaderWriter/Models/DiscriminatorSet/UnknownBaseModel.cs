@@ -25,7 +25,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Name = name;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

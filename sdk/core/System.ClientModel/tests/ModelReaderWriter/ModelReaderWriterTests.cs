@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.Text.Json;
@@ -19,11 +20,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!));
 
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, ModelReaderWriterOptions.Wire));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), ModelReaderWriterOptions.Wire));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData(new byte[] { }), null!, ModelReaderWriterOptions.Wire));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, ModelReaderWriterOptions.Wire));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, ModelReaderWriterOptions.Wire));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, ModelReaderWriterHelper.WireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), ModelReaderWriterHelper.WireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData(new byte[] { }), null!, ModelReaderWriterHelper.WireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, ModelReaderWriterHelper.WireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, ModelReaderWriterHelper.WireOptions));
         }
 
         [TestCaseSource(typeof(ReaderWriterTestSource), "InvalidOperationBinaryData")]
@@ -109,7 +110,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private class SubType : BaseWithNoUnknown, IJsonModel<SubType>
         {
-            string IPersistableModel<SubType>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+            string IPersistableModel<SubType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
             SubType IJsonModel<SubType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
@@ -134,7 +135,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         private abstract class BaseWithNoUnknown : IJsonModel<BaseWithNoUnknown>
         {
-            string IPersistableModel<BaseWithNoUnknown>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+            string IPersistableModel<BaseWithNoUnknown>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
             BaseWithNoUnknown IJsonModel<BaseWithNoUnknown>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
@@ -161,7 +162,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             public ModelWithNoDefaultCtor(int x) { }
 
-            string IPersistableModel<ModelWithNoDefaultCtor>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+            string IPersistableModel<ModelWithNoDefaultCtor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
             ModelWithNoDefaultCtor IJsonModel<ModelWithNoDefaultCtor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {

@@ -29,7 +29,7 @@ namespace System.ClientModel
 
             options ??= ModelReaderWriterOptions.Json;
 
-            if (options.Format == "J" || (options.Format == "W" && model.GetWireFormat(options) == "J"))
+            if (options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J"))
             {
                 if (model is not IJsonModel<T> jsonModel)
                 {
@@ -71,7 +71,7 @@ namespace System.ClientModel
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
             }
 
-            if (options.Format == "J" || (options.Format == "W" && iModel.GetWireFormat(options) == "J"))
+            if (options.Format == "J" || (options.Format == "W" && iModel.GetFormatFromOptions(options) == "J"))
             {
                 if (model is not IJsonModel<object> jsonModel)
                 {

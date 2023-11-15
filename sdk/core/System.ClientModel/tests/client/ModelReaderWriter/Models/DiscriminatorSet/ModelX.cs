@@ -40,7 +40,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return InputContent.Create(modelX, ModelReaderWriterOptions.Wire);
+            return InputContent.Create(modelX, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator ModelX(OutputMessage result)
@@ -48,7 +48,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             ClientUtilities.AssertNotNull(result, nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         void IJsonModel<ModelX>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -114,7 +114,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -200,6 +200,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelX>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

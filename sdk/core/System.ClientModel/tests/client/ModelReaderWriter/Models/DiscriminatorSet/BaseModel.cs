@@ -20,7 +20,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return InputContent.Create(baseModel, ModelReaderWriterOptions.Wire);
+            return InputContent.Create(baseModel, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator BaseModel(OutputMessage result)
@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             ClientUtilities.AssertNotNull(result, nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         protected internal BaseModel(Dictionary<string, BinaryData> rawData)
@@ -82,7 +82,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static BaseModel DeserializeBaseModel(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,6 +146,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<BaseModel>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
