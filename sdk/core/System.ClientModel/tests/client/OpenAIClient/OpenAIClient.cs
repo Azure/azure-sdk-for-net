@@ -67,8 +67,7 @@ public class OpenAIClient
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        options.Apply(message);
-        message.MessageClassifier = MessageClassifier200;
+        options.Apply(message, MessageClassifier200);
 
         PipelineRequest request = message.Request;
         request.Method = "POST";

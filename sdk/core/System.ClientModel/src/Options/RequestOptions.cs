@@ -21,10 +21,15 @@ public class RequestOptions : PipelineOptions
         RequestHeaders = new PipelineRequestHeaders();
     }
 
-    public virtual void Apply(PipelineMessage message)
+    public virtual void Apply(PipelineMessage message, MessageClassifier? classifier = default)
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
+
+        if (classifier is not null)
+        {
+            message.MessageClassifier ??= classifier;
+        }
 
         // TODO: note that this is a lot of *ways* to set values on the
         // message, policy, etc.  Let's get clear on how many ways we need and why

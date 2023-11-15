@@ -66,7 +66,6 @@ public class MapsClient
         options ??= new RequestOptions();
 
         using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
-        message.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
         _pipeline.Send(message);
 
@@ -83,7 +82,7 @@ public class MapsClient
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        options.Apply(message);
+        options.Apply(message, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
 
         PipelineRequest request = message.Request;
         request.Method = "GET";

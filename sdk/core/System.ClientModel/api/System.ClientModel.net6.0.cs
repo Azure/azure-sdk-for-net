@@ -67,7 +67,7 @@ namespace System.ClientModel
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public virtual System.ClientModel.Primitives.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
         public virtual System.ClientModel.Primitives.MessageHeaders RequestHeaders { get { throw null; } }
-        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
+        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.MessageClassifier? classifier = null) { }
     }
 }
 namespace System.ClientModel.Internal
@@ -306,7 +306,7 @@ namespace System.ClientModel.Primitives
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
-        public virtual System.ClientModel.Primitives.MessageClassifier MessageClassifier { get { throw null; } set { } }
+        public virtual System.ClientModel.Primitives.MessageClassifier MessageClassifier { get { throw null; } protected internal set { } }
         public virtual System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public virtual System.ClientModel.Primitives.PipelineResponse Response { get { throw null; } protected internal set { } }
         public virtual void Dispose() { }

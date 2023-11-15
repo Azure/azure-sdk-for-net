@@ -216,8 +216,6 @@ namespace Azure
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
-        public void Apply(Azure.Core.HttpMessage message) { }
-        public override void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.ClientModel.ClientRequestException, System.Runtime.Serialization.ISerializable
@@ -488,7 +486,7 @@ namespace Azure.Core
         public bool BufferResponse { get { throw null; } set { } }
         public new bool HasResponse { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override System.ClientModel.Primitives.MessageClassifier MessageClassifier { get { throw null; } set { } }
+        public override System.ClientModel.Primitives.MessageClassifier MessageClassifier { get { throw null; } protected set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public new Azure.Core.Request Request { get { throw null; } }
