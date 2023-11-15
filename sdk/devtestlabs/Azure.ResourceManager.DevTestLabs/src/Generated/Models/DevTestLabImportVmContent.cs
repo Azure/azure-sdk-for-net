@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> This represents the payload required to import a virtual machine from a different lab into the current one. </summary>
     public partial class DevTestLabImportVmContent
     {
-        /// <summary> Initializes a new instance of DevTestLabImportVmContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabImportVmContent"/>. </summary>
         public DevTestLabImportVmContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabImportVmContent"/>. </summary>
+        /// <param name="sourceVmResourceId"> The full resource ID of the virtual machine to be imported. </param>
+        /// <param name="destinationVmName"> The name of the virtual machine in the destination lab. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabImportVmContent(ResourceIdentifier sourceVmResourceId, string destinationVmName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceVmResourceId = sourceVmResourceId;
+            DestinationVmName = destinationVmName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The full resource ID of the virtual machine to be imported. </summary>

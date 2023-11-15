@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary>
@@ -14,7 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// </summary>
     public partial class MediaJobOutput
     {
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
         internal MediaJobOutput(long progress, MediaJobState state)
@@ -23,19 +29,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             State = state;
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> Gets the Job output error. </param>
         /// <param name="label"> Gets the Job output label. </param>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
-        internal MediaJobOutput(string odataType, MediaJobError error, string label, long progress, MediaJobState state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaJobOutput(string odataType, MediaJobError error, string label, long progress, MediaJobState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
             Error = error;
             Label = label;
             Progress = progress;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/> for deserialization. </summary>
+        internal MediaJobOutput()
+        {
         }
 
         /// <summary> The discriminator for derived types. </summary>

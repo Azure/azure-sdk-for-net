@@ -15,7 +15,10 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> An object representing a word. </summary>
     internal partial class TextWord
     {
-        /// <summary> Initializes a new instance of TextWord. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextWord"/>. </summary>
         /// <param name="text"> The text content of the word. </param>
         /// <param name="boundingBox"> Bounding box of an extracted word. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.AI.FormRecognizer.Models
             BoundingBox = boundingBox.ToList();
         }
 
-        /// <summary> Initializes a new instance of TextWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextWord"/>. </summary>
         /// <param name="text"> The text content of the word. </param>
         /// <param name="boundingBox"> Bounding box of an extracted word. </param>
         /// <param name="confidence"> Confidence value. </param>
-        internal TextWord(string text, IReadOnlyList<float> boundingBox, float? confidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextWord(string text, IReadOnlyList<float> boundingBox, float? confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             BoundingBox = boundingBox;
             Confidence = confidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextWord"/> for deserialization. </summary>
+        internal TextWord()
+        {
         }
 
         /// <summary> The text content of the word. </summary>

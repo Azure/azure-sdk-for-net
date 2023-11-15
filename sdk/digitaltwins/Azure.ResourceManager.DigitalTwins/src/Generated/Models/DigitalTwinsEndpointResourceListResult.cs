@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DigitalTwins;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     /// <summary> A list of DigitalTwinsInstance Endpoints with a next link. </summary>
     internal partial class DigitalTwinsEndpointResourceListResult
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEndpointResourceListResult"/>. </summary>
         internal DigitalTwinsEndpointResourceListResult()
         {
             Value = new ChangeTrackingList<DigitalTwinsEndpointResourceData>();
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEndpointResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEndpointResourceListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of DigitalTwinsInstance Endpoints. </param>
         /// <param name="value"> A list of DigitalTwinsInstance Endpoints. </param>
-        internal DigitalTwinsEndpointResourceListResult(string nextLink, IReadOnlyList<DigitalTwinsEndpointResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DigitalTwinsEndpointResourceListResult(string nextLink, IReadOnlyList<DigitalTwinsEndpointResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of DigitalTwinsInstance Endpoints. </summary>

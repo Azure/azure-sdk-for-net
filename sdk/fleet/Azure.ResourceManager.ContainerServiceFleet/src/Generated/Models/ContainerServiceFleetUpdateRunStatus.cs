@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     /// <summary> The status of a UpdateRun. </summary>
     public partial class ContainerServiceFleetUpdateRunStatus
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunStatus"/>. </summary>
         internal ContainerServiceFleetUpdateRunStatus()
         {
             Stages = new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetUpdateRunStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateRun. </param>
         /// <param name="stages"> The stages composing an update run. Stages are run sequentially withing an UpdateRun. </param>
         /// <param name="nodeImageSelection"> The node image upgrade specs for the update run. It is only set in update run when `NodeImageSelection.type` is `Consistent`. </param>
-        internal ContainerServiceFleetUpdateRunStatus(ContainerServiceFleetUpdateStatus status, IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages, NodeImageSelectionStatus nodeImageSelection)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateRunStatus(ContainerServiceFleetUpdateStatus status, IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages, NodeImageSelectionStatus nodeImageSelection, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Stages = stages;
             NodeImageSelection = nodeImageSelection;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the UpdateRun. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -12,16 +13,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Event data for Microsoft.Devices.DeviceTelemetry event. </summary>
     public partial class IotHubDeviceTelemetryEventData : DeviceTelemetryEventProperties
     {
-        /// <summary> Initializes a new instance of IotHubDeviceTelemetryEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/>. </summary>
         internal IotHubDeviceTelemetryEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubDeviceTelemetryEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
-        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties) : base(body, properties, systemProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(body, properties, systemProperties, serializedAdditionalRawData)
         {
         }
     }

@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     internal partial class ImportJobsCancelOptions
     {
-        /// <summary> Initializes a new instance of ImportJobsCancelOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImportJobsCancelOptions"/>. </summary>
         public ImportJobsCancelOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportJobsCancelOptions"/>. </summary>
+        /// <param name="traceparent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="tracestate"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImportJobsCancelOptions(string traceparent, string tracestate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Traceparent = traceparent;
+            Tracestate = tracestate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identifies the request in a distributed tracing system. </summary>

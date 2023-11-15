@@ -6,26 +6,97 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class DataShareEmailRegistration : IUtf8JsonSerializable
+    public partial class DataShareEmailRegistration : IUtf8JsonSerializable, IJsonModel<DataShareEmailRegistration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareEmailRegistration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataShareEmailRegistration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataShareEmailRegistration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataShareEmailRegistration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActivationCode))
             {
                 writer.WritePropertyName("activationCode"u8);
                 writer.WriteStringValue(ActivationCode);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ActivationExpireOn))
+                {
+                    writer.WritePropertyName("activationExpirationDate"u8);
+                    writer.WriteStringValue(ActivationExpireOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Email))
+                {
+                    writer.WritePropertyName("email"u8);
+                    writer.WriteStringValue(Email);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RegistrationStatus))
+                {
+                    writer.WritePropertyName("registrationStatus"u8);
+                    writer.WriteStringValue(RegistrationStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("tenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataShareEmailRegistration DeserializeDataShareEmailRegistration(JsonElement element)
+        DataShareEmailRegistration IJsonModel<DataShareEmailRegistration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataShareEmailRegistration(document.RootElement, options);
+        }
+
+        internal static DataShareEmailRegistration DeserializeDataShareEmailRegistration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +106,8 @@ namespace Azure.ResourceManager.DataShare.Models
             Optional<string> email = default;
             Optional<DataShareEmailRegistrationStatus> registrationStatus = default;
             Optional<Guid> tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activationCode"u8))
@@ -74,8 +147,38 @@ namespace Azure.ResourceManager.DataShare.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataShareEmailRegistration(activationCode.Value, Optional.ToNullable(activationExpirationDate), email.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataShareEmailRegistration(activationCode.Value, Optional.ToNullable(activationExpirationDate), email.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataShareEmailRegistration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataShareEmailRegistration IPersistableModel<DataShareEmailRegistration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataShareEmailRegistration(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataShareEmailRegistration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

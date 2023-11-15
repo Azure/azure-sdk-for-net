@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The details about the usage of a particular limited resource. </summary>
     public partial class HDInsightUsage
     {
-        /// <summary> Initializes a new instance of HDInsightUsage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightUsage"/>. </summary>
         internal HDInsightUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightUsage"/>. </summary>
         /// <param name="unit"> The type of measurement for usage. </param>
         /// <param name="currentValue"> The current usage. </param>
         /// <param name="limit"> The maximum allowed usage. </param>
         /// <param name="name"> The details about the localizable name of the used resource. </param>
-        internal HDInsightUsage(string unit, long? currentValue, long? limit, HDInsightLocalizedName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightUsage(string unit, long? currentValue, long? limit, HDInsightLocalizedName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of measurement for usage. </summary>

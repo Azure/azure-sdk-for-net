@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsForwardingRulesetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverOutboundEndpoints"/> is null. </exception>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.DnsResolver
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints.ToList();
         }
 
-        /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,12 +47,19 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
         /// <param name="provisioningState"> The current provisioning state of the DNS forwarding ruleset. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid for the DNS forwarding ruleset. </param>
-        internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<WritableSubResource> dnsResolverOutboundEndpoints, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsForwardingRulesetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IList<WritableSubResource> dnsResolverOutboundEndpoints, DnsResolverProvisioningState? provisioningState, Guid? resourceGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetData"/> for deserialization. </summary>
+        internal DnsForwardingRulesetData()
+        {
         }
 
         /// <summary> ETag of the DNS forwarding ruleset. </summary>

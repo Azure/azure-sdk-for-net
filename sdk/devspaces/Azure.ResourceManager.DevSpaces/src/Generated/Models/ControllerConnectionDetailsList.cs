@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.DevSpaces.Models
     /// <summary> The ControllerConnectionDetailsList. </summary>
     public partial class ControllerConnectionDetailsList
     {
-        /// <summary> Initializes a new instance of ControllerConnectionDetailsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ControllerConnectionDetailsList"/>. </summary>
         internal ControllerConnectionDetailsList()
         {
             ConnectionDetailsList = new ChangeTrackingList<ControllerConnectionDetails>();
         }
 
-        /// <summary> Initializes a new instance of ControllerConnectionDetailsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ControllerConnectionDetailsList"/>. </summary>
         /// <param name="connectionDetailsList"> List of Azure Dev Spaces Controller connection details. </param>
-        internal ControllerConnectionDetailsList(IReadOnlyList<ControllerConnectionDetails> connectionDetailsList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ControllerConnectionDetailsList(IReadOnlyList<ControllerConnectionDetails> connectionDetailsList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionDetailsList = connectionDetailsList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Azure Dev Spaces Controller connection details. </summary>

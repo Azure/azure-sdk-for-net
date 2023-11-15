@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class SessionHostData : ResourceData
     {
-        /// <summary> Initializes a new instance of SessionHostData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SessionHostData"/>. </summary>
         public SessionHostData()
         {
             SessionHostHealthCheckResults = new ChangeTrackingList<SessionHostHealthCheckReport>();
         }
 
-        /// <summary> Initializes a new instance of SessionHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="lastUpdatedOn"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             LastHeartBeatOn = lastHeartBeatOn;
@@ -66,6 +70,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             LastUpdatedOn = lastUpdatedOn;
             UpdateErrorMessage = updateErrorMessage;
             SessionHostHealthCheckResults = sessionHostHealthCheckResults;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ObjectId of SessionHost. (internal use). </summary>

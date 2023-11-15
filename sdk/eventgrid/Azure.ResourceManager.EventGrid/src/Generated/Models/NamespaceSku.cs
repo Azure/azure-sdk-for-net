@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Represents available Sku pricing tiers. </summary>
     public partial class NamespaceSku
     {
-        /// <summary> Initializes a new instance of NamespaceSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NamespaceSku"/>. </summary>
         public NamespaceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of NamespaceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="NamespaceSku"/>. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacity">
         /// Specifies the number of Throughput Units that defines the capacity for the namespace. The property default value is
         /// 1 which signifies 1 Throughput Unit = 1MB/s ingress and 2MB/s egress per namespace. Min capacity is 1 and
         /// max allowed capacity is 20.
         /// </param>
-        internal NamespaceSku(EventGridSkuName? name, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceSku(EventGridSkuName? name, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the SKU. </summary>

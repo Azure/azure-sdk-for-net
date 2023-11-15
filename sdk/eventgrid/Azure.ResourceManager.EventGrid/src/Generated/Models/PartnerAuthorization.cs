@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The partner authorization details. </summary>
     public partial class PartnerAuthorization
     {
-        /// <summary> Initializes a new instance of PartnerAuthorization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerAuthorization"/>. </summary>
         public PartnerAuthorization()
         {
             AuthorizedPartnersList = new ChangeTrackingList<EventGridPartnerContent>();
         }
 
-        /// <summary> Initializes a new instance of PartnerAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerAuthorization"/>. </summary>
         /// <param name="defaultMaximumExpirationTimeInDays">
         /// Time used to validate the authorization expiration time for each authorized partner. If DefaultMaximumExpirationTimeInDays is
         /// not specified, the default is 7 days. Otherwise, allowed values are between 1 and 365 days.
         /// </param>
         /// <param name="authorizedPartnersList"> The list of authorized partners. </param>
-        internal PartnerAuthorization(int? defaultMaximumExpirationTimeInDays, IList<EventGridPartnerContent> authorizedPartnersList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerAuthorization(int? defaultMaximumExpirationTimeInDays, IList<EventGridPartnerContent> authorizedPartnersList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultMaximumExpirationTimeInDays = defaultMaximumExpirationTimeInDays;
             AuthorizedPartnersList = authorizedPartnersList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

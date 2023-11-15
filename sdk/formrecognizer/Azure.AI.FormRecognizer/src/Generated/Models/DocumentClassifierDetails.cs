@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document classifier info. </summary>
     public partial class DocumentClassifierDetails
     {
-        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="serviceVersion"> API version used to create this document classifier. </param>
@@ -32,14 +35,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DocumentTypes = documentTypes;
         }
 
-        /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
         /// <param name="serviceVersion"> API version used to create this document classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClassifierId = classifierId;
             Description = description;
@@ -47,6 +51,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             ExpiresOn = expiresOn;
             ServiceVersion = serviceVersion;
             DocumentTypes = documentTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierDetails"/> for deserialization. </summary>
+        internal DocumentClassifierDetails()
+        {
         }
 
         /// <summary> Unique document classifier name. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.Dns.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> An AAAA record. </summary>
     public partial class DnsAaaaRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsAaaaRecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsAaaaRecordInfo"/>. </summary>
         public DnsAaaaRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsAaaaRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsAaaaRecordInfo"/>. </summary>
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
-        internal DnsAaaaRecordInfo(IPAddress ipv6Address)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsAaaaRecordInfo(IPAddress ipv6Address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPv6Address = ipv6Address;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IPv6 address of this AAAA record. </summary>

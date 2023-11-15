@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> The network profile definition. </summary>
     public partial class NetworkProfile
     {
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         public NetworkProfile()
         {
             NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
         /// <param name="subnet"> Specifies the identifier of the subnet. </param>
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM. </param>
-        internal NetworkProfile(WritableSubResource subnet, IList<NetworkInterface> networkInterfaces)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkProfile(WritableSubResource subnet, IList<NetworkInterface> networkInterfaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the identifier of the subnet. </summary>

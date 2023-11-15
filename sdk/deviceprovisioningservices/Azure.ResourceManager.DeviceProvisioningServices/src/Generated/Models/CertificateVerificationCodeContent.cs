@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> The JSON-serialized leaf certificate. </summary>
     public partial class CertificateVerificationCodeContent
     {
-        /// <summary> Initializes a new instance of CertificateVerificationCodeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeContent"/>. </summary>
         public CertificateVerificationCodeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CertificateVerificationCodeContent"/>. </summary>
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateVerificationCodeContent(string certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Certificate = certificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> base-64 representation of X509 certificate .cer file or just .pem file content. </summary>

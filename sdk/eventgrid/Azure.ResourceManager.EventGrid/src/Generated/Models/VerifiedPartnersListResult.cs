@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Result of the List verified partners operation. </summary>
     internal partial class VerifiedPartnersListResult
     {
-        /// <summary> Initializes a new instance of VerifiedPartnersListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VerifiedPartnersListResult"/>. </summary>
         internal VerifiedPartnersListResult()
         {
             Value = new ChangeTrackingList<VerifiedPartnerData>();
         }
 
-        /// <summary> Initializes a new instance of VerifiedPartnersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VerifiedPartnersListResult"/>. </summary>
         /// <param name="value"> A collection of verified partners. </param>
         /// <param name="nextLink"> A link for the next page of verified partners if any. </param>
-        internal VerifiedPartnersListResult(IReadOnlyList<VerifiedPartnerData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VerifiedPartnersListResult(IReadOnlyList<VerifiedPartnerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A collection of verified partners. </summary>

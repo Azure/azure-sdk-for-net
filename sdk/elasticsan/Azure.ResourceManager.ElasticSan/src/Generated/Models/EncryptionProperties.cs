@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> The encryption settings on the volume group. </summary>
     public partial class EncryptionProperties
     {
-        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         public EncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionProperties"/>. </summary>
         /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
         /// <param name="encryptionIdentity"> The identity to be used with service-side encryption at rest. </param>
-        internal EncryptionProperties(KeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionProperties(KeyVaultProperties keyVaultProperties, EncryptionIdentity encryptionIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultProperties = keyVaultProperties;
             EncryptionIdentity = encryptionIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties provided by key vault. </summary>

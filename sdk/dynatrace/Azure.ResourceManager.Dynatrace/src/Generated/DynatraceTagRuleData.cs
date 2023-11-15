@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Dynatrace.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Dynatrace
     /// </summary>
     public partial class DynatraceTagRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of DynatraceTagRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRuleData"/>. </summary>
         public DynatraceTagRuleData()
         {
         }
 
-        /// <summary> Initializes a new instance of DynatraceTagRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynatraceTagRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +35,13 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, DynatraceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceTagRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DynatraceMonitorResourceLogRules logRules, DynatraceMonitorResourceMetricRules metricRules, DynatraceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LogRules = logRules;
             MetricRules = metricRules;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>

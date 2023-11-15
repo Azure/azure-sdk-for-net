@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Grafana;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The ManagedGrafanaListResponse. </summary>
     internal partial class ManagedGrafanaListResponse
     {
-        /// <summary> Initializes a new instance of ManagedGrafanaListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaListResponse"/>. </summary>
         internal ManagedGrafanaListResponse()
         {
             Value = new ChangeTrackingList<ManagedGrafanaData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedGrafanaListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedGrafanaListResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal ManagedGrafanaListResponse(IReadOnlyList<ManagedGrafanaData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedGrafanaListResponse(IReadOnlyList<ManagedGrafanaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

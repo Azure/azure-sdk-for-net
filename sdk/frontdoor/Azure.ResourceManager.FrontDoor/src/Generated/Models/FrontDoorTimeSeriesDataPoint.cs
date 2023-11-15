@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Defines a timeseries datapoint used in a timeseries. </summary>
     public partial class FrontDoorTimeSeriesDataPoint
     {
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesDataPoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesDataPoint"/>. </summary>
         public FrontDoorTimeSeriesDataPoint()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesDataPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesDataPoint"/>. </summary>
         /// <param name="dateTimeUtc"> The DateTime of the Timeseries data point in UTC. </param>
         /// <param name="value"> The Value of the Timeseries data point. </param>
-        internal FrontDoorTimeSeriesDataPoint(DateTimeOffset? dateTimeUtc, float? value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorTimeSeriesDataPoint(DateTimeOffset? dateTimeUtc, float? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DateTimeUtc = dateTimeUtc;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The DateTime of the Timeseries data point in UTC. </summary>

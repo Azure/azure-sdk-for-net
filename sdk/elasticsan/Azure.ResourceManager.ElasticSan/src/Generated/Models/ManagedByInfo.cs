@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> Parent resource information. </summary>
     internal partial class ManagedByInfo
     {
-        /// <summary> Initializes a new instance of ManagedByInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedByInfo"/>. </summary>
         public ManagedByInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedByInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedByInfo"/>. </summary>
         /// <param name="resourceId"> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </param>
-        internal ManagedByInfo(ResourceIdentifier resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedByInfo(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>

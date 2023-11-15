@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a lab's announcement banner. </summary>
     public partial class DevTestLabAnnouncement
     {
-        /// <summary> Initializes a new instance of DevTestLabAnnouncement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabAnnouncement"/>. </summary>
         public DevTestLabAnnouncement()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabAnnouncement. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabAnnouncement"/>. </summary>
         /// <param name="title"> The plain text title for the lab announcement. </param>
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
         /// <param name="enabled"> Is the lab announcement active/enabled at this time?. </param>
@@ -25,7 +29,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="isExpired"> Has this announcement expired?. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
-        internal DevTestLabAnnouncement(string title, string markdown, DevTestLabEnableStatus? enabled, DateTimeOffset? expireOn, bool? isExpired, string provisioningState, Guid? uniqueIdentifier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabAnnouncement(string title, string markdown, DevTestLabEnableStatus? enabled, DateTimeOffset? expireOn, bool? isExpired, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Markdown = markdown;
@@ -34,6 +39,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             IsExpired = isExpired;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The plain text title for the lab announcement. </summary>

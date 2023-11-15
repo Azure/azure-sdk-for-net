@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of an Azure Resource Manager template parameter. </summary>
     public partial class DevTestLabArmTemplateParameter
     {
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateParameter"/>. </summary>
         public DevTestLabArmTemplateParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateParameter"/>. </summary>
         /// <param name="name"> The name of the template parameter. </param>
         /// <param name="value"> The value of the template parameter. </param>
-        internal DevTestLabArmTemplateParameter(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArmTemplateParameter(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the template parameter. </summary>

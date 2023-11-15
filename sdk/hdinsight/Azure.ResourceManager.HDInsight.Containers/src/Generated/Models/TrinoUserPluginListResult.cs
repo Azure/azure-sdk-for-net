@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino user plugins spec. </summary>
     internal partial class TrinoUserPluginListResult
     {
-        /// <summary> Initializes a new instance of TrinoUserPluginListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrinoUserPluginListResult"/>. </summary>
         public TrinoUserPluginListResult()
         {
             Plugins = new ChangeTrackingList<TrinoUserPlugin>();
         }
 
-        /// <summary> Initializes a new instance of TrinoUserPluginListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrinoUserPluginListResult"/>. </summary>
         /// <param name="plugins"> Trino user plugins. </param>
-        internal TrinoUserPluginListResult(IList<TrinoUserPlugin> plugins)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrinoUserPluginListResult(IList<TrinoUserPlugin> plugins, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Plugins = plugins;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Trino user plugins. </summary>

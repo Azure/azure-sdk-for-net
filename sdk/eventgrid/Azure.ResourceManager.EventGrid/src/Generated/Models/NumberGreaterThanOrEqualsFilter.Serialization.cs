@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class NumberGreaterThanOrEqualsFilter : IUtf8JsonSerializable
+    public partial class NumberGreaterThanOrEqualsFilter : IUtf8JsonSerializable, IJsonModel<NumberGreaterThanOrEqualsFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberGreaterThanOrEqualsFilter>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NumberGreaterThanOrEqualsFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NumberGreaterThanOrEqualsFilter>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NumberGreaterThanOrEqualsFilter>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
@@ -27,11 +38,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NumberGreaterThanOrEqualsFilter DeserializeNumberGreaterThanOrEqualsFilter(JsonElement element)
+        NumberGreaterThanOrEqualsFilter IJsonModel<NumberGreaterThanOrEqualsFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NumberGreaterThanOrEqualsFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNumberGreaterThanOrEqualsFilter(document.RootElement, options);
+        }
+
+        internal static NumberGreaterThanOrEqualsFilter DeserializeNumberGreaterThanOrEqualsFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<double> value = default;
             FilterOperatorType operatorType = default;
             Optional<string> key = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -60,8 +102,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NumberGreaterThanOrEqualsFilter(operatorType, key.Value, Optional.ToNullable(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NumberGreaterThanOrEqualsFilter(operatorType, key.Value, serializedAdditionalRawData, Optional.ToNullable(value));
         }
+
+        BinaryData IPersistableModel<NumberGreaterThanOrEqualsFilter>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NumberGreaterThanOrEqualsFilter)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NumberGreaterThanOrEqualsFilter IPersistableModel<NumberGreaterThanOrEqualsFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NumberGreaterThanOrEqualsFilter)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNumberGreaterThanOrEqualsFilter(document.RootElement, options);
+        }
+
+        string IPersistableModel<NumberGreaterThanOrEqualsFilter>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The execution summary of a script action. </summary>
     public partial class ScriptActionExecutionSummary
     {
-        /// <summary> Initializes a new instance of ScriptActionExecutionSummary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActionExecutionSummary"/>. </summary>
         internal ScriptActionExecutionSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptActionExecutionSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActionExecutionSummary"/>. </summary>
         /// <param name="status"> The status of script action execution. </param>
         /// <param name="instanceCount"> The instance count for a given script action execution status. </param>
-        internal ScriptActionExecutionSummary(string status, int? instanceCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActionExecutionSummary(string status, int? instanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             InstanceCount = instanceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of script action execution. </summary>

@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerRegistrationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PartnerRegistrationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerRegistrationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PartnerRegistrationData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerRegistrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerRegistrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,10 +40,17 @@ namespace Azure.ResourceManager.EventGrid
         /// The immutableId of the corresponding partner registration.
         /// Note: This property is marked for deprecation and is not supported in any future GA API version
         /// </param>
-        internal PartnerRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PartnerRegistrationProvisioningState? provisioningState, Guid? partnerRegistrationImmutableId) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PartnerRegistrationProvisioningState? provisioningState, Guid? partnerRegistrationImmutableId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerRegistrationData"/> for deserialization. </summary>
+        internal PartnerRegistrationData()
+        {
         }
 
         /// <summary> Provisioning state of the partner registration. </summary>

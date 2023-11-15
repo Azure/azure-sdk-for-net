@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
@@ -13,7 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Channel Archive heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventChannelArchiveHeartbeat event. </summary>
     public partial class MediaLiveEventChannelArchiveHeartbeatEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventChannelArchiveHeartbeatEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventChannelArchiveHeartbeatEventData"/>. </summary>
         /// <param name="channelLatencyMsInternal"> Gets the channel latency in ms. </param>
         /// <param name="latencyResultCode"> Gets the latency result code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="channelLatencyMsInternal"/> or <paramref name="latencyResultCode"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             ChannelLatencyMsInternal = channelLatencyMsInternal;
             LatencyResultCode = latencyResultCode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventChannelArchiveHeartbeatEventData"/>. </summary>
+        /// <param name="channelLatencyMsInternal"> Gets the channel latency in ms. </param>
+        /// <param name="latencyResultCode"> Gets the latency result code. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventChannelArchiveHeartbeatEventData(string channelLatencyMsInternal, string latencyResultCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ChannelLatencyMsInternal = channelLatencyMsInternal;
+            LatencyResultCode = latencyResultCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventChannelArchiveHeartbeatEventData"/> for deserialization. </summary>
+        internal MediaLiveEventChannelArchiveHeartbeatEventData()
+        {
         }
         /// <summary> Gets the latency result code. </summary>
         public string LatencyResultCode { get; }

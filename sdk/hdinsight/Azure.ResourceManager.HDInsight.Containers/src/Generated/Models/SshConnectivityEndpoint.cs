@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> SSH connectivity endpoint details. </summary>
     public partial class SshConnectivityEndpoint
     {
-        /// <summary> Initializes a new instance of SshConnectivityEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SshConnectivityEndpoint"/>. </summary>
         /// <param name="endpoint"> SSH connectivity endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         internal SshConnectivityEndpoint(string endpoint)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SshConnectivityEndpoint"/>. </summary>
+        /// <param name="endpoint"> SSH connectivity endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SshConnectivityEndpoint(string endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Endpoint = endpoint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SshConnectivityEndpoint"/> for deserialization. </summary>
+        internal SshConnectivityEndpoint()
+        {
         }
 
         /// <summary> SSH connectivity endpoint. </summary>

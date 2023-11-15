@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     /// <summary> The settings for the CORS configuration of the service instance. </summary>
     public partial class DicomServiceCorsConfiguration
     {
-        /// <summary> Initializes a new instance of DicomServiceCorsConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DicomServiceCorsConfiguration"/>. </summary>
         public DicomServiceCorsConfiguration()
         {
             Origins = new ChangeTrackingList<string>();
@@ -21,19 +25,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             Methods = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DicomServiceCorsConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DicomServiceCorsConfiguration"/>. </summary>
         /// <param name="origins"> The origins to be allowed via CORS. </param>
         /// <param name="headers"> The headers to be allowed via CORS. </param>
         /// <param name="methods"> The methods to be allowed via CORS. </param>
         /// <param name="maxAge"> The max age to be allowed via CORS. </param>
         /// <param name="allowCredentials"> If credentials are allowed via CORS. </param>
-        internal DicomServiceCorsConfiguration(IList<string> origins, IList<string> headers, IList<string> methods, int? maxAge, bool? allowCredentials)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DicomServiceCorsConfiguration(IList<string> origins, IList<string> headers, IList<string> methods, int? maxAge, bool? allowCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Origins = origins;
             Headers = headers;
             Methods = methods;
             MaxAge = maxAge;
             AllowCredentials = allowCredentials;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The origins to be allowed via CORS. </summary>

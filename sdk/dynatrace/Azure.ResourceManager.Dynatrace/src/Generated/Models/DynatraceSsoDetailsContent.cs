@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Dynatrace.Models
 {
     /// <summary> Request for getting sso details for a user. </summary>
     public partial class DynatraceSsoDetailsContent
     {
-        /// <summary> Initializes a new instance of DynatraceSsoDetailsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/>. </summary>
         public DynatraceSsoDetailsContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DynatraceSsoDetailsContent"/>. </summary>
+        /// <param name="userPrincipal"> user principal id of the user. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DynatraceSsoDetailsContent(string userPrincipal, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            UserPrincipal = userPrincipal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> user principal id of the user. </summary>

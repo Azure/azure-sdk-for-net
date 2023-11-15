@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class PartnerClientAuthentication
     {
-        /// <summary> Initializes a new instance of PartnerClientAuthentication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerClientAuthentication"/>. </summary>
         protected PartnerClientAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerClientAuthentication"/>. </summary>
         /// <param name="clientAuthenticationType"> Type of client authentication. </param>
-        internal PartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientAuthenticationType = clientAuthenticationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of client authentication. </summary>

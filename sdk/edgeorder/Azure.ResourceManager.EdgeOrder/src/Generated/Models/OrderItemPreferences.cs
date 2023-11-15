@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Preferences related to the order. </summary>
     public partial class OrderItemPreferences
     {
-        /// <summary> Initializes a new instance of OrderItemPreferences. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrderItemPreferences"/>. </summary>
         public OrderItemPreferences()
         {
             NotificationPreferences = new ChangeTrackingList<NotificationPreference>();
         }
 
-        /// <summary> Initializes a new instance of OrderItemPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemPreferences"/>. </summary>
         /// <param name="notificationPreferences"> Notification preferences. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the order. </param>
         /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>
         /// <param name="managementResourcePreferences"> Preferences related to the Management resource. </param>
-        internal OrderItemPreferences(IList<NotificationPreference> notificationPreferences, TransportPreferences transportPreferences, EncryptionPreferences encryptionPreferences, ManagementResourcePreferences managementResourcePreferences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrderItemPreferences(IList<NotificationPreference> notificationPreferences, TransportPreferences transportPreferences, EncryptionPreferences encryptionPreferences, ManagementResourcePreferences managementResourcePreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NotificationPreferences = notificationPreferences;
             TransportPreferences = transportPreferences;
             EncryptionPreferences = encryptionPreferences;
             ManagementResourcePreferences = managementResourcePreferences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Notification preferences. </summary>

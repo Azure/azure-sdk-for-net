@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.KeyNearExpiry event. </summary>
     public partial class KeyVaultKeyNearExpiryEventData
     {
-        /// <summary> Initializes a new instance of KeyVaultKeyNearExpiryEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyNearExpiryEventData"/>. </summary>
         internal KeyVaultKeyNearExpiryEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultKeyNearExpiryEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultKeyNearExpiryEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>
@@ -23,7 +29,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the object that triggered this event. </param>
         /// <param name="nbf"> Not before date of the object that triggered this event. </param>
         /// <param name="exp"> The expiration date of the object that triggered this event. </param>
-        internal KeyVaultKeyNearExpiryEventData(string id, string vaultName, string objectType, string objectName, string version, float? nbf, float? exp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultKeyNearExpiryEventData(string id, string vaultName, string objectType, string objectName, string version, float? nbf, float? exp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             VaultName = vaultName;
@@ -32,6 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Version = version;
             Nbf = nbf;
             Exp = exp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of the object that triggered this event. </summary>

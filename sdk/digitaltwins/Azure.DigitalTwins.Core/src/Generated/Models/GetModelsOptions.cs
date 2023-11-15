@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     public partial class GetModelsOptions
     {
-        /// <summary> Initializes a new instance of GetModelsOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetModelsOptions"/>. </summary>
         public GetModelsOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetModelsOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="maxItemsPerPage"> The maximum number of items to retrieve per request. The server may choose to return less than the requested number. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetModelsOptions(string traceParent, string traceState, int? maxItemsPerPage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
+            MaxItemsPerPage = maxItemsPerPage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

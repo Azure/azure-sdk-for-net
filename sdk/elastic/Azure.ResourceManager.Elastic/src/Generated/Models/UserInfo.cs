@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Elastic.Models
 {
     /// <summary> User Information to be passed to partners. </summary>
     public partial class UserInfo
     {
-        /// <summary> Initializes a new instance of UserInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserInfo"/>. </summary>
         public UserInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of UserInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserInfo"/>. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="companyName"> Company name of the user. </param>
         /// <param name="emailAddress"> Email of the user used by Elastic for contacting them if needed. </param>
         /// <param name="companyInfo"> Company information of the user to be passed to partners. </param>
-        internal UserInfo(string firstName, string lastName, string companyName, string emailAddress, CompanyInfo companyInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserInfo(string firstName, string lastName, string companyName, string emailAddress, CompanyInfo companyInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstName = firstName;
             LastName = lastName;
             CompanyName = companyName;
             EmailAddress = emailAddress;
             CompanyInfo = companyInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> First name of the user. </summary>

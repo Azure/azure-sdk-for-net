@@ -5,28 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServiceAccessPolicyEntry : IUtf8JsonSerializable
+    public partial class FhirServiceAccessPolicyEntry : IUtf8JsonSerializable, IJsonModel<FhirServiceAccessPolicyEntry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceAccessPolicyEntry>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FhirServiceAccessPolicyEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FhirServiceAccessPolicyEntry>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FhirServiceAccessPolicyEntry>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("objectId"u8);
             writer.WriteStringValue(ObjectId);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FhirServiceAccessPolicyEntry DeserializeFhirServiceAccessPolicyEntry(JsonElement element)
+        FhirServiceAccessPolicyEntry IJsonModel<FhirServiceAccessPolicyEntry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FhirServiceAccessPolicyEntry)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFhirServiceAccessPolicyEntry(document.RootElement, options);
+        }
+
+        internal static FhirServiceAccessPolicyEntry DeserializeFhirServiceAccessPolicyEntry(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string objectId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("objectId"u8))
@@ -34,8 +76,38 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     objectId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FhirServiceAccessPolicyEntry(objectId);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FhirServiceAccessPolicyEntry(objectId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FhirServiceAccessPolicyEntry>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FhirServiceAccessPolicyEntry)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FhirServiceAccessPolicyEntry IPersistableModel<FhirServiceAccessPolicyEntry>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FhirServiceAccessPolicyEntry)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFhirServiceAccessPolicyEntry(document.RootElement, options);
+        }
+
+        string IPersistableModel<FhirServiceAccessPolicyEntry>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

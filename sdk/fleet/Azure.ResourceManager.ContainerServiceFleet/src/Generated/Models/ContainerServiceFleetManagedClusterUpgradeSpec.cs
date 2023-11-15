@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The upgrade to apply to a ManagedCluster. </summary>
     public partial class ContainerServiceFleetManagedClusterUpgradeSpec
     {
-        /// <summary> Initializes a new instance of ContainerServiceFleetManagedClusterUpgradeSpec. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
         /// <param name="upgradeType">
         /// The upgrade type.
         /// Full requires the KubernetesVersion property to be set.
@@ -21,17 +27,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             UpgradeType = upgradeType;
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceFleetManagedClusterUpgradeSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/>. </summary>
         /// <param name="upgradeType">
         /// The upgrade type.
         /// Full requires the KubernetesVersion property to be set.
         /// NodeImageOnly requires the KubernetesVersion property not to be set.
         /// </param>
         /// <param name="kubernetesVersion"> The Kubernetes version to upgrade the member clusters to. </param>
-        internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType upgradeType, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpgradeType = upgradeType;
             KubernetesVersion = kubernetesVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedClusterUpgradeSpec"/> for deserialization. </summary>
+        internal ContainerServiceFleetManagedClusterUpgradeSpec()
+        {
         }
 
         /// <summary>

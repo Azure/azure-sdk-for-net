@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.KeyValueModified event. </summary>
     public partial class AppConfigurationKeyValueModifiedEventData
     {
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueModifiedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/>. </summary>
         internal AppConfigurationKeyValueModifiedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppConfigurationKeyValueModifiedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueModifiedEventData"/>. </summary>
         /// <param name="key"> The key used to identify the key-value that was modified. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was modified. </param>
         /// <param name="etag"> The etag representing the new state of the key-value. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        internal AppConfigurationKeyValueModifiedEventData(string key, string label, string etag, string syncToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationKeyValueModifiedEventData(string key, string label, string etag, string syncToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Label = label;
             Etag = etag;
             SyncToken = syncToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The key used to identify the key-value that was modified. </summary>

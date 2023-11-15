@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The update gateway settings request parameters. </summary>
     public partial class HDInsightClusterUpdateGatewaySettingsContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterUpdateGatewaySettingsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateGatewaySettingsContent"/>. </summary>
         public HDInsightClusterUpdateGatewaySettingsContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterUpdateGatewaySettingsContent"/>. </summary>
+        /// <param name="isCredentialEnabled"> Indicates whether or not the gateway settings based authorization is enabled. </param>
+        /// <param name="userName"> The gateway settings user name. </param>
+        /// <param name="password"> The gateway settings user password. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterUpdateGatewaySettingsContent(bool? isCredentialEnabled, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsCredentialEnabled = isCredentialEnabled;
+            UserName = userName;
+            Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether or not the gateway settings based authorization is enabled. </summary>

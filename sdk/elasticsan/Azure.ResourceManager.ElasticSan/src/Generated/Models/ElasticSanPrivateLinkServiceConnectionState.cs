@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Response for Private Link Service Connection state. </summary>
     public partial class ElasticSanPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkServiceConnectionState"/>. </summary>
         public ElasticSanPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticSanPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        internal ElasticSanPrivateLinkServiceConnectionState(ElasticSanPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanPrivateLinkServiceConnectionState(ElasticSanPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>

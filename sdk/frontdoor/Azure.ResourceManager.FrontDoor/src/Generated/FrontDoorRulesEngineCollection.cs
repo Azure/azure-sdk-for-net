@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

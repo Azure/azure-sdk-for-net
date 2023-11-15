@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Different types of filters supported and its values. </summary>
     public partial class FilterableProperty
     {
-        /// <summary> Initializes a new instance of FilterableProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FilterableProperty"/>. </summary>
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportedValues"/> is null. </exception>
@@ -27,13 +30,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             SupportedValues = supportedValues.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilterableProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterableProperty"/>. </summary>
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
-        internal FilterableProperty(SupportedFilterType supportedFilterType, IList<string> supportedValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FilterableProperty(SupportedFilterType supportedFilterType, IList<string> supportedValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SupportedFilterType = supportedFilterType;
             SupportedValues = supportedValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FilterableProperty"/> for deserialization. </summary>
+        internal FilterableProperty()
+        {
         }
 
         /// <summary> Type of product filter. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareConsumerInvitationData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataShareConsumerInvitationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareConsumerInvitationData"/>. </summary>
         /// <param name="invitationId"> Unique id of the invitation. </param>
         public DataShareConsumerInvitationData(Guid invitationId)
         {
             InvitationId = invitationId;
         }
 
-        /// <summary> Initializes a new instance of DataShareConsumerInvitationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareConsumerInvitationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +49,8 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="termsOfUse"> Terms of use shared when the invitation was created. </param>
         /// <param name="userEmail"> Email of the user who created the resource. </param>
         /// <param name="userName"> Name of the user who created the resource. </param>
-        internal DataShareConsumerInvitationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? dataSetCount, string description, DateTimeOffset? expireOn, Guid invitationId, DataShareInvitationStatus? invitationStatus, AzureLocation? location, string providerEmail, string providerName, string providerTenantName, DateTimeOffset? respondedOn, DateTimeOffset? sentOn, string shareName, string termsOfUse, string userEmail, string userName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareConsumerInvitationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? dataSetCount, string description, DateTimeOffset? expireOn, Guid invitationId, DataShareInvitationStatus? invitationStatus, AzureLocation? location, string providerEmail, string providerName, string providerTenantName, DateTimeOffset? respondedOn, DateTimeOffset? sentOn, string shareName, string termsOfUse, string userEmail, string userName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DataSetCount = dataSetCount;
             Description = description;
@@ -62,6 +67,12 @@ namespace Azure.ResourceManager.DataShare
             TermsOfUse = termsOfUse;
             UserEmail = userEmail;
             UserName = userName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataShareConsumerInvitationData"/> for deserialization. </summary>
+        internal DataShareConsumerInvitationData()
+        {
         }
 
         /// <summary> Number of data sets in a share. </summary>

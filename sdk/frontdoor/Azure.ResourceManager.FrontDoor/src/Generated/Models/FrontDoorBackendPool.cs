@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,21 +15,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> A backend pool is a collection of backends that can be routed to. </summary>
     public partial class FrontDoorBackendPool : FrontDoorResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorBackendPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorBackendPool"/>. </summary>
         public FrontDoorBackendPool()
         {
             Backends = new ChangeTrackingList<FrontDoorBackend>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorBackendPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorBackendPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="backends"> The set of backends for this pool. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> L7 health probe settings for a backend pool. </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IList<FrontDoorBackend> backends, WritableSubResource loadBalancingSettings, WritableSubResource healthProbeSettings, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal FrontDoorBackendPool(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FrontDoorBackend> backends, WritableSubResource loadBalancingSettings, WritableSubResource healthProbeSettings, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             Backends = backends;
             LoadBalancingSettings = loadBalancingSettings;

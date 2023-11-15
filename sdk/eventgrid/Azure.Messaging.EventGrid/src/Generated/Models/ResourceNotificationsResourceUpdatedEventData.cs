@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Describes the schema of the common properties across all ARN system topic events. </summary>
     public partial class ResourceNotificationsResourceUpdatedEventData
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedEventData"/>. </summary>
         internal ResourceNotificationsResourceUpdatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
-        internal ResourceNotificationsResourceUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceNotificationsResourceUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceDetails = resourceDetails;
             OperationalDetails = operationalDetails;
             ApiVersion = apiVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> resourceInfo details for update event. </summary>

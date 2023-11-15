@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Additional information about every inline event. </summary>
     public partial class InlineEventProperties
     {
-        /// <summary> Initializes a new instance of InlineEventProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InlineEventProperties"/>. </summary>
         public InlineEventProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of InlineEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="InlineEventProperties"/>. </summary>
         /// <param name="description"> The description for the inline event. </param>
         /// <param name="displayName"> The displayName for the inline event. </param>
         /// <param name="documentationUri"> The documentationUrl for the inline event. </param>
         /// <param name="dataSchemaUri"> The dataSchemaUrl for the inline event. </param>
-        internal InlineEventProperties(string description, string displayName, Uri documentationUri, Uri dataSchemaUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InlineEventProperties(string description, string displayName, Uri documentationUri, Uri dataSchemaUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             DisplayName = displayName;
             DocumentationUri = documentationUri;
             DataSchemaUri = dataSchemaUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The description for the inline event. </summary>

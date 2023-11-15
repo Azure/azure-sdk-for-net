@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
@@ -14,9 +17,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class PartnerUpdateDestinationInfo
     {
-        /// <summary> Initializes a new instance of PartnerUpdateDestinationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerUpdateDestinationInfo"/>. </summary>
         protected PartnerUpdateDestinationInfo()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PartnerUpdateDestinationInfo"/>. </summary>
+        /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerUpdateDestinationInfo(PartnerEndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EndpointType = endpointType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the endpoint for the partner destination. </summary>

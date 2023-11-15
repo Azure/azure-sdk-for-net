@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The security profile which contains Ssh public key for the HDInsight cluster. </summary>
     public partial class HDInsightSecurityProfile
     {
-        /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightSecurityProfile"/>. </summary>
         public HDInsightSecurityProfile()
         {
             LdapUris = new ChangeTrackingList<Uri>();
             ClusterUsersGroupDNs = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightSecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSecurityProfile"/>. </summary>
         /// <param name="directoryType"> The directory type. </param>
         /// <param name="domain"> The organization's active directory domain. </param>
         /// <param name="organizationalUnitDN"> The organizational unit within the Active Directory to place the cluster and service accounts. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="clusterUsersGroupDNs"> Optional. The Distinguished Names for cluster user groups. </param>
         /// <param name="aaddsResourceId"> The resource ID of the user's Azure Active Directory Domain Service. </param>
         /// <param name="msiResourceId"> User assigned identity that has permissions to read and create cluster-related artifacts in the user's AADDS. </param>
-        internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<Uri> ldapUris, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, ResourceIdentifier aaddsResourceId, ResourceIdentifier msiResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightSecurityProfile(AuthenticationDirectoryType? directoryType, string domain, string organizationalUnitDN, IList<Uri> ldapUris, string domainUsername, string domainUserPassword, IList<string> clusterUsersGroupDNs, ResourceIdentifier aaddsResourceId, ResourceIdentifier msiResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DirectoryType = directoryType;
             Domain = domain;
@@ -42,6 +46,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             ClusterUsersGroupDNs = clusterUsersGroupDNs;
             AaddsResourceId = aaddsResourceId;
             MsiResourceId = msiResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The directory type. </summary>

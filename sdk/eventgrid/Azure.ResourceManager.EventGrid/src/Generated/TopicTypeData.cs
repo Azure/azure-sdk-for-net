@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class TopicTypeData : ResourceData
     {
-        /// <summary> Initializes a new instance of TopicTypeData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
         public TopicTypeData()
         {
             SupportedLocations = new ChangeTrackingList<string>();
             SupportedScopesForSource = new ChangeTrackingList<TopicTypeSourceScope>();
         }
 
-        /// <summary> Initializes a new instance of TopicTypeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="sourceResourceFormat"> Source resource format. </param>
         /// <param name="supportedScopesForSource"> Supported source scopes. </param>
         /// <param name="areRegionalAndGlobalSourcesSupported"> Flag to indicate that a topic type can support both regional or global system topics. </param>
-        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string displayName, string description, EventGridResourceRegionType? resourceRegionType, TopicTypeProvisioningState? provisioningState, IList<string> supportedLocations, string sourceResourceFormat, IList<TopicTypeSourceScope> supportedScopesForSource, bool? areRegionalAndGlobalSourcesSupported) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provider, string displayName, string description, EventGridResourceRegionType? resourceRegionType, TopicTypeProvisioningState? provisioningState, IList<string> supportedLocations, string sourceResourceFormat, IList<TopicTypeSourceScope> supportedScopesForSource, bool? areRegionalAndGlobalSourcesSupported, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Provider = provider;
             DisplayName = displayName;
@@ -50,6 +55,7 @@ namespace Azure.ResourceManager.EventGrid
             SourceResourceFormat = sourceResourceFormat;
             SupportedScopesForSource = supportedScopesForSource;
             AreRegionalAndGlobalSourcesSupported = areRegionalAndGlobalSourcesSupported;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Namespace of the provider of the topic type. </summary>

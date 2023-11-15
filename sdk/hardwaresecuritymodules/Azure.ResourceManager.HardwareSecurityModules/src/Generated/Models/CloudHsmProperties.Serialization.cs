@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class CloudHsmProperties : IUtf8JsonSerializable
+    public partial class CloudHsmProperties : IUtf8JsonSerializable, IJsonModel<CloudHsmProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CloudHsmProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CloudHsmProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CloudHsmProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Fqdn))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("stateMessage"u8);
                 writer.WriteStringValue(StateMessage);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudHsmProperties DeserializeCloudHsmProperties(JsonElement element)
+        CloudHsmProperties IJsonModel<CloudHsmProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudHsmProperties(document.RootElement, options);
+        }
+
+        internal static CloudHsmProperties DeserializeCloudHsmProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             Optional<string> fqdn = default;
             Optional<string> state = default;
             Optional<string> stateMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -59,8 +101,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     stateMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudHsmProperties(fqdn.Value, state.Value, stateMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudHsmProperties(fqdn.Value, state.Value, stateMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudHsmProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CloudHsmProperties IPersistableModel<CloudHsmProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CloudHsmProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCloudHsmProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<CloudHsmProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

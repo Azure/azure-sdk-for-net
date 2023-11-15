@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class ExtensionTopicData : ResourceData
     {
-        /// <summary> Initializes a new instance of ExtensionTopicData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionTopicData"/>. </summary>
         public ExtensionTopicData()
         {
         }
 
-        /// <summary> Initializes a new instance of ExtensionTopicData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionTopicData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Description of the extension topic. </param>
         /// <param name="systemTopic"> System topic resource id which is mapped to the source. </param>
-        internal ExtensionTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string systemTopic) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtensionTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string systemTopic, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             SystemTopic = systemTopic;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description of the extension topic. </summary>

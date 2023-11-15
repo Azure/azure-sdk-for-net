@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,72 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     [JsonConverter(typeof(MachineLearningServicesModelRegisteredEventDataConverter))]
-    public partial class MachineLearningServicesModelRegisteredEventData
+    public partial class MachineLearningServicesModelRegisteredEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesModelRegisteredEventData>
     {
-        internal static MachineLearningServicesModelRegisteredEventData DeserializeMachineLearningServicesModelRegisteredEventData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesModelRegisteredEventData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MachineLearningServicesModelRegisteredEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningServicesModelRegisteredEventData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningServicesModelRegisteredEventData>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName);
+            }
+            if (Optional.IsDefined(ModelVersion))
+            {
+                writer.WritePropertyName("modelVersion"u8);
+                writer.WriteStringValue(ModelVersion);
+            }
+            if (Optional.IsDefined(ModelTags))
+            {
+                writer.WritePropertyName("modelTags"u8);
+                writer.WriteObjectValue(ModelTags);
+            }
+            if (Optional.IsDefined(ModelProperties))
+            {
+                writer.WritePropertyName("modelProperties"u8);
+                writer.WriteObjectValue(ModelProperties);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningServicesModelRegisteredEventData IJsonModel<MachineLearningServicesModelRegisteredEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningServicesModelRegisteredEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningServicesModelRegisteredEventData(document.RootElement, options);
+        }
+
+        internal static MachineLearningServicesModelRegisteredEventData DeserializeMachineLearningServicesModelRegisteredEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +90,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> modelVersion = default;
             Optional<object> modelTags = default;
             Optional<object> modelProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelName"u8))
@@ -55,15 +122,45 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     modelProperties = property.Value.GetObject();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningServicesModelRegisteredEventData(modelName.Value, modelVersion.Value, modelTags.Value, modelProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningServicesModelRegisteredEventData(modelName.Value, modelVersion.Value, modelTags.Value, modelProperties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningServicesModelRegisteredEventData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningServicesModelRegisteredEventData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningServicesModelRegisteredEventData IPersistableModel<MachineLearningServicesModelRegisteredEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningServicesModelRegisteredEventData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningServicesModelRegisteredEventData(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningServicesModelRegisteredEventData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class MachineLearningServicesModelRegisteredEventDataConverter : JsonConverter<MachineLearningServicesModelRegisteredEventData>
         {
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesModelRegisteredEventData model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override MachineLearningServicesModelRegisteredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Trino cluster catalog options. </summary>
     internal partial class CatalogOptions
     {
-        /// <summary> Initializes a new instance of CatalogOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CatalogOptions"/>. </summary>
         public CatalogOptions()
         {
             Hive = new ChangeTrackingList<HiveCatalogOption>();
         }
 
-        /// <summary> Initializes a new instance of CatalogOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogOptions"/>. </summary>
         /// <param name="hive"> hive catalog options. </param>
-        internal CatalogOptions(IList<HiveCatalogOption> hive)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CatalogOptions(IList<HiveCatalogOption> hive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hive = hive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> hive catalog options. </summary>

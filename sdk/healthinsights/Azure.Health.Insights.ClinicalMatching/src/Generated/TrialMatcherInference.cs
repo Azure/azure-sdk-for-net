@@ -14,7 +14,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> An inference made by the Trial Matcher model regarding a patient. </summary>
     public partial class TrialMatcherInference
     {
-        /// <summary> Initializes a new instance of TrialMatcherInference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherInference"/>. </summary>
         /// <param name="type"> The type of the Trial Matcher inference. </param>
         /// <param name="value"> The value of the inference, as relevant for the given inference type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -25,9 +28,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             Type = type;
             Value = value;
             Evidence = new ChangeTrackingList<TrialMatcherInferenceEvidence>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherInference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherInference"/>. </summary>
         /// <param name="type"> The type of the Trial Matcher inference. </param>
         /// <param name="value"> The value of the inference, as relevant for the given inference type. </param>
         /// <param name="description"> The description corresponding to the inference value. </param>
@@ -36,7 +40,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="id"> The identifier of the clinical trial. </param>
         /// <param name="source"> Possible sources of a clinical trial. </param>
         /// <param name="metadata"> Trial data which is of interest to the potential participant. </param>
-        internal TrialMatcherInference(TrialMatcherInferenceType type, string value, string description, float? confidenceScore, IReadOnlyList<TrialMatcherInferenceEvidence> evidence, string id, ClinicalTrialSource? source, ClinicalTrialMetadata metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherInference(TrialMatcherInferenceType type, string value, string description, float? confidenceScore, IReadOnlyList<TrialMatcherInferenceEvidence> evidence, string id, ClinicalTrialSource? source, ClinicalTrialMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Value = value;
@@ -46,6 +51,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             Id = id;
             Source = source;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherInference"/> for deserialization. </summary>
+        internal TrialMatcherInference()
+        {
         }
 
         /// <summary> The type of the Trial Matcher inference. </summary>

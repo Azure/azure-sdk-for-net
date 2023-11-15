@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,48 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The cluster create parameters. </summary>
     public partial class HDInsightClusterCreateOrUpdateProperties
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreateOrUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateProperties"/>. </summary>
         public HDInsightClusterCreateOrUpdateProperties()
         {
             PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreateOrUpdateProperties"/>. </summary>
+        /// <param name="clusterVersion"> The version of the cluster. </param>
+        /// <param name="osType"> The type of operating system. </param>
+        /// <param name="tier"> The cluster tier. </param>
+        /// <param name="clusterDefinition"> The cluster definition. </param>
+        /// <param name="kafkaRestProperties"> The cluster kafka rest proxy configuration. </param>
+        /// <param name="securityProfile"> The security profile. </param>
+        /// <param name="computeProfile"> The compute profile. </param>
+        /// <param name="storageProfile"> The storage profile. </param>
+        /// <param name="diskEncryptionProperties"> The disk encryption properties. </param>
+        /// <param name="encryptionInTransitProperties"> The encryption-in-transit properties. </param>
+        /// <param name="minSupportedTlsVersion"> The minimal supported tls version. </param>
+        /// <param name="networkProperties"> The network properties. </param>
+        /// <param name="computeIsolationProperties"> The compute isolation properties. </param>
+        /// <param name="privateLinkConfigurations"> The private link configurations. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterCreateOrUpdateProperties(string clusterVersion, HDInsightOSType? osType, HDInsightTier? tier, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, StorageProfile storageProfile, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, string minSupportedTlsVersion, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClusterVersion = clusterVersion;
+            OSType = osType;
+            Tier = tier;
+            ClusterDefinition = clusterDefinition;
+            KafkaRestProperties = kafkaRestProperties;
+            SecurityProfile = securityProfile;
+            ComputeProfile = computeProfile;
+            StorageProfile = storageProfile;
+            DiskEncryptionProperties = diskEncryptionProperties;
+            EncryptionInTransitProperties = encryptionInTransitProperties;
+            MinSupportedTlsVersion = minSupportedTlsVersion;
+            NetworkProperties = networkProperties;
+            ComputeIsolationProperties = computeIsolationProperties;
+            PrivateLinkConfigurations = privateLinkConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version of the cluster. </summary>

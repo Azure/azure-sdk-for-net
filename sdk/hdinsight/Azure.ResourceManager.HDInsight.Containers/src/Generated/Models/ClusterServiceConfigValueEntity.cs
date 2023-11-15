@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Default config details. </summary>
     public partial class ClusterServiceConfigValueEntity
     {
-        /// <summary> Initializes a new instance of ClusterServiceConfigValueEntity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigValueEntity"/>. </summary>
         /// <param name="value"> Config value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ClusterServiceConfigValueEntity(string value)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of ClusterServiceConfigValueEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigValueEntity"/>. </summary>
         /// <param name="value"> Config value. </param>
         /// <param name="description"> Config description. </param>
-        internal ClusterServiceConfigValueEntity(string value, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterServiceConfigValueEntity(string value, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterServiceConfigValueEntity"/> for deserialization. </summary>
+        internal ClusterServiceConfigValueEntity()
+        {
         }
 
         /// <summary> Config value. </summary>

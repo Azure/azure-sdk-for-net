@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -13,7 +14,10 @@ namespace Azure.Health.Insights.ClinicalMatching
     /// <summary> Configuration affecting the Trial Matcher model's inference. </summary>
     public partial class TrialMatcherModelConfiguration
     {
-        /// <summary> Initializes a new instance of TrialMatcherModelConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherModelConfiguration"/>. </summary>
         /// <param name="clinicalTrials">
         /// The clinical trials that the patient(s) should be matched to. &lt;br /&gt;The trial
         /// selection can be given as a list of custom clinical trials and/or a list of
@@ -26,9 +30,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             Argument.AssertNotNull(clinicalTrials, nameof(clinicalTrials));
 
             ClinicalTrials = clinicalTrials;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherModelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherModelConfiguration"/>. </summary>
         /// <param name="verbose"> An indication whether the model should produce verbose output. </param>
         /// <param name="includeEvidence"> An indication whether the model's output should include evidence for the inferences. </param>
         /// <param name="clinicalTrials">
@@ -37,11 +42,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// filters to known clinical trial registries. In case both are given, the
         /// resulting trial set is a union of the two sets.
         /// </param>
-        internal TrialMatcherModelConfiguration(bool? verbose, bool? includeEvidence, ClinicalTrials clinicalTrials)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherModelConfiguration(bool? verbose, bool? includeEvidence, ClinicalTrials clinicalTrials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Verbose = verbose;
             IncludeEvidence = includeEvidence;
             ClinicalTrials = clinicalTrials;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherModelConfiguration"/> for deserialization. </summary>
+        internal TrialMatcherModelConfiguration()
+        {
         }
 
         /// <summary> An indication whether the model should produce verbose output. </summary>

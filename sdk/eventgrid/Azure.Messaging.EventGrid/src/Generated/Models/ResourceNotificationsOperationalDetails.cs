@@ -6,22 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> details of operational info. </summary>
     public partial class ResourceNotificationsOperationalDetails
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsOperationalDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsOperationalDetails"/>. </summary>
         internal ResourceNotificationsOperationalDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsOperationalDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsOperationalDetails"/>. </summary>
         /// <param name="resourceEventTime"> Date and Time when resource was updated. </param>
-        internal ResourceNotificationsOperationalDetails(DateTimeOffset? resourceEventTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceNotificationsOperationalDetails(DateTimeOffset? resourceEventTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceEventTime = resourceEventTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Date and Time when resource was updated. </summary>

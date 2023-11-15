@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Contains all settings for the cluster. </summary>
     public partial class ClusterQuotaConfigurationProperties
     {
-        /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterQuotaConfigurationProperties"/>. </summary>
         public ClusterQuotaConfigurationProperties()
         {
             Settings = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ClusterQuotaConfigurationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterQuotaConfigurationProperties"/>. </summary>
         /// <param name="settings"> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </param>
-        internal ClusterQuotaConfigurationProperties(IDictionary<string, string> settings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterQuotaConfigurationProperties(IDictionary<string, string> settings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Settings = settings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </summary>

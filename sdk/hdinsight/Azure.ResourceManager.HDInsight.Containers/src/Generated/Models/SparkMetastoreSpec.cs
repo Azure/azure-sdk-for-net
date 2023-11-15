@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The metastore specification for Spark cluster. </summary>
     public partial class SparkMetastoreSpec
     {
-        /// <summary> Initializes a new instance of SparkMetastoreSpec. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkMetastoreSpec"/>. </summary>
         /// <param name="dbServerHost"> The database server host. </param>
         /// <param name="dbName"> The database name. </param>
         /// <param name="dbUserName"> The database user name. </param>
@@ -35,14 +39,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             KeyVaultId = keyVaultId;
         }
 
-        /// <summary> Initializes a new instance of SparkMetastoreSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkMetastoreSpec"/>. </summary>
         /// <param name="dbServerHost"> The database server host. </param>
         /// <param name="dbName"> The database name. </param>
         /// <param name="dbUserName"> The database user name. </param>
         /// <param name="dbPasswordSecretName"> The secret name which contains the database user password. </param>
         /// <param name="keyVaultId"> The key vault resource id. </param>
         /// <param name="thriftUriString"> The thrift url. </param>
-        internal SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId, string thriftUriString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId, string thriftUriString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DBServerHost = dbServerHost;
             DBName = dbName;
@@ -50,6 +55,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             DBPasswordSecretName = dbPasswordSecretName;
             KeyVaultId = keyVaultId;
             ThriftUriString = thriftUriString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkMetastoreSpec"/> for deserialization. </summary>
+        internal SparkMetastoreSpec()
+        {
         }
 
         /// <summary> The database server host. </summary>

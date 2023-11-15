@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The encryption-in-transit properties. </summary>
     internal partial class EncryptionInTransitProperties
     {
-        /// <summary> Initializes a new instance of EncryptionInTransitProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionInTransitProperties"/>. </summary>
         public EncryptionInTransitProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionInTransitProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionInTransitProperties"/>. </summary>
         /// <param name="isEncryptionInTransitEnabled"> Indicates whether or not inter cluster node communication is encrypted in transit. </param>
-        internal EncryptionInTransitProperties(bool? isEncryptionInTransitEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionInTransitProperties(bool? isEncryptionInTransitEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEncryptionInTransitEnabled = isEncryptionInTransitEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether or not inter cluster node communication is encrypted in transit. </summary>

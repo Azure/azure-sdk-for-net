@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Grafana;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> The list of managed private endpoints of a grafana resource. </summary>
     internal partial class ManagedPrivateEndpointModelListResponse
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelListResponse"/>. </summary>
         internal ManagedPrivateEndpointModelListResponse()
         {
             Value = new ChangeTrackingList<ManagedPrivateEndpointModelData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointModelListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointModelListResponse"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
-        internal ManagedPrivateEndpointModelListResponse(IReadOnlyList<ManagedPrivateEndpointModelData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedPrivateEndpointModelListResponse(IReadOnlyList<ManagedPrivateEndpointModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

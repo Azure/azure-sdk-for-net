@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -13,18 +14,23 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     /// <summary> Information about the VM. </summary>
     public partial class GuestConfigurationVmInfo
     {
-        /// <summary> Initializes a new instance of GuestConfigurationVmInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmInfo"/>. </summary>
         public GuestConfigurationVmInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GuestConfigurationVmInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationVmInfo"/>. </summary>
         /// <param name="id"> Azure resource Id of the VM. </param>
         /// <param name="uuid"> UUID(Universally Unique Identifier) of the VM. </param>
-        internal GuestConfigurationVmInfo(ResourceIdentifier id, Guid? uuid)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationVmInfo(ResourceIdentifier id, Guid? uuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Uuid = uuid;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure resource Id of the VM. </summary>

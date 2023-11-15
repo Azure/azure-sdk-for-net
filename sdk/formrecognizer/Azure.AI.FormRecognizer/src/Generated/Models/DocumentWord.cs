@@ -14,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A word object consisting of a contiguous sequence of characters.  For non-space delimited languages, such as Chinese, Japanese, and Korean, each character is represented as its own word. </summary>
     public partial class DocumentWord
     {
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
@@ -29,17 +32,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="polygon"> Bounding polygon of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
-        internal DocumentWord(string content, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentWord(string content, IReadOnlyList<float> polygon, DocumentSpan span, float confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Content = content;
             Polygon = polygon;
             Span = span;
             Confidence = confidence;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/> for deserialization. </summary>
+        internal DocumentWord()
+        {
         }
 
         /// <summary> Text content of the word. </summary>

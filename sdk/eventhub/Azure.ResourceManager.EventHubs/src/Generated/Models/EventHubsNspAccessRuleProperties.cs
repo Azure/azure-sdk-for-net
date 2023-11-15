@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Properties of Access Rule. </summary>
     public partial class EventHubsNspAccessRuleProperties
     {
-        /// <summary> Initializes a new instance of EventHubsNspAccessRuleProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRuleProperties"/>. </summary>
         internal EventHubsNspAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
@@ -23,19 +27,21 @@ namespace Azure.ResourceManager.EventHubs.Models
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsNspAccessRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNspAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
-        internal EventHubsNspAccessRuleProperties(EventHubsNspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNspAccessRuleProperties(EventHubsNspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
             Subscriptions = subscriptions;
             NetworkSecurityPerimeters = networkSecurityPerimeters;
             FullyQualifiedDomainNames = fullyQualifiedDomainNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Direction of Access Rule. </summary>

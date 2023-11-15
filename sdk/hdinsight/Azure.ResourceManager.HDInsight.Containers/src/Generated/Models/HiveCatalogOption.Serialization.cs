@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class HiveCatalogOption : IUtf8JsonSerializable
+    public partial class HiveCatalogOption : IUtf8JsonSerializable, IJsonModel<HiveCatalogOption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HiveCatalogOption>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HiveCatalogOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HiveCatalogOption>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HiveCatalogOption>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("catalogName"u8);
             writer.WriteStringValue(CatalogName);
@@ -25,11 +36,40 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(MetastoreDBConnectionUserName);
             writer.WritePropertyName("metastoreWarehouseDir"u8);
             writer.WriteStringValue(MetastoreWarehouseDir);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HiveCatalogOption DeserializeHiveCatalogOption(JsonElement element)
+        HiveCatalogOption IJsonModel<HiveCatalogOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHiveCatalogOption(document.RootElement, options);
+        }
+
+        internal static HiveCatalogOption DeserializeHiveCatalogOption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string metastoreDBConnectionURL = default;
             string metastoreDBConnectionUserName = default;
             string metastoreWarehouseDir = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("catalogName"u8))
@@ -66,8 +108,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     metastoreWarehouseDir = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HiveCatalogOption(catalogName, metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, metastoreWarehouseDir);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HiveCatalogOption(catalogName, metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, metastoreWarehouseDir, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HiveCatalogOption>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HiveCatalogOption IPersistableModel<HiveCatalogOption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HiveCatalogOption)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHiveCatalogOption(document.RootElement, options);
+        }
+
+        string IPersistableModel<HiveCatalogOption>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

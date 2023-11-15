@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Encoder connect event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingStreamReceived event. </summary>
     public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamReceivedEventData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingStreamReceivedEventData"/>. </summary>
         internal MediaLiveEventIncomingStreamReceivedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingStreamReceivedEventData"/>. </summary>
         /// <param name="ingestUrl"> Gets the ingest URL provided by the live event. </param>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="trackName"> Gets the track name. </param>
@@ -25,7 +31,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="timestamp"> Gets the first timestamp of the data chunk received. </param>
         /// <param name="duration"> Gets the duration of the first data chunk. </param>
         /// <param name="timescale"> Gets the timescale in which timestamp is represented. </param>
-        internal MediaLiveEventIncomingStreamReceivedEventData(string ingestUrl, string trackType, string trackName, long? bitrate, string encoderIp, string encoderPort, string timestamp, string duration, string timescale)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaLiveEventIncomingStreamReceivedEventData(string ingestUrl, string trackType, string trackName, long? bitrate, string encoderIp, string encoderPort, string timestamp, string duration, string timescale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IngestUrl = ingestUrl;
             TrackType = trackType;
@@ -36,6 +43,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Timestamp = timestamp;
             Duration = duration;
             Timescale = timescale;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the ingest URL provided by the live event. </summary>

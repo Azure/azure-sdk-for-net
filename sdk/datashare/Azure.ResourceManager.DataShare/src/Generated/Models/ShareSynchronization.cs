@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> A ShareSynchronization data transfer object. </summary>
     public partial class ShareSynchronization
     {
-        /// <summary> Initializes a new instance of ShareSynchronization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronization"/>. </summary>
         public ShareSynchronization()
         {
         }
 
-        /// <summary> Initializes a new instance of ShareSynchronization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareSynchronization"/>. </summary>
         /// <param name="consumerEmail"> Email of the user who created the synchronization. </param>
         /// <param name="consumerName"> Name of the user who created the synchronization. </param>
         /// <param name="consumerTenantName"> Tenant name of the consumer who created the synchronization. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="status"> Raw Status. </param>
         /// <param name="synchronizationId"> Synchronization id. </param>
         /// <param name="synchronizationMode"> Synchronization mode. </param>
-        internal ShareSynchronization(string consumerEmail, string consumerName, string consumerTenantName, int? durationInMilliSeconds, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, Guid? synchronizationId, SynchronizationMode? synchronizationMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareSynchronization(string consumerEmail, string consumerName, string consumerTenantName, int? durationInMilliSeconds, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, Guid? synchronizationId, SynchronizationMode? synchronizationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConsumerEmail = consumerEmail;
             ConsumerName = consumerName;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Status = status;
             SynchronizationId = synchronizationId;
             SynchronizationMode = synchronizationMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Email of the user who created the synchronization. </summary>

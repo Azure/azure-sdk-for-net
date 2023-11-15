@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Grafana.Models;
@@ -18,14 +19,17 @@ namespace Azure.ResourceManager.Grafana
     /// </summary>
     public partial class GrafanaPrivateLinkResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceData"/>. </summary>
         public GrafanaPrivateLinkResourceData()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GrafanaPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GrafanaPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +38,14 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        internal GrafanaPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GrafanaProvisioningState? provisioningState, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GrafanaPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GrafanaProvisioningState? provisioningState, string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             GroupId = groupId;
             RequiredMembers = requiredMembers;
             RequiredZoneNames = requiredZoneNames;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of the resource. </summary>

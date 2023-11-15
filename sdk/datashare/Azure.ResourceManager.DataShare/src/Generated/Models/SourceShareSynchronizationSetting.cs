@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.DataShare.Models
     /// </summary>
     public abstract partial class SourceShareSynchronizationSetting
     {
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSetting"/>. </summary>
         protected SourceShareSynchronizationSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceShareSynchronizationSetting"/>. </summary>
         /// <param name="kind"> Kind of synchronization setting on share. </param>
-        internal SourceShareSynchronizationSetting(SourceShareSynchronizationSettingKind kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceShareSynchronizationSetting(SourceShareSynchronizationSettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of synchronization setting on share. </summary>

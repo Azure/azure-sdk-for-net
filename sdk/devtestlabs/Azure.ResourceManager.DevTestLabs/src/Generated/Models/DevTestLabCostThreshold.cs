@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a cost threshold item. </summary>
     public partial class DevTestLabCostThreshold
     {
-        /// <summary> Initializes a new instance of DevTestLabCostThreshold. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostThreshold"/>. </summary>
         public DevTestLabCostThreshold()
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabCostThreshold. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostThreshold"/>. </summary>
         /// <param name="thresholdId"> The ID of the cost threshold item. </param>
         /// <param name="percentageThreshold"> The value of the percentage cost threshold. </param>
         /// <param name="displayOnChart"> Indicates whether this threshold will be displayed on cost charts. </param>
         /// <param name="sendNotificationWhenExceeded"> Indicates whether notifications will be sent when this threshold is exceeded. </param>
         /// <param name="notificationSent"> Indicates the datetime when notifications were last sent for this threshold. </param>
-        internal DevTestLabCostThreshold(string thresholdId, PercentageCostThresholdProperties percentageThreshold, DevTestLabCostThresholdStatus? displayOnChart, DevTestLabCostThresholdStatus? sendNotificationWhenExceeded, string notificationSent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCostThreshold(string thresholdId, PercentageCostThresholdProperties percentageThreshold, DevTestLabCostThresholdStatus? displayOnChart, DevTestLabCostThresholdStatus? sendNotificationWhenExceeded, string notificationSent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ThresholdId = thresholdId;
             PercentageThreshold = percentageThreshold;
             DisplayOnChart = displayOnChart;
             SendNotificationWhenExceeded = sendNotificationWhenExceeded;
             NotificationSent = notificationSent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the cost threshold item. </summary>

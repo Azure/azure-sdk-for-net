@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The azure async operation response. </summary>
     public partial class HDInsightAsyncOperationResult
     {
-        /// <summary> Initializes a new instance of HDInsightAsyncOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAsyncOperationResult"/>. </summary>
         internal HDInsightAsyncOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightAsyncOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAsyncOperationResult"/>. </summary>
         /// <param name="status"> The async operation state. </param>
         /// <param name="error"> The operation error information. </param>
-        internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, ResponseError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The async operation state. </summary>

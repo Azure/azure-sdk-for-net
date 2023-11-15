@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// </summary>
     public abstract partial class RouteConfiguration
     {
-        /// <summary> Initializes a new instance of RouteConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteConfiguration"/>. </summary>
         protected RouteConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteConfiguration"/>. </summary>
         /// <param name="odataType"></param>
-        internal RouteConfiguration(string odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OdataType = odataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the odata type. </summary>

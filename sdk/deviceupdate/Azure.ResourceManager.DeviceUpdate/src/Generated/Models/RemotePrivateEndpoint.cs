@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Remote private endpoint details. </summary>
     public partial class RemotePrivateEndpoint
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpoint"/>. </summary>
         public RemotePrivateEndpoint()
         {
             ManualPrivateLinkServiceConnections = new ChangeTrackingList<PrivateLinkServiceConnection>();
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             ConnectionDetails = new ChangeTrackingList<ConnectionDetails>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpoint"/>. </summary>
         /// <param name="id"> Remote endpoint resource ID. </param>
         /// <param name="location"> ARM location of the remote private endpoint. </param>
         /// <param name="immutableSubscriptionId"> Original subscription ID needed by Microsoft.Network. </param>
@@ -32,7 +36,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="privateLinkServiceConnections"> List of automatically approved private link service connections. </param>
         /// <param name="privateLinkServiceProxies"> List of private link service proxies. </param>
         /// <param name="connectionDetails"> List of connection details. </param>
-        internal RemotePrivateEndpoint(string id, AzureLocation? location, string immutableSubscriptionId, string immutableResourceId, string vnetTrafficTag, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<ConnectionDetails> connectionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemotePrivateEndpoint(string id, AzureLocation? location, string immutableSubscriptionId, string immutableResourceId, string vnetTrafficTag, IList<PrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<PrivateLinkServiceConnection> privateLinkServiceConnections, IList<PrivateLinkServiceProxy> privateLinkServiceProxies, IList<ConnectionDetails> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Location = location;
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             PrivateLinkServiceConnections = privateLinkServiceConnections;
             PrivateLinkServiceProxies = privateLinkServiceProxies;
             ConnectionDetails = connectionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Remote endpoint resource ID. </summary>

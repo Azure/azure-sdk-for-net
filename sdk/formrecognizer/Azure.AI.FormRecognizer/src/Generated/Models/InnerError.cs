@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -13,7 +14,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Detailed error. </summary>
     internal partial class InnerError
     {
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal InnerError(string code)
@@ -23,15 +27,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Code = code;
         }
 
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="innererror"> Detailed error. </param>
-        internal InnerError(string code, string message, InnerError innererror)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InnerError(string code, string message, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Innererror = innererror;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InnerError"/> for deserialization. </summary>
+        internal InnerError()
+        {
         }
 
         /// <summary> Error code. </summary>

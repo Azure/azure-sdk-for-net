@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Flink cluster catalog options. </summary>
     internal partial class FlinkCatalogOptions
     {
-        /// <summary> Initializes a new instance of FlinkCatalogOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlinkCatalogOptions"/>. </summary>
         public FlinkCatalogOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of FlinkCatalogOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkCatalogOptions"/>. </summary>
         /// <param name="hive"> Hive Catalog Option for Flink cluster. </param>
-        internal FlinkCatalogOptions(FlinkHiveCatalogOption hive)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlinkCatalogOptions(FlinkHiveCatalogOption hive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hive = hive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Hive Catalog Option for Flink cluster. </summary>

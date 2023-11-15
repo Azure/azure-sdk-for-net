@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Containers;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The list cluster pools operation response. </summary>
     internal partial class HDInsightClusterPoolListData
     {
-        /// <summary> Initializes a new instance of HDInsightClusterPoolListData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPoolListData"/>. </summary>
         internal HDInsightClusterPoolListData()
         {
             Value = new ChangeTrackingList<HDInsightClusterPoolData>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterPoolListData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPoolListData"/>. </summary>
         /// <param name="value"> The list of cluster pools. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        internal HDInsightClusterPoolListData(IReadOnlyList<HDInsightClusterPoolData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterPoolListData(IReadOnlyList<HDInsightClusterPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of cluster pools. </summary>

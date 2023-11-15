@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The request that generated the event. </summary>
     public partial class ContainerRegistryEventRequest
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEventRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventRequest"/>. </summary>
         internal ContainerRegistryEventRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEventRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventRequest"/>. </summary>
         /// <param name="id"> The ID of the request that initiated the event. </param>
         /// <param name="addr"> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </param>
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>
         /// <param name="method"> The request method that generated the event. </param>
         /// <param name="useragent"> The user agent header of the request. </param>
-        internal ContainerRegistryEventRequest(string id, string addr, string host, string method, string useragent)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryEventRequest(string id, string addr, string host, string method, string useragent, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Addr = addr;
             Host = host;
             Method = method;
             Useragent = useragent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of the request that initiated the event. </summary>

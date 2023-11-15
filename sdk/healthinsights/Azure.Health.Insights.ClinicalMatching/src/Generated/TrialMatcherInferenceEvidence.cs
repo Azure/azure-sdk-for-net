@@ -5,17 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary> A piece of evidence corresponding to a Trial Matcher inference. </summary>
     public partial class TrialMatcherInferenceEvidence
     {
-        /// <summary> Initializes a new instance of TrialMatcherInferenceEvidence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherInferenceEvidence"/>. </summary>
         internal TrialMatcherInferenceEvidence()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TrialMatcherInferenceEvidence. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrialMatcherInferenceEvidence"/>. </summary>
         /// <param name="eligibilityCriteriaEvidence"> A piece of evidence from the eligibility criteria text of a clinical trial. </param>
         /// <param name="patientDataEvidence"> A piece of evidence from a clinical note (text document). </param>
         /// <param name="patientInfoEvidence">
@@ -23,12 +31,14 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// system.
         /// </param>
         /// <param name="importance"> A value indicating how important this piece of evidence is for the inference. </param>
-        internal TrialMatcherInferenceEvidence(string eligibilityCriteriaEvidence, ClinicalNoteEvidence patientDataEvidence, ClinicalCodedElement patientInfoEvidence, float? importance)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TrialMatcherInferenceEvidence(string eligibilityCriteriaEvidence, ClinicalNoteEvidence patientDataEvidence, ClinicalCodedElement patientInfoEvidence, float? importance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EligibilityCriteriaEvidence = eligibilityCriteriaEvidence;
             PatientDataEvidence = patientDataEvidence;
             PatientInfoEvidence = patientInfoEvidence;
             Importance = importance;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A piece of evidence from the eligibility criteria text of a clinical trial. </summary>

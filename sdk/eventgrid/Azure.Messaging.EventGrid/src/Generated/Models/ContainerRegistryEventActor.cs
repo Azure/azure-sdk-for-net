@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The agent that initiated the event. For most situations, this could be from the authorization context of the request. </summary>
     public partial class ContainerRegistryEventActor
     {
-        /// <summary> Initializes a new instance of ContainerRegistryEventActor. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventActor"/>. </summary>
         internal ContainerRegistryEventActor()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryEventActor. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventActor"/>. </summary>
         /// <param name="name"> The subject or username associated with the request context that generated the event. </param>
-        internal ContainerRegistryEventActor(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryEventActor(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The subject or username associated with the request context that generated the event. </summary>

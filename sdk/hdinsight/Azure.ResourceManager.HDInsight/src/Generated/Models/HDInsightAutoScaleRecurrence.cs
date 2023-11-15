@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> Schedule-based autoscale request parameters. </summary>
     public partial class HDInsightAutoScaleRecurrence
     {
-        /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleRecurrence"/>. </summary>
         public HDInsightAutoScaleRecurrence()
         {
             Schedule = new ChangeTrackingList<HDInsightAutoScaleSchedule>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightAutoScaleRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAutoScaleRecurrence"/>. </summary>
         /// <param name="timeZone"> The time zone for the autoscale schedule times. </param>
         /// <param name="schedule"> Array of schedule-based autoscale rules. </param>
-        internal HDInsightAutoScaleRecurrence(string timeZone, IList<HDInsightAutoScaleSchedule> schedule)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightAutoScaleRecurrence(string timeZone, IList<HDInsightAutoScaleSchedule> schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeZone = timeZone;
             Schedule = schedule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time zone for the autoscale schedule times. </summary>

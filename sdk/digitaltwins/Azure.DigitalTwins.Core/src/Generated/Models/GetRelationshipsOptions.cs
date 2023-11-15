@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Parameter group. </summary>
     internal partial class GetRelationshipsOptions
     {
-        /// <summary> Initializes a new instance of GetRelationshipsOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GetRelationshipsOptions"/>. </summary>
         public GetRelationshipsOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetRelationshipsOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetRelationshipsOptions(string traceParent, string traceState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

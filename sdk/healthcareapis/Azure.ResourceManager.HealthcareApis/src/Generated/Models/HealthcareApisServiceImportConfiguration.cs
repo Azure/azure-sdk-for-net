@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Import operation configuration information. </summary>
     public partial class HealthcareApisServiceImportConfiguration
     {
-        /// <summary> Initializes a new instance of HealthcareApisServiceImportConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceImportConfiguration"/>. </summary>
         public HealthcareApisServiceImportConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareApisServiceImportConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceImportConfiguration"/>. </summary>
         /// <param name="integrationDataStore"> The name of the default integration storage account. </param>
         /// <param name="isInitialImportMode"> If the FHIR service is in InitialImportMode. </param>
         /// <param name="isEnabled"> If the import operation is enabled. </param>
-        internal HealthcareApisServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisServiceImportConfiguration(string integrationDataStore, bool? isInitialImportMode, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IntegrationDataStore = integrationDataStore;
             IsInitialImportMode = isInitialImportMode;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the default integration storage account. </summary>

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class AzureADPartnerClientAuthentication : IUtf8JsonSerializable
+    public partial class AzureADPartnerClientAuthentication : IUtf8JsonSerializable, IJsonModel<AzureADPartnerClientAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureADPartnerClientAuthentication>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureADPartnerClientAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureADPartnerClientAuthentication>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureADPartnerClientAuthentication>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("clientAuthenticationType"u8);
             writer.WriteStringValue(ClientAuthenticationType.ToString());
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureADPartnerClientAuthentication DeserializeAzureADPartnerClientAuthentication(JsonElement element)
+        AzureADPartnerClientAuthentication IJsonModel<AzureADPartnerClientAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureADPartnerClientAuthentication(document.RootElement, options);
+        }
+
+        internal static AzureADPartnerClientAuthentication DeserializeAzureADPartnerClientAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             PartnerClientAuthenticationType clientAuthenticationType = default;
             Optional<string> azureActiveDirectoryTenantId = default;
             Optional<Uri> azureActiveDirectoryApplicationIdOrUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientAuthenticationType"u8))
@@ -76,8 +117,38 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureADPartnerClientAuthentication(clientAuthenticationType, azureActiveDirectoryTenantId.Value, azureActiveDirectoryApplicationIdOrUri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureADPartnerClientAuthentication(clientAuthenticationType, serializedAdditionalRawData, azureActiveDirectoryTenantId.Value, azureActiveDirectoryApplicationIdOrUri.Value);
         }
+
+        BinaryData IPersistableModel<AzureADPartnerClientAuthentication>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureADPartnerClientAuthentication IPersistableModel<AzureADPartnerClientAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureADPartnerClientAuthentication(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureADPartnerClientAuthentication>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

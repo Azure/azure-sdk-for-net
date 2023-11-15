@@ -1296,7 +1296,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListVhdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListVhdsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1318,7 +1318,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListVhdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListVhdsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

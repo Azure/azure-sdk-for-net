@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary>
@@ -13,12 +16,15 @@ namespace Azure.ResourceManager.Grafana.Models
     /// </summary>
     public partial class Smtp
     {
-        /// <summary> Initializes a new instance of Smtp. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Smtp"/>. </summary>
         public Smtp()
         {
         }
 
-        /// <summary> Initializes a new instance of Smtp. </summary>
+        /// <summary> Initializes a new instance of <see cref="Smtp"/>. </summary>
         /// <param name="enabled"> Enable this to allow Grafana to send email. Default is false. </param>
         /// <param name="host"> SMTP server hostname with port, e.g. test.email.net:587. </param>
         /// <param name="user"> User of SMTP auth. </param>
@@ -39,7 +45,8 @@ namespace Azure.ResourceManager.Grafana.Models
         /// Verify SSL for SMTP server. Default is false
         /// https://pkg.go.dev/crypto/tls#Config
         /// </param>
-        internal Smtp(bool? enabled, string host, string user, string password, string fromAddress, string fromName, StartTLSPolicy? startTLSPolicy, bool? skipVerify)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Smtp(bool? enabled, string host, string user, string password, string fromAddress, string fromName, StartTLSPolicy? startTLSPolicy, bool? skipVerify, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Host = host;
@@ -49,6 +56,7 @@ namespace Azure.ResourceManager.Grafana.Models
             FromName = fromName;
             StartTLSPolicy = startTLSPolicy;
             SkipVerify = skipVerify;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable this to allow Grafana to send email. Default is false. </summary>

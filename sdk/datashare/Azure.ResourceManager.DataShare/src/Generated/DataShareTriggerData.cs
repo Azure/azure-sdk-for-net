@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Models;
@@ -19,20 +21,25 @@ namespace Azure.ResourceManager.DataShare
     /// </summary>
     public partial class DataShareTriggerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataShareTriggerData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataShareTriggerData"/>. </summary>
         public DataShareTriggerData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataShareTriggerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataShareTriggerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of synchronization on trigger. </param>
-        internal DataShareTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerKind kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataShareTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of synchronization on trigger. </summary>

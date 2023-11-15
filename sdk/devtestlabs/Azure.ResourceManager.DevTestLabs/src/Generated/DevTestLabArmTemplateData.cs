@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabArmTemplateData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabArmTemplateData(AzureLocation location) : base(location)
         {
             ParametersValueFilesInfo = new ChangeTrackingList<DevTestLabParametersValueFileInfo>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabArmTemplateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="createdOn"> The creation date of the armTemplate. </param>
         /// <param name="parametersValueFilesInfo"> File name and parameter values information from all azuredeploy.*.parameters.json for the ARM template. </param>
         /// <param name="isEnabled"> Whether or not ARM template is enabled for use by lab user. </param>
-        internal DevTestLabArmTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? isEnabled) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabArmTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string description, string publisher, string icon, BinaryData contents, DateTimeOffset? createdOn, IReadOnlyList<DevTestLabParametersValueFileInfo> parametersValueFilesInfo, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             Description = description;
@@ -51,6 +55,12 @@ namespace Azure.ResourceManager.DevTestLabs
             CreatedOn = createdOn;
             ParametersValueFilesInfo = parametersValueFilesInfo;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabArmTemplateData"/> for deserialization. </summary>
+        internal DevTestLabArmTemplateData()
+        {
         }
 
         /// <summary> The display name of the ARM template. </summary>

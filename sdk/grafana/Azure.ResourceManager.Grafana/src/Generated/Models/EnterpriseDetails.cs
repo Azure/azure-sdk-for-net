@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary> Enterprise details of a Grafana instance. </summary>
     public partial class EnterpriseDetails
     {
-        /// <summary> Initializes a new instance of EnterpriseDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EnterpriseDetails"/>. </summary>
         internal EnterpriseDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of EnterpriseDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnterpriseDetails"/>. </summary>
         /// <param name="saasSubscriptionDetails"> SaaS subscription details of a Grafana instance. </param>
         /// <param name="marketplaceTrialQuota"> The allocation details of the per subscription free trial slot of the subscription. </param>
-        internal EnterpriseDetails(SaasSubscriptionDetails saasSubscriptionDetails, MarketplaceTrialQuota marketplaceTrialQuota)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EnterpriseDetails(SaasSubscriptionDetails saasSubscriptionDetails, MarketplaceTrialQuota marketplaceTrialQuota, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SaasSubscriptionDetails = saasSubscriptionDetails;
             MarketplaceTrialQuota = marketplaceTrialQuota;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SaaS subscription details of a Grafana instance. </summary>

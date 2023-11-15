@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Describes a virtual network link for PATCH operation. </summary>
     public partial class DnsForwardingRulesetVirtualNetworkLinkPatch
     {
-        /// <summary> Initializes a new instance of DnsForwardingRulesetVirtualNetworkLinkPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkPatch"/>. </summary>
         public DnsForwardingRulesetVirtualNetworkLinkPatch()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsForwardingRulesetVirtualNetworkLinkPatch"/>. </summary>
+        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsForwardingRulesetVirtualNetworkLinkPatch(IDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Metadata attached to the virtual network link. </summary>

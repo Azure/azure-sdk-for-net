@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,18 +15,23 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> Reference to DNS forwarding ruleset and associated virtual network link. </summary>
     public partial class VirtualNetworkDnsForwardingRuleset
     {
-        /// <summary> Initializes a new instance of VirtualNetworkDnsForwardingRuleset. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRuleset"/>. </summary>
         internal VirtualNetworkDnsForwardingRuleset()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkDnsForwardingRuleset. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkDnsForwardingRuleset"/>. </summary>
         /// <param name="id"> DNS Forwarding Ruleset Resource ID. </param>
         /// <param name="virtualNetworkLink"> The reference to the virtual network link. </param>
-        internal VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id, WritableSubResource virtualNetworkLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id, WritableSubResource virtualNetworkLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             VirtualNetworkLink = virtualNetworkLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> DNS Forwarding Ruleset Resource ID. </summary>

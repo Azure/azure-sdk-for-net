@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Input of the custom domain to be validated for DNS mapping. </summary>
     public partial class FrontDoorValidateCustomDomainContent
     {
-        /// <summary> Initializes a new instance of FrontDoorValidateCustomDomainContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainContent"/>. </summary>
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hostName"/> is null. </exception>
         public FrontDoorValidateCustomDomainContent(string hostName)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Argument.AssertNotNull(hostName, nameof(hostName));
 
             HostName = hostName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainContent"/>. </summary>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorValidateCustomDomainContent(string hostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HostName = hostName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorValidateCustomDomainContent"/> for deserialization. </summary>
+        internal FrontDoorValidateCustomDomainContent()
+        {
         }
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>

@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> An incoming relationship. </summary>
     public partial class IncomingRelationship
     {
-        /// <summary> Initializes a new instance of IncomingRelationship. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IncomingRelationship"/>. </summary>
         internal IncomingRelationship()
         {
         }
 
-        /// <summary> Initializes a new instance of IncomingRelationship. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncomingRelationship"/>. </summary>
         /// <param name="relationshipId"> A user-provided string representing the id of this relationship, unique in the context of the source digital twin, i.e. sourceId + relationshipId is unique in the context of the service. </param>
         /// <param name="sourceId"> The id of the source digital twin. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>
         /// <param name="relationshipLink"> Link to the relationship, to be used for deletion. </param>
-        internal IncomingRelationship(string relationshipId, string sourceId, string relationshipName, string relationshipLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IncomingRelationship(string relationshipId, string sourceId, string relationshipName, string relationshipLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RelationshipId = relationshipId;
             SourceId = sourceId;
             RelationshipName = relationshipName;
             RelationshipLink = relationshipLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A user-provided string representing the id of this relationship, unique in the context of the source digital twin, i.e. sourceId + relationshipId is unique in the context of the service. </summary>
