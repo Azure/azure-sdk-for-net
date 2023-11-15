@@ -367,11 +367,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var activity = CreateTestActivity(tagObjects);
             activityTagsProcessor.CategorizeTags(activity);
 
-            var result = doubleArray.ToCommaDelimitedString(cultureInfo);
-
-            Assert.NotEqual("1.1,2.2,3.3", result);
+            // Asserting Culture Behavior
+            Assert.NotEqual("1.1,2.2,3.3", doubleArray.ToCommaDelimitedString(cultureInfo));
             Assert.NotEqual("123.45", doubleValue.ToString(cultureInfo));
 
+            // Asserting CultureInvariant Behavior
             Assert.Equal("1.1,2.2,3.3", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "doubleArray"));
             Assert.Equal("123.45", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "double"));
 
