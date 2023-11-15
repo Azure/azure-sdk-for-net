@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DocumentEntities. </summary>
     internal partial class DocumentEntities
     {
-        /// <summary> Initializes a new instance of DocumentEntities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
@@ -31,17 +34,24 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentEntities(string id, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentEntities(string id, IReadOnlyList<Entity> entities, IReadOnlyList<TextAnalyticsWarning> warnings, DocumentStatistics statistics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Entities = entities;
             Warnings = warnings;
             Statistics = statistics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentEntities"/> for deserialization. </summary>
+        internal DocumentEntities()
+        {
         }
 
         /// <summary> Unique, non-empty document identifier. </summary>

@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeComputeProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeComputeProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeComputeProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SynapseIntegrationRuntimeComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SynapseIntegrationRuntimeComputeProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SynapseIntegrationRuntimeComputeProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -62,8 +71,22 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static SynapseIntegrationRuntimeComputeProperties DeserializeSynapseIntegrationRuntimeComputeProperties(JsonElement element)
+        SynapseIntegrationRuntimeComputeProperties IJsonModel<SynapseIntegrationRuntimeComputeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseIntegrationRuntimeComputeProperties(document.RootElement, options);
+        }
+
+        internal static SynapseIntegrationRuntimeComputeProperties DeserializeSynapseIntegrationRuntimeComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -133,5 +156,30 @@ namespace Azure.ResourceManager.Synapse.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseIntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseIntegrationRuntimeComputeProperties IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseIntegrationRuntimeComputeProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

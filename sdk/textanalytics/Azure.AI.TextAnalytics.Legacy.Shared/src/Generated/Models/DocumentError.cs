@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
@@ -13,7 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DocumentError. </summary>
     internal partial class DocumentError
     {
-        /// <summary> Initializes a new instance of DocumentError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentError"/>. </summary>
         /// <param name="id"> Document Id. </param>
         /// <param name="error"> Document Error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="error"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.AI.TextAnalytics.Legacy
 
             Id = id;
             Error = error;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentError"/>. </summary>
+        /// <param name="id"> Document Id. </param>
+        /// <param name="error"> Document Error. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentError(string id, TextAnalyticsError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentError"/> for deserialization. </summary>
+        internal DocumentError()
+        {
         }
 
         /// <summary> Document Id. </summary>

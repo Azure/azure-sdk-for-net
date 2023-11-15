@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,7 +15,10 @@ namespace Azure.AI.Translation.Document
     /// <summary> Document Status Response. </summary>
     public partial class DocumentStatusResult
     {
-        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
@@ -38,7 +42,7 @@ namespace Azure.AI.Translation.Document
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
         /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
@@ -49,7 +53,8 @@ namespace Azure.AI.Translation.Document
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
         /// <param name="charactersCharged"> Character charged by the API. </param>
-        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, JsonElement error, float progress, string id, long charactersCharged)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentStatusResult(Uri translatedDocumentUri, Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, JsonElement error, float progress, string id, long charactersCharged, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TranslatedDocumentUri = translatedDocumentUri;
             SourceDocumentUri = sourceDocumentUri;
@@ -61,6 +66,12 @@ namespace Azure.AI.Translation.Document
             Progress = progress;
             Id = id;
             CharactersCharged = charactersCharged;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/> for deserialization. </summary>
+        internal DocumentStatusResult()
+        {
         }
     }
 }

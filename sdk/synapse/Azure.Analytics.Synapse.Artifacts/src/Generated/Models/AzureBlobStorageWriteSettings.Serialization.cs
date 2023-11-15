@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureBlobStorageWriteSettingsConverter))]
-    public partial class AzureBlobStorageWriteSettings : IUtf8JsonSerializable
+    public partial class AzureBlobStorageWriteSettings : IUtf8JsonSerializable, IJsonModel<AzureBlobStorageWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobStorageWriteSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureBlobStorageWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureBlobStorageWriteSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureBlobStorageWriteSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BlockSizeInMB))
             {
@@ -44,8 +53,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureBlobStorageWriteSettings DeserializeAzureBlobStorageWriteSettings(JsonElement element)
+        AzureBlobStorageWriteSettings IJsonModel<AzureBlobStorageWriteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureBlobStorageWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureBlobStorageWriteSettings(document.RootElement, options);
+        }
+
+        internal static AzureBlobStorageWriteSettings DeserializeAzureBlobStorageWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +118,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureBlobStorageWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, blockSizeInMB.Value);
         }
+
+        BinaryData IPersistableModel<AzureBlobStorageWriteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureBlobStorageWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureBlobStorageWriteSettings IPersistableModel<AzureBlobStorageWriteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureBlobStorageWriteSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureBlobStorageWriteSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureBlobStorageWriteSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureBlobStorageWriteSettingsConverter : JsonConverter<AzureBlobStorageWriteSettings>
         {

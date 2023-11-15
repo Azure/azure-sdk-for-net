@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseRestorePointData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseRestorePointData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorePointData"/>. </summary>
         public SynapseRestorePointData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,13 +37,15 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="earliestRestoreOn"> The earliest time to which this database can be restored. </param>
         /// <param name="restorePointCreationOn"> The time the backup was taken. </param>
         /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
-        internal SynapseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseRestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreationOn, string restorePointLabel) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseRestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreationOn, string restorePointLabel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             RestorePointType = restorePointType;
             EarliestRestoreOn = earliestRestoreOn;
             RestorePointCreationOn = restorePointCreationOn;
             RestorePointLabel = restorePointLabel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource location. </summary>

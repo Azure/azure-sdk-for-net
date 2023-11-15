@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class EndpointBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownEndpointBase))]
+    public partial class EndpointBase : IUtf8JsonSerializable, IJsonModel<EndpointBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointBase>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EndpointBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EndpointBase>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EndpointBase>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
@@ -24,11 +35,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EndpointBase DeserializeEndpointBase(JsonElement element)
+        EndpointBase IJsonModel<EndpointBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEndpointBase(document.RootElement, options);
+        }
+
+        internal static EndpointBase DeserializeEndpointBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,5 +83,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             return UnknownEndpointBase.DeserializeUnknownEndpointBase(element);
         }
+
+        BinaryData IPersistableModel<EndpointBase>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointBase)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EndpointBase IPersistableModel<EndpointBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EndpointBase)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEndpointBase(document.RootElement, options);
+        }
+
+        string IPersistableModel<EndpointBase>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

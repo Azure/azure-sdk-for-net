@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Run notebook parameter. </summary>
     public partial class RunNotebookParameter
     {
-        /// <summary> Initializes a new instance of RunNotebookParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookParameter"/>. </summary>
         public RunNotebookParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of RunNotebookParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookParameter"/>. </summary>
         /// <param name="type"> Parameter type. </param>
         /// <param name="value"> Parameter value. </param>
-        internal RunNotebookParameter(string type, object value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookParameter(string type, object value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Parameter type. </summary>

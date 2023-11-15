@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseSqlPoolBlobAuditingPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSqlPoolBlobAuditingPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolBlobAuditingPolicyData"/>. </summary>
         public SynapseSqlPoolBlobAuditingPolicyData()
         {
             AuditActionsAndGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -110,7 +113,8 @@ namespace Azure.ResourceManager.Synapse
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         ///
         /// </param>
-        internal SynapseSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             State = state;
@@ -121,6 +125,7 @@ namespace Azure.ResourceManager.Synapse
             StorageAccountSubscriptionId = storageAccountSubscriptionId;
             IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUse;
             IsAzureMonitorTargetEnabled = isAzureMonitorTargetEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource kind. </summary>

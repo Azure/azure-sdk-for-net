@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Hub setting list. </summary>
     internal partial class WebPubSubHubList
     {
-        /// <summary> Initializes a new instance of WebPubSubHubList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubList"/>. </summary>
         internal WebPubSubHubList()
         {
             Value = new ChangeTrackingList<WebPubSubHubData>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubHubList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubHubList"/>. </summary>
         /// <param name="value"> List of hub settings to this resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal WebPubSubHubList(IReadOnlyList<WebPubSubHubData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubHubList(IReadOnlyList<WebPubSubHubData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of hub settings to this resource. </summary>

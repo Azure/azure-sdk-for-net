@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,14 +16,17 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ResourceData
     {
-        /// <summary> Initializes a new instance of ResponseMessageEnvelopeRemotePrivateEndpointConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResponseMessageEnvelopeRemotePrivateEndpointConnection"/>. </summary>
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResponseMessageEnvelopeRemotePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResponseMessageEnvelopeRemotePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Azure-AsyncOperation Error info. </param>
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
             Error = error;
             Identity = identity;
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>

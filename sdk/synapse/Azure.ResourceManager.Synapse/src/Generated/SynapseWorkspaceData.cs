@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseWorkspaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SynapseWorkspaceData(AzureLocation location) : base(location)
         {
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Synapse
             Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,7 +61,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="settings"> Workspace settings. </param>
         /// <param name="isAadOnlyAuthenticationEnabled"> Enable or Disable AzureADOnlyAuthentication on All Workspace subresource. </param>
         /// <param name="isTrustedServiceBypassEnabled"> Is trustedServiceBypassEnabled for the workspace. </param>
-        internal SynapseWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections, SynapseEncryptionDetails encryption, Guid? workspaceUid, IReadOnlyDictionary<string, BinaryData> extraProperties, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, ResourceIdentifier adlaResourceId, WorkspacePublicNetworkAccess? publicNetworkAccess, CspWorkspaceAdminProperties cspWorkspaceAdminProperties, IReadOnlyDictionary<string, BinaryData> settings, bool? isAadOnlyAuthenticationEnabled, bool? isTrustedServiceBypassEnabled) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections, SynapseEncryptionDetails encryption, Guid? workspaceUid, IReadOnlyDictionary<string, BinaryData> extraProperties, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, ResourceIdentifier adlaResourceId, WorkspacePublicNetworkAccess? publicNetworkAccess, CspWorkspaceAdminProperties cspWorkspaceAdminProperties, IReadOnlyDictionary<string, BinaryData> settings, bool? isAadOnlyAuthenticationEnabled, bool? isTrustedServiceBypassEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -82,6 +86,12 @@ namespace Azure.ResourceManager.Synapse
             Settings = settings;
             IsAadOnlyAuthenticationEnabled = isAadOnlyAuthenticationEnabled;
             IsTrustedServiceBypassEnabled = isTrustedServiceBypassEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspaceData"/> for deserialization. </summary>
+        internal SynapseWorkspaceData()
+        {
         }
 
         /// <summary> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </summary>

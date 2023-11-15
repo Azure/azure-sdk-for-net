@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class ThreeTierCustomResourceNames
     {
-        /// <summary> Initializes a new instance of ThreeTierCustomResourceNames. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreeTierCustomResourceNames"/>. </summary>
         protected ThreeTierCustomResourceNames()
         {
         }
 
-        /// <summary> Initializes a new instance of ThreeTierCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreeTierCustomResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
-        internal ThreeTierCustomResourceNames(SapNamingPatternType namingPatternType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreeTierCustomResourceNames(SapNamingPatternType namingPatternType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NamingPatternType = namingPatternType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The pattern type to be used for resource naming. </summary>

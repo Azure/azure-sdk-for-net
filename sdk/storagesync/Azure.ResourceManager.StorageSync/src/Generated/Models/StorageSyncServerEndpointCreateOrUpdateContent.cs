@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> The parameters used when creating a server endpoint. </summary>
     public partial class StorageSyncServerEndpointCreateOrUpdateContent : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointCreateOrUpdateContent"/>. </summary>
         public StorageSyncServerEndpointCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSyncServerEndpointCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncServerEndpointCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +39,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="initialDownloadPolicy"> Policy for how namespace and files are recalled during FastDr. </param>
         /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
-        internal StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, StorageSyncFeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverLocalPath, StorageSyncFeatureStatus? cloudTiering, int? volumeFreeSpacePercent, int? tierFilesOlderThanDays, string friendlyName, ResourceIdentifier serverResourceId, StorageSyncFeatureStatus? offlineDataTransfer, string offlineDataTransferShareName, InitialDownloadPolicy? initialDownloadPolicy, LocalCacheMode? localCacheMode, InitialUploadPolicy? initialUploadPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServerLocalPath = serverLocalPath;
             CloudTiering = cloudTiering;
@@ -47,6 +53,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             InitialDownloadPolicy = initialDownloadPolicy;
             LocalCacheMode = localCacheMode;
             InitialUploadPolicy = initialUploadPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Server Local path. </summary>

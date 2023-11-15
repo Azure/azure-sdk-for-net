@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StorageSync;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Array of RegisteredServer. </summary>
     internal partial class RegisteredServerArray
     {
-        /// <summary> Initializes a new instance of RegisteredServerArray. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RegisteredServerArray"/>. </summary>
         internal RegisteredServerArray()
         {
             Value = new ChangeTrackingList<StorageSyncRegisteredServerData>();
         }
 
-        /// <summary> Initializes a new instance of RegisteredServerArray. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegisteredServerArray"/>. </summary>
         /// <param name="value"> Collection of Registered Server. </param>
-        internal RegisteredServerArray(IReadOnlyList<StorageSyncRegisteredServerData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegisteredServerArray(IReadOnlyList<StorageSyncRegisteredServerData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of Registered Server. </summary>

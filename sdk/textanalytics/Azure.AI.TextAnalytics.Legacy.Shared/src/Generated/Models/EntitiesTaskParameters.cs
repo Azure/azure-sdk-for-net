@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
@@ -12,9 +14,25 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The EntitiesTaskParameters. </summary>
     internal partial class EntitiesTaskParameters
     {
-        /// <summary> Initializes a new instance of EntitiesTaskParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskParameters"/>. </summary>
         public EntitiesTaskParameters()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EntitiesTaskParameters"/>. </summary>
+        /// <param name="modelVersion"></param>
+        /// <param name="loggingOptOut"></param>
+        /// <param name="stringIndexType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EntitiesTaskParameters(string modelVersion, bool? loggingOptOut, StringIndexType? stringIndexType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ModelVersion = modelVersion;
+            LoggingOptOut = loggingOptOut;
+            StringIndexType = stringIndexType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the model version. </summary>

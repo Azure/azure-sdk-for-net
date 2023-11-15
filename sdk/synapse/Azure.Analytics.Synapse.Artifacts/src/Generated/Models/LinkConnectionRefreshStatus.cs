@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The LinkConnectionRefreshStatus. </summary>
     public partial class LinkConnectionRefreshStatus
     {
-        /// <summary> Initializes a new instance of LinkConnectionRefreshStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionRefreshStatus"/>. </summary>
         internal LinkConnectionRefreshStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionRefreshStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionRefreshStatus"/>. </summary>
         /// <param name="refreshStatus"> Link connection refresh status. </param>
         /// <param name="errorMessage"> Link connection refresh error message. </param>
-        internal LinkConnectionRefreshStatus(string refreshStatus, string errorMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkConnectionRefreshStatus(string refreshStatus, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RefreshStatus = refreshStatus;
             ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Link connection refresh status. </summary>

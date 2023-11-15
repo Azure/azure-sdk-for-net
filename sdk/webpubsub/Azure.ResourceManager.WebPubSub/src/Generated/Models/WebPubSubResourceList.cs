@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.WebPubSub;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Object that includes an array of resources and a possible link for next set. </summary>
     internal partial class WebPubSubResourceList
     {
-        /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubResourceList"/>. </summary>
         internal WebPubSubResourceList()
         {
             Value = new ChangeTrackingList<WebPubSubData>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubResourceList"/>. </summary>
         /// <param name="value"> List of the resources. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal WebPubSubResourceList(IReadOnlyList<WebPubSubData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubResourceList(IReadOnlyList<WebPubSubData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of the resources. </summary>

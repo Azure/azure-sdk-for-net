@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> The billing information of the resource. </summary>
     public partial class BillingInfoSku
     {
-        /// <summary> Initializes a new instance of BillingInfoSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingInfoSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of BillingInfoSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInfoSku"/>. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         ///
@@ -47,13 +51,20 @@ namespace Azure.ResourceManager.WebPubSub.Models
         ///     Free: 1
         ///     Standard: 1,2,5,10,20,50,100
         /// </param>
-        internal BillingInfoSku(string name, WebPubSubSkuTier? tier, string size, string family, int? capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingInfoSku(string name, WebPubSubSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             Size = size;
             Family = family;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingInfoSku"/> for deserialization. </summary>
+        internal BillingInfoSku()
+        {
         }
 
         /// <summary>

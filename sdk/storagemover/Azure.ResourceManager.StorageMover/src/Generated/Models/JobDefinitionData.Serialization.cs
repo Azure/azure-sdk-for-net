@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,11 +16,41 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class JobDefinitionData : IUtf8JsonSerializable
+    public partial class JobDefinitionData : IUtf8JsonSerializable, IJsonModel<JobDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobDefinitionData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<JobDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<JobDefinitionData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<JobDefinitionData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -28,6 +62,14 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteStringValue(CopyMode.ToString());
             writer.WritePropertyName("sourceName"u8);
             writer.WriteStringValue(SourceName);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SourceResourceId))
+                {
+                    writer.WritePropertyName("sourceResourceId"u8);
+                    writer.WriteStringValue(SourceResourceId);
+                }
+            }
             if (Optional.IsDefined(SourceSubpath))
             {
                 writer.WritePropertyName("sourceSubpath"u8);
@@ -35,22 +77,99 @@ namespace Azure.ResourceManager.StorageMover
             }
             writer.WritePropertyName("targetName"u8);
             writer.WriteStringValue(TargetName);
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TargetResourceId))
+                {
+                    writer.WritePropertyName("targetResourceId"u8);
+                    writer.WriteStringValue(TargetResourceId);
+                }
+            }
             if (Optional.IsDefined(TargetSubpath))
             {
                 writer.WritePropertyName("targetSubpath"u8);
                 writer.WriteStringValue(TargetSubpath);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LatestJobRunName))
+                {
+                    writer.WritePropertyName("latestJobRunName"u8);
+                    writer.WriteStringValue(LatestJobRunName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LatestJobRunResourceId))
+                {
+                    writer.WritePropertyName("latestJobRunResourceId"u8);
+                    writer.WriteStringValue(LatestJobRunResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LatestJobRunStatus))
+                {
+                    writer.WritePropertyName("latestJobRunStatus"u8);
+                    writer.WriteStringValue(LatestJobRunStatus.Value.ToString());
+                }
             }
             if (Optional.IsDefined(AgentName))
             {
                 writer.WritePropertyName("agentName"u8);
                 writer.WriteStringValue(AgentName);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AgentResourceId))
+                {
+                    writer.WritePropertyName("agentResourceId"u8);
+                    writer.WriteStringValue(AgentResourceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobDefinitionData DeserializeJobDefinitionData(JsonElement element)
+        JobDefinitionData IJsonModel<JobDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobDefinitionData(document.RootElement, options);
+        }
+
+        internal static JobDefinitionData DeserializeJobDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +192,8 @@ namespace Azure.ResourceManager.StorageMover
             Optional<string> agentName = default;
             Optional<ResourceIdentifier> agentResourceId = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -205,8 +326,38 @@ namespace Azure.ResourceManager.StorageMover
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobDefinitionData(id, name, type, systemData.Value, description.Value, copyMode, sourceName, sourceResourceId.Value, sourceSubpath.Value, targetName, targetResourceId.Value, targetSubpath.Value, latestJobRunName.Value, latestJobRunResourceId.Value, Optional.ToNullable(latestJobRunStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JobDefinitionData(id, name, type, systemData.Value, description.Value, copyMode, sourceName, sourceResourceId.Value, sourceSubpath.Value, targetName, targetResourceId.Value, targetSubpath.Value, latestJobRunName.Value, latestJobRunResourceId.Value, Optional.ToNullable(latestJobRunStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JobDefinitionData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        JobDefinitionData IPersistableModel<JobDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(JobDefinitionData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeJobDefinitionData(document.RootElement, options);
+        }
+
+        string IPersistableModel<JobDefinitionData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

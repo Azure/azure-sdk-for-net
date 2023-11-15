@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Describes The zonal capabilities of a SKU. </summary>
     public partial class StoragePoolSkuZoneDetails
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuZoneDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuZoneDetails"/>. </summary>
         internal StoragePoolSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<StoragePoolSkuCapability>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuZoneDetails"/>. </summary>
         /// <param name="name"> The set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
-        internal StoragePoolSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<StoragePoolSkuCapability> capabilities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePoolSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<StoragePoolSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capabilities = capabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The set of zones that the SKU is available in with the specified capabilities. </summary>

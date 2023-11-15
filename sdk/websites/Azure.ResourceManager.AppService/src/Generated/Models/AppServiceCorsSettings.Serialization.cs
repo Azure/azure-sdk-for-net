@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCorsSettings : IUtf8JsonSerializable
+    public partial class AppServiceCorsSettings : IUtf8JsonSerializable, IJsonModel<AppServiceCorsSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCorsSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppServiceCorsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppServiceCorsSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppServiceCorsSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedOrigins))
             {
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("supportCredentials"u8);
                 writer.WriteBooleanValue(IsCredentialsSupported.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceCorsSettings DeserializeAppServiceCorsSettings(JsonElement element)
+        AppServiceCorsSettings IJsonModel<AppServiceCorsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCorsSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceCorsSettings(document.RootElement, options);
+        }
+
+        internal static AppServiceCorsSettings DeserializeAppServiceCorsSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> allowedOrigins = default;
             Optional<bool> supportCredentials = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedOrigins"u8))
@@ -67,8 +108,38 @@ namespace Azure.ResourceManager.AppService.Models
                     supportCredentials = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceCorsSettings(Optional.ToList(allowedOrigins), Optional.ToNullable(supportCredentials));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceCorsSettings(Optional.ToList(allowedOrigins), Optional.ToNullable(supportCredentials), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceCorsSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCorsSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceCorsSettings IPersistableModel<AppServiceCorsSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceCorsSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceCorsSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppServiceCorsSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

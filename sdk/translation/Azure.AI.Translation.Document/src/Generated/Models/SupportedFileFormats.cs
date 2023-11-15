@@ -16,7 +16,10 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> Base type for List return in our api. </summary>
     internal partial class SupportedFileFormats
     {
-        /// <summary> Initializes a new instance of SupportedFileFormats. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
         /// <param name="value"> list of objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value)
@@ -26,11 +29,18 @@ namespace Azure.AI.Translation.Document.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SupportedFileFormats. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
         /// <param name="value"> list of objects. </param>
-        internal SupportedFileFormats(IReadOnlyList<DocumentTranslationFileFormat> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedFileFormats(IReadOnlyList<DocumentTranslationFileFormat> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/> for deserialization. </summary>
+        internal SupportedFileFormats()
+        {
         }
 
         /// <summary> list of objects. </summary>

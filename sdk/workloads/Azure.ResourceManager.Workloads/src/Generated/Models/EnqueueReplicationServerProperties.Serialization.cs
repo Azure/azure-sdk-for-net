@@ -5,21 +5,117 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class EnqueueReplicationServerProperties : IUtf8JsonSerializable
+    public partial class EnqueueReplicationServerProperties : IUtf8JsonSerializable, IJsonModel<EnqueueReplicationServerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnqueueReplicationServerProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<EnqueueReplicationServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<EnqueueReplicationServerProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<EnqueueReplicationServerProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErsVersion))
+                {
+                    writer.WritePropertyName("ersVersion"u8);
+                    writer.WriteStringValue(ErsVersion.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InstanceNo))
+                {
+                    writer.WritePropertyName("instanceNo"u8);
+                    writer.WriteStringValue(InstanceNo);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Hostname))
+                {
+                    writer.WritePropertyName("hostname"u8);
+                    writer.WriteStringValue(Hostname);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KernelVersion))
+                {
+                    writer.WritePropertyName("kernelVersion"u8);
+                    writer.WriteStringValue(KernelVersion);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KernelPatch))
+                {
+                    writer.WritePropertyName("kernelPatch"u8);
+                    writer.WriteStringValue(KernelPatch);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IPAddress))
+                {
+                    writer.WritePropertyName("ipAddress"u8);
+                    writer.WriteStringValue(IPAddress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Health))
+                {
+                    writer.WritePropertyName("health"u8);
+                    writer.WriteStringValue(Health.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EnqueueReplicationServerProperties DeserializeEnqueueReplicationServerProperties(JsonElement element)
+        EnqueueReplicationServerProperties IJsonModel<EnqueueReplicationServerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEnqueueReplicationServerProperties(document.RootElement, options);
+        }
+
+        internal static EnqueueReplicationServerProperties DeserializeEnqueueReplicationServerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +127,8 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<string> kernelPatch = default;
             Optional<string> ipAddress = default;
             Optional<SapHealthState> health = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ersVersion"u8))
@@ -76,8 +174,38 @@ namespace Azure.ResourceManager.Workloads.Models
                     health = new SapHealthState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EnqueueReplicationServerProperties(Optional.ToNullable(ersVersion), instanceNo.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(health));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EnqueueReplicationServerProperties(Optional.ToNullable(ersVersion), instanceNo.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(health), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EnqueueReplicationServerProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        EnqueueReplicationServerProperties IPersistableModel<EnqueueReplicationServerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeEnqueueReplicationServerProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<EnqueueReplicationServerProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

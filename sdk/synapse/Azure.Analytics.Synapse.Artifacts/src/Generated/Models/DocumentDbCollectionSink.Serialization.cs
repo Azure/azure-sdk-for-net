@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(DocumentDbCollectionSinkConverter))]
-    public partial class DocumentDbCollectionSink : IUtf8JsonSerializable
+    public partial class DocumentDbCollectionSink : IUtf8JsonSerializable, IJsonModel<DocumentDbCollectionSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentDbCollectionSink>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DocumentDbCollectionSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DocumentDbCollectionSink>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DocumentDbCollectionSink>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NestingSeparator))
             {
@@ -64,8 +73,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static DocumentDbCollectionSink DeserializeDocumentDbCollectionSink(JsonElement element)
+        DocumentDbCollectionSink IJsonModel<DocumentDbCollectionSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentDbCollectionSink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentDbCollectionSink(document.RootElement, options);
+        }
+
+        internal static DocumentDbCollectionSink DeserializeDocumentDbCollectionSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +178,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DocumentDbCollectionSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, nestingSeparator.Value, writeBehavior.Value);
         }
+
+        BinaryData IPersistableModel<DocumentDbCollectionSink>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentDbCollectionSink)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DocumentDbCollectionSink IPersistableModel<DocumentDbCollectionSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DocumentDbCollectionSink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDocumentDbCollectionSink(document.RootElement, options);
+        }
+
+        string IPersistableModel<DocumentDbCollectionSink>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class DocumentDbCollectionSinkConverter : JsonConverter<DocumentDbCollectionSink>
         {

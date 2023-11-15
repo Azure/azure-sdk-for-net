@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -16,13 +17,16 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A remote private endpoint connection. </summary>
     public partial class RemotePrivateEndpointConnection : ResourceData
     {
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnection"/>. </summary>
         public RemotePrivateEndpointConnection()
         {
             IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of RemotePrivateEndpointConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +36,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<IPAddress> ipAddresses, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, SubResource privateEndpoint, PrivateLinkConnectionState privateLinkServiceConnectionState, IList<IPAddress> ipAddresses, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             IPAddresses = ipAddresses;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the provisioning state. </summary>

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of Kudu process information elements. </summary>
     internal partial class ProcessInfoListResult
     {
-        /// <summary> Initializes a new instance of ProcessInfoListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProcessInfoListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ProcessInfoListResult(IEnumerable<ProcessInfoData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ProcessInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessInfoListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal ProcessInfoListResult(IReadOnlyList<ProcessInfoData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProcessInfoListResult(IReadOnlyList<ProcessInfoData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProcessInfoListResult"/> for deserialization. </summary>
+        internal ProcessInfoListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

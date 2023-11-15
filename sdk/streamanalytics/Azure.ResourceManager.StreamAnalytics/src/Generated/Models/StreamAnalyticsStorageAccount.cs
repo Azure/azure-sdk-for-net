@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The properties that are associated with an Azure Storage account. </summary>
     public partial class StreamAnalyticsStorageAccount
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsStorageAccount. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsStorageAccount"/>. </summary>
         public StreamAnalyticsStorageAccount()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsStorageAccount. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsStorageAccount"/>. </summary>
         /// <param name="accountName"> The name of the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountKey"> The account key for the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal StreamAnalyticsStorageAccount(string accountName, string accountKey, StreamAnalyticsAuthenticationMode? authenticationMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsStorageAccount(string accountName, string accountKey, StreamAnalyticsAuthenticationMode? authenticationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountName = accountName;
             AccountKey = accountKey;
             AuthenticationMode = authenticationMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the Azure Storage account. Required on PUT (CreateOrReplace) requests. </summary>

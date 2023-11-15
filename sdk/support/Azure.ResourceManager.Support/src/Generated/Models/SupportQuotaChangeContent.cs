@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> This property is required for providing the region and new quota limits. </summary>
     public partial class SupportQuotaChangeContent
     {
-        /// <summary> Initializes a new instance of SupportQuotaChangeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportQuotaChangeContent"/>. </summary>
         public SupportQuotaChangeContent()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportQuotaChangeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportQuotaChangeContent"/>. </summary>
         /// <param name="region"> Region for which the quota increase request is being made. </param>
         /// <param name="payload"> Payload of the quota increase request. </param>
-        internal SupportQuotaChangeContent(string region, string payload)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportQuotaChangeContent(string region, string payload, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Region = region;
             Payload = payload;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Region for which the quota increase request is being made. </summary>

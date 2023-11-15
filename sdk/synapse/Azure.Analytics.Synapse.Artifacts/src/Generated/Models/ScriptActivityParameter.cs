@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Parameters of a script block. </summary>
     public partial class ScriptActivityParameter
     {
-        /// <summary> Initializes a new instance of ScriptActivityParameter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityParameter"/>. </summary>
         public ScriptActivityParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityParameter"/>. </summary>
         /// <param name="name"> The name of the parameter. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of the parameter. </param>
         /// <param name="value"> The value of the parameter. </param>
         /// <param name="direction"> The direction of the parameter. </param>
         /// <param name="size"> The size of the output direction parameter. </param>
-        internal ScriptActivityParameter(object name, ScriptActivityParameterType? type, object value, ScriptActivityParameterDirection? direction, int? size)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActivityParameter(object name, ScriptActivityParameterType? type, object value, ScriptActivityParameterDirection? direction, int? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
             Value = value;
             Direction = direction;
             Size = size;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the parameter. Type: string (or Expression with resultType string). </summary>

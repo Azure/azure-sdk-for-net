@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Class  representing the video's rate control. </summary>
     public partial class RateControl
     {
-        /// <summary> Initializes a new instance of RateControl. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RateControl"/>. </summary>
         public RateControl()
         {
         }
 
-        /// <summary> Initializes a new instance of RateControl. </summary>
+        /// <summary> Initializes a new instance of <see cref="RateControl"/>. </summary>
         /// <param name="bitRateLimit"> the maximum output bitrate in kbps. </param>
         /// <param name="encodingInterval"> Interval at which images are encoded and transmitted. </param>
         /// <param name="frameRateLimit"> Maximum output framerate in fps. </param>
         /// <param name="guaranteedFrameRate"> A value of true indicates that frame rate is a fixed value rather than an upper limit, and that the video encoder shall prioritize frame rate over all other adaptable configuration values such as bitrate. </param>
-        internal RateControl(float? bitRateLimit, float? encodingInterval, float? frameRateLimit, bool? guaranteedFrameRate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RateControl(float? bitRateLimit, float? encodingInterval, float? frameRateLimit, bool? guaranteedFrameRate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BitRateLimit = bitRateLimit;
             EncodingInterval = encodingInterval;
             FrameRateLimit = frameRateLimit;
             GuaranteedFrameRate = guaranteedFrameRate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the maximum output bitrate in kbps. </summary>

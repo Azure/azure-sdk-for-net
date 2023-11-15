@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The list of disk configuration for vmSku which are part of SAP deployment. </summary>
     public partial class SapDiskConfigurationsResult
     {
-        /// <summary> Initializes a new instance of SapDiskConfigurationsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsResult"/>. </summary>
         internal SapDiskConfigurationsResult()
         {
             VolumeConfigurations = new ChangeTrackingDictionary<string, SapDiskConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of SapDiskConfigurationsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapDiskConfigurationsResult"/>. </summary>
         /// <param name="volumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </param>
-        internal SapDiskConfigurationsResult(IReadOnlyDictionary<string, SapDiskConfiguration> volumeConfigurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SapDiskConfigurationsResult(IReadOnlyDictionary<string, SapDiskConfiguration> volumeConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VolumeConfigurations = volumeConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </summary>

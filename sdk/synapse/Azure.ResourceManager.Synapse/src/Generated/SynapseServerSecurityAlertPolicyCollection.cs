@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseServerSecurityAlertPolicyResource(Client, SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(e)), _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyClientDiagnostics, Pipeline, "SynapseServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SynapseServerSecurityAlertPolicyResource(Client, SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(e)), _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyClientDiagnostics, Pipeline, "SynapseServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseServerSecurityAlertPolicyResource(Client, SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(e)), _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyClientDiagnostics, Pipeline, "SynapseServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SynapseServerSecurityAlertPolicyResource(Client, SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(e)), _synapseServerSecurityAlertPolicyWorkspaceManagedSqlServerSecurityAlertPolicyClientDiagnostics, Pipeline, "SynapseServerSecurityAlertPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.VoiceServices.Models
     /// <summary> The response of a CommunicationsGateway list operation. </summary>
     internal partial class VoiceServicesCommunicationsGatewayListResult
     {
-        /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayListResult"/>. </summary>
         /// <param name="value"> The CommunicationsGateway items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VoiceServicesCommunicationsGatewayListResult(IEnumerable<VoiceServicesCommunicationsGatewayData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.VoiceServices.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VoiceServicesCommunicationsGatewayListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayListResult"/>. </summary>
         /// <param name="value"> The CommunicationsGateway items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal VoiceServicesCommunicationsGatewayListResult(IReadOnlyList<VoiceServicesCommunicationsGatewayData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VoiceServicesCommunicationsGatewayListResult(IReadOnlyList<VoiceServicesCommunicationsGatewayData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VoiceServicesCommunicationsGatewayListResult"/> for deserialization. </summary>
+        internal VoiceServicesCommunicationsGatewayListResult()
+        {
         }
 
         /// <summary> The CommunicationsGateway items on this page. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
@@ -13,7 +14,10 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The QuerySerialization. </summary>
     internal partial class QuerySerialization
     {
-        /// <summary> Initializes a new instance of QuerySerialization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuerySerialization"/>. </summary>
         /// <param name="format"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public QuerySerialization(QueryFormat format)
@@ -21,6 +25,20 @@ namespace Azure.Storage.Blobs.Models
             Argument.AssertNotNull(format, nameof(format));
 
             Format = format;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuerySerialization"/>. </summary>
+        /// <param name="format"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuerySerialization(QueryFormat format, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Format = format;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuerySerialization"/> for deserialization. </summary>
+        internal QuerySerialization()
+        {
         }
 
         /// <summary> Gets the format. </summary>

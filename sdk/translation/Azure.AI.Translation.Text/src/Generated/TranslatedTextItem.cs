@@ -15,7 +15,10 @@ namespace Azure.AI.Translation.Text
     /// <summary> Element containing the translated text. </summary>
     public partial class TranslatedTextItem
     {
-        /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/>. </summary>
         /// <param name="translations">
         /// An array of translation results. The size of the array matches the number of target
         /// languages specified through the to query parameter.
@@ -26,9 +29,10 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(translations, nameof(translations));
 
             Translations = translations.ToList();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="translations">
         /// An array of translation results. The size of the array matches the number of target
@@ -40,11 +44,18 @@ namespace Azure.AI.Translation.Text
         /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
         /// converted into Arab script.
         /// </param>
-        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<Translation> translations, SourceText sourceText)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslatedTextItem(DetectedLanguage detectedLanguage, IReadOnlyList<Translation> translations, SourceText sourceText, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DetectedLanguage = detectedLanguage;
             Translations = translations;
             SourceText = sourceText;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslatedTextItem"/> for deserialization. </summary>
+        internal TranslatedTextItem()
+        {
         }
 
         /// <summary> The detectedLanguage property is only present in the result object when language auto-detection is requested. </summary>

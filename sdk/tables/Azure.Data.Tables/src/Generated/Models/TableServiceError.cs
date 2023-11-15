@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Data.Tables.Models
 {
     /// <summary> Table Service error. </summary>
     internal partial class TableServiceError
     {
-        /// <summary> Initializes a new instance of TableServiceError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableServiceError"/>. </summary>
         internal TableServiceError()
         {
         }
 
-        /// <summary> Initializes a new instance of TableServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableServiceError"/>. </summary>
         /// <param name="message"> The error message. </param>
-        internal TableServiceError(string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableServiceError(string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The error message. </summary>

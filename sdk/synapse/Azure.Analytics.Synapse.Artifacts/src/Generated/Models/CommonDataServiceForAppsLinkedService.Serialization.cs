@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(CommonDataServiceForAppsLinkedServiceConverter))]
-    public partial class CommonDataServiceForAppsLinkedService : IUtf8JsonSerializable
+    public partial class CommonDataServiceForAppsLinkedService : IUtf8JsonSerializable, IJsonModel<CommonDataServiceForAppsLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonDataServiceForAppsLinkedService>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CommonDataServiceForAppsLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CommonDataServiceForAppsLinkedService>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CommonDataServiceForAppsLinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -122,8 +131,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static CommonDataServiceForAppsLinkedService DeserializeCommonDataServiceForAppsLinkedService(JsonElement element)
+        CommonDataServiceForAppsLinkedService IJsonModel<CommonDataServiceForAppsLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommonDataServiceForAppsLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonDataServiceForAppsLinkedService(document.RootElement, options);
+        }
+
+        internal static CommonDataServiceForAppsLinkedService DeserializeCommonDataServiceForAppsLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -320,6 +343,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CommonDataServiceForAppsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, encryptedCredential.Value);
         }
+
+        BinaryData IPersistableModel<CommonDataServiceForAppsLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommonDataServiceForAppsLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CommonDataServiceForAppsLinkedService IPersistableModel<CommonDataServiceForAppsLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommonDataServiceForAppsLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCommonDataServiceForAppsLinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<CommonDataServiceForAppsLinkedService>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class CommonDataServiceForAppsLinkedServiceConverter : JsonConverter<CommonDataServiceForAppsLinkedService>
         {

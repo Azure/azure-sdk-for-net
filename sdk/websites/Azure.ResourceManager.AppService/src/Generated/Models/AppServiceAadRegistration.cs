@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
     public partial class AppServiceAadRegistration
     {
-        /// <summary> Initializes a new instance of AppServiceAadRegistration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceAadRegistration"/>. </summary>
         public AppServiceAadRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceAadRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceAadRegistration"/>. </summary>
         /// <param name="openIdIssuer">
         /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.
         /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. https://login.microsoftonline.com/v2.0/{tenant-guid}/.
@@ -41,7 +47,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// An alternative to the client secret thumbprint, that is the issuer of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
         /// </param>
-        internal AppServiceAadRegistration(string openIdIssuer, string clientId, string clientSecretSettingName, string clientSecretCertificateThumbprintString, string clientSecretCertificateSubjectAlternativeName, string clientSecretCertificateIssuer)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceAadRegistration(string openIdIssuer, string clientId, string clientSecretSettingName, string clientSecretCertificateThumbprintString, string clientSecretCertificateSubjectAlternativeName, string clientSecretCertificateIssuer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OpenIdIssuer = openIdIssuer;
             ClientId = clientId;
@@ -49,6 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
             ClientSecretCertificateThumbprintString = clientSecretCertificateThumbprintString;
             ClientSecretCertificateSubjectAlternativeName = clientSecretCertificateSubjectAlternativeName;
             ClientSecretCertificateIssuer = clientSecretCertificateIssuer;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

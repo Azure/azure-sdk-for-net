@@ -5,16 +5,150 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class InstanceHitHighlights
+    internal partial class InstanceHitHighlights : IUtf8JsonSerializable, IJsonModel<InstanceHitHighlights>
     {
-        internal static InstanceHitHighlights DeserializeInstanceHitHighlights(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceHitHighlights>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<InstanceHitHighlights>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<InstanceHitHighlights>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<InstanceHitHighlights>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(TimeSeriesId))
+                {
+                    writer.WritePropertyName("timeSeriesId"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in TimeSeriesId)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TypeName))
+                {
+                    writer.WritePropertyName("typeName"u8);
+                    writer.WriteStringValue(TypeName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(HierarchyIds))
+                {
+                    writer.WritePropertyName("hierarchyIds"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in HierarchyIds)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(HierarchyNames))
+                {
+                    writer.WritePropertyName("hierarchyNames"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in HierarchyNames)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(InstanceFieldNames))
+                {
+                    writer.WritePropertyName("instanceFieldNames"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in InstanceFieldNames)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(InstanceFieldValues))
+                {
+                    writer.WritePropertyName("instanceFieldValues"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in InstanceFieldValues)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InstanceHitHighlights IJsonModel<InstanceHitHighlights>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceHitHighlights)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceHitHighlights(document.RootElement, options);
+        }
+
+        internal static InstanceHitHighlights DeserializeInstanceHitHighlights(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +161,8 @@ namespace Azure.IoT.TimeSeriesInsights
             Optional<IReadOnlyList<string>> hierarchyNames = default;
             Optional<IReadOnlyList<string>> instanceFieldNames = default;
             Optional<IReadOnlyList<string>> instanceFieldValues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeSeriesId"u8))
@@ -114,8 +250,38 @@ namespace Azure.IoT.TimeSeriesInsights
                     instanceFieldValues = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InstanceHitHighlights(Optional.ToList(timeSeriesId), typeName.Value, name.Value, description.Value, Optional.ToList(hierarchyIds), Optional.ToList(hierarchyNames), Optional.ToList(instanceFieldNames), Optional.ToList(instanceFieldValues));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InstanceHitHighlights(Optional.ToList(timeSeriesId), typeName.Value, name.Value, description.Value, Optional.ToList(hierarchyIds), Optional.ToList(hierarchyNames), Optional.ToList(instanceFieldNames), Optional.ToList(instanceFieldValues), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InstanceHitHighlights>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceHitHighlights)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        InstanceHitHighlights IPersistableModel<InstanceHitHighlights>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(InstanceHitHighlights)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeInstanceHitHighlights(document.RootElement, options);
+        }
+
+        string IPersistableModel<InstanceHitHighlights>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

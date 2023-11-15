@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A list of recommended sensitivity label update operations. </summary>
     public partial class SynapseRecommendedSensitivityLabelUpdateOperationListResult
     {
-        /// <summary> Initializes a new instance of SynapseRecommendedSensitivityLabelUpdateOperationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRecommendedSensitivityLabelUpdateOperationListResult"/>. </summary>
         public SynapseRecommendedSensitivityLabelUpdateOperationListResult()
         {
             Operations = new ChangeTrackingList<SynapseRecommendedSensitivityLabelUpdate>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRecommendedSensitivityLabelUpdateOperationListResult"/>. </summary>
+        /// <param name="operations"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseRecommendedSensitivityLabelUpdateOperationListResult(IList<SynapseRecommendedSensitivityLabelUpdate> operations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Operations = operations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the operations. </summary>

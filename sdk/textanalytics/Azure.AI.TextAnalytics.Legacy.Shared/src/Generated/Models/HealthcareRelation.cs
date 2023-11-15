@@ -16,7 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> Every relation is an entity graph of a certain relationType, where all entities are connected and have specific roles within the relation context. </summary>
     internal partial class HealthcareRelation
     {
-        /// <summary> Initializes a new instance of HealthcareRelation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelation"/>. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
@@ -28,13 +31,20 @@ namespace Azure.AI.TextAnalytics.Legacy
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of HealthcareRelation. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelation"/>. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </param>
         /// <param name="entities"> The entities in the relation. </param>
-        internal HealthcareRelation(RelationType relationType, IReadOnlyList<HealthcareRelationEntity> entities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareRelation(RelationType relationType, IReadOnlyList<HealthcareRelationEntity> entities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RelationType = relationType;
             Entities = entities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HealthcareRelation"/> for deserialization. </summary>
+        internal HealthcareRelation()
+        {
         }
 
         /// <summary> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </summary>

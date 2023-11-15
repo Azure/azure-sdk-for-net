@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Additional configuration for a data providers. </summary>
     public partial class DataProviderMetadata
     {
-        /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
         public DataProviderMetadata()
         {
             PropertyBag = new ChangeTrackingList<DataProviderKeyValuePair>();
         }
 
-        /// <summary> Initializes a new instance of DataProviderMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
-        internal DataProviderMetadata(string providerName, IReadOnlyList<DataProviderKeyValuePair> propertyBag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProviderMetadata(string providerName, IReadOnlyList<DataProviderKeyValuePair> propertyBag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderName = providerName;
             PropertyBag = propertyBag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the provider name. </summary>

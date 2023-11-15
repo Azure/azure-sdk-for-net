@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of the App Service plan scale options. </summary>
     public partial class AppServiceSkuCapacity
     {
-        /// <summary> Initializes a new instance of AppServiceSkuCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuCapacity"/>. </summary>
         public AppServiceSkuCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceSkuCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuCapacity"/>. </summary>
         /// <param name="minimum"> Minimum number of workers for this App Service plan SKU. </param>
         /// <param name="maximum"> Maximum number of workers for this App Service plan SKU. </param>
         /// <param name="elasticMaximum"> Maximum number of Elastic workers for this App Service plan SKU. </param>
         /// <param name="default"> Default number of workers for this App Service plan SKU. </param>
         /// <param name="scaleType"> Available scale configurations for an App Service plan. </param>
-        internal AppServiceSkuCapacity(int? minimum, int? maximum, int? elasticMaximum, int? @default, string scaleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceSkuCapacity(int? minimum, int? maximum, int? elasticMaximum, int? @default, string scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Minimum = minimum;
             Maximum = maximum;
             ElasticMaximum = elasticMaximum;
             Default = @default;
             ScaleType = scaleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Minimum number of workers for this App Service plan SKU. </summary>

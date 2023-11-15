@@ -19,14 +19,17 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseBigDataPoolInfoData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoData"/>. </summary>
         /// <param name="location"> The location. </param>
         public SynapseBigDataPoolInfoData(AzureLocation location) : base(location)
         {
             CustomLibraries = new ChangeTrackingList<BigDataPoolLibraryInfo>();
         }
 
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +55,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="nodeSize"> The level of compute power that each node in the Big Data pool has. </param>
         /// <param name="nodeSizeFamily"> The kind of nodes that the Big Data pool provides. </param>
         /// <param name="lastSucceededOn"> The time when the Big Data pool was updated successfully. </param>
-        internal SynapseBigDataPoolInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, BigDataPoolAutoScaleProperties autoScale, DateTimeOffset? createdOn, BigDataPoolAutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? isAutotuneEnabled, bool? isSessionLevelPackagesEnabled, int? cacheSize, SynapseDynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, BigDataPoolLibraryRequirements libraryRequirements, IList<BigDataPoolLibraryInfo> customLibraries, BigDataPoolSparkConfigProperties sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, BigDataPoolNodeSize? nodeSize, BigDataPoolNodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseBigDataPoolInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, BigDataPoolAutoScaleProperties autoScale, DateTimeOffset? createdOn, BigDataPoolAutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? isAutotuneEnabled, bool? isSessionLevelPackagesEnabled, int? cacheSize, SynapseDynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, BigDataPoolLibraryRequirements libraryRequirements, IList<BigDataPoolLibraryInfo> customLibraries, BigDataPoolSparkConfigProperties sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, BigDataPoolNodeSize? nodeSize, BigDataPoolNodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AutoScale = autoScale;
@@ -73,6 +77,12 @@ namespace Azure.ResourceManager.Synapse
             NodeSize = nodeSize;
             NodeSizeFamily = nodeSizeFamily;
             LastSucceededOn = lastSucceededOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseBigDataPoolInfoData"/> for deserialization. </summary>
+        internal SynapseBigDataPoolInfoData()
+        {
         }
 
         /// <summary> The state of the Big Data pool. </summary>

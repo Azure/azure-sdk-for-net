@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Network rule set. </summary>
     public partial class StorageAccountNetworkRuleSet
     {
-        /// <summary> Initializes a new instance of StorageAccountNetworkRuleSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNetworkRuleSet"/>. </summary>
         /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
         public StorageAccountNetworkRuleSet(StorageNetworkDefaultAction defaultAction)
         {
@@ -23,19 +27,26 @@ namespace Azure.ResourceManager.Storage.Models
             DefaultAction = defaultAction;
         }
 
-        /// <summary> Initializes a new instance of StorageAccountNetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNetworkRuleSet"/>. </summary>
         /// <param name="bypass"> Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, "Logging, Metrics"), or None to bypass none of those traffics. </param>
         /// <param name="resourceAccessRules"> Sets the resource access rules. </param>
         /// <param name="virtualNetworkRules"> Sets the virtual network rules. </param>
         /// <param name="ipRules"> Sets the IP ACL rules. </param>
         /// <param name="defaultAction"> Specifies the default action of allow or deny when no other rules match. </param>
-        internal StorageAccountNetworkRuleSet(StorageNetworkBypass? bypass, IList<StorageAccountResourceAccessRule> resourceAccessRules, IList<StorageAccountVirtualNetworkRule> virtualNetworkRules, IList<StorageAccountIPRule> ipRules, StorageNetworkDefaultAction defaultAction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountNetworkRuleSet(StorageNetworkBypass? bypass, IList<StorageAccountResourceAccessRule> resourceAccessRules, IList<StorageAccountVirtualNetworkRule> virtualNetworkRules, IList<StorageAccountIPRule> ipRules, StorageNetworkDefaultAction defaultAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Bypass = bypass;
             ResourceAccessRules = resourceAccessRules;
             VirtualNetworkRules = virtualNetworkRules;
             IPRules = ipRules;
             DefaultAction = defaultAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountNetworkRuleSet"/> for deserialization. </summary>
+        internal StorageAccountNetworkRuleSet()
+        {
         }
 
         /// <summary> Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Possible values are any combination of Logging|Metrics|AzureServices (For example, "Logging, Metrics"), or None to bypass none of those traffics. </summary>

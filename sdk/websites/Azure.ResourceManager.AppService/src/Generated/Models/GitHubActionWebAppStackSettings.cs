@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> GitHub Actions Web App stack settings. </summary>
     public partial class GitHubActionWebAppStackSettings
     {
-        /// <summary> Initializes a new instance of GitHubActionWebAppStackSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubActionWebAppStackSettings"/>. </summary>
         internal GitHubActionWebAppStackSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubActionWebAppStackSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubActionWebAppStackSettings"/>. </summary>
         /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="supportedVersion"> The minor version that is supported for GitHub Actions. </param>
-        internal GitHubActionWebAppStackSettings(bool? isSupported, string supportedVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubActionWebAppStackSettings(bool? isSupported, string supportedVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsSupported = isSupported;
             SupportedVersion = supportedVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,23 +15,28 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> AzureStorageInfo dictionary resource. </summary>
     public partial class AzureStoragePropertyDictionary : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureStoragePropertyDictionary. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureStoragePropertyDictionary"/>. </summary>
         public AzureStoragePropertyDictionary()
         {
             Properties = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
         }
 
-        /// <summary> Initializes a new instance of AzureStoragePropertyDictionary. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureStoragePropertyDictionary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Azure storage accounts. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AzureStoragePropertyDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AppServiceStorageAccessInfo> properties, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureStoragePropertyDictionary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, AppServiceStorageAccessInfo> properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure storage accounts. </summary>

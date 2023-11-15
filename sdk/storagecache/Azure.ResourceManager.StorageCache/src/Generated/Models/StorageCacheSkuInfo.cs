@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> SKU for the cache. </summary>
     internal partial class StorageCacheSkuInfo
     {
-        /// <summary> Initializes a new instance of StorageCacheSkuInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSkuInfo"/>. </summary>
         public StorageCacheSkuInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSkuInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSkuInfo"/>. </summary>
         /// <param name="name"> SKU name for this cache. </param>
-        internal StorageCacheSkuInfo(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheSkuInfo(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SKU name for this cache. </summary>

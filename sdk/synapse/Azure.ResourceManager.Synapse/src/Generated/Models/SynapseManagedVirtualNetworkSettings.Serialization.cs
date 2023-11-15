@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseManagedVirtualNetworkSettings : IUtf8JsonSerializable
+    public partial class SynapseManagedVirtualNetworkSettings : IUtf8JsonSerializable, IJsonModel<SynapseManagedVirtualNetworkSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseManagedVirtualNetworkSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SynapseManagedVirtualNetworkSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SynapseManagedVirtualNetworkSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SynapseManagedVirtualNetworkSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreventDataExfiltration))
             {
@@ -36,11 +46,40 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseManagedVirtualNetworkSettings DeserializeSynapseManagedVirtualNetworkSettings(JsonElement element)
+        SynapseManagedVirtualNetworkSettings IJsonModel<SynapseManagedVirtualNetworkSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseManagedVirtualNetworkSettings(document.RootElement, options);
+        }
+
+        internal static SynapseManagedVirtualNetworkSettings DeserializeSynapseManagedVirtualNetworkSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +87,8 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<bool> preventDataExfiltration = default;
             Optional<bool> linkedAccessCheckOnTargetResource = default;
             Optional<IList<string>> allowedAadTenantIdsForLinking = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preventDataExfiltration"u8))
@@ -82,8 +123,38 @@ namespace Azure.ResourceManager.Synapse.Models
                     allowedAadTenantIdsForLinking = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseManagedVirtualNetworkSettings(Optional.ToNullable(preventDataExfiltration), Optional.ToNullable(linkedAccessCheckOnTargetResource), Optional.ToList(allowedAadTenantIdsForLinking));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseManagedVirtualNetworkSettings(Optional.ToNullable(preventDataExfiltration), Optional.ToNullable(linkedAccessCheckOnTargetResource), Optional.ToList(allowedAadTenantIdsForLinking), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseManagedVirtualNetworkSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SynapseManagedVirtualNetworkSettings IPersistableModel<SynapseManagedVirtualNetworkSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSynapseManagedVirtualNetworkSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<SynapseManagedVirtualNetworkSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

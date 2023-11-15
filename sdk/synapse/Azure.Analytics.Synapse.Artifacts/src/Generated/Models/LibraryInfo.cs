@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Library/package information of a Big Data pool powered by Apache Spark. </summary>
     public partial class LibraryInfo
     {
-        /// <summary> Initializes a new instance of LibraryInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LibraryInfo"/>. </summary>
         public LibraryInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of LibraryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryInfo"/>. </summary>
         /// <param name="name"> Name of the library. </param>
         /// <param name="path"> Storage blob path of library. </param>
         /// <param name="containerName"> Storage blob container name. </param>
@@ -25,7 +29,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> Type of the library. </param>
         /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
         /// <param name="creatorId"> Creator Id of the library/package. </param>
-        internal LibraryInfo(string name, string path, string containerName, DateTimeOffset? uploadedTimestamp, string type, string provisioningStatus, string creatorId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LibraryInfo(string name, string path, string containerName, DateTimeOffset? uploadedTimestamp, string type, string provisioningStatus, string creatorId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Path = path;
@@ -34,6 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type;
             ProvisioningStatus = provisioningStatus;
             CreatorId = creatorId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the library. </summary>

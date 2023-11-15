@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Settings for SMB multichannel. </summary>
     public partial class SmbMultichannel
     {
-        /// <summary> Initializes a new instance of SmbMultichannel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmbMultichannel"/>. </summary>
         public SmbMultichannel()
         {
         }
 
-        /// <summary> Initializes a new instance of SmbMultichannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmbMultichannel"/>. </summary>
         /// <param name="enabled"> If SMB multichannel is enabled. </param>
-        internal SmbMultichannel(bool? enabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmbMultichannel(bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> If SMB multichannel is enabled. </summary>

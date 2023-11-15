@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Filters limit rule actions to a subset of blobs within the storage account. If multiple filters are defined, a logical AND is performed on all filters. </summary>
     public partial class ManagementPolicyFilter
     {
-        /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyFilter"/>. </summary>
         /// <param name="blobTypes"> An array of predefined enum values. Currently blockBlob supports all tiering and delete actions. Only delete actions are supported for appendBlob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobTypes"/> is null. </exception>
         public ManagementPolicyFilter(IEnumerable<string> blobTypes)
@@ -27,15 +30,22 @@ namespace Azure.ResourceManager.Storage.Models
             BlobIndexMatch = new ChangeTrackingList<ManagementPolicyTagFilter>();
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyFilter"/>. </summary>
         /// <param name="prefixMatch"> An array of strings for prefixes to be match. </param>
         /// <param name="blobTypes"> An array of predefined enum values. Currently blockBlob supports all tiering and delete actions. Only delete actions are supported for appendBlob. </param>
         /// <param name="blobIndexMatch"> An array of blob index tag based filters, there can be at most 10 tag filters. </param>
-        internal ManagementPolicyFilter(IList<string> prefixMatch, IList<string> blobTypes, IList<ManagementPolicyTagFilter> blobIndexMatch)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicyFilter(IList<string> prefixMatch, IList<string> blobTypes, IList<ManagementPolicyTagFilter> blobIndexMatch, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrefixMatch = prefixMatch;
             BlobTypes = blobTypes;
             BlobIndexMatch = blobIndexMatch;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyFilter"/> for deserialization. </summary>
+        internal ManagementPolicyFilter()
+        {
         }
 
         /// <summary> An array of strings for prefixes to be match. </summary>

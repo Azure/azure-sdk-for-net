@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,16 +16,76 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(LinkConnectionRefreshStatusConverter))]
-    public partial class LinkConnectionRefreshStatus
+    public partial class LinkConnectionRefreshStatus : IUtf8JsonSerializable, IJsonModel<LinkConnectionRefreshStatus>
     {
-        internal static LinkConnectionRefreshStatus DeserializeLinkConnectionRefreshStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkConnectionRefreshStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LinkConnectionRefreshStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LinkConnectionRefreshStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LinkConnectionRefreshStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RefreshStatus))
+                {
+                    writer.WritePropertyName("refreshStatus"u8);
+                    writer.WriteStringValue(RefreshStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    writer.WritePropertyName("errorMessage"u8);
+                    writer.WriteStringValue(ErrorMessage);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinkConnectionRefreshStatus IJsonModel<LinkConnectionRefreshStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkConnectionRefreshStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinkConnectionRefreshStatus(document.RootElement, options);
+        }
+
+        internal static LinkConnectionRefreshStatus DeserializeLinkConnectionRefreshStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> refreshStatus = default;
             Optional<string> errorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("refreshStatus"u8))
@@ -35,15 +98,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     errorMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinkConnectionRefreshStatus(refreshStatus.Value, errorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinkConnectionRefreshStatus(refreshStatus.Value, errorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinkConnectionRefreshStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkConnectionRefreshStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinkConnectionRefreshStatus IPersistableModel<LinkConnectionRefreshStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinkConnectionRefreshStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinkConnectionRefreshStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<LinkConnectionRefreshStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class LinkConnectionRefreshStatusConverter : JsonConverter<LinkConnectionRefreshStatus>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionRefreshStatus model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException();
+                writer.WriteObjectValue(model);
             }
             public override LinkConnectionRefreshStatus Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes an output column for the Azure Machine Learning web service endpoint. </summary>
     public partial class MachineLearningServiceOutputColumn
     {
-        /// <summary> Initializes a new instance of MachineLearningServiceOutputColumn. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServiceOutputColumn"/>. </summary>
         public MachineLearningServiceOutputColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServiceOutputColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServiceOutputColumn"/>. </summary>
         /// <param name="name"> The name of the output column. </param>
         /// <param name="dataType"> The (Azure Machine Learning supported) data type of the output column. </param>
         /// <param name="mapTo"> The zero based index of the function parameter this input maps to. </param>
-        internal MachineLearningServiceOutputColumn(string name, string dataType, int? mapTo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServiceOutputColumn(string name, string dataType, int? mapTo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DataType = dataType;
             MapTo = mapTo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the output column. </summary>

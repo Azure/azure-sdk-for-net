@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class DeletedAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedAccountData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedAccountData"/>. </summary>
         public DeletedAccountData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +36,15 @@ namespace Azure.ResourceManager.Storage
         /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
         /// <param name="createdOn"> Creation time of the deleted account. </param>
         /// <param name="deletedOn"> Deletion time of the deleted account. </param>
-        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, AzureLocation? location, string restoreReference, DateTimeOffset? createdOn, DateTimeOffset? deletedOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountResourceId, AzureLocation? location, string restoreReference, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StorageAccountResourceId = storageAccountResourceId;
             Location = location;
             RestoreReference = restoreReference;
             CreatedOn = createdOn;
             DeletedOn = deletedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Full resource id of the original storage account. </summary>

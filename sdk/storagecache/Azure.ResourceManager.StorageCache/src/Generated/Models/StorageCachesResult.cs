@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.StorageCache;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Result of the request to list caches. It contains a list of caches and a URL link to get the next set of results. </summary>
     internal partial class StorageCachesResult
     {
-        /// <summary> Initializes a new instance of StorageCachesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCachesResult"/>. </summary>
         internal StorageCachesResult()
         {
             Value = new ChangeTrackingList<StorageCacheData>();
         }
 
-        /// <summary> Initializes a new instance of StorageCachesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCachesResult"/>. </summary>
         /// <param name="nextLink"> URL to get the next set of cache list results, if there are any. </param>
         /// <param name="value"> List of Caches. </param>
-        internal StorageCachesResult(string nextLink, IReadOnlyList<StorageCacheData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCachesResult(string nextLink, IReadOnlyList<StorageCacheData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> URL to get the next set of cache list results, if there are any. </summary>

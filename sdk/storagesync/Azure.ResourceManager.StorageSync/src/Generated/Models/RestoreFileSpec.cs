@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Restore file spec. </summary>
     public partial class RestoreFileSpec
     {
-        /// <summary> Initializes a new instance of RestoreFileSpec. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpec"/>. </summary>
         public RestoreFileSpec()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreFileSpec"/>. </summary>
+        /// <param name="path"> Restore file spec path. </param>
+        /// <param name="isDirectory"> Restore file spec isdir. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreFileSpec(string path, bool? isDirectory, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Path = path;
+            IsDirectory = isDirectory;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Restore file spec path. </summary>

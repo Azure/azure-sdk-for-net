@@ -6,15 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Parameter group. </summary>
     internal partial class SourceModifiedAccessConditions
     {
-        /// <summary> Initializes a new instance of SourceModifiedAccessConditions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceModifiedAccessConditions"/>. </summary>
         public SourceModifiedAccessConditions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SourceModifiedAccessConditions"/>. </summary>
+        /// <param name="sourceIfMatchCrc64"> Specify the crc64 value to operate only on range with a matching crc64 checksum. </param>
+        /// <param name="sourceIfNoneMatchCrc64"> Specify the crc64 value to operate only on range without a matching crc64 checksum. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceModifiedAccessConditions(byte[] sourceIfMatchCrc64, byte[] sourceIfNoneMatchCrc64, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SourceIfMatchCrc64 = sourceIfMatchCrc64;
+            SourceIfNoneMatchCrc64 = sourceIfNoneMatchCrc64;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specify the crc64 value to operate only on range with a matching crc64 checksum. </summary>

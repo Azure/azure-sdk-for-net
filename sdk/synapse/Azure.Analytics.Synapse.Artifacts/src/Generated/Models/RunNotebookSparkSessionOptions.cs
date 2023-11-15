@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The RunNotebookSparkSessionOptions. </summary>
     public partial class RunNotebookSparkSessionOptions
     {
-        /// <summary> Initializes a new instance of RunNotebookSparkSessionOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSparkSessionOptions"/>. </summary>
         public RunNotebookSparkSessionOptions()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -24,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Configuration = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RunNotebookSparkSessionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunNotebookSparkSessionOptions"/>. </summary>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="kind"> The session kind. </param>
         /// <param name="proxyUser"> User to impersonate when starting the session. </param>
@@ -42,7 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="executorCount"> Number of executors to launch for this session. </param>
         /// <param name="isQueueable"> Whether to queue session creation if Spark pool doesn't have enough capacity. Default value is true in notebook runs API. </param>
         /// <param name="heartbeatTimeoutInSecond"> Timeout in second to which session be orphaned. </param>
-        internal RunNotebookSparkSessionOptions(IDictionary<string, string> tags, string kind, string proxyUser, string name, IList<string> jars, IList<string> pythonFiles, IList<string> files, IList<string> archives, object queue, IDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount, bool? isQueueable, int? heartbeatTimeoutInSecond)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunNotebookSparkSessionOptions(IDictionary<string, string> tags, string kind, string proxyUser, string name, IList<string> jars, IList<string> pythonFiles, IList<string> files, IList<string> archives, object queue, IDictionary<string, string> configuration, string driverMemory, int? driverCores, string executorMemory, int? executorCores, int? executorCount, bool? isQueueable, int? heartbeatTimeoutInSecond, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Kind = kind;
@@ -61,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ExecutorCount = executorCount;
             IsQueueable = isQueueable;
             HeartbeatTimeoutInSecond = heartbeatTimeoutInSecond;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

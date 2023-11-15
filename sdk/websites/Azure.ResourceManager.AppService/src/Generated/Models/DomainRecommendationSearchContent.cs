@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Domain recommendation search parameters. </summary>
     public partial class DomainRecommendationSearchContent
     {
-        /// <summary> Initializes a new instance of DomainRecommendationSearchContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DomainRecommendationSearchContent"/>. </summary>
         public DomainRecommendationSearchContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DomainRecommendationSearchContent"/>. </summary>
+        /// <param name="keywords"> Keywords to be used for generating domain recommendations. </param>
+        /// <param name="maxDomainRecommendations"> Maximum number of recommendations. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DomainRecommendationSearchContent(string keywords, int? maxDomainRecommendations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Keywords = keywords;
+            MaxDomainRecommendations = maxDomainRecommendations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Keywords to be used for generating domain recommendations. </summary>

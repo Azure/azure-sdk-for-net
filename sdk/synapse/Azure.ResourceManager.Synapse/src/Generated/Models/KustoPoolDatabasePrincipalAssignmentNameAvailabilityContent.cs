@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> A principal assignment check name availability request. </summary>
     public partial class KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Principal Assignment resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name)
@@ -22,6 +26,22 @@ namespace Azure.ResourceManager.Synapse.Models
 
             Name = name;
             ResourceType = SynapseDatabasePrincipalAssignmentType.MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignments;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name, SynapseDatabasePrincipalAssignmentType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/> for deserialization. </summary>
+        internal KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent()
+        {
         }
 
         /// <summary> Principal Assignment resource name. </summary>

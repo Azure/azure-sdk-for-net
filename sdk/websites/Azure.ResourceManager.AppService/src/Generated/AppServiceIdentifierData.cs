@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,22 +18,27 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceIdentifierData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceIdentifierData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceIdentifierData"/>. </summary>
         public AppServiceIdentifierData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceIdentifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceIdentifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="value"> String representation of the identity. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Value = value;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> String representation of the identity. </summary>

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(AzureDataExplorerSourceConverter))]
-    public partial class AzureDataExplorerSource : IUtf8JsonSerializable
+    public partial class AzureDataExplorerSource : IUtf8JsonSerializable, IJsonModel<AzureDataExplorerSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataExplorerSource>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureDataExplorerSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureDataExplorerSource>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureDataExplorerSource>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("query"u8);
             writer.WriteObjectValue(Query);
@@ -61,8 +70,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataExplorerSource DeserializeAzureDataExplorerSource(JsonElement element)
+        AzureDataExplorerSource IJsonModel<AzureDataExplorerSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataExplorerSource(document.RootElement, options);
+        }
+
+        internal static AzureDataExplorerSource DeserializeAzureDataExplorerSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -148,6 +171,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataExplorerSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query, noTruncation.Value, queryTimeout.Value, additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<AzureDataExplorerSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureDataExplorerSource IPersistableModel<AzureDataExplorerSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureDataExplorerSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureDataExplorerSource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class AzureDataExplorerSourceConverter : JsonConverter<AzureDataExplorerSource>
         {

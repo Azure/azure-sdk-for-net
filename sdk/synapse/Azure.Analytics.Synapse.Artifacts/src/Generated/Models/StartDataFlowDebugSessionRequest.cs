@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for starting data flow debug session. </summary>
     public partial class StartDataFlowDebugSessionRequest
     {
-        /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StartDataFlowDebugSessionRequest"/>. </summary>
         public StartDataFlowDebugSessionRequest()
         {
             DataFlows = new ChangeTrackingList<DataFlowResource>();
@@ -21,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LinkedServices = new ChangeTrackingList<LinkedServiceResource>();
         }
 
-        /// <summary> Initializes a new instance of StartDataFlowDebugSessionRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartDataFlowDebugSessionRequest"/>. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="dataFlow"> Data flow instance. </param>
         /// <param name="dataFlows"> List of Data flows. </param>
@@ -30,7 +34,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="staging"> Staging info for debug session. </param>
         /// <param name="debugSettings"> Data flow debug settings. </param>
         /// <param name="incrementalDebug"> The type of new Databricks cluster. </param>
-        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DataFlowResource> dataFlows, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StartDataFlowDebugSessionRequest(string sessionId, DataFlowResource dataFlow, IList<DataFlowResource> dataFlows, IList<DatasetResource> datasets, IList<LinkedServiceResource> linkedServices, object staging, object debugSettings, bool? incrementalDebug, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionId = sessionId;
             DataFlow = dataFlow;
@@ -40,6 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Staging = staging;
             DebugSettings = debugSettings;
             IncrementalDebug = incrementalDebug;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

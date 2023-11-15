@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseRestorableDroppedSqlPoolData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseRestorableDroppedSqlPoolData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorableDroppedSqlPoolData"/>. </summary>
         public SynapseRestorableDroppedSqlPoolData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseRestorableDroppedSqlPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorableDroppedSqlPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +40,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
         /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
-        internal SynapseRestorableDroppedSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string databaseName, string edition, string maxSizeBytes, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseRestorableDroppedSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string databaseName, string edition, string maxSizeBytes, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DatabaseName = databaseName;
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.Synapse
             CreatedOn = createdOn;
             DeletedOn = deletedOn;
             EarliestRestoreOn = earliestRestoreOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The geo-location where the resource lives. </summary>

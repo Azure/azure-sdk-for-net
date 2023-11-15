@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> Network ACL. </summary>
     public partial class PublicNetworkAcls
     {
-        /// <summary> Initializes a new instance of PublicNetworkAcls. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublicNetworkAcls"/>. </summary>
         public PublicNetworkAcls()
         {
             Allow = new ChangeTrackingList<WebPubSubRequestType>();
             Deny = new ChangeTrackingList<WebPubSubRequestType>();
         }
 
-        /// <summary> Initializes a new instance of PublicNetworkAcls. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicNetworkAcls"/>. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        internal PublicNetworkAcls(IList<WebPubSubRequestType> allow, IList<WebPubSubRequestType> deny)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublicNetworkAcls(IList<WebPubSubRequestType> allow, IList<WebPubSubRequestType> deny, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Allow = allow;
             Deny = deny;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </summary>

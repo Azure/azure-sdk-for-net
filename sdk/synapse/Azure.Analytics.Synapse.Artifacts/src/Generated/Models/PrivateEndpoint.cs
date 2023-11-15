@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Private endpoint details. </summary>
     public partial class PrivateEndpoint
     {
-        /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
         public PrivateEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
         /// <param name="id"> Resource id of the private endpoint. </param>
-        internal PrivateEndpoint(string id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpoint(string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource id of the private endpoint. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RegistrationContactInfo : IUtf8JsonSerializable
+    public partial class RegistrationContactInfo : IUtf8JsonSerializable, IJsonModel<RegistrationContactInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationContactInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RegistrationContactInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RegistrationContactInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RegistrationContactInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressMailing))
             {
@@ -48,11 +59,40 @@ namespace Azure.ResourceManager.AppService.Models
             }
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RegistrationContactInfo DeserializeRegistrationContactInfo(JsonElement element)
+        RegistrationContactInfo IJsonModel<RegistrationContactInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegistrationContactInfo(document.RootElement, options);
+        }
+
+        internal static RegistrationContactInfo DeserializeRegistrationContactInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +106,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> nameMiddle = default;
             Optional<string> organization = default;
             string phone = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressMailing"u8))
@@ -117,8 +159,38 @@ namespace Azure.ResourceManager.AppService.Models
                     phone = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RegistrationContactInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RegistrationContactInfo IPersistableModel<RegistrationContactInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRegistrationContactInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<RegistrationContactInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Active Directory account details to operate Windows Server Failover Cluster. </summary>
     public partial class WindowsServerFailoverClusterDomainProfile
     {
-        /// <summary> Initializes a new instance of WindowsServerFailoverClusterDomainProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WindowsServerFailoverClusterDomainProfile"/>. </summary>
         public WindowsServerFailoverClusterDomainProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsServerFailoverClusterDomainProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsServerFailoverClusterDomainProfile"/>. </summary>
         /// <param name="domainFqdn"> Fully qualified name of the domain. </param>
         /// <param name="organizationalUnitPath"> Organizational Unit path in which the nodes and cluster will be present. </param>
         /// <param name="clusterBootstrapAccount"> Account name used for creating cluster (at minimum needs permissions to 'Create Computer Objects' in domain). </param>
@@ -27,7 +31,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="storageAccountUri"> Fully qualified ARM resource id of the witness storage account. </param>
         /// <param name="storageAccountPrimaryKey"> Primary key of the witness storage account. </param>
         /// <param name="clusterSubnetType"> Cluster subnet type. </param>
-        internal WindowsServerFailoverClusterDomainProfile(string domainFqdn, string organizationalUnitPath, string clusterBootstrapAccount, string clusterOperatorAccount, string sqlServiceAccount, string fileShareWitnessPath, Uri storageAccountUri, string storageAccountPrimaryKey, SqlVmClusterSubnetType? clusterSubnetType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsServerFailoverClusterDomainProfile(string domainFqdn, string organizationalUnitPath, string clusterBootstrapAccount, string clusterOperatorAccount, string sqlServiceAccount, string fileShareWitnessPath, Uri storageAccountUri, string storageAccountPrimaryKey, SqlVmClusterSubnetType? clusterSubnetType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DomainFqdn = domainFqdn;
             OrganizationalUnitPath = organizationalUnitPath;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             StorageAccountUri = storageAccountUri;
             StorageAccountPrimaryKey = storageAccountPrimaryKey;
             ClusterSubnetType = clusterSubnetType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fully qualified name of the domain. </summary>

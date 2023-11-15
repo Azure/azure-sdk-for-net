@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Spark.Models
 {
     /// <summary> The SparkStatementOptions. </summary>
     public partial class SparkStatementOptions
     {
-        /// <summary> Initializes a new instance of SparkStatementOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOptions"/>. </summary>
         public SparkStatementOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkStatementOptions"/>. </summary>
+        /// <param name="code"></param>
+        /// <param name="kind"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkStatementOptions(string code, SparkStatementLanguageType? kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Code = code;
+            Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the code. </summary>

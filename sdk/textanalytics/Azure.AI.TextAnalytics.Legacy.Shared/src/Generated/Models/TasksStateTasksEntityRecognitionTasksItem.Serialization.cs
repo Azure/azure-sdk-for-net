@@ -6,16 +6,75 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    internal partial class TasksStateTasksEntityRecognitionTasksItem
+    internal partial class TasksStateTasksEntityRecognitionTasksItem : IUtf8JsonSerializable, IJsonModel<TasksStateTasksEntityRecognitionTasksItem>
     {
-        internal static TasksStateTasksEntityRecognitionTasksItem DeserializeTasksStateTasksEntityRecognitionTasksItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TasksStateTasksEntityRecognitionTasksItem>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TasksStateTasksEntityRecognitionTasksItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TasksStateTasksEntityRecognitionTasksItem>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TasksStateTasksEntityRecognitionTasksItem>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteObjectValue(Results);
+            }
+            writer.WritePropertyName("lastUpdateDateTime"u8);
+            writer.WriteStringValue(LastUpdateDateTime, "O");
+            if (Optional.IsDefined(TaskName))
+            {
+                writer.WritePropertyName("taskName"u8);
+                writer.WriteStringValue(TaskName);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToSerialString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TasksStateTasksEntityRecognitionTasksItem IJsonModel<TasksStateTasksEntityRecognitionTasksItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TasksStateTasksEntityRecognitionTasksItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTasksStateTasksEntityRecognitionTasksItem(document.RootElement, options);
+        }
+
+        internal static TasksStateTasksEntityRecognitionTasksItem DeserializeTasksStateTasksEntityRecognitionTasksItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +83,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> taskName = default;
             State status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -50,8 +111,38 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     status = property.Value.GetString().ToState();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TasksStateTasksEntityRecognitionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TasksStateTasksEntityRecognitionTasksItem(lastUpdateDateTime, taskName.Value, status, serializedAdditionalRawData, results.Value);
         }
+
+        BinaryData IPersistableModel<TasksStateTasksEntityRecognitionTasksItem>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TasksStateTasksEntityRecognitionTasksItem)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TasksStateTasksEntityRecognitionTasksItem IPersistableModel<TasksStateTasksEntityRecognitionTasksItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TasksStateTasksEntityRecognitionTasksItem)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTasksStateTasksEntityRecognitionTasksItem(document.RootElement, options);
+        }
+
+        string IPersistableModel<TasksStateTasksEntityRecognitionTasksItem>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

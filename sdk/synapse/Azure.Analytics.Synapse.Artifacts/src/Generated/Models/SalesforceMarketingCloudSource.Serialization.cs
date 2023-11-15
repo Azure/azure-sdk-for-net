@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,10 +16,17 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     [JsonConverter(typeof(SalesforceMarketingCloudSourceConverter))]
-    public partial class SalesforceMarketingCloudSource : IUtf8JsonSerializable
+    public partial class SalesforceMarketingCloudSource : IUtf8JsonSerializable, IJsonModel<SalesforceMarketingCloudSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceMarketingCloudSource>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SalesforceMarketingCloudSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SalesforceMarketingCloudSource>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SalesforceMarketingCloudSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -59,8 +68,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static SalesforceMarketingCloudSource DeserializeSalesforceMarketingCloudSource(JsonElement element)
+        SalesforceMarketingCloudSource IJsonModel<SalesforceMarketingCloudSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceMarketingCloudSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSalesforceMarketingCloudSource(document.RootElement, options);
+        }
+
+        internal static SalesforceMarketingCloudSource DeserializeSalesforceMarketingCloudSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,6 +163,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SalesforceMarketingCloudSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
         }
+
+        BinaryData IPersistableModel<SalesforceMarketingCloudSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceMarketingCloudSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SalesforceMarketingCloudSource IPersistableModel<SalesforceMarketingCloudSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceMarketingCloudSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSalesforceMarketingCloudSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<SalesforceMarketingCloudSource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class SalesforceMarketingCloudSourceConverter : JsonConverter<SalesforceMarketingCloudSource>
         {

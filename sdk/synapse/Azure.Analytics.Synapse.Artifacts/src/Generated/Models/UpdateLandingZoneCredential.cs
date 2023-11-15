@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The UpdateLandingZoneCredential. </summary>
     public partial class UpdateLandingZoneCredential
     {
-        /// <summary> Initializes a new instance of UpdateLandingZoneCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateLandingZoneCredential"/>. </summary>
         public UpdateLandingZoneCredential()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateLandingZoneCredential"/>. </summary>
+        /// <param name="sasToken"> Landing zone's sas token. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateLandingZoneCredential(SecureString sasToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SasToken = sasToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Landing zone's sas token. </summary>

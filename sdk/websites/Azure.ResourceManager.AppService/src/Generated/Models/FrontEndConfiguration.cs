@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The FrontEndConfiguration. </summary>
     internal partial class FrontEndConfiguration
     {
-        /// <summary> Initializes a new instance of FrontEndConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontEndConfiguration"/>. </summary>
         public FrontEndConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontEndConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontEndConfiguration"/>. </summary>
         /// <param name="kind"></param>
-        internal FrontEndConfiguration(FrontEndServiceType? kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontEndConfiguration(FrontEndServiceType? kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the kind. </summary>

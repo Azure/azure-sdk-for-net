@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> This property indicates secondary consent for the support ticket. </summary>
     public partial class SecondaryConsent
     {
-        /// <summary> Initializes a new instance of SecondaryConsent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecondaryConsent"/>. </summary>
         public SecondaryConsent()
         {
         }
 
-        /// <summary> Initializes a new instance of SecondaryConsent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecondaryConsent"/>. </summary>
         /// <param name="userConsent"> User consent value provided. </param>
         /// <param name="secondaryConsentType"> The service name for which the secondary consent is being provided. The value needs to be retrieved from the Problem Classification API response. </param>
-        internal SecondaryConsent(UserConsent? userConsent, string secondaryConsentType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecondaryConsent(UserConsent? userConsent, string secondaryConsentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserConsent = userConsent;
             SecondaryConsentType = secondaryConsentType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User consent value provided. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The exposure control response. </summary>
     public partial class ExposureControlResponse
     {
-        /// <summary> Initializes a new instance of ExposureControlResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlResponse"/>. </summary>
         public ExposureControlResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ExposureControlResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlResponse"/>. </summary>
         /// <param name="featureName"> The feature name. </param>
         /// <param name="value"> The feature value. </param>
-        internal ExposureControlResponse(string featureName, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExposureControlResponse(string featureName, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FeatureName = featureName;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The feature name. </summary>

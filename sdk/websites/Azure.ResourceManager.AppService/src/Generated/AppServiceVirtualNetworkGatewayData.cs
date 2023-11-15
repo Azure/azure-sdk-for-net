@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceVirtualNetworkGatewayData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkGatewayData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkGatewayData"/>. </summary>
         public AppServiceVirtualNetworkGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +34,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="vnetName"> The Virtual Network name. </param>
         /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceVirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetName, Uri vpnPackageUri, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceVirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetName, Uri vpnPackageUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             VnetName = vnetName;
             VpnPackageUri = vpnPackageUri;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Virtual Network name. </summary>

@@ -6,15 +6,116 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SqlPoolUsage
+    public partial class SqlPoolUsage : IUtf8JsonSerializable, IJsonModel<SqlPoolUsage>
     {
-        internal static SqlPoolUsage DeserializeSqlPoolUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlPoolUsage>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SqlPoolUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SqlPoolUsage>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SqlPoolUsage>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceName))
+                {
+                    writer.WritePropertyName("resourceName"u8);
+                    writer.WriteStringValue(ResourceName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentValue))
+                {
+                    writer.WritePropertyName("currentValue"u8);
+                    writer.WriteNumberValue(CurrentValue.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Limit))
+                {
+                    writer.WritePropertyName("limit"u8);
+                    writer.WriteNumberValue(Limit.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Unit))
+                {
+                    writer.WritePropertyName("unit"u8);
+                    writer.WriteStringValue(Unit);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NextResetOn))
+                {
+                    writer.WritePropertyName("nextResetTime"u8);
+                    writer.WriteStringValue(NextResetOn.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SqlPoolUsage IJsonModel<SqlPoolUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPoolUsage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlPoolUsage(document.RootElement, options);
+        }
+
+        internal static SqlPoolUsage DeserializeSqlPoolUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +127,8 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<double> limit = default;
             Optional<string> unit = default;
             Optional<DateTimeOffset> nextResetTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -75,8 +178,38 @@ namespace Azure.ResourceManager.Synapse.Models
                     nextResetTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlPoolUsage(name.Value, resourceName.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, Optional.ToNullable(nextResetTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlPoolUsage(name.Value, resourceName.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, Optional.ToNullable(nextResetTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlPoolUsage>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPoolUsage)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SqlPoolUsage IPersistableModel<SqlPoolUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SqlPoolUsage)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSqlPoolUsage(document.RootElement, options);
+        }
+
+        string IPersistableModel<SqlPoolUsage>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

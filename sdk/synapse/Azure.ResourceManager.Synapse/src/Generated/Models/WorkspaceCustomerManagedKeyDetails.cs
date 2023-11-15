@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class WorkspaceCustomerManagedKeyDetails
     {
-        /// <summary> Initializes a new instance of WorkspaceCustomerManagedKeyDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceCustomerManagedKeyDetails"/>. </summary>
         public WorkspaceCustomerManagedKeyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceCustomerManagedKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceCustomerManagedKeyDetails"/>. </summary>
         /// <param name="status"> The customer managed key status on the workspace. </param>
         /// <param name="key"> The key object of the workspace. </param>
         /// <param name="kekIdentity"> Key encryption key. </param>
-        internal WorkspaceCustomerManagedKeyDetails(string status, SynapseWorkspaceKeyDetails key, KekIdentityProperties kekIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceCustomerManagedKeyDetails(string status, SynapseWorkspaceKeyDetails key, KekIdentityProperties kekIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Key = key;
             KekIdentity = kekIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The customer managed key status on the workspace. </summary>

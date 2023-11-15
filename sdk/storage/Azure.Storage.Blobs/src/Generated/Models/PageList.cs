@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> the list of pages. </summary>
     internal partial class PageList
     {
-        /// <summary> Initializes a new instance of PageList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
         internal PageList()
         {
             PageRange = new ChangeTrackingList<PageRange>();
             ClearRange = new ChangeTrackingList<ClearRange>();
         }
 
-        /// <summary> Initializes a new instance of PageList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PageList"/>. </summary>
         /// <param name="pageRange"></param>
         /// <param name="clearRange"></param>
         /// <param name="nextMarker"></param>
-        internal PageList(IReadOnlyList<PageRange> pageRange, IReadOnlyList<ClearRange> clearRange, string nextMarker)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PageList(IReadOnlyList<PageRange> pageRange, IReadOnlyList<ClearRange> clearRange, string nextMarker, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PageRange = pageRange;
             ClearRange = clearRange;
             NextMarker = nextMarker;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the page range. </summary>

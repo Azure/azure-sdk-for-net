@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MySQL migration request. </summary>
     public partial class MigrateMySqlContent : ResourceData
     {
-        /// <summary> Initializes a new instance of MigrateMySqlContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlContent"/>. </summary>
         public MigrateMySqlContent()
         {
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,11 +31,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="connectionString"> Connection string to the remote MySQL database. </param>
         /// <param name="migrationType"> The type of migration operation to be done. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectionString, MySqlMigrationType? migrationType, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string connectionString, MySqlMigrationType? migrationType, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ConnectionString = connectionString;
             MigrationType = migrationType;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Connection string to the remote MySQL database. </summary>

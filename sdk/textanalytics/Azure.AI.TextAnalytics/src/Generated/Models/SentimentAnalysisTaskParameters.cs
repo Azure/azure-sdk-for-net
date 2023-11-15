@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> Supported parameters for a Sentiment Analysis task. </summary>
     internal partial class SentimentAnalysisTaskParameters : PreBuiltTaskParameters
     {
-        /// <summary> Initializes a new instance of SentimentAnalysisTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
         public SentimentAnalysisTaskParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of SentimentAnalysisTaskParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentimentAnalysisTaskParameters"/>. </summary>
         /// <param name="loggingOptOut"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="modelVersion"></param>
         /// <param name="opinionMining"></param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets.  Defaults to Text Elements (Graphemes) according to Unicode v8.0.0. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        internal SentimentAnalysisTaskParameters(bool? loggingOptOut, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType) : base(loggingOptOut, modelVersion)
+        internal SentimentAnalysisTaskParameters(bool? loggingOptOut, IDictionary<string, BinaryData> serializedAdditionalRawData, string modelVersion, bool? opinionMining, StringIndexType? stringIndexType) : base(loggingOptOut, serializedAdditionalRawData, modelVersion)
         {
             OpinionMining = opinionMining;
             StringIndexType = stringIndexType;

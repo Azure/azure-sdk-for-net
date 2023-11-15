@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Virtual IP mapping. </summary>
     public partial class VirtualIPMapping
     {
-        /// <summary> Initializes a new instance of VirtualIPMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualIPMapping"/>. </summary>
         public VirtualIPMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualIPMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualIPMapping"/>. </summary>
         /// <param name="virtualIP"> Virtual IP address. </param>
         /// <param name="internalHttpPort"> Internal HTTP port. </param>
         /// <param name="internalHttpsPort"> Internal HTTPS port. </param>
         /// <param name="isInUse"> Is virtual IP mapping in use. </param>
         /// <param name="serviceName"> name of the service that virtual IP is assigned to. </param>
-        internal VirtualIPMapping(string virtualIP, int? internalHttpPort, int? internalHttpsPort, bool? isInUse, string serviceName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualIPMapping(string virtualIP, int? internalHttpPort, int? internalHttpsPort, bool? isInUse, string serviceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualIP = virtualIP;
             InternalHttpPort = internalHttpPort;
             InternalHttpsPort = internalHttpsPort;
             IsInUse = isInUse;
             ServiceName = serviceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Virtual IP address. </summary>

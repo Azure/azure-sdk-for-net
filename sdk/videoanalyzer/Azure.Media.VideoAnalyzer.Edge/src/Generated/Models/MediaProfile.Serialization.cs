@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    public partial class MediaProfile : IUtf8JsonSerializable
+    public partial class MediaProfile : IUtf8JsonSerializable, IJsonModel<MediaProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MediaProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MediaProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MediaProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -30,11 +41,40 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WritePropertyName("videoEncoderConfiguration"u8);
                 writer.WriteObjectValue(VideoEncoderConfiguration);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaProfile DeserializeMediaProfile(JsonElement element)
+        MediaProfile IJsonModel<MediaProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaProfile(document.RootElement, options);
+        }
+
+        internal static MediaProfile DeserializeMediaProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<string> name = default;
             Optional<object> mediaUri = default;
             Optional<VideoEncoderConfiguration> videoEncoderConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -67,8 +109,38 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     videoEncoderConfiguration = VideoEncoderConfiguration.DeserializeVideoEncoderConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaProfile(name.Value, mediaUri.Value, videoEncoderConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaProfile(name.Value, mediaUri.Value, videoEncoderConfiguration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaProfile IPersistableModel<MediaProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<MediaProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

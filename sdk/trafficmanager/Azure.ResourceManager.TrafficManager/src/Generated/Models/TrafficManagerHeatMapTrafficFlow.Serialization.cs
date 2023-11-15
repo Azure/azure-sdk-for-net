@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerHeatMapTrafficFlow : IUtf8JsonSerializable
+    public partial class TrafficManagerHeatMapTrafficFlow : IUtf8JsonSerializable, IJsonModel<TrafficManagerHeatMapTrafficFlow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerHeatMapTrafficFlow>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<TrafficManagerHeatMapTrafficFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<TrafficManagerHeatMapTrafficFlow>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<TrafficManagerHeatMapTrafficFlow>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceIP))
             {
@@ -42,11 +52,40 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerHeatMapTrafficFlow DeserializeTrafficManagerHeatMapTrafficFlow(JsonElement element)
+        TrafficManagerHeatMapTrafficFlow IJsonModel<TrafficManagerHeatMapTrafficFlow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerHeatMapTrafficFlow(document.RootElement, options);
+        }
+
+        internal static TrafficManagerHeatMapTrafficFlow DeserializeTrafficManagerHeatMapTrafficFlow(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +94,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<double> latitude = default;
             Optional<double> longitude = default;
             Optional<IList<TrafficManagerHeatMapQueryExperience>> queryExperiences = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceIp"u8))
@@ -98,8 +139,38 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     queryExperiences = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TrafficManagerHeatMapTrafficFlow(sourceIP.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), Optional.ToList(queryExperiences));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TrafficManagerHeatMapTrafficFlow(sourceIP.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), Optional.ToList(queryExperiences), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TrafficManagerHeatMapTrafficFlow>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        TrafficManagerHeatMapTrafficFlow IPersistableModel<TrafficManagerHeatMapTrafficFlow>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeTrafficManagerHeatMapTrafficFlow(document.RootElement, options);
+        }
+
+        string IPersistableModel<TrafficManagerHeatMapTrafficFlow>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

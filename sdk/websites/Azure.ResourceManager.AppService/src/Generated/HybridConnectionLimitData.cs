@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class HybridConnectionLimitData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridConnectionLimitData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionLimitData"/>. </summary>
         public HybridConnectionLimitData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionLimitData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionLimitData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,11 +34,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="current"> The current number of Hybrid Connections. </param>
         /// <param name="maximum"> The maximum number of Hybrid Connections allowed. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal HybridConnectionLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? maximum, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridConnectionLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? maximum, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Current = current;
             Maximum = maximum;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The current number of Hybrid Connections. </summary>

@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Resource log category configuration of a Microsoft.SignalRService resource. </summary>
     public partial class ResourceLogCategory
     {
-        /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceLogCategory"/>. </summary>
         public ResourceLogCategory()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceLogCategory"/>. </summary>
         /// <param name="name">
         /// Gets or sets the resource log category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
@@ -26,10 +32,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
-        internal ResourceLogCategory(string name, string enabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceLogCategory(string name, string enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

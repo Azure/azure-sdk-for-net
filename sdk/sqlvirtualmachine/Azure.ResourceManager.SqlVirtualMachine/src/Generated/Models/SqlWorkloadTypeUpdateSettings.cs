@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     /// <summary> Set workload type to optimize storage for SQL Server. </summary>
     internal partial class SqlWorkloadTypeUpdateSettings
     {
-        /// <summary> Initializes a new instance of SqlWorkloadTypeUpdateSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlWorkloadTypeUpdateSettings"/>. </summary>
         public SqlWorkloadTypeUpdateSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlWorkloadTypeUpdateSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlWorkloadTypeUpdateSettings"/>. </summary>
         /// <param name="sqlWorkloadType"> SQL Server workload type. </param>
-        internal SqlWorkloadTypeUpdateSettings(SqlWorkloadType? sqlWorkloadType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlWorkloadTypeUpdateSettings(SqlWorkloadType? sqlWorkloadType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SqlWorkloadType = sqlWorkloadType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SQL Server workload type. </summary>

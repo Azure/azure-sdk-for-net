@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> Describes scaling information of a SKU. </summary>
     public partial class StoragePoolSkuRestrictions
     {
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictions"/>. </summary>
         internal StoragePoolSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StoragePoolSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="StoragePoolSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
-        internal StoragePoolSkuRestrictions(StoragePoolSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, StoragePoolSkuRestrictionInfo restrictionInfo, StoragePoolSkuRestrictionsReasonCode? reasonCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StoragePoolSkuRestrictions(StoragePoolSkuRestrictionsType? restrictionsType, IReadOnlyList<string> values, StoragePoolSkuRestrictionInfo restrictionInfo, StoragePoolSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestrictionsType = restrictionsType;
             Values = values;
             RestrictionInfo = restrictionInfo;
             ReasonCode = reasonCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of restrictions. </summary>

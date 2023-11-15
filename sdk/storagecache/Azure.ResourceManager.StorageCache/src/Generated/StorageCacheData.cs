@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.StorageCache
     /// </summary>
     public partial class StorageCacheData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of StorageCacheData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheData"/>. </summary>
         /// <param name="location"> The location. </param>
         public StorageCacheData(AzureLocation location) : base(location)
         {
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.StorageCache
             SpaceAllocation = new ChangeTrackingList<StorageTargetSpaceAllocation>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +56,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
         /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
         /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
-        internal StorageCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuInfo sku, int? cacheSizeGB, StorageCacheHealth health, IReadOnlyList<IPAddress> mountAddresses, StorageCacheProvisioningStateType? provisioningState, ResourceIdentifier subnet, StorageCacheUpgradeStatus upgradeStatus, StorageCacheUpgradeSettings upgradeSettings, StorageCacheNetworkSettings networkSettings, StorageCacheEncryptionSettings encryptionSettings, StorageCacheSecuritySettings securitySettings, StorageCacheDirectorySettings directoryServicesSettings, IList<string> zones, IReadOnlyList<PrimingJob> primingJobs, IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, StorageCacheSkuInfo sku, int? cacheSizeGB, StorageCacheHealth health, IReadOnlyList<IPAddress> mountAddresses, StorageCacheProvisioningStateType? provisioningState, ResourceIdentifier subnet, StorageCacheUpgradeStatus upgradeStatus, StorageCacheUpgradeSettings upgradeSettings, StorageCacheNetworkSettings networkSettings, StorageCacheEncryptionSettings encryptionSettings, StorageCacheSecuritySettings securitySettings, StorageCacheDirectorySettings directoryServicesSettings, IList<string> zones, IReadOnlyList<PrimingJob> primingJobs, IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -70,6 +75,12 @@ namespace Azure.ResourceManager.StorageCache
             Zones = zones;
             PrimingJobs = primingJobs;
             SpaceAllocation = spaceAllocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheData"/> for deserialization. </summary>
+        internal StorageCacheData()
+        {
         }
 
         /// <summary> The identity of the cache, if configured. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceDatabaseBackupSetting : IUtf8JsonSerializable
+    public partial class AppServiceDatabaseBackupSetting : IUtf8JsonSerializable, IJsonModel<AppServiceDatabaseBackupSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDatabaseBackupSetting>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppServiceDatabaseBackupSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppServiceDatabaseBackupSetting>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppServiceDatabaseBackupSetting>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
@@ -32,11 +43,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceDatabaseBackupSetting DeserializeAppServiceDatabaseBackupSetting(JsonElement element)
+        AppServiceDatabaseBackupSetting IJsonModel<AppServiceDatabaseBackupSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceDatabaseBackupSetting(document.RootElement, options);
+        }
+
+        internal static AppServiceDatabaseBackupSetting DeserializeAppServiceDatabaseBackupSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +85,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> name = default;
             Optional<string> connectionStringName = default;
             Optional<string> connectionString = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseType"u8))
@@ -67,8 +109,38 @@ namespace Azure.ResourceManager.AppService.Models
                     connectionString = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceDatabaseBackupSetting(databaseType, name.Value, connectionStringName.Value, connectionString.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceDatabaseBackupSetting(databaseType, name.Value, connectionStringName.Value, connectionString.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceDatabaseBackupSetting>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppServiceDatabaseBackupSetting IPersistableModel<AppServiceDatabaseBackupSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppServiceDatabaseBackupSetting)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppServiceDatabaseBackupSetting(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppServiceDatabaseBackupSetting>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

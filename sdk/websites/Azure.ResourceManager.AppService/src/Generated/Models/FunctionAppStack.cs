@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Function App Stack. </summary>
     public partial class FunctionAppStack : ResourceData
     {
-        /// <summary> Initializes a new instance of FunctionAppStack. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionAppStack"/>. </summary>
         public FunctionAppStack()
         {
             MajorVersions = new ChangeTrackingList<FunctionAppMajorVersion>();
         }
 
-        /// <summary> Initializes a new instance of FunctionAppStack. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppStack"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,7 +35,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="majorVersions"> List of major versions available. </param>
         /// <param name="preferredOS"> Function App stack preferred OS. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppStack(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayText, string value, IReadOnlyList<FunctionAppMajorVersion> majorVersions, StackPreferredOS? preferredOS, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             DisplayText = displayText;
@@ -39,6 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             MajorVersions = majorVersions;
             PreferredOS = preferredOS;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Function App stack location. </summary>

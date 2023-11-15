@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,7 +14,10 @@ namespace Azure.AI.Translation.Text
     /// <summary> An object describing the detected language. </summary>
     public partial class DetectedLanguage
     {
-        /// <summary> Initializes a new instance of DetectedLanguage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
         /// <param name="score">
         /// A float value indicating the confidence in the result.
@@ -26,6 +30,26 @@ namespace Azure.AI.Translation.Text
 
             Language = language;
             Score = score;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/>. </summary>
+        /// <param name="language"> A string representing the code of the detected language. </param>
+        /// <param name="score">
+        /// A float value indicating the confidence in the result.
+        /// The score is between zero and one and a low score indicates a low confidence.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DetectedLanguage(string language, float score, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Language = language;
+            Score = score;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectedLanguage"/> for deserialization. </summary>
+        internal DetectedLanguage()
+        {
         }
 
         /// <summary> A string representing the code of the detected language. </summary>

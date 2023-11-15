@@ -5,17 +5,27 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class PiiEntitiesDocumentResult : IUtf8JsonSerializable
+    internal partial class PiiEntitiesDocumentResult : IUtf8JsonSerializable, IJsonModel<PiiEntitiesDocumentResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiEntitiesDocumentResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PiiEntitiesDocumentResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PiiEntitiesDocumentResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PiiEntitiesDocumentResult>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("redactedText"u8);
             writer.WriteStringValue(RedactedText);
@@ -40,11 +50,40 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PiiEntitiesDocumentResult DeserializePiiEntitiesDocumentResult(JsonElement element)
+        PiiEntitiesDocumentResult IJsonModel<PiiEntitiesDocumentResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiEntitiesDocumentResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePiiEntitiesDocumentResult(document.RootElement, options);
+        }
+
+        internal static PiiEntitiesDocumentResult DeserializePiiEntitiesDocumentResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +93,8 @@ namespace Azure.AI.TextAnalytics.Models
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("redactedText"u8))
@@ -95,8 +136,38 @@ namespace Azure.AI.TextAnalytics.Models
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PiiEntitiesDocumentResult(id, warnings, Optional.ToNullable(statistics), redactedText, entities);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PiiEntitiesDocumentResult(id, warnings, Optional.ToNullable(statistics), serializedAdditionalRawData, redactedText, entities);
         }
+
+        BinaryData IPersistableModel<PiiEntitiesDocumentResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiEntitiesDocumentResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PiiEntitiesDocumentResult IPersistableModel<PiiEntitiesDocumentResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PiiEntitiesDocumentResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePiiEntitiesDocumentResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<PiiEntitiesDocumentResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

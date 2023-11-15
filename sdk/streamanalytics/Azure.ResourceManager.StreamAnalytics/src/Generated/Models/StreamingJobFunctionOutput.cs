@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes the output of a function. </summary>
     public partial class StreamingJobFunctionOutput
     {
-        /// <summary> Initializes a new instance of StreamingJobFunctionOutput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobFunctionOutput"/>. </summary>
         public StreamingJobFunctionOutput()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobFunctionOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobFunctionOutput"/>. </summary>
         /// <param name="dataType"> The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx. </param>
-        internal StreamingJobFunctionOutput(string dataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobFunctionOutput(string dataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataType = dataType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The (Azure Stream Analytics supported) data type of the function output. A list of valid Azure Stream Analytics data types are described at https://msdn.microsoft.com/en-us/library/azure/dn835065.aspx. </summary>

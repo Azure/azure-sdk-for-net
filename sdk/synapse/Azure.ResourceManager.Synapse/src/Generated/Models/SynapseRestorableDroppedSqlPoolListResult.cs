@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The response to a list restorable dropped Sql pools request. </summary>
     internal partial class SynapseRestorableDroppedSqlPoolListResult
     {
-        /// <summary> Initializes a new instance of SynapseRestorableDroppedSqlPoolListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorableDroppedSqlPoolListResult"/>. </summary>
         /// <param name="value"> A list of restorable dropped Sql pools. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SynapseRestorableDroppedSqlPoolListResult(IEnumerable<SynapseRestorableDroppedSqlPoolData> value)
@@ -26,11 +29,18 @@ namespace Azure.ResourceManager.Synapse.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SynapseRestorableDroppedSqlPoolListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorableDroppedSqlPoolListResult"/>. </summary>
         /// <param name="value"> A list of restorable dropped Sql pools. </param>
-        internal SynapseRestorableDroppedSqlPoolListResult(IReadOnlyList<SynapseRestorableDroppedSqlPoolData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseRestorableDroppedSqlPoolListResult(IReadOnlyList<SynapseRestorableDroppedSqlPoolData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseRestorableDroppedSqlPoolListResult"/> for deserialization. </summary>
+        internal SynapseRestorableDroppedSqlPoolListResult()
+        {
         }
 
         /// <summary> A list of restorable dropped Sql pools. </summary>

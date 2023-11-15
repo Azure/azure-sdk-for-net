@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Description of a backup which will be performed. </summary>
     public partial class WebAppBackupInfo : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppBackupInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppBackupInfo"/>. </summary>
         public WebAppBackupInfo()
         {
             Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
-        /// <summary> Initializes a new instance of WebAppBackupInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppBackupInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +35,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="backupSchedule"> Schedule for the backup if it is executed periodically. </param>
         /// <param name="databases"> Databases included in the backup. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebAppBackupInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupName, bool? isEnabled, Uri storageAccountUri, WebAppBackupSchedule backupSchedule, IList<AppServiceDatabaseBackupSetting> databases, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppBackupInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupName, bool? isEnabled, Uri storageAccountUri, WebAppBackupSchedule backupSchedule, IList<AppServiceDatabaseBackupSetting> databases, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackupName = backupName;
             IsEnabled = isEnabled;
@@ -40,6 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
             BackupSchedule = backupSchedule;
             Databases = databases;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the backup. </summary>

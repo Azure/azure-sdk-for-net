@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     /// <summary> List of iSCSI Targets. </summary>
     internal partial class DiskPoolIscsiTargetList
     {
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetList"/>. </summary>
         /// <param name="value"> An array of iSCSI Targets in a Disk Pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskPoolIscsiTargetList(IEnumerable<DiskPoolIscsiTargetData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.StoragePool.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiskPoolIscsiTargetList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetList"/>. </summary>
         /// <param name="value"> An array of iSCSI Targets in a Disk Pool. </param>
         /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
-        internal DiskPoolIscsiTargetList(IReadOnlyList<DiskPoolIscsiTargetData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolIscsiTargetList(IReadOnlyList<DiskPoolIscsiTargetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetList"/> for deserialization. </summary>
+        internal DiskPoolIscsiTargetList()
+        {
         }
 
         /// <summary> An array of iSCSI Targets in a Disk Pool. </summary>

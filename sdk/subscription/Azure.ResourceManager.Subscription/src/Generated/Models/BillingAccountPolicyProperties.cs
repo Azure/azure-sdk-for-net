@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Subscription.Models
     /// <summary> Put billing account policies response properties. </summary>
     public partial class BillingAccountPolicyProperties
     {
-        /// <summary> Initializes a new instance of BillingAccountPolicyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyProperties"/>. </summary>
         internal BillingAccountPolicyProperties()
         {
             ServiceTenants = new ChangeTrackingList<ServiceTenant>();
         }
 
-        /// <summary> Initializes a new instance of BillingAccountPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAccountPolicyProperties"/>. </summary>
         /// <param name="serviceTenants"> Service tenant for the billing account. </param>
         /// <param name="allowTransfers"> Determine if the transfers are allowed for the billing account. </param>
-        internal BillingAccountPolicyProperties(IReadOnlyList<ServiceTenant> serviceTenants, bool? allowTransfers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingAccountPolicyProperties(IReadOnlyList<ServiceTenant> serviceTenants, bool? allowTransfers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceTenants = serviceTenants;
             AllowTransfers = allowTransfers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Service tenant for the billing account. </summary>

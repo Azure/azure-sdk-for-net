@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Class representing the ONVIF MediaProfiles. </summary>
     public partial class MediaProfile
     {
-        /// <summary> Initializes a new instance of MediaProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaProfile"/>. </summary>
         public MediaProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaProfile"/>. </summary>
         /// <param name="name"> The name of the Media Profile. </param>
         /// <param name="mediaUri"> Object representing the URI that will be used to request for media streaming. </param>
         /// <param name="videoEncoderConfiguration"> The Video encoder configuration. </param>
-        internal MediaProfile(string name, object mediaUri, VideoEncoderConfiguration videoEncoderConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaProfile(string name, object mediaUri, VideoEncoderConfiguration videoEncoderConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             MediaUri = mediaUri;
             VideoEncoderConfiguration = videoEncoderConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the Media Profile. </summary>

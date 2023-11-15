@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerThrottlingInfo. </summary>
     public partial class ContainerThrottlingInfo
     {
-        /// <summary> Initializes a new instance of ContainerThrottlingInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerThrottlingInfo"/>. </summary>
         public ContainerThrottlingInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerThrottlingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerThrottlingInfo"/>. </summary>
         /// <param name="periods"></param>
         /// <param name="throttledPeriods"></param>
         /// <param name="throttledTime"></param>
-        internal ContainerThrottlingInfo(int? periods, int? throttledPeriods, int? throttledTime)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerThrottlingInfo(int? periods, int? throttledPeriods, int? throttledTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Periods = periods;
             ThrottledPeriods = throttledPeriods;
             ThrottledTime = throttledTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the periods. </summary>

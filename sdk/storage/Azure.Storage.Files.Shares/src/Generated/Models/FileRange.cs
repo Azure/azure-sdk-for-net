@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> An Azure Storage file range. </summary>
     internal partial class FileRange
     {
-        /// <summary> Initializes a new instance of FileRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileRange"/>. </summary>
         /// <param name="start"> Start of the range. </param>
         /// <param name="end"> End of the range. </param>
         internal FileRange(long start, long end)
         {
             Start = start;
             End = end;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileRange"/>. </summary>
+        /// <param name="start"> Start of the range. </param>
+        /// <param name="end"> End of the range. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileRange(long start, long end, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Start = start;
+            End = end;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileRange"/> for deserialization. </summary>
+        internal FileRange()
+        {
         }
 
         /// <summary> Start of the range. </summary>

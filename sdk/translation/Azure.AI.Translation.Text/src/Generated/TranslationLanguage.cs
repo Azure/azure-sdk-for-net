@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -16,7 +17,10 @@ namespace Azure.AI.Translation.Text
     /// </summary>
     public partial class TranslationLanguage
     {
-        /// <summary> Initializes a new instance of TranslationLanguage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
@@ -30,6 +34,25 @@ namespace Azure.AI.Translation.Text
             Name = name;
             NativeName = nativeName;
             Dir = dir;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/>. </summary>
+        /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
+        /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TranslationLanguage(string name, string nativeName, string dir, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            NativeName = nativeName;
+            Dir = dir;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranslationLanguage"/> for deserialization. </summary>
+        internal TranslationLanguage()
+        {
         }
 
         /// <summary> Display name of the language in the locale requested via Accept-Language header. </summary>

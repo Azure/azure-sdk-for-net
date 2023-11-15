@@ -5,18 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> Contains an input document to be analyzed by the service. </summary>
     internal partial class MultiLanguageInput
     {
-        /// <summary> Initializes a new instance of MultiLanguageInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageInput"/>. </summary>
         /// <param name="id"> A unique, non-empty document identifier. </param>
         /// <param name="text"> The input text to process. </param>
         public MultiLanguageInput(string id, string text)
         {
             Id = id;
             Text = text;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageInput"/>. </summary>
+        /// <param name="id"> A unique, non-empty document identifier. </param>
+        /// <param name="text"> The input text to process. </param>
+        /// <param name="language"> (Optional) This is the 2 letter ISO 639-1 representation of a language. For example, use "en" for English; "es" for Spanish etc. If not set, use "en" for English as default. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MultiLanguageInput(string id, string text, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Text = text;
+            Language = language;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageInput"/> for deserialization. </summary>
+        internal MultiLanguageInput()
+        {
         }
 
         /// <summary> A unique, non-empty document identifier. </summary>

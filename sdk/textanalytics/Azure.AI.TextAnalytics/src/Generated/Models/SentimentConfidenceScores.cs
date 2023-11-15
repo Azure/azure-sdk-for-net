@@ -5,10 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> Represents the confidence scores between 0 and 1 across all sentiment classes: positive, neutral, negative. </summary>
     public partial class SentimentConfidenceScores
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SentimentConfidenceScores"/>. </summary>
+        /// <param name="positive"> Confidence score for positive sentiment. </param>
+        /// <param name="neutral"> Confidence score for neutral sentiment. </param>
+        /// <param name="negative"> Confidence score for negative sentiment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SentimentConfidenceScores(double positive, double neutral, double negative, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Positive = positive;
+            Neutral = neutral;
+            Negative = negative;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SentimentConfidenceScores"/> for deserialization. </summary>
+        internal SentimentConfidenceScores()
+        {
+        }
     }
 }

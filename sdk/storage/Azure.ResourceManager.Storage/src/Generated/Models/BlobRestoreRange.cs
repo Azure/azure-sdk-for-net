@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Blob range. </summary>
     public partial class BlobRestoreRange
     {
-        /// <summary> Initializes a new instance of BlobRestoreRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreRange"/>. </summary>
         /// <param name="startRange"> Blob start range. This is inclusive. Empty means account start. </param>
         /// <param name="endRange"> Blob end range. This is exclusive. Empty means account end. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startRange"/> or <paramref name="endRange"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Storage.Models
 
             StartRange = startRange;
             EndRange = endRange;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreRange"/>. </summary>
+        /// <param name="startRange"> Blob start range. This is inclusive. Empty means account start. </param>
+        /// <param name="endRange"> Blob end range. This is exclusive. Empty means account end. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobRestoreRange(string startRange, string endRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartRange = startRange;
+            EndRange = endRange;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreRange"/> for deserialization. </summary>
+        internal BlobRestoreRange()
+        {
         }
 
         /// <summary> Blob start range. This is inclusive. Empty means account start. </summary>

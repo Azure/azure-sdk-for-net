@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
@@ -13,7 +14,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The Video Analyzer edge module can act as a transparent gateway for video, enabling IoT devices to send video to the cloud from behind a firewall. A remote device adapter should be created for each such IoT device. Communication between the cloud and IoT device would then flow via the Video Analyzer edge module. </summary>
     internal partial class RemoteDeviceAdapterSetRequestBody : MethodRequest
     {
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterSetRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterSetRequestBody"/>. </summary>
         /// <param name="name"> The unique identifier for the remote device adapter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RemoteDeviceAdapterSetRequestBody(string name)
@@ -24,18 +25,24 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = "RemoteDeviceAdapterSetRequestBody";
         }
 
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterSetRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterSetRequestBody"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The unique identifier for the remote device adapter. </param>
         /// <param name="systemData"> Read-only system metadata associated with this object. </param>
         /// <param name="properties"> Properties of the remote device adapter. </param>
-        internal RemoteDeviceAdapterSetRequestBody(string methodName, string apiVersion, string name, SystemData systemData, RemoteDeviceAdapterProperties properties) : base(methodName, apiVersion)
+        internal RemoteDeviceAdapterSetRequestBody(string methodName, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SystemData systemData, RemoteDeviceAdapterProperties properties) : base(methodName, apiVersion, serializedAdditionalRawData)
         {
             Name = name;
             SystemData = systemData;
             Properties = properties;
             MethodName = methodName ?? "RemoteDeviceAdapterSetRequestBody";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterSetRequestBody"/> for deserialization. </summary>
+        internal RemoteDeviceAdapterSetRequestBody()
+        {
         }
 
         /// <summary> The unique identifier for the remote device adapter. </summary>

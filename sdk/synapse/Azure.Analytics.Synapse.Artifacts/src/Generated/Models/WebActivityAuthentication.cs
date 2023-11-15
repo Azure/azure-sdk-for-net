@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -13,7 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Web activity authentication properties. </summary>
     public partial class WebActivityAuthentication
     {
-        /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         /// <param name="type"> Web activity authentication (Basic/ClientCertificate/MSI). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public WebActivityAuthentication(string type)
@@ -23,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         /// <param name="type"> Web activity authentication (Basic/ClientCertificate/MSI). </param>
         /// <param name="pfx">
         /// Base64-encoded contents of a PFX file.
@@ -39,7 +43,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="resource"> Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="userTenant"> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal WebActivityAuthentication(string type, SecretBase pfx, object username, SecretBase password, object resource, object userTenant, CredentialReference credential)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebActivityAuthentication(string type, SecretBase pfx, object username, SecretBase password, object resource, object userTenant, CredentialReference credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Pfx = pfx;
@@ -48,6 +53,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Resource = resource;
             UserTenant = userTenant;
             Credential = credential;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/> for deserialization. </summary>
+        internal WebActivityAuthentication()
+        {
         }
 
         /// <summary> Web activity authentication (Basic/ClientCertificate/MSI). </summary>

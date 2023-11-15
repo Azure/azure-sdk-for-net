@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Publishing Credentials Policies entity collection ARM resource. </summary>
     internal partial class PublishingCredentialsPoliciesListResult
     {
-        /// <summary> Initializes a new instance of PublishingCredentialsPoliciesListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PublishingCredentialsPoliciesListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PublishingCredentialsPoliciesListResult(IEnumerable<CsmPublishingCredentialsPoliciesEntityData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PublishingCredentialsPoliciesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishingCredentialsPoliciesListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal PublishingCredentialsPoliciesListResult(IReadOnlyList<CsmPublishingCredentialsPoliciesEntityData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PublishingCredentialsPoliciesListResult(IReadOnlyList<CsmPublishingCredentialsPoliciesEntityData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PublishingCredentialsPoliciesListResult"/> for deserialization. </summary>
+        internal PublishingCredentialsPoliciesListResult()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

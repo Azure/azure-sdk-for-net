@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The details of Azure-SSIS integration runtime outbound network dependency endpoint. </summary>
     public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/>. </summary>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/>. </summary>
         /// <param name="port"> The port of endpoint. </param>
-        internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The port of endpoint. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
@@ -13,22 +16,27 @@ namespace Azure.ResourceManager.AppService.Models
     /// </summary>
     public partial class MetricDimension
     {
-        /// <summary> Initializes a new instance of MetricDimension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         internal MetricDimension()
         {
         }
 
-        /// <summary> Initializes a new instance of MetricDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="internalName"></param>
         /// <param name="isToBeExportedForShoebox"></param>
-        internal MetricDimension(string name, string displayName, string internalName, bool? isToBeExportedForShoebox)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDimension(string name, string displayName, string internalName, bool? isToBeExportedForShoebox, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
             InternalName = internalName;
             IsToBeExportedForShoebox = isToBeExportedForShoebox;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

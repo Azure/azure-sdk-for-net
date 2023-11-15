@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Collection of SKU information. </summary>
     public partial class AppServiceSkuResult
     {
-        /// <summary> Initializes a new instance of AppServiceSkuResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuResult"/>. </summary>
         internal AppServiceSkuResult()
         {
             Skus = new ChangeTrackingList<GlobalCsmSkuDescription>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceSkuResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceSkuResult"/>. </summary>
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="skus"> List of SKUs the subscription is able to use. </param>
-        internal AppServiceSkuResult(ResourceType? resourceType, IReadOnlyList<GlobalCsmSkuDescription> skus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceSkuResult(ResourceType? resourceType, IReadOnlyList<GlobalCsmSkuDescription> skus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Skus = skus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource type that this SKU applies to. </summary>

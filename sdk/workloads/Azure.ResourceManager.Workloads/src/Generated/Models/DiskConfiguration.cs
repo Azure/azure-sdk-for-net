@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The Disk Configuration Details. </summary>
     internal partial class DiskConfiguration
     {
-        /// <summary> Initializes a new instance of DiskConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskConfiguration"/>. </summary>
         public DiskConfiguration()
         {
             DiskVolumeConfigurations = new ChangeTrackingDictionary<string, DiskVolumeConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of DiskConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskConfiguration"/>. </summary>
         /// <param name="diskVolumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </param>
-        internal DiskConfiguration(IDictionary<string, DiskVolumeConfiguration> diskVolumeConfigurations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskConfiguration(IDictionary<string, DiskVolumeConfiguration> diskVolumeConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskVolumeConfigurations = diskVolumeConfigurations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </summary>

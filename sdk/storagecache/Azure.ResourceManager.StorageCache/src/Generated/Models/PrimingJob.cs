@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A priming job instance. </summary>
     public partial class PrimingJob
     {
-        /// <summary> Initializes a new instance of PrimingJob. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrimingJob"/>. </summary>
         /// <param name="primingJobName"> The priming job name. </param>
         /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobName"/> or <paramref name="primingManifestUri"/> is null. </exception>
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             PrimingManifestUri = primingManifestUri;
         }
 
-        /// <summary> Initializes a new instance of PrimingJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrimingJob"/>. </summary>
         /// <param name="primingJobName"> The priming job name. </param>
         /// <param name="primingManifestUri"> The URL for the priming manifest file to download. This file must be readable from the HPC Cache. When the file is in Azure blob storage the URL should include a Shared Access Signature (SAS) granting read permissions on the blob. </param>
         /// <param name="primingJobId"> The unique identifier of the priming job. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="primingJobStatus"> The status code of the priming job. </param>
         /// <param name="primingJobDetails"> The job details or error information if any. </param>
         /// <param name="primingJobPercentComplete"> The current progress of the priming job, as a percentage. </param>
-        internal PrimingJob(string primingJobName, Uri primingManifestUri, string primingJobId, PrimingJobState? primingJobState, string primingJobStatus, string primingJobDetails, double? primingJobPercentComplete)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrimingJob(string primingJobName, Uri primingManifestUri, string primingJobId, PrimingJobState? primingJobState, string primingJobStatus, string primingJobDetails, double? primingJobPercentComplete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimingJobName = primingJobName;
             PrimingManifestUri = primingManifestUri;
@@ -43,6 +48,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             PrimingJobStatus = primingJobStatus;
             PrimingJobDetails = primingJobDetails;
             PrimingJobPercentComplete = primingJobPercentComplete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PrimingJob"/> for deserialization. </summary>
+        internal PrimingJob()
+        {
         }
 
         /// <summary> The priming job name. </summary>
