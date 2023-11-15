@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.NetApp;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> List of capacity pool resources. </summary>
     internal partial class CapacityPoolList
     {
-        /// <summary> Initializes a new instance of CapacityPoolList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CapacityPoolList"/>. </summary>
         internal CapacityPoolList()
         {
             Value = new ChangeTrackingList<CapacityPoolData>();
         }
 
-        /// <summary> Initializes a new instance of CapacityPoolList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapacityPoolList"/>. </summary>
         /// <param name="value"> List of Capacity pools. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        internal CapacityPoolList(IReadOnlyList<CapacityPoolData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CapacityPoolList(IReadOnlyList<CapacityPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Capacity pools. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -13,7 +14,10 @@ namespace Azure.AI.OpenAI
     /// <summary> The configuration information for an audio transcription request. </summary>
     public partial class AudioTranscriptionOptions
     {
-        /// <summary> Initializes a new instance of AudioTranscriptionOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AudioTranscriptionOptions"/>. </summary>
         /// <param name="audioData">
         /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
         ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
@@ -34,7 +38,8 @@ namespace Azure.AI.OpenAI
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </param>
         /// <param name="deploymentName"> The model to use for this transcription request. </param>
-        internal AudioTranscriptionOptions(BinaryData audioData, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string deploymentName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AudioTranscriptionOptions(BinaryData audioData, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AudioData = audioData;
             ResponseFormat = responseFormat;
@@ -42,6 +47,7 @@ namespace Azure.AI.OpenAI
             Prompt = prompt;
             Temperature = temperature;
             DeploymentName = deploymentName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The requested format of the transcription response data, which will influence the content and detail of the result. </summary>
         public AudioTranscriptionFormat? ResponseFormat { get; set; }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Pool change request. </summary>
     public partial class NetAppVolumePoolChangeContent
     {
-        /// <summary> Initializes a new instance of NetAppVolumePoolChangeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/>. </summary>
         /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="newPoolResourceId"/> is null. </exception>
         public NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.NetApp.Models
             Argument.AssertNotNull(newPoolResourceId, nameof(newPoolResourceId));
 
             NewPoolResourceId = newPoolResourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/>. </summary>
+        /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NewPoolResourceId = newPoolResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/> for deserialization. </summary>
+        internal NetAppVolumePoolChangeContent()
+        {
         }
 
         /// <summary> Resource id of the pool to move volume to. </summary>

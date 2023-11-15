@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration for intrusion detection mode and rules. </summary>
     public partial class FirewallPolicyIntrusionDetection
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetection"/>. </summary>
         public FirewallPolicyIntrusionDetection()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetection"/>. </summary>
         /// <param name="mode"> Intrusion detection general state. </param>
         /// <param name="configuration"> Intrusion detection configuration properties. </param>
-        internal FirewallPolicyIntrusionDetection(FirewallPolicyIntrusionDetectionStateType? mode, FirewallPolicyIntrusionDetectionConfiguration configuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyIntrusionDetection(FirewallPolicyIntrusionDetectionStateType? mode, FirewallPolicyIntrusionDetectionConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             Configuration = configuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Intrusion detection general state. </summary>

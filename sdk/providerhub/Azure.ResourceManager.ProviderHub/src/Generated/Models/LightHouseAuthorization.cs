@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The LightHouseAuthorization. </summary>
     public partial class LightHouseAuthorization
     {
-        /// <summary> Initializes a new instance of LightHouseAuthorization. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LightHouseAuthorization"/>. </summary>
         /// <param name="principalId"></param>
         /// <param name="roleDefinitionId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> or <paramref name="roleDefinitionId"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LightHouseAuthorization"/>. </summary>
+        /// <param name="principalId"></param>
+        /// <param name="roleDefinitionId"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LightHouseAuthorization(string principalId, string roleDefinitionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PrincipalId = principalId;
+            RoleDefinitionId = roleDefinitionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LightHouseAuthorization"/> for deserialization. </summary>
+        internal LightHouseAuthorization()
+        {
         }
 
         /// <summary> Gets or sets the principal id. </summary>

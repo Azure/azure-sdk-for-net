@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     /// </summary>
     public partial class MySqlFlexibleServerConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationData"/>. </summary>
         public MySqlFlexibleServerConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +43,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="isReadOnly"> If is the configuration read only. </param>
         /// <param name="isConfigPendingRestart"> If is the configuration pending restart or not. </param>
         /// <param name="isDynamicConfig"> If is the configuration dynamic. </param>
-        internal MySqlFlexibleServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string currentValue, string description, string documentationLink, string defaultValue, string dataType, string allowedValues, MySqlFlexibleServerConfigurationSource? source, MySqlFlexibleServerConfigReadOnlyState? isReadOnly, MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart, MySqlFlexibleServerConfigDynamicState? isDynamicConfig) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string currentValue, string description, string documentationLink, string defaultValue, string dataType, string allowedValues, MySqlFlexibleServerConfigurationSource? source, MySqlFlexibleServerConfigReadOnlyState? isReadOnly, MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart, MySqlFlexibleServerConfigDynamicState? isDynamicConfig, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Value = value;
             CurrentValue = currentValue;
@@ -51,6 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             IsReadOnly = isReadOnly;
             IsConfigPendingRestart = isConfigPendingRestart;
             IsDynamicConfig = isDynamicConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the configuration. </summary>

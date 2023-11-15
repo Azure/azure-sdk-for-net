@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Details for KeyVault. </summary>
     public partial class NetworkAnalyticsKeyVaultContent
     {
-        /// <summary> Initializes a new instance of NetworkAnalyticsKeyVaultContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsKeyVaultContent"/>. </summary>
         /// <param name="keyVaultUri"> key vault url. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/> is null. </exception>
         public NetworkAnalyticsKeyVaultContent(Uri keyVaultUri)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
 
             KeyVaultUri = keyVaultUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsKeyVaultContent"/>. </summary>
+        /// <param name="keyVaultUri"> key vault url. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkAnalyticsKeyVaultContent(Uri keyVaultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyVaultUri = keyVaultUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalyticsKeyVaultContent"/> for deserialization. </summary>
+        internal NetworkAnalyticsKeyVaultContent()
+        {
         }
 
         /// <summary> key vault url. </summary>

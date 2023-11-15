@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -12,23 +14,28 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Log Analytics destination. </summary>
     public partial class LogAnalyticsDestination
     {
-        /// <summary> Initializes a new instance of LogAnalyticsDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDestination"/>. </summary>
         public LogAnalyticsDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of LogAnalyticsDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDestination"/>. </summary>
         /// <param name="workspaceResourceId"> The resource ID of the Log Analytics workspace. </param>
         /// <param name="workspaceId"> The Customer ID of the Log Analytics workspace. </param>
         /// <param name="name">
         /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
-        internal LogAnalyticsDestination(ResourceIdentifier workspaceResourceId, string workspaceId, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogAnalyticsDestination(ResourceIdentifier workspaceResourceId, string workspaceId, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkspaceResourceId = workspaceResourceId;
             WorkspaceId = workspaceId;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource ID of the Log Analytics workspace. </summary>

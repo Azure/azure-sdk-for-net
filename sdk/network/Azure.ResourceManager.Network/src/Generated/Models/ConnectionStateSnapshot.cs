@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Connection state snapshot. </summary>
     public partial class ConnectionStateSnapshot
     {
-        /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionStateSnapshot"/>. </summary>
         internal ConnectionStateSnapshot()
         {
             Hops = new ChangeTrackingList<ConnectivityHopInfo>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionStateSnapshot. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStateSnapshot"/>. </summary>
         /// <param name="networkConnectionState"> The connection state. </param>
         /// <param name="startOn"> The start time of the connection snapshot. </param>
         /// <param name="endOn"> The end time of the connection snapshot. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="probesSent"> The number of sent probes. </param>
         /// <param name="probesFailed"> The number of failed probes. </param>
         /// <param name="hops"> List of hops between the source and the destination. </param>
-        internal ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState, DateTimeOffset? startOn, DateTimeOffset? endOn, EvaluationState? evaluationState, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IReadOnlyList<ConnectivityHopInfo> hops)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionStateSnapshot(NetworkConnectionState? networkConnectionState, DateTimeOffset? startOn, DateTimeOffset? endOn, EvaluationState? evaluationState, long? avgLatencyInMs, long? minLatencyInMs, long? maxLatencyInMs, long? probesSent, long? probesFailed, IReadOnlyList<ConnectivityHopInfo> hops, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkConnectionState = networkConnectionState;
             StartOn = startOn;
@@ -43,6 +47,7 @@ namespace Azure.ResourceManager.Network.Models
             ProbesSent = probesSent;
             ProbesFailed = probesFailed;
             Hops = hops;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The connection state. </summary>

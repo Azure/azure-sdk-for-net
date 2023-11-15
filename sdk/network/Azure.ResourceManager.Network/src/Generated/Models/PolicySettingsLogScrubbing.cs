@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> To scrub sensitive log fields. </summary>
     public partial class PolicySettingsLogScrubbing
     {
-        /// <summary> Initializes a new instance of PolicySettingsLogScrubbing. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicySettingsLogScrubbing"/>. </summary>
         public PolicySettingsLogScrubbing()
         {
             ScrubbingRules = new ChangeTrackingList<WebApplicationFirewallScrubbingRules>();
         }
 
-        /// <summary> Initializes a new instance of PolicySettingsLogScrubbing. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySettingsLogScrubbing"/>. </summary>
         /// <param name="state"> State of the log scrubbing config. Default value is Enabled. </param>
         /// <param name="scrubbingRules"> The rules that are applied to the logs for scrubbing. </param>
-        internal PolicySettingsLogScrubbing(WebApplicationFirewallScrubbingState? state, IList<WebApplicationFirewallScrubbingRules> scrubbingRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySettingsLogScrubbing(WebApplicationFirewallScrubbingState? state, IList<WebApplicationFirewallScrubbingRules> scrubbingRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             ScrubbingRules = scrubbingRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>

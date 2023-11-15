@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Configuration for uploading packet core diagnostics. </summary>
     internal partial class DiagnosticsUploadConfiguration
     {
-        /// <summary> Initializes a new instance of DiagnosticsUploadConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsUploadConfiguration"/>. </summary>
         /// <param name="storageAccountContainerUri"> The Storage Account Container URL to upload diagnostics to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountContainerUri"/> is null. </exception>
         public DiagnosticsUploadConfiguration(Uri storageAccountContainerUri)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Argument.AssertNotNull(storageAccountContainerUri, nameof(storageAccountContainerUri));
 
             StorageAccountContainerUri = storageAccountContainerUri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsUploadConfiguration"/>. </summary>
+        /// <param name="storageAccountContainerUri"> The Storage Account Container URL to upload diagnostics to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticsUploadConfiguration(Uri storageAccountContainerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StorageAccountContainerUri = storageAccountContainerUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticsUploadConfiguration"/> for deserialization. </summary>
+        internal DiagnosticsUploadConfiguration()
+        {
         }
 
         /// <summary> The Storage Account Container URL to upload diagnostics to. </summary>

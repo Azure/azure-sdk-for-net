@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Network related properties of a server. </summary>
     public partial class MySqlFlexibleServerHighAvailability
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerHighAvailability"/>. </summary>
         public MySqlFlexibleServerHighAvailability()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerHighAvailability"/>. </summary>
         /// <param name="mode"> High availability mode for a server. </param>
         /// <param name="state"> The state of server high availability. </param>
         /// <param name="standbyAvailabilityZone"> Availability zone of the standby server. </param>
-        internal MySqlFlexibleServerHighAvailability(MySqlFlexibleServerHighAvailabilityMode? mode, MySqlFlexibleServerHighAvailabilityState? state, string standbyAvailabilityZone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerHighAvailability(MySqlFlexibleServerHighAvailabilityMode? mode, MySqlFlexibleServerHighAvailabilityState? state, string standbyAvailabilityZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             State = state;
             StandbyAvailabilityZone = standbyAvailabilityZone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> High availability mode for a server. </summary>

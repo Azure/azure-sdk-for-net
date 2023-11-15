@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Defines contents of a web application rule. </summary>
     public partial class WebApplicationFirewallCustomRule
     {
-        /// <summary> Initializes a new instance of WebApplicationFirewallCustomRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallCustomRule"/>. </summary>
         /// <param name="priority"> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="ruleType"> The rule type. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of WebApplicationFirewallCustomRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallCustomRule"/>. </summary>
         /// <param name="name"> The name of the resource that is unique within a policy. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="priority"> Priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
@@ -44,7 +47,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="matchConditions"> List of match conditions. </param>
         /// <param name="groupByUserSession"> List of user session identifier group by clauses. </param>
         /// <param name="action"> Type of Actions. </param>
-        internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallState? state, ApplicationGatewayFirewallRateLimitDuration? rateLimitDuration, int? rateLimitThreshold, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, IList<GroupByUserSession> groupByUserSession, WebApplicationFirewallAction action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationFirewallCustomRule(string name, ETag? etag, int priority, WebApplicationFirewallState? state, ApplicationGatewayFirewallRateLimitDuration? rateLimitDuration, int? rateLimitThreshold, WebApplicationFirewallRuleType ruleType, IList<MatchCondition> matchConditions, IList<GroupByUserSession> groupByUserSession, WebApplicationFirewallAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ETag = etag;
@@ -56,6 +60,12 @@ namespace Azure.ResourceManager.Network.Models
             MatchConditions = matchConditions;
             GroupByUserSession = groupByUserSession;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallCustomRule"/> for deserialization. </summary>
+        internal WebApplicationFirewallCustomRule()
+        {
         }
 
         /// <summary> The name of the resource that is unique within a policy. This name can be used to access the resource. </summary>

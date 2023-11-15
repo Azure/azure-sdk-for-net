@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters that define the retention policy for flow log. </summary>
     public partial class RetentionPolicyParameters
     {
-        /// <summary> Initializes a new instance of RetentionPolicyParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RetentionPolicyParameters"/>. </summary>
         public RetentionPolicyParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of RetentionPolicyParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetentionPolicyParameters"/>. </summary>
         /// <param name="days"> Number of days to retain flow log records. </param>
         /// <param name="enabled"> Flag to enable/disable retention. </param>
-        internal RetentionPolicyParameters(int? days, bool? enabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RetentionPolicyParameters(int? days, bool? enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Days = days;
             Enabled = enabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of days to retain flow log records. </summary>

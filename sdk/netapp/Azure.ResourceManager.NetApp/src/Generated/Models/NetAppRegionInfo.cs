@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Provides region specific information. </summary>
     public partial class NetAppRegionInfo
     {
-        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppRegionInfo"/>. </summary>
         internal NetAppRegionInfo()
         {
             AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMapping>();
         }
 
-        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppRegionInfo"/>. </summary>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
         /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
-        internal NetAppRegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppRegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageToNetworkProximity = storageToNetworkProximity;
             AvailabilityZoneMappings = availabilityZoneMappings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provides storage to network proximity information in the region. </summary>

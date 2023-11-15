@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> A metric describing the usage of a resource. </summary>
     public partial class OperationalInsightsUsageMetric
     {
-        /// <summary> Initializes a new instance of OperationalInsightsUsageMetric. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsUsageMetric"/>. </summary>
         internal OperationalInsightsUsageMetric()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsUsageMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsUsageMetric"/>. </summary>
         /// <param name="name"> The name of the metric. </param>
         /// <param name="unit"> The units used for the metric. </param>
         /// <param name="currentValue"> The current value of the metric. </param>
         /// <param name="limit"> The quota limit for the metric. </param>
         /// <param name="nextResetOn"> The time that the metric's value will reset. </param>
         /// <param name="quotaPeriod"> The quota period that determines the length of time between value resets. </param>
-        internal OperationalInsightsUsageMetric(OperationalInsightsMetricName name, string unit, double? currentValue, double? limit, DateTimeOffset? nextResetOn, string quotaPeriod)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsUsageMetric(OperationalInsightsMetricName name, string unit, double? currentValue, double? limit, DateTimeOffset? nextResetOn, string quotaPeriod, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Unit = unit;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Limit = limit;
             NextResetOn = nextResetOn;
             QuotaPeriod = quotaPeriod;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the metric. </summary>

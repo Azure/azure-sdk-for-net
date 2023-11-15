@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,11 +15,35 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The type used for update operations of the DataProduct. </summary>
     public partial class DataProductPatch
     {
-        /// <summary> Initializes a new instance of DataProductPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProductPatch"/>. </summary>
         public DataProductPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Owners = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProductPatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="owners"> List of name or email associated with data product resource deployment. </param>
+        /// <param name="purviewAccount"> Purview account url for data product to connect to. </param>
+        /// <param name="purviewCollection"> Purview collection url for data product to connect to. </param>
+        /// <param name="privateLinksEnabled"> Flag to enable or disable private link for data product resource. </param>
+        /// <param name="currentMinorVersion"> Current configured minor version of the data product resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProductPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, IList<string> owners, string purviewAccount, string purviewCollection, DataProductControlState? privateLinksEnabled, string currentMinorVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Identity = identity;
+            Tags = tags;
+            Owners = owners;
+            PurviewAccount = purviewAccount;
+            PurviewCollection = purviewCollection;
+            PrivateLinksEnabled = privateLinksEnabled;
+            CurrentMinorVersion = currentMinorVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>

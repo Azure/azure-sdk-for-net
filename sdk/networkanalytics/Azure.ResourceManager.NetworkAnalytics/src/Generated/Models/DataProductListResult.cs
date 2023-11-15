@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> The response of a DataProduct list operation. </summary>
     internal partial class DataProductListResult
     {
-        /// <summary> Initializes a new instance of DataProductListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProductListResult"/>. </summary>
         /// <param name="value"> The DataProduct items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DataProductListResult(IEnumerable<DataProductData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProductListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductListResult"/>. </summary>
         /// <param name="value"> The DataProduct items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal DataProductListResult(IReadOnlyList<DataProductData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProductListResult(IReadOnlyList<DataProductData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProductListResult"/> for deserialization. </summary>
+        internal DataProductListResult()
+        {
         }
 
         /// <summary> The DataProduct items on this page. </summary>

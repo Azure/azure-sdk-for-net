@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of the routing intent result and a URL nextLink to get the next set of results. </summary>
     internal partial class ListRoutingIntentResult
     {
-        /// <summary> Initializes a new instance of ListRoutingIntentResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListRoutingIntentResult"/>. </summary>
         internal ListRoutingIntentResult()
         {
             Value = new ChangeTrackingList<RoutingIntentData>();
         }
 
-        /// <summary> Initializes a new instance of ListRoutingIntentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListRoutingIntentResult"/>. </summary>
         /// <param name="value"> List of RoutingIntent resource. </param>
         /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
-        internal ListRoutingIntentResult(IReadOnlyList<RoutingIntentData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListRoutingIntentResult(IReadOnlyList<RoutingIntentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of RoutingIntent resource. </summary>

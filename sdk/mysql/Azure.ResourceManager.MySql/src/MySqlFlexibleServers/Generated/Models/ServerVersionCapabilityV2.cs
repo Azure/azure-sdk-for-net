@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> Server version capabilities. </summary>
     public partial class ServerVersionCapabilityV2
     {
-        /// <summary> Initializes a new instance of ServerVersionCapabilityV2. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerVersionCapabilityV2"/>. </summary>
         internal ServerVersionCapabilityV2()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerVersionCapabilityV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerVersionCapabilityV2"/>. </summary>
         /// <param name="name"> server version. </param>
-        internal ServerVersionCapabilityV2(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerVersionCapabilityV2(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> server version. </summary>

@@ -6,15 +6,103 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsManagementGroup
+    public partial class OperationalInsightsManagementGroup : IUtf8JsonSerializable, IJsonModel<OperationalInsightsManagementGroup>
     {
-        internal static OperationalInsightsManagementGroup DeserializeOperationalInsightsManagementGroup(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsManagementGroup>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OperationalInsightsManagementGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OperationalInsightsManagementGroup>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OperationalInsightsManagementGroup>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ServerCount))
+            {
+                writer.WritePropertyName("serverCount"u8);
+                writer.WriteNumberValue(ServerCount.Value);
+            }
+            if (Optional.IsDefined(IsGateway))
+            {
+                writer.WritePropertyName("isGateway"u8);
+                writer.WriteBooleanValue(IsGateway.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("created"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(DataReceivedOn))
+            {
+                writer.WritePropertyName("dataReceived"u8);
+                writer.WriteStringValue(DataReceivedOn.Value, "O");
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteStringValue(Sku);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OperationalInsightsManagementGroup IJsonModel<OperationalInsightsManagementGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsManagementGroup(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsManagementGroup DeserializeOperationalInsightsManagementGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +115,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<DateTimeOffset> dataReceived = default;
             Optional<string> version = default;
             Optional<string> sku = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -97,8 +187,38 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsManagementGroup(Optional.ToNullable(serverCount), Optional.ToNullable(isGateway), name.Value, id.Value, Optional.ToNullable(created), Optional.ToNullable(dataReceived), version.Value, sku.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsManagementGroup(Optional.ToNullable(serverCount), Optional.ToNullable(isGateway), name.Value, id.Value, Optional.ToNullable(created), Optional.ToNullable(dataReceived), version.Value, sku.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsManagementGroup>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OperationalInsightsManagementGroup IPersistableModel<OperationalInsightsManagementGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsManagementGroup)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOperationalInsightsManagementGroup(document.RootElement, options);
+        }
+
+        string IPersistableModel<OperationalInsightsManagementGroup>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

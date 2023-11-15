@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ThrottlingRule. </summary>
     public partial class ThrottlingRule
     {
-        /// <summary> Initializes a new instance of ThrottlingRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThrottlingRule"/>. </summary>
         /// <param name="action"></param>
         /// <param name="metrics"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="metrics"/> is null. </exception>
@@ -29,15 +32,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
             RequiredFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ThrottlingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThrottlingRule"/>. </summary>
         /// <param name="action"></param>
         /// <param name="metrics"></param>
         /// <param name="requiredFeatures"></param>
-        internal ThrottlingRule(string action, IList<ThrottlingMetric> metrics, IList<string> requiredFeatures)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThrottlingRule(string action, IList<ThrottlingMetric> metrics, IList<string> requiredFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Action = action;
             Metrics = metrics;
             RequiredFeatures = requiredFeatures;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThrottlingRule"/> for deserialization. </summary>
+        internal ThrottlingRule()
+        {
         }
 
         /// <summary> Gets or sets the action. </summary>

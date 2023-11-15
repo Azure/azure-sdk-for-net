@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -12,23 +14,28 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRuleStorageBlobDestination. </summary>
     public partial class DataCollectionRuleStorageBlobDestination
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleStorageBlobDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleStorageBlobDestination"/>. </summary>
         public DataCollectionRuleStorageBlobDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleStorageBlobDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleStorageBlobDestination"/>. </summary>
         /// <param name="containerName"> The container name of the Storage Blob. </param>
         /// <param name="storageAccountResourceId"> The resource ID of the storage account. </param>
         /// <param name="name">
         /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
-        internal DataCollectionRuleStorageBlobDestination(string containerName, ResourceIdentifier storageAccountResourceId, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleStorageBlobDestination(string containerName, ResourceIdentifier storageAccountResourceId, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerName = containerName;
             StorageAccountResourceId = storageAccountResourceId;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The container name of the Storage Blob. </summary>

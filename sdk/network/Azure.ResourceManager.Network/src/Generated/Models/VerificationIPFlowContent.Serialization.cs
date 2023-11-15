@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VerificationIPFlowContent : IUtf8JsonSerializable
+    public partial class VerificationIPFlowContent : IUtf8JsonSerializable, IJsonModel<VerificationIPFlowContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VerificationIPFlowContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VerificationIPFlowContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VerificationIPFlowContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VerificationIPFlowContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
@@ -34,7 +45,132 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("targetNicResourceId"u8);
                 writer.WriteStringValue(TargetNicResourceId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VerificationIPFlowContent IJsonModel<VerificationIPFlowContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVerificationIPFlowContent(document.RootElement, options);
+        }
+
+        internal static VerificationIPFlowContent DeserializeVerificationIPFlowContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier targetResourceId = default;
+            NetworkTrafficDirection direction = default;
+            IPFlowProtocol protocol = default;
+            string localPort = default;
+            string remotePort = default;
+            string localIPAddress = default;
+            string remoteIPAddress = default;
+            Optional<ResourceIdentifier> targetNicResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetResourceId"u8))
+                {
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("direction"u8))
+                {
+                    direction = new NetworkTrafficDirection(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("protocol"u8))
+                {
+                    protocol = new IPFlowProtocol(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("localPort"u8))
+                {
+                    localPort = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("remotePort"u8))
+                {
+                    remotePort = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("localIPAddress"u8))
+                {
+                    localIPAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("remoteIPAddress"u8))
+                {
+                    remoteIPAddress = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetNicResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetNicResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VerificationIPFlowContent(targetResourceId, direction, protocol, localPort, remotePort, localIPAddress, remoteIPAddress, targetNicResourceId.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<VerificationIPFlowContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VerificationIPFlowContent IPersistableModel<VerificationIPFlowContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VerificationIPFlowContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVerificationIPFlowContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<VerificationIPFlowContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

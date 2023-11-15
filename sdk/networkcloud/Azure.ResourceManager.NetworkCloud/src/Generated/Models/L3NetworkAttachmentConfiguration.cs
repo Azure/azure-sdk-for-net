@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> L3NetworkAttachmentConfiguration represents the configuration of the attachment of a Layer 3 network. </summary>
     public partial class L3NetworkAttachmentConfiguration
     {
-        /// <summary> Initializes a new instance of L3NetworkAttachmentConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="L3NetworkAttachmentConfiguration"/>. </summary>
         /// <param name="networkId"> The resource ID of the network that is being configured for attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
         public L3NetworkAttachmentConfiguration(ResourceIdentifier networkId)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             NetworkId = networkId;
         }
 
-        /// <summary> Initializes a new instance of L3NetworkAttachmentConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="L3NetworkAttachmentConfiguration"/>. </summary>
         /// <param name="ipamEnabled"> The indication of whether this network will or will not perform IP address management and allocate IP addresses when attached. </param>
         /// <param name="networkId"> The resource ID of the network that is being configured for attachment. </param>
         /// <param name="pluginType"> The indicator of how this network will be utilized by the Kubernetes cluster. </param>
-        internal L3NetworkAttachmentConfiguration(L3NetworkConfigurationIpamEnabled? ipamEnabled, ResourceIdentifier networkId, KubernetesPluginType? pluginType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal L3NetworkAttachmentConfiguration(L3NetworkConfigurationIpamEnabled? ipamEnabled, ResourceIdentifier networkId, KubernetesPluginType? pluginType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IpamEnabled = ipamEnabled;
             NetworkId = networkId;
             PluginType = pluginType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="L3NetworkAttachmentConfiguration"/> for deserialization. </summary>
+        internal L3NetworkAttachmentConfiguration()
+        {
         }
 
         /// <summary> The indication of whether this network will or will not perform IP address management and allocate IP addresses when attached. </summary>

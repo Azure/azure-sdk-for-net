@@ -7,15 +7,94 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkManagerDeploymentStatus
+    public partial class NetworkManagerDeploymentStatus : IUtf8JsonSerializable, IJsonModel<NetworkManagerDeploymentStatus>
     {
-        internal static NetworkManagerDeploymentStatus DeserializeNetworkManagerDeploymentStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkManagerDeploymentStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetworkManagerDeploymentStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkManagerDeploymentStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkManagerDeploymentStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CommitOn))
+            {
+                writer.WritePropertyName("commitTime"u8);
+                writer.WriteStringValue(CommitOn.Value, "O");
+            }
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (Optional.IsDefined(DeploymentState))
+            {
+                writer.WritePropertyName("deploymentStatus"u8);
+                writer.WriteStringValue(DeploymentState.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ConfigurationIds))
+            {
+                writer.WritePropertyName("configurationIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConfigurationIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DeploymentType))
+            {
+                writer.WritePropertyName("deploymentType"u8);
+                writer.WriteStringValue(DeploymentType.Value.ToString());
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NetworkManagerDeploymentStatus IJsonModel<NetworkManagerDeploymentStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkManagerDeploymentStatus(document.RootElement, options);
+        }
+
+        internal static NetworkManagerDeploymentStatus DeserializeNetworkManagerDeploymentStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +105,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<string>> configurationIds = default;
             Optional<NetworkConfigurationDeploymentType> deploymentType = default;
             Optional<string> errorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitTime"u8))
@@ -79,8 +160,38 @@ namespace Azure.ResourceManager.Network.Models
                     errorMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), Optional.ToList(configurationIds), Optional.ToNullable(deploymentType), errorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), Optional.ToList(configurationIds), Optional.ToNullable(deploymentType), errorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkManagerDeploymentStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkManagerDeploymentStatus IPersistableModel<NetworkManagerDeploymentStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkManagerDeploymentStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkManagerDeploymentStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

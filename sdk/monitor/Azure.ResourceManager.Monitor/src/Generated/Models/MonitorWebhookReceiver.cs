@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A webhook receiver. </summary>
     public partial class MonitorWebhookReceiver
     {
-        /// <summary> Initializes a new instance of MonitorWebhookReceiver. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorWebhookReceiver"/>. </summary>
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="serviceUri"/> is null. </exception>
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             ServiceUri = serviceUri;
         }
 
-        /// <summary> Initializes a new instance of MonitorWebhookReceiver. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWebhookReceiver"/>. </summary>
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
         /// <param name="useCommonAlertSchema"> Indicates whether to use common alert schema. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="objectId"> Indicates the webhook app object Id for aad auth. </param>
         /// <param name="identifierUri"> Indicates the identifier uri for aad auth. </param>
         /// <param name="tenantId"> Indicates the tenant id for aad auth. </param>
-        internal MonitorWebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorWebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ServiceUri = serviceUri;
@@ -43,6 +48,12 @@ namespace Azure.ResourceManager.Monitor.Models
             ObjectId = objectId;
             IdentifierUri = identifierUri;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorWebhookReceiver"/> for deserialization. </summary>
+        internal MonitorWebhookReceiver()
+        {
         }
 
         /// <summary> The name of the webhook receiver. Names must be unique across all receivers within an action group. </summary>

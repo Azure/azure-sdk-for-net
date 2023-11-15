@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.MixedReality.ObjectAnchors.Conversion.Models;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
@@ -13,7 +14,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// <summary> Represents the status of an AOA asset conversion job. </summary>
     public partial class AssetConversionProperties
     {
-        /// <summary> Initializes a new instance of AssetConversionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssetConversionProperties"/>. </summary>
         /// <param name="clientErrorDetails"> Information about the cause of a ClientError JobStatus. </param>
         /// <param name="serverErrorDetails"> Information about the cause of a ServerError JobStatus. </param>
         /// <param name="errorCode"> The error code associated with the asset conversion job. </param>
@@ -25,7 +29,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="accountIdInternal"> Identifier for the Account owning the asset conversion job. </param>
         /// <param name="conversionConfiguration"> Configuration settings for the asset conversion job. </param>
         /// <param name="scaledAssetDimensionsWrapper"> The scaled dimensions of the asset. </param>
-        internal AssetConversionProperties(string clientErrorDetails, string serverErrorDetails, ConversionErrorCode errorCode, Guid? jobIdInternal, string outputModelUriString, AssetConversionStatus? conversionStatus, string assetFileTypeString, string inputAssetUriString, Guid? accountIdInternal, AssetConversionConfiguration conversionConfiguration, Vector3 scaledAssetDimensionsWrapper)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssetConversionProperties(string clientErrorDetails, string serverErrorDetails, ConversionErrorCode errorCode, Guid? jobIdInternal, string outputModelUriString, AssetConversionStatus? conversionStatus, string assetFileTypeString, string inputAssetUriString, Guid? accountIdInternal, AssetConversionConfiguration conversionConfiguration, Vector3 scaledAssetDimensionsWrapper, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientErrorDetails = clientErrorDetails;
             ServerErrorDetails = serverErrorDetails;
@@ -38,6 +43,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             AccountIdInternal = accountIdInternal;
             ConversionConfiguration = conversionConfiguration;
             ScaledAssetDimensionsWrapper = scaledAssetDimensionsWrapper;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Information about the cause of a ClientError JobStatus. </summary>

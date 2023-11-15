@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    internal partial class SimStaticIPPropertiesStaticIP : IUtf8JsonSerializable
+    internal partial class SimStaticIPPropertiesStaticIP : IUtf8JsonSerializable, IJsonModel<SimStaticIPPropertiesStaticIP>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimStaticIPPropertiesStaticIP>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SimStaticIPPropertiesStaticIP>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SimStaticIPPropertiesStaticIP>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SimStaticIPPropertiesStaticIP>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SimStaticIPPropertiesStaticIP DeserializeSimStaticIPPropertiesStaticIP(JsonElement element)
+        SimStaticIPPropertiesStaticIP IJsonModel<SimStaticIPPropertiesStaticIP>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimStaticIPPropertiesStaticIP(document.RootElement, options);
+        }
+
+        internal static SimStaticIPPropertiesStaticIP DeserializeSimStaticIPPropertiesStaticIP(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ipv4Address = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipv4Address"u8))
@@ -37,8 +79,38 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     ipv4Address = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SimStaticIPPropertiesStaticIP(ipv4Address.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SimStaticIPPropertiesStaticIP(ipv4Address.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SimStaticIPPropertiesStaticIP>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SimStaticIPPropertiesStaticIP IPersistableModel<SimStaticIPPropertiesStaticIP>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSimStaticIPPropertiesStaticIP(document.RootElement, options);
+        }
+
+        string IPersistableModel<SimStaticIPPropertiesStaticIP>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

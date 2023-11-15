@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class StorageInsightData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageInsightData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageInsightData"/>. </summary>
         public StorageInsightData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -27,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Tables = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StorageInsightData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageInsightData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="tables"> The names of the Azure tables that the workspace should read. </param>
         /// <param name="storageAccount"> The storage account connection details. </param>
         /// <param name="status"> The status of the storage insight. </param>
-        internal StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, IList<string> containers, IList<string> tables, OperationalInsightsStorageAccount storageAccount, StorageInsightStatus status) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageInsightData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, IList<string> containers, IList<string> tables, OperationalInsightsStorageAccount storageAccount, StorageInsightStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Tags = tags;
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Tables = tables;
             StorageAccount = storageAccount;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ETag of the storage insight. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
     public partial class DataCollectionRuleBcdrFailoverConfigurationSpec
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrFailoverConfigurationSpec"/>. </summary>
         internal DataCollectionRuleBcdrFailoverConfigurationSpec()
         {
             Locations = new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>();
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrFailoverConfigurationSpec"/>. </summary>
         /// <param name="activeLocation"> Active location where data flow will occur. </param>
         /// <param name="locations"> Locations that are configured for failover. </param>
-        internal DataCollectionRuleBcdrFailoverConfigurationSpec(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleBcdrFailoverConfigurationSpec(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActiveLocation = activeLocation;
             Locations = locations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Active location where data flow will occur. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Will contain the properties of the resource (the actual signature overrides). </summary>
     internal partial class PolicySignaturesOverridesForIdpsProperties
     {
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsProperties"/>. </summary>
         public PolicySignaturesOverridesForIdpsProperties()
         {
             Signatures = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsProperties"/>. </summary>
         /// <param name="signatures"> Dictionary of &lt;string&gt;. </param>
-        internal PolicySignaturesOverridesForIdpsProperties(IDictionary<string, string> signatures)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySignaturesOverridesForIdpsProperties(IDictionary<string, string> signatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Signatures = signatures;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>

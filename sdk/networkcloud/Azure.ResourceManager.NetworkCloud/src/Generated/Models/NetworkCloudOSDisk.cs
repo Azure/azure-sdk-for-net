@@ -5,27 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> OsDisk represents configuration of the boot disk. </summary>
     public partial class NetworkCloudOSDisk
     {
-        /// <summary> Initializes a new instance of NetworkCloudOSDisk. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/>. </summary>
         /// <param name="diskSizeInGB"> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </param>
         public NetworkCloudOSDisk(long diskSizeInGB)
         {
             DiskSizeInGB = diskSizeInGB;
         }
 
-        /// <summary> Initializes a new instance of NetworkCloudOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/>. </summary>
         /// <param name="createOption"> The strategy for creating the OS disk. </param>
         /// <param name="deleteOption"> The strategy for deleting the OS disk. </param>
         /// <param name="diskSizeInGB"> The size of the disk in gigabytes. Required if the createOption is Ephemeral. </param>
-        internal NetworkCloudOSDisk(OSDiskCreateOption? createOption, OSDiskDeleteOption? deleteOption, long diskSizeInGB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudOSDisk(OSDiskCreateOption? createOption, OSDiskDeleteOption? deleteOption, long diskSizeInGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateOption = createOption;
             DeleteOption = deleteOption;
             DiskSizeInGB = diskSizeInGB;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudOSDisk"/> for deserialization. </summary>
+        internal NetworkCloudOSDisk()
+        {
         }
 
         /// <summary> The strategy for creating the OS disk. </summary>

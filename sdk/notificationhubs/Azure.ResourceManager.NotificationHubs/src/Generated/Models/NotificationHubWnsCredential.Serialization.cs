@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
-    public partial class NotificationHubWnsCredential : IUtf8JsonSerializable
+    public partial class NotificationHubWnsCredential : IUtf8JsonSerializable, IJsonModel<NotificationHubWnsCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubWnsCredential>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NotificationHubWnsCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NotificationHubWnsCredential>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NotificationHubWnsCredential>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -34,11 +44,40 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStringValue(WindowsLiveEndpoint.AbsoluteUri);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NotificationHubWnsCredential DeserializeNotificationHubWnsCredential(JsonElement element)
+        NotificationHubWnsCredential IJsonModel<NotificationHubWnsCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNotificationHubWnsCredential(document.RootElement, options);
+        }
+
+        internal static NotificationHubWnsCredential DeserializeNotificationHubWnsCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +85,8 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Optional<string> packageSid = default;
             Optional<string> secretKey = default;
             Optional<Uri> windowsLiveEndpoint = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -79,8 +120,38 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NotificationHubWnsCredential(packageSid.Value, secretKey.Value, windowsLiveEndpoint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NotificationHubWnsCredential(packageSid.Value, secretKey.Value, windowsLiveEndpoint.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NotificationHubWnsCredential>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NotificationHubWnsCredential IPersistableModel<NotificationHubWnsCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NotificationHubWnsCredential)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNotificationHubWnsCredential(document.RootElement, options);
+        }
+
+        string IPersistableModel<NotificationHubWnsCredential>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

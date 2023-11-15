@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Orbital.Models
     /// <summary> Response for the ListAvailableContacts API service call. </summary>
     public partial class OrbitalAvailableContactsResult
     {
-        /// <summary> Initializes a new instance of OrbitalAvailableContactsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContactsResult"/>. </summary>
         internal OrbitalAvailableContactsResult()
         {
             Values = new ChangeTrackingList<OrbitalAvailableContact>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalAvailableContactsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalAvailableContactsResult"/>. </summary>
         /// <param name="values"> A list of available contacts. </param>
-        internal OrbitalAvailableContactsResult(IReadOnlyList<OrbitalAvailableContact> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalAvailableContactsResult(IReadOnlyList<OrbitalAvailableContact> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of available contacts. </summary>

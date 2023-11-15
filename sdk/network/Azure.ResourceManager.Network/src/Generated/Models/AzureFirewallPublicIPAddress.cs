@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Public IP Address associated with azure firewall. </summary>
     public partial class AzureFirewallPublicIPAddress
     {
-        /// <summary> Initializes a new instance of AzureFirewallPublicIPAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPublicIPAddress"/>. </summary>
         public AzureFirewallPublicIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallPublicIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallPublicIPAddress"/>. </summary>
         /// <param name="address"> Public IP Address value. </param>
-        internal AzureFirewallPublicIPAddress(string address)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallPublicIPAddress(string address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Public IP Address value. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -12,24 +14,29 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> EventHub configurations. </summary>
     public partial class EventHubConfiguration
     {
-        /// <summary> Initializes a new instance of EventHubConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubConfiguration"/>. </summary>
         public EventHubConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubConfiguration"/>. </summary>
         /// <param name="id"> Resource ID of EventHub. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
         /// <param name="name"> EventHub name. </param>
         /// <param name="nameSpace"> EventHub namespace. </param>
         /// <param name="policyName"> EventHub policy name. </param>
-        internal EventHubConfiguration(ResourceIdentifier id, string subscriptionId, string name, string nameSpace, string policyName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubConfiguration(ResourceIdentifier id, string subscriptionId, string name, string nameSpace, string policyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SubscriptionId = subscriptionId;
             Name = name;
             NameSpace = nameSpace;
             PolicyName = policyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID of EventHub. </summary>

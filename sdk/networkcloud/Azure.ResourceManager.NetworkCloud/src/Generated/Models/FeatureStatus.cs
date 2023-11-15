@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> FeatureStatus contains information regarding a Kubernetes cluster feature. </summary>
     public partial class FeatureStatus
     {
-        /// <summary> Initializes a new instance of FeatureStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureStatus"/>. </summary>
         internal FeatureStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureStatus"/>. </summary>
         /// <param name="detailedStatus"> The status representing the state of this feature. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="name"> The name of the feature. </param>
         /// <param name="version"> The version of the feature. </param>
-        internal FeatureStatus(FeatureDetailedStatus? detailedStatus, string detailedStatusMessage, string name, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureStatus(FeatureDetailedStatus? detailedStatus, string detailedStatusMessage, string name, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
             Name = name;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status representing the state of this feature. </summary>

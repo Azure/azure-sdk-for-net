@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EnergyServices.Models
 {
     /// <summary> The list of Energy services resource's Data Partition Names. </summary>
     public partial class DataPartitionName
     {
-        /// <summary> Initializes a new instance of DataPartitionName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataPartitionName"/>. </summary>
         public DataPartitionName()
         {
         }
 
-        /// <summary> Initializes a new instance of DataPartitionName. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPartitionName"/>. </summary>
         /// <param name="name"></param>
-        internal DataPartitionName(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataPartitionName(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name. </summary>

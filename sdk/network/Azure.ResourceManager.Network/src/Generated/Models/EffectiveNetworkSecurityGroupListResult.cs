@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for list effective network security groups API service call. </summary>
     public partial class EffectiveNetworkSecurityGroupListResult
     {
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroupListResult"/>. </summary>
         internal EffectiveNetworkSecurityGroupListResult()
         {
             Value = new ChangeTrackingList<EffectiveNetworkSecurityGroup>();
         }
 
-        /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroupListResult"/>. </summary>
         /// <param name="value"> A list of effective network security groups. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal EffectiveNetworkSecurityGroupListResult(IReadOnlyList<EffectiveNetworkSecurityGroup> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveNetworkSecurityGroupListResult(IReadOnlyList<EffectiveNetworkSecurityGroup> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of effective network security groups. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The claims for a rule management event data source. </summary>
     internal partial class RuleManagementEventClaimsDataSource
     {
-        /// <summary> Initializes a new instance of RuleManagementEventClaimsDataSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RuleManagementEventClaimsDataSource"/>. </summary>
         public RuleManagementEventClaimsDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of RuleManagementEventClaimsDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleManagementEventClaimsDataSource"/>. </summary>
         /// <param name="emailAddress"> the email address. </param>
-        internal RuleManagementEventClaimsDataSource(string emailAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RuleManagementEventClaimsDataSource(string emailAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EmailAddress = emailAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the email address. </summary>

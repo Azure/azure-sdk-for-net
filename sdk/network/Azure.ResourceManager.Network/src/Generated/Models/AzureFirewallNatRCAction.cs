@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> AzureFirewall NAT Rule Collection Action. </summary>
     internal partial class AzureFirewallNatRCAction
     {
-        /// <summary> Initializes a new instance of AzureFirewallNatRCAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRCAction"/>. </summary>
         public AzureFirewallNatRCAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureFirewallNatRCAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRCAction"/>. </summary>
         /// <param name="actionType"> The type of action. </param>
-        internal AzureFirewallNatRCAction(AzureFirewallNatRCActionType? actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallNatRCAction(AzureFirewallNatRCActionType? actionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of action. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MySql.FlexibleServers;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A list of firewall rules. </summary>
     internal partial class MySqlFlexibleServerFirewallRuleListResult
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerFirewallRuleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFirewallRuleListResult"/>. </summary>
         internal MySqlFlexibleServerFirewallRuleListResult()
         {
             Value = new ChangeTrackingList<MySqlFlexibleServerFirewallRuleData>();
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerFirewallRuleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFirewallRuleListResult"/>. </summary>
         /// <param name="value"> The list of firewall rules in a server. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        internal MySqlFlexibleServerFirewallRuleListResult(IReadOnlyList<MySqlFlexibleServerFirewallRuleData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerFirewallRuleListResult(IReadOnlyList<MySqlFlexibleServerFirewallRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of firewall rules in a server. </summary>

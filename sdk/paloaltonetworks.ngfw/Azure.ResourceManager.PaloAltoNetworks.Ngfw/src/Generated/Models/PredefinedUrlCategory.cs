@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Predefined URL category object. </summary>
     public partial class PredefinedUrlCategory
     {
-        /// <summary> Initializes a new instance of PredefinedUrlCategory. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/>. </summary>
         /// <param name="action"></param>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="name"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
             Action = action;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/>. </summary>
+        /// <param name="action"></param>
+        /// <param name="name"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredefinedUrlCategory(string action, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Action = action;
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/> for deserialization. </summary>
+        internal PredefinedUrlCategory()
+        {
         }
 
         /// <summary> Gets the action. </summary>

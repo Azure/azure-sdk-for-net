@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,23 +19,28 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsLinkedStorageAccountsData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedStorageAccountsData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedStorageAccountsData"/>. </summary>
         public OperationalInsightsLinkedStorageAccountsData()
         {
             StorageAccountIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsLinkedStorageAccountsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsLinkedStorageAccountsData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="dataSourceType"> Linked storage accounts type. </param>
         /// <param name="storageAccountIds"> Linked storage accounts resources ids. </param>
-        internal OperationalInsightsLinkedStorageAccountsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationalInsightsDataSourceType? dataSourceType, IList<ResourceIdentifier> storageAccountIds) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsLinkedStorageAccountsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OperationalInsightsDataSourceType? dataSourceType, IList<ResourceIdentifier> storageAccountIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DataSourceType = dataSourceType;
             StorageAccountIds = storageAccountIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Linked storage accounts type. </summary>

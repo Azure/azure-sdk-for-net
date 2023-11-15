@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
     /// <summary> Emission policy destination properties. </summary>
     public partial class EmissionPolicyDestination
     {
-        /// <summary> Initializes a new instance of EmissionPolicyDestination. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmissionPolicyDestination"/>. </summary>
         public EmissionPolicyDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of EmissionPolicyDestination. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmissionPolicyDestination"/>. </summary>
         /// <param name="destinationType"> Emission destination type. </param>
-        internal EmissionPolicyDestination(EmissionDestinationType? destinationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmissionPolicyDestination(EmissionDestinationType? destinationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DestinationType = destinationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Emission destination type. </summary>

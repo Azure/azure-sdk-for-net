@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The response of a FqdnListLocalRulestackResource list operation. </summary>
     internal partial class LocalRulestackFqdnListResult
     {
-        /// <summary> Initializes a new instance of LocalRulestackFqdnListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LocalRulestackFqdnListResult(IEnumerable<LocalRulestackFqdnData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LocalRulestackFqdnListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal LocalRulestackFqdnListResult(IReadOnlyList<LocalRulestackFqdnData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalRulestackFqdnListResult(IReadOnlyList<LocalRulestackFqdnData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackFqdnListResult"/> for deserialization. </summary>
+        internal LocalRulestackFqdnListResult()
+        {
         }
 
         /// <summary> The items on this page. </summary>

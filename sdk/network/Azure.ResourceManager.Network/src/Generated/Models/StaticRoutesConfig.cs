@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration for static routes on this HubVnetConnectionConfiguration for static routes on this HubVnetConnection. </summary>
     public partial class StaticRoutesConfig
     {
-        /// <summary> Initializes a new instance of StaticRoutesConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticRoutesConfig"/>. </summary>
         public StaticRoutesConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of StaticRoutesConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRoutesConfig"/>. </summary>
         /// <param name="propagateStaticRoutes"> Boolean indicating whether static routes on this connection are automatically propagate to route tables which this connection propagates to. </param>
         /// <param name="vnetLocalRouteOverrideCriteria"> Parameter determining whether NVA in spoke vnet is bypassed for traffic with destination in spoke. </param>
-        internal StaticRoutesConfig(bool? propagateStaticRoutes, VnetLocalRouteOverrideCriterion? vnetLocalRouteOverrideCriteria)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticRoutesConfig(bool? propagateStaticRoutes, VnetLocalRouteOverrideCriterion? vnetLocalRouteOverrideCriteria, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PropagateStaticRoutes = propagateStaticRoutes;
             VnetLocalRouteOverrideCriteria = vnetLocalRouteOverrideCriteria;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Boolean indicating whether static routes on this connection are automatically propagate to route tables which this connection propagates to. </summary>

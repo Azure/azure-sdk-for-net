@@ -5,15 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MultiMetricCriteria : IUtf8JsonSerializable
+    public partial class MultiMetricCriteria : IUtf8JsonSerializable, IJsonModel<MultiMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiMetricCriteria>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MultiMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MultiMetricCriteria>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MultiMetricCriteria>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("criterionType"u8);
             writer.WriteStringValue(CriterionType.ToString());
@@ -58,8 +68,22 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        internal static MultiMetricCriteria DeserializeMultiMetricCriteria(JsonElement element)
+        MultiMetricCriteria IJsonModel<MultiMetricCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMultiMetricCriteria(document.RootElement, options);
+        }
+
+        internal static MultiMetricCriteria DeserializeMultiMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,5 +98,30 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             return UnknownMultiMetricCriteria.DeserializeUnknownMultiMetricCriteria(element);
         }
+
+        BinaryData IPersistableModel<MultiMetricCriteria>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MultiMetricCriteria IPersistableModel<MultiMetricCriteria>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMultiMetricCriteria(document.RootElement, options);
+        }
+
+        string IPersistableModel<MultiMetricCriteria>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

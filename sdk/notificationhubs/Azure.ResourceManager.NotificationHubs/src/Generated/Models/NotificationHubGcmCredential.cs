@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub GcmCredential. </summary>
     public partial class NotificationHubGcmCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubGcmCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/>. </summary>
         public NotificationHubGcmCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubGcmCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubGcmCredential"/>. </summary>
         /// <param name="gcmEndpoint"> The FCM legacy endpoint. Default value is 'https://fcm.googleapis.com/fcm/send'. </param>
         /// <param name="gcmApiKey"> The Google API key. </param>
-        internal NotificationHubGcmCredential(Uri gcmEndpoint, string gcmApiKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubGcmCredential(Uri gcmEndpoint, string gcmApiKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GcmEndpoint = gcmEndpoint;
             GcmApiKey = gcmApiKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The FCM legacy endpoint. Default value is 'https://fcm.googleapis.com/fcm/send'. </summary>

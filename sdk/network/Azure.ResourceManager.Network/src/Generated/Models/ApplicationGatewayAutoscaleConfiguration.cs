@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Application Gateway autoscale configuration. </summary>
     public partial class ApplicationGatewayAutoscaleConfiguration
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayAutoscaleConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAutoscaleConfiguration"/>. </summary>
         /// <param name="minCapacity"> Lower bound on number of Application Gateway capacity. </param>
         public ApplicationGatewayAutoscaleConfiguration(int minCapacity)
         {
             MinCapacity = minCapacity;
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayAutoscaleConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAutoscaleConfiguration"/>. </summary>
         /// <param name="minCapacity"> Lower bound on number of Application Gateway capacity. </param>
         /// <param name="maxCapacity"> Upper bound on number of Application Gateway capacity. </param>
-        internal ApplicationGatewayAutoscaleConfiguration(int minCapacity, int? maxCapacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayAutoscaleConfiguration(int minCapacity, int? maxCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinCapacity = minCapacity;
             MaxCapacity = maxCapacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayAutoscaleConfiguration"/> for deserialization. </summary>
+        internal ApplicationGatewayAutoscaleConfiguration()
+        {
         }
 
         /// <summary> Lower bound on number of Application Gateway capacity. </summary>

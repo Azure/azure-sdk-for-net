@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The LinkedOperationRule. </summary>
     public partial class LinkedOperationRule
     {
-        /// <summary> Initializes a new instance of LinkedOperationRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkedOperationRule"/>. </summary>
         /// <param name="linkedOperation"></param>
         /// <param name="linkedAction"></param>
         internal LinkedOperationRule(LinkedOperation linkedOperation, LinkedAction linkedAction)
         {
             LinkedOperation = linkedOperation;
             LinkedAction = linkedAction;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedOperationRule"/>. </summary>
+        /// <param name="linkedOperation"></param>
+        /// <param name="linkedAction"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkedOperationRule(LinkedOperation linkedOperation, LinkedAction linkedAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LinkedOperation = linkedOperation;
+            LinkedAction = linkedAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkedOperationRule"/> for deserialization. </summary>
+        internal LinkedOperationRule()
+        {
         }
 
         /// <summary> Gets the linked operation. </summary>

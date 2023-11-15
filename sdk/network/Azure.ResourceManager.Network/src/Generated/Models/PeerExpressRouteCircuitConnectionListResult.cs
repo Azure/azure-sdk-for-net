@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListPeeredConnections API service call retrieves all global reach peer circuit connections that belongs to a Private Peering for an ExpressRouteCircuit. </summary>
     internal partial class PeerExpressRouteCircuitConnectionListResult
     {
-        /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionListResult"/>. </summary>
         internal PeerExpressRouteCircuitConnectionListResult()
         {
             Value = new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionListResult"/>. </summary>
         /// <param name="value"> The global reach peer circuit connection associated with Private Peering in an ExpressRoute Circuit. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PeerExpressRouteCircuitConnectionListResult(IReadOnlyList<PeerExpressRouteCircuitConnectionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeerExpressRouteCircuitConnectionListResult(IReadOnlyList<PeerExpressRouteCircuitConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The global reach peer circuit connection associated with Private Peering in an ExpressRoute Circuit. </summary>

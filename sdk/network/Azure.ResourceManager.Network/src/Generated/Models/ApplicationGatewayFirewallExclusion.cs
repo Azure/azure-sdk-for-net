@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Allow to exclude some variable satisfy the condition for the WAF check. </summary>
     public partial class ApplicationGatewayFirewallExclusion
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayFirewallExclusion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallExclusion"/>. </summary>
         /// <param name="matchVariable"> The variable to be excluded. </param>
         /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
         /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>
@@ -27,6 +31,24 @@ namespace Azure.ResourceManager.Network.Models
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallExclusion"/>. </summary>
+        /// <param name="matchVariable"> The variable to be excluded. </param>
+        /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
+        /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayFirewallExclusion(string matchVariable, string selectorMatchOperator, string selector, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MatchVariable = matchVariable;
+            SelectorMatchOperator = selectorMatchOperator;
+            Selector = selector;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallExclusion"/> for deserialization. </summary>
+        internal ApplicationGatewayFirewallExclusion()
+        {
         }
 
         /// <summary> The variable to be excluded. </summary>

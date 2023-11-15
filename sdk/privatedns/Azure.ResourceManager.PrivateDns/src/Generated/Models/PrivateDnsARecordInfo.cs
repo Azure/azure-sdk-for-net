@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.PrivateDns.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.PrivateDns.Models
     /// <summary> An A record. </summary>
     public partial class PrivateDnsARecordInfo
     {
-        /// <summary> Initializes a new instance of PrivateDnsARecordInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsARecordInfo"/>. </summary>
         public PrivateDnsARecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateDnsARecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsARecordInfo"/>. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
-        internal PrivateDnsARecordInfo(IPAddress ipv4Address)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateDnsARecordInfo(IPAddress ipv4Address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPv4Address = ipv4Address;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IPv4 address of this A record. </summary>

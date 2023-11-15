@@ -5,15 +5,93 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyReference
+    public partial class PolicyReference : IUtf8JsonSerializable, IJsonModel<PolicyReference>
     {
-        internal static PolicyReference DeserializePolicyReference(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyReference>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PolicyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PolicyReference>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PolicyReference>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PolicyDefinitionId))
+                {
+                    writer.WritePropertyName("policyDefinitionId"u8);
+                    writer.WriteStringValue(PolicyDefinitionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PolicySetDefinitionId))
+                {
+                    writer.WritePropertyName("policySetDefinitionId"u8);
+                    writer.WriteStringValue(PolicySetDefinitionId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PolicyDefinitionReferenceId))
+                {
+                    writer.WritePropertyName("policyDefinitionReferenceId"u8);
+                    writer.WriteStringValue(PolicyDefinitionReferenceId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PolicyAssignmentId))
+                {
+                    writer.WritePropertyName("policyAssignmentId"u8);
+                    writer.WriteStringValue(PolicyAssignmentId);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyReference IJsonModel<PolicyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyReference(document.RootElement, options);
+        }
+
+        internal static PolicyReference DeserializePolicyReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +100,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Optional<ResourceIdentifier> policySetDefinitionId = default;
             Optional<string> policyDefinitionReferenceId = default;
             Optional<ResourceIdentifier> policyAssignmentId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyDefinitionId"u8))
@@ -56,8 +136,38 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     policyAssignmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyReference(policyDefinitionId.Value, policySetDefinitionId.Value, policyDefinitionReferenceId.Value, policyAssignmentId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PolicyReference(policyDefinitionId.Value, policySetDefinitionId.Value, policyDefinitionReferenceId.Value, policyAssignmentId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyReference>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyReference)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PolicyReference IPersistableModel<PolicyReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyReference)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePolicyReference(document.RootElement, options);
+        }
+
+        string IPersistableModel<PolicyReference>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

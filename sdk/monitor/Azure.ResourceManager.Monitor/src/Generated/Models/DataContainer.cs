@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Information about a container with data for a given resource. </summary>
     public partial class DataContainer
     {
-        /// <summary> Initializes a new instance of DataContainer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataContainer"/>. </summary>
         /// <param name="workspace"> Log Analytics workspace information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspace"/> is null. </exception>
         internal DataContainer(DataContainerWorkspace workspace)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Monitor.Models
             Argument.AssertNotNull(workspace, nameof(workspace));
 
             Workspace = workspace;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataContainer"/>. </summary>
+        /// <param name="workspace"> Log Analytics workspace information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataContainer(DataContainerWorkspace workspace, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Workspace = workspace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataContainer"/> for deserialization. </summary>
+        internal DataContainer()
+        {
         }
 
         /// <summary> Log Analytics workspace information. </summary>

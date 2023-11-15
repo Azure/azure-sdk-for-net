@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> HTTPS server certificate configuration. </summary>
     public partial class MobileNetworkHttpsServerCertificate
     {
-        /// <summary> Initializes a new instance of MobileNetworkHttpsServerCertificate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkHttpsServerCertificate"/>. </summary>
         /// <param name="certificateUri"> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateUri"/> is null. </exception>
         public MobileNetworkHttpsServerCertificate(Uri certificateUri)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             CertificateUri = certificateUri;
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkHttpsServerCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkHttpsServerCertificate"/>. </summary>
         /// <param name="certificateUri"> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </param>
         /// <param name="provisioning"> The provisioning state of the certificate. </param>
-        internal MobileNetworkHttpsServerCertificate(Uri certificateUri, MobileNetworkCertificateProvisioning provisioning)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkHttpsServerCertificate(Uri certificateUri, MobileNetworkCertificateProvisioning provisioning, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateUri = certificateUri;
             Provisioning = provisioning;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkHttpsServerCertificate"/> for deserialization. </summary>
+        internal MobileNetworkHttpsServerCertificate()
+        {
         }
 
         /// <summary> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </summary>

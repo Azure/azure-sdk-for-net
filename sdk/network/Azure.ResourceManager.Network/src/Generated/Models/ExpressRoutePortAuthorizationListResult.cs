@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Response for ListExpressRoutePortAuthorizations API service call. </summary>
     internal partial class ExpressRoutePortAuthorizationListResult
     {
-        /// <summary> Initializes a new instance of ExpressRoutePortAuthorizationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortAuthorizationListResult"/>. </summary>
         internal ExpressRoutePortAuthorizationListResult()
         {
             Value = new ChangeTrackingList<ExpressRoutePortAuthorizationData>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRoutePortAuthorizationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortAuthorizationListResult"/>. </summary>
         /// <param name="value"> The authorizations in an ExpressRoute Port. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ExpressRoutePortAuthorizationListResult(IReadOnlyList<ExpressRoutePortAuthorizationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRoutePortAuthorizationListResult(IReadOnlyList<ExpressRoutePortAuthorizationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The authorizations in an ExpressRoute Port. </summary>

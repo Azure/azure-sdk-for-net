@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,18 +15,23 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Contains the DDoS protection settings of the public IP. </summary>
     public partial class DdosSettings
     {
-        /// <summary> Initializes a new instance of DdosSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DdosSettings"/>. </summary>
         public DdosSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of DdosSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosSettings"/>. </summary>
         /// <param name="protectionMode"> The DDoS protection mode of the public IP. </param>
         /// <param name="ddosProtectionPlan"> The DDoS protection plan associated with the public IP. Can only be set if ProtectionMode is Enabled. </param>
-        internal DdosSettings(DdosSettingsProtectionMode? protectionMode, WritableSubResource ddosProtectionPlan)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DdosSettings(DdosSettingsProtectionMode? protectionMode, WritableSubResource ddosProtectionPlan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtectionMode = protectionMode;
             DdosProtectionPlan = ddosProtectionPlan;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The DDoS protection mode of the public IP. </summary>

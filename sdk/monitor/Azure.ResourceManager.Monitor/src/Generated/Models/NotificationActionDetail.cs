@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The action detail. </summary>
     public partial class NotificationActionDetail
     {
-        /// <summary> Initializes a new instance of NotificationActionDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationActionDetail"/>. </summary>
         internal NotificationActionDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationActionDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationActionDetail"/>. </summary>
         /// <param name="mechanismType"> The mechanism type. </param>
         /// <param name="name"> The name of the action. </param>
         /// <param name="status"> The status of the action. </param>
         /// <param name="subState"> The substatus of the action. </param>
         /// <param name="sendOn"> The send time. </param>
         /// <param name="detail"> The detail of the friendly error message. </param>
-        internal NotificationActionDetail(string mechanismType, string name, string status, string subState, DateTimeOffset? sendOn, string detail)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationActionDetail(string mechanismType, string name, string status, string subState, DateTimeOffset? sendOn, string detail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MechanismType = mechanismType;
             Name = name;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
             SubState = subState;
             SendOn = sendOn;
             Detail = detail;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The mechanism type. </summary>

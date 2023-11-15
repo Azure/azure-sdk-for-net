@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CheckinManifestInfo. </summary>
     public partial class CheckinManifestInfo
     {
-        /// <summary> Initializes a new instance of CheckinManifestInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/>. </summary>
         /// <param name="isCheckedIn"></param>
         /// <param name="statusMessage"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="statusMessage"/> is null. </exception>
@@ -25,17 +29,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
             StatusMessage = statusMessage;
         }
 
-        /// <summary> Initializes a new instance of CheckinManifestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/>. </summary>
         /// <param name="isCheckedIn"></param>
         /// <param name="statusMessage"></param>
         /// <param name="pullRequest"></param>
         /// <param name="commitId"></param>
-        internal CheckinManifestInfo(bool isCheckedIn, string statusMessage, string pullRequest, string commitId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckinManifestInfo(bool isCheckedIn, string statusMessage, string pullRequest, string commitId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsCheckedIn = isCheckedIn;
             StatusMessage = statusMessage;
             PullRequest = pullRequest;
             CommitId = commitId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/> for deserialization. </summary>
+        internal CheckinManifestInfo()
+        {
         }
 
         /// <summary> Gets the is checked in. </summary>

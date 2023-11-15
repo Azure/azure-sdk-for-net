@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CheckNameAvailabilitySpecifications. </summary>
     public partial class CheckNameAvailabilitySpecifications
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilitySpecifications"/>. </summary>
         public CheckNameAvailabilitySpecifications()
         {
             ResourceTypesWithCustomValidation = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilitySpecifications. </summary>
+        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilitySpecifications"/>. </summary>
         /// <param name="isDefaultValidationEnabled"></param>
         /// <param name="resourceTypesWithCustomValidation"></param>
-        internal CheckNameAvailabilitySpecifications(bool? isDefaultValidationEnabled, IList<string> resourceTypesWithCustomValidation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CheckNameAvailabilitySpecifications(bool? isDefaultValidationEnabled, IList<string> resourceTypesWithCustomValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsDefaultValidationEnabled = isDefaultValidationEnabled;
             ResourceTypesWithCustomValidation = resourceTypesWithCustomValidation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the is default validation enabled. </summary>

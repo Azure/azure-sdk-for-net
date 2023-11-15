@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    public partial class PostgreSqlServerPropertiesForCreate : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownServerPropertiesForCreate))]
+    public partial class PostgreSqlServerPropertiesForCreate : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerPropertiesForCreate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerPropertiesForCreate>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PostgreSqlServerPropertiesForCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PostgreSqlServerPropertiesForCreate>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PostgreSqlServerPropertiesForCreate>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Version))
             {
@@ -47,7 +58,80 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PostgreSqlServerPropertiesForCreate IJsonModel<PostgreSqlServerPropertiesForCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlServerPropertiesForCreate(document.RootElement, options);
+        }
+
+        internal static PostgreSqlServerPropertiesForCreate DeserializePostgreSqlServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("createMode", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Default": return PostgreSqlServerPropertiesForDefaultCreate.DeserializePostgreSqlServerPropertiesForDefaultCreate(element);
+                    case "GeoRestore": return PostgreSqlServerPropertiesForGeoRestore.DeserializePostgreSqlServerPropertiesForGeoRestore(element);
+                    case "PointInTimeRestore": return PostgreSqlServerPropertiesForRestore.DeserializePostgreSqlServerPropertiesForRestore(element);
+                    case "Replica": return PostgreSqlServerPropertiesForReplica.DeserializePostgreSqlServerPropertiesForReplica(element);
+                }
+            }
+            return UnknownServerPropertiesForCreate.DeserializeUnknownServerPropertiesForCreate(element);
+        }
+
+        BinaryData IPersistableModel<PostgreSqlServerPropertiesForCreate>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PostgreSqlServerPropertiesForCreate IPersistableModel<PostgreSqlServerPropertiesForCreate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePostgreSqlServerPropertiesForCreate(document.RootElement, options);
+        }
+
+        string IPersistableModel<PostgreSqlServerPropertiesForCreate>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

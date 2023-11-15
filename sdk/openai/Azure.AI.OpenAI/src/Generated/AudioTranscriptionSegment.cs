@@ -19,7 +19,10 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AudioTranscriptionSegment
     {
-        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AudioTranscriptionSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a transcription. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
         /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
@@ -52,9 +55,10 @@ namespace Azure.AI.OpenAI
             NoSpeechProbability = noSpeechProbability;
             Tokens = tokens.ToList();
             Seek = seek;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AudioTranscriptionSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioTranscriptionSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a transcription. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
         /// <param name="end"> The time at which this segment ended relative to the beginning of the transcribed audio. </param>
@@ -71,7 +75,8 @@ namespace Azure.AI.OpenAI
         /// a later time than the segment's start, the segment's start may represent a significantly later time than the
         /// segment's associated seek position.
         /// </param>
-        internal AudioTranscriptionSegment(int id, TimeSpan start, TimeSpan end, string text, float temperature, float averageLogProbability, float compressionRatio, float noSpeechProbability, IReadOnlyList<int> tokens, int seek)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AudioTranscriptionSegment(int id, TimeSpan start, TimeSpan end, string text, float temperature, float averageLogProbability, float compressionRatio, float noSpeechProbability, IReadOnlyList<int> tokens, int seek, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Start = start;
@@ -83,6 +88,12 @@ namespace Azure.AI.OpenAI
             NoSpeechProbability = noSpeechProbability;
             Tokens = tokens;
             Seek = seek;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AudioTranscriptionSegment"/> for deserialization. </summary>
+        internal AudioTranscriptionSegment()
+        {
         }
 
         /// <summary> The 0-based index of this segment within a transcription. </summary>

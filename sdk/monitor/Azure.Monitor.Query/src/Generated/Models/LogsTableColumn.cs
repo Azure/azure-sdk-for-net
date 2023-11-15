@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -13,7 +14,10 @@ namespace Azure.Monitor.Query.Models
     /// <summary> A column in a table. </summary>
     public partial class LogsTableColumn
     {
-        /// <summary> Initializes a new instance of LogsTableColumn. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.Monitor.Query.Models
 
             Name = name;
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogsTableColumn"/>. </summary>
+        /// <param name="name"> The name of this column. </param>
+        /// <param name="type"> The data type of this column. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogsTableColumn(string name, LogsColumnType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Type = type;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogsTableColumn"/> for deserialization. </summary>
+        internal LogsTableColumn()
+        {
         }
 
         /// <summary> The name of this column. </summary>

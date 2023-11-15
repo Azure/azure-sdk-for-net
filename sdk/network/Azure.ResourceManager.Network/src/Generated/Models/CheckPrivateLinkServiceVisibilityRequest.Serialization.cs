@@ -5,22 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class CheckPrivateLinkServiceVisibilityRequest : IUtf8JsonSerializable
+    public partial class CheckPrivateLinkServiceVisibilityRequest : IUtf8JsonSerializable, IJsonModel<CheckPrivateLinkServiceVisibilityRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckPrivateLinkServiceVisibilityRequest>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CheckPrivateLinkServiceVisibilityRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CheckPrivateLinkServiceVisibilityRequest>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CheckPrivateLinkServiceVisibilityRequest>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateLinkServiceAlias))
             {
                 writer.WritePropertyName("privateLinkServiceAlias"u8);
                 writer.WriteStringValue(PrivateLinkServiceAlias);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CheckPrivateLinkServiceVisibilityRequest IJsonModel<CheckPrivateLinkServiceVisibilityRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CheckPrivateLinkServiceVisibilityRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCheckPrivateLinkServiceVisibilityRequest(document.RootElement, options);
+        }
+
+        internal static CheckPrivateLinkServiceVisibilityRequest DeserializeCheckPrivateLinkServiceVisibilityRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> privateLinkServiceAlias = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("privateLinkServiceAlias"u8))
+                {
+                    privateLinkServiceAlias = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CheckPrivateLinkServiceVisibilityRequest(privateLinkServiceAlias.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<CheckPrivateLinkServiceVisibilityRequest>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CheckPrivateLinkServiceVisibilityRequest)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CheckPrivateLinkServiceVisibilityRequest IPersistableModel<CheckPrivateLinkServiceVisibilityRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CheckPrivateLinkServiceVisibilityRequest)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCheckPrivateLinkServiceVisibilityRequest(document.RootElement, options);
+        }
+
+        string IPersistableModel<CheckPrivateLinkServiceVisibilityRequest>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

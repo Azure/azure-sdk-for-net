@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.PolicyInsights
     /// </summary>
     public partial class PolicyMetadataData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyMetadataData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyMetadataData"/>. </summary>
         internal PolicyMetadataData()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,7 +39,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="metadata"> Additional metadata. </param>
         /// <param name="description"> The description of the policy metadata. </param>
         /// <param name="requirements"> The requirements of the policy metadata. </param>
-        internal PolicyMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata, string description, string requirements) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata, string description, string requirements, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MetadataId = metadataId;
             Category = category;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Metadata = metadata;
             Description = description;
             Requirements = requirements;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The policy metadata identifier. </summary>

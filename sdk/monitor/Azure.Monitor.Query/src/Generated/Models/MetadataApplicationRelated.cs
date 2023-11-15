@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,25 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The related metadata items for the Application Insights app. </summary>
     internal partial class MetadataApplicationRelated
     {
-        /// <summary> Initializes a new instance of MetadataApplicationRelated. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetadataApplicationRelated"/>. </summary>
         internal MetadataApplicationRelated()
         {
             Tables = new ChangeTrackingList<string>();
             Functions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataApplicationRelated"/>. </summary>
+        /// <param name="tables"> The related tables for the Application Insights app. </param>
+        /// <param name="functions"> The related functions for the Application Insights app. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataApplicationRelated(IReadOnlyList<string> tables, IReadOnlyList<string> functions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tables = tables;
+            Functions = functions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The related tables for the Application Insights app. </summary>

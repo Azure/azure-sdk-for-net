@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The ExtensionOptions. </summary>
     public partial class ExtensionOptions
     {
-        /// <summary> Initializes a new instance of ExtensionOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExtensionOptions"/>. </summary>
         public ExtensionOptions()
         {
             Request = new ChangeTrackingList<ExtensionOptionType>();
             Response = new ChangeTrackingList<ExtensionOptionType>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionOptions"/>. </summary>
         /// <param name="request"></param>
         /// <param name="response"></param>
-        internal ExtensionOptions(IList<ExtensionOptionType> request, IList<ExtensionOptionType> response)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExtensionOptions(IList<ExtensionOptionType> request, IList<ExtensionOptionType> response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Request = request;
             Response = response;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the request. </summary>

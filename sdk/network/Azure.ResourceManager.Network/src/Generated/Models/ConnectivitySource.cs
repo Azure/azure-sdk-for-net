@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that define the source of the connection. </summary>
     public partial class ConnectivitySource
     {
-        /// <summary> Initializes a new instance of ConnectivitySource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivitySource"/>. </summary>
         /// <param name="resourceId"> The ID of the resource from which a connectivity check will be initiated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ConnectivitySource(ResourceIdentifier resourceId)
@@ -21,6 +25,22 @@ namespace Azure.ResourceManager.Network.Models
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivitySource"/>. </summary>
+        /// <param name="resourceId"> The ID of the resource from which a connectivity check will be initiated. </param>
+        /// <param name="port"> The source port from which a connectivity check will be performed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivitySource(ResourceIdentifier resourceId, int? port, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceId = resourceId;
+            Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivitySource"/> for deserialization. </summary>
+        internal ConnectivitySource()
+        {
         }
 
         /// <summary> The ID of the resource from which a connectivity check will be initiated. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ExpressRouteProviderPortData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ExpressRouteProviderPortData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ExpressRouteProviderPortData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteProviderPortData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +44,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="portBandwidthInMbps"> Bandwidth of the port in Mbps. </param>
         /// <param name="usedBandwidthInMbps"> Used Bandwidth of the port in Mbps. </param>
         /// <param name="remainingBandwidthInMbps"> Remaining Bandwidth of the port in Mbps. </param>
-        internal ExpressRouteProviderPortData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string portPairDescriptor, string primaryAzurePort, string secondaryAzurePort, string peeringLocation, int? overprovisionFactor, int? portBandwidthInMbps, int? usedBandwidthInMbps, int? remainingBandwidthInMbps) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteProviderPortData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string portPairDescriptor, string primaryAzurePort, string secondaryAzurePort, string peeringLocation, int? overprovisionFactor, int? portBandwidthInMbps, int? usedBandwidthInMbps, int? remainingBandwidthInMbps, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             PortPairDescriptor = portPairDescriptor;
@@ -51,6 +56,12 @@ namespace Azure.ResourceManager.Network
             PortBandwidthInMbps = portBandwidthInMbps;
             UsedBandwidthInMbps = usedBandwidthInMbps;
             RemainingBandwidthInMbps = remainingBandwidthInMbps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/> for deserialization. </summary>
+        internal ExpressRouteProviderPortData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

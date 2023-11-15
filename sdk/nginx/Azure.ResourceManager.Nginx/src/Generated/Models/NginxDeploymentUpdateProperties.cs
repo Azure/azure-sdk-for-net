@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> The NginxDeploymentUpdateProperties. </summary>
     public partial class NginxDeploymentUpdateProperties
     {
-        /// <summary> Initializes a new instance of NginxDeploymentUpdateProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
         public NginxDeploymentUpdateProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
+        /// <param name="enableDiagnosticsSupport"></param>
+        /// <param name="logging"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            EnableDiagnosticsSupport = enableDiagnosticsSupport;
+            Logging = logging;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the enable diagnostics support. </summary>

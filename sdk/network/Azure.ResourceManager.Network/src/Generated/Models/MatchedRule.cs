@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Matched rule. </summary>
     public partial class MatchedRule
     {
-        /// <summary> Initializes a new instance of MatchedRule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MatchedRule"/>. </summary>
         internal MatchedRule()
         {
         }
 
-        /// <summary> Initializes a new instance of MatchedRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchedRule"/>. </summary>
         /// <param name="ruleName"> Name of the matched network security rule. </param>
         /// <param name="action"> The network traffic is allowed or denied. Possible values are 'Allow' and 'Deny'. </param>
-        internal MatchedRule(string ruleName, string action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MatchedRule(string ruleName, string action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RuleName = ruleName;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the matched network security rule. </summary>

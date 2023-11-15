@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> Set of export policy rules. </summary>
     internal partial class VolumePatchPropertiesExportPolicy
     {
-        /// <summary> Initializes a new instance of VolumePatchPropertiesExportPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VolumePatchPropertiesExportPolicy"/>. </summary>
         public VolumePatchPropertiesExportPolicy()
         {
             Rules = new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VolumePatchPropertiesExportPolicy"/>. </summary>
+        /// <param name="rules"> Export policy rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VolumePatchPropertiesExportPolicy(IList<NetAppVolumeExportPolicyRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Rules = rules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Export policy rule. </summary>

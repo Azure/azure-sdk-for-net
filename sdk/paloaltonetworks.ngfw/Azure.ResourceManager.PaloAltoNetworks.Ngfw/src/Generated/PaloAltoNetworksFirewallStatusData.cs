@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class PaloAltoNetworksFirewallStatusData : ResourceData
     {
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallStatusData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallStatusData"/>. </summary>
         public PaloAltoNetworksFirewallStatusData()
         {
         }
 
-        /// <summary> Initializes a new instance of PaloAltoNetworksFirewallStatusData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksFirewallStatusData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +37,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="healthReason"> Detail description of current health of the Firewall. </param>
         /// <param name="panoramaStatus"> Panorama Status. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal PaloAltoNetworksFirewallStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallBooleanType? isPanoramaManaged, FirewallHealthStatus? healthStatus, string healthReason, FirewallPanoramaStatus panoramaStatus, FirewallProvisioningStateType? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PaloAltoNetworksFirewallStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallBooleanType? isPanoramaManaged, FirewallHealthStatus? healthStatus, string healthReason, FirewallPanoramaStatus panoramaStatus, FirewallProvisioningStateType? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IsPanoramaManaged = isPanoramaManaged;
             HealthStatus = healthStatus;
             HealthReason = healthReason;
             PanoramaStatus = panoramaStatus;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Panorama Managed: Default is False. Default will be CloudSec managed. </summary>

@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class AlertRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of AlertRuleData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="alertRuleName"> the name of the alert rule. </param>
         /// <param name="isEnabled"> the flag that indicates whether the alert rule is enabled. </param>
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.Monitor
             Actions = new ChangeTrackingList<AlertRuleAction>();
         }
 
-        /// <summary> Initializes a new instance of AlertRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +70,8 @@ namespace Azure.ResourceManager.Monitor
         /// The available derived classes include <see cref="RuleEmailAction"/> and <see cref="RuleWebhookAction"/>.
         /// </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string alertRuleName, string description, string provisioningState, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IList<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string alertRuleName, string description, string provisioningState, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IList<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AlertRuleName = alertRuleName;
             Description = description;
@@ -77,6 +81,12 @@ namespace Azure.ResourceManager.Monitor
             Action = action;
             Actions = actions;
             LastUpdatedOn = lastUpdatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertRuleData"/> for deserialization. </summary>
+        internal AlertRuleData()
+        {
         }
 
         /// <summary> the name of the alert rule. </summary>

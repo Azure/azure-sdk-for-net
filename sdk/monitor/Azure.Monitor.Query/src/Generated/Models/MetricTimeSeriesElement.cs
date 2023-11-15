@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.Monitor.Query.Models
     /// <summary> A time series result type. The discriminator value is always TimeSeries in this case. </summary>
     public partial class MetricTimeSeriesElement
     {
-        /// <summary> Initializes a new instance of MetricTimeSeriesElement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricTimeSeriesElement"/>. </summary>
         internal MetricTimeSeriesElement()
         {
             Metadatavalues = new ChangeTrackingList<MetadataValue>();
             Values = new ChangeTrackingList<MetricValue>();
         }
 
-        /// <summary> Initializes a new instance of MetricTimeSeriesElement. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricTimeSeriesElement"/>. </summary>
         /// <param name="metadatavalues"> the metadata values returned if $filter was specified in the call. </param>
         /// <param name="values"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
-        internal MetricTimeSeriesElement(IReadOnlyList<MetadataValue> metadatavalues, IReadOnlyList<MetricValue> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricTimeSeriesElement(IReadOnlyList<MetadataValue> metadatavalues, IReadOnlyList<MetricValue> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Metadatavalues = metadatavalues;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

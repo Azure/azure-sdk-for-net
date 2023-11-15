@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     /// <summary> storage edition capability. </summary>
     public partial class MySqlFlexibleServerStorageEditionCapability
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerStorageEditionCapability. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorageEditionCapability"/>. </summary>
         internal MySqlFlexibleServerStorageEditionCapability()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerStorageEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorageEditionCapability"/>. </summary>
         /// <param name="name"> storage edition name. </param>
         /// <param name="minStorageSize"> The minimal supported storage size. </param>
         /// <param name="maxStorageSize"> The maximum supported storage size. </param>
         /// <param name="minBackupRetentionDays"> Minimal backup retention days. </param>
         /// <param name="maxBackupRetentionDays"> Maximum backup retention days. </param>
-        internal MySqlFlexibleServerStorageEditionCapability(string name, long? minStorageSize, long? maxStorageSize, long? minBackupRetentionDays, long? maxBackupRetentionDays)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerStorageEditionCapability(string name, long? minStorageSize, long? maxStorageSize, long? minBackupRetentionDays, long? maxBackupRetentionDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             MinStorageSize = minStorageSize;
             MaxStorageSize = maxStorageSize;
             MinBackupRetentionDays = minBackupRetentionDays;
             MaxBackupRetentionDays = maxBackupRetentionDays;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> storage edition name. </summary>

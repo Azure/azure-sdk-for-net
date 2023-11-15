@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Nfv version of the list of RouteTables to advertise the routes to. </summary>
     public partial class PropagatedRouteTableNfv
     {
-        /// <summary> Initializes a new instance of PropagatedRouteTableNfv. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PropagatedRouteTableNfv"/>. </summary>
         public PropagatedRouteTableNfv()
         {
             Labels = new ChangeTrackingList<string>();
             Ids = new ChangeTrackingList<RoutingConfigurationNfvSubResource>();
         }
 
-        /// <summary> Initializes a new instance of PropagatedRouteTableNfv. </summary>
+        /// <summary> Initializes a new instance of <see cref="PropagatedRouteTableNfv"/>. </summary>
         /// <param name="labels"> The list of labels. </param>
         /// <param name="ids"> The list of resource ids of all the RouteTables. </param>
-        internal PropagatedRouteTableNfv(IList<string> labels, IList<RoutingConfigurationNfvSubResource> ids)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PropagatedRouteTableNfv(IList<string> labels, IList<RoutingConfigurationNfvSubResource> ids, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Labels = labels;
             Ids = ids;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of labels. </summary>

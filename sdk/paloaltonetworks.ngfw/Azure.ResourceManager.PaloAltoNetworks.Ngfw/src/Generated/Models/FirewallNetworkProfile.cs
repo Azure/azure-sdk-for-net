@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Network settings for Firewall. </summary>
     public partial class FirewallNetworkProfile
     {
-        /// <summary> Initializes a new instance of FirewallNetworkProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallNetworkProfile"/>. </summary>
         /// <param name="networkType"> vnet or vwan, cannot be updated. </param>
         /// <param name="publicIPs"> List of IPs associated with the Firewall. </param>
         /// <param name="enableEgressNat"> Enable egress NAT, enabled by default. </param>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             TrustedRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of FirewallNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallNetworkProfile"/>. </summary>
         /// <param name="vnetConfiguration"> Vnet configurations. </param>
         /// <param name="vwanConfiguration"> Vwan configurations. </param>
         /// <param name="networkType"> vnet or vwan, cannot be updated. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="enableEgressNat"> Enable egress NAT, enabled by default. </param>
         /// <param name="egressNatIP"> Egress nat IP to use. </param>
         /// <param name="trustedRanges"> Non-RFC 1918 address. </param>
-        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP, IList<string> trustedRanges)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallNetworkProfile(FirewallVnetConfiguration vnetConfiguration, FirewallVwanConfiguration vwanConfiguration, FirewallNetworkType networkType, IList<IPAddressInfo> publicIPs, AllowEgressNatType enableEgressNat, IList<IPAddressInfo> egressNatIP, IList<string> trustedRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VnetConfiguration = vnetConfiguration;
             VwanConfiguration = vwanConfiguration;
@@ -48,6 +52,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             EnableEgressNat = enableEgressNat;
             EgressNatIP = egressNatIP;
             TrustedRanges = trustedRanges;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FirewallNetworkProfile"/> for deserialization. </summary>
+        internal FirewallNetworkProfile()
+        {
         }
 
         /// <summary> Vnet configurations. </summary>

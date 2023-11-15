@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Specification of destinations that can be used in data flows. </summary>
     public partial class DestinationsSpec
     {
-        /// <summary> Initializes a new instance of DestinationsSpec. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DestinationsSpec"/>. </summary>
         public DestinationsSpec()
         {
             LogAnalytics = new ChangeTrackingList<LogAnalyticsDestination>();
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             StorageAccounts = new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>();
         }
 
-        /// <summary> Initializes a new instance of DestinationsSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="DestinationsSpec"/>. </summary>
         /// <param name="logAnalytics"> List of Log Analytics destinations. </param>
         /// <param name="monitoringAccounts"> List of monitoring account destinations. </param>
         /// <param name="azureMonitorMetrics"> Azure Monitor Metrics destination. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="storageBlobsDirect"> List of Storage Blob Direct destinations. To be used only for sending data directly to store from the agent. </param>
         /// <param name="storageTablesDirect"> List of Storage Table Direct destinations. </param>
         /// <param name="storageAccounts"> List of storage accounts destinations. </param>
-        internal DestinationsSpec(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<DataCollectionRuleEventHubDestination> eventHubs, IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect, IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect, IList<DataCollectionRuleStorageTableDestination> storageTablesDirect, IList<DataCollectionRuleStorageBlobDestination> storageAccounts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DestinationsSpec(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<DataCollectionRuleEventHubDestination> eventHubs, IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect, IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect, IList<DataCollectionRuleStorageTableDestination> storageTablesDirect, IList<DataCollectionRuleStorageBlobDestination> storageAccounts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogAnalytics = logAnalytics;
             MonitoringAccounts = monitoringAccounts;
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
             StorageBlobsDirect = storageBlobsDirect;
             StorageTablesDirect = storageTablesDirect;
             StorageAccounts = storageAccounts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Log Analytics destinations. </summary>

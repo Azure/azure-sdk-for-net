@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.PolicyInsights
     /// </summary>
     public partial class PolicyAttestationData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicyAttestationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyAttestationData"/>. </summary>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment that the attestation is setting the state for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
         public PolicyAttestationData(ResourceIdentifier policyAssignmentId)
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Evidence = new ChangeTrackingList<AttestationEvidence>();
         }
 
-        /// <summary> Initializes a new instance of PolicyAttestationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAttestationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="lastComplianceStateChangeOn"> The time the compliance state was last changed in this attestation. </param>
         /// <param name="assessOn"> The time the evidence was assessed. </param>
         /// <param name="metadata"> Additional metadata for this attestation. </param>
-        internal PolicyAttestationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn, DateTimeOffset? assessOn, BinaryData metadata) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyAttestationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn, DateTimeOffset? assessOn, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -59,6 +63,12 @@ namespace Azure.ResourceManager.PolicyInsights
             LastComplianceStateChangeOn = lastComplianceStateChangeOn;
             AssessOn = assessOn;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PolicyAttestationData"/> for deserialization. </summary>
+        internal PolicyAttestationData()
+        {
         }
 
         /// <summary> The resource ID of the policy assignment that the attestation is setting the state for. </summary>

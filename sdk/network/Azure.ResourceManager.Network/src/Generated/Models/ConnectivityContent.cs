@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Parameters that determine how the connectivity check will be performed. </summary>
     public partial class ConnectivityContent
     {
-        /// <summary> Initializes a new instance of ConnectivityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityContent"/>. </summary>
         /// <param name="source"> The source of the connection. </param>
         /// <param name="destination"> The destination of connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
@@ -24,6 +28,28 @@ namespace Azure.ResourceManager.Network.Models
 
             Source = source;
             Destination = destination;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityContent"/>. </summary>
+        /// <param name="source"> The source of the connection. </param>
+        /// <param name="destination"> The destination of connection. </param>
+        /// <param name="protocol"> Network protocol. </param>
+        /// <param name="protocolConfiguration"> Configuration of the protocol. </param>
+        /// <param name="preferredIPVersion"> Preferred IP version of the connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityContent(ConnectivitySource source, ConnectivityDestination destination, NetworkWatcherProtocol? protocol, ProtocolConfiguration protocolConfiguration, NetworkIPVersion? preferredIPVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Source = source;
+            Destination = destination;
+            Protocol = protocol;
+            ProtocolConfiguration = protocolConfiguration;
+            PreferredIPVersion = preferredIPVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityContent"/> for deserialization. </summary>
+        internal ConnectivityContent()
+        {
         }
 
         /// <summary> The source of the connection. </summary>

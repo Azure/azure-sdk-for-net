@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The baseline values for a single sensitivity value. </summary>
     public partial class MonitorSingleBaseline
     {
-        /// <summary> Initializes a new instance of MonitorSingleBaseline. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorSingleBaseline"/>. </summary>
         /// <param name="sensitivity"> the sensitivity of the baseline. </param>
         /// <param name="lowThresholds"> The low thresholds of the baseline. </param>
         /// <param name="highThresholds"> The high thresholds of the baseline. </param>
@@ -30,15 +33,22 @@ namespace Azure.ResourceManager.Monitor.Models
             HighThresholds = highThresholds.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorSingleBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSingleBaseline"/>. </summary>
         /// <param name="sensitivity"> the sensitivity of the baseline. </param>
         /// <param name="lowThresholds"> The low thresholds of the baseline. </param>
         /// <param name="highThresholds"> The high thresholds of the baseline. </param>
-        internal MonitorSingleBaseline(MonitorBaselineSensitivity sensitivity, IReadOnlyList<double> lowThresholds, IReadOnlyList<double> highThresholds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorSingleBaseline(MonitorBaselineSensitivity sensitivity, IReadOnlyList<double> lowThresholds, IReadOnlyList<double> highThresholds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sensitivity = sensitivity;
             LowThresholds = lowThresholds;
             HighThresholds = highThresholds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorSingleBaseline"/> for deserialization. </summary>
+        internal MonitorSingleBaseline()
+        {
         }
 
         /// <summary> the sensitivity of the baseline. </summary>

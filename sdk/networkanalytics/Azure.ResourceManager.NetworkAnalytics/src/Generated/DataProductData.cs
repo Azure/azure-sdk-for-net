@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.NetworkAnalytics
     /// </summary>
     public partial class DataProductData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataProductData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProductData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataProductData(AzureLocation location) : base(location)
         {
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             AvailableMinorVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataProductData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProductData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -55,7 +58,8 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <param name="documentation"> Documentation link for the data product based on definition file. </param>
         /// <param name="consumptionEndpoints"> Resource links which exposed to the customer to query the data. </param>
         /// <param name="keyVaultUri"> Key vault url. </param>
-        internal DataProductData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string resourceGuid, NetworkAnalyticsProvisioningState? provisioningState, string publisher, string product, string majorVersion, IList<string> owners, DataProductControlState? redundancy, string purviewAccount, string purviewCollection, DataProductControlState? privateLinksEnabled, DataProductControlState? publicNetworkAccess, DataProductControlState? customerManagedKeyEncryptionEnabled, EncryptionKeyDetails customerEncryptionKey, DataProductNetworkAcls networkacls, NetworkAnalyticsManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<string> availableMinorVersions, string currentMinorVersion, string documentation, ConsumptionEndpointsProperties consumptionEndpoints, Uri keyVaultUri) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProductData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string resourceGuid, NetworkAnalyticsProvisioningState? provisioningState, string publisher, string product, string majorVersion, IList<string> owners, DataProductControlState? redundancy, string purviewAccount, string purviewCollection, DataProductControlState? privateLinksEnabled, DataProductControlState? publicNetworkAccess, DataProductControlState? customerManagedKeyEncryptionEnabled, EncryptionKeyDetails customerEncryptionKey, DataProductNetworkAcls networkacls, NetworkAnalyticsManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<string> availableMinorVersions, string currentMinorVersion, string documentation, ConsumptionEndpointsProperties consumptionEndpoints, Uri keyVaultUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ResourceGuid = resourceGuid;
@@ -78,6 +82,12 @@ namespace Azure.ResourceManager.NetworkAnalytics
             Documentation = documentation;
             ConsumptionEndpoints = consumptionEndpoints;
             KeyVaultUri = keyVaultUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProductData"/> for deserialization. </summary>
+        internal DataProductData()
+        {
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
