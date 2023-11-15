@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of NetAppVolumeSnapshotResources and their operations over a NetAppVolumeSnapshotResource. </returns>
         public virtual NetAppVolumeSnapshotCollection GetNetAppVolumeSnapshots()
         {
-            return GetCachedClient(Client => new NetAppVolumeSnapshotCollection(Client, Id));
+            return GetCachedClient(client => new NetAppVolumeSnapshotCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="snapshotName"> The name of the snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppVolumeSnapshotResource>> GetNetAppVolumeSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="snapshotName"> The name of the snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetAppVolumeSnapshotResource> GetNetAppVolumeSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of NetAppVolumeQuotaRuleResources and their operations over a NetAppVolumeQuotaRuleResource. </returns>
         public virtual NetAppVolumeQuotaRuleCollection GetNetAppVolumeQuotaRules()
         {
-            return GetCachedClient(Client => new NetAppVolumeQuotaRuleCollection(Client, Id));
+            return GetCachedClient(client => new NetAppVolumeQuotaRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="volumeQuotaRuleName"> The name of volume quota rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeQuotaRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeQuotaRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppVolumeQuotaRuleResource>> GetNetAppVolumeQuotaRuleAsync(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="volumeQuotaRuleName"> The name of volume quota rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeQuotaRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeQuotaRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeQuotaRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetAppVolumeQuotaRuleResource> GetNetAppVolumeQuotaRule(string volumeQuotaRuleName, CancellationToken cancellationToken = default)
         {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of NetAppSubvolumeInfoResources and their operations over a NetAppSubvolumeInfoResource. </returns>
         public virtual NetAppSubvolumeInfoCollection GetNetAppSubvolumeInfos()
         {
-            return GetCachedClient(Client => new NetAppSubvolumeInfoCollection(Client, Id));
+            return GetCachedClient(client => new NetAppSubvolumeInfoCollection(client, Id));
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="subvolumeName"> The name of the subvolume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppSubvolumeInfoResource>> GetNetAppSubvolumeInfoAsync(string subvolumeName, CancellationToken cancellationToken = default)
         {
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="subvolumeName"> The name of the subvolume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subvolumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subvolumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetAppSubvolumeInfoResource> GetNetAppSubvolumeInfo(string subvolumeName, CancellationToken cancellationToken = default)
         {

@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("storeSettings"u8);
                 writer.WriteObjectValue(StoreSettings);
             }
+            if (Optional.IsDefined(FormatSettings))
+            {
+                writer.WritePropertyName("formatSettings"u8);
+                writer.WriteObjectValue(FormatSettings);
+            }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
@@ -79,6 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<StoreReadSettings> storeSettings = default;
+            Optional<ParquetReadSettings> formatSettings = default;
             Optional<BinaryData> additionalColumns = default;
             string type = default;
             Optional<DataFactoryElement<int>> sourceRetryCount = default;
@@ -96,6 +102,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("formatSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    formatSettings = ParquetReadSettings.DeserializeParquetReadSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -151,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParquetSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, storeSettings.Value, additionalColumns.Value);
+            return new ParquetSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, storeSettings.Value, formatSettings.Value, additionalColumns.Value);
         }
     }
 }

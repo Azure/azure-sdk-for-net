@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -37,28 +38,35 @@ public class AzureChatExtensionsTests : OpenAITestBase
             OpenAIClientScenario.ChatCompletions);
 
         AzureChatExtensionsOptions extensionsOptions = new();
-        extensionsOptions.Extensions.Add(extensionStrategy switch
+        switch (extensionStrategy)
         {
-            ExtensionObjectStrategy.WithGenericParentType => new AzureChatExtensionConfiguration()
-            {
-                Type = "AzureCognitiveSearch",
-                Parameters = BinaryData.FromObjectAsJson(new
+            case ExtensionObjectStrategy.WithGenericParentType:
+                AzureChatExtensionConfiguration genericConfig = new()
                 {
-                    Endpoint = "https://openaisdktestsearch.search.windows.net",
-                    IndexName = "openai-test-index-carbon-wiki",
-                    Key = GetCognitiveSearchApiKey().Key,
-                },
-                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
-            },
-            ExtensionObjectStrategy.WithScenarioSpecificHelperType
-                => new AzureCognitiveSearchChatExtensionConfiguration()
+                    Type = "AzureCognitiveSearch",
+                    Parameters = BinaryData.FromObjectAsJson(new
+                    {
+                        Endpoint = "https://openaisdktestsearch.search.windows.net",
+                        IndexName = "openai-test-index-carbon-wiki",
+                        GetCognitiveSearchApiKey().Key,
+                    },
+                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+                };
+                extensionsOptions.Extensions.Add(genericConfig);
+                break;
+            case ExtensionObjectStrategy.WithScenarioSpecificHelperType:
+                AzureCognitiveSearchChatExtensionConfiguration helperTypeConfig = new()
                 {
+                    Type = "AzureCognitiveSearch",
                     SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
-                    IndexName = "openai-test-index-carbon-wiki",
-                    SearchKey = GetCognitiveSearchApiKey(),
-                },
-            _ => throw new NotImplementedException("Don't know how to add the extension config!"),
-        });
+                    IndexName = "openai-test-index-carbon-wiki"
+                };
+                helperTypeConfig.SetSearchKey(GetCognitiveSearchApiKey().Key);
+                extensionsOptions.Extensions.Add(helperTypeConfig);
+                break;
+            default:
+                throw new NotImplementedException("Don't know how to add the extension config!");
+        }
 
         var requestOptions = new ChatCompletionsOptions()
         {
@@ -117,7 +125,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
                         {
                             Endpoint = "https://openaisdktestsearch.search.windows.net",
                             IndexName = "openai-test-index-carbon-wiki",
-                            Key = GetCognitiveSearchApiKey().Key,
+                            GetCognitiveSearchApiKey().Key,
                         },
                         new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
                     },
@@ -125,28 +133,34 @@ public class AzureChatExtensionsTests : OpenAITestBase
             },
         };
 
-        Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(requestOptions);
+        using StreamingResponse<StreamingChatCompletionsUpdate> response
+            = await client.GetChatCompletionsStreamingAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
-        Assert.That(response.Value, Is.Not.Null);
+        Assert.That(response.GetRawResponse(), Is.Not.Null);
 
-        using StreamingChatCompletions streamingChatCompletions = response.Value;
+        ChatRole? streamedRole = null;
+        IEnumerable<ChatMessage> azureContextMessages = null;
+        StringBuilder contentBuilder = new();
 
-        int choiceCount = 0;
-        List<ChatMessage> messageChunks = new();
-
-        await foreach (StreamingChatChoice streamingChatChoice in response.Value.GetChoicesStreaming())
+        await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
         {
-            choiceCount++;
-            await foreach (ChatMessage chatMessage in streamingChatChoice.GetMessageStreaming())
+            if (chatUpdate.Role.HasValue)
             {
-                messageChunks.Add(chatMessage);
+                Assert.That(streamedRole, Is.Null);
+                streamedRole = chatUpdate.Role.Value;
             }
+            if (chatUpdate.AzureExtensionsContext?.Messages?.Count > 0)
+            {
+                Assert.That(azureContextMessages, Is.Null);
+                azureContextMessages = chatUpdate.AzureExtensionsContext.Messages;
+            }
+            contentBuilder.Append(chatUpdate.ContentUpdate);
         }
 
-        Assert.That(choiceCount, Is.EqualTo(1));
-        Assert.That(messageChunks, Is.Not.Null.Or.Empty);
-        Assert.That(messageChunks.Any(chunk => chunk.AzureExtensionsContext != null && chunk.AzureExtensionsContext.Messages.Any(m => m.Role == ChatRole.Tool)));
-        //Assert.That(messageChunks.Any(chunk => chunk.Role == ChatRole.Assistant));
-        Assert.That(messageChunks.Any(chunk => !string.IsNullOrWhiteSpace(chunk.Content)));
+        Assert.That(streamedRole, Is.EqualTo(ChatRole.Assistant));
+        Assert.That(contentBuilder.ToString(), Is.Not.Null.Or.Empty);
+        Assert.That(azureContextMessages, Is.Not.Null.Or.Empty);
+        Assert.That(azureContextMessages.Any(contextMessage => contextMessage.Role == ChatRole.Tool));
+        Assert.That(azureContextMessages.Any(contextMessage => !string.IsNullOrEmpty(contextMessage.Content)));
     }
 }

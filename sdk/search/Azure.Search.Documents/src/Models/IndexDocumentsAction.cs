@@ -57,9 +57,9 @@ namespace Azure.Search.Documents.Models
             Document = doc;
         }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
-        #pragma warning disable CA1801 // Not all parameters are used depending on feature flags
-        #pragma warning disable CS1998 // Won't await depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CA1801 // Not all parameters are used depending on feature flags
+#pragma warning disable CS1998 // Won't await depending on feature flags
         /// <summary>
         /// Serialize the document write action.
         /// </summary>
@@ -81,9 +81,9 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions options,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1998
-        #pragma warning restore CA1801
-        #pragma warning restore CS1572
+#pragma warning restore CS1998
+#pragma warning restore CA1801
+#pragma warning restore CS1572
         {
             Debug.Assert(writer != null);
 

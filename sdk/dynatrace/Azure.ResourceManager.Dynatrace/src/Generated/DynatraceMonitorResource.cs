@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An object representing collection of DynatraceTagRuleResources and their operations over a DynatraceTagRuleResource. </returns>
         public virtual DynatraceTagRuleCollection GetDynatraceTagRules()
         {
-            return GetCachedClient(Client => new DynatraceTagRuleCollection(Client, Id));
+            return GetCachedClient(client => new DynatraceTagRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="ruleSetName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DynatraceTagRuleResource>> GetDynatraceTagRuleAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="ruleSetName"> Monitor resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DynatraceTagRuleResource> GetDynatraceTagRule(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// <returns> An object representing collection of DynatraceSingleSignOnResources and their operations over a DynatraceSingleSignOnResource. </returns>
         public virtual DynatraceSingleSignOnCollection GetDynatraceSingleSignOns()
         {
-            return GetCachedClient(Client => new DynatraceSingleSignOnCollection(Client, Id));
+            return GetCachedClient(client => new DynatraceSingleSignOnCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="configurationName"> Single Sign On Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DynatraceSingleSignOnResource>> GetDynatraceSingleSignOnAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.Dynatrace
         /// </summary>
         /// <param name="configurationName"> Single Sign On Configuration Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DynatraceSingleSignOnResource> GetDynatraceSingleSignOn(string configurationName, CancellationToken cancellationToken = default)
         {

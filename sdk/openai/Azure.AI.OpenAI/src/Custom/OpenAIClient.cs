@@ -4,10 +4,12 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Sse;
 
 namespace Azure.AI.OpenAI
 {
@@ -218,9 +220,11 @@ namespace Azure.AI.OpenAI
         ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         /// <returns>
-        /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
+        /// A response that, if the request was successful, may be asynchronously enumerated for
+        /// <see cref="Completions"/> instances.
         /// </returns>
-        public virtual Response<StreamingCompletions> GetCompletionsStreaming(
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
+        public virtual StreamingResponse<Completions> GetCompletionsStreaming(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
@@ -241,7 +245,12 @@ namespace Azure.AI.OpenAI
                 HttpMessage message = CreatePostRequestMessage(completionsOptions, content, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
+                return StreamingResponse<Completions>.CreateFromResponse(
+                    baseResponse,
+                    (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
+                        responseForEnumeration.ContentStream,
+                        Completions.DeserializeCompletions,
+                        cancellationToken));
             }
             catch (Exception e)
             {
@@ -264,9 +273,11 @@ namespace Azure.AI.OpenAI
         ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         /// <returns>
-        /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
+        /// A response that, if the request was successful, may be asynchronously enumerated for
+        /// <see cref="Completions"/> instances.
         /// </returns>
-        public virtual async Task<Response<StreamingCompletions>> GetCompletionsStreamingAsync(
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
+        public virtual async Task<StreamingResponse<Completions>> GetCompletionsStreamingAsync(
             CompletionsOptions completionsOptions,
             CancellationToken cancellationToken = default)
         {
@@ -288,7 +299,12 @@ namespace Azure.AI.OpenAI
                 message.BufferResponse = false;
                 Response baseResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken)
                     .ConfigureAwait(false);
-                return Response.FromValue(new StreamingCompletions(baseResponse), baseResponse);
+                return StreamingResponse<Completions>.CreateFromResponse(
+                    baseResponse,
+                    (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
+                        responseForEnumeration.ContentStream,
+                        Completions.DeserializeCompletions,
+                        cancellationToken));
             }
             catch (Exception e)
             {
@@ -389,7 +405,8 @@ namespace Azure.AI.OpenAI
         ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
+        public virtual StreamingResponse<StreamingChatCompletionsUpdate> GetChatCompletionsStreaming(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
@@ -410,7 +427,13 @@ namespace Azure.AI.OpenAI
                 HttpMessage message = CreatePostRequestMessage(chatCompletionsOptions, content, context);
                 message.BufferResponse = false;
                 Response baseResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
-                return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
+                return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
+                    baseResponse,
+                    (responseForEnumeration)
+                        => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                            responseForEnumeration.ContentStream,
+                            StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                            cancellationToken));
             }
             catch (Exception e)
             {
@@ -435,8 +458,12 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentException">
         ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
+        /// <returns>
+        /// A response that, if the request was successful, may be asynchronously enumerated for
+        /// <see cref="StreamingChatCompletionsUpdate"/> instances.
+        /// </returns>
+        [SuppressMessage("Usage", "AZC0015:Unexpected client method return type.")]
+        public virtual async Task<StreamingResponse<StreamingChatCompletionsUpdate>> GetChatCompletionsStreamingAsync(
             ChatCompletionsOptions chatCompletionsOptions,
             CancellationToken cancellationToken = default)
         {
@@ -460,7 +487,13 @@ namespace Azure.AI.OpenAI
                     message,
                     context,
                     cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new StreamingChatCompletions(baseResponse), baseResponse);
+                return StreamingResponse<StreamingChatCompletionsUpdate>.CreateFromResponse(
+                    baseResponse,
+                    (responseForEnumeration)
+                        => SseAsyncEnumerator<StreamingChatCompletionsUpdate>.EnumerateFromSseStream(
+                            responseForEnumeration.ContentStream,
+                            StreamingChatCompletionsUpdate.DeserializeStreamingChatCompletionsUpdates,
+                            cancellationToken));
             }
             catch (Exception e)
             {
@@ -686,7 +719,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
             Argument.AssertNotNullOrEmpty(audioTranscriptionOptions.DeploymentName, nameof(audioTranscriptionOptions.DeploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
             scope.Start();
 
             RequestContent content = audioTranscriptionOptions.ToRequestContent();
@@ -727,7 +760,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
             Argument.AssertNotNullOrEmpty(audioTranscriptionOptions.DeploymentName, nameof(audioTranscriptionOptions.DeploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
             scope.Start();
 
             RequestContent content = audioTranscriptionOptions.ToRequestContent();
@@ -768,7 +801,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
             Argument.AssertNotNullOrEmpty(audioTranslationOptions.DeploymentName, nameof(audioTranslationOptions.DeploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
             scope.Start();
 
             RequestContent content = audioTranslationOptions.ToRequestContent();
@@ -809,7 +842,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
             Argument.AssertNotNullOrEmpty(audioTranslationOptions.DeploymentName, nameof(audioTranslationOptions.DeploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
             scope.Start();
 
             RequestContent content = audioTranslationOptions.ToRequestContent();

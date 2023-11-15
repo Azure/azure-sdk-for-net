@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeRoleAddonResources and their operations over a DataBoxEdgeRoleAddonResource. </returns>
         public virtual DataBoxEdgeRoleAddonCollection GetDataBoxEdgeRoleAddons()
         {
-            return GetCachedClient(Client => new DataBoxEdgeRoleAddonCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeRoleAddonCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeRoleAddonResource>> GetDataBoxEdgeRoleAddonAsync(string addonName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="addonName"> The addon name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="addonName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="addonName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeRoleAddonResource> GetDataBoxEdgeRoleAddon(string addonName, CancellationToken cancellationToken = default)
         {

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformApiPortalCustomDomainResources and their operations over a AppPlatformApiPortalCustomDomainResource. </returns>
         public virtual AppPlatformApiPortalCustomDomainCollection GetAppPlatformApiPortalCustomDomains()
         {
-            return GetCachedClient(Client => new AppPlatformApiPortalCustomDomainCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformApiPortalCustomDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="domainName"> The name of the API portal custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformApiPortalCustomDomainResource>> GetAppPlatformApiPortalCustomDomainAsync(string domainName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.AppPlatform
         /// </summary>
         /// <param name="domainName"> The name of the API portal custom domain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformApiPortalCustomDomainResource> GetAppPlatformApiPortalCustomDomain(string domainName, CancellationToken cancellationToken = default)
         {

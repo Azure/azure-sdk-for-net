@@ -145,6 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element);
                     case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element);
                     case "Json": return JsonDataset.DeserializeJsonDataset(element);
+                    case "LakeHouseTable": return LakeHouseTableDataset.DeserializeLakeHouseTableDataset(element);
                     case "MagentoObject": return MagentoObjectDataset.DeserializeMagentoObjectDataset(element);
                     case "MariaDBTable": return MariaDBTableDataset.DeserializeMariaDBTableDataset(element);
                     case "MarketoObject": return MarketoObjectDataset.DeserializeMarketoObjectDataset(element);

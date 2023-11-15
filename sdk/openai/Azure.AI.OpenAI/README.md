@@ -209,17 +209,48 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
     }
 };
 
-Response<StreamingChatCompletions> response
-    = await client.GetChatCompletionsStreamingAsync(chatCompletionsOptions);
-using StreamingChatCompletions streamingChatCompletions = response.Value;
-
-await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
+await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(chatCompletionsOptions))
 {
-    await foreach (ChatMessage message in choice.GetMessageStreaming())
+    if (chatUpdate.Role.HasValue)
     {
-        Console.Write(message.Content);
+        Console.Write($"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ");
     }
-    Console.WriteLine();
+    if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+    {
+        Console.Write(chatUpdate.ContentUpdate);
+    }
+}
+```
+
+When explicitly requesting more than one `Choice` while streaming, use the `ChoiceIndex` property on
+`StreamingChatCompletionsUpdate` to determine which `Choice` each update corresponds to.
+
+```C# Snippet:StreamChatMessagesWithMultipleChoices
+// A ChoiceCount > 1 will feature multiple, parallel, independent text generations arriving on the
+// same response. This may be useful when choosing between multiple candidates for a single request.
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    Messages = { new ChatMessage(ChatRole.User, "Write a limerick about bananas.") },
+    ChoiceCount = 4
+};
+
+await foreach (StreamingChatCompletionsUpdate chatUpdate
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+{
+    // Choice-specific information like Role and ContentUpdate will also provide a ChoiceIndex that allows
+    // StreamingChatCompletionsUpdate data for independent choices to be appropriately separated.
+    if (chatUpdate.ChoiceIndex.HasValue)
+    {
+        int choiceIndex = chatUpdate.ChoiceIndex.Value;
+        if (chatUpdate.Role.HasValue)
+        {
+            textBoxes[choiceIndex].Text += $"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ";
+        }
+        if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+        {
+            textBoxes[choiceIndex].Text += chatUpdate.ContentUpdate;
+        }
+    }
 }
 ```
 
@@ -338,6 +369,47 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
 }
 ```
 
+When using streaming, capture streaming response components as they arrive and accumulate streaming function arguments
+in the same manner used for streaming content. Then, in the place of using the `ChatMessage` from the non-streaming
+response, instead add a new `ChatMessage` instance for history, created from the streamed information.
+
+```C# Snippet::ChatFunctions::StreamingFunctions
+string functionName = null;
+StringBuilder contentBuilder = new();
+StringBuilder functionArgumentsBuilder = new();
+ChatRole streamedRole = default;
+CompletionsFinishReason finishReason = default;
+
+await foreach (StreamingChatCompletionsUpdate update
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
+{
+    contentBuilder.Append(update.ContentUpdate);
+    functionName ??= update.FunctionName;
+    functionArgumentsBuilder.Append(update.FunctionArgumentsUpdate);
+    streamedRole = update.Role ?? default;
+    finishReason = update.FinishReason ?? default;
+}
+
+if (finishReason == CompletionsFinishReason.FunctionCall)
+{
+    string lastContent = contentBuilder.ToString();
+    string unvalidatedArguments = functionArgumentsBuilder.ToString();
+    ChatMessage chatMessageForHistory = new(streamedRole, lastContent)
+    {
+        FunctionCall = new(functionName, unvalidatedArguments),
+    };
+    conversationMessages.Add(chatMessageForHistory);
+
+    // Handle from here just like the non-streaming case
+}
+```
+
+Please note: while streamed function information (name, arguments) may be evaluated as it arrives, it should not be
+considered complete or confirmed until the `FinishReason` of `FunctionCall` is received. It may be appropriate to make
+best-effort attempts at "warm-up" or other speculative preparation based on a function name or particular key/value
+appearing in the accumulated, partial JSON arguments, but no strong assumptions about validity, ordering, or other
+details should be evaluated until the arguments are fully available and confirmed via `FinishReason`.
+
 ### Use your own data with Azure OpenAI
 
 The use your own data feature is unique to Azure OpenAI and won't work with a client configured to use the non-Azure service.
@@ -346,7 +418,15 @@ See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.co
 **NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
 
 ```C# Snippet:ChatUsingYourOwnData
-var chatCompletionsOptions = new ChatCompletionsOptions()
+AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new()
+{
+    SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
+    IndexName = "contoso-products-index",
+};
+
+contosoExtensionConfig.SetSearchKey("<your Cognitive Search resource API key>");
+
+ChatCompletionsOptions chatCompletionsOptions = new()
 {
     DeploymentName = "gpt-35-turbo-0613",
     Messages =
@@ -356,29 +436,26 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
             "You are a helpful assistant that answers questions about the Contoso product database."),
         new ChatMessage(ChatRole.User, "What are the best-selling Contoso products this month?")
     },
+
     // The addition of AzureChatExtensionsOptions enables the use of Azure OpenAI capabilities that add to
     // the behavior of Chat Completions, here the "using your own data" feature to supplement the context
     // with information from an Azure Cognitive Search resource with documents that have been indexed.
     AzureExtensionsOptions = new AzureChatExtensionsOptions()
     {
-        Extensions =
-        {
-            new AzureCognitiveSearchChatExtensionConfiguration()
-            {
-                SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
-                IndexName = "contoso-products-index",
-                SearchKey = new AzureKeyCredential("<your Cognitive Search resource API key>"),
-            }
-        }
+        Extensions = { contosoExtensionConfig }
     }
 };
+
 Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ChatMessage message = response.Value.Choices[0].Message;
+
 // The final, data-informed response still appears in the ChatMessages as usual
 Console.WriteLine($"{message.Role}: {message.Content}");
+
 // Responses that used extensions will also have Context information that includes special Tool messages
 // to explain extension activity and provide supplemental information like citations.
 Console.WriteLine($"Citations and other information:");
+
 foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
 {
     // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents

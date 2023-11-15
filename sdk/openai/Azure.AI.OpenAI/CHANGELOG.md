@@ -1,12 +1,38 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.10 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.9 (2023-11-06)
+
+### Breaking Changes
+
 This update includes a number of version-to-version breaking changes to the API.
+
+#### Streaming for completions and chat completions
+
+Streaming Completions and Streaming Chat Completions have been significantly updated to use simpler, shallower usage
+patterns and data representations. The goal of these changes is to make streaming much easier to consume in common
+cases while still retaining full functionality in more complex ones (e.g. with multiple choices requested).
+- A new `StreamingResponse<T>` type is introduced that implicitly exposes an `IAsyncEnumerable<T>` derived from
+  the underlying response.
+- `OpenAI.GetCompletionsStreaming()` now returns a `StreamingResponse<Completions>` that may be directly
+  enumerated over. `StreamingCompletions`, `StreamingChoice`, and the corresponding methods are removed.
+- Because Chat Completions use a distinct structure for their streaming response messages, a new
+  `StreamingChatCompletionsUpdate` type is introduced that encapsulates this update data.
+- Correspondingly, `OpenAI.GetChatCompletionsStreaming()` now returns a
+  `StreamingResponse<StreamingChatCompletionsUpdate>` that may be enumerated over directly.
+  `StreamingChatCompletions`, `StreamingChatChoice`, and related methods are removed.
+- For more information, please see
+  [the related pull request description](https://github.com/Azure/azure-sdk-for-net/pull/39347) as well as the
+  updated snippets in the project README.
 
 #### `deploymentOrModelName` moved to `*Options.DeploymentName`
 
@@ -62,13 +88,18 @@ And *added* as replacements are:
 - `CompletionsOptions(string, IEnumerable<string>)`
 - `EmbeddingsOptions(string, IEnumerable<string>)`
 
-#### Embeddings
+#### Embeddings now represented as `ReadOnlyMemory<float>`
 
-- Changed the representation of embeddings from `IReadOnlyList<float>` to `ReadOnlyMemory<float>`.
+Changed the representation of embeddings (specifically, the type of the `Embedding` property of the `EmbeddingItem` class)
+from `IReadOnlyList<float>` to `ReadOnlyMemory<float>` as part of a broader effort to establish consistency across the
+.NET ecosystem.
 
-### Bugs Fixed
+#### `SearchKey` and `EmbeddingKey` properties replaced by `SetSearchKey` and `SetEmbeddingKey` methods
 
-### Other Changes
+Replaced the `SearchKey` and `EmbeddingKey` properties of the `AzureCognitiveSearchChatExtensionConfiguration` class with
+new `SetSearchKey` and `SetEmbeddingKey` methods respectively. These methods simplify the configuration of the Azure Cognitive
+Search chat extension by receiving a plain string instead of an `AzureKeyCredential`, promote more sensible key and secret
+management, and align with the Azure SDK guidelines.
 
 ## 1.0.0-beta.8 (2023-09-21)
 

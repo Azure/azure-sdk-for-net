@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <returns> An object representing collection of AvailabilityGroupListenerResources and their operations over a AvailabilityGroupListenerResource. </returns>
         public virtual AvailabilityGroupListenerCollection GetAvailabilityGroupListeners()
         {
-            return GetCachedClient(Client => new AvailabilityGroupListenerCollection(Client, Id));
+            return GetCachedClient(client => new AvailabilityGroupListenerCollection(client, Id));
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AvailabilityGroupListenerResource>> GetAvailabilityGroupListenerAsync(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AvailabilityGroupListenerResource> GetAvailabilityGroupListener(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {

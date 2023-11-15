@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualRouterPeeringResources and their operations over a VirtualRouterPeeringResource. </returns>
         public virtual VirtualRouterPeeringCollection GetVirtualRouterPeerings()
         {
-            return GetCachedClient(Client => new VirtualRouterPeeringCollection(Client, Id));
+            return GetCachedClient(client => new VirtualRouterPeeringCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualRouterPeeringResource>> GetVirtualRouterPeeringAsync(string peeringName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="peeringName"> The name of the Virtual Router Peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualRouterPeeringResource> GetVirtualRouterPeering(string peeringName, CancellationToken cancellationToken = default)
         {
