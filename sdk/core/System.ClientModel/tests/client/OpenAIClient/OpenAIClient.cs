@@ -59,9 +59,6 @@ public class OpenAIClient
 
         using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
-        // TODO: per precedence rules, we should not override a customer-specified message classifier.
-        options.MessageClassifier = MessageClassifier200;
-
         PipelineResponse response = _pipeline.ProcessMessage(message, options);
         OutputMessage result = OutputMessage.FromResponse(response);
         return result;
@@ -70,7 +67,7 @@ public class OpenAIClient
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, InputContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        options.Apply(message);
+        options.Apply(message, MessageClassifier200);
 
         PipelineRequest request = message.Request;
         request.Method = "POST";

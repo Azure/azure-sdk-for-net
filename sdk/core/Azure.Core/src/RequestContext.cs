@@ -73,37 +73,6 @@ namespace Azure
         public static implicit operator RequestContext(ErrorOptions options) => new RequestContext { ErrorOptions = options };
 
         /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        public override void Apply(PipelineMessage message)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unexpected message type: '{message.GetType()}'.");
-            }
-
-            Apply(httpMessage);
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="message"></param>
-        public void Apply(HttpMessage message)
-        {
-            message.CancellationToken = CancellationToken;
-
-            // TODO: Note, we don't set response classifier here, but need to rethink this
-            // story e2e.
-
-            if (NetworkTimeout.HasValue)
-            {
-                ResponseBufferingPolicy.SetNetworkTimeout(message, NetworkTimeout.Value);
-            }
-        }
-
-        /// <summary>
         /// Adds an <see cref="HttpPipelinePolicy"/> into the pipeline for the duration of this request.
         /// The position of policy in the pipeline is controlled by <paramref name="position"/> parameter.
         /// If you want the policy to execute once per client request use <see cref="HttpPipelinePosition.PerCall"/>
