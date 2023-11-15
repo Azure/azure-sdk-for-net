@@ -40,6 +40,16 @@
      * In case of duplicate keys within the scopes, only the first entry is
      retained, while all subsequent duplicate entries are discarded.
 
+* Resolved an issue where activity tags of various object types, including
+  double, float, and others, were previously formatted using
+  `CultureInfo.CurrentCulture`. This behavior caused inconsistencies in tag
+  value formatting depending on the regional settings of the machine where the
+  application was running. Such inconsistencies could lead to challenges in data
+  analysis and cause test failures in environments with differing cultural
+  settings. The fix ensures uniform and culture-independent formatting of
+  activity tag values, aligning with consistent data representation.
+  ([#39470](https://github.com/Azure/azure-sdk-for-net/pull/39470))
+
 ### Other Changes
 
 * Update OpenTelemetry dependencies
