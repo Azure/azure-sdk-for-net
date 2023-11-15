@@ -10,6 +10,12 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentModelAdministrationClient
     {
+        // CUSTOM CODE NOTE: the spec incorrectly defines the operationId parameter as a GUID
+        // in the GetOperation APIs, but it should be a string. This makes it impossible to
+        // use the API since IDs will never be a GUID. Because of this we're manually adding
+        // overloads that take a string and forcing the generated ones to be internal. Ideally
+        // we'll get the spec fixed and this piece of custom code will be removed.
+
         /// <summary> Gets operation info. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,6 +109,11 @@ namespace Azure.AI.DocumentIntelligence
                 throw;
             }
         }
+
+        // CUSTOM CODE NODE: we're overwriting the behavior of the BuildDocumentModel, ComposeModel,
+        // CopyModelTo, and BuildClassifier APIs to return an instance of TrainingOperation. This is
+        // a workaround since Operation.Id is not supported by our generator yet (it throws a
+        // NotSupportedException), but this ID is needed for the GetOperation API.
 
         /// <summary>
         /// [Protocol Method] Builds a custom document analysis model.
