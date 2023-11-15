@@ -64,9 +64,9 @@ public class MapsClient
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
         options ??= new RequestOptions();
-        options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
         using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
+        message.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
         _pipeline.Send(message);
 

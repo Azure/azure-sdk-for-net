@@ -87,7 +87,7 @@ namespace Azure.Core
         public override MessageClassifier MessageClassifier
         {
             get => base.MessageClassifier;
-            protected set => base.MessageClassifier = value;
+            set => base.MessageClassifier = value;
         }
 
         /// <summary>

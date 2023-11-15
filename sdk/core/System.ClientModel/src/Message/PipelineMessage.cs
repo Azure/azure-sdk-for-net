@@ -61,7 +61,8 @@ public class PipelineMessage : IDisposable
             return _messageClassifer;
         }
 
-        protected internal set => _messageClassifer = value;
+        // TODO: lets revisit this per need of client to set classifier for operation
+        set => _messageClassifer = value;
     }
 
     #endregion
