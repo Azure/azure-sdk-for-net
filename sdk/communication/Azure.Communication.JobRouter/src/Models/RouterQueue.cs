@@ -10,8 +10,8 @@ namespace Azure.Communication.JobRouter
 {
     public partial class RouterQueue : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of RouterQueue. </summary>
-        /// <param name="queueId"> Id of the policy. </param>
+        /// <summary> Initializes a new instance of a queue. </summary>
+        /// <param name="queueId"> Id of a queue. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> is null. </exception>
         public RouterQueue(string queueId)
         {
@@ -46,13 +46,13 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The name of this queue. </summary>
+        /// <summary> Friendly name of this queue. </summary>
         public string Name { get; set; }
 
-        /// <summary> The ID of the distribution policy that will determine how a job is distributed to workers. </summary>
+        /// <summary> Id of a distribution policy that will determine how a job is distributed to workers. </summary>
         public string DistributionPolicyId { get; set; }
 
-        /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
+        /// <summary> Id of an exception policy that determines various job escalation rules. </summary>
         public string ExceptionPolicyId { get; set; }
 
         [CodeGenMember("Etag")]
@@ -68,10 +68,10 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Concurrency Token. </summary>
+        /// <summary> The entity tag for this resource. </summary>
         public ETag ETag { get; internal set; }
 
-        /// <summary> Initializes a new instance of JobQueue. </summary>
+        /// <summary> Initializes a new instance of a queue. </summary>
         internal RouterQueue()
         {
             _labels = new ChangeTrackingDictionary<string, object>();

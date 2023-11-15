@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             Optional<string> id = default;
-            string kind = "Unknown";
+            ExceptionActionKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -30,7 +30,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new ExceptionActionKind(property.Value.GetString());
                     continue;
                 }
             }

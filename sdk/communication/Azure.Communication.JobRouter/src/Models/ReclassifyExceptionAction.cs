@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
         public ReclassifyExceptionAction()
         {
-            Kind = "reclassify";
+            Kind = ExceptionActionKind.Reclassify;
             _labelsToUpsert = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -80,7 +80,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

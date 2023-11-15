@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
@@ -29,6 +30,21 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         private readonly Counter<long> _dependencyFailedPerSecond;
         private readonly Counter<long> _exceptionsPerSecond;
         private readonly DoubleBuffer _doubleBuffer;
+
+        internal static readonly IReadOnlyDictionary<string, string> s_liveMetricNameMapping = new Dictionary<string, string>()
+        {
+            [LiveMetricConstants.RequestDurationInstrumentName] = LiveMetricConstants.RequestDurationMetricIdValue,
+            [LiveMetricConstants.RequestsInstrumentName] = LiveMetricConstants.RequestsPerSecondMetricIdValue,
+            [LiveMetricConstants.RequestsSucceededPerSecondInstrumentName] = LiveMetricConstants.RequestsSucceededPerSecondMetricIdValue,
+            [LiveMetricConstants.RequestsFailedPerSecondInstrumentName] = LiveMetricConstants.RequestsFailedPerSecondMetricIdValue,
+            [LiveMetricConstants.DependencyDurationInstrumentName] = LiveMetricConstants.DependencyDurationMetricIdValue,
+            [LiveMetricConstants.DependencyInstrumentName] = LiveMetricConstants.DependenciesPerSecondMetricIdValue,
+            [LiveMetricConstants.DependencySucceededPerSecondInstrumentName] = LiveMetricConstants.DependencySucceededPerSecondMetricIdValue,
+            [LiveMetricConstants.DependencyFailedPerSecondInstrumentName] = LiveMetricConstants.DependencyFailedPerSecondMetricIdValue,
+            [LiveMetricConstants.ExceptionsPerSecondInstrumentName] = LiveMetricConstants.ExceptionsPerSecondMetricIdValue,
+            [LiveMetricConstants.MemoryCommittedBytesInstrumentName] = LiveMetricConstants.MemoryCommittedBytesMetricIdValue,
+            [LiveMetricConstants.ProcessorTimeInstrumentName] = LiveMetricConstants.ProcessorTimeMetricIdValue,
+        };
 
         internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 

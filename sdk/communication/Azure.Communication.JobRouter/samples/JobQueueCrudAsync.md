@@ -60,7 +60,7 @@ Response<RouterQueue> updatedJobQueue = await routerAdministrationClient.UpdateQ
 ## List job queues
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetJobQueues_Async
-AsyncPageable<RouterQueue> jobQueues = routerAdministrationClient.GetQueuesAsync();
+AsyncPageable<RouterQueue> jobQueues = routerAdministrationClient.GetQueuesAsync(cancellationToken: default);
 await foreach (Page<RouterQueue> asPage in jobQueues.AsPages(pageSizeHint: 10))
 {
     foreach (RouterQueue? policy in asPage.Values)

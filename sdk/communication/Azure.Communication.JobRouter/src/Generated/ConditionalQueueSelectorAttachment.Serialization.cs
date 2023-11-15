@@ -21,7 +21,7 @@ namespace Azure.Communication.JobRouter
             }
             RouterRule condition = default;
             IList<RouterQueueSelector> queueSelectors = default;
-            string kind = default;
+            QueueSelectorAttachmentKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("condition"u8))
@@ -41,7 +41,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new QueueSelectorAttachmentKind(property.Value.GetString());
                     continue;
                 }
             }

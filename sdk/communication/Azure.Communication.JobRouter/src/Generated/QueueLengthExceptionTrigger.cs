@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of QueueLengthExceptionTrigger. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
         /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
-        internal QueueLengthExceptionTrigger(string kind, int threshold) : base(kind)
+        internal QueueLengthExceptionTrigger(ExceptionTriggerKind kind, int threshold) : base(kind)
         {
             Threshold = threshold;
         }
