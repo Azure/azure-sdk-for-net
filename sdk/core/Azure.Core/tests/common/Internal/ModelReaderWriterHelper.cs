@@ -24,7 +24,7 @@ namespace Azure.Core.Tests.Common
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ValidateFormat(IPersistableModel<object> model, string format) => ValidateFormat<object>(model, format);
 
-        private static ModelReaderWriterOptions? _wireOptions;
+        private static ModelReaderWriterOptions _wireOptions;
         public static ModelReaderWriterOptions WireOptions => _wireOptions ??= new ModelReaderWriterOptions("W");
     }
 }
