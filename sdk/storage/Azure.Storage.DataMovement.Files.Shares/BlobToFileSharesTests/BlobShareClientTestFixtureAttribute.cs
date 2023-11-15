@@ -14,6 +14,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
     public class BlobShareClientTestFixtureAttribute : ClientTestFixtureAttribute
     {
+        // TODO: provide a way to pass both the BlobClientOptions.ServiceVersion
+        // and the ShareClientOptions.Service version.
         public BlobShareClientTestFixtureAttribute()
             : base(
                 ShareClientOptions.ServiceVersion.V2019_02_02,
