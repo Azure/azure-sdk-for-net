@@ -128,6 +128,7 @@ namespace Azure.Storage.DataMovement
 
         private List<Task<bool>> _chunkTasks;
         private List<TaskCompletionSource<bool>> _chunkTaskSources;
+        protected bool _queueingTasks = false;
 
         /// <summary>
         /// Array pools for reading from streams to upload
@@ -557,15 +558,15 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CheckAndUpdateCancellationStateAsync()
         {
-            if (_chunkTasks.All((Task task) => (task.IsCompleted)))
+            if (JobPartStatus.State == DataTransferState.Pausing ||
+                JobPartStatus.State == DataTransferState.Stopping)
             {
-                if (JobPartStatus.State == DataTransferState.Pausing)
+                if (!_queueingTasks && _chunkTasks.All((Task task) => (task.IsCompleted)))
                 {
-                    await OnTransferStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
-                }
-                else if (JobPartStatus.State == DataTransferState.Stopping)
-                {
-                    await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                    DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
+                        DataTransferState.Paused :
+                        DataTransferState.Completed;
+                    await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }
         }

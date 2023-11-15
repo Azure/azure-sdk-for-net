@@ -11,8 +11,8 @@ namespace Azure.Communication.JobRouter
 {
     public partial class RouterJob : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of RouterJob. </summary>
-        /// <param name="jobId"> Id of the policy. </param>
+        /// <summary> Initializes a new instance of a job. </summary>
+        /// <param name="jobId"> Id of a job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         public RouterJob(string jobId)
         {
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> A set of non-identifying attributes attached to this job. Values must be primitive values - number, string, boolean. </summary>
         public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
+        /// <summary> A collection of manually specified worker selectors, which a worker must satisfy in order to process this job. </summary>
         public IList<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
 
         /// <summary> A collection of notes attached to a job. </summary>
@@ -43,19 +43,19 @@ namespace Azure.Communication.JobRouter
         /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
         public string ChannelId { get; set; }
 
-        /// <summary> The Id of the Classification policy used for classifying a job. </summary>
+        /// <summary> Id of a classification policy used for classifying this job. </summary>
         public string ClassificationPolicyId { get; set; }
 
-        /// <summary> The Id of the Queue that this job is queued to. </summary>
+        /// <summary> Id of a queue that this job is queued to. </summary>
         public string QueueId { get; set; }
 
         /// <summary> The priority of this job. </summary>
         public int? Priority { get; set; }
 
-        /// <summary> Reason code for cancelled or closed jobs. </summary>
+        /// <summary> Indicates the outcome of a job, populate this field with your own custom values. </summary>
         public string DispositionCode { get; set; }
 
-        /// <summary> Gets or sets the matching mode. </summary>
+        /// <summary> If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode. </summary>
         public JobMatchingMode MatchingMode { get; set; }
 
         [CodeGenMember("Labels")]
@@ -113,7 +113,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Concurrency Token. </summary>
+        /// <summary> The entity tag for this resource. </summary>
         public ETag ETag { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

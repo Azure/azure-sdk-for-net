@@ -10,7 +10,7 @@ namespace Azure.Communication.JobRouter
     public partial class ScheduleAndSuspendMode : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
-        /// <param name="scheduleAt">The time at which the job will be scheduled.</param>
+        /// <param name="scheduleAt"> Requested schedule time. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleAt"/> is null. </exception>
         public ScheduleAndSuspendMode(DateTimeOffset scheduleAt) : this(JobMatchingModeKind.ScheduleAndSuspend, scheduleAt)
         {

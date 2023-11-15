@@ -10,7 +10,7 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class ShareFileDestinationCheckpointData : StorageResourceCheckpointData
+    internal class ShareFileDestinationCheckpointData : StorageResourceCheckpointDataInternal
     {
         private const char HeaderDelimiter = Constants.CommaChar;
 
@@ -66,8 +66,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             SmbProperties = fileSmbProperties;
             _filePermissionKeyBytes = SmbProperties?.FilePermissionKey != default ? Encoding.UTF8.GetBytes(SmbProperties.FilePermissionKey) : Array.Empty<byte>();
         }
-
-        internal void SerializeInternal(Stream stream) => Serialize(stream);
 
         protected override void Serialize(Stream stream)
         {
@@ -204,8 +202,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileHttpHeaders contentHeaders = new()
             {
                 ContentType = contentType,
-                ContentEncoding = contentEncoding.Split(HeaderDelimiter),
-                ContentLanguage = contentLanguage.Split(HeaderDelimiter),
+                ContentEncoding = contentEncoding?.Split(HeaderDelimiter),
+                ContentLanguage = contentLanguage?.Split(HeaderDelimiter),
                 ContentDisposition = contentDisposition,
                 CacheControl = cacheControl,
             };

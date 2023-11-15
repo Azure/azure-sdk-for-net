@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="connectionString"> Connection string acquired from your Communication resource. </param>
         public static IAzureClientBuilder<JobRouterAdministrationClient, JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, string connectionString)
             where TBuilder : IAzureClientFactoryBuilder
         {
@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="connectionString"> Connection string acquired from your Communication resource. </param>
         public static IAzureClientBuilder<JobRouterClient, JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, string connectionString)
             where TBuilder : IAzureClientFactoryBuilder
         {
@@ -31,8 +31,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
-        /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of your Communication resource. </param>
+        /// <param name="credential"> The <see cref="AzureKeyCredential"/> used to authenticate requests. </param>
         public static IAzureClientBuilder<JobRouterAdministrationClient, JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
@@ -41,8 +41,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
-        /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of your Communication resource. </param>
+        /// <param name="credential"> The <see cref="AzureKeyCredential"/> used to authenticate requests. </param>
         public static IAzureClientBuilder<JobRouterClient, JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
@@ -51,8 +51,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
-        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of your Communication resource. </param>
+        /// <param name="credential"> The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
         public static IAzureClientBuilder<JobRouterAdministrationClient, JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, TokenCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
@@ -61,8 +61,8 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of the Azure Communication Services resource. </param>
-        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
+        /// <param name="endpoint"> The <see cref="Uri"/> endpoint of your Communication resource. </param>
+        /// <param name="credential"> The <see cref="TokenCredential"/> used to authenticate requests, such as DefaultAzureCredential. </param>
         public static IAzureClientBuilder<JobRouterClient, JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, Uri endpoint, TokenCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
