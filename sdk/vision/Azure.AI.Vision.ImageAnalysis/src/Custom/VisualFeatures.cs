@@ -14,20 +14,20 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary>
         /// No visual features are selected.
         /// </summary>
-        None,
+        None = 0,
         /// <summary> Tags. </summary>
-        Tags,
+        Tags = 1,
         /// <summary> Caption. </summary>
-        Caption,
+        Caption = 2,
         /// <summary> DenseCaptions. </summary>
-        DenseCaptions,
+        DenseCaptions = 4,
         /// <summary> Objects. </summary>
-        Objects,
+        Objects = 8,
         /// <summary> Read. </summary>
-        Read,
+        Read = 16,
         /// <summary> SmartCrops. </summary>
-        SmartCrops,
+        SmartCrops = 32,
         /// <summary> People. </summary>
-        People
+        People = 64
     }
 }
