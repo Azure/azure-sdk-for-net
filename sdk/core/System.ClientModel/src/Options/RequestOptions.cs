@@ -25,7 +25,6 @@ public class RequestOptions : PipelineOptions
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
-        message.MessageClassifier = MessageClassifier ?? MessageClassifier.Default;
 
         // TODO: note that this is a lot of *ways* to set values on the
         // message, policy, etc.  Let's get clear on how many ways we need and why

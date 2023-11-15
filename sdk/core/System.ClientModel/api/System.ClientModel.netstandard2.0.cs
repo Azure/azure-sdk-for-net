@@ -315,8 +315,6 @@ namespace System.ClientModel.Primitives
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
-        public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
-        public virtual System.ClientModel.Primitives.MessageClassifier? MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }

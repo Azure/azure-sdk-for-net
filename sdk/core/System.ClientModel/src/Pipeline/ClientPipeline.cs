@@ -43,7 +43,6 @@ public class ClientPipeline
         }
 
         pipelineLength += options.RetryPolicy is null ? 0 : 1;
-        pipelineLength += options.LoggingPolicy is null ? 0 : 1;
 
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
@@ -67,11 +66,6 @@ public class ClientPipeline
         {
             options.PerTryPolicies.CopyTo(pipeline.AsSpan(index));
             index += options.PerTryPolicies.Length;
-        }
-
-        if (options.LoggingPolicy != null)
-        {
-            pipeline[index++] = options.LoggingPolicy;
         }
 
         TimeSpan networkTimeout = options.NetworkTimeout ?? ResponseBufferingPolicy.DefaultNetworkTimeout;

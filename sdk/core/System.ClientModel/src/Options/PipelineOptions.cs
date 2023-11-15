@@ -21,8 +21,6 @@ public class PipelineOptions
 
     public PipelinePolicy? RetryPolicy { get; set; }
 
-    public PipelinePolicy? LoggingPolicy { get; set; }
-
     public PipelineTransport? Transport { get; set; }
 
     #endregion
@@ -31,8 +29,6 @@ public class PipelineOptions
 
     // TODO: when do we want these to be nullable and when do we want to set defaults?  Why?
     public TimeSpan? NetworkTimeout { get; set; }
-
-    public virtual MessageClassifier? MessageClassifier { get; set; }
 
     #endregion
 }
