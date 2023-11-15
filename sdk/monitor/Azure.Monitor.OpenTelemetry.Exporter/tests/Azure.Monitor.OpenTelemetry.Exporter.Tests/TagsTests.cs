@@ -354,6 +354,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var originalCulture = Thread.CurrentThread.CurrentCulture;
             var cultureInfo = new CultureInfo(cultureName);
             Thread.CurrentThread.CurrentCulture = cultureInfo;
+            IDictionary<string, string> properties = new Dictionary<string, string>();
 
             var doubleArray = new double[] { 1.1, 2.2, 3.3 };
             var doubleValue = 123.45;
@@ -366,14 +367,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             using var activity = CreateTestActivity(tagObjects);
             activityTagsProcessor.CategorizeTags(activity);
+            TraceHelper.AddPropertiesToTelemetry(properties, ref activityTagsProcessor.UnMappedTags);
 
             // Asserting Culture Behavior
             Assert.NotEqual("1.1,2.2,3.3", doubleArray.ToCommaDelimitedString(cultureInfo));
             Assert.NotEqual("123.45", doubleValue.ToString(cultureInfo));
 
             // Asserting CultureInvariant Behavior
-            Assert.Equal("1.1,2.2,3.3", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "doubleArray"));
-            Assert.Equal("123.45", AzMonList.GetTagValue(ref activityTagsProcessor.UnMappedTags, "double"));
+            Assert.Equal("1.1,2.2,3.3", properties["doubleArray"]);
+            Assert.Equal("123.45", properties["double"]);
 
             // Cleanup: Revert to the original culture
             Thread.CurrentThread.CurrentCulture = originalCulture;
