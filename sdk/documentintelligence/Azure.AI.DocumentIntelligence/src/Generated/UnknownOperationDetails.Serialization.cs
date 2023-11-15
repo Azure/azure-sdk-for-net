@@ -21,7 +21,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Guid operationId = default;
+            string operationId = default;
             OperationStatus status = default;
             Optional<int> percentCompleted = default;
             DateTimeOffset createdDateTime = default;
@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("operationId"u8))
                 {
-                    operationId = property.Value.GetGuid();
+                    operationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"u8))

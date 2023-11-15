@@ -25,8 +25,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+            var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
 
-            var nonInstrumentedClient = new DocumentAnalysisClient(endpoint, credential);
+            var nonInstrumentedClient = new DocumentAnalysisClient(endpoint, credential, options);
 
             return InstrumentClient(nonInstrumentedClient);
         }
@@ -35,8 +36,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
+            var options = InstrumentClientOptions(new AzureAIDocumentIntelligenceClientOptions());
 
-            var nonInstrumentedClient = new DocumentModelAdministrationClient(endpoint, credential);
+            var nonInstrumentedClient = new DocumentModelAdministrationClient(endpoint, credential, options);
 
             return InstrumentClient(nonInstrumentedClient);
         }

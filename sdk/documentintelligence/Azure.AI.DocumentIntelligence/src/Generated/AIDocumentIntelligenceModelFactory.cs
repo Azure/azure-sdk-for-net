@@ -587,7 +587,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.OperationDetails"/> instance for mocking. </returns>
-        public static OperationDetails OperationDetails(Guid operationId = default, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, string kind = "Unknown", Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
+        public static OperationDetails OperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, string kind = "Unknown", Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -630,7 +630,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(Guid operationId = default, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -649,7 +649,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(Guid operationId = default, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -668,7 +668,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(Guid operationId = default, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentModelDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -687,7 +687,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(Guid operationId = default, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, OperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, DocumentIntelligenceError error = null, DocumentClassifierDetails result = null)
         {
             tags ??= new Dictionary<string, string>();
 

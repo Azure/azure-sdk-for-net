@@ -24,9 +24,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
         /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceLocation"/> is null. </exception>
-        protected OperationDetails(Guid operationId, OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
+        protected OperationDetails(string operationId, OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 
             OperationId = operationId;
@@ -48,7 +49,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
-        internal OperationDetails(Guid operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error)
+        internal OperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error)
         {
             OperationId = operationId;
             Status = status;
@@ -61,9 +62,6 @@ namespace Azure.AI.DocumentIntelligence
             Tags = tags;
             Error = error;
         }
-
-        /// <summary> Operation ID. </summary>
-        public Guid OperationId { get; }
         /// <summary> Operation status. </summary>
         public OperationStatus Status { get; }
         /// <summary> Operation progress (0-100). </summary>

@@ -44,7 +44,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
         #region Get Operation
 
         [RecordedTest]
-        [Ignore("Calling Operation.Id throws a NotSupportedException: https://github.com/Azure/autorest.csharp/issues/2158")]
         public async Task GetOperationWithDocumentModelBuild()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -54,13 +53,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl, description, tags);
 
-            var operationId = new Guid(disposableModel.Operation.Id);
+            OperationDetails operationDetails = await client.GetOperationAsync(disposableModel.Operation.Id);
 
-            OperationDetails operationDetails = await client.GetOperationAsync(operationId);
+            var resourceLocation = $"{TestEnvironment.Endpoint}documentintelligence/documentModels/{disposableModel.ModelId}?api-version={ServiceVersionString}";
 
-            var resourceLocation = $"{TestEnvironment.Endpoint}formrecognizer/documentModels/{disposableModel.ModelId}?api-version={ServiceVersionString}";
-
-            ValidateOperationDetails(operationDetails, operationId, resourceLocation, startTime, tags);
+            ValidateOperationDetails(operationDetails, disposableModel.Operation.Id, resourceLocation, startTime, tags);
 
             var buildOperationDetails = operationDetails as DocumentModelBuildOperationDetails;
 
@@ -70,7 +67,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        [Ignore("Calling Operation.Id throws a NotSupportedException: https://github.com/Azure/autorest.csharp/issues/2158")]
         public async Task GetOperationWithDocumentClassifierBuild()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -80,13 +76,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(description);
 
-            var operationId = new Guid(disposableClassifier.ClassifierId);
+            OperationDetails operationDetails = await client.GetOperationAsync(disposableClassifier.Operation.Id);
 
-            OperationDetails operationDetails = await client.GetOperationAsync(operationId);
+            var resourceLocation = $"{TestEnvironment.Endpoint}documentintelligence/documentClassifiers/{disposableClassifier.ClassifierId}?api-version={ServiceVersionString}";
 
-            var resourceLocation = $"{TestEnvironment.Endpoint}formrecognizer/documentClassifiers/{disposableClassifier.ClassifierId}?api-version={ServiceVersionString}";
-
-            ValidateOperationDetails(operationDetails, operationId, resourceLocation, startTime, tags);
+            ValidateOperationDetails(operationDetails, disposableClassifier.Operation.Id, resourceLocation, startTime, tags);
 
             var buildOperationDetails = operationDetails as DocumentClassifierBuildOperationDetails;
 
@@ -99,7 +93,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         public void GetOperationCanParseError()
         {
             var client = CreateDocumentModelAdministrationClient();
-            var operationId = new Guid("00000000-0000-0000-0000-000000000000");
+            var operationId = "00000000000_00000000-0000-0000-0000-000000000000";
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.GetOperationAsync(operationId));
 
@@ -111,7 +105,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
         #region List Operations
 
         [RecordedTest]
-        [Ignore("Calling Operation.Id throws a NotSupportedException: https://github.com/Azure/autorest.csharp/issues/2158")]
         public async Task GetOperations()
         {
             var client = CreateDocumentModelAdministrationClient();
@@ -122,18 +115,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
             await using var disposableModel0 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl, description, tags);
             await using var disposableModel1 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl, description, tags);
 
-            var operationId0 = new Guid(disposableModel0.Operation.Id);
-            var operationId1 = new Guid(disposableModel1.Operation.Id);
+            OperationDetails expectedOperation0 = await client.GetOperationAsync(disposableModel0.Operation.Id);
+            OperationDetails expectedOperation1 = await client.GetOperationAsync(disposableModel1.Operation.Id);
 
-            OperationDetails expectedOperation0 = await client.GetOperationAsync(operationId0);
-            OperationDetails expectedOperation1 = await client.GetOperationAsync(operationId1);
-
-            var expectedIdMapping = new Dictionary<Guid, OperationDetails>()
+            var expectedIdMapping = new Dictionary<string, OperationDetails>()
             {
-                { operationId0, expectedOperation0 },
-                { operationId1, expectedOperation1 }
+                { disposableModel0.Operation.Id, expectedOperation0 },
+                { disposableModel1.Operation.Id, expectedOperation1 }
             };
-            var idMapping = new Dictionary<Guid, OperationDetails>();
+            var idMapping = new Dictionary<string, OperationDetails>();
 
             await foreach (OperationDetails operation in client.GetOperationsAsync())
             {
@@ -150,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             Assert.That(idMapping.Count, Is.EqualTo(expectedIdMapping.Count));
 
-            foreach (Guid id in expectedIdMapping.Keys)
+            foreach (string id in expectedIdMapping.Keys)
             {
                 Assert.That(idMapping, Contains.Key(id));
 
@@ -172,14 +162,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         #endregion List Operations
 
-        private void ValidateOperationDetails(OperationDetails operationDetails, Guid operationId, string resourceLocation, DateTimeOffset startTime, IDictionary<string, string> tags)
+        private void ValidateOperationDetails(OperationDetails operationDetails, string operationId, string resourceLocation, DateTimeOffset startTime, IDictionary<string, string> tags)
         {
             Assert.That(operationDetails.OperationId, Is.EqualTo(operationId));
+            Assert.That(operationDetails.ApiVersion, Is.EqualTo(ServiceVersionString));
             Assert.That(operationDetails.Status, Is.EqualTo(OperationStatus.Succeeded));
             Assert.That(operationDetails.PercentCompleted, Is.EqualTo(100));
             Assert.That(operationDetails.ResourceLocation.AbsoluteUri, Is.EqualTo(resourceLocation));
 
-            Assert.That(operationDetails.ApiVersion, Is.Null);
             Assert.That(operationDetails.Error, Is.Null);
 
             // Add a 4-hour tolerance because the model could have been cached before this test.
