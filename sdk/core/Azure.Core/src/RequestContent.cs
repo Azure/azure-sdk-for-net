@@ -90,7 +90,7 @@ namespace Azure.Core
         /// <param name="model">The <see cref="IPersistableModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IPersistableModel{T}"/>.</returns>
-        public static new RequestContent Create(IPersistableModel<object> model, ModelReaderWriterOptions? options = default)
+        public static new RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T: IPersistableModel<T>
             => new AzureRequestBodyContent(InputContent.Create(model, options ?? ModelReaderWriterHelper.WireOptions));
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace System.ClientModel
     {
         protected InputContent() { }
         public static System.ClientModel.InputContent Create(System.BinaryData value) { throw null; }
-        public static System.ClientModel.InputContent Create(System.ClientModel.Primitives.IPersistableModel<object> model, System.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.ClientModel.InputContent Create<T>(T model, System.ClientModel.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
