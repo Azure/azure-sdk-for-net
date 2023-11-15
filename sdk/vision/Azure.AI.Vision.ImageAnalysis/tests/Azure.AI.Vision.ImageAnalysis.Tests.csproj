@@ -26,4 +26,10 @@
   <ItemGroup>
     <Folder Include="SessionRecords\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="image-analysis-sample.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

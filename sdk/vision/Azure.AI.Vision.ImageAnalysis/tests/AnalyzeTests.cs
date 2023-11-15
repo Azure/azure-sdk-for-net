@@ -26,40 +26,55 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
         public async Task AnalyzeFromUrl()
         {
             var client = GetClientWithKey();
-            var allFeatures = new VisualFeatures[] { VisualFeatures.Caption, VisualFeatures.DenseCaptions, VisualFeatures.Objects, VisualFeatures.People, VisualFeatures.Read, VisualFeatures.SmartCrops, VisualFeatures.Tags };
-            var someFeatures = new VisualFeatures[] { VisualFeatures.Caption, VisualFeatures.Read };
+            var allFeatures = VisualFeatures.Caption | VisualFeatures.DenseCaptions | VisualFeatures.Objects | VisualFeatures.People | VisualFeatures.Read | VisualFeatures.SmartCrops | VisualFeatures.Tags;
+            var someFeatures = VisualFeatures.Caption | VisualFeatures.Read;
 
-            foreach (var testFeatures in new VisualFeatures[][] { allFeatures, someFeatures })
+            foreach (var testFeatures in new VisualFeatures[] { allFeatures, someFeatures })
             {
-                var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, null, null, new float[] { 0.9F, 1.33F });
+                var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { smartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
                 Assert.IsNotNull(result);
                 var iaResult = result.Value;
                 Assert.IsNotNull(iaResult);
 
-                ValidateResponse(iaResult, testFeatures, false);
+                ValidateResponse(iaResult, testFeatures, false, 2);
             }
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeFromUrlDefaultParams()
+        {
+            var client = GetClientWithKey();
+            var testFeatures = VisualFeatures.Caption | VisualFeatures.Read;
+
+            var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures);
+
+            Assert.IsNotNull(result);
+            var iaResult = result.Value;
+            Assert.IsNotNull(iaResult);
+
+            ValidateResponse(iaResult, testFeatures, false, 0);
         }
 
         [RecordedTest]
         public async Task AnalyzeFromStream()
         {
             var client = GetClientWithKey();
-            var allFeatures = new VisualFeatures[] { VisualFeatures.Caption, VisualFeatures.DenseCaptions, VisualFeatures.Objects, VisualFeatures.People, VisualFeatures.Read, VisualFeatures.SmartCrops, VisualFeatures.Tags };
-            var someFeatures = new VisualFeatures[] { VisualFeatures.Caption, VisualFeatures.Read };
+            var allFeatures = VisualFeatures.Caption | VisualFeatures.DenseCaptions | VisualFeatures.Objects | VisualFeatures.People | VisualFeatures.Read | VisualFeatures.SmartCrops | VisualFeatures.Tags;
+            var someFeatures = VisualFeatures.Caption | VisualFeatures.Read;
 
             var fileLocation = TestEnvironment.TestImageInputPath;
 
-            foreach (var testFeatures in new VisualFeatures[][] { allFeatures, someFeatures })
+            foreach (var testFeatures in new VisualFeatures[] { allFeatures, someFeatures })
             {
                 using var fileStream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read);
-                var result = await client.AnalyzeAsync(BinaryData.FromStream(fileStream), testFeatures, null, null, new float[] { 0.9F, 1.33F });
+                var result = await client.AnalyzeAsync(BinaryData.FromStream(fileStream), testFeatures, new ImageAnalysisOptions { smartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
                 Assert.IsNotNull(result);
                 var iaResult = result.Value;
                 Assert.IsNotNull(iaResult);
 
-                ValidateResponse(iaResult, testFeatures, false);
+                ValidateResponse(iaResult, testFeatures, false, 2);
             }
         }
 
@@ -76,23 +91,23 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             var client = GetClientWithKey(null, clientOptions);
 
-            var testFeatures = new VisualFeatures[] { VisualFeatures.Read };
+            var testFeatures = VisualFeatures.Read;
 
-            var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, null, null, new float[] { 0.9F, 1.33F });
+            var result = await client.AnalyzeAsync(TestEnvironment.TestImageInputUrl, testFeatures, new ImageAnalysisOptions { smartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
             Assert.IsNotNull(result);
             var iaResult = result.Value;
             Assert.IsNotNull(iaResult);
 
-            ValidateResponse(iaResult, testFeatures, false);
+            ValidateResponse(iaResult, testFeatures, false, 2);
         }
 
-        private void ValidateResponse(ImageAnalysisResult iaResult, IEnumerable<VisualFeatures> testFeatures, bool genderNeutral)
+        private void ValidateResponse(ImageAnalysisResult iaResult, VisualFeatures testFeatures, bool genderNeutral, int smartCropsSpecified)
         {
             ValidateMetaData(iaResult);
 
             var captionResult = iaResult.Caption;
-            if (testFeatures.Contains(VisualFeatures.Caption))
+            if (testFeatures.HasFlag(VisualFeatures.Caption))
             {
                 ValidateCaption(captionResult, genderNeutral);
             }
@@ -101,7 +116,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 Assert.IsNull(captionResult);
             }
 
-            if (testFeatures.Contains(VisualFeatures.DenseCaptions))
+            if (testFeatures.HasFlag(VisualFeatures.DenseCaptions))
             {
                 ValidateDenseCaptions(iaResult);
             }
@@ -111,7 +126,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
 
             var objectsResult = iaResult.Objects;
-            if (testFeatures.Contains(VisualFeatures.Objects))
+            if (testFeatures.HasFlag(VisualFeatures.Objects))
             {
                 ValidateObjectsResult(objectsResult);
             }
@@ -120,7 +135,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 Assert.IsNull(objectsResult);
             }
 
-            if (testFeatures.Contains(VisualFeatures.Tags))
+            if (testFeatures.HasFlag(VisualFeatures.Tags))
             {
                 ValidateTags(iaResult.Tags);
             }
@@ -129,7 +144,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 Assert.IsNull(iaResult.Tags);
             }
 
-            if (testFeatures.Contains(VisualFeatures.People))
+            if (testFeatures.HasFlag(VisualFeatures.People))
             {
                 ValidatePeopleResult(iaResult);
             }
@@ -138,9 +153,9 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
                 Assert.IsNull(iaResult.People);
             }
 
-            if (testFeatures.Contains(VisualFeatures.SmartCrops))
+            if (testFeatures.HasFlag(VisualFeatures.SmartCrops))
             {
-                ValidateSmartCrops(iaResult);
+                ValidateSmartCrops(iaResult, smartCropsSpecified);
             }
             else
             {
@@ -148,7 +163,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             }
 
             var readResult = iaResult.Read;
-            if (!testFeatures.Contains(VisualFeatures.Read))
+            if (!testFeatures.HasFlag(VisualFeatures.Read))
             {
                 Assert.IsNull(readResult);
             }
@@ -304,13 +319,13 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             Assert.GreaterOrEqual(found, 2);
         }
 
-        private void ValidateSmartCrops(ImageAnalysisResult iaResult)
+        private void ValidateSmartCrops(ImageAnalysisResult iaResult, int smartCropsSpecified)
         {
             var smartCropsResult = iaResult.SmartCrops;
             Assert.IsNotNull(smartCropsResult);
 
             Assert.IsNotNull(smartCropsResult.Values);
-            Assert.AreEqual(2, smartCropsResult.Values.Count);
+            Assert.AreEqual(0 != smartCropsSpecified ? smartCropsSpecified : 1, smartCropsResult.Values.Count);
 
             var boundingBoxes = new HashSet<ImageBoundingBox>(new BoundingBoxComparer());
 

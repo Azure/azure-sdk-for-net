@@ -22,53 +22,41 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
-        /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
-        /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="options">A structure containg the per call analysis options</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Task<Response<ImageAnalysisResult>> AnalyzeAsync(BinaryData imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => AnalyzeFromStreamAsync(visualFeatures, imageContent, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
+        public virtual Task<Response<ImageAnalysisResult>> AnalyzeAsync(BinaryData imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
+            => AnalyzeFromBufferAsync(visualFeatures.ToStringArray(), imageContent, options.language, options.genderNeutralCaption, options.smartCropsAspectRatios, options.modelVersion, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
-        /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
-        /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="options">A structure containg the per call analysis options</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImageAnalysisResult> Analyze(BinaryData imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => AnalyzeFromStream(visualFeatures, imageContent, language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
+        public virtual Response<ImageAnalysisResult> Analyze(BinaryData imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
+            => AnalyzeFromBuffer(visualFeatures.ToStringArray(), imageContent, options.language, options.genderNeutralCaption, options.smartCropsAspectRatios, options.modelVersion, cancellationToken);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
-        /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
-        /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="options">A structure containg the per call analysis options</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ImageAnalysisResult>> AnalyzeAsync(Uri imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => await AnalyzeFromUrlAsync(visualFeatures, new ImageUrl(imageContent), language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<Response<ImageAnalysisResult>> AnalyzeAsync(Uri imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
+            => await AnalyzeFromUrlAsync(visualFeatures.ToStringArray(), new ImageUrl(imageContent), options.language, options.genderNeutralCaption, options.smartCropsAspectRatios, options.modelVersion, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageContent"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A string indicating what visual feature types to return. Multiple values should be comma-separated. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="language"> The desired language for output generation. If this parameter is not specified, the default value is "en". See https://aka.ms/cv-languages for a list of supported languages. </param>
-        /// <param name="genderNeutralCaption"> Boolean flag for enabling gender-neutral captioning for caption and denseCaptions features. If this parameter is not specified, the default value is "false". </param>
-        /// <param name="smartCropsAspectRatios"> A list of aspect ratios to use for smartCrops feature. Aspect ratios are calculated by dividing the target crop width by the height. Supported values are between 0.75 and 1.8 (inclusive). Multiple values should be comma-separated. If this parameter is not specified, the service will return one crop suggestion with an aspect ratio it sees fit between 0.5 and 2.0 (inclusive). </param>
-        /// <param name="modelName"> The name of the custom trained model. This parameter needs to be specified if the parameter "features" is not specified. </param>
+        /// <param name="options">A structure containg the per call analysis options</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageContent"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImageAnalysisResult> Analyze(Uri imageContent, IEnumerable<VisualFeatures> visualFeatures = null, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelName = null, CancellationToken cancellationToken = default)
-            => AnalyzeFromUrl(visualFeatures, new ImageUrl(imageContent), language, genderNeutralCaption, smartCropsAspectRatios, modelName, cancellationToken);
+        public virtual Response<ImageAnalysisResult> Analyze(Uri imageContent, VisualFeatures visualFeatures, ImageAnalysisOptions options = default, CancellationToken cancellationToken = default)
+            => AnalyzeFromUrl(visualFeatures.ToStringArray(), new ImageUrl(imageContent), options.language, options.genderNeutralCaption, options.smartCropsAspectRatios, options.modelVersion, cancellationToken);
     }
 }
