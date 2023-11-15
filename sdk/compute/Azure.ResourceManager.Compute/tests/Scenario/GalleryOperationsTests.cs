@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
@@ -83,6 +84,31 @@ namespace Azure.ResourceManager.Compute.Tests
             GalleryResource updatedGallery = await gallery.SetTagsAsync(tags);
 
             Assert.AreEqual(tags, updatedGallery.Data.Tags);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CreateGallerywithPublisherUri()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            var collection = _resourceGroup.GetGalleries();
+            var name = Recording.GenerateAssetName("galleryName");
+            var input = new GalleryData(AzureLocation.EastUS)
+            {
+                SharingProfile = new SharingProfile()
+                {
+                    Permission = GallerySharingPermissionType.Community,
+                    CommunityGalleryInfo = new CommunityGalleryInfo()
+                    {
+                        PublisherUriString = "www.gallerytestxxx.com",
+                        PublisherContact = "gallerytest@163.com",
+                        PublicNamePrefix = "gallerytest",
+                    }
+                }
+            };
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            var gallery = lro.Value;
+            Assert.AreEqual(gallery.Data.Name, name);
         }
     }
 }
