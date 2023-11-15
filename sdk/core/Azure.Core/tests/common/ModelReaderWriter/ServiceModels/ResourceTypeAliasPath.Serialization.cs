@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ResourceTypeAliasPath : IUtf8JsonSerializable, IJsonModel<ResourceTypeAliasPath>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPath>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPath>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         internal static ResourceTypeAliasPath DeserializeResourceTypeAliasPath(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

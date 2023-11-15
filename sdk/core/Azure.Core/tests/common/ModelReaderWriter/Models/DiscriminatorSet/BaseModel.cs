@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(baseModel, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(baseModel, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator BaseModel(Response response)
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         protected internal BaseModel(Dictionary<string, BinaryData> rawData)
@@ -55,7 +55,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             }
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseModel>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseModel>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,7 +86,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static BaseModel DeserializeBaseModel(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

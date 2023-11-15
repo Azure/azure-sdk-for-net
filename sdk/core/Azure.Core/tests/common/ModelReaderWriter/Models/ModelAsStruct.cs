@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         /// <summary> Gets the id. </summary>
         public int Id { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<ModelAsStruct>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static implicit operator RequestContent(ModelAsStruct model)
         {
-            return RequestContent.Create(model, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(model, ModelReaderWriterHelper.WireOptions);
         }
 
         ModelAsStruct IPersistableModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -79,7 +79,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             int id = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument doc = JsonDocument.Parse(response.ContentStream);
-            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);

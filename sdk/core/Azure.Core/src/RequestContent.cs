@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Buffers;
 using Azure.Core.Serialization;
+using System.ClientModel.Internal;
 
 namespace Azure.Core
 {
@@ -90,7 +91,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IPersistableModel{T}"/>.</returns>
         public static new RequestContent Create(IPersistableModel<object> model, ModelReaderWriterOptions? options = default)
-            => new AzureRequestBodyContent(InputContent.Create(model, options ?? ModelReaderWriterOptions.Wire));
+            => new AzureRequestBodyContent(InputContent.Create(model, options ?? ModelReaderWriterHelper.WireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.

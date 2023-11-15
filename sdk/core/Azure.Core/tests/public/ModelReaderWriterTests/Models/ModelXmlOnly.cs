@@ -51,19 +51,19 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(modelXml, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(modelXml, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator ModelXmlOnly(Response response)
         {
             Argument.AssertNotNull(response, nameof(response));
 
-            return DeserializeModelXmlOnly(XElement.Load(response.ContentStream), ModelReaderWriterOptions.Wire);
+            return DeserializeModelXmlOnly(XElement.Load(response.ContentStream), ModelReaderWriterHelper.WireOptions);
         }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -86,7 +86,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         public static ModelXmlOnly DeserializeModelXmlOnly(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;

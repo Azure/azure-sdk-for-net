@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.ClientModel;
+using System.ClientModel.Internal;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
@@ -31,7 +32,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
             Assert.Throws(Is.InstanceOf<JsonException>(), () => ModelReaderWriter.Read<ModelXmlCrossLibrary>(new BinaryData(Encoding.UTF8.GetBytes(WirePayload)), jsonOptions));
 
-            ModelReaderWriterOptions wireOptions = ModelReaderWriterOptions.Wire;
+            ModelReaderWriterOptions wireOptions = ModelReaderWriterHelper.WireOptions;
             Assert.Throws<XmlException>(() => ModelReaderWriter.Read<ModelXmlCrossLibrary>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), wireOptions));
         }
 

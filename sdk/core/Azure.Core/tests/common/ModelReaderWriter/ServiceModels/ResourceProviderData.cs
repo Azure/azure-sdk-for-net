@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System.ClientModel.Internal;
 using System.Collections.Generic;
-using System.ClientModel;
 using System.Text.Json;
 
 namespace Azure.Core.Tests.Models.ResourceManager.Resources
@@ -24,7 +24,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
                 return null;
             }
 
-            return RequestContent.Create(resourceProviderData, ModelReaderWriterOptions.Wire);
+            return RequestContent.Create(resourceProviderData, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator ResourceProviderData(Response response)
@@ -32,7 +32,7 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         /// <summary> Initializes a new instance of ProviderData. </summary>

@@ -43,7 +43,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string id = default;
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.Wire);
+                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterHelper.WireOptions);
             }
         }
 

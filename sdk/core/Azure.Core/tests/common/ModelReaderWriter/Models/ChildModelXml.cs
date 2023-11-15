@@ -38,7 +38,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+            Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string value = default;
             string readonlyProperty = default;
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string childValue = default;
             string childReadOnlyProperty = default;
@@ -121,7 +121,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.Wire;
+                options ??= ModelReaderWriterHelper.WireOptions;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -166,7 +166,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelReaderWriterOptions.Wire);
+            Serialize(writer, ModelReaderWriterHelper.WireOptions);
 
         string IPersistableModel<ChildModelXml>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }

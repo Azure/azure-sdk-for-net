@@ -29,7 +29,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 return null;
             }
 
-            return InputContent.Create(availabilitySetData, ModelReaderWriterOptions.Wire);
+            return InputContent.Create(availabilitySetData, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator AvailabilitySetData(OutputMessage result)
@@ -37,7 +37,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             ClientUtilities.AssertNotNull(result, nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>

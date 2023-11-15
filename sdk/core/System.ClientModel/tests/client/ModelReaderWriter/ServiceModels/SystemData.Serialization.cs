@@ -26,7 +26,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
 
         internal static SystemData DeserializeSystemData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSystemData(document.RootElement, ModelReaderWriterOptions.Wire);
+                return DeserializeSystemData(document.RootElement, ModelReaderWriterHelper.WireOptions);
             }
         }
 

@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatReadOnlyProperty>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatReadOnlyProperty>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<CatReadOnlyProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -71,7 +71,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             double weight = default;
             string name = "";

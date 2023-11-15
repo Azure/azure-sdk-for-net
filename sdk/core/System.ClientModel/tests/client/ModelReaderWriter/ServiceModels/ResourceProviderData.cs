@@ -25,7 +25,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                 return null;
             }
 
-            return InputContent.Create(resourceProviderData, ModelReaderWriterOptions.Wire);
+            return InputContent.Create(resourceProviderData, ModelReaderWriterHelper.WireOptions);
         }
 
         public static explicit operator ResourceProviderData(OutputMessage result)
@@ -33,7 +33,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             ClientUtilities.AssertNotNull(result, nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterOptions.Wire);
+            return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
         /// <summary> Initializes a new instance of ProviderData. </summary>
