@@ -48,7 +48,7 @@
   analysis and cause test failures in environments with differing cultural
   settings. The fix ensures uniform and culture-independent formatting of
   activity tag values, aligning with consistent data representation.
-  ([#39470](https://github.com/Azure/azure-sdk-for-net/pull/39470))
+  ([#39470](https://github.com/Azure/azure-sdk-for-net/issues/39470))
 
 ### Other Changes
 
