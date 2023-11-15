@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A list of vulnerability assessment scan records. </summary>
     internal partial class Scans
     {
-        /// <summary> Initializes a new instance of Scans. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Scans"/>. </summary>
         internal Scans()
         {
             Value = new ChangeTrackingList<SqlVulnerabilityAssessmentScanData>();
         }
 
-        /// <summary> Initializes a new instance of Scans. </summary>
+        /// <summary> Initializes a new instance of <see cref="Scans"/>. </summary>
         /// <param name="value"> List of vulnerability assessment scan records. </param>
-        internal Scans(IReadOnlyList<SqlVulnerabilityAssessmentScanData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Scans(IReadOnlyList<SqlVulnerabilityAssessmentScanData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of vulnerability assessment scan records. </summary>

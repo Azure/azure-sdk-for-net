@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The security automation model state property bag. </summary>
     public partial class SecurityAutomationValidationStatus
     {
-        /// <summary> Initializes a new instance of SecurityAutomationValidationStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationValidationStatus"/>. </summary>
         internal SecurityAutomationValidationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationValidationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationValidationStatus"/>. </summary>
         /// <param name="isValid"> Indicates whether the model is valid or not. </param>
         /// <param name="message"> The validation message. </param>
-        internal SecurityAutomationValidationStatus(bool? isValid, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAutomationValidationStatus(bool? isValid, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsValid = isValid;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the model is valid or not. </summary>

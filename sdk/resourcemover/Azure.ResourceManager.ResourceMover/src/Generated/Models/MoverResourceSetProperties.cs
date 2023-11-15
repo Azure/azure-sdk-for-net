@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the move collection properties. </summary>
     public partial class MoverResourceSetProperties
     {
-        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetProperties"/>. </summary>
         public MoverResourceSetProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetProperties"/>. </summary>
         /// <param name="sourceLocation"> Gets or sets the source region. </param>
         /// <param name="targetLocation"> Gets or sets the target region. </param>
         /// <param name="moveLocation"> Gets or sets the move region which indicates the region where the VM Regional to Zonal move will be conducted. </param>
@@ -26,7 +31,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="version"> Gets or sets the version of move collection. </param>
         /// <param name="moveType"> Defines the MoveType. </param>
         /// <param name="errors"> Defines the move collection errors. </param>
-        internal MoverResourceSetProperties(AzureLocation? sourceLocation, AzureLocation? targetLocation, AzureLocation? moveLocation, MoverProvisioningState? provisioningState, string version, MoveType? moveType, MoveCollectionPropertiesErrors errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverResourceSetProperties(AzureLocation? sourceLocation, AzureLocation? targetLocation, AzureLocation? moveLocation, MoverProvisioningState? provisioningState, string version, MoveType? moveType, MoveCollectionPropertiesErrors errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceLocation = sourceLocation;
             TargetLocation = targetLocation;
@@ -35,6 +41,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Version = version;
             MoveType = moveType;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the source region. </summary>

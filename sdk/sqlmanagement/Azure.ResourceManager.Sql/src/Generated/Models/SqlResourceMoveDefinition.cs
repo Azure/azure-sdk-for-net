@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform a resource move (rename). </summary>
     public partial class SqlResourceMoveDefinition
     {
-        /// <summary> Initializes a new instance of SqlResourceMoveDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlResourceMoveDefinition"/>. </summary>
         /// <param name="id"> The target ID for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SqlResourceMoveDefinition(ResourceIdentifier id)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.Sql.Models
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlResourceMoveDefinition"/>. </summary>
+        /// <param name="id"> The target ID for the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlResourceMoveDefinition(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlResourceMoveDefinition"/> for deserialization. </summary>
+        internal SqlResourceMoveDefinition()
+        {
         }
 
         /// <summary> The target ID for the resource. </summary>

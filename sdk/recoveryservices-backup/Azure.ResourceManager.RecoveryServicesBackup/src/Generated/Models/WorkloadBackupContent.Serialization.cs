@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadBackupContent : IUtf8JsonSerializable
+    public partial class WorkloadBackupContent : IUtf8JsonSerializable, IJsonModel<WorkloadBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadBackupContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<WorkloadBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WorkloadBackupContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WorkloadBackupContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupType))
             {
@@ -33,11 +43,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkloadBackupContent DeserializeWorkloadBackupContent(JsonElement element)
+        WorkloadBackupContent IJsonModel<WorkloadBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkloadBackupContent(document.RootElement, options);
+        }
+
+        internal static WorkloadBackupContent DeserializeWorkloadBackupContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +85,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> enableCompression = default;
             Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupType"u8))
@@ -80,8 +121,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkloadBackupContent(objectType, Optional.ToNullable(backupType), Optional.ToNullable(enableCompression), Optional.ToNullable(recoveryPointExpiryTimeInUTC));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkloadBackupContent(objectType, serializedAdditionalRawData, Optional.ToNullable(backupType), Optional.ToNullable(enableCompression), Optional.ToNullable(recoveryPointExpiryTimeInUTC));
         }
+
+        BinaryData IPersistableModel<WorkloadBackupContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WorkloadBackupContent IPersistableModel<WorkloadBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWorkloadBackupContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<WorkloadBackupContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

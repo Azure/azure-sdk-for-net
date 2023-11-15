@@ -5,12 +5,18 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Provides parameter values to a magnitude scoring function. </summary>
     public partial class MagnitudeScoringParameters
     {
-        /// <summary> Initializes a new instance of MagnitudeScoringParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MagnitudeScoringParameters"/>. </summary>
         /// <param name="boostingRangeStart"> The field value at which boosting starts. </param>
         /// <param name="boostingRangeEnd"> The field value at which boosting ends. </param>
         public MagnitudeScoringParameters(double boostingRangeStart, double boostingRangeEnd)
@@ -19,15 +25,22 @@ namespace Azure.Search.Documents.Indexes.Models
             BoostingRangeEnd = boostingRangeEnd;
         }
 
-        /// <summary> Initializes a new instance of MagnitudeScoringParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="MagnitudeScoringParameters"/>. </summary>
         /// <param name="boostingRangeStart"> The field value at which boosting starts. </param>
         /// <param name="boostingRangeEnd"> The field value at which boosting ends. </param>
         /// <param name="shouldBoostBeyondRangeByConstant"> A value indicating whether to apply a constant boost for field values beyond the range end value; default is false. </param>
-        internal MagnitudeScoringParameters(double boostingRangeStart, double boostingRangeEnd, bool? shouldBoostBeyondRangeByConstant)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MagnitudeScoringParameters(double boostingRangeStart, double boostingRangeEnd, bool? shouldBoostBeyondRangeByConstant, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BoostingRangeStart = boostingRangeStart;
             BoostingRangeEnd = boostingRangeEnd;
             ShouldBoostBeyondRangeByConstant = shouldBoostBeyondRangeByConstant;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MagnitudeScoringParameters"/> for deserialization. </summary>
+        internal MagnitudeScoringParameters()
+        {
         }
 
         /// <summary> The field value at which boosting starts. </summary>

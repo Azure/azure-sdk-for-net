@@ -5,14 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Input definition for unplanned failover input properties. </summary>
     public partial class UnplannedFailoverProperties
     {
-        /// <summary> Initializes a new instance of UnplannedFailoverProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverProperties"/>. </summary>
         public UnplannedFailoverProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnplannedFailoverProperties"/>. </summary>
+        /// <param name="failoverDirection"> Failover direction. </param>
+        /// <param name="sourceSiteOperations"> Source site operations status. </param>
+        /// <param name="providerSpecificDetails">
+        /// Provider specific settings.
+        /// Please note <see cref="UnplannedFailoverProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2AUnplannedFailoverContent"/>, <see cref="HyperVReplicaAzureUnplannedFailoverContent"/>, <see cref="InMageUnplannedFailoverContent"/>, <see cref="InMageAzureV2UnplannedFailoverContent"/> and <see cref="InMageRcmUnplannedFailoverContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnplannedFailoverProperties(string failoverDirection, string sourceSiteOperations, UnplannedFailoverProviderSpecificContent providerSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FailoverDirection = failoverDirection;
+            SourceSiteOperations = sourceSiteOperations;
+            ProviderSpecificDetails = providerSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Failover direction. </summary>

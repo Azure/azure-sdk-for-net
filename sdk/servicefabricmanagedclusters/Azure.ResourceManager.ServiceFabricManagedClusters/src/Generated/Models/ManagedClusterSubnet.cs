@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a Subnet. </summary>
     public partial class ManagedClusterSubnet
     {
-        /// <summary> Initializes a new instance of ManagedClusterSubnet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSubnet"/>. </summary>
         /// <param name="name"> Subnet name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ManagedClusterSubnet(string name)
@@ -23,19 +27,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSubnet"/>. </summary>
         /// <param name="name"> Subnet name. </param>
         /// <param name="isIPv6Enabled"> Indicates wether to enable Ipv6 or not. If not provided, it will take the same configuration as the cluster. </param>
         /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>
         /// <param name="privateLinkServiceNetworkPolicies"> Enable or Disable apply network policies on private link service in the subnet. </param>
         /// <param name="networkSecurityGroupId"> Full resource id for the network security group. </param>
-        internal ManagedClusterSubnet(string name, bool? isIPv6Enabled, ManagedClusterSubnetPrivateEndpointNetworkPoliciesState? privateEndpointNetworkPolicies, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState? privateLinkServiceNetworkPolicies, ResourceIdentifier networkSecurityGroupId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSubnet(string name, bool? isIPv6Enabled, ManagedClusterSubnetPrivateEndpointNetworkPoliciesState? privateEndpointNetworkPolicies, ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState? privateLinkServiceNetworkPolicies, ResourceIdentifier networkSecurityGroupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IsIPv6Enabled = isIPv6Enabled;
             PrivateEndpointNetworkPolicies = privateEndpointNetworkPolicies;
             PrivateLinkServiceNetworkPolicies = privateLinkServiceNetworkPolicies;
             NetworkSecurityGroupId = networkSecurityGroupId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSubnet"/> for deserialization. </summary>
+        internal ManagedClusterSubnet()
+        {
         }
 
         /// <summary> Subnet name. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of policy definitions. </summary>
     internal partial class PolicyDefinitionListResult
     {
-        /// <summary> Initializes a new instance of PolicyDefinitionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionListResult"/>. </summary>
         internal PolicyDefinitionListResult()
         {
             Value = new ChangeTrackingList<PolicyDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyDefinitionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDefinitionListResult"/>. </summary>
         /// <param name="value"> An array of policy definitions. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal PolicyDefinitionListResult(IReadOnlyList<PolicyDefinitionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyDefinitionListResult(IReadOnlyList<PolicyDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of policy definitions. </summary>

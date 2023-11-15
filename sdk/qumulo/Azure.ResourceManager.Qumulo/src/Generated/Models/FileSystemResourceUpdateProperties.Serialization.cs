@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class FileSystemResourceUpdateProperties : IUtf8JsonSerializable
+    public partial class FileSystemResourceUpdateProperties : IUtf8JsonSerializable, IJsonModel<FileSystemResourceUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemResourceUpdateProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FileSystemResourceUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FileSystemResourceUpdateProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MarketplaceDetails))
             {
@@ -45,7 +56,135 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        FileSystemResourceUpdateProperties IJsonModel<FileSystemResourceUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFileSystemResourceUpdateProperties(document.RootElement, options);
+        }
+
+        internal static FileSystemResourceUpdateProperties DeserializeFileSystemResourceUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<MarketplaceDetails> marketplaceDetails = default;
+            Optional<QumuloUserDetails> userDetails = default;
+            Optional<ResourceIdentifier> delegatedSubnetId = default;
+            Optional<Uri> clusterLoginUrl = default;
+            Optional<IList<string>> privateIPs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("marketplaceDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    marketplaceDetails = MarketplaceDetails.DeserializeMarketplaceDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("userDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userDetails = QumuloUserDetails.DeserializeQumuloUserDetails(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("delegatedSubnetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    delegatedSubnetId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("clusterLoginUrl"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterLoginUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("privateIPs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    privateIPs = array;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FileSystemResourceUpdateProperties(marketplaceDetails.Value, userDetails.Value, delegatedSubnetId.Value, clusterLoginUrl.Value, Optional.ToList(privateIPs), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<FileSystemResourceUpdateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FileSystemResourceUpdateProperties IPersistableModel<FileSystemResourceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFileSystemResourceUpdateProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<FileSystemResourceUpdateProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

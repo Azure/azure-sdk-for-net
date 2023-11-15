@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceBus;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The result of the List Alias(Disaster Recovery configuration) operation. </summary>
     internal partial class ArmDisasterRecoveryListResult
     {
-        /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDisasterRecoveryListResult"/>. </summary>
         internal ArmDisasterRecoveryListResult()
         {
             Value = new ChangeTrackingList<ServiceBusDisasterRecoveryData>();
         }
 
-        /// <summary> Initializes a new instance of ArmDisasterRecoveryListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDisasterRecoveryListResult"/>. </summary>
         /// <param name="value"> List of Alias(Disaster Recovery configurations). </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Alias(Disaster Recovery configuration). </param>
-        internal ArmDisasterRecoveryListResult(IReadOnlyList<ServiceBusDisasterRecoveryData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDisasterRecoveryListResult(IReadOnlyList<ServiceBusDisasterRecoveryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Alias(Disaster Recovery configurations). </summary>

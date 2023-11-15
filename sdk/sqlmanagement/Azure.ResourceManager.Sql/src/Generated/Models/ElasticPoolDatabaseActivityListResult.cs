@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Represents the response to a list elastic pool database activity request. </summary>
     internal partial class ElasticPoolDatabaseActivityListResult
     {
-        /// <summary> Initializes a new instance of ElasticPoolDatabaseActivityListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivityListResult"/>. </summary>
         /// <param name="value"> The list of elastic pool database activities. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ElasticPoolDatabaseActivityListResult(IEnumerable<ElasticPoolDatabaseActivity> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.Sql.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolDatabaseActivityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivityListResult"/>. </summary>
         /// <param name="value"> The list of elastic pool database activities. </param>
-        internal ElasticPoolDatabaseActivityListResult(IReadOnlyList<ElasticPoolDatabaseActivity> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolDatabaseActivityListResult(IReadOnlyList<ElasticPoolDatabaseActivity> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolDatabaseActivityListResult"/> for deserialization. </summary>
+        internal ElasticPoolDatabaseActivityListResult()
+        {
         }
 
         /// <summary> The list of elastic pool database activities. </summary>

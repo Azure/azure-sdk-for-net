@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Details of the certificate to be uploaded to the vault. </summary>
     public partial class RecoveryServicesCertificateContent
     {
-        /// <summary> Initializes a new instance of RecoveryServicesCertificateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesCertificateContent"/>. </summary>
         public RecoveryServicesCertificateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesCertificateContent"/>. </summary>
+        /// <param name="properties"> Raw certificate data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesCertificateContent(RawCertificateData properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Raw certificate data. </summary>

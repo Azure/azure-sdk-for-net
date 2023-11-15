@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Message Count Details. </summary>
     public partial class MessageCountDetails
     {
-        /// <summary> Initializes a new instance of MessageCountDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageCountDetails"/>. </summary>
         internal MessageCountDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of MessageCountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageCountDetails"/>. </summary>
         /// <param name="activeMessageCount"> Number of active messages in the queue, topic, or subscription. </param>
         /// <param name="deadLetterMessageCount"> Number of messages that are dead lettered. </param>
         /// <param name="scheduledMessageCount"> Number of scheduled messages. </param>
         /// <param name="transferMessageCount"> Number of messages transferred to another queue, topic, or subscription. </param>
         /// <param name="transferDeadLetterMessageCount"> Number of messages transferred into dead letters. </param>
-        internal MessageCountDetails(long? activeMessageCount, long? deadLetterMessageCount, long? scheduledMessageCount, long? transferMessageCount, long? transferDeadLetterMessageCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageCountDetails(long? activeMessageCount, long? deadLetterMessageCount, long? scheduledMessageCount, long? transferMessageCount, long? transferDeadLetterMessageCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActiveMessageCount = activeMessageCount;
             DeadLetterMessageCount = deadLetterMessageCount;
             ScheduledMessageCount = scheduledMessageCount;
             TransferMessageCount = transferMessageCount;
             TransferDeadLetterMessageCount = transferDeadLetterMessageCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of active messages in the queue, topic, or subscription. </summary>

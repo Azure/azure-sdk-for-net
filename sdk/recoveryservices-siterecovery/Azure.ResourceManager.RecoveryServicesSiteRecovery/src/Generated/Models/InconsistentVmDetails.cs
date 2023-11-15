@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> This class stores the monitoring details for consistency check of inconsistent Protected Entity. </summary>
     public partial class InconsistentVmDetails
     {
-        /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InconsistentVmDetails"/>. </summary>
         internal InconsistentVmDetails()
         {
             Details = new ChangeTrackingList<string>();
             ErrorIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InconsistentVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InconsistentVmDetails"/>. </summary>
         /// <param name="vmName"> The Vm name. </param>
         /// <param name="cloudName"> The Cloud name. </param>
         /// <param name="details"> The list of details regarding state of the Protected Entity in SRS and On prem. </param>
         /// <param name="errorIds"> The list of error ids. </param>
-        internal InconsistentVmDetails(string vmName, string cloudName, IReadOnlyList<string> details, IReadOnlyList<string> errorIds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InconsistentVmDetails(string vmName, string cloudName, IReadOnlyList<string> details, IReadOnlyList<string> errorIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmName = vmName;
             CloudName = cloudName;
             Details = details;
             ErrorIds = errorIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Vm name. </summary>

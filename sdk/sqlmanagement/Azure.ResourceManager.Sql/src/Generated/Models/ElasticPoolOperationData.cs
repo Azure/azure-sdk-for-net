@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A elastic pool operation. </summary>
     public partial class ElasticPoolOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ElasticPoolOperationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolOperationData"/>. </summary>
         public ElasticPoolOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal ElasticPoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ElasticPoolName = elasticPoolName;
             Operation = operation;
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
             EstimatedCompleteOn = estimatedCompleteOn;
             Description = description;
             IsCancellable = isCancellable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the elastic pool the operation is being performed on. </summary>

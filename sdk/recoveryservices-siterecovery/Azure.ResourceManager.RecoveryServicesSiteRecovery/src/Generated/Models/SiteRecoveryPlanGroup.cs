@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan group details. </summary>
     public partial class SiteRecoveryPlanGroup
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPlanGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPlanGroup"/>. </summary>
         /// <param name="groupType"> The group type. </param>
         public SiteRecoveryPlanGroup(RecoveryPlanGroupType groupType)
         {
@@ -23,17 +27,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             EndGroupActions = new ChangeTrackingList<RecoveryPlanAction>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPlanGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPlanGroup"/>. </summary>
         /// <param name="groupType"> The group type. </param>
         /// <param name="replicationProtectedItems"> The list of protected items. </param>
         /// <param name="startGroupActions"> The start group actions. </param>
         /// <param name="endGroupActions"> The end group actions. </param>
-        internal SiteRecoveryPlanGroup(RecoveryPlanGroupType groupType, IList<RecoveryPlanProtectedItem> replicationProtectedItems, IList<RecoveryPlanAction> startGroupActions, IList<RecoveryPlanAction> endGroupActions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryPlanGroup(RecoveryPlanGroupType groupType, IList<RecoveryPlanProtectedItem> replicationProtectedItems, IList<RecoveryPlanAction> startGroupActions, IList<RecoveryPlanAction> endGroupActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupType = groupType;
             ReplicationProtectedItems = replicationProtectedItems;
             StartGroupActions = startGroupActions;
             EndGroupActions = endGroupActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPlanGroup"/> for deserialization. </summary>
+        internal SiteRecoveryPlanGroup()
+        {
         }
 
         /// <summary> The group type. </summary>

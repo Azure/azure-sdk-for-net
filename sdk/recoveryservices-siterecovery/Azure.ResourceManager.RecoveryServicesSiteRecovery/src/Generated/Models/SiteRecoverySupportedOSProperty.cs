@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Supported operating systems property. </summary>
     public partial class SiteRecoverySupportedOSProperty
     {
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOSProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSProperty"/>. </summary>
         internal SiteRecoverySupportedOSProperty()
         {
             SupportedOS = new ChangeTrackingList<SiteRecoverySupportedOSDetails>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoverySupportedOSProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoverySupportedOSProperty"/>. </summary>
         /// <param name="instanceType"> The replication provider type. </param>
         /// <param name="supportedOS"> The list of supported operating systems. </param>
-        internal SiteRecoverySupportedOSProperty(string instanceType, IReadOnlyList<SiteRecoverySupportedOSDetails> supportedOS)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoverySupportedOSProperty(string instanceType, IReadOnlyList<SiteRecoverySupportedOSDetails> supportedOS, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
             SupportedOS = supportedOS;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The replication provider type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Details of step input. </summary>
     public partial class StepInput
     {
-        /// <summary> Initializes a new instance of StepInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StepInput"/>. </summary>
         internal StepInput()
         {
             ResponseOptions = new ChangeTrackingList<ResponseConfig>();
         }
 
-        /// <summary> Initializes a new instance of StepInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="StepInput"/>. </summary>
         /// <param name="questionId"> Use Index as QuestionId. </param>
         /// <param name="questionType"> Text Input. Will be a single line input. </param>
         /// <param name="questionContent"> User question content. </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="selectedOptionValue"> Text of response that was selected. </param>
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
-        internal StepInput(string questionId, string questionType, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StepInput(string questionId, string questionType, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuestionId = questionId;
             QuestionType = questionType;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             SelectedOptionValue = selectedOptionValue;
             ResponseValidationProperties = responseValidationProperties;
             ResponseOptions = responseOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Use Index as QuestionId. </summary>

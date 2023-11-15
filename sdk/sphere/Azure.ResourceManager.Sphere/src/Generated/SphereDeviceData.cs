@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sphere.Models;
@@ -19,12 +20,15 @@ namespace Azure.ResourceManager.Sphere
     /// </summary>
     public partial class SphereDeviceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereDeviceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceData"/>. </summary>
         public SphereDeviceData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereDeviceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,7 +61,8 @@ namespace Azure.ResourceManager.Sphere
         /// The status of the last operation.
         /// Serialized Name: Device.properties.provisioningState
         /// </param>
-        internal SphereDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string chipSku, string lastAvailableOSVersion, string lastInstalledOSVersion, DateTimeOffset? lastOSUpdateUtc, DateTimeOffset? lastUpdateRequestUtc, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SphereDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deviceId, string chipSku, string lastAvailableOSVersion, string lastInstalledOSVersion, DateTimeOffset? lastOSUpdateUtc, DateTimeOffset? lastUpdateRequestUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeviceId = deviceId;
             ChipSku = chipSku;
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.Sphere
             LastOSUpdateUtc = lastOSUpdateUtc;
             LastUpdateRequestUtc = lastUpdateRequestUtc;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

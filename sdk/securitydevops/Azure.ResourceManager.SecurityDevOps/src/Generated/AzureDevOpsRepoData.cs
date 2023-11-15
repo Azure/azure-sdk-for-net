@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityDevOps.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.SecurityDevOps
     /// </summary>
     public partial class AzureDevOpsRepoData : ResourceData
     {
-        /// <summary> Initializes a new instance of AzureDevOpsRepoData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsRepoData"/>. </summary>
         public AzureDevOpsRepoData()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsRepoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsRepoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> AzureDevOps Repo properties. </param>
-        internal AzureDevOpsRepoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureDevOpsRepoProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsRepoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureDevOpsRepoProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> AzureDevOps Repo properties. </summary>

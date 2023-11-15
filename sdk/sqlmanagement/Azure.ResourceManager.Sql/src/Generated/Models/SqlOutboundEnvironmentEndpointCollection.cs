@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A collection of endpoints that the managed instance service requires outbound network access to. </summary>
     internal partial class SqlOutboundEnvironmentEndpointCollection
     {
-        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlOutboundEnvironmentEndpointCollection"/>. </summary>
         internal SqlOutboundEnvironmentEndpointCollection()
         {
             Value = new ChangeTrackingList<SqlOutboundEnvironmentEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of SqlOutboundEnvironmentEndpointCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlOutboundEnvironmentEndpointCollection"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SqlOutboundEnvironmentEndpointCollection(IReadOnlyList<SqlOutboundEnvironmentEndpoint> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlOutboundEnvironmentEndpointCollection(IReadOnlyList<SqlOutboundEnvironmentEndpoint> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of results. </summary>

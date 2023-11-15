@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Object of the emerging issue impact on services and regions. </summary>
     public partial class EmergingIssueImpact
     {
-        /// <summary> Initializes a new instance of EmergingIssueImpact. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueImpact"/>. </summary>
         internal EmergingIssueImpact()
         {
             Regions = new ChangeTrackingList<EmergingIssueImpactedRegion>();
         }
 
-        /// <summary> Initializes a new instance of EmergingIssueImpact. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueImpact"/>. </summary>
         /// <param name="id"> The impacted service id. </param>
         /// <param name="name"> The impacted service name. </param>
         /// <param name="regions"> The list of impacted regions for corresponding emerging issues. </param>
-        internal EmergingIssueImpact(string id, string name, IReadOnlyList<EmergingIssueImpactedRegion> regions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmergingIssueImpact(string id, string name, IReadOnlyList<EmergingIssueImpactedRegion> regions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             Regions = regions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The impacted service id. </summary>

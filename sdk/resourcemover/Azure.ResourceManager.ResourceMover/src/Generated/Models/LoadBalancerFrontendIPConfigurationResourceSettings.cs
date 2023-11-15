@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.ResourceMover.Models
@@ -12,12 +14,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines load balancer frontend IP configuration properties. </summary>
     public partial class LoadBalancerFrontendIPConfigurationResourceSettings
     {
-        /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationResourceSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationResourceSettings"/>. </summary>
         public LoadBalancerFrontendIPConfigurationResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of LoadBalancerFrontendIPConfigurationResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationResourceSettings"/>. </summary>
         /// <param name="name"> Gets or sets the frontend IP configuration name. </param>
         /// <param name="privateIPAddress">
         /// Gets or sets the IP address of the Load Balancer.This is only specified if a specific
@@ -26,13 +31,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="privateIPAllocationMethod"> Gets or sets PrivateIP allocation method (Static/Dynamic). </param>
         /// <param name="subnet"> Defines reference to subnet. </param>
         /// <param name="zones"> Gets or sets the csv list of zones. </param>
-        internal LoadBalancerFrontendIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, string zones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerFrontendIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, string zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the frontend IP configuration name. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
@@ -13,7 +14,10 @@ namespace Azure.Quantum.Jobs.Models
     /// <summary> A JSONPatch document as defined by RFC 6902. </summary>
     public partial class JsonPatchDocument
     {
-        /// <summary> Initializes a new instance of JsonPatchDocument. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JsonPatchDocument"/>. </summary>
         /// <param name="op"> The operation to be performed. </param>
         /// <param name="path"> A JSON-Pointer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
@@ -23,6 +27,26 @@ namespace Azure.Quantum.Jobs.Models
 
             Op = op;
             Path = path;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JsonPatchDocument"/>. </summary>
+        /// <param name="op"> The operation to be performed. </param>
+        /// <param name="path"> A JSON-Pointer. </param>
+        /// <param name="value"> A value to be used in the operation on the path. </param>
+        /// <param name="from"> Optional field used in copy and move operations. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JsonPatchDocument(JsonPatchOperation op, string path, object value, string @from, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Op = op;
+            Path = path;
+            Value = value;
+            From = @from;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JsonPatchDocument"/> for deserialization. </summary>
+        internal JsonPatchDocument()
+        {
         }
 
         /// <summary> The operation to be performed. </summary>

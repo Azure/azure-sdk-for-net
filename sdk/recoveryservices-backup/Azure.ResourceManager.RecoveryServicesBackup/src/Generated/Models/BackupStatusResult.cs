@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,12 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> BackupStatus response. </summary>
     public partial class BackupStatusResult
     {
-        /// <summary> Initializes a new instance of BackupStatusResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupStatusResult"/>. </summary>
         internal BackupStatusResult()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStatusResult"/>. </summary>
         /// <param name="protectionStatus"> Specifies whether the container is registered or not. </param>
         /// <param name="vaultId"> Specifies the arm resource id of the vault. </param>
         /// <param name="fabricName"> Specifies the fabric name - Azure or AD. </param>
@@ -27,7 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="errorMessage"> ErrorMessage in case of intent failed. </param>
         /// <param name="policyName"> Specifies the policy name which is used for protection. </param>
         /// <param name="registrationStatus"> Container registration status. </param>
-        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupStatusResult(BackupProtectionStatus? protectionStatus, ResourceIdentifier vaultId, BackupFabricName? fabricName, string containerName, string protectedItemName, string errorCode, string errorMessage, string policyName, string registrationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtectionStatus = protectionStatus;
             VaultId = vaultId;
@@ -38,6 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ErrorMessage = errorMessage;
             PolicyName = policyName;
             RegistrationStatus = registrationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies whether the container is registered or not. </summary>

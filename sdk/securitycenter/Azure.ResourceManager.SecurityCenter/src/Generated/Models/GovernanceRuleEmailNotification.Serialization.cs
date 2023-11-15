@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GovernanceRuleEmailNotification : IUtf8JsonSerializable
+    public partial class GovernanceRuleEmailNotification : IUtf8JsonSerializable, IJsonModel<GovernanceRuleEmailNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GovernanceRuleEmailNotification>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GovernanceRuleEmailNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GovernanceRuleEmailNotification>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GovernanceRuleEmailNotification>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsManagerEmailNotificationDisabled))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("disableOwnerEmailNotification"u8);
                 writer.WriteBooleanValue(IsOwnerEmailNotificationDisabled.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GovernanceRuleEmailNotification DeserializeGovernanceRuleEmailNotification(JsonElement element)
+        GovernanceRuleEmailNotification IJsonModel<GovernanceRuleEmailNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GovernanceRuleEmailNotification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGovernanceRuleEmailNotification(document.RootElement, options);
+        }
+
+        internal static GovernanceRuleEmailNotification DeserializeGovernanceRuleEmailNotification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> disableManagerEmailNotification = default;
             Optional<bool> disableOwnerEmailNotification = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disableManagerEmailNotification"u8))
@@ -56,8 +98,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     disableOwnerEmailNotification = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GovernanceRuleEmailNotification(Optional.ToNullable(disableManagerEmailNotification), Optional.ToNullable(disableOwnerEmailNotification));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GovernanceRuleEmailNotification(Optional.ToNullable(disableManagerEmailNotification), Optional.ToNullable(disableOwnerEmailNotification), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GovernanceRuleEmailNotification>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GovernanceRuleEmailNotification)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GovernanceRuleEmailNotification IPersistableModel<GovernanceRuleEmailNotification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GovernanceRuleEmailNotification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGovernanceRuleEmailNotification(document.RootElement, options);
+        }
+
+        string IPersistableModel<GovernanceRuleEmailNotification>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

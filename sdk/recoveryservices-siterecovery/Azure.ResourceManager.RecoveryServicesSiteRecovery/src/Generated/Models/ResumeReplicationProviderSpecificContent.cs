@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,9 +17,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class ResumeReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of ResumeReplicationProviderSpecificContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResumeReplicationProviderSpecificContent"/>. </summary>
         protected ResumeReplicationProviderSpecificContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResumeReplicationProviderSpecificContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResumeReplicationProviderSpecificContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The class type. </summary>

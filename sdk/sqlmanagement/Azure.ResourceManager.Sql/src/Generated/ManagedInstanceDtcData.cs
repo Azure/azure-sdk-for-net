@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstanceDtcData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceDtcData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcData"/>. </summary>
         public ManagedInstanceDtcData()
         {
             ExternalDnsSuffixSearchList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceDtcData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +38,15 @@ namespace Azure.ResourceManager.Sql
         /// <param name="externalDnsSuffixSearchList"> External dns suffix search list of managed instance DTC. </param>
         /// <param name="dtcHostNameDnsSuffix"> Host name dns suffix of managed instance DTC. </param>
         /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
-        internal ManagedInstanceDtcData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? dtcEnabled, ManagedInstanceDtcSecuritySettings securitySettings, IList<string> externalDnsSuffixSearchList, string dtcHostNameDnsSuffix, JobExecutionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceDtcData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? dtcEnabled, ManagedInstanceDtcSecuritySettings securitySettings, IList<string> externalDnsSuffixSearchList, string dtcHostNameDnsSuffix, JobExecutionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DtcEnabled = dtcEnabled;
             SecuritySettings = securitySettings;
             ExternalDnsSuffixSearchList = externalDnsSuffixSearchList;
             DtcHostNameDnsSuffix = dtcHostNameDnsSuffix;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Active status of managed instance DTC. </summary>

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Dra model properties. </summary>
     public partial class DataReplicationDraProperties
     {
-        /// <summary> Initializes a new instance of DataReplicationDraProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraProperties"/>. </summary>
         /// <param name="machineId"> Gets or sets the machine Id where Dra is running. </param>
         /// <param name="machineName"> Gets or sets the machine name where Dra is running. </param>
         /// <param name="authenticationIdentity"> Identity model. </param>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CustomProperties = customProperties;
         }
 
-        /// <summary> Initializes a new instance of DataReplicationDraProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraProperties"/>. </summary>
         /// <param name="correlationId"> Gets or sets the Dra correlation Id. </param>
         /// <param name="machineId"> Gets or sets the machine Id where Dra is running. </param>
         /// <param name="machineName"> Gets or sets the machine name where Dra is running. </param>
@@ -57,7 +60,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// Please note <see cref="DraModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GeneralDraModelCustomProperties"/> and <see cref="VMwareDraModelCustomProperties"/>.
         /// </param>
-        internal DataReplicationDraProperties(string correlationId, string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, bool? isResponsive, DateTimeOffset? lastHeartbeatOn, string versionNumber, DataReplicationProvisioningState? provisioningState, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DraModelCustomProperties customProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationDraProperties(string correlationId, string machineId, string machineName, DataReplicationIdentity authenticationIdentity, DataReplicationIdentity resourceAccessIdentity, bool? isResponsive, DateTimeOffset? lastHeartbeatOn, string versionNumber, DataReplicationProvisioningState? provisioningState, IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors, DraModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CorrelationId = correlationId;
             MachineId = machineId;
@@ -70,6 +74,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             ProvisioningState = provisioningState;
             HealthErrors = healthErrors;
             CustomProperties = customProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraProperties"/> for deserialization. </summary>
+        internal DataReplicationDraProperties()
+        {
         }
 
         /// <summary> Gets or sets the Dra correlation Id. </summary>

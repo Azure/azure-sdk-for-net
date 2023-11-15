@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SuppressionAlertsScopeElement : IUtf8JsonSerializable
+    public partial class SuppressionAlertsScopeElement : IUtf8JsonSerializable, IJsonModel<SuppressionAlertsScopeElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressionAlertsScopeElement>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SuppressionAlertsScopeElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SuppressionAlertsScopeElement>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SuppressionAlertsScopeElement>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Field))
             {
@@ -37,8 +46,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static SuppressionAlertsScopeElement DeserializeSuppressionAlertsScopeElement(JsonElement element)
+        SuppressionAlertsScopeElement IJsonModel<SuppressionAlertsScopeElement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SuppressionAlertsScopeElement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSuppressionAlertsScopeElement(document.RootElement, options);
+        }
+
+        internal static SuppressionAlertsScopeElement DeserializeSuppressionAlertsScopeElement(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,5 +81,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SuppressionAlertsScopeElement(field.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<SuppressionAlertsScopeElement>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SuppressionAlertsScopeElement)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SuppressionAlertsScopeElement IPersistableModel<SuppressionAlertsScopeElement>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SuppressionAlertsScopeElement)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSuppressionAlertsScopeElement(document.RootElement, options);
+        }
+
+        string IPersistableModel<SuppressionAlertsScopeElement>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

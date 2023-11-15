@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     /// <summary> The validation operation result for a linker. </summary>
     public partial class LinkerValidateOperationResult
     {
-        /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkerValidateOperationResult"/>. </summary>
         internal LinkerValidateOperationResult()
         {
             ValidationDetail = new ChangeTrackingList<LinkerValidationResultItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of LinkerValidateOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkerValidateOperationResult"/>. </summary>
         /// <param name="resourceId"> Validated linker id. </param>
         /// <param name="status"> Validation operation status. </param>
         /// <param name="linkerName"> The linker name. </param>
@@ -31,7 +34,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="targetId"> The resource Id of target service. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="validationDetail"> The detail of validation result. </param>
-        internal LinkerValidateOperationResult(ResourceIdentifier resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartOn, DateTimeOffset? reportEndOn, ResourceIdentifier sourceId, ResourceIdentifier targetId, LinkerAuthType? authType, IReadOnlyList<LinkerValidationResultItemInfo> validationDetail)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkerValidateOperationResult(ResourceIdentifier resourceId, string status, string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartOn, DateTimeOffset? reportEndOn, ResourceIdentifier sourceId, ResourceIdentifier targetId, LinkerAuthType? authType, IReadOnlyList<LinkerValidationResultItemInfo> validationDetail, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Status = status;
@@ -43,6 +47,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             TargetId = targetId;
             AuthType = authType;
             ValidationDetail = validationDetail;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Validated linker id. </summary>

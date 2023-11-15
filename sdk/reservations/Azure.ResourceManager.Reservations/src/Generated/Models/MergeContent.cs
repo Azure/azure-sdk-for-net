@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The request for reservation merge. </summary>
     public partial class MergeContent
     {
-        /// <summary> Initializes a new instance of MergeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MergeContent"/>. </summary>
         public MergeContent()
         {
             Sources = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MergeContent"/>. </summary>
+        /// <param name="sources"> Format of the resource id should be /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MergeContent(IList<string> sources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Sources = sources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Format of the resource id should be /providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}. </summary>

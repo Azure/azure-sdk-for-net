@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery disk encryption info (BEK and KEK). </summary>
     public partial class SiteRecoveryDiskEncryptionInfo
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskEncryptionInfo"/>. </summary>
         public SiteRecoveryDiskEncryptionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDiskEncryptionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDiskEncryptionInfo"/>. </summary>
         /// <param name="diskEncryptionKeyInfo"> The recovery KeyVault reference for secret. </param>
         /// <param name="keyEncryptionKeyInfo"> The recovery KeyVault reference for key. </param>
-        internal SiteRecoveryDiskEncryptionInfo(SiteRecoveryDiskEncryptionKeyInfo diskEncryptionKeyInfo, SiteRecoveryKeyEncryptionKeyInfo keyEncryptionKeyInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryDiskEncryptionInfo(SiteRecoveryDiskEncryptionKeyInfo diskEncryptionKeyInfo, SiteRecoveryKeyEncryptionKeyInfo keyEncryptionKeyInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskEncryptionKeyInfo = diskEncryptionKeyInfo;
             KeyEncryptionKeyInfo = keyEncryptionKeyInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The recovery KeyVault reference for secret. </summary>

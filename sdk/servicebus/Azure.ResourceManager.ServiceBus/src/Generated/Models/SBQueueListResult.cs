@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ServiceBus;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> The response to the List Queues operation. </summary>
     internal partial class SBQueueListResult
     {
-        /// <summary> Initializes a new instance of SBQueueListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SBQueueListResult"/>. </summary>
         internal SBQueueListResult()
         {
             Value = new ChangeTrackingList<ServiceBusQueueData>();
         }
 
-        /// <summary> Initializes a new instance of SBQueueListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SBQueueListResult"/>. </summary>
         /// <param name="value"> Result of the List Queues operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of queues. </param>
-        internal SBQueueListResult(IReadOnlyList<ServiceBusQueueData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SBQueueListResult(IReadOnlyList<ServiceBusQueueData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the List Queues operation. </summary>

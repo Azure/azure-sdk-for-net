@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Information from validate template deployment response. </summary>
     public partial class ArmDeploymentValidateResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentValidateResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentValidateResult"/>. </summary>
         internal ArmDeploymentValidateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentValidateResult"/>. </summary>
         /// <param name="error"> The deployment validation error. </param>
         /// <param name="properties"> The template deployment properties. </param>
-        internal ArmDeploymentValidateResult(ResponseError error, ArmDeploymentPropertiesExtended properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentValidateResult(ResponseError error, ArmDeploymentPropertiesExtended properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The deployment validation error. </summary>

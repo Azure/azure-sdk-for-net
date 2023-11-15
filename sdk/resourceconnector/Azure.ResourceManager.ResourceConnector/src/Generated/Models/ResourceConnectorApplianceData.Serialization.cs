@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,10 +16,17 @@ using Azure.ResourceManager.ResourceConnector.Models;
 
 namespace Azure.ResourceManager.ResourceConnector
 {
-    public partial class ResourceConnectorApplianceData : IUtf8JsonSerializable
+    public partial class ResourceConnectorApplianceData : IUtf8JsonSerializable, IJsonModel<ResourceConnectorApplianceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceConnectorApplianceData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ResourceConnectorApplianceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ResourceConnectorApplianceData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ResourceConnectorApplianceData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -36,6 +46,29 @@ namespace Azure.ResourceManager.ResourceConnector
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Distro))
@@ -48,10 +81,26 @@ namespace Azure.ResourceManager.ResourceConnector
                 writer.WritePropertyName("infrastructureConfig"u8);
                 writer.WriteObjectValue(InfrastructureConfig);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
             }
             if (Optional.IsDefined(Version))
             {
@@ -59,11 +108,40 @@ namespace Azure.ResourceManager.ResourceConnector
                 writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceConnectorApplianceData DeserializeResourceConnectorApplianceData(JsonElement element)
+        ResourceConnectorApplianceData IJsonModel<ResourceConnectorApplianceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceConnectorApplianceData(document.RootElement, options);
+        }
+
+        internal static ResourceConnectorApplianceData DeserializeResourceConnectorApplianceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -81,6 +159,8 @@ namespace Azure.ResourceManager.ResourceConnector
             Optional<string> publicKey = default;
             Optional<ResourceConnectorStatus> status = default;
             Optional<string> version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -189,8 +269,38 @@ namespace Azure.ResourceManager.ResourceConnector
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceConnectorApplianceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(distro), infrastructureConfig.Value, provisioningState.Value, publicKey.Value, Optional.ToNullable(status), version.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceConnectorApplianceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(distro), infrastructureConfig.Value, provisioningState.Value, publicKey.Value, Optional.ToNullable(status), version.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceConnectorApplianceData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ResourceConnectorApplianceData IPersistableModel<ResourceConnectorApplianceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeResourceConnectorApplianceData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ResourceConnectorApplianceData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

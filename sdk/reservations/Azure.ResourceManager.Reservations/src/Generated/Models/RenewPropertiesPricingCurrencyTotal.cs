@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </summary>
     public partial class RenewPropertiesPricingCurrencyTotal
     {
-        /// <summary> Initializes a new instance of RenewPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RenewPropertiesPricingCurrencyTotal"/>. </summary>
         internal RenewPropertiesPricingCurrencyTotal()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewPropertiesPricingCurrencyTotal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewPropertiesPricingCurrencyTotal"/>. </summary>
         /// <param name="currencyCode"> The ISO 4217 3-letter currency code for the currency used by this purchase record. </param>
         /// <param name="amount"></param>
-        internal RenewPropertiesPricingCurrencyTotal(string currencyCode, float? amount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RenewPropertiesPricingCurrencyTotal(string currencyCode, float? amount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrencyCode = currencyCode;
             Amount = amount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ISO 4217 3-letter currency code for the currency used by this purchase record. </summary>

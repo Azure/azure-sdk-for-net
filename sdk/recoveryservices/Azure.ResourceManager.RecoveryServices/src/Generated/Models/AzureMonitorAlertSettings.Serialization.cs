@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class AzureMonitorAlertSettings : IUtf8JsonSerializable
+    internal partial class AzureMonitorAlertSettings : IUtf8JsonSerializable, IJsonModel<AzureMonitorAlertSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMonitorAlertSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureMonitorAlertSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureMonitorAlertSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureMonitorAlertSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AlertsForAllJobFailures))
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertsForAllJobFailures.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureMonitorAlertSettings DeserializeAzureMonitorAlertSettings(JsonElement element)
+        AzureMonitorAlertSettings IJsonModel<AzureMonitorAlertSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMonitorAlertSettings(document.RootElement, options);
+        }
+
+        internal static AzureMonitorAlertSettings DeserializeAzureMonitorAlertSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RecoveryServicesAlertsState> alertsForAllJobFailures = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsForAllJobFailures"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     alertsForAllJobFailures = new RecoveryServicesAlertsState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureMonitorAlertSettings(Optional.ToNullable(alertsForAllJobFailures));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzureMonitorAlertSettings(Optional.ToNullable(alertsForAllJobFailures), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureMonitorAlertSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureMonitorAlertSettings IPersistableModel<AzureMonitorAlertSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureMonitorAlertSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureMonitorAlertSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

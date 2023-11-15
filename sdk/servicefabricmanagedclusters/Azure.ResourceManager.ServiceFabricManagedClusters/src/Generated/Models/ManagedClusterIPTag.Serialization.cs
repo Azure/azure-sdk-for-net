@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedClusterIPTag : IUtf8JsonSerializable
+    public partial class ManagedClusterIPTag : IUtf8JsonSerializable, IJsonModel<ManagedClusterIPTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterIPTag>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedClusterIPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedClusterIPTag>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedClusterIPTag>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("ipTagType"u8);
             writer.WriteStringValue(IPTagType);
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterIPTag DeserializeManagedClusterIPTag(JsonElement element)
+        ManagedClusterIPTag IJsonModel<ManagedClusterIPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterIPTag(document.RootElement, options);
+        }
+
+        internal static ManagedClusterIPTag DeserializeManagedClusterIPTag(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string ipTagType = default;
             string tag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipTagType"u8))
@@ -42,8 +84,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     tag = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterIPTag(ipTagType, tag);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterIPTag(ipTagType, tag, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterIPTag>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedClusterIPTag IPersistableModel<ManagedClusterIPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedClusterIPTag(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedClusterIPTag>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describe the owner source of governance rule. </summary>
     public partial class GovernanceRuleOwnerSource
     {
-        /// <summary> Initializes a new instance of GovernanceRuleOwnerSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleOwnerSource"/>. </summary>
         public GovernanceRuleOwnerSource()
         {
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleOwnerSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleOwnerSource"/>. </summary>
         /// <param name="sourceType"> The owner type for the governance rule owner source. </param>
         /// <param name="value"> The source value e.g. tag key like owner name or email address. </param>
-        internal GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? sourceType, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? sourceType, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceType = sourceType;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The owner type for the governance rule owner source. </summary>

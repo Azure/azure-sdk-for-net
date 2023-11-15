@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesDataReplication;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     /// <summary> Dra model collection. </summary>
     internal partial class DataReplicationDraListResult
     {
-        /// <summary> Initializes a new instance of DataReplicationDraListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraListResult"/>. </summary>
         internal DataReplicationDraListResult()
         {
             Value = new ChangeTrackingList<DataReplicationDraData>();
         }
 
-        /// <summary> Initializes a new instance of DataReplicationDraListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationDraListResult"/>. </summary>
         /// <param name="value"> Gets or sets the list of Dras. </param>
         /// <param name="nextLink"> Gets or sets the value of next link. </param>
-        internal DataReplicationDraListResult(IReadOnlyList<DataReplicationDraData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataReplicationDraListResult(IReadOnlyList<DataReplicationDraData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of Dras. </summary>

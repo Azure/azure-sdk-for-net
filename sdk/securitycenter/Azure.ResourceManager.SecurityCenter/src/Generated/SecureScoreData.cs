@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecureScoreData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecureScoreData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecureScoreData"/>. </summary>
         public SecureScoreData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecureScoreData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,13 +36,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="max"> Maximum score available. </param>
         /// <param name="current"> Current score. </param>
         /// <param name="percentage"> Ratio of the current score divided by the maximum. Rounded to 4 digits after the decimal point. </param>
-        internal SecureScoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? weight, int? max, double? current, double? percentage) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecureScoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? weight, int? max, double? current, double? percentage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Weight = weight;
             Max = max;
             Current = current;
             Percentage = percentage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The initiative’s name. </summary>

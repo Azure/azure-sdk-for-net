@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Properties model for replication eligibility results API. </summary>
     public partial class ReplicationEligibilityResultProperties
     {
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultProperties"/>. </summary>
         internal ReplicationEligibilityResultProperties()
         {
             Errors = new ChangeTrackingList<ReplicationEligibilityResultErrorInfo>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationEligibilityResultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationEligibilityResultProperties"/>. </summary>
         /// <param name="clientRequestId"> The client request Id. </param>
         /// <param name="errors"> The error details. </param>
-        internal ReplicationEligibilityResultProperties(string clientRequestId, IReadOnlyList<ReplicationEligibilityResultErrorInfo> errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationEligibilityResultProperties(string clientRequestId, IReadOnlyList<ReplicationEligibilityResultErrorInfo> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientRequestId = clientRequestId;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The client request Id. </summary>

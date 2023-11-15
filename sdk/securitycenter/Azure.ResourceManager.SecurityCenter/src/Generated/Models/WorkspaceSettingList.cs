@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> List of workspace settings response. </summary>
     internal partial class WorkspaceSettingList
     {
-        /// <summary> Initializes a new instance of WorkspaceSettingList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceSettingList"/>. </summary>
         /// <param name="value"> List of workspace settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkspaceSettingList(IEnumerable<SecurityWorkspaceSettingData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceSettingList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceSettingList"/>. </summary>
         /// <param name="value"> List of workspace settings. </param>
         /// <param name="nextLink"> The URI to fetch the next page. </param>
-        internal WorkspaceSettingList(IReadOnlyList<SecurityWorkspaceSettingData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceSettingList(IReadOnlyList<SecurityWorkspaceSettingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceSettingList"/> for deserialization. </summary>
+        internal WorkspaceSettingList()
+        {
         }
 
         /// <summary> List of workspace settings. </summary>

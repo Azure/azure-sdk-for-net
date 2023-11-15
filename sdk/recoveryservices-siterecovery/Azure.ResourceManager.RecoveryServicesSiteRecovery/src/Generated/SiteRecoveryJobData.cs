@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class SiteRecoveryJobData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteRecoveryJobData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobData"/>. </summary>
         internal SiteRecoveryJobData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryJobData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
         /// <param name="location"> Resource Location. </param>
-        internal SiteRecoveryJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryJobProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryJobProperties properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The custom data. </summary>

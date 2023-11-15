@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SignalR.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRCustomCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of SignalRCustomCertificateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomCertificateData"/>. </summary>
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultBaseUri"/> or <paramref name="keyVaultSecretName"/> is null. </exception>
@@ -31,7 +35,7 @@ namespace Azure.ResourceManager.SignalR
             KeyVaultSecretName = keyVaultSecretName;
         }
 
-        /// <summary> Initializes a new instance of SignalRCustomCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,12 +44,19 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <param name="keyVaultSecretVersion"> Certificate secret version. </param>
-        internal SignalRCustomCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SignalRProvisioningState? provisioningState, Uri keyVaultBaseUri, string keyVaultSecretName, string keyVaultSecretVersion) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRCustomCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SignalRProvisioningState? provisioningState, Uri keyVaultBaseUri, string keyVaultSecretName, string keyVaultSecretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             KeyVaultBaseUri = keyVaultBaseUri;
             KeyVaultSecretName = keyVaultSecretName;
             KeyVaultSecretVersion = keyVaultSecretVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRCustomCertificateData"/> for deserialization. </summary>
+        internal SignalRCustomCertificateData()
+        {
         }
 
         /// <summary> Provisioning state of the resource. </summary>

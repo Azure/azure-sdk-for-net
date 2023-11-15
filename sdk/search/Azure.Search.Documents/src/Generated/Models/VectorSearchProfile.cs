@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,7 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Defines a combination of configurations to use with vector search. </summary>
     public partial class VectorSearchProfile
     {
-        /// <summary> Initializes a new instance of VectorSearchProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/>. </summary>
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
         /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithmConfigurationName"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/>. </summary>
+        /// <param name="name"> The name to associate with this particular vector search profile. </param>
+        /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VectorSearchProfile(string name, string algorithmConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            AlgorithmConfigurationName = algorithmConfigurationName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VectorSearchProfile"/> for deserialization. </summary>
+        internal VectorSearchProfile()
+        {
         }
 
         /// <summary> The name to associate with this particular vector search profile. </summary>

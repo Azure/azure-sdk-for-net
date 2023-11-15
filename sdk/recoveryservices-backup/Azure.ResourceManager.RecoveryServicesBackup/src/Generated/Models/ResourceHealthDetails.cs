@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Health Details for backup items. </summary>
     public partial class ResourceHealthDetails
     {
-        /// <summary> Initializes a new instance of ResourceHealthDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthDetails"/>. </summary>
         public ResourceHealthDetails()
         {
             Recommendations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthDetails"/>. </summary>
         /// <param name="code"> Health Code. </param>
         /// <param name="title"> Health Title. </param>
         /// <param name="message"> Health Message. </param>
         /// <param name="recommendations"> Health Recommended Actions. </param>
-        internal ResourceHealthDetails(int? code, string title, string message, IReadOnlyList<string> recommendations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthDetails(int? code, string title, string message, IReadOnlyList<string> recommendations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Title = title;
             Message = message;
             Recommendations = recommendations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Health Code. </summary>

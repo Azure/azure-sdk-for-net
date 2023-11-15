@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Automatic tuning properties for individual advisors. </summary>
     public partial class AutomaticTuningOptions
     {
-        /// <summary> Initializes a new instance of AutomaticTuningOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomaticTuningOptions"/>. </summary>
         public AutomaticTuningOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomaticTuningOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomaticTuningOptions"/>. </summary>
         /// <param name="desiredState"> Automatic tuning option desired state. </param>
         /// <param name="actualState"> Automatic tuning option actual state. </param>
         /// <param name="reasonCode"> Reason code if desired and actual state are different. </param>
         /// <param name="reasonDesc"> Reason description if desired and actual state are different. </param>
-        internal AutomaticTuningOptions(AutomaticTuningOptionModeDesired? desiredState, AutomaticTuningOptionModeActual? actualState, int? reasonCode, AutomaticTuningDisabledReason? reasonDesc)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomaticTuningOptions(AutomaticTuningOptionModeDesired? desiredState, AutomaticTuningOptionModeActual? actualState, int? reasonCode, AutomaticTuningDisabledReason? reasonDesc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DesiredState = desiredState;
             ActualState = actualState;
             ReasonCode = reasonCode;
             ReasonDesc = reasonDesc;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Automatic tuning option desired state. </summary>

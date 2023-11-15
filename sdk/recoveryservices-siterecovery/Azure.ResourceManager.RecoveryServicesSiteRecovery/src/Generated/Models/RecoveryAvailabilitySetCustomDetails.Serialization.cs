@@ -5,23 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryAvailabilitySetCustomDetails : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownRecoveryAvailabilitySetCustomDetails))]
+    public partial class RecoveryAvailabilitySetCustomDetails : IUtf8JsonSerializable, IJsonModel<RecoveryAvailabilitySetCustomDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryAvailabilitySetCustomDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RecoveryAvailabilitySetCustomDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RecoveryAvailabilitySetCustomDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RecoveryAvailabilitySetCustomDetails>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryAvailabilitySetCustomDetails DeserializeRecoveryAvailabilitySetCustomDetails(JsonElement element)
+        RecoveryAvailabilitySetCustomDetails IJsonModel<RecoveryAvailabilitySetCustomDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryAvailabilitySetCustomDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryAvailabilitySetCustomDetails(document.RootElement, options);
+        }
+
+        internal static RecoveryAvailabilitySetCustomDetails DeserializeRecoveryAvailabilitySetCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,5 +75,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             return UnknownRecoveryAvailabilitySetCustomDetails.DeserializeUnknownRecoveryAvailabilitySetCustomDetails(element);
         }
+
+        BinaryData IPersistableModel<RecoveryAvailabilitySetCustomDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryAvailabilitySetCustomDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RecoveryAvailabilitySetCustomDetails IPersistableModel<RecoveryAvailabilitySetCustomDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RecoveryAvailabilitySetCustomDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRecoveryAvailabilitySetCustomDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<RecoveryAvailabilitySetCustomDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

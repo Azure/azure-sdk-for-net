@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Troubleshooters in Solutions. </summary>
     public partial class SolutionsTroubleshooters
     {
-        /// <summary> Initializes a new instance of SolutionsTroubleshooters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SolutionsTroubleshooters"/>. </summary>
         public SolutionsTroubleshooters()
         {
         }
 
-        /// <summary> Initializes a new instance of SolutionsTroubleshooters. </summary>
+        /// <summary> Initializes a new instance of <see cref="SolutionsTroubleshooters"/>. </summary>
         /// <param name="solutionId"> Solution Id to identify single Solutions Troubleshooter. </param>
         /// <param name="title"> Troubleshooter title. </param>
         /// <param name="summary"> Troubleshooter summary. </param>
-        internal SolutionsTroubleshooters(string solutionId, string title, string summary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SolutionsTroubleshooters(string solutionId, string title, string summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SolutionId = solutionId;
             Title = title;
             Summary = summary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Solution Id to identify single Solutions Troubleshooter. </summary>

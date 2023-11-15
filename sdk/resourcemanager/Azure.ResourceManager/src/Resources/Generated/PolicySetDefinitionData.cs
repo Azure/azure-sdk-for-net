@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class PolicySetDefinitionData : ResourceData
     {
-        /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionData"/>. </summary>
         public PolicySetDefinitionData()
         {
             Parameters = new ChangeTrackingDictionary<string, ArmPolicyParameter>();
@@ -27,7 +30,7 @@ namespace Azure.ResourceManager.Resources
             PolicyDefinitionGroups = new ChangeTrackingList<PolicyDefinitionGroup>();
         }
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySetDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +42,8 @@ namespace Azure.ResourceManager.Resources
         /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
         /// <param name="policyDefinitions"> An array of policy definition references. </param>
         /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
-        internal PolicySetDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string displayName, string description, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySetDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyType? policyType, string displayName, string description, BinaryData metadata, IDictionary<string, ArmPolicyParameter> parameters, IList<PolicyDefinitionReference> policyDefinitions, IList<PolicyDefinitionGroup> policyDefinitionGroups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PolicyType = policyType;
             DisplayName = displayName;
@@ -48,6 +52,7 @@ namespace Azure.ResourceManager.Resources
             Parameters = parameters;
             PolicyDefinitions = policyDefinitions;
             PolicyDefinitionGroups = policyDefinitionGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </summary>

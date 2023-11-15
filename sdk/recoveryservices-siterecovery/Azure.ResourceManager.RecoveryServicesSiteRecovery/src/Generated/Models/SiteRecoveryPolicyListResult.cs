@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection Profile Collection details. </summary>
     internal partial class SiteRecoveryPolicyListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyListResult"/>. </summary>
         internal SiteRecoveryPolicyListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyListResult"/>. </summary>
         /// <param name="value"> The policy details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryPolicyListResult(IReadOnlyList<SiteRecoveryPolicyData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryPolicyListResult(IReadOnlyList<SiteRecoveryPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The policy details. </summary>

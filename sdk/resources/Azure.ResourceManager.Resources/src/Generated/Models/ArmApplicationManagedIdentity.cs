@@ -14,23 +14,28 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Identity for the resource. </summary>
     public partial class ArmApplicationManagedIdentity
     {
-        /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationManagedIdentity"/>. </summary>
         public ArmApplicationManagedIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, ArmApplicationUserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationManagedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="identityType"> The identity type. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        internal ArmApplicationManagedIdentity(Guid? principalId, Guid? tenantId, ArmApplicationManagedIdentityType? identityType, IDictionary<string, ArmApplicationUserAssignedIdentity> userAssignedIdentities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationManagedIdentity(Guid? principalId, Guid? tenantId, ArmApplicationManagedIdentityType? identityType, IDictionary<string, ArmApplicationUserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
             IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The principal ID of resource identity. </summary>

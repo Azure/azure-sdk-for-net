@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Information on the client (user or application) that made some action. </summary>
     public partial class SecurityInsightsClientInfo
     {
-        /// <summary> Initializes a new instance of SecurityInsightsClientInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsClientInfo"/>. </summary>
         internal SecurityInsightsClientInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsClientInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsClientInfo"/>. </summary>
         /// <param name="email"> The email of the client. </param>
         /// <param name="name"> The name of the client. </param>
         /// <param name="objectId"> The object id of the client. </param>
         /// <param name="userPrincipalName"> The user principal name of the client. </param>
-        internal SecurityInsightsClientInfo(string email, string name, Guid? objectId, string userPrincipalName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsClientInfo(string email, string name, Guid? objectId, string userPrincipalName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Email = email;
             Name = name;
             ObjectId = objectId;
             UserPrincipalName = userPrincipalName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The email of the client. </summary>

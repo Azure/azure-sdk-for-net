@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Connection string for ingesting security data and logs. </summary>
     internal partial class ConnectionStrings
     {
-        /// <summary> Initializes a new instance of ConnectionStrings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionStrings"/>. </summary>
         /// <param name="value"> Connection strings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ConnectionStrings(IEnumerable<IngestionConnectionString> value)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConnectionStrings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionStrings"/>. </summary>
         /// <param name="value"> Connection strings. </param>
-        internal ConnectionStrings(IReadOnlyList<IngestionConnectionString> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionStrings(IReadOnlyList<IngestionConnectionString> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionStrings"/> for deserialization. </summary>
+        internal ConnectionStrings()
+        {
         }
 
         /// <summary> Connection strings. </summary>

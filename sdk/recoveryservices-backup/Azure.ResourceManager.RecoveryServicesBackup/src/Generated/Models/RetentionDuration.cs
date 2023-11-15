@@ -5,26 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Retention duration. </summary>
     public partial class RetentionDuration
     {
-        /// <summary> Initializes a new instance of RetentionDuration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RetentionDuration"/>. </summary>
         public RetentionDuration()
         {
         }
 
-        /// <summary> Initializes a new instance of RetentionDuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="RetentionDuration"/>. </summary>
         /// <param name="count">
         /// Count of duration types. Retention duration is obtained by the counting the duration type Count times.
         /// For example, when Count = 3 and DurationType = Weeks, retention duration will be three weeks.
         /// </param>
         /// <param name="durationType"> Retention duration type of retention policy. </param>
-        internal RetentionDuration(int? count, RetentionDurationType? durationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RetentionDuration(int? count, RetentionDurationType? durationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             DurationType = durationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

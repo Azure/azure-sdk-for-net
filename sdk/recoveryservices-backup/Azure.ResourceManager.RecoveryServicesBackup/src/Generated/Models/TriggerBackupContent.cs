@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -15,13 +16,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Base class for backup request. Workload-specific backup requests are derived from this class. </summary>
     public partial class TriggerBackupContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of TriggerBackupContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggerBackupContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public TriggerBackupContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of TriggerBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerBackupContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,10 +38,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// The available derived classes include <see cref="FileShareBackupContent"/>, <see cref="WorkloadBackupContent"/> and <see cref="IaasVmBackupContent"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
-        internal TriggerBackupContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupContent properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerBackupContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BackupContent properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TriggerBackupContent"/> for deserialization. </summary>
+        internal TriggerBackupContent()
+        {
         }
 
         /// <summary>

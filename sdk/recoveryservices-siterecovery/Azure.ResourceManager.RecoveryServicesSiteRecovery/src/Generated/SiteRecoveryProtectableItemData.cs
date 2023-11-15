@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class SiteRecoveryProtectableItemData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectableItemData"/>. </summary>
         internal SiteRecoveryProtectableItemData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectableItemData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectableItemData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The custom data. </param>
         /// <param name="location"> Resource Location. </param>
-        internal SiteRecoveryProtectableItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryProtectableItemProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProtectableItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteRecoveryProtectableItemProperties properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The custom data. </summary>

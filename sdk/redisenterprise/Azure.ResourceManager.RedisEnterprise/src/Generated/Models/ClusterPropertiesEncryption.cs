@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Encryption-at-rest configuration for the cluster. </summary>
     internal partial class ClusterPropertiesEncryption
     {
-        /// <summary> Initializes a new instance of ClusterPropertiesEncryption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClusterPropertiesEncryption"/>. </summary>
         public ClusterPropertiesEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of ClusterPropertiesEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterPropertiesEncryption"/>. </summary>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </param>
-        internal ClusterPropertiesEncryption(RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterPropertiesEncryption(RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>

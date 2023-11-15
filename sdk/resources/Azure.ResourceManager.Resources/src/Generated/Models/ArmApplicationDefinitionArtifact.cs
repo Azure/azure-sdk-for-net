@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Application definition artifact. </summary>
     public partial class ArmApplicationDefinitionArtifact
     {
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionArtifact. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionArtifact"/>. </summary>
         /// <param name="name"> The managed application definition artifact name. </param>
         /// <param name="uri"> The managed application definition artifact blob uri. </param>
         /// <param name="artifactType"> The managed application definition artifact type. </param>
@@ -25,6 +29,24 @@ namespace Azure.ResourceManager.Resources.Models
             Name = name;
             Uri = uri;
             ArtifactType = artifactType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionArtifact"/>. </summary>
+        /// <param name="name"> The managed application definition artifact name. </param>
+        /// <param name="uri"> The managed application definition artifact blob uri. </param>
+        /// <param name="artifactType"> The managed application definition artifact type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationDefinitionArtifact(ArmApplicationDefinitionArtifactName name, Uri uri, ArmApplicationArtifactType artifactType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Uri = uri;
+            ArtifactType = artifactType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionArtifact"/> for deserialization. </summary>
+        internal ArmApplicationDefinitionArtifact()
+        {
         }
 
         /// <summary> The managed application definition artifact name. </summary>

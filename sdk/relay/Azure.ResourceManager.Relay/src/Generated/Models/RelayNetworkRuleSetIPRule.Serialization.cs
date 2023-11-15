@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    public partial class RelayNetworkRuleSetIPRule : IUtf8JsonSerializable
+    public partial class RelayNetworkRuleSetIPRule : IUtf8JsonSerializable, IJsonModel<RelayNetworkRuleSetIPRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelayNetworkRuleSetIPRule>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RelayNetworkRuleSetIPRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RelayNetworkRuleSetIPRule>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RelayNetworkRuleSetIPRule>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPMask))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RelayNetworkRuleSetIPRule DeserializeRelayNetworkRuleSetIPRule(JsonElement element)
+        RelayNetworkRuleSetIPRule IJsonModel<RelayNetworkRuleSetIPRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRelayNetworkRuleSetIPRule(document.RootElement, options);
+        }
+
+        internal static RelayNetworkRuleSetIPRule DeserializeRelayNetworkRuleSetIPRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> ipMask = default;
             Optional<RelayNetworkRuleIPAction> action = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipMask"u8))
@@ -52,8 +94,38 @@ namespace Azure.ResourceManager.Relay.Models
                     action = new RelayNetworkRuleIPAction(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RelayNetworkRuleSetIPRule(ipMask.Value, Optional.ToNullable(action));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RelayNetworkRuleSetIPRule(ipMask.Value, Optional.ToNullable(action), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RelayNetworkRuleSetIPRule>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RelayNetworkRuleSetIPRule IPersistableModel<RelayNetworkRuleSetIPRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRelayNetworkRuleSetIPRule(document.RootElement, options);
+        }
+
+        string IPersistableModel<RelayNetworkRuleSetIPRule>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

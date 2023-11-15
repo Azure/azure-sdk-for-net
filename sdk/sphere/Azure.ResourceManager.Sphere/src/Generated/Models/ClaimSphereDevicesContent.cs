@@ -18,7 +18,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     public partial class ClaimSphereDevicesContent
     {
-        /// <summary> Initializes a new instance of ClaimSphereDevicesContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClaimSphereDevicesContent"/>. </summary>
         /// <param name="deviceIdentifiers">
         /// Device identifiers of the devices to be claimed.
         /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
@@ -29,6 +32,23 @@ namespace Azure.ResourceManager.Sphere.Models
             Argument.AssertNotNull(deviceIdentifiers, nameof(deviceIdentifiers));
 
             DeviceIdentifiers = deviceIdentifiers.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClaimSphereDevicesContent"/>. </summary>
+        /// <param name="deviceIdentifiers">
+        /// Device identifiers of the devices to be claimed.
+        /// Serialized Name: ClaimDevicesRequest.deviceIdentifiers
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClaimSphereDevicesContent(IList<string> deviceIdentifiers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DeviceIdentifiers = deviceIdentifiers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClaimSphereDevicesContent"/> for deserialization. </summary>
+        internal ClaimSphereDevicesContent()
+        {
         }
 
         /// <summary>

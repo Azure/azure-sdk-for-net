@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Per database settings of an elastic pool. </summary>
     public partial class ElasticPoolPerDatabaseSettings
     {
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseSettings"/>. </summary>
         public ElasticPoolPerDatabaseSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseSettings"/>. </summary>
         /// <param name="minCapacity"> The minimum capacity all databases are guaranteed. </param>
         /// <param name="maxCapacity"> The maximum capacity any one database can consume. </param>
-        internal ElasticPoolPerDatabaseSettings(double? minCapacity, double? maxCapacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolPerDatabaseSettings(double? minCapacity, double? maxCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinCapacity = minCapacity;
             MaxCapacity = maxCapacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minimum capacity all databases are guaranteed. </summary>

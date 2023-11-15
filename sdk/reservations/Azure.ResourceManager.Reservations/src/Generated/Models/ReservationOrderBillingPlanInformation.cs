@@ -14,23 +14,28 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Information describing the type of billing plan for this reservation. </summary>
     public partial class ReservationOrderBillingPlanInformation
     {
-        /// <summary> Initializes a new instance of ReservationOrderBillingPlanInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderBillingPlanInformation"/>. </summary>
         internal ReservationOrderBillingPlanInformation()
         {
             Transactions = new ChangeTrackingList<PaymentDetail>();
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderBillingPlanInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderBillingPlanInformation"/>. </summary>
         /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
         /// <param name="startOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
-        internal ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IReadOnlyList<PaymentDetail> transactions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IReadOnlyList<PaymentDetail> transactions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PricingCurrencyTotal = pricingCurrencyTotal;
             StartOn = startOn;
             NextPaymentDueOn = nextPaymentDueOn;
             Transactions = transactions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Amount of money to be paid for the Order. Tax is not included. </summary>

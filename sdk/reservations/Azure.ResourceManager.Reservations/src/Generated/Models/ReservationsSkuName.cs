@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The name of sku. </summary>
     internal partial class ReservationsSkuName
     {
-        /// <summary> Initializes a new instance of ReservationsSkuName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationsSkuName"/>. </summary>
         public ReservationsSkuName()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationsSkuName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationsSkuName"/>. </summary>
         /// <param name="name"></param>
-        internal ReservationsSkuName(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationsSkuName(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name. </summary>

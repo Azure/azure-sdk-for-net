@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Specifies set of extensions that should be installed onto the virtual machines. </summary>
     public partial class NodeTypeVmssExtension
     {
-        /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/>. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -46,7 +49,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        internal NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Publisher = publisher;
@@ -59,6 +63,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ProvisionAfterExtensions = provisionAfterExtensions;
             ProvisioningState = provisioningState;
             IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NodeTypeVmssExtension"/> for deserialization. </summary>
+        internal NodeTypeVmssExtension()
+        {
         }
 
         /// <summary> The name of the extension. </summary>

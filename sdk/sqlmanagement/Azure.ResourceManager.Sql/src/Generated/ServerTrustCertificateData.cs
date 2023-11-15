@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ServerTrustCertificateData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerTrustCertificateData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerTrustCertificateData"/>. </summary>
         public ServerTrustCertificateData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerTrustCertificateData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerTrustCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,11 +34,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="publicBlob"> The certificate public blob. </param>
         /// <param name="thumbprint"> The certificate thumbprint. </param>
         /// <param name="certificateName"> The certificate name. </param>
-        internal ServerTrustCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publicBlob, string thumbprint, string certificateName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerTrustCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publicBlob, string thumbprint, string certificateName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PublicBlob = publicBlob;
             Thumbprint = thumbprint;
             CertificateName = certificateName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The certificate public blob. </summary>

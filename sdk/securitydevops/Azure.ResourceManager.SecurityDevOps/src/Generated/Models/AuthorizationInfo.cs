@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     /// <summary> The AuthorizationInfo. </summary>
     internal partial class AuthorizationInfo
     {
-        /// <summary> Initializes a new instance of AuthorizationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationInfo"/>. </summary>
         public AuthorizationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationInfo"/>. </summary>
         /// <param name="code"> Gets or sets one-time OAuth code to exchange for refresh and access tokens. </param>
-        internal AuthorizationInfo(string code)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationInfo(string code, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets one-time OAuth code to exchange for refresh and access tokens. </summary>

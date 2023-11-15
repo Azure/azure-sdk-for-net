@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     /// <summary> The GitHubConnectorStatsProperties. </summary>
     public partial class GitHubConnectorStatsProperties
     {
-        /// <summary> Initializes a new instance of GitHubConnectorStatsProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStatsProperties"/>. </summary>
         public GitHubConnectorStatsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubConnectorStatsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubConnectorStatsProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="ownersCount"> Gets or sets owners count. </param>
         /// <param name="reposCount"> Gets or sets repos count. </param>
-        internal GitHubConnectorStatsProperties(ProvisioningState? provisioningState, long? ownersCount, long? reposCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GitHubConnectorStatsProperties(ProvisioningState? provisioningState, long? ownersCount, long? reposCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             OwnersCount = ownersCount;
             ReposCount = reposCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the provisioning state. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,15 +18,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public partial class HyperVVmDetails : SiteRecoveryReplicationProviderSettings
     {
-        /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVVmDetails"/>. </summary>
         internal HyperVVmDetails()
         {
             DiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
             InstanceType = "HyperVVirtualMachine";
         }
 
-        /// <summary> Initializes a new instance of HyperVVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVVmDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceItemId"> The source id of the object. </param>
         /// <param name="generation"> The id of the object in fabric. </param>
         /// <param name="osDetails"> The Last replication time. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hasFibreChannelAdapter"> A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum. </param>
         /// <param name="hasSharedVhd"> A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum. </param>
         /// <param name="hyperVHostId"> The Id of the hyper-v host in fabric. </param>
-        internal HyperVVmDetails(string instanceType, string sourceItemId, string generation, SiteRecoveryOSDetails osDetails, IReadOnlyList<SiteRecoveryDiskDetails> diskDetails, HyperVVmDiskPresenceStatus? hasPhysicalDisk, HyperVVmDiskPresenceStatus? hasFibreChannelAdapter, HyperVVmDiskPresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType)
+        internal HyperVVmDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sourceItemId, string generation, SiteRecoveryOSDetails osDetails, IReadOnlyList<SiteRecoveryDiskDetails> diskDetails, HyperVVmDiskPresenceStatus? hasPhysicalDisk, HyperVVmDiskPresenceStatus? hasFibreChannelAdapter, HyperVVmDiskPresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType, serializedAdditionalRawData)
         {
             SourceItemId = sourceItemId;
             Generation = generation;

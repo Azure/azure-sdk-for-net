@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Replication agent details. </summary>
     public partial class ReplicationAgentDetails
     {
-        /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationAgentDetails"/>. </summary>
         internal ReplicationAgentDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationAgentDetails"/>. </summary>
         /// <param name="id"> The replication agent Id. </param>
         /// <param name="name"> The replication agent name. </param>
         /// <param name="biosId"> The replication agent Bios Id. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastHeartbeatUtc"> The last heartbeat received from the replication agent. </param>
         /// <param name="health"> The health of the replication agent. </param>
         /// <param name="healthErrors"> The health errors. </param>
-        internal ReplicationAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -41,6 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastHeartbeatUtc = lastHeartbeatUtc;
             Health = health;
             HealthErrors = healthErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The replication agent Id. </summary>

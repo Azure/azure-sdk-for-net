@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Sphere.Models
     /// </summary>
     internal partial class CatalogListResult
     {
-        /// <summary> Initializes a new instance of CatalogListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CatalogListResult"/>. </summary>
         /// <param name="value">
         /// The Catalog items on this page
         /// Serialized Name: CatalogListResult.value
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Sphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CatalogListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CatalogListResult"/>. </summary>
         /// <param name="value">
         /// The Catalog items on this page
         /// Serialized Name: CatalogListResult.value
@@ -41,10 +44,17 @@ namespace Azure.ResourceManager.Sphere.Models
         /// The link to the next page of items
         /// Serialized Name: CatalogListResult.nextLink
         /// </param>
-        internal CatalogListResult(IReadOnlyList<SphereCatalogData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CatalogListResult(IReadOnlyList<SphereCatalogData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CatalogListResult"/> for deserialization. </summary>
+        internal CatalogListResult()
+        {
         }
 
         /// <summary>

@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Recovery plan action details. </summary>
     public partial class RecoveryPlanAction
     {
-        /// <summary> Initializes a new instance of RecoveryPlanAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanAction"/>. </summary>
         /// <param name="actionName"> The action name. </param>
         /// <param name="failoverTypes"> The list of failover types. </param>
         /// <param name="failoverDirections"> The list of failover directions. </param>
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanAction"/>. </summary>
         /// <param name="actionName"> The action name. </param>
         /// <param name="failoverTypes"> The list of failover types. </param>
         /// <param name="failoverDirections"> The list of failover directions. </param>
@@ -47,12 +50,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
         /// </param>
-        internal RecoveryPlanAction(string actionName, IList<ReplicationProtectedItemOperation> failoverTypes, IList<PossibleOperationsDirection> failoverDirections, RecoveryPlanActionDetails customDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPlanAction(string actionName, IList<ReplicationProtectedItemOperation> failoverTypes, IList<PossibleOperationsDirection> failoverDirections, RecoveryPlanActionDetails customDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionName = actionName;
             FailoverTypes = failoverTypes;
             FailoverDirections = failoverDirections;
             CustomDetails = customDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanAction"/> for deserialization. </summary>
+        internal RecoveryPlanAction()
+        {
         }
 
         /// <summary> The action name. </summary>

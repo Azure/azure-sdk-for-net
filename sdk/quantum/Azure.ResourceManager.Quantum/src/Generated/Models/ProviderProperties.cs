@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Provider properties. </summary>
     public partial class ProviderProperties
     {
-        /// <summary> Initializes a new instance of ProviderProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProviderProperties"/>. </summary>
         internal ProviderProperties()
         {
             Targets = new ChangeTrackingList<TargetDescription>();
@@ -22,7 +26,7 @@ namespace Azure.ResourceManager.Quantum.Models
             PricingDimensions = new ChangeTrackingList<PricingDimension>();
         }
 
-        /// <summary> Initializes a new instance of ProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderProperties"/>. </summary>
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
@@ -33,7 +37,8 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="skus"> The list of skus available from this provider. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
         /// <param name="pricingDimensions"> The list of pricing dimensions from the provider. </param>
-        internal ProviderProperties(string description, string providerType, string company, string defaultEndpoint, ProviderPropertiesAad aad, ProviderPropertiesManagedApplication managedApplication, IReadOnlyList<TargetDescription> targets, IReadOnlyList<SkuDescription> skus, IReadOnlyList<QuotaDimension> quotaDimensions, IReadOnlyList<PricingDimension> pricingDimensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderProperties(string description, string providerType, string company, string defaultEndpoint, ProviderPropertiesAad aad, ProviderPropertiesManagedApplication managedApplication, IReadOnlyList<TargetDescription> targets, IReadOnlyList<SkuDescription> skus, IReadOnlyList<QuotaDimension> quotaDimensions, IReadOnlyList<PricingDimension> pricingDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             ProviderType = providerType;
@@ -45,6 +50,7 @@ namespace Azure.ResourceManager.Quantum.Models
             Skus = skus;
             QuotaDimensions = quotaDimensions;
             PricingDimensions = pricingDimensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A description about this provider. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The type of the security control (For example, BuiltIn). </summary>
     internal partial class SecureScoreControlDefinitionSource
     {
-        /// <summary> Initializes a new instance of SecureScoreControlDefinitionSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionSource"/>. </summary>
         internal SecureScoreControlDefinitionSource()
         {
         }
 
-        /// <summary> Initializes a new instance of SecureScoreControlDefinitionSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionSource"/>. </summary>
         /// <param name="sourceType"> The type of security control (for example, BuiltIn). </param>
-        internal SecureScoreControlDefinitionSource(SecurityControlType? sourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecureScoreControlDefinitionSource(SecurityControlType? sourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceType = sourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of security control (for example, BuiltIn). </summary>

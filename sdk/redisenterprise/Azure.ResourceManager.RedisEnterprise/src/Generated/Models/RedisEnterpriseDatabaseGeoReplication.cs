@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Optional set of properties to configure geo replication for this database. </summary>
     public partial class RedisEnterpriseDatabaseGeoReplication
     {
-        /// <summary> Initializes a new instance of RedisEnterpriseDatabaseGeoReplication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseGeoReplication"/>. </summary>
         public RedisEnterpriseDatabaseGeoReplication()
         {
             LinkedDatabases = new ChangeTrackingList<RedisEnterpriseLinkedDatabase>();
         }
 
-        /// <summary> Initializes a new instance of RedisEnterpriseDatabaseGeoReplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseDatabaseGeoReplication"/>. </summary>
         /// <param name="groupNickname"> Name for the group of linked database resources. </param>
         /// <param name="linkedDatabases"> List of database resources to link with this database. </param>
-        internal RedisEnterpriseDatabaseGeoReplication(string groupNickname, IList<RedisEnterpriseLinkedDatabase> linkedDatabases)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseDatabaseGeoReplication(string groupNickname, IList<RedisEnterpriseLinkedDatabase> linkedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupNickname = groupNickname;
             LinkedDatabases = linkedDatabases;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name for the group of linked database resources. </summary>

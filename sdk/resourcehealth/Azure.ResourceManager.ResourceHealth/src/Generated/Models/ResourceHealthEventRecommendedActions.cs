@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Recommended actions of event. </summary>
     public partial class ResourceHealthEventRecommendedActions
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventRecommendedActions"/>. </summary>
         internal ResourceHealthEventRecommendedActions()
         {
             Actions = new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventRecommendedActions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventRecommendedActions"/>. </summary>
         /// <param name="message"> Recommended action title for the service health event. </param>
         /// <param name="actions"> Recommended actions for the service health event. </param>
         /// <param name="localeCode"> Recommended action locale for the service health event. </param>
-        internal ResourceHealthEventRecommendedActions(string message, IReadOnlyList<ResourceHealthEventRecommendedActionsItem> actions, string localeCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthEventRecommendedActions(string message, IReadOnlyList<ResourceHealthEventRecommendedActionsItem> actions, string localeCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             Actions = actions;
             LocaleCode = localeCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Recommended action title for the service health event. </summary>

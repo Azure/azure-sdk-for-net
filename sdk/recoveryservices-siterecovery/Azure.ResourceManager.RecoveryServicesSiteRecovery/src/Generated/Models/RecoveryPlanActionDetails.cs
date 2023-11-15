@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// </summary>
     public abstract partial class RecoveryPlanActionDetails
     {
-        /// <summary> Initializes a new instance of RecoveryPlanActionDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanActionDetails"/>. </summary>
         protected RecoveryPlanActionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of RecoveryPlanActionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanActionDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </param>
-        internal RecoveryPlanActionDetails(string instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPlanActionDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceType = instanceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the type of action details (see RecoveryPlanActionDetailsTypes enum for possible values). </summary>

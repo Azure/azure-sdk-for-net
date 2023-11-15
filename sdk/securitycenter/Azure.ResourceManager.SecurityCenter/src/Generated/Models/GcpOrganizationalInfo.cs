@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// </summary>
     public abstract partial class GcpOrganizationalInfo
     {
-        /// <summary> Initializes a new instance of GcpOrganizationalInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GcpOrganizationalInfo"/>. </summary>
         protected GcpOrganizationalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GcpOrganizationalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpOrganizationalInfo"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
-        internal GcpOrganizationalInfo(OrganizationMembershipType organizationMembershipType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GcpOrganizationalInfo(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OrganizationMembershipType = organizationMembershipType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The multi cloud account's membership type in the organization. </summary>

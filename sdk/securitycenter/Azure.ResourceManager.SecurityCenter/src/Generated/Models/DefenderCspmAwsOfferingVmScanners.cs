@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Microsoft Defender for Server VM scanning configuration. </summary>
     public partial class DefenderCspmAwsOfferingVmScanners
     {
-        /// <summary> Initializes a new instance of DefenderCspmAwsOfferingVmScanners. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingVmScanners"/>. </summary>
         public DefenderCspmAwsOfferingVmScanners()
         {
         }
 
-        /// <summary> Initializes a new instance of DefenderCspmAwsOfferingVmScanners. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderCspmAwsOfferingVmScanners"/>. </summary>
         /// <param name="enabled"> Is Microsoft Defender for Server VM scanning enabled. </param>
         /// <param name="configuration"> configuration for Microsoft Defender for Server VM scanning. </param>
-        internal DefenderCspmAwsOfferingVmScanners(bool? enabled, DefenderCspmAwsOfferingVmScannersConfiguration configuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderCspmAwsOfferingVmScanners(bool? enabled, DefenderCspmAwsOfferingVmScannersConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Configuration = configuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Is Microsoft Defender for Server VM scanning enabled. </summary>

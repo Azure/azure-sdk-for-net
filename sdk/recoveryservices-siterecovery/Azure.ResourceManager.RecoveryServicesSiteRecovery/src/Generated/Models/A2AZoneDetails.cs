@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Zone details data. </summary>
     public partial class A2AZoneDetails
     {
-        /// <summary> Initializes a new instance of A2AZoneDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AZoneDetails"/>. </summary>
         internal A2AZoneDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of A2AZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AZoneDetails"/>. </summary>
         /// <param name="source"> Source zone info. </param>
         /// <param name="target"> The target zone info. </param>
-        internal A2AZoneDetails(string source, string target)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AZoneDetails(string source, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             Target = target;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source zone info. </summary>

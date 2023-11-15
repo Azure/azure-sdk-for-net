@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class SubscriptionPolicies
+    public partial class SubscriptionPolicies : IUtf8JsonSerializable, IJsonModel<SubscriptionPolicies>
     {
-        internal static SubscriptionPolicies DeserializeSubscriptionPolicies(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionPolicies>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SubscriptionPolicies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SubscriptionPolicies>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SubscriptionPolicies>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LocationPlacementId))
+                {
+                    writer.WritePropertyName("locationPlacementId"u8);
+                    writer.WriteStringValue(LocationPlacementId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(QuotaId))
+                {
+                    writer.WritePropertyName("quotaId"u8);
+                    writer.WriteStringValue(QuotaId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SpendingLimit))
+                {
+                    writer.WritePropertyName("spendingLimit"u8);
+                    writer.WriteStringValue(SpendingLimit.Value.ToSerialString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SubscriptionPolicies IJsonModel<SubscriptionPolicies>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionPolicies(document.RootElement, options);
+        }
+
+        internal static SubscriptionPolicies DeserializeSubscriptionPolicies(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> locationPlacementId = default;
             Optional<string> quotaId = default;
             Optional<SpendingLimit> spendingLimit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationPlacementId"u8))
@@ -42,8 +114,38 @@ namespace Azure.ResourceManager.Resources.Models
                     spendingLimit = property.Value.GetString().ToSpendingLimit();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubscriptionPolicies(locationPlacementId.Value, quotaId.Value, Optional.ToNullable(spendingLimit));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SubscriptionPolicies(locationPlacementId.Value, quotaId.Value, Optional.ToNullable(spendingLimit), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SubscriptionPolicies>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SubscriptionPolicies IPersistableModel<SubscriptionPolicies>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSubscriptionPolicies(document.RootElement, options);
+        }
+
+        string IPersistableModel<SubscriptionPolicies>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

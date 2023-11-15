@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> List of logical networks. </summary>
     internal partial class SiteRecoveryLogicalNetworkListResult
     {
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryLogicalNetworkListResult"/>. </summary>
         internal SiteRecoveryLogicalNetworkListResult()
         {
             Value = new ChangeTrackingList<SiteRecoveryLogicalNetworkData>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryLogicalNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryLogicalNetworkListResult"/>. </summary>
         /// <param name="value"> The Logical Networks list details. </param>
         /// <param name="nextLink"> The value of next link. </param>
-        internal SiteRecoveryLogicalNetworkListResult(IReadOnlyList<SiteRecoveryLogicalNetworkData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryLogicalNetworkListResult(IReadOnlyList<SiteRecoveryLogicalNetworkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Logical Networks list details. </summary>

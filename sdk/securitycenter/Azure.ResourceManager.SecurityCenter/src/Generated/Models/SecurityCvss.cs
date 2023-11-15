@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> CVSS details. </summary>
     public partial class SecurityCvss
     {
-        /// <summary> Initializes a new instance of SecurityCvss. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityCvss"/>. </summary>
         internal SecurityCvss()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityCvss. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCvss"/>. </summary>
         /// <param name="base"> CVSS base. </param>
-        internal SecurityCvss(float? @base)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCvss(float? @base, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Base = @base;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> CVSS base. </summary>

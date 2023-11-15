@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Rules results input. </summary>
     public partial class RulesResultsContent
     {
-        /// <summary> Initializes a new instance of RulesResultsContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RulesResultsContent"/>. </summary>
         public RulesResultsContent()
         {
             Results = new ChangeTrackingDictionary<string, IList<IList<string>>>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RulesResultsContent"/>. </summary>
+        /// <param name="latestScan"> Take results from latest scan. </param>
+        /// <param name="results">
+        /// Expected results to be inserted into the baseline.
+        /// Leave this field empty it LatestScan == true.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RulesResultsContent(bool? latestScan, IDictionary<string, IList<IList<string>>> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LatestScan = latestScan;
+            Results = results;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Take results from latest scan. </summary>

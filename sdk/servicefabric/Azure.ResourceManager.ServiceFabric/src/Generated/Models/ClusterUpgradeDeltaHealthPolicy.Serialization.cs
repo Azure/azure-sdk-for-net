@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterUpgradeDeltaHealthPolicy : IUtf8JsonSerializable
+    public partial class ClusterUpgradeDeltaHealthPolicy : IUtf8JsonSerializable, IJsonModel<ClusterUpgradeDeltaHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterUpgradeDeltaHealthPolicy>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ClusterUpgradeDeltaHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ClusterUpgradeDeltaHealthPolicy>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ClusterUpgradeDeltaHealthPolicy>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("maxPercentDeltaUnhealthyNodes"u8);
             writer.WriteNumberValue(MaxPercentDeltaUnhealthyNodes);
@@ -33,11 +43,40 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterUpgradeDeltaHealthPolicy DeserializeClusterUpgradeDeltaHealthPolicy(JsonElement element)
+        ClusterUpgradeDeltaHealthPolicy IJsonModel<ClusterUpgradeDeltaHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterUpgradeDeltaHealthPolicy(document.RootElement, options);
+        }
+
+        internal static ClusterUpgradeDeltaHealthPolicy DeserializeClusterUpgradeDeltaHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +85,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             int maxPercentUpgradeDomainDeltaUnhealthyNodes = default;
             int maxPercentDeltaUnhealthyApplications = default;
             Optional<IDictionary<string, ApplicationDeltaHealthPolicy>> applicationDeltaHealthPolicies = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxPercentDeltaUnhealthyNodes"u8))
@@ -77,8 +118,38 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     applicationDeltaHealthPolicies = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, maxPercentUpgradeDomainDeltaUnhealthyNodes, maxPercentDeltaUnhealthyApplications, Optional.ToDictionary(applicationDeltaHealthPolicies));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, maxPercentUpgradeDomainDeltaUnhealthyNodes, maxPercentDeltaUnhealthyApplications, Optional.ToDictionary(applicationDeltaHealthPolicies), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterUpgradeDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ClusterUpgradeDeltaHealthPolicy IPersistableModel<ClusterUpgradeDeltaHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeClusterUpgradeDeltaHealthPolicy(document.RootElement, options);
+        }
+
+        string IPersistableModel<ClusterUpgradeDeltaHealthPolicy>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

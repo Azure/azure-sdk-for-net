@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Refund policy result property. </summary>
     public partial class ReservationRefundPolicyResultProperty
     {
-        /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundPolicyResultProperty"/>. </summary>
         internal ReservationRefundPolicyResultProperty()
         {
             PolicyErrors = new ChangeTrackingList<ReservationRefundPolicyError>();
         }
 
-        /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRefundPolicyResultProperty"/>. </summary>
         /// <param name="consumedRefundsTotal"> Pricing information containing the amount and the currency code. </param>
         /// <param name="maxRefundLimit"> Pricing information containing the amount and the currency code. </param>
         /// <param name="policyErrors"> Refund Policy errors. </param>
-        internal ReservationRefundPolicyResultProperty(PurchasePrice consumedRefundsTotal, PurchasePrice maxRefundLimit, IReadOnlyList<ReservationRefundPolicyError> policyErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationRefundPolicyResultProperty(PurchasePrice consumedRefundsTotal, PurchasePrice maxRefundLimit, IReadOnlyList<ReservationRefundPolicyError> policyErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConsumedRefundsTotal = consumedRefundsTotal;
             MaxRefundLimit = maxRefundLimit;
             PolicyErrors = policyErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Pricing information containing the amount and the currency code. </summary>

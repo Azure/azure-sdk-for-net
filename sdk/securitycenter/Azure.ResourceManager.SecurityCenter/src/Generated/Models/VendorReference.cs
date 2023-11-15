@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Vendor reference. </summary>
     public partial class VendorReference
     {
-        /// <summary> Initializes a new instance of VendorReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VendorReference"/>. </summary>
         internal VendorReference()
         {
         }
 
-        /// <summary> Initializes a new instance of VendorReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="VendorReference"/>. </summary>
         /// <param name="title"> Link title. </param>
         /// <param name="link"> Link url. </param>
-        internal VendorReference(string title, string link)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VendorReference(string title, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Link = link;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Link title. </summary>

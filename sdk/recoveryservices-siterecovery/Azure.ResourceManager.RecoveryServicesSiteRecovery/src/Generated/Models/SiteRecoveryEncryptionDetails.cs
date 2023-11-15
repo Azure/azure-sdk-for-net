@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Encryption details for the fabric. </summary>
     public partial class SiteRecoveryEncryptionDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEncryptionDetails"/>. </summary>
         internal SiteRecoveryEncryptionDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryEncryptionDetails"/>. </summary>
         /// <param name="kekState"> The key encryption key state for the Vmm. </param>
         /// <param name="kekCertThumbprint"> The key encryption key certificate thumbprint. </param>
         /// <param name="kekCertExpireOn"> The key encryption key certificate expiry date. </param>
-        internal SiteRecoveryEncryptionDetails(string kekState, string kekCertThumbprint, DateTimeOffset? kekCertExpireOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryEncryptionDetails(string kekState, string kekCertThumbprint, DateTimeOffset? kekCertExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KekState = kekState;
             KekCertThumbprint = kekCertThumbprint;
             KekCertExpireOn = kekCertExpireOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The key encryption key state for the Vmm. </summary>

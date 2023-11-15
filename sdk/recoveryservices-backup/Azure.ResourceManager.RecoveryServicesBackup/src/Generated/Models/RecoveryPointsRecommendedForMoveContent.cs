@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> ListRecoveryPointsRecommendedForMoveRequest Request. </summary>
     public partial class RecoveryPointsRecommendedForMoveContent
     {
-        /// <summary> Initializes a new instance of RecoveryPointsRecommendedForMoveContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointsRecommendedForMoveContent"/>. </summary>
         public RecoveryPointsRecommendedForMoveContent()
         {
             ExcludedRPList = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointsRecommendedForMoveContent"/>. </summary>
+        /// <param name="objectType"> Gets the class type. </param>
+        /// <param name="excludedRPList"> List of Recovery Points excluded from Move. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointsRecommendedForMoveContent(string objectType, IList<string> excludedRPList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ObjectType = objectType;
+            ExcludedRPList = excludedRPList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the class type. </summary>

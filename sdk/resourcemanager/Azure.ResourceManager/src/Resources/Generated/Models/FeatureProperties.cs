@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information about feature. </summary>
     internal partial class FeatureProperties
     {
-        /// <summary> Initializes a new instance of FeatureProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FeatureProperties"/>. </summary>
         internal FeatureProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of FeatureProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="FeatureProperties"/>. </summary>
         /// <param name="state"> The registration state of the feature for the subscription. </param>
-        internal FeatureProperties(string state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FeatureProperties(string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The registration state of the feature for the subscription. </summary>

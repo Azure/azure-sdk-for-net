@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Describes the result of the request to view descendants. </summary>
     internal partial class DescendantListResult
     {
-        /// <summary> Initializes a new instance of DescendantListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DescendantListResult"/>. </summary>
         internal DescendantListResult()
         {
             Value = new ChangeTrackingList<DescendantData>();
         }
 
-        /// <summary> Initializes a new instance of DescendantListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DescendantListResult"/>. </summary>
         /// <param name="value"> The list of descendants. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal DescendantListResult(IReadOnlyList<DescendantData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DescendantListResult(IReadOnlyList<DescendantData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of descendants. </summary>

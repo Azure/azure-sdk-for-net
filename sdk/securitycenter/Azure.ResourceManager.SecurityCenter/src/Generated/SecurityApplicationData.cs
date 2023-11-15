@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityApplicationData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityApplicationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityApplicationData"/>. </summary>
         public SecurityApplicationData()
         {
             ConditionSets = new ChangeTrackingList<BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SecurityApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,12 +37,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="description"> description of the application. </param>
         /// <param name="sourceResourceType"> The application source, what it affects, e.g. Assessments. </param>
         /// <param name="conditionSets"> The application conditionSets - see examples. </param>
-        internal SecurityApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, ApplicationSourceResourceType? sourceResourceType, IList<BinaryData> conditionSets) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, ApplicationSourceResourceType? sourceResourceType, IList<BinaryData> conditionSets, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
             SourceResourceType = sourceResourceType;
             ConditionSets = conditionSets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> display name of the application. </summary>

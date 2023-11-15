@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Video group detail. </summary>
     public partial class VideoGroup
     {
-        /// <summary> Initializes a new instance of VideoGroup. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VideoGroup"/>. </summary>
         public VideoGroup()
         {
             Videos = new ChangeTrackingList<VideoGroupVideo>();
         }
 
-        /// <summary> Initializes a new instance of VideoGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="VideoGroup"/>. </summary>
         /// <param name="videos"> List of videos will be shown to customers. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
-        internal VideoGroup(IList<VideoGroupVideo> videos, string replacementKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VideoGroup(IList<VideoGroupVideo> videos, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Videos = videos;
             ReplacementKey = replacementKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of videos will be shown to customers. </summary>

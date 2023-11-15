@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The private link service connection state. </summary>
     public partial class PurviewPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of PurviewPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkServiceConnectionState"/>. </summary>
         public PurviewPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="actionsRequired"> The required actions. </param>
         /// <param name="description"> The description. </param>
         /// <param name="status"> The status. </param>
-        internal PurviewPrivateLinkServiceConnectionState(string actionsRequired, string description, PurviewPrivateLinkServiceStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewPrivateLinkServiceConnectionState(string actionsRequired, string description, PurviewPrivateLinkServiceStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionsRequired = actionsRequired;
             Description = description;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The required actions. </summary>

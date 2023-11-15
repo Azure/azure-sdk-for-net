@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityComplianceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityComplianceData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityComplianceData"/>. </summary>
         public SecurityComplianceData()
         {
             AssessmentResult = new ChangeTrackingList<ComplianceSegment>();
         }
 
-        /// <summary> Initializes a new instance of SecurityComplianceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityComplianceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,11 +36,13 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="assessedOn"> The timestamp when the Compliance calculation was conducted. </param>
         /// <param name="resourceCount"> The resource count of the given subscription for which the Compliance calculation was conducted (needed for Management Group Compliance calculation). </param>
         /// <param name="assessmentResult"> An array of segment, which is the actually the compliance assessment. </param>
-        internal SecurityComplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? assessedOn, int? resourceCount, IReadOnlyList<ComplianceSegment> assessmentResult) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityComplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? assessedOn, int? resourceCount, IReadOnlyList<ComplianceSegment> assessmentResult, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AssessedOn = assessedOn;
             ResourceCount = resourceCount;
             AssessmentResult = assessmentResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The timestamp when the Compliance calculation was conducted. </summary>

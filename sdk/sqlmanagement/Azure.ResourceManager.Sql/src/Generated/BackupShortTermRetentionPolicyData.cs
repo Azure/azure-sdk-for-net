@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -17,22 +19,27 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class BackupShortTermRetentionPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupShortTermRetentionPolicyData"/>. </summary>
         public BackupShortTermRetentionPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupShortTermRetentionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupShortTermRetentionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="retentionDays"> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </param>
         /// <param name="diffBackupIntervalInHours"> The differential backup interval in hours. This is how many interval hours between each differential backup will be supported. This is only applicable to live databases but not dropped databases. </param>
-        internal BackupShortTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupShortTermRetentionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionDays, DiffBackupIntervalInHours? diffBackupIntervalInHours, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RetentionDays = retentionDays;
             DiffBackupIntervalInHours = diffBackupIntervalInHours;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The backup retention period in days. This is how many days Point-in-Time Restore will be supported. </summary>

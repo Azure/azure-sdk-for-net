@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Paginated list of applied reservations. </summary>
     public partial class AppliedReservationList
     {
-        /// <summary> Initializes a new instance of AppliedReservationList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppliedReservationList"/>. </summary>
         internal AppliedReservationList()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppliedReservationList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppliedReservationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page of reservations. </param>
-        internal AppliedReservationList(IReadOnlyList<string> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppliedReservationList(IReadOnlyList<string> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

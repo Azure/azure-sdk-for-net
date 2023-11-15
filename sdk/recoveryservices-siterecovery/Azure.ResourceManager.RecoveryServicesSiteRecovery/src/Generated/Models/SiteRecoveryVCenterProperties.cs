@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> vCenter properties. </summary>
     public partial class SiteRecoveryVCenterProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterProperties"/>. </summary>
         internal SiteRecoveryVCenterProperties()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryVCenterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterProperties"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the vCenter. </param>
         /// <param name="internalId"> VCenter internal ID. </param>
         /// <param name="lastHeartbeatReceivedOn"> The time when the last heartbeat was received by vCenter. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="runAsAccountId"> The account Id which has privileges to discover the vCenter. </param>
         /// <param name="fabricArmResourceName"> The ARM resource name of the fabric containing this VCenter. </param>
         /// <param name="healthErrors"> The health errors for this VCenter. </param>
-        internal SiteRecoveryVCenterProperties(string friendlyName, string internalId, DateTimeOffset? lastHeartbeatReceivedOn, string discoveryStatus, Guid? processServerId, IPAddress ipAddress, string infrastructureId, string port, string runAsAccountId, string fabricArmResourceName, IReadOnlyList<SiteRecoveryHealthError> healthErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryVCenterProperties(string friendlyName, string internalId, DateTimeOffset? lastHeartbeatReceivedOn, string discoveryStatus, Guid? processServerId, IPAddress ipAddress, string infrastructureId, string port, string runAsAccountId, string fabricArmResourceName, IReadOnlyList<SiteRecoveryHealthError> healthErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             InternalId = internalId;
@@ -46,6 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RunAsAccountId = runAsAccountId;
             FabricArmResourceName = fabricArmResourceName;
             HealthErrors = healthErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Friendly name of the vCenter. </summary>

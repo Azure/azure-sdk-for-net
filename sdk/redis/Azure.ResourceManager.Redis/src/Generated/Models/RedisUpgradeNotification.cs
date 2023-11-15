@@ -14,21 +14,26 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Properties of upgrade notification. </summary>
     public partial class RedisUpgradeNotification
     {
-        /// <summary> Initializes a new instance of RedisUpgradeNotification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RedisUpgradeNotification"/>. </summary>
         internal RedisUpgradeNotification()
         {
             UpsellNotification = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of RedisUpgradeNotification. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisUpgradeNotification"/>. </summary>
         /// <param name="name"> Name of upgrade notification. </param>
         /// <param name="timestamp"> Timestamp when upgrade notification occurred. </param>
         /// <param name="upsellNotification"> Details about this upgrade notification. </param>
-        internal RedisUpgradeNotification(string name, DateTimeOffset? timestamp, IReadOnlyDictionary<string, string> upsellNotification)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisUpgradeNotification(string name, DateTimeOffset? timestamp, IReadOnlyDictionary<string, string> upsellNotification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Timestamp = timestamp;
             UpsellNotification = upsellNotification;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of upgrade notification. </summary>

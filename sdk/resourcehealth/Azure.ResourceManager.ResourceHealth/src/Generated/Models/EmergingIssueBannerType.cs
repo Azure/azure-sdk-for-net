@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
     /// <summary> Banner type of emerging issue. </summary>
     public partial class EmergingIssueBannerType
     {
-        /// <summary> Initializes a new instance of EmergingIssueBannerType. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueBannerType"/>. </summary>
         internal EmergingIssueBannerType()
         {
         }
 
-        /// <summary> Initializes a new instance of EmergingIssueBannerType. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmergingIssueBannerType"/>. </summary>
         /// <param name="title"> The banner title. </param>
         /// <param name="message"> The details of banner. </param>
         /// <param name="cloud"> The cloud type of this banner. </param>
         /// <param name="lastModifiedOn"> The last time modified on this banner. </param>
-        internal EmergingIssueBannerType(string title, string message, string cloud, DateTimeOffset? lastModifiedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmergingIssueBannerType(string title, string message, string cloud, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Message = message;
             Cloud = cloud;
             LastModifiedOn = lastModifiedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The banner title. </summary>

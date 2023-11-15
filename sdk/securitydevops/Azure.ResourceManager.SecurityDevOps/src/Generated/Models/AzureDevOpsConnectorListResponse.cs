@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.SecurityDevOps;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> The AzureDevOpsConnectorListResponse. </summary>
     internal partial class AzureDevOpsConnectorListResponse
     {
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorListResponse"/>. </summary>
         internal AzureDevOpsConnectorListResponse()
         {
             Value = new ChangeTrackingList<AzureDevOpsConnectorData>();
         }
 
-        /// <summary> Initializes a new instance of AzureDevOpsConnectorListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDevOpsConnectorListResponse"/>. </summary>
         /// <param name="value"> Gets or sets list of resources. </param>
         /// <param name="nextLink"> Gets or sets next link to scroll over the results. </param>
-        internal AzureDevOpsConnectorListResponse(IReadOnlyList<AzureDevOpsConnectorData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsConnectorListResponse(IReadOnlyList<AzureDevOpsConnectorData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets list of resources. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedInstancePrivateLinkData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkData"/>. </summary>
         public ManagedInstancePrivateLinkData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private link resource group id. </param>
-        internal ManagedInstancePrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedInstancePrivateLinkProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstancePrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedInstancePrivateLinkProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private link resource group id. </summary>

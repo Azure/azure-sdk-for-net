@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -17,13 +18,23 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class LexicalTokenizer
     {
-        /// <summary> Initializes a new instance of LexicalTokenizer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LexicalTokenizer"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of tokenizer. </param>
         /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        internal LexicalTokenizer(string oDataType, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LexicalTokenizer(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ODataType = oDataType;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LexicalTokenizer"/> for deserialization. </summary>
+        internal LexicalTokenizer()
+        {
         }
 
         /// <summary> A URI fragment specifying the type of tokenizer. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaPolicyContent : IUtf8JsonSerializable
+    public partial class HyperVReplicaPolicyContent : IUtf8JsonSerializable, IJsonModel<HyperVReplicaPolicyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaPolicyContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<HyperVReplicaPolicyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<HyperVReplicaPolicyContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<HyperVReplicaPolicyContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPoints))
             {
@@ -67,7 +78,169 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        HyperVReplicaPolicyContent IJsonModel<HyperVReplicaPolicyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaPolicyContent(document.RootElement, options);
+        }
+
+        internal static HyperVReplicaPolicyContent DeserializeHyperVReplicaPolicyContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "HyperVReplica2012R2": return HyperVReplicaBluePolicyContent.DeserializeHyperVReplicaBluePolicyContent(element);
+                }
+            }
+            Optional<int> recoveryPoints = default;
+            Optional<int> applicationConsistentSnapshotFrequencyInHours = default;
+            Optional<string> compression = default;
+            Optional<string> initialReplicationMethod = default;
+            Optional<string> onlineReplicationStartTime = default;
+            Optional<string> offlineReplicationImportPath = default;
+            Optional<string> offlineReplicationExportPath = default;
+            Optional<int> replicationPort = default;
+            Optional<int> allowedAuthenticationType = default;
+            Optional<string> replicaDeletion = default;
+            string instanceType = "HyperVReplica2012";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("recoveryPoints"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPoints = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("applicationConsistentSnapshotFrequencyInHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    applicationConsistentSnapshotFrequencyInHours = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("compression"u8))
+                {
+                    compression = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("initialReplicationMethod"u8))
+                {
+                    initialReplicationMethod = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("onlineReplicationStartTime"u8))
+                {
+                    onlineReplicationStartTime = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("offlineReplicationImportPath"u8))
+                {
+                    offlineReplicationImportPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("offlineReplicationExportPath"u8))
+                {
+                    offlineReplicationExportPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("replicationPort"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    replicationPort = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("allowedAuthenticationType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowedAuthenticationType = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("replicaDeletion"u8))
+                {
+                    replicaDeletion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("instanceType"u8))
+                {
+                    instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HyperVReplicaPolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletion.Value);
+        }
+
+        BinaryData IPersistableModel<HyperVReplicaPolicyContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        HyperVReplicaPolicyContent IPersistableModel<HyperVReplicaPolicyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaPolicyContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeHyperVReplicaPolicyContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<HyperVReplicaPolicyContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A private endpoint connection under a managed instance. </summary>
     public partial class ManagedInstancePecProperty
     {
-        /// <summary> Initializes a new instance of ManagedInstancePecProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePecProperty"/>. </summary>
         internal ManagedInstancePecProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstancePecProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePecProperty"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="properties"> Private endpoint connection properties. </param>
-        internal ManagedInstancePecProperty(ResourceIdentifier id, ManagedInstancePrivateEndpointConnectionProperties properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstancePecProperty(ResourceIdentifier id, ManagedInstancePrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID. </summary>

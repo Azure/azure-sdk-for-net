@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The native cloud connection configuration. </summary>
     internal partial class AwsInformationProtection
     {
-        /// <summary> Initializes a new instance of AwsInformationProtection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AwsInformationProtection"/>. </summary>
         public AwsInformationProtection()
         {
         }
 
-        /// <summary> Initializes a new instance of AwsInformationProtection. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsInformationProtection"/>. </summary>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal AwsInformationProtection(string cloudRoleArn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AwsInformationProtection(string cloudRoleArn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CloudRoleArn = cloudRoleArn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cloud role ARN in AWS for this feature. </summary>

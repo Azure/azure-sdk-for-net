@@ -5,19 +5,102 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class FabricSpecificCreationContent : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownFabricSpecificCreationContent))]
+    public partial class FabricSpecificCreationContent : IUtf8JsonSerializable, IJsonModel<FabricSpecificCreationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSpecificCreationContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FabricSpecificCreationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FabricSpecificCreationContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FabricSpecificCreationContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        FabricSpecificCreationContent IJsonModel<FabricSpecificCreationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFabricSpecificCreationContent(document.RootElement, options);
+        }
+
+        internal static FabricSpecificCreationContent DeserializeFabricSpecificCreationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Azure": return SiteRecoveryFabricProviderCreationContent.DeserializeSiteRecoveryFabricProviderCreationContent(element);
+                    case "InMageRcm": return InMageRcmFabricCreationContent.DeserializeInMageRcmFabricCreationContent(element);
+                    case "VMwareV2": return VMwareV2FabricCreationContent.DeserializeVMwareV2FabricCreationContent(element);
+                }
+            }
+            return UnknownFabricSpecificCreationContent.DeserializeUnknownFabricSpecificCreationContent(element);
+        }
+
+        BinaryData IPersistableModel<FabricSpecificCreationContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FabricSpecificCreationContent IPersistableModel<FabricSpecificCreationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFabricSpecificCreationContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<FabricSpecificCreationContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

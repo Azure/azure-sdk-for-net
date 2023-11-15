@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagementGroups;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     /// <summary> Describes the result of the request to list management groups. </summary>
     internal partial class ManagementGroupListResult
     {
-        /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupListResult"/>. </summary>
         internal ManagementGroupListResult()
         {
             Value = new ChangeTrackingList<ManagementGroupData>();
         }
 
-        /// <summary> Initializes a new instance of ManagementGroupListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupListResult"/>. </summary>
         /// <param name="value"> The list of management groups. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal ManagementGroupListResult(IReadOnlyList<ManagementGroupData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementGroupListResult(IReadOnlyList<ManagementGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of management groups. </summary>

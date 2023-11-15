@@ -6,15 +6,148 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class DataReplicationInnerHealthErrorInfo
+    public partial class DataReplicationInnerHealthErrorInfo : IUtf8JsonSerializable, IJsonModel<DataReplicationInnerHealthErrorInfo>
     {
-        internal static DataReplicationInnerHealthErrorInfo DeserializeDataReplicationInnerHealthErrorInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationInnerHealthErrorInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataReplicationInnerHealthErrorInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataReplicationInnerHealthErrorInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataReplicationInnerHealthErrorInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Code))
+                {
+                    writer.WritePropertyName("code"u8);
+                    writer.WriteStringValue(Code);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HealthCategory))
+                {
+                    writer.WritePropertyName("healthCategory"u8);
+                    writer.WriteStringValue(HealthCategory);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Category))
+                {
+                    writer.WritePropertyName("category"u8);
+                    writer.WriteStringValue(Category);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Severity))
+                {
+                    writer.WritePropertyName("severity"u8);
+                    writer.WriteStringValue(Severity);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Source))
+                {
+                    writer.WritePropertyName("source"u8);
+                    writer.WriteStringValue(Source);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsCustomerResolvable))
+                {
+                    writer.WritePropertyName("isCustomerResolvable"u8);
+                    writer.WriteBooleanValue(IsCustomerResolvable.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Summary))
+                {
+                    writer.WritePropertyName("summary"u8);
+                    writer.WriteStringValue(Summary);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Causes))
+                {
+                    writer.WritePropertyName("causes"u8);
+                    writer.WriteStringValue(Causes);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Recommendation))
+                {
+                    writer.WritePropertyName("recommendation"u8);
+                    writer.WriteStringValue(Recommendation);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataReplicationInnerHealthErrorInfo IJsonModel<DataReplicationInnerHealthErrorInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataReplicationInnerHealthErrorInfo(document.RootElement, options);
+        }
+
+        internal static DataReplicationInnerHealthErrorInfo DeserializeDataReplicationInnerHealthErrorInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +163,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> message = default;
             Optional<string> causes = default;
             Optional<string> recommendation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -95,8 +230,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     recommendation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataReplicationInnerHealthErrorInfo(code.Value, healthCategory.Value, category.Value, severity.Value, source.Value, Optional.ToNullable(creationTime), Optional.ToNullable(isCustomerResolvable), summary.Value, message.Value, causes.Value, recommendation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataReplicationInnerHealthErrorInfo(code.Value, healthCategory.Value, category.Value, severity.Value, source.Value, Optional.ToNullable(creationTime), Optional.ToNullable(isCustomerResolvable), summary.Value, message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataReplicationInnerHealthErrorInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataReplicationInnerHealthErrorInfo IPersistableModel<DataReplicationInnerHealthErrorInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataReplicationInnerHealthErrorInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataReplicationInnerHealthErrorInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataReplicationInnerHealthErrorInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

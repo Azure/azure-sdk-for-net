@@ -5,15 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryJobStatusEventDetails
+    public partial class SiteRecoveryJobStatusEventDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryJobStatusEventDetails>
     {
-        internal static SiteRecoveryJobStatusEventDetails DeserializeSiteRecoveryJobStatusEventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryJobStatusEventDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SiteRecoveryJobStatusEventDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SiteRecoveryJobStatusEventDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SiteRecoveryJobStatusEventDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (Optional.IsDefined(JobFriendlyName))
+            {
+                writer.WritePropertyName("jobFriendlyName"u8);
+                writer.WriteStringValue(JobFriendlyName);
+            }
+            if (Optional.IsDefined(JobStatus))
+            {
+                writer.WritePropertyName("jobStatus"u8);
+                writer.WriteStringValue(JobStatus);
+            }
+            if (Optional.IsDefined(AffectedObjectType))
+            {
+                writer.WritePropertyName("affectedObjectType"u8);
+                writer.WriteStringValue(AffectedObjectType);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryJobStatusEventDetails IJsonModel<SiteRecoveryJobStatusEventDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobStatusEventDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryJobStatusEventDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryJobStatusEventDetails DeserializeSiteRecoveryJobStatusEventDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +91,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> jobStatus = default;
             Optional<string> affectedObjectType = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -54,8 +124,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryJobStatusEventDetails(instanceType, jobId.Value, jobFriendlyName.Value, jobStatus.Value, affectedObjectType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryJobStatusEventDetails(instanceType, serializedAdditionalRawData, jobId.Value, jobFriendlyName.Value, jobStatus.Value, affectedObjectType.Value);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryJobStatusEventDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobStatusEventDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SiteRecoveryJobStatusEventDetails IPersistableModel<SiteRecoveryJobStatusEventDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobStatusEventDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSiteRecoveryJobStatusEventDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<SiteRecoveryJobStatusEventDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }
