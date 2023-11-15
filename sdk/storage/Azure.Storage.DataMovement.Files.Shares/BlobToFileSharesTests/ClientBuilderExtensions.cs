@@ -30,17 +30,9 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             => $"test-container-{clientBuilder.Recording.Random.NewGuid()}";
         public static string GetNewShareName(this SharesClientBuilder clientBuilder)
             => $"test-share-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewDirectoryName(this SharesClientBuilder clientBuilder)
-            => $"test-directory-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewNonAsciiDirectoryName(this SharesClientBuilder clientBuilder)
-            => $"test-dire¢t Ø®ϒ%3A-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewFileName(this SharesClientBuilder clientBuilder)
-            => $"test-file-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewNonAsciiFileName(this SharesClientBuilder clientBuilder)
-            => $"test-ƒ¡£€‽%3A-{clientBuilder.Recording.Random.NewGuid()}";
 
         public static BlobServiceClient GetServiceClient_SharedKey(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
-    => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
         /// <summary>
         /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>
@@ -118,14 +110,6 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
-        }
-
-        public static BlobsStorageResourceProvider GetBlobsStorageResourceProvider(
-            this BlobsClientBuilder clientBuilder)
-        {
-            TenantConfiguration tenants = clientBuilder.Tenants.TestConfigDefault;
-            StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(tenants.AccountName, tenants.AccountKey);
-            return new BlobsStorageResourceProvider(sharedKey);
         }
     }
 }
