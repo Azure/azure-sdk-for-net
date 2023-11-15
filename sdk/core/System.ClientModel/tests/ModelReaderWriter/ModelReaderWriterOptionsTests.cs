@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.ClientModel.Internal;
 using System.Reflection;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
@@ -12,7 +11,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void AllInstancesInMapShouldBeFrozen()
         {
-            ValidateFrozenInstance(ModelReaderWriterHelper.WireOptions, true);
             ValidateFrozenInstance(ModelReaderWriterOptions.Json, true);
             ValidateFrozenInstance(ModelReaderWriterOptions.Xml, true);
         }
