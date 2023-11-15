@@ -151,7 +151,49 @@ await tranfer.WaitForCompletionAsync();
 
 ### Initializing Blob Storage `StorageResource`
 
-Azure.Storage.DataMovement.Blobs exposes a `StorageResource` for each type of blob (block, page, append) as well as a blob container. Storage resources are initialized with the appropriate client object from Azure.Storage.Blobs.
+Azure.Storage.DataMovement.Blobs exposes `BlobsStorageResourceProvider` to create `StorageResource` instances for each type of blob (block, page, append) as well as a blob container. The resource provider should be initialized with a credential to properly authenticate the storage resources. The following demonstrates this using an `Azure.Core` token credential.
+
+```C# Snippet:MakeProvider_TokenCredential
+BlobStorageResourceProvider blobs = new(tokenCredential);
+```
+
+For workflows that require specific credentials for specific Blob Storage resources, the resource provider can be initialized with a delegate to construct the appropriate credential from the resource's URI. The following demonstrates a provider that produces a sas scoped to the resource from a `StorageSharedKeyCredential`.
+
+```C# Snippet:MakeProvider_SasFactory
+public AzureSasCredential GenerateSas(Uri uri, bool readonly)
+{
+    // Quick sample demonstrating minimal steps
+    // Construct your SAS according to your needs
+    BlobUriBuilder blobUri = new(uri);
+    BlobSasBuilder sas = new(BlobSasPermissions.All, DateTimeOffset.Now.AddHours(1))
+    {
+        BlobContainerName = blobUri.BlobContainerName,
+        BlobName = blobUri.BlobName,
+    };
+    return new AzureSasCredential(sas.ToSasQueryParameters(sharedKeyCredential).ToString())
+}
+BlobStorageResourceProvider blobs = new(GenerateSas);
+```
+
+To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer`.
+
+```C# Snippet:MakeProvider_SasFactory
+StorageResource container = blobs.FromContainer(
+    "http://myaccount.blob.core.windows.net/container");
+
+// block blobs are the default if no options are specified
+StorageResource blockBlob = blobs.FromBlob(
+    "http://myaccount.blob.core.windows.net/container",
+    new BlockBlobStorageResourceOptions());
+StorageResource pageBlob = blobs.FromBlob(
+    "http://myaccount.blob.core.windows.net/container",
+    new PageBlobStorageResourceOptions());
+StorageResource blockBlob = blobs.FromBlob(
+    "http://myaccount.blob.core.windows.net/container",
+    new AppendBlobStorageResourceOptions());
+```
+
+Storage resources can also be initialized with the appropriate client object from Azure.Storage.Blobs. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `BlobsStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.
 
 ```C# Snippet:ResourceConstruction_Blobs
 BlobsStorageResourceProvider blobs = new();
@@ -161,7 +203,7 @@ StorageResource pageBlobResource = blobs.FromClient(pageBlobClient);
 StorageResource appendBlobResource = blobs.FromClient(appendBlobClient);
 ```
 
-Blob `StorageResource` objects can be constructed with optional "options" arguments specific to the type of resource.
+There are more options which can be used when creating a blob storage resource. Below are some exapmles.
 
 ```C# Snippet:ResourceConstruction_Blobs_WithOptions_VirtualDirectory
 BlobStorageResourceContainerOptions virtualDirectoryOptions = new()
@@ -187,8 +229,6 @@ StorageResource leasedBlockBlobResource = blobs.FromClient(
     leasedResourceOptions);
 ```
 
-***TODO (jaschrep-msft): Replace resume samples once resume refactor finished.***
-
 ### Upload
 
 An upload takes place between a local file `StorageResource` as source and blob `StorageResource` as destination.
@@ -198,7 +238,7 @@ Upload a block blob.
 ```C# Snippet:SimpleBlobUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
     sourceResource: files.FromFile(sourceLocalPath),
-    destinationResource: blobs.FromClient(destinationBlob));
+    destinationResource: blobs.FromBlob(destinationBlobUri));
 await dataTransfer.WaitForCompletionAsync();
 ```
 
@@ -206,16 +246,15 @@ Upload a directory as a specific blob type.
 
 ```C# Snippet:SimpleDirectoryUpload
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromDirectory(sourcePath),
-    destinationResource: blobs.FromClient(
-        blobContainerClient,
+    sourceResource: files.FromDirectory(sourceLocalPath),
+    destinationResource: blobs.FromContainer(
+        blobContainerUri,
         new BlobStorageResourceContainerOptions()
         {
             // Block blobs are the default if not specified
             BlobType = BlobType.Block,
             BlobDirectoryPrefix = optionalDestinationPrefix,
-        }),
-    transferOptions: options);
+        }));
 await dataTransfer.WaitForCompletionAsync();
 ```
 
@@ -223,14 +262,12 @@ await dataTransfer.WaitForCompletionAsync();
 
 A download takes place between a blob `StorageResource` as source and local file `StorageResource` as destination.
 
-Download a block blob.
+Download a blob.
 
 ```C# Snippet:SimpleBlockBlobDownload
-BlobsStorageResourceProvider blobs = new();
-LocalFilesStorageResourceProvider files = new();
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromClient(sourceBlobClient),
-    destinationResource: files.FromFile(downloadPath));
+    sourceResource: blobs.FromBlob(sourceBlobUri),
+    destinationResource: files.FromFile(destinationLocalPath));
 await dataTransfer.WaitForCompletionAsync();
 ```
 
@@ -250,16 +287,14 @@ await dataTransfer.WaitForCompletionAsync();
 
 ### Blob Copy
 
-A copy takes place between two blob `StorageResource` instances. Copying between to Azure blobs uses PUT from URL REST APIs, which do not pass data through the calling machine.
+A copy takes place between two blob `StorageResource` instances. Copying between to Azure blobs uses PUT from URL REST APIs, which do not transfer data through the machine running DataMovement.
 
-Copy a single blob. Note the change in blob type on this copy from block to append.
+Copy a single blob. Note the destination blob is an append blob, regardless of the first blob's type.
 
 ```C# Snippet:s2sCopyBlob
-BlobsStorageResourceProvider blobs = new();
-LocalFilesStorageResourceProvider files = new();
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromClient(sourceBlockBlobClient),
-    destinationResource: blobs.FromClient(destinationAppendBlobClient));
+    sourceResource: blobs.FromBlob(sourceBlobUri),
+    destinationResource: blobs.FromBlob(destinationBlobUri), new AppendBlobStorageResourceOptions());
 await dataTransfer.WaitForCompletionAsync();
 ```
 
@@ -267,11 +302,11 @@ Copy a blob container.
 
 ```C# Snippet:s2sCopyBlobContainer
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromClient(
-        sourceContainer,
+    sourceResource: blobs.FromContainer(
+        sourceContainerUri,
         new BlobStorageResourceContainerOptions()
         {
-            BlobDirectoryPrefix = sourceDirectoryName
+            BlobDirectoryPrefix = optionalSourcePrefix
         }),
     destinationResource: blobs.FromClient(
         destinationContainer,
@@ -280,8 +315,9 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
             // all source blobs will be copied as a single type of destination blob
             // defaults to block blobs if unspecified
             BlobType = BlobType.Block,
-            BlobDirectoryPrefix = downloadPath
+            BlobDirectoryPrefix = optionalDestinationPrefix
         }));
+await dataTransfer.WaitForCompletionAsync();
 ```
 
 ## Troubleshooting
