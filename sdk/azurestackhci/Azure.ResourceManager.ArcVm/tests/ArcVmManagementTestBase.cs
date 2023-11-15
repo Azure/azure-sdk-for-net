@@ -233,6 +233,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
                 ExtendedLocation = extendedLocation,
                 OSProfile = new VirtualMachineInstancePropertiesOSProfile()
                 {
+                    AdminPassword = TestEnvironment.VmPass,
                     AdminUsername = TestEnvironment.VmUsername,
                     ComputerName = "dotnetvm",
                     WindowsConfiguration = new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration()

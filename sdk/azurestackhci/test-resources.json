@@ -96,6 +96,12 @@
             "metadata": {
                 "description": "The username to create a virtualmachineinstance with."
             }
+        },
+        "vmPass": {
+            "type": "string",
+            "metadata": {
+                "description": "The password to create a virtualmachineinstance with."
+            }
         }
     },
     "outputs": {
@@ -122,6 +128,10 @@
         "VM_USERNAME": {
             "type": "string",
             "value": "[parameters('vmUsername')]"
+        },
+        "VM_PASS": {
+            "type": "string",
+            "value": "[parameters('vmPass')]"
         }
     }
 }
