@@ -27,6 +27,12 @@
 
 - Upgraded Azure.Core from 1.34.0 to 1.35.0
 
+## 1.5.0-beta.1 (2023-08-14)
+
+### Features Added
+
+- Make `NetworkArmClientMockingExtension`, `NetworkManagementGroupMockingExtension`, `NetworkResourceGroupMockingExtension`, `NetworkSubscriptionMockingExtension` public for mocking the extension methods.
+
 ## 1.4.0 (2023-07-31)
 
 ### Features Added

@@ -9,7 +9,6 @@ using System.Text.Json;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("WeightedAllocationWorkerSelectorAttachment")]
     public partial class WeightedAllocationWorkerSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
@@ -19,7 +18,7 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNull(allocations, nameof(allocations));
 
-            Kind = "weighted-allocation-worker-selector";
+            Kind = WorkerSelectorAttachmentKind.WeightedAllocation;
             Allocations = allocations.ToList();
         }
 
@@ -34,7 +33,7 @@ namespace Azure.Communication.JobRouter
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
         }
     }

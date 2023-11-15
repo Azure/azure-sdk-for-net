@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.NetApp
     public partial class CapacityPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CapacityPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="poolName"> The poolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}";
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An object representing collection of NetAppVolumeResources and their operations over a NetAppVolumeResource. </returns>
         public virtual NetAppVolumeCollection GetNetAppVolumes()
         {
-            return GetCachedClient(Client => new NetAppVolumeCollection(Client, Id));
+            return GetCachedClient(client => new NetAppVolumeCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppVolumeResource>> GetNetAppVolumeAsync(string volumeName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="volumeName"> The name of the volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetAppVolumeResource> GetNetAppVolume(string volumeName, CancellationToken cancellationToken = default)
         {

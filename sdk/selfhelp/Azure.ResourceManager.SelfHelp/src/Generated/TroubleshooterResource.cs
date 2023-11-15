@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SelfHelp
     public partial class TroubleshooterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TroubleshooterResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="troubleshooterName"> The troubleshooterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string troubleshooterName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}";

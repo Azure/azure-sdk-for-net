@@ -33,15 +33,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("NA"),
-                        ["English"] = new LabelValue(7),
-                        ["O365"] = new LabelValue(true),
-                        ["Xbox_Support"] = new LabelValue(false)
+                        ["Location"] = new RouterValue("NA"),
+                        ["English"] = new RouterValue(7),
+                        ["O365"] = new RouterValue(true),
+                        ["Xbox_Support"] = new RouterValue(false)
                     },
                     Tags =
                     {
-                        ["Name"] = new LabelValue("John Doe"),
-                        ["Department"] = new LabelValue("IT_HelpDesk")
+                        ["Name"] = new RouterValue("John Doe"),
+                        ["Department"] = new RouterValue("IT_HelpDesk")
                     }
                 }
             );
@@ -75,9 +75,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Channels = { new RouterChannel("WebChatEscalated", 50), },
                     Labels =
                     {
-                        ["O365"] = new LabelValue("Supported"),
-                        ["Xbox_Support"] = new LabelValue(null),
-                        ["Xbox_Support_EN"] = new LabelValue(true),
+                        ["O365"] = new RouterValue("Supported"),
+                        ["Xbox_Support"] = new RouterValue(null),
+                        ["Xbox_Support_EN"] = new RouterValue(true),
                     }
                 });
 
@@ -104,7 +104,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterWorkers
 
-            Pageable<RouterWorker> workers = routerClient.GetWorkers();
+            Pageable<RouterWorker> workers = routerClient.GetWorkers(null, null);
             foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
             {
                 foreach (RouterWorker? workerPaged in asPage.Values)
@@ -114,7 +114,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             }
 
             // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-            workers = routerClient.GetWorkers(channelId: "Voip", state: RouterWorkerStateSelector.All);
+            workers = routerClient.GetWorkers(null, channelId: "Voip", state: RouterWorkerStateSelector.All);
 
             foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
             {

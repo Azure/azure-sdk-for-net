@@ -295,7 +295,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
             Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(await destinationClient.ExistsAsync());
-            await testEventRaised.AssertSingleFailedCheck();
+            await testEventRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(testEventRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             Assert.IsTrue(testEventRaised.FailedEvents.First().Exception.Message.Contains("The specified blob already exists."));
             // Verify Upload - That we skipped over and didn't reupload something new.
@@ -648,7 +648,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             // Assert
-            await testEventsRaised.AssertSingleFailedCheck();
+            await testEventsRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
@@ -1055,7 +1055,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             // Assert
-            await testEventsRaised.AssertSingleFailedCheck();
+            await testEventsRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
@@ -1334,7 +1334,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            await testEventsRaised.AssertSingleFailedCheck();
+            await testEventsRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
@@ -1421,7 +1421,7 @@ namespace Azure.Storage.DataMovement.Tests
             transfer.WaitForCompletion(cancellationTokenSource.Token);
 
             // Assert
-            await testEventsRaised.AssertSingleFailedCheck();
+            await testEventsRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
@@ -1461,24 +1461,5 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
         }
         #endregion
-
-        [Test]
-        public async Task SupportsLongFiles()
-        {
-            long fileSize = 5L * Constants.GB;
-
-            StorageResourceItem srcResource = MockStorageResource.MakeSourceResource(fileSize, maxChunkSize: Constants.GB);
-            StorageResourceItem dstResource = MockStorageResource.MakeDestinationResource(maxChunkSize: Constants.GB);
-            TransferManager transferManager = new TransferManager();
-
-            DataTransferOptions options = new();
-            TestEventsRaised events = new(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
-            await transfer.WaitForCompletionAsync();
-
-            Assert.IsEmpty(events.FailedEvents);
-            Assert.IsTrue(transfer.HasCompleted);
-            await events.AssertSingleCompletedCheck();
-        }
     }
 }

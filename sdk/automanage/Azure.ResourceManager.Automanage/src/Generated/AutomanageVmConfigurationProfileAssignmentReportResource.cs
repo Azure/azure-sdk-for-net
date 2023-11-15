@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Automanage
     public partial class AutomanageVmConfigurationProfileAssignmentReportResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vmName"> The vmName. </param>
+        /// <param name="configurationProfileAssignmentName"> The configurationProfileAssignmentName. </param>
+        /// <param name="reportName"> The reportName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string configurationProfileAssignmentName, string reportName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}";

@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppService
     public partial class WebSiteSlotConfigAppSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSlotConfigAppSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="appSettingKey"> The appSettingKey. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string appSettingKey)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/configreferences/appsettings/{appSettingKey}";

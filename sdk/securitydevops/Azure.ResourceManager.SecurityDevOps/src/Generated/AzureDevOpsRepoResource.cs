@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.SecurityDevOps
     public partial class AzureDevOpsRepoResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AzureDevOpsRepoResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureDevOpsConnectorName"> The azureDevOpsConnectorName. </param>
+        /// <param name="azureDevOpsOrgName"> The azureDevOpsOrgName. </param>
+        /// <param name="azureDevOpsProjectName"> The azureDevOpsProjectName. </param>
+        /// <param name="azureDevOpsRepoName"> The azureDevOpsRepoName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, string azureDevOpsProjectName, string azureDevOpsRepoName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}/projects/{azureDevOpsProjectName}/repos/{azureDevOpsRepoName}";

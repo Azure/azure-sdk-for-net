@@ -57,7 +57,7 @@ Console.WriteLine($"Distribution policy successfully update with new distributio
 ## List distribution policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicies_Async
-AsyncPageable<DistributionPolicy> distributionPolicies = routerAdministrationClient.GetDistributionPoliciesAsync();
+AsyncPageable<DistributionPolicy> distributionPolicies = routerAdministrationClient.GetDistributionPoliciesAsync(cancellationToken: default);
 await foreach (Page<DistributionPolicy> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
 {
     foreach (DistributionPolicy? policy in asPage.Values)

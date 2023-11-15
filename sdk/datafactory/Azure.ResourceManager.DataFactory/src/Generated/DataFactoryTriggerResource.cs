@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DataFactoryTriggerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryTriggerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string triggerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/triggers/{triggerName}";

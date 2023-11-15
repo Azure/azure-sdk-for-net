@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class AdaptiveApplicationControlGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AdaptiveApplicationControlGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
+        /// <param name="groupName"> The groupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation ascLocation, string groupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}";

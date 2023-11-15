@@ -16,26 +16,20 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
-        /// <param name="etag"> Concurrency Token. </param>
-        /// <param name="id"> The unique identifier of the policy. </param>
-        /// <param name="name"> The human readable name of the policy. </param>
-        /// <param name="offerExpiresAfterSeconds">
-        /// The number of seconds after which any offers created under this policy will be
-        /// expired.
-        /// </param>
-        /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
+        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of a distribution policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="offerExpiresAfterSeconds"> Number of seconds after which any offers created under this policy will be expired. </param>
+        /// <param name="mode"> Mode governing the specific distribution method. </param>
         internal DistributionPolicy(string etag, string id, string name, double? offerExpiresAfterSeconds, DistributionMode mode)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             Name = name;
             _offerExpiresAfterSeconds = offerExpiresAfterSeconds;
             Mode = mode;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
-        /// <summary> The unique identifier of the policy. </summary>
+        /// <summary> Id of a distribution policy. </summary>
         public string Id { get; }
     }
 }

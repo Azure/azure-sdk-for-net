@@ -20,21 +20,18 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
-        /// <param name="etag"> Concurrency Token. </param>
-        /// <param name="id"> The Id of the exception policy. </param>
-        /// <param name="name"> (Optional) The name of the exception policy. </param>
-        /// <param name="exceptionRules"> (Optional) A collection of exception rules on the exception policy. </param>
+        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of an exception policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
         internal ExceptionPolicy(string etag, string id, string name, IList<ExceptionRule> exceptionRules)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             Name = name;
             ExceptionRules = exceptionRules;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
-        /// <summary> The Id of the exception policy. </summary>
+        /// <summary> Id of an exception policy. </summary>
         public string Id { get; }
     }
 }

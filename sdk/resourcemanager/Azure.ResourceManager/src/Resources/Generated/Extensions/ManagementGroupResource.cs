@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <returns> An object representing collection of ManagementGroupPolicyDefinitionResources and their operations over a ManagementGroupPolicyDefinitionResource. </returns>
         public virtual ManagementGroupPolicyDefinitionCollection GetManagementGroupPolicyDefinitions()
         {
-            return GetCachedClient(Client => new ManagementGroupPolicyDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new ManagementGroupPolicyDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagementGroupPolicyDefinitionResource>> GetManagementGroupPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagementGroupPolicyDefinitionResource> GetManagementGroupPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <returns> An object representing collection of ManagementGroupPolicySetDefinitionResources and their operations over a ManagementGroupPolicySetDefinitionResource. </returns>
         public virtual ManagementGroupPolicySetDefinitionCollection GetManagementGroupPolicySetDefinitions()
         {
-            return GetCachedClient(Client => new ManagementGroupPolicySetDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new ManagementGroupPolicySetDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagementGroupPolicySetDefinitionResource>> GetManagementGroupPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagementGroupPolicySetDefinitionResource> GetManagementGroupPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {

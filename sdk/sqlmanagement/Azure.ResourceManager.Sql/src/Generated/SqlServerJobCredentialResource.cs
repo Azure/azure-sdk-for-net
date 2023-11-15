@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlServerJobCredentialResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerJobCredentialResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="jobAgentName"> The jobAgentName. </param>
+        /// <param name="credentialName"> The credentialName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/credentials/{credentialName}";

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService
     public partial class SiteInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteInstanceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="instanceId"> The instanceId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}";
@@ -97,7 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteInstanceProcessResources and their operations over a SiteInstanceProcessResource. </returns>
         public virtual SiteInstanceProcessCollection GetSiteInstanceProcesses()
         {
-            return GetCachedClient(Client => new SiteInstanceProcessCollection(Client, Id));
+            return GetCachedClient(client => new SiteInstanceProcessCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +119,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteInstanceProcessResource>> GetSiteInstanceProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
@@ -138,8 +142,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteInstanceProcessResource> GetSiteInstanceProcess(string processId, CancellationToken cancellationToken = default)
         {

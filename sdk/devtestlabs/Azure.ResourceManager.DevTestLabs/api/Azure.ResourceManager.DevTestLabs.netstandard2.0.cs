@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabArmTemplateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabArmTemplateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabArmTemplateData(Azure.Core.AzureLocation location) { }
         public System.BinaryData Contents { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabArtifactData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabArtifactData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabArtifactData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
         public string FilePath { get { throw null; } }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabArtifactSourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabArtifactSourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabArtifactSourceData(Azure.Core.AzureLocation location) { }
         public string ArmTemplateFolderPath { get { throw null; } set { } }
         public string BranchRef { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabCostData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabCostData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabCostData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string CurrencyCode { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabCustomImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabCustomImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabCustomImageData(Azure.Core.AzureLocation location) { }
         public string Author { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImagePlan CustomImagePlan { get { throw null; } set { } }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabAnnouncement Announcement { get { throw null; } set { } }
         public string ArtifactsStorageAccount { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabDiskData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabDiskData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabDiskData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DiskBlobName { get { throw null; } set { } }
         public int? DiskSizeGiB { get { throw null; } set { } }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabEnvironmentData(Azure.Core.AzureLocation location) { }
         public string ArmTemplateDisplayName { get { throw null; } set { } }
         public string CreatedByUser { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentDeployment DeploymentProperties { get { throw null; } set { } }
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabFormulaData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabFormulaData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabFormulaData(Azure.Core.AzureLocation location) { }
         public string Author { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabNotificationChannelData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabNotificationChannelData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabNotificationChannelData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string EmailRecipient { get { throw null; } set { } }
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabPolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabPolicyData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType? EvaluatorType { get { throw null; } set { } }
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabScheduleData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabScheduleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabScheduleData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DailyRecurrenceTime { get { throw null; } set { } }
         public int? HourlyRecurrenceMinute { get { throw null; } set { } }
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabSecretData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabSecretData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabSecretData(Azure.Core.AzureLocation location) { }
         public string ProvisioningState { get { throw null; } }
         public System.Guid? UniqueIdentifier { get { throw null; } }
         public string Value { get { throw null; } set { } }
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabServiceFabricData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabServiceFabricData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabServiceFabricData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule ApplicableSchedule { get { throw null; } }
         public string EnvironmentId { get { throw null; } set { } }
         public string ExternalServiceFabricId { get { throw null; } set { } }
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabServiceRunnerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabServiceRunnerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabServiceRunnerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabManagedIdentity Identity { get { throw null; } set { } }
     }
     public partial class DevTestLabServiceRunnerResource : Azure.ResourceManager.ArmResource
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabUserData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabUserData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabUserData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserIdentity Identity { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabVirtualNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabVirtualNetworkData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabSubnet> AllowedSubnets { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -1026,7 +1026,7 @@ namespace Azure.ResourceManager.DevTestLabs
     }
     public partial class DevTestLabVmData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabVmData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabVmData(Azure.Core.AzureLocation location) { }
         public bool? AllowClaim { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabApplicableSchedule ApplicableSchedule { get { throw null; } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactDeploymentStatus ArtifactDeploymentStatus { get { throw null; } }
@@ -1152,6 +1152,52 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DevTestLabs.Mocking
+{
+    public partial class MockableDevTestLabsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDevTestLabsArmClient() { }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource GetDevTestLabArtifactResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCostResource GetDevTestLabCostResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource GetDevTestLabCustomImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource GetDevTestLabDiskResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource GetDevTestLabFormulaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource GetDevTestLabPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabResource GetDevTestLabResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource GetDevTestLabScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource GetDevTestLabSecretResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabUserResource GetDevTestLabUserResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmResource GetDevTestLabVmResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDevTestLabsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDevTestLabsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLab(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> GetDevTestLabAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules() { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCollection GetDevTestLabs() { throw null; }
+    }
+    public partial class MockableDevTestLabsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDevTestLabsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabs(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabsAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public static partial class ArmDevTestLabsModelFactory
@@ -1239,7 +1285,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     }
     public partial class DevTestLabApplicableSchedule : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabApplicableSchedule(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabApplicableSchedule(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsShutdown { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsStartup { get { throw null; } set { } }
     }
@@ -1515,7 +1561,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     }
     public partial class DevTestLabGalleryImage : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevTestLabGalleryImage(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevTestLabGalleryImage(Azure.Core.AzureLocation location) { }
         public string Author { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }

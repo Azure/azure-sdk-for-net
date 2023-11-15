@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class OutboundRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OutboundRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="loadBalancerName"> The loadBalancerName. </param>
+        /// <param name="outboundRuleName"> The outboundRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadBalancerName, string outboundRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}";

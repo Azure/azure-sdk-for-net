@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.AppService
     public partial class AppServiceDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppServiceDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="domainName"> The domainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string domainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DomainRegistration/domains/{domainName}";
@@ -92,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of DomainOwnershipIdentifierResources and their operations over a DomainOwnershipIdentifierResource. </returns>
         public virtual DomainOwnershipIdentifierCollection GetDomainOwnershipIdentifiers()
         {
-            return GetCachedClient(Client => new DomainOwnershipIdentifierCollection(Client, Id));
+            return GetCachedClient(client => new DomainOwnershipIdentifierCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +113,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DomainOwnershipIdentifierResource>> GetDomainOwnershipIdentifierAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -133,8 +136,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DomainOwnershipIdentifierResource> GetDomainOwnershipIdentifier(string name, CancellationToken cancellationToken = default)
         {

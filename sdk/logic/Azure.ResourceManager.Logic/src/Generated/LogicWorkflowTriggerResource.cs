@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Logic
     public partial class LogicWorkflowTriggerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowTriggerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string triggerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/triggers/{triggerName}";
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An object representing collection of LogicWorkflowTriggerHistoryResources and their operations over a LogicWorkflowTriggerHistoryResource. </returns>
         public virtual LogicWorkflowTriggerHistoryCollection GetLogicWorkflowTriggerHistories()
         {
-            return GetCachedClient(Client => new LogicWorkflowTriggerHistoryCollection(Client, Id));
+            return GetCachedClient(client => new LogicWorkflowTriggerHistoryCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +113,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LogicWorkflowTriggerHistoryResource>> GetLogicWorkflowTriggerHistoryAsync(string historyName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +136,8 @@ namespace Azure.ResourceManager.Logic
         /// </summary>
         /// <param name="historyName"> The workflow trigger history name. Corresponds to the run name for triggers that resulted in a run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="historyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LogicWorkflowTriggerHistoryResource> GetLogicWorkflowTriggerHistory(string historyName, CancellationToken cancellationToken = default)
         {

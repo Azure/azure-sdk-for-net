@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Monitor
     public partial class DiagnosticSettingsCategoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiagnosticSettingsCategoryResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}";

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class StreamToUriJobPart : JobPartInternal, IAsyncDisposable
+    internal class StreamToUriJobPart : JobPartInternal, IDisposable
     {
         /// <summary>
         ///  Will handle the calling the commit block list API once
@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
                   errorHandling: job._errorMode,
                   createMode: job._creationPreference,
@@ -53,13 +53,12 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus = default,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
                   errorHandling: job._errorMode,
                   createMode: job._creationPreference,
@@ -73,48 +72,107 @@ namespace Azure.Storage.DataMovement
                   singleTransferEventHandler: job.TransferItemCompletedEventHandler,
                   clientDiagnostics: job.ClientDiagnostics,
                   cancellationToken: job._cancellationToken,
-                  jobPartStatus: jobPartStatus,
+                  jobPartStatus: default,
                   length: length)
         {
         }
 
-        public async ValueTask DisposeAsync()
+        /// <summary>
+        /// Creating transfer job based on a checkpoint file.
+        /// </summary>
+        private StreamToUriJobPart(
+            StreamToUriTransferJob job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferStatus jobPartStatus,
+            long initialTransferSize,
+            long transferChunkSize,
+            StorageResourceCreationPreference createPreference)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  sourceResource: sourceResource,
+                  destinationResource: destinationResource,
+                  transferChunkSize: transferChunkSize,
+                  initialTransferSize: initialTransferSize,
+                  errorHandling: job._errorMode,
+                  createMode: createPreference,
+                  checkpointer: job._checkpointer,
+                  progressTracker: job._progressTracker,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
+                  clientDiagnostics: job.ClientDiagnostics,
+                  cancellationToken: job._cancellationToken,
+                  jobPartStatus: jobPartStatus,
+                  length: default)
         {
-            await DisposeHandlers().ConfigureAwait(false);
         }
 
+        public void Dispose()
+        {
+            DisposeHandlers();
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a single transfer.
+        /// </summary>
         public static async Task<StreamToUriJobPart> CreateJobPartAsync(
             StreamToUriTransferJob job,
             int partNumber)
         {
             // Create Job Part file as we're initializing the job part
             StreamToUriJobPart part = new StreamToUriJobPart(job, partNumber);
-            await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
+            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
         }
 
+        /// <summary>
+        /// Called when creating a job part from a container transfer.
+        /// </summary>
         public static async Task<StreamToUriJobPart> CreateJobPartAsync(
             StreamToUriTransferJob job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus = default,
-            long? length = default,
-            bool partPlanFileExists = false)
+            long? length = default)
         {
             // Create Job Part file as we're initializing the job part
             StreamToUriJobPart part = new StreamToUriJobPart(
                 job: job,
                 partNumber: partNumber,
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
                 length: length);
-            if (!partPlanFileExists)
-            {
-                await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
-            }
+            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a checkpoint file on resume.
+        /// </summary>
+        public static StreamToUriJobPart CreateJobPartFromCheckpoint(
+            StreamToUriTransferJob job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferStatus jobPartStatus,
+            long initialTransferSize,
+            long transferChunkSize,
+            StorageResourceCreationPreference createPreference)
+        {
+            return new StreamToUriJobPart(
+                job: job,
+                partNumber: partNumber,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
         }
 
         /// <summary>
@@ -124,7 +182,7 @@ namespace Azure.Storage.DataMovement
         public override async Task ProcessPartToChunkAsync()
         {
             // Attempt to get the length, it's possible the file could
-            // not be accesible (or does not exist).
+            // not be accessible (or does not exist).
             string operationName = $"{nameof(TransferManager.StartTransferAsync)}";
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
             long? fileLength = default;
@@ -147,7 +205,7 @@ namespace Azure.Storage.DataMovement
                                 singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
                         return;
                     }
-                    long blockSize = CalculateBlockSize(length);
+                    long blockSize = _transferChunkSize;
 
                     _commitBlockHandler = GetCommitController(
                         expectedLength: length,
@@ -166,13 +224,8 @@ namespace Azure.Storage.DataMovement
                         }
                         else // Sequential
                         {
-                            // Queue paritioned block task
-                            await QueueChunkToChannelAsync(
-                                async () =>
-                                await StageBlockInternal(
-                                    rangeList[0].Offset,
-                                    rangeList[0].Length,
-                                    length).ConfigureAwait(false)).ConfigureAwait(false);
+                            // Queue the first partitioned block task
+                            await QueueStageBlockRequest(rangeList[0].Offset, rangeList[0].Length, length).ConfigureAwait(false);
                         }
                     }
                 }
@@ -297,11 +350,10 @@ namespace Azure.Storage.DataMovement
         {
             return new CommitChunkHandler.Behaviors
             {
-                QueuePutBlockTask = async (long offset, long blockSize, long expectedLength) => await jobPart.StageBlockInternal(offset, blockSize, expectedLength).ConfigureAwait(false),
-                QueueCommitBlockTask = async () => await jobPart.CompleteTransferAsync().ConfigureAwait(false),
-                ReportProgressInBytes = (long bytesWritten) =>
-                    jobPart.ReportBytesWritten(bytesWritten),
-                InvokeFailedHandler = async (ex) => await jobPart.InvokeFailedArg(ex).ConfigureAwait(false),
+                QueuePutBlockTask = jobPart.QueueStageBlockRequest,
+                QueueCommitBlockTask = jobPart.CompleteTransferAsync,
+                ReportProgressInBytes = jobPart.ReportBytesWritten,
+                InvokeFailedHandler = jobPart.InvokeFailedArg,
             };
         }
         #endregion
@@ -381,7 +433,7 @@ namespace Azure.Storage.DataMovement
                 cancellationToken: _cancellationToken).ConfigureAwait(false);
 
             // Dispose the handlers
-            await DisposeHandlers().ConfigureAwait(false);
+            DisposeHandlers();
 
             // Set completion status to completed
             await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
@@ -389,17 +441,24 @@ namespace Azure.Storage.DataMovement
 
         private async Task QueueStageBlockRequests(List<(long Offset, long Size)> rangeList, long completeLength)
         {
+            _queueingTasks = true;
             // Partition the stream into individual blocks
             foreach ((long Offset, long Length) block in rangeList)
             {
-                // Queue paritioned block task
-                await QueueChunkToChannelAsync(
-                    async () =>
-                    await StageBlockInternal(
-                    block.Offset,
-                    block.Length,
-                    completeLength).ConfigureAwait(false)).ConfigureAwait(false);
+                // Queue partitioned block task
+                await QueueStageBlockRequest(block.Offset, block.Length, completeLength).ConfigureAwait(false);
             }
+            _queueingTasks = false;
+        }
+
+        private Task QueueStageBlockRequest(long offset, long blockSize, long expectedLength)
+        {
+            return QueueChunkToChannelAsync(
+                async () =>
+                await StageBlockInternal(
+                    offset,
+                    blockSize,
+                    expectedLength).ConfigureAwait(false));
         }
 
         /// <summary>
@@ -443,21 +502,21 @@ namespace Azure.Storage.DataMovement
 
         public override async Task InvokeSkippedArg()
         {
-            await DisposeHandlers().ConfigureAwait(false);
+            DisposeHandlers();
             await base.InvokeSkippedArg().ConfigureAwait(false);
         }
 
         public override async Task InvokeFailedArg(Exception ex)
         {
-            await DisposeHandlers().ConfigureAwait(false);
+            DisposeHandlers();
             await base.InvokeFailedArg(ex).ConfigureAwait(false);
         }
 
-        internal async Task DisposeHandlers()
+        internal void DisposeHandlers()
         {
             if (_commitBlockHandler != default)
             {
-                await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
+                _commitBlockHandler.Dispose();
             }
         }
     }

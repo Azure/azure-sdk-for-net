@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DataShare
     public partial class DataShareSynchronizationSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataShareSynchronizationSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareName"> The shareName. </param>
+        /// <param name="synchronizationSettingName"> The synchronizationSettingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareName, string synchronizationSettingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/synchronizationSettings/{synchronizationSettingName}";

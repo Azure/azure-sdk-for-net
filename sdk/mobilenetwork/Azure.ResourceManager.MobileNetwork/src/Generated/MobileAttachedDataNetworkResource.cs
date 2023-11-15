@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.MobileNetwork
     public partial class MobileAttachedDataNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileAttachedDataNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="packetCoreControlPlaneName"> The packetCoreControlPlaneName. </param>
+        /// <param name="packetCoreDataPlaneName"> The packetCoreDataPlaneName. </param>
+        /// <param name="attachedDataNetworkName"> The attachedDataNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, string attachedDataNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCoreDataPlanes/{packetCoreDataPlaneName}/attachedDataNetworks/{attachedDataNetworkName}";

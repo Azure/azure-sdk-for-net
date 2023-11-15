@@ -11,8 +11,13 @@ namespace Azure.Communication.JobRouter
     internal partial class UnknownJobMatchingMode : JobMatchingMode
     {
         /// <summary> Initializes a new instance of UnknownJobMatchingMode. </summary>
+        internal UnknownJobMatchingMode()
+        {
+        }
+
+        /// <summary> Initializes a new instance of UnknownJobMatchingMode. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
-        internal UnknownJobMatchingMode(string kind) : base(kind)
+        internal UnknownJobMatchingMode(JobMatchingModeKind kind) : base(kind)
         {
         }
     }

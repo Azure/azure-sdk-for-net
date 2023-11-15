@@ -43,9 +43,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 switch (discriminator.GetString())
                 {
                     case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element);
+                    case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
                     case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element);
                     case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element);
-                    case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
+                    case "ParquetReadSettings": return ParquetReadSettings.DeserializeParquetReadSettings(element);
                 }
             }
             return UnknownFormatReadSettings.DeserializeUnknownFormatReadSettings(element);
