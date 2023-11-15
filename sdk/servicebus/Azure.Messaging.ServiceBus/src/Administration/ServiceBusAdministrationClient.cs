@@ -15,6 +15,11 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// The <see cref="ServiceBusAdministrationClient"/> is the client through which all Service Bus
     /// entities can be created, updated, fetched, and deleted.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="ServiceBusAdministrationClient"/> operates against an entity management endpoint
+    /// without performance guarantees.  It is not recommended for use in performance-critical
+    /// scenarios.
+    /// </remarks>
     public class ServiceBusAdministrationClient
     {
         private readonly string _fullyQualifiedNamespace;
