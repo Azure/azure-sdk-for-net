@@ -21,7 +21,6 @@ namespace Azure.Communication.Chat
             }
             string id = default;
             ChatAttachmentType attachmentType = default;
-            Optional<string> extension = default;
             Optional<string> name = default;
             Optional<Uri> url = default;
             Optional<Uri> previewUrl = default;
@@ -35,11 +34,6 @@ namespace Azure.Communication.Chat
                 if (property.NameEquals("attachmentType"u8))
                 {
                     attachmentType = new ChatAttachmentType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("extension"u8))
-                {
-                    extension = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -66,7 +60,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatAttachmentInternal(id, attachmentType, extension.Value, name.Value, url.Value, previewUrl.Value);
+            return new ChatAttachmentInternal(id, attachmentType, name.Value, url.Value, previewUrl.Value);
         }
     }
 }

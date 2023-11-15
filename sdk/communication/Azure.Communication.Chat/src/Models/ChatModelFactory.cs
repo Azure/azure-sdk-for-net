@@ -119,12 +119,11 @@ namespace Azure.Communication.Chat
         /// </summary>
         /// <param name="id"> Id of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment. </param>
-        /// <param name="extension"> The file extension of the attachment, if available. </param>
         /// <param name="name"> The name of the attachment content. </param>
         /// <param name="uri"> The URI where the attachment can be downloaded. </param>
         /// <param name="previewUri"> The URI where the preview of attachment can be downloaded. </param>
         /// <returns>A new <see cref="ChatAttachment"/> instance for mocking.</returns>
-        public static ChatAttachment ChatAttachment(string id, ChatAttachmentType attachmentType, string extension, string name, Uri uri, Uri previewUri) => new ChatAttachment(id, attachmentType, extension, name, uri, previewUri);
+        public static ChatAttachment ChatAttachment(string id, ChatAttachmentType attachmentType, string name, Uri uri, Uri previewUri) => new ChatAttachment(id, attachmentType, name, uri, previewUri);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatParticipant"/> class.

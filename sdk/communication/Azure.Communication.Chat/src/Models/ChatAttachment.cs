@@ -21,15 +21,13 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of ChatAttachmentInternal. </summary>
         /// <param name="id"> Id of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment. </param>
-        /// <param name="extension"> The file extension of the attachment, if available. </param>
         /// <param name="name"> The name of the attachment content. </param>
         /// <param name="uri"> The URI where the attachment can be downloaded. </param>
         /// <param name="previewUri"> The URI where the preview of attachment can be downloaded. </param>
-        internal ChatAttachment(string id, ChatAttachmentType attachmentType, string extension, string name, Uri uri, Uri previewUri)
+        internal ChatAttachment(string id, ChatAttachmentType attachmentType, string name, Uri uri, Uri previewUri)
         {
             Id = id;
             AttachmentType = attachmentType;
-            Extension = extension;
             Name = name;
             Uri = uri;
             PreviewUri = previewUri;
@@ -39,7 +37,6 @@ namespace Azure.Communication.Chat
         {
             Id = chatAttachmentInternal.Id;
             AttachmentType = chatAttachmentInternal.AttachmentType;
-            Extension = chatAttachmentInternal.Extension;
             Name = chatAttachmentInternal.Name;
             Uri = chatAttachmentInternal.Url;
             PreviewUri = chatAttachmentInternal.PreviewUrl;
@@ -49,8 +46,6 @@ namespace Azure.Communication.Chat
         public string Id { get; }
         /// <summary> The type of attachment. </summary>
         public ChatAttachmentType AttachmentType { get; }
-        /// <summary> The file extension of the attachment, if available. </summary>
-        public string Extension { get; }
         /// <summary> The name of the attachment content. </summary>
         public string Name { get; }
         /// <summary> The URL where the attachment can be downloaded. </summary>
@@ -60,7 +55,7 @@ namespace Azure.Communication.Chat
 
         internal ChatAttachmentInternal ToChatAttachmentInternal()
         {
-            return new ChatAttachmentInternal(Id, AttachmentType, Extension, Name, Uri, PreviewUri);
+            return new ChatAttachmentInternal(Id, AttachmentType, Name, Uri, PreviewUri);
         }
     }
 }

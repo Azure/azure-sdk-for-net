@@ -9,7 +9,6 @@ namespace Azure.Communication.Chat
     {
         internal ChatAttachment() { }
         public Azure.Communication.Chat.ChatAttachmentType AttachmentType { get { throw null; } }
-        public string Extension { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Uri PreviewUri { get { throw null; } }
@@ -118,7 +117,7 @@ namespace Azure.Communication.Chat
     public static partial class ChatModelFactory
     {
         public static Azure.Communication.Chat.AddChatParticipantsResult AddChatParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants = null) { throw null; }
-        public static Azure.Communication.Chat.ChatAttachment ChatAttachment(string id, Azure.Communication.Chat.ChatAttachmentType attachmentType, string extension, string name, System.Uri uri, System.Uri previewUri) { throw null; }
+        public static Azure.Communication.Chat.ChatAttachment ChatAttachment(string id, Azure.Communication.Chat.ChatAttachmentType attachmentType, string name, System.Uri uri, System.Uri previewUri) { throw null; }
         public static Azure.Communication.Chat.ChatError ChatError(string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> details = null, Azure.Communication.Chat.ChatError innerError = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatMessage ChatMessage(string id, Azure.Communication.Chat.ChatMessageType type, string sequenceId, string version, Azure.Communication.Chat.ChatMessageContent content, string senderDisplayName, System.DateTimeOffset createdOn, string senderId, System.DateTimeOffset? deletedOn, System.DateTimeOffset? editedOn) { throw null; }
