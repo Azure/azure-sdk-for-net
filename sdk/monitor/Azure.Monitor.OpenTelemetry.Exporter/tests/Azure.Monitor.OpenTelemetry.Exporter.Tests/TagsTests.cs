@@ -346,7 +346,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("en-US")] // French culture
+        [InlineData("fr-FR")] // French culture
         [InlineData("de-DE")] // German culture
         public void TagObjects_TestCulture(string cultureName)
         {
