@@ -47,7 +47,7 @@
   </ItemGroup>
   
   <ItemGroup Condition="!$(TargetFramework.StartsWith('net4'))">
-    <ProjectReference Include="..\..\Microsoft.Azure.CoreWCF.Storage.Queues.Client\src\Azure.WCF.AzureQueueStorage.Client.csproj" />
+    <ProjectReference Include="..\..\Microsoft.WCF.Azure.StorageQueues\src\Azure.WCF.AzureQueueStorage.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
