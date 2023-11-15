@@ -1,11 +1,12 @@
 namespace System.ClientModel
 {
-    public partial class ClientRequestException : System.Exception
+    public partial class ClientRequestException : System.Exception, System.Runtime.Serialization.ISerializable
     {
         public ClientRequestException(System.ClientModel.Primitives.PipelineResponse response) { }
-        protected ClientRequestException(System.ClientModel.Primitives.PipelineResponse response, string message, System.Exception? innerException) { }
+        public ClientRequestException(int? status, string? message, System.Exception? innerException = null) { }
         protected ClientRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public int Status { get { throw null; } }
+        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public virtual System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
     public abstract partial class InputContent : System.IDisposable

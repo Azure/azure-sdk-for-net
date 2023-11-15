@@ -3,32 +3,48 @@
 
 using System.Runtime.Serialization;
 using System.ClientModel.Primitives;
+using System.ClientModel.Internal;
 
 namespace System.ClientModel
 {
-    public class ClientRequestException : Exception
+    [Serializable]
+    public class ClientRequestException : Exception, ISerializable
     {
         /// <summary>
         /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
         /// </summary>
         public int Status { get; }
 
-        public ClientRequestException(PipelineResponse response) : base(GetMessageFromResponse(response))
+        public ClientRequestException(PipelineResponse response)
+            : base(GetMessageFromResponse(response))
         {
             Status = response.Status;
         }
 
-        protected ClientRequestException(PipelineResponse response, string message, Exception? innerException)
-            // TODO: what is the actual behavior of the EBN RFE constructor that takes both erroCode and message?
-            // Duplicate that here.
+        public ClientRequestException(int? status, string? message, Exception? innerException = default)
             : base(message, innerException)
         {
-            Status = response.Status;
+            Status = status ?? 0;
         }
 
-        internal ClientRequestException(string message, Exception? innerException) : base(message, innerException)
+        /// <summary>
+        /// TBD
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="context"></param>
+        protected ClientRequestException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            // TODO: What is the experience if someone tries to access this.Response?
+            Status = info.GetInt32(nameof(Status));
+        }
+
+        /// <inheritdoc />
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            ClientUtilities.AssertNotNull(info, nameof(info));
+
+            info.AddValue(nameof(Status), Status);
+
+            base.GetObjectData(info, context);
         }
 
         public virtual PipelineResponse? GetRawResponse()
@@ -42,16 +58,6 @@ namespace System.ClientModel
         {
             // TODO: implement for real
             return $"Service error: {response.Status}";
-        }
-
-        /// <summary>
-        /// TBD
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        protected ClientRequestException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-            Status = info.GetInt32(nameof(Status));
         }
     }
 }
