@@ -516,11 +516,14 @@ namespace Azure.Storage.DataMovement.Tests
             string objectName = GetNewObjectName();
             string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, objectName);
             int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            using Stream originalStream = await CreateLimitedMemoryStream(size);
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
-                destination.Container,
-                objectName: objectName,
+                container: destination.Container,
                 objectLength: size,
-                createResource: true);
+                createResource: true,
+                objectName: objectName,
+                contents: originalStream);
 
             // Act
             // Create options bag to overwrite any existing destination.
@@ -558,9 +561,8 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertSingleSkippedCheck();
             Assert.IsTrue(await DestinationExistsAsync(destinationClient));
             // Verify Upload - That we skipped over and didn't reupload something new.
-            using Stream sourceStream = await SourceOpenReadAsync(sourceClient);
             using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.AreEqual(originalStream, destinationStream);
         }
 
         [RecordedTest]
@@ -573,11 +575,14 @@ namespace Azure.Storage.DataMovement.Tests
             string name = GetNewObjectName();
             string originalSourceFile = Path.Combine(testDirectory.DirectoryPath, name);
             int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            using Stream originalStream = await CreateLimitedMemoryStream(size);
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
                 container: destination.Container,
                 objectLength: size,
                 createResource: true,
-                objectName: name);
+                objectName: name,
+                contents: originalStream);
 
             // Act
             // Create options bag to fail and keep track of the failure.
@@ -614,10 +619,9 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertSingleFailedCheck();
             Assert.NotNull(testEventsRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
-            // Verify Upload - That we skipped over and didn't reupload something new.
-            using Stream sourceStream = await SourceOpenReadAsync(sourceClient);
+            // Verify Copy - That we skipped over and didn't reupload something new.
             using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
-            Assert.AreEqual(sourceStream, destinationStream);
+            Assert.AreEqual(originalStream, destinationStream);
         }
         #endregion
 

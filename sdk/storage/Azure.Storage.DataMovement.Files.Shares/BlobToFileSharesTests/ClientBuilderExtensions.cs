@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias DMBlob;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,6 +19,8 @@ using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Test;
+using DMBlob::Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -114,6 +118,14 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingContainer(container);
+        }
+
+        public static BlobsStorageResourceProvider GetBlobsStorageResourceProvider(
+            this BlobsClientBuilder clientBuilder)
+        {
+            TenantConfiguration tenants = clientBuilder.Tenants.TestConfigDefault;
+            StorageSharedKeyCredential sharedKey = new StorageSharedKeyCredential(tenants.AccountName, tenants.AccountKey);
+            return new BlobsStorageResourceProvider(sharedKey);
         }
     }
 }

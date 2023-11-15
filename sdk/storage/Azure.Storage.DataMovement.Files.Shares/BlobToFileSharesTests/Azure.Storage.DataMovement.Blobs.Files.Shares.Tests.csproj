@@ -11,6 +11,9 @@
     </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement.Files.Shares\src\Azure.Storage.DataMovement.Files.Shares.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement.Blobs\src\Azure.Storage.DataMovement.Blobs.csproj">
+      <Aliases>DMBlob</Aliases>
+    </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
   </ItemGroup>
   <ItemGroup>
