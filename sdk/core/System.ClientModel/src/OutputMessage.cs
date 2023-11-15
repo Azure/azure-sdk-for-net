@@ -14,6 +14,7 @@ public abstract class OutputMessage
         => new NoModelOutputMessage(response);
 
     public static OutputMessage<T> FromValue<T>(T value, PipelineResponse response)
+        where T : class, IPersistableModel<T>
     {
         // Null values are required to use NullableOutputMessage<T>
         if (value is null)
@@ -27,6 +28,7 @@ public abstract class OutputMessage
     }
 
     public static NullableOutputMessage<T> FromNullableValue<T>(T? value, PipelineResponse response)
+        where T : class, IPersistableModel<T>
     {
         ClientUtilities.AssertNotNull(response, nameof(response));
 

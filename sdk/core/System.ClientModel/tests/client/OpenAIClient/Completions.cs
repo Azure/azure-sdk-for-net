@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Linq;
-using System.ClientModel.Internal;
 
 namespace OpenAI;
 
@@ -17,7 +17,7 @@ namespace OpenAI;
 /// Completions support a wide variety of tasks and generate text that continues from or "completes"
 /// provided prompt data.
 /// </summary>
-public partial class Completions
+public partial class Completions 
 {
     /// <summary> Initializes a new instance of Completions. </summary>
     /// <param name="id"> A unique identifier associated with this completions response. </param>

@@ -39,26 +39,23 @@ namespace System.ClientModel
         public static System.ClientModel.ModelReaderWriterOptions Wire { get { throw null; } }
         public static System.ClientModel.ModelReaderWriterOptions Xml { get { throw null; } }
     }
-    public partial class NullableOutputMessage<T> : System.ClientModel.OutputMessage
+    public partial class NullableOutputMessage<T> : System.ClientModel.OutputMessage where T : class, System.ClientModel.Primitives.IPersistableModel<T>
     {
         internal NullableOutputMessage() { }
-        public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
         public override System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
     }
     public abstract partial class OutputMessage
     {
         protected OutputMessage() { }
-        public static System.ClientModel.NullableOutputMessage<T> FromNullableValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.NullableOutputMessage<T> FromNullableValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) where T : class, System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static System.ClientModel.OutputMessage FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public static System.ClientModel.OutputMessage<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.OutputMessage<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) where T : class, System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract System.ClientModel.Primitives.PipelineResponse GetRawResponse();
     }
-    public partial class OutputMessage<T> : System.ClientModel.NullableOutputMessage<T>
+    public partial class OutputMessage<T> : System.ClientModel.NullableOutputMessage<T> where T : class, System.ClientModel.Primitives.IPersistableModel<T>
     {
         internal OutputMessage() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
     }
     public partial class RequestOptions : System.ClientModel.Primitives.PipelineOptions
@@ -184,8 +181,6 @@ namespace System.ClientModel.Internal
     }
     public static partial class PipelineProtocolExtensions
     {
-        public static System.ClientModel.NullableOutputMessage<bool> ProcessHeadAsBoolMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.ClientModel.NullableOutputMessage<bool>> ProcessHeadAsBoolMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext) { throw null; }
         public static System.ClientModel.Primitives.PipelineResponse ProcessMessage(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.PipelineResponse> ProcessMessageAsync(this System.ClientModel.Primitives.ClientPipeline pipeline, System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

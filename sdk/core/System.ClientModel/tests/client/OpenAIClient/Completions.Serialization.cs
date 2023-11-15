@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using System.ClientModel.Primitives;
 using System.ClientModel.Internal;
 using System.Text.Json;
+using System.ClientModel;
 
 namespace OpenAI;
 
-public partial class Completions
+public partial class Completions : IPersistableModel<Completions>
 {
     internal static Completions DeserializeCompletions(JsonElement element)
     {
@@ -77,6 +78,22 @@ public partial class Completions
     {
         using var document = JsonDocument.Parse(response.Content);
         return DeserializeCompletions(document.RootElement);
+    }
+
+
+    public Completions Create(BinaryData data, ModelReaderWriterOptions options)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetWireFormat(ModelReaderWriterOptions options)
+    {
+        throw new NotImplementedException();
+    }
+
+    public BinaryData Write(ModelReaderWriterOptions options)
+    {
+        throw new NotImplementedException();
     }
 }
 
