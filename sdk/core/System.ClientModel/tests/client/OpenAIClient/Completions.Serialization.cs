@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
-using System.Text.Json;
 using System.ClientModel;
+using System.ClientModel.Internal;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace OpenAI;
 
