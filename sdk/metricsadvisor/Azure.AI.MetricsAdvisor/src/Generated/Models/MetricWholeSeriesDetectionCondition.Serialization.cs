@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class MetricWholeSeriesDetectionCondition : IUtf8JsonSerializable
+    public partial class MetricWholeSeriesDetectionCondition : IUtf8JsonSerializable, IJsonModel<MetricWholeSeriesDetectionCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricWholeSeriesDetectionCondition>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MetricWholeSeriesDetectionCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MetricWholeSeriesDetectionCondition>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MetricWholeSeriesDetectionCondition>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ConditionOperator))
             {
@@ -35,11 +46,40 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WritePropertyName("changeThresholdCondition"u8);
                 writer.WriteObjectValue(ChangeThresholdCondition);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MetricWholeSeriesDetectionCondition DeserializeMetricWholeSeriesDetectionCondition(JsonElement element)
+        MetricWholeSeriesDetectionCondition IJsonModel<MetricWholeSeriesDetectionCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricWholeSeriesDetectionCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricWholeSeriesDetectionCondition(document.RootElement, options);
+        }
+
+        internal static MetricWholeSeriesDetectionCondition DeserializeMetricWholeSeriesDetectionCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             Optional<SmartDetectionCondition> smartDetectionCondition = default;
             Optional<HardThresholdCondition> hardThresholdCondition = default;
             Optional<ChangeThresholdCondition> changeThresholdCondition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionOperator"u8))
@@ -86,8 +128,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                     changeThresholdCondition = Models.ChangeThresholdCondition.DeserializeChangeThresholdCondition(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricWholeSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MetricWholeSeriesDetectionCondition(Optional.ToNullable(conditionOperator), smartDetectionCondition.Value, hardThresholdCondition.Value, changeThresholdCondition.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MetricWholeSeriesDetectionCondition>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricWholeSeriesDetectionCondition)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MetricWholeSeriesDetectionCondition IPersistableModel<MetricWholeSeriesDetectionCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricWholeSeriesDetectionCondition)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMetricWholeSeriesDetectionCondition(document.RootElement, options);
+        }
+
+        string IPersistableModel<MetricWholeSeriesDetectionCondition>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

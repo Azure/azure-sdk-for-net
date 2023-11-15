@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Credentials for a user on a lab VM. </summary>
     public partial class LabVirtualMachineCredential
     {
-        /// <summary> Initializes a new instance of LabVirtualMachineCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineCredential"/>. </summary>
         /// <param name="username"> The username to use when signing in to lab VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public LabVirtualMachineCredential(string username)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.LabServices.Models
             Username = username;
         }
 
-        /// <summary> Initializes a new instance of LabVirtualMachineCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineCredential"/>. </summary>
         /// <param name="username"> The username to use when signing in to lab VMs. </param>
         /// <param name="password"> The password for the user. This is required for the TemplateVM createOption. </param>
-        internal LabVirtualMachineCredential(string username, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabVirtualMachineCredential(string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabVirtualMachineCredential"/> for deserialization. </summary>
+        internal LabVirtualMachineCredential()
+        {
         }
 
         /// <summary> The username to use when signing in to lab VMs. </summary>

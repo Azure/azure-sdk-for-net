@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Configures the Play Right in the PlayReady license. </summary>
     public partial class ContentKeyPolicyPlayReadyPlayRight
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyPlayRight. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyPlayRight"/>. </summary>
         /// <param name="hasDigitalVideoOnlyContentRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="hasImageConstraintForAnalogComponentVideoRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
         /// <param name="hasImageConstraintForAnalogComputerMonitorRestriction"> Enables the Image Constraint For Analog Component Video Restriction in the license. </param>
@@ -25,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             AllowPassingVideoContentToUnknownOutput = allowPassingVideoContentToUnknownOutput;
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyPlayRight. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyPlayRight"/>. </summary>
         /// <param name="firstPlayExpiration"> The amount of time that the license is valid after the license is first used to play content. </param>
         /// <param name="scmsRestriction"> Configures the Serial Copy Management System (SCMS) in the license. Must be between 0 and 3 inclusive. </param>
         /// <param name="agcAndColorStripeRestriction"> Configures Automatic Gain Control (AGC) and Color Stripe in the license. Must be between 0 and 3 inclusive. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="analogVideoOutputProtectionLevel"> Specifies the output protection level for compressed digital audio. </param>
         /// <param name="compressedDigitalAudioOutputProtectionLevel"> Specifies the output protection level for compressed digital audio. </param>
         /// <param name="uncompressedDigitalAudioOutputProtectionLevel"> Specifies the output protection level for uncompressed digital audio. </param>
-        internal ContentKeyPolicyPlayReadyPlayRight(TimeSpan? firstPlayExpiration, int? scmsRestriction, int? agcAndColorStripeRestriction, ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction, bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput, int? uncompressedDigitalVideoOutputProtectionLevel, int? compressedDigitalVideoOutputProtectionLevel, int? analogVideoOutputProtectionLevel, int? compressedDigitalAudioOutputProtectionLevel, int? uncompressedDigitalAudioOutputProtectionLevel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyPlayReadyPlayRight(TimeSpan? firstPlayExpiration, int? scmsRestriction, int? agcAndColorStripeRestriction, ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction, bool hasDigitalVideoOnlyContentRestriction, bool hasImageConstraintForAnalogComponentVideoRestriction, bool hasImageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput, int? uncompressedDigitalVideoOutputProtectionLevel, int? compressedDigitalVideoOutputProtectionLevel, int? analogVideoOutputProtectionLevel, int? compressedDigitalAudioOutputProtectionLevel, int? uncompressedDigitalAudioOutputProtectionLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstPlayExpiration = firstPlayExpiration;
             ScmsRestriction = scmsRestriction;
@@ -54,6 +59,12 @@ namespace Azure.ResourceManager.Media.Models
             AnalogVideoOutputProtectionLevel = analogVideoOutputProtectionLevel;
             CompressedDigitalAudioOutputProtectionLevel = compressedDigitalAudioOutputProtectionLevel;
             UncompressedDigitalAudioOutputProtectionLevel = uncompressedDigitalAudioOutputProtectionLevel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyPlayRight"/> for deserialization. </summary>
+        internal ContentKeyPolicyPlayReadyPlayRight()
+        {
         }
 
         /// <summary> The amount of time that the license is valid after the license is first used to play content. </summary>

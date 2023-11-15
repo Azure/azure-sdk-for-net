@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list of language extension objects. </summary>
     public partial class KustoLanguageExtensionList
     {
-        /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionList"/>. </summary>
         public KustoLanguageExtensionList()
         {
             Value = new ChangeTrackingList<KustoLanguageExtension>();
         }
 
-        /// <summary> Initializes a new instance of KustoLanguageExtensionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionList"/>. </summary>
         /// <param name="value"> The list of language extensions. </param>
-        internal KustoLanguageExtensionList(IList<KustoLanguageExtension> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoLanguageExtensionList(IList<KustoLanguageExtension> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of language extensions. </summary>

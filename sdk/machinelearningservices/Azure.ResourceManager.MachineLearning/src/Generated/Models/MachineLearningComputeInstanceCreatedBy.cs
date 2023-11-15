@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Describes information on user who created this ComputeInstance. </summary>
     public partial class MachineLearningComputeInstanceCreatedBy
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceCreatedBy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceCreatedBy"/>. </summary>
         internal MachineLearningComputeInstanceCreatedBy()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceCreatedBy. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceCreatedBy"/>. </summary>
         /// <param name="userName"> Name of the user. </param>
         /// <param name="userOrgId"> Uniquely identifies user' Azure Active Directory organization. </param>
         /// <param name="userId"> Uniquely identifies the user within his/her organization. </param>
-        internal MachineLearningComputeInstanceCreatedBy(string userName, string userOrgId, string userId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceCreatedBy(string userName, string userOrgId, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserName = userName;
             UserOrgId = userOrgId;
             UserId = userId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the user. </summary>

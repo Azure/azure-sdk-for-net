@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
-    public partial class MetricCommentFeedback : IUtf8JsonSerializable
+    public partial class MetricCommentFeedback : IUtf8JsonSerializable, IJsonModel<MetricCommentFeedback>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricCommentFeedback>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MetricCommentFeedback>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MetricCommentFeedback>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MetricCommentFeedback>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StartsOn))
             {
@@ -45,15 +55,68 @@ namespace Azure.AI.MetricsAdvisor
             writer.WriteObjectValue(ValueInternal);
             writer.WritePropertyName("feedbackType"u8);
             writer.WriteStringValue(FeedbackKind.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("feedbackId"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UserPrincipal))
+                {
+                    writer.WritePropertyName("userPrincipal"u8);
+                    writer.WriteStringValue(UserPrincipal);
+                }
+            }
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
             writer.WriteObjectValue(DimensionFilter);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MetricCommentFeedback DeserializeMetricCommentFeedback(JsonElement element)
+        MetricCommentFeedback IJsonModel<MetricCommentFeedback>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricCommentFeedback)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricCommentFeedback(document.RootElement, options);
+        }
+
+        internal static MetricCommentFeedback DeserializeMetricCommentFeedback(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +130,8 @@ namespace Azure.AI.MetricsAdvisor
             Optional<string> userPrincipal = default;
             string metricId = default;
             FeedbackFilter dimensionFilter = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -128,8 +193,38 @@ namespace Azure.AI.MetricsAdvisor
                     dimensionFilter = FeedbackFilter.DeserializeFeedbackFilter(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricCommentFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, Optional.ToNullable(startTime), Optional.ToNullable(endTime), value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MetricCommentFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, serializedAdditionalRawData, Optional.ToNullable(startTime), Optional.ToNullable(endTime), value);
         }
+
+        BinaryData IPersistableModel<MetricCommentFeedback>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricCommentFeedback)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MetricCommentFeedback IPersistableModel<MetricCommentFeedback>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MetricCommentFeedback)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMetricCommentFeedback(document.RootElement, options);
+        }
+
+        string IPersistableModel<MetricCommentFeedback>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes a network interface. </summary>
     public partial class NetworkInterface
     {
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
         internal NetworkInterface()
         {
             IPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of NetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterface"/>. </summary>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
-        internal NetworkInterface(IReadOnlyList<IPAddress> ipAddresses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkInterface(IReadOnlyList<IPAddress> ipAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddresses = ipAddresses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of IP addresses in this interface. </summary>

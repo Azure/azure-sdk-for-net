@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -12,16 +13,21 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account partner content. </summary>
     public partial class IntegrationAccountPartnerContent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerContent"/>. </summary>
         public IntegrationAccountPartnerContent()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountPartnerContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountPartnerContent"/>. </summary>
         /// <param name="b2b"> The B2B partner content. </param>
-        internal IntegrationAccountPartnerContent(B2BPartnerContent b2b)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountPartnerContent(B2BPartnerContent b2b, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             B2B = b2b;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The B2B partner content. </summary>

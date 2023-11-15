@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> network service design group properties. </summary>
     public partial class NetworkServiceDesignGroupPropertiesFormat
     {
-        /// <summary> Initializes a new instance of NetworkServiceDesignGroupPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignGroupPropertiesFormat"/>. </summary>
         public NetworkServiceDesignGroupPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkServiceDesignGroupPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignGroupPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
         /// <param name="description"> The network service design group description. </param>
-        internal NetworkServiceDesignGroupPropertiesFormat(ProvisioningState? provisioningState, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkServiceDesignGroupPropertiesFormat(ProvisioningState? provisioningState, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the network service design groups resource. </summary>

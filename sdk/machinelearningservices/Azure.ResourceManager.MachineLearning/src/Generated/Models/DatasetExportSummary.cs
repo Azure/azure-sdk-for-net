@@ -6,26 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The DatasetExportSummary. </summary>
     public partial class DatasetExportSummary : ExportSummary
     {
-        /// <summary> Initializes a new instance of DatasetExportSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetExportSummary"/>. </summary>
         public DatasetExportSummary()
         {
             Format = ExportFormatType.Dataset;
         }
 
-        /// <summary> Initializes a new instance of DatasetExportSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatasetExportSummary"/>. </summary>
         /// <param name="endOn"> The time when the export was completed. </param>
         /// <param name="exportedRowCount"> The total number of labeled datapoints exported. </param>
         /// <param name="format"> [Required] The format of exported labels, also as the discriminator. </param>
         /// <param name="labelingJobId"> Name and identifier of the job containing exported labels. </param>
         /// <param name="startOn"> The time when the export was requested. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="labeledAssetName"> The unique name of the labeled data asset. </param>
-        internal DatasetExportSummary(DateTimeOffset? endOn, long? exportedRowCount, ExportFormatType format, string labelingJobId, DateTimeOffset? startOn, string labeledAssetName) : base(endOn, exportedRowCount, format, labelingJobId, startOn)
+        internal DatasetExportSummary(DateTimeOffset? endOn, long? exportedRowCount, ExportFormatType format, string labelingJobId, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string labeledAssetName) : base(endOn, exportedRowCount, format, labelingJobId, startOn, serializedAdditionalRawData)
         {
             LabeledAssetName = labeledAssetName;
             Format = format;

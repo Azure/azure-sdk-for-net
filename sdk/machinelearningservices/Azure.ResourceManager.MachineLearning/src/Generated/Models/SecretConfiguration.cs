@@ -6,27 +6,33 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Secret Configuration definition. </summary>
     public partial class SecretConfiguration
     {
-        /// <summary> Initializes a new instance of SecretConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecretConfiguration"/>. </summary>
         public SecretConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SecretConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretConfiguration"/>. </summary>
         /// <param name="uri">
         /// Secret Uri.
         /// Sample Uri : https://myvault.vault.azure.net/secrets/mysecretname/secretversion
         /// </param>
         /// <param name="workspaceSecretName"> Name of secret in workspace key vault. </param>
-        internal SecretConfiguration(Uri uri, string workspaceSecretName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecretConfiguration(Uri uri, string workspaceSecretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             WorkspaceSecretName = workspaceSecretName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

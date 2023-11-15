@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyFeedbackValue. </summary>
     internal partial class AnomalyFeedbackValue
     {
-        /// <summary> Initializes a new instance of AnomalyFeedbackValue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyFeedbackValue"/>. </summary>
         /// <param name="anomalyValue"></param>
         public AnomalyFeedbackValue(AnomalyValue anomalyValue)
         {
             AnomalyValue = anomalyValue;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyFeedbackValue"/>. </summary>
+        /// <param name="anomalyValue"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnomalyFeedbackValue(AnomalyValue anomalyValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AnomalyValue = anomalyValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyFeedbackValue"/> for deserialization. </summary>
+        internal AnomalyFeedbackValue()
+        {
         }
 
         /// <summary> Gets or sets the anomaly value. </summary>

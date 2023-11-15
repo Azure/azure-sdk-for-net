@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Group properties. </summary>
     public partial class MatchConfigurationIPGroupProperties
     {
-        /// <summary> Initializes a new instance of MatchConfigurationIPGroupProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MatchConfigurationIPGroupProperties"/>. </summary>
         public MatchConfigurationIPGroupProperties()
         {
             IPPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MatchConfigurationIPGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchConfigurationIPGroupProperties"/>. </summary>
         /// <param name="name"> IP Group name. </param>
         /// <param name="ipAddressType"> IP Address type. </param>
         /// <param name="ipPrefixes"> List of IP Prefixes. </param>
-        internal MatchConfigurationIPGroupProperties(string name, NetworkFabricIPAddressType? ipAddressType, IList<string> ipPrefixes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MatchConfigurationIPGroupProperties(string name, NetworkFabricIPAddressType? ipAddressType, IList<string> ipPrefixes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IPAddressType = ipAddressType;
             IPPrefixes = ipPrefixes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP Group name. </summary>

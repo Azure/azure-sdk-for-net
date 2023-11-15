@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The StorageSpacesExtendedLocation. </summary>
     public partial class StorageSpacesExtendedLocation
     {
-        /// <summary> Initializes a new instance of StorageSpacesExtendedLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesExtendedLocation"/>. </summary>
         public StorageSpacesExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageSpacesExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSpacesExtendedLocation"/>. </summary>
         /// <param name="storageSpacesExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
-        internal StorageSpacesExtendedLocation(string storageSpacesExtendedLocationType, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSpacesExtendedLocation(string storageSpacesExtendedLocationType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSpacesExtendedLocationType = storageSpacesExtendedLocationType;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The extended location type. </summary>

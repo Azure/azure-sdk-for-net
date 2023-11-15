@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkServiceDesignVersionRestClient.CreateListByNetworkServiceDesignGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new NetworkServiceDesignVersionResource(Client, NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(e)), _networkServiceDesignVersionClientDiagnostics, Pipeline, "NetworkServiceDesignVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

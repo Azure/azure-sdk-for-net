@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Template artifact profile. </summary>
     public partial class ArmTemplateArtifactProfile
     {
-        /// <summary> Initializes a new instance of ArmTemplateArtifactProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateArtifactProfile"/>. </summary>
         public ArmTemplateArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ArmTemplateArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmTemplateArtifactProfile"/>. </summary>
         /// <param name="templateName"> Template name. </param>
         /// <param name="templateVersion"> Template version. </param>
-        internal ArmTemplateArtifactProfile(string templateName, string templateVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmTemplateArtifactProfile(string templateName, string templateVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TemplateName = templateName;
             TemplateVersion = templateVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Template name. </summary>

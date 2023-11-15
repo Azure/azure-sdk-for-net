@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The ProvisionedClustersExtendedLocation. </summary>
     public partial class ProvisionedClustersExtendedLocation
     {
-        /// <summary> Initializes a new instance of ProvisionedClustersExtendedLocation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersExtendedLocation"/>. </summary>
         public ProvisionedClustersExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClustersExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClustersExtendedLocation"/>. </summary>
         /// <param name="provisionedClustersExtendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
-        internal ProvisionedClustersExtendedLocation(string provisionedClustersExtendedLocationType, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClustersExtendedLocation(string provisionedClustersExtendedLocationType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisionedClustersExtendedLocationType = provisionedClustersExtendedLocationType;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The extended location type. </summary>

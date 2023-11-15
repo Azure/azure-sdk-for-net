@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Input for testing route. </summary>
     public partial class IotHubTestRouteContent
     {
-        /// <summary> Initializes a new instance of IotHubTestRouteContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteContent"/>. </summary>
         /// <param name="route"> Route properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="route"/> is null. </exception>
         public IotHubTestRouteContent(RoutingRuleProperties route)
@@ -21,6 +25,24 @@ namespace Azure.ResourceManager.IotHub.Models
             Argument.AssertNotNull(route, nameof(route));
 
             Route = route;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteContent"/>. </summary>
+        /// <param name="message"> Routing message. </param>
+        /// <param name="route"> Route properties. </param>
+        /// <param name="twin"> Routing Twin Reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubTestRouteContent(RoutingMessage message, RoutingRuleProperties route, RoutingTwin twin, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Message = message;
+            Route = route;
+            Twin = twin;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteContent"/> for deserialization. </summary>
+        internal IotHubTestRouteContent()
+        {
         }
 
         /// <summary> Routing message. </summary>

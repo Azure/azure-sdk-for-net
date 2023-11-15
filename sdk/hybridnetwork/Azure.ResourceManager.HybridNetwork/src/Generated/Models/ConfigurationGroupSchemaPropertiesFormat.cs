@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Configuration group schema properties. </summary>
     public partial class ConfigurationGroupSchemaPropertiesFormat
     {
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaPropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
         public ConfigurationGroupSchemaPropertiesFormat()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationGroupSchemaPropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
         /// <param name="versionState"> The configuration group schema version state. </param>
         /// <param name="description"> Description of what schema can contain. </param>
         /// <param name="schemaDefinition"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
-        internal ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string schemaDefinition)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string schemaDefinition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             VersionState = versionState;
             Description = description;
             SchemaDefinition = schemaDefinition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the Configuration group schema resource. </summary>

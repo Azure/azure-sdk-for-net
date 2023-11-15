@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    public partial class DimensionKey : IUtf8JsonSerializable
+    public partial class DimensionKey : IUtf8JsonSerializable, IJsonModel<DimensionKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DimensionKey>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DimensionKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DimensionKey>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DimensionKey>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("dimension"u8);
             writer.WriteStartObject();
@@ -24,16 +34,47 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DimensionKey DeserializeDimensionKey(JsonElement element)
+        DimensionKey IJsonModel<DimensionKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DimensionKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDimensionKey(document.RootElement, options);
+        }
+
+        internal static DimensionKey DeserializeDimensionKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> dimension = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimension"u8))
@@ -46,8 +87,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                     dimension = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DimensionKey(dimension);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DimensionKey(dimension, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DimensionKey>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DimensionKey)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DimensionKey IPersistableModel<DimensionKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DimensionKey)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDimensionKey(document.RootElement, options);
+        }
+
+        string IPersistableModel<DimensionKey>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

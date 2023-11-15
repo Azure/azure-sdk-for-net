@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Url data for creating or accessing a blob file. </summary>
     public partial class UriToken
     {
-        /// <summary> Initializes a new instance of UriToken. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UriToken"/>. </summary>
         internal UriToken()
         {
         }
 
-        /// <summary> Initializes a new instance of UriToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriToken"/>. </summary>
         /// <param name="uri"> SAS URL for creating or accessing a blob file. </param>
         /// <param name="uploadUri"> SAS URL for file uploading. Kept for backwards compatibility. </param>
-        internal UriToken(Uri uri, Uri uploadUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UriToken(Uri uri, Uri uploadUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             UploadUri = uploadUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> SAS URL for creating or accessing a blob file. </summary>

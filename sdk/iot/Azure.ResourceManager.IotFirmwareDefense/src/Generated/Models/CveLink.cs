@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Link for CVE. </summary>
     public partial class CveLink
     {
-        /// <summary> Initializes a new instance of CveLink. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CveLink"/>. </summary>
         internal CveLink()
         {
         }
 
-        /// <summary> Initializes a new instance of CveLink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveLink"/>. </summary>
         /// <param name="href"> Href of CVE link. </param>
         /// <param name="label"> Label of CVE link. </param>
-        internal CveLink(string href, string label)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CveLink(string href, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Href = href;
             Label = label;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Href of CVE link. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> A region that this managed HSM Pool has been extended to. </summary>
     public partial class ManagedHsmGeoReplicatedRegion
     {
-        /// <summary> Initializes a new instance of ManagedHsmGeoReplicatedRegion. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmGeoReplicatedRegion"/>. </summary>
         public ManagedHsmGeoReplicatedRegion()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmGeoReplicatedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmGeoReplicatedRegion"/>. </summary>
         /// <param name="name"> Name of the geo replicated region. </param>
         /// <param name="provisioningState"> Provisioning state of the geo replicated region. </param>
         /// <param name="isPrimary"> A boolean value that indicates whether the region is the primary region or a secondary region. </param>
-        internal ManagedHsmGeoReplicatedRegion(string name, ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState, bool? isPrimary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHsmGeoReplicatedRegion(string name, ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState, bool? isPrimary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ProvisioningState = provisioningState;
             IsPrimary = isPrimary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the geo replicated region. </summary>

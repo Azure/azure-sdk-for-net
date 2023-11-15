@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -12,20 +14,25 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration service environment sku definition. </summary>
     public partial class IntegrationServiceEnvironmentSkuDefinition
     {
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuDefinition"/>. </summary>
         internal IntegrationServiceEnvironmentSkuDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationServiceEnvironmentSkuDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationServiceEnvironmentSkuDefinition"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="sku"> The sku. </param>
         /// <param name="capacity"> The sku capacity. </param>
-        internal IntegrationServiceEnvironmentSkuDefinition(ResourceType? resourceType, IntegrationServiceEnvironmentSkuDefinitionSku sku, IntegrationServiceEnvironmentSkuCapacity capacity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationServiceEnvironmentSkuDefinition(ResourceType? resourceType, IntegrationServiceEnvironmentSkuDefinitionSku sku, IntegrationServiceEnvironmentSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Sku = sku;
             Capacity = capacity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource type. </summary>

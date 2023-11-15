@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,28 @@ namespace Azure.ResourceManager.LoadTesting.Models
     /// <summary> LoadTest resource patch request body. </summary>
     public partial class LoadTestingResourcePatch
     {
-        /// <summary> Initializes a new instance of LoadTestingResourcePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingResourcePatch"/>. </summary>
         public LoadTestingResourcePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LoadTestingResourcePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The type of identity used for the resource. </param>
+        /// <param name="description"> Description of the resource. </param>
+        /// <param name="encryption"> CMK Encryption property. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LoadTestingResourcePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, string description, LoadTestingCmkEncryptionProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            Description = description;
+            Encryption = encryption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

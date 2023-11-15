@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm StatefulSet status properties. </summary>
     public partial class KubernetesStatefulSet
     {
-        /// <summary> Initializes a new instance of KubernetesStatefulSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesStatefulSet"/>. </summary>
         internal KubernetesStatefulSet()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesStatefulSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesStatefulSet"/>. </summary>
         /// <param name="name"> The name of the statefulset. </param>
         /// <param name="namespace"> The namespace of the statefulset. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="createdOn"> Creation Time of statefulset. </param>
-        internal KubernetesStatefulSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, DateTimeOffset? createdOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesStatefulSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Namespace = @namespace;
             DesiredNumberOfPods = desiredNumberOfPods;
             ReadyNumberOfPods = readyNumberOfPods;
             CreatedOn = createdOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the statefulset. </summary>

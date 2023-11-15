@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Port Group properties. </summary>
     public partial class PortGroupProperties
     {
-        /// <summary> Initializes a new instance of PortGroupProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PortGroupProperties"/>. </summary>
         public PortGroupProperties()
         {
             Ports = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PortGroupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="PortGroupProperties"/>. </summary>
         /// <param name="name"> The name of the port group. </param>
         /// <param name="ports"> List of the ports that need to be matched. </param>
-        internal PortGroupProperties(string name, IList<string> ports)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PortGroupProperties(string name, IList<string> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Ports = ports;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the port group. </summary>

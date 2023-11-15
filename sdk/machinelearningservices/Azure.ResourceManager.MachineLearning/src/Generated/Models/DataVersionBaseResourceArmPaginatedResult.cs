@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A paginated list of DataVersionBase entities. </summary>
     internal partial class DataVersionBaseResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of DataVersionBaseResourceArmPaginatedResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataVersionBaseResourceArmPaginatedResult"/>. </summary>
         internal DataVersionBaseResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningDataVersionData>();
         }
 
-        /// <summary> Initializes a new instance of DataVersionBaseResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataVersionBaseResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page of DataVersionBase objects. If null, there are no additional pages. </param>
         /// <param name="value"> An array of objects of type DataVersionBase. </param>
-        internal DataVersionBaseResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDataVersionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataVersionBaseResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDataVersionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page of DataVersionBase objects. If null, there are no additional pages. </summary>

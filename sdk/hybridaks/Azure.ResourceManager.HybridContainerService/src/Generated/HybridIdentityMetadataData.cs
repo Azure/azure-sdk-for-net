@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class HybridIdentityMetadataData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataData"/>. </summary>
         public HybridIdentityMetadataData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridIdentityMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,12 +35,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="publicKey"> Onboarding public key for provisioning the Managed identity for the HybridAKS cluster. </param>
         /// <param name="identity"> The identity of the provisioned cluster. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="provisioningState"> provisioning state of the hybridIdentityMetadata resource. </param>
-        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceUid, string publicKey, ManagedServiceIdentity identity, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceUid, string publicKey, ManagedServiceIdentity identity, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceUid = resourceUid;
             PublicKey = publicKey;
             Identity = identity;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique id of the parent provisioned cluster resource. </summary>

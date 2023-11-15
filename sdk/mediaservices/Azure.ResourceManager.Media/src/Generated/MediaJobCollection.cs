@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MediaJobResource(Client, MediaJobData.DeserializeMediaJobData(e)), _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaJobResource(Client, MediaJobData.DeserializeMediaJobData(e)), _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaJobJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mediaJobJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MediaJobResource(Client, MediaJobData.DeserializeMediaJobData(e)), _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new MediaJobResource(Client, MediaJobData.DeserializeMediaJobData(e)), _mediaJobJobsClientDiagnostics, Pipeline, "MediaJobCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningContainerRegistryCredentials. </summary>
     public partial class MachineLearningContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         internal MachineLearningContainerRegistryCredentials()
         {
             Passwords = new ChangeTrackingList<MachineLearningPasswordDetail>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         /// <param name="location"> The location of the workspace ACR. </param>
         /// <param name="passwords"></param>
         /// <param name="username"> The username of the workspace ACR. </param>
-        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, IReadOnlyList<MachineLearningPasswordDetail> passwords, string username)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, IReadOnlyList<MachineLearningPasswordDetail> passwords, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Passwords = passwords;
             Username = username;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The location of the workspace ACR. </summary>

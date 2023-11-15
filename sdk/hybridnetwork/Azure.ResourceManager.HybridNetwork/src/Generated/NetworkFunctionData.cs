@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class NetworkFunctionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFunctionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetworkFunctionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,11 +43,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The managed identity of the network function. </param>
-        internal NetworkFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkFunctionPropertiesFormat properties, ETag? etag, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFunctionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkFunctionPropertiesFormat properties, ETag? etag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = etag;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionData"/> for deserialization. </summary>
+        internal NetworkFunctionData()
+        {
         }
 
         /// <summary>

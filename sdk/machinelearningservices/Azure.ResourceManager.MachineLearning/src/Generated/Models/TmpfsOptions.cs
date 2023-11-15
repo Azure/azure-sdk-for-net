@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The TmpfsOptions. </summary>
     internal partial class TmpfsOptions
     {
-        /// <summary> Initializes a new instance of TmpfsOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TmpfsOptions"/>. </summary>
         public TmpfsOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of TmpfsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TmpfsOptions"/>. </summary>
         /// <param name="size"> Mention the Tmpfs size. </param>
-        internal TmpfsOptions(int? size)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TmpfsOptions(int? size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Size = size;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Mention the Tmpfs size. </summary>

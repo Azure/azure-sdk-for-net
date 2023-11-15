@@ -5,29 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Route policy action properties. </summary>
     public partial class StatementActionProperties
     {
-        /// <summary> Initializes a new instance of StatementActionProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StatementActionProperties"/>. </summary>
         /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
         public StatementActionProperties(RoutePolicyActionType actionType)
         {
             ActionType = actionType;
         }
 
-        /// <summary> Initializes a new instance of StatementActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementActionProperties"/>. </summary>
         /// <param name="localPreference"> Local Preference of the route policy. </param>
         /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
         /// <param name="ipCommunityProperties"> IP Community Properties. </param>
         /// <param name="ipExtendedCommunityProperties"> IP Extended Community Properties. </param>
-        internal StatementActionProperties(long? localPreference, RoutePolicyActionType actionType, ActionIPCommunityProperties ipCommunityProperties, ActionIPExtendedCommunityProperties ipExtendedCommunityProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StatementActionProperties(long? localPreference, RoutePolicyActionType actionType, ActionIPCommunityProperties ipCommunityProperties, ActionIPExtendedCommunityProperties ipExtendedCommunityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocalPreference = localPreference;
             ActionType = actionType;
             IPCommunityProperties = ipCommunityProperties;
             IPExtendedCommunityProperties = ipExtendedCommunityProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StatementActionProperties"/> for deserialization. </summary>
+        internal StatementActionProperties()
+        {
         }
 
         /// <summary> Local Preference of the route policy. </summary>

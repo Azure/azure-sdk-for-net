@@ -19,5 +19,31 @@ namespace Azure.AI.MetricsAdvisor.Administration
     /// </summary>
     public abstract partial class NotificationHook
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHook"/>. </summary>
+        /// <param name="hookKind"> hook type. </param>
+        /// <param name="id"> Hook unique id. </param>
+        /// <param name="name"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="internalExternalLink"> hook external link. </param>
+        /// <param name="administrators"> hook administrators. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHook(NotificationHookKind hookKind, string id, string name, string description, string internalExternalLink, IList<string> administrators, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HookKind = hookKind;
+            Id = id;
+            Name = name;
+            Description = description;
+            InternalExternalLink = internalExternalLink;
+            Administrators = administrators;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationHook"/> for deserialization. </summary>
+        internal NotificationHook()
+        {
+        }
     }
 }

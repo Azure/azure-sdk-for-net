@@ -14,7 +14,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The SAS definition create parameters. </summary>
     internal partial class SasDefinitionCreateParameters
     {
-        /// <summary> Initializes a new instance of SasDefinitionCreateParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionCreateParameters"/>. </summary>
         /// <param name="templateUri"> The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template. </param>
         /// <param name="sasType"> The type of SAS token the SAS definition will create. </param>
         /// <param name="validityPeriod"> The validity period of SAS tokens created according to the SAS definition. </param>
@@ -28,6 +31,28 @@ namespace Azure.Security.KeyVault.Storage.Models
             SasType = sasType;
             ValidityPeriod = validityPeriod;
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionCreateParameters"/>. </summary>
+        /// <param name="templateUri"> The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template. </param>
+        /// <param name="sasType"> The type of SAS token the SAS definition will create. </param>
+        /// <param name="validityPeriod"> The validity period of SAS tokens created according to the SAS definition. </param>
+        /// <param name="sasDefinitionAttributes"> The attributes of the SAS definition. </param>
+        /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SasDefinitionCreateParameters(string templateUri, SasTokenType sasType, string validityPeriod, SasDefinitionAttributes sasDefinitionAttributes, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            TemplateUri = templateUri;
+            SasType = sasType;
+            ValidityPeriod = validityPeriod;
+            SasDefinitionAttributes = sasDefinitionAttributes;
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionCreateParameters"/> for deserialization. </summary>
+        internal SasDefinitionCreateParameters()
+        {
         }
 
         /// <summary> The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template. </summary>

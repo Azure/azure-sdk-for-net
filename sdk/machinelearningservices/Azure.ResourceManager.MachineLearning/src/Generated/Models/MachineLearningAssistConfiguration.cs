@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningAssistConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningAssistConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistConfiguration"/>. </summary>
         protected MachineLearningAssistConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAssistConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssistConfiguration"/>. </summary>
         /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>
-        internal MachineLearningAssistConfiguration(MLAssistConfigurationType mlAssist)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningAssistConfiguration(MLAssistConfigurationType mlAssist, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MlAssist = mlAssist;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Indicates whether MLAssist feature is enabled. </summary>

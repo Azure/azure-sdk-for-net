@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> Optimized way point object. </summary>
     public partial class RouteOptimizedWaypoint
     {
-        /// <summary> Initializes a new instance of RouteOptimizedWaypoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteOptimizedWaypoint"/>. </summary>
         internal RouteOptimizedWaypoint()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteOptimizedWaypoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteOptimizedWaypoint"/>. </summary>
         /// <param name="providedIndex"> Way point index provided by the user. </param>
         /// <param name="optimizedIndex"> Optimized way point index from the system. </param>
-        internal RouteOptimizedWaypoint(int? providedIndex, int? optimizedIndex)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteOptimizedWaypoint(int? providedIndex, int? optimizedIndex, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvidedIndex = providedIndex;
             OptimizedIndex = optimizedIndex;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Way point index provided by the user. </summary>

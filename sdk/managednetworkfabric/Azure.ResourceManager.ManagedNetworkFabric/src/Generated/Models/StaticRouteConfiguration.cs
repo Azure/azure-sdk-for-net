@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Static Route Configuration properties. </summary>
     public partial class StaticRouteConfiguration
     {
-        /// <summary> Initializes a new instance of StaticRouteConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StaticRouteConfiguration"/>. </summary>
         public StaticRouteConfiguration()
         {
             IPv4Routes = new ChangeTrackingList<StaticRouteProperties>();
             IPv6Routes = new ChangeTrackingList<StaticRouteProperties>();
         }
 
-        /// <summary> Initializes a new instance of StaticRouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticRouteConfiguration"/>. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
         /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
-        internal StaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BfdConfiguration = bfdConfiguration;
             IPv4Routes = ipv4Routes;
             IPv6Routes = ipv6Routes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> BFD configuration properties. </summary>

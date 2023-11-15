@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkInterfacePatch resource definition. </summary>
     public partial class NetworkDeviceInterfacePatch
     {
-        /// <summary> Initializes a new instance of NetworkDeviceInterfacePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfacePatch"/>. </summary>
         public NetworkDeviceInterfacePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfacePatch"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDeviceInterfacePatch(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Annotation = annotation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Switch configuration description. </summary>

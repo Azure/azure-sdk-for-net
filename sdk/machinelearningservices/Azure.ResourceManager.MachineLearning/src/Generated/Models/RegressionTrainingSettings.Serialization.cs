@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class RegressionTrainingSettings : IUtf8JsonSerializable
+    public partial class RegressionTrainingSettings : IUtf8JsonSerializable, IJsonModel<RegressionTrainingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegressionTrainingSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RegressionTrainingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RegressionTrainingSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RegressionTrainingSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
             {
@@ -98,11 +107,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("trainingMode"u8);
                 writer.WriteStringValue(TrainingMode.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RegressionTrainingSettings DeserializeRegressionTrainingSettings(JsonElement element)
+        RegressionTrainingSettings IJsonModel<RegressionTrainingSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegressionTrainingSettings(document.RootElement, options);
+        }
+
+        internal static RegressionTrainingSettings DeserializeRegressionTrainingSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,6 +155,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan> ensembleModelDownloadTimeout = default;
             Optional<MachineLearningStackEnsembleSettings> stackEnsembleSettings = default;
             Optional<TrainingMode> trainingMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowedTrainingAlgorithms"u8))
@@ -222,8 +262,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trainingMode = new TrainingMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegressionTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode), Optional.ToList(allowedTrainingAlgorithms), Optional.ToList(blockedTrainingAlgorithms));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RegressionTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode), serializedAdditionalRawData, Optional.ToList(allowedTrainingAlgorithms), Optional.ToList(blockedTrainingAlgorithms));
         }
+
+        BinaryData IPersistableModel<RegressionTrainingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RegressionTrainingSettings IPersistableModel<RegressionTrainingSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRegressionTrainingSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<RegressionTrainingSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

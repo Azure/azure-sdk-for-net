@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitoringFeatureFilterBase
     {
-        /// <summary> Initializes a new instance of MonitoringFeatureFilterBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringFeatureFilterBase"/>. </summary>
         protected MonitoringFeatureFilterBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringFeatureFilterBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringFeatureFilterBase"/>. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
-        internal MonitoringFeatureFilterBase(MonitoringFeatureFilterType filterType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringFeatureFilterBase(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FilterType = filterType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </summary>

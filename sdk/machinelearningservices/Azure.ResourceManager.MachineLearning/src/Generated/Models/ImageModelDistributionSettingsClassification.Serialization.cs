@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelDistributionSettingsClassification : IUtf8JsonSerializable
+    public partial class ImageModelDistributionSettingsClassification : IUtf8JsonSerializable, IJsonModel<ImageModelDistributionSettingsClassification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageModelDistributionSettingsClassification>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ImageModelDistributionSettingsClassification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ImageModelDistributionSettingsClassification>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ImageModelDistributionSettingsClassification>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TrainingCropSize))
             {
@@ -399,11 +410,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("weightDecay");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageModelDistributionSettingsClassification DeserializeImageModelDistributionSettingsClassification(JsonElement element)
+        ImageModelDistributionSettingsClassification IJsonModel<ImageModelDistributionSettingsClassification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageModelDistributionSettingsClassification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageModelDistributionSettingsClassification(document.RootElement, options);
+        }
+
+        internal static ImageModelDistributionSettingsClassification DeserializeImageModelDistributionSettingsClassification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -440,6 +480,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> warmupCosineLRCycles = default;
             Optional<string> warmupCosineLRWarmupEpochs = default;
             Optional<string> weightDecay = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trainingCropSize"u8))
@@ -762,8 +804,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     weightDecay = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageModelDistributionSettingsClassification(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, trainingCropSize.Value, validationCropSize.Value, validationResizeSize.Value, weightedLoss.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageModelDistributionSettingsClassification(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, serializedAdditionalRawData, trainingCropSize.Value, validationCropSize.Value, validationResizeSize.Value, weightedLoss.Value);
         }
+
+        BinaryData IPersistableModel<ImageModelDistributionSettingsClassification>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageModelDistributionSettingsClassification)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ImageModelDistributionSettingsClassification IPersistableModel<ImageModelDistributionSettingsClassification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageModelDistributionSettingsClassification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeImageModelDistributionSettingsClassification(document.RootElement, options);
+        }
+
+        string IPersistableModel<ImageModelDistributionSettingsClassification>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

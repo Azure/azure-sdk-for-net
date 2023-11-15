@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 schema reference. </summary>
     public partial class X12SchemaReference
     {
-        /// <summary> Initializes a new instance of X12SchemaReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12SchemaReference"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="schemaVersion"> The schema version. </param>
         /// <param name="schemaName"> The schema name. </param>
@@ -29,17 +33,24 @@ namespace Azure.ResourceManager.Logic.Models
             SchemaName = schemaName;
         }
 
-        /// <summary> Initializes a new instance of X12SchemaReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="X12SchemaReference"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="senderApplicationId"> The sender application id. </param>
         /// <param name="schemaVersion"> The schema version. </param>
         /// <param name="schemaName"> The schema name. </param>
-        internal X12SchemaReference(string messageId, string senderApplicationId, string schemaVersion, string schemaName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12SchemaReference(string messageId, string senderApplicationId, string schemaVersion, string schemaName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MessageId = messageId;
             SenderApplicationId = senderApplicationId;
             SchemaVersion = schemaVersion;
             SchemaName = schemaName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12SchemaReference"/> for deserialization. </summary>
+        internal X12SchemaReference()
+        {
         }
 
         /// <summary> The message id. </summary>

@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The API deployment parameter metadata. </summary>
     public partial class LogicApiDeploymentParameterMetadata
     {
-        /// <summary> Initializes a new instance of LogicApiDeploymentParameterMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicApiDeploymentParameterMetadata"/>. </summary>
         internal LogicApiDeploymentParameterMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of LogicApiDeploymentParameterMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicApiDeploymentParameterMetadata"/>. </summary>
         /// <param name="apiDeploymentParameterMetadataType"> The type. </param>
         /// <param name="isRequired"> Indicates whether its required. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="description"> The description. </param>
         /// <param name="visibility"> The visibility. </param>
-        internal LogicApiDeploymentParameterMetadata(string apiDeploymentParameterMetadataType, bool? isRequired, string displayName, string description, LogicApiDeploymentParameterVisibility? visibility)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicApiDeploymentParameterMetadata(string apiDeploymentParameterMetadataType, bool? isRequired, string displayName, string description, LogicApiDeploymentParameterVisibility? visibility, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApiDeploymentParameterMetadataType = apiDeploymentParameterMetadataType;
             IsRequired = isRequired;
             DisplayName = displayName;
             Description = description;
             Visibility = visibility;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type. </summary>

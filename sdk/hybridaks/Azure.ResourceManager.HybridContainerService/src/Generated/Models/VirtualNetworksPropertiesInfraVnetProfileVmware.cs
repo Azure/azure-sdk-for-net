@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Infra network profile for VMware platform. </summary>
     internal partial class VirtualNetworksPropertiesInfraVnetProfileVmware
     {
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileVmware. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfileVmware"/>. </summary>
         public VirtualNetworksPropertiesInfraVnetProfileVmware()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileVmware. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworksPropertiesInfraVnetProfileVmware"/>. </summary>
         /// <param name="segmentName"> Name of the network segment in VSphere. </param>
-        internal VirtualNetworksPropertiesInfraVnetProfileVmware(string segmentName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworksPropertiesInfraVnetProfileVmware(string segmentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SegmentName = segmentName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the network segment in VSphere. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapDestinationProperties : IUtf8JsonSerializable
+    public partial class NetworkTapDestinationProperties : IUtf8JsonSerializable, IJsonModel<NetworkTapDestinationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapDestinationProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetworkTapDestinationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkTapDestinationProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkTapDestinationProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("destinationTapRuleId"u8);
                 writer.WriteStringValue(DestinationTapRuleId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkTapDestinationProperties DeserializeNetworkTapDestinationProperties(JsonElement element)
+        NetworkTapDestinationProperties IJsonModel<NetworkTapDestinationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkTapDestinationProperties(document.RootElement, options);
+        }
+
+        internal static NetworkTapDestinationProperties DeserializeNetworkTapDestinationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<ResourceIdentifier> destinationId = default;
             Optional<IsolationDomainProperties> isolationDomainProperties = default;
             Optional<ResourceIdentifier> destinationTapRuleId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -97,8 +139,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     destinationTapRuleId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkTapDestinationProperties(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkTapDestinationProperties(name.Value, Optional.ToNullable(destinationType), destinationId.Value, isolationDomainProperties.Value, destinationTapRuleId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkTapDestinationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkTapDestinationProperties IPersistableModel<NetworkTapDestinationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkTapDestinationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkTapDestinationProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkTapDestinationProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

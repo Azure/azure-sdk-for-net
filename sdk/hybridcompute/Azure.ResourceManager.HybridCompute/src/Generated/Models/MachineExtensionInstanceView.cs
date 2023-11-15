@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the Machine Extension Instance View. </summary>
     public partial class MachineExtensionInstanceView
     {
-        /// <summary> Initializes a new instance of MachineExtensionInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionInstanceView"/>. </summary>
         public MachineExtensionInstanceView()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionInstanceView"/>. </summary>
         /// <param name="name"> The machine extension name. </param>
         /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="status"> Instance view status. </param>
-        internal MachineExtensionInstanceView(string name, string machineExtensionInstanceViewType, string typeHandlerVersion, MachineExtensionInstanceViewStatus status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineExtensionInstanceView(string name, string machineExtensionInstanceViewType, string typeHandlerVersion, MachineExtensionInstanceViewStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             MachineExtensionInstanceViewType = machineExtensionInstanceViewType;
             TypeHandlerVersion = typeHandlerVersion;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The machine extension name. </summary>

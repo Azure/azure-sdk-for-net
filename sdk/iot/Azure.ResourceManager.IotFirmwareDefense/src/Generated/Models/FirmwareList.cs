@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotFirmwareDefense;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> List of firmwares. </summary>
     internal partial class FirmwareList
     {
-        /// <summary> Initializes a new instance of FirmwareList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareList"/>. </summary>
         internal FirmwareList()
         {
             Value = new ChangeTrackingList<FirmwareData>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareList. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareList"/>. </summary>
         /// <param name="value"> The list of firmwares. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
-        internal FirmwareList(IReadOnlyList<FirmwareData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareList(IReadOnlyList<FirmwareData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of firmwares. </summary>

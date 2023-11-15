@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> Defines the Arc Agent properties for the Provisioned clusters. </summary>
     public partial class ArcAgentProfile
     {
-        /// <summary> Initializes a new instance of ArcAgentProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArcAgentProfile"/>. </summary>
         public ArcAgentProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of ArcAgentProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcAgentProfile"/>. </summary>
         /// <param name="agentVersion"> Version of the Arc agents to be installed on the provisioned Provisioned cluster resource. </param>
         /// <param name="agentAutoUpgrade"> Indicates whether the Arc agents on the provisioned clusters be upgraded automatically to the latest version. Defaults to Enabled. </param>
-        internal ArcAgentProfile(string agentVersion, AutoUpgradeOption? agentAutoUpgrade)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArcAgentProfile(string agentVersion, AutoUpgradeOption? agentAutoUpgrade, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentVersion = agentVersion;
             AgentAutoUpgrade = agentAutoUpgrade;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Version of the Arc agents to be installed on the provisioned Provisioned cluster resource. </summary>

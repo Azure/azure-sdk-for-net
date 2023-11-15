@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The description of an X509 CA Certificate including the challenge nonce issued for the Proof-Of-Possession flow. </summary>
     public partial class IotHubCertificatePropertiesWithNonce
     {
-        /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificatePropertiesWithNonce"/>. </summary>
         internal IotHubCertificatePropertiesWithNonce()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubCertificatePropertiesWithNonce. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCertificatePropertiesWithNonce"/>. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
         /// <param name="thumbprintString"> The certificate's thumbprint. </param>
@@ -26,7 +30,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="updatedOn"> The certificate's last update date and time. </param>
         /// <param name="verificationCode"> The certificate's verification code that will be used for proof of possession. </param>
         /// <param name="certificate"> The certificate content. </param>
-        internal IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subject = subject;
             ExpireOn = expireOn;
@@ -36,6 +41,7 @@ namespace Azure.ResourceManager.IotHub.Models
             UpdatedOn = updatedOn;
             VerificationCode = verificationCode;
             Certificate = certificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The certificate's subject name. </summary>

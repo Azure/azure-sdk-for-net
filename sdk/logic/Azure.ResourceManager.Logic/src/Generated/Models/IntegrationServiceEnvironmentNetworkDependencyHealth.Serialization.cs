@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceEnvironmentNetworkDependencyHealth
+    public partial class IntegrationServiceEnvironmentNetworkDependencyHealth : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentNetworkDependencyHealth>
     {
-        internal static IntegrationServiceEnvironmentNetworkDependencyHealth DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentNetworkDependencyHealth>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<IntegrationServiceEnvironmentNetworkDependencyHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<IntegrationServiceEnvironmentNetworkDependencyHealth>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<IntegrationServiceEnvironmentNetworkDependencyHealth>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IntegrationServiceEnvironmentNetworkDependencyHealth IJsonModel<IntegrationServiceEnvironmentNetworkDependencyHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentNetworkDependencyHealth)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(document.RootElement, options);
+        }
+
+        internal static IntegrationServiceEnvironmentNetworkDependencyHealth DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IntegrationServiceErrorInfo> error = default;
             Optional<IntegrationServiceEnvironmentNetworkDependencyHealthState> state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -40,8 +98,38 @@ namespace Azure.ResourceManager.Logic.Models
                     state = new IntegrationServiceEnvironmentNetworkDependencyHealthState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error.Value, Optional.ToNullable(state));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error.Value, Optional.ToNullable(state), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationServiceEnvironmentNetworkDependencyHealth>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentNetworkDependencyHealth)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        IntegrationServiceEnvironmentNetworkDependencyHealth IPersistableModel<IntegrationServiceEnvironmentNetworkDependencyHealth>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentNetworkDependencyHealth)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(document.RootElement, options);
+        }
+
+        string IPersistableModel<IntegrationServiceEnvironmentNetworkDependencyHealth>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

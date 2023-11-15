@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The EdgeUsageDataEventHub. </summary>
     public partial class EdgeUsageDataEventHub
     {
-        /// <summary> Initializes a new instance of EdgeUsageDataEventHub. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeUsageDataEventHub"/>. </summary>
         internal EdgeUsageDataEventHub()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeUsageDataEventHub. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeUsageDataEventHub"/>. </summary>
         /// <param name="name"> Name of the Event Hub where usage will be reported. </param>
         /// <param name="namespace"> Namespace of the Event Hub where usage will be reported. </param>
         /// <param name="token"> SAS token needed to interact with Event Hub. </param>
-        internal EdgeUsageDataEventHub(string name, string @namespace, string token)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeUsageDataEventHub(string name, string @namespace, string token, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Namespace = @namespace;
             Token = token;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Event Hub where usage will be reported. </summary>

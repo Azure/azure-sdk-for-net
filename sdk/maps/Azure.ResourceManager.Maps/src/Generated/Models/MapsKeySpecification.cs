@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Whether the operation refers to the primary or secondary key. </summary>
     public partial class MapsKeySpecification
     {
-        /// <summary> Initializes a new instance of MapsKeySpecification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsKeySpecification"/>. </summary>
         /// <param name="keyType"> Whether the operation refers to the primary or secondary key. </param>
         public MapsKeySpecification(MapsKeyType keyType)
         {
             KeyType = keyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapsKeySpecification"/>. </summary>
+        /// <param name="keyType"> Whether the operation refers to the primary or secondary key. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsKeySpecification(MapsKeyType keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyType = keyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapsKeySpecification"/> for deserialization. </summary>
+        internal MapsKeySpecification()
+        {
         }
 
         /// <summary> Whether the operation refers to the primary or secondary key. </summary>

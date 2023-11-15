@@ -5,29 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The AccountEncryption. </summary>
     public partial class AccountEncryption
     {
-        /// <summary> Initializes a new instance of AccountEncryption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AccountEncryption"/>. </summary>
         /// <param name="keyType"> The type of key used to encrypt the Account Key. </param>
         public AccountEncryption(AccountEncryptionKeyType keyType)
         {
             KeyType = keyType;
         }
 
-        /// <summary> Initializes a new instance of AccountEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountEncryption"/>. </summary>
         /// <param name="keyType"> The type of key used to encrypt the Account Key. </param>
         /// <param name="keyVaultProperties"> The properties of the key used to encrypt the account. </param>
         /// <param name="identity"> The Key Vault identity. </param>
         /// <param name="status"> The current status of the Key Vault mapping. </param>
-        internal AccountEncryption(AccountEncryptionKeyType keyType, KeyVaultProperties keyVaultProperties, ResourceIdentity identity, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccountEncryption(AccountEncryptionKeyType keyType, KeyVaultProperties keyVaultProperties, ResourceIdentity identity, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyType = keyType;
             KeyVaultProperties = keyVaultProperties;
             Identity = identity;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AccountEncryption"/> for deserialization. </summary>
+        internal AccountEncryption()
+        {
         }
 
         /// <summary> The type of key used to encrypt the Account Key. </summary>

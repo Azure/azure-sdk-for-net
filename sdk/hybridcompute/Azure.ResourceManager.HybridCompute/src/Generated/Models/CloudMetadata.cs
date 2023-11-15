@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
     internal partial class CloudMetadata
     {
-        /// <summary> Initializes a new instance of CloudMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudMetadata"/>. </summary>
         public CloudMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudMetadata"/>. </summary>
         /// <param name="provider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
-        internal CloudMetadata(string provider)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudMetadata(string provider, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Provider = provider;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>

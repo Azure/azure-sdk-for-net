@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -12,16 +14,21 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of the Managed identity. </summary>
     internal partial class ManagedIdentity
     {
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         public ManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentity"/>. </summary>
         /// <param name="userAssignedIdentity"> The user assigned identity. </param>
-        internal ManagedIdentity(ResourceIdentifier userAssignedIdentity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedIdentity(ResourceIdentifier userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserAssignedIdentity = userAssignedIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The user assigned identity. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Defines the common match conditions of the ACL and Network Tap Rule. </summary>
     public partial class CommonMatchConditions
     {
-        /// <summary> Initializes a new instance of CommonMatchConditions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommonMatchConditions"/>. </summary>
         public CommonMatchConditions()
         {
             ProtocolTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CommonMatchConditions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommonMatchConditions"/>. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
-        internal CommonMatchConditions(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommonMatchConditions(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProtocolTypes = protocolTypes;
             VlanMatchCondition = vlanMatchCondition;
             IPCondition = ipCondition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of the protocols that need to be matched. </summary>

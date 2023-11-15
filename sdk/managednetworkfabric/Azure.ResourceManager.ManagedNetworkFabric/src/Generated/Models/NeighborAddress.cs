@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Neighbor Address properties. </summary>
     public partial class NeighborAddress
     {
-        /// <summary> Initializes a new instance of NeighborAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NeighborAddress"/>. </summary>
         public NeighborAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of NeighborAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="NeighborAddress"/>. </summary>
         /// <param name="address"> IP Address. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
-        internal NeighborAddress(string address, NetworkFabricConfigurationState? configurationState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NeighborAddress(string address, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             ConfigurationState = configurationState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IP Address. </summary>

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaTrackSelection : IUtf8JsonSerializable
+    public partial class MediaTrackSelection : IUtf8JsonSerializable, IJsonModel<MediaTrackSelection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaTrackSelection>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MediaTrackSelection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MediaTrackSelection>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MediaTrackSelection>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TrackSelections))
             {
@@ -26,16 +36,47 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaTrackSelection DeserializeMediaTrackSelection(JsonElement element)
+        MediaTrackSelection IJsonModel<MediaTrackSelection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaTrackSelection(document.RootElement, options);
+        }
+
+        internal static MediaTrackSelection DeserializeMediaTrackSelection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<TrackPropertyCondition>> trackSelections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trackSelections"u8))
@@ -52,8 +93,38 @@ namespace Azure.ResourceManager.Media.Models
                     trackSelections = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaTrackSelection(Optional.ToList(trackSelections));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaTrackSelection(Optional.ToList(trackSelections), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaTrackSelection>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MediaTrackSelection IPersistableModel<MediaTrackSelection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MediaTrackSelection)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMediaTrackSelection(document.RootElement, options);
+        }
+
+        string IPersistableModel<MediaTrackSelection>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningKubernetesOnlineDeployment : IUtf8JsonSerializable
+    public partial class MachineLearningKubernetesOnlineDeployment : IUtf8JsonSerializable, IJsonModel<MachineLearningKubernetesOnlineDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningKubernetesOnlineDeployment>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MachineLearningKubernetesOnlineDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningKubernetesOnlineDeployment>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningKubernetesOnlineDeployment>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerResourceRequirements))
             {
@@ -98,6 +108,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("modelMountPath");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
                 }
             }
             if (Optional.IsDefined(ReadinessProbe))
@@ -208,11 +226,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningKubernetesOnlineDeployment DeserializeMachineLearningKubernetesOnlineDeployment(JsonElement element)
+        MachineLearningKubernetesOnlineDeployment IJsonModel<MachineLearningKubernetesOnlineDeployment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningKubernetesOnlineDeployment(document.RootElement, options);
+        }
+
+        internal static MachineLearningKubernetesOnlineDeployment DeserializeMachineLearningKubernetesOnlineDeployment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -235,6 +282,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerResourceRequirements"u8))
@@ -419,8 +468,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), dataCollector.Value, Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningKubernetesOnlineDeployment(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), serializedAdditionalRawData, Optional.ToNullable(appInsightsEnabled), dataCollector.Value, Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value, containerResourceRequirements.Value);
         }
+
+        BinaryData IPersistableModel<MachineLearningKubernetesOnlineDeployment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningKubernetesOnlineDeployment IPersistableModel<MachineLearningKubernetesOnlineDeployment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningKubernetesOnlineDeployment(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningKubernetesOnlineDeployment>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

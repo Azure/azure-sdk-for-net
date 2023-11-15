@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Result of AmlCompute Nodes. </summary>
     internal partial class AmlComputeNodesInformation
     {
-        /// <summary> Initializes a new instance of AmlComputeNodesInformation. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlComputeNodesInformation"/>. </summary>
         internal AmlComputeNodesInformation()
         {
             Nodes = new ChangeTrackingList<AmlComputeNodeInformation>();
         }
 
-        /// <summary> Initializes a new instance of AmlComputeNodesInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeNodesInformation"/>. </summary>
         /// <param name="nodes"> The collection of returned AmlCompute nodes details. </param>
         /// <param name="nextLink"> The continuation token. </param>
-        internal AmlComputeNodesInformation(IReadOnlyList<AmlComputeNodeInformation> nodes, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlComputeNodesInformation(IReadOnlyList<AmlComputeNodeInformation> nodes, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Nodes = nodes;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of returned AmlCompute nodes details. </summary>

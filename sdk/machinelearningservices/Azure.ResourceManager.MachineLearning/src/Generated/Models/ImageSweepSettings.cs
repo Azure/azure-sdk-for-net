@@ -5,29 +5,42 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Model sweeping and hyperparameter sweeping related settings. </summary>
     public partial class ImageSweepSettings
     {
-        /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
         public ImageSweepSettings(SamplingAlgorithmType samplingAlgorithm)
         {
             SamplingAlgorithm = samplingAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of ImageSweepSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/>. </summary>
         /// <param name="earlyTermination">
         /// Type of early termination policy.
         /// Please note <see cref="MachineLearningEarlyTerminationPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BanditPolicy"/>, <see cref="MedianStoppingPolicy"/> and <see cref="TruncationSelectionPolicy"/>.
         /// </param>
         /// <param name="samplingAlgorithm"> [Required] Type of the hyperparameter sampling algorithms. </param>
-        internal ImageSweepSettings(MachineLearningEarlyTerminationPolicy earlyTermination, SamplingAlgorithmType samplingAlgorithm)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageSweepSettings(MachineLearningEarlyTerminationPolicy earlyTermination, SamplingAlgorithmType samplingAlgorithm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EarlyTermination = earlyTermination;
             SamplingAlgorithm = samplingAlgorithm;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageSweepSettings"/> for deserialization. </summary>
+        internal ImageSweepSettings()
+        {
         }
 
         /// <summary>

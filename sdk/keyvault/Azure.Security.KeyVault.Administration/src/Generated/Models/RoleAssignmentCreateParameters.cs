@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Security.KeyVault.Administration;
 
@@ -14,7 +15,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role assignment create parameters. </summary>
     internal partial class RoleAssignmentCreateParameters
     {
-        /// <summary> Initializes a new instance of RoleAssignmentCreateParameters. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateParameters"/>. </summary>
         /// <param name="properties"> Role assignment properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RoleAssignmentCreateParameters(KeyVaultRoleAssignmentPropertiesInternal properties)
@@ -22,6 +26,20 @@ namespace Azure.Security.KeyVault.Administration.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateParameters"/>. </summary>
+        /// <param name="properties"> Role assignment properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentCreateParameters(KeyVaultRoleAssignmentPropertiesInternal properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentCreateParameters"/> for deserialization. </summary>
+        internal RoleAssignmentCreateParameters()
+        {
         }
 
         /// <summary> Role assignment properties. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> The list Kusto database principals operation response. </summary>
     internal partial class DatabasePrincipalListResult
     {
-        /// <summary> Initializes a new instance of DatabasePrincipalListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalListResult"/>. </summary>
         internal DatabasePrincipalListResult()
         {
             Value = new ChangeTrackingList<KustoDatabasePrincipal>();
         }
 
-        /// <summary> Initializes a new instance of DatabasePrincipalListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabasePrincipalListResult"/>. </summary>
         /// <param name="value"> The list of Kusto database principals. </param>
-        internal DatabasePrincipalListResult(IReadOnlyList<KustoDatabasePrincipal> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabasePrincipalListResult(IReadOnlyList<KustoDatabasePrincipal> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Kusto database principals. </summary>

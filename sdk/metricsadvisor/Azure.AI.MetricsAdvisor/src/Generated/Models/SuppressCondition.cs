@@ -5,10 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The SuppressCondition. </summary>
     public partial class SuppressCondition
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SuppressCondition"/>. </summary>
+        /// <param name="minimumNumber"> min point number, value range : [1, +∞). </param>
+        /// <param name="minimumRatio"> min point ratio, value range : (0, 100]. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SuppressCondition(int minimumNumber, double minimumRatio, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MinimumNumber = minimumNumber;
+            MinimumRatio = minimumRatio;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SuppressCondition"/> for deserialization. </summary>
+        internal SuppressCondition()
+        {
+        }
     }
 }

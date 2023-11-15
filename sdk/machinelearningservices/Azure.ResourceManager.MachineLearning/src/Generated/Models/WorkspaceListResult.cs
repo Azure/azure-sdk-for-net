@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The result of a request to list machine learning workspaces. </summary>
     internal partial class WorkspaceListResult
     {
-        /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
         internal WorkspaceListResult()
         {
             Value = new ChangeTrackingList<MachineLearningWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
         /// <param name="nextLink"> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </param>
         /// <param name="value"> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </param>
-        internal WorkspaceListResult(string nextLink, IReadOnlyList<MachineLearningWorkspaceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceListResult(string nextLink, IReadOnlyList<MachineLearningWorkspaceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </summary>

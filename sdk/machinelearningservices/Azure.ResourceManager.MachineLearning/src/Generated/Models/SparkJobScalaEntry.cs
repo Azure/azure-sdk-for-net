@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The SparkJobScalaEntry. </summary>
     public partial class SparkJobScalaEntry : SparkJobEntry
     {
-        /// <summary> Initializes a new instance of SparkJobScalaEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobScalaEntry"/>. </summary>
         /// <param name="className"> [Required] Scala class name used as entry point. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="className"/> is null. </exception>
         public SparkJobScalaEntry(string className)
@@ -24,13 +25,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SparkJobEntryType = SparkJobEntryType.SparkJobScalaEntry;
         }
 
-        /// <summary> Initializes a new instance of SparkJobScalaEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkJobScalaEntry"/>. </summary>
         /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="className"> [Required] Scala class name used as entry point. </param>
-        internal SparkJobScalaEntry(SparkJobEntryType sparkJobEntryType, string className) : base(sparkJobEntryType)
+        internal SparkJobScalaEntry(SparkJobEntryType sparkJobEntryType, IDictionary<string, BinaryData> serializedAdditionalRawData, string className) : base(sparkJobEntryType, serializedAdditionalRawData)
         {
             ClassName = className;
             SparkJobEntryType = sparkJobEntryType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkJobScalaEntry"/> for deserialization. </summary>
+        internal SparkJobScalaEntry()
+        {
         }
 
         /// <summary> [Required] Scala class name used as entry point. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> scale units definition. </summary>
     public partial class StreamingEntityScaleUnit
     {
-        /// <summary> Initializes a new instance of StreamingEntityScaleUnit. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEntityScaleUnit"/>. </summary>
         public StreamingEntityScaleUnit()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEntityScaleUnit"/>. </summary>
+        /// <param name="scaleUnit"> The scale unit number of the streaming endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEntityScaleUnit(int? scaleUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ScaleUnit = scaleUnit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The scale unit number of the streaming endpoint. </summary>

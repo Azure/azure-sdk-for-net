@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The result of update workspace quota. </summary>
     internal partial class UpdateWorkspaceQuotasResult
     {
-        /// <summary> Initializes a new instance of UpdateWorkspaceQuotasResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateWorkspaceQuotasResult"/>. </summary>
         internal UpdateWorkspaceQuotasResult()
         {
             Value = new ChangeTrackingList<MachineLearningWorkspaceQuotaUpdate>();
         }
 
-        /// <summary> Initializes a new instance of UpdateWorkspaceQuotasResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateWorkspaceQuotasResult"/>. </summary>
         /// <param name="value"> The list of workspace quota update result. </param>
         /// <param name="nextLink"> The URI to fetch the next page of workspace quota update result. Call ListNext() with this to fetch the next page of Workspace Quota update result. </param>
-        internal UpdateWorkspaceQuotasResult(IReadOnlyList<MachineLearningWorkspaceQuotaUpdate> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateWorkspaceQuotasResult(IReadOnlyList<MachineLearningWorkspaceQuotaUpdate> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of workspace quota update result. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Validation configuration properties. </summary>
     public partial class ValidateConfigurationContent
     {
-        /// <summary> Initializes a new instance of ValidateConfigurationContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateConfigurationContent"/>. </summary>
         public ValidateConfigurationContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ValidateConfigurationContent"/>. </summary>
+        /// <param name="validateAction"> Validate action that to be performed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateConfigurationContent(NetworkFabricValidateAction? validateAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ValidateAction = validateAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Validate action that to be performed. </summary>

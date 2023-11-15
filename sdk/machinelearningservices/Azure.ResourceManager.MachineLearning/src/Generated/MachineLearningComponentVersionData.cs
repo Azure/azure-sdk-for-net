@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningComponentVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningComponentVersionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionData"/>. </summary>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public MachineLearningComponentVersionData(MachineLearningComponentVersionProperties properties)
@@ -28,15 +32,22 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComponentVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        internal MachineLearningComponentVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningComponentVersionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComponentVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningComponentVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComponentVersionData"/> for deserialization. </summary>
+        internal MachineLearningComponentVersionData()
+        {
         }
 
         /// <summary> [Required] Additional attributes of the entity. </summary>

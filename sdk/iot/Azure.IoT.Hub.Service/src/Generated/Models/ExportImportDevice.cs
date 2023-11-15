@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,44 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The ExportImportDevice. </summary>
     public partial class ExportImportDevice
     {
-        /// <summary> Initializes a new instance of ExportImportDevice. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportImportDevice"/>. </summary>
         public ExportImportDevice()
         {
             Tags = new ChangeTrackingDictionary<string, object>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportImportDevice"/>. </summary>
+        /// <param name="id"> The unique identifier of the device. </param>
+        /// <param name="moduleId"> The unique identifier of the module, if applicable. </param>
+        /// <param name="eTag"> The string representing a weak ETag for the device RFC7232. The value is only used if import mode is updateIfMatchETag, in that case the import operation is performed only if this ETag matches the value maintained by the server. </param>
+        /// <param name="importMode"> The type of registry operation and ETag preferences. </param>
+        /// <param name="status"> The status of the module. If disabled, the module cannot connect to the service. </param>
+        /// <param name="statusReason"> The 128 character-long string that stores the reason for the device identity status. All UTF-8 characters are allowed. </param>
+        /// <param name="authentication"> The authentication mechanism used by the module. This parameter is optional and defaults to SAS if not provided. In that case, primary/secondary access keys are auto-generated. </param>
+        /// <param name="twinETag"> The string representing a weak ETag for the device twin RFC7232. The value is only used if import mode is updateIfMatchETag, in that case the import operation is performed only if this ETag matches the value maintained by the server. </param>
+        /// <param name="tags"> The JSON document read and written by the solution back end. The tags are not visible to device apps. </param>
+        /// <param name="properties"> The desired and reported properties for the device. </param>
+        /// <param name="capabilities"> The status of capabilities enabled on the device. </param>
+        /// <param name="deviceScope"> The scope of the device. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportImportDevice(string id, string moduleId, string eTag, ExportImportDeviceImportMode? importMode, ExportImportDeviceStatus? status, string statusReason, AuthenticationMechanism authentication, string twinETag, IDictionary<string, object> tags, PropertyContainer properties, DeviceCapabilities capabilities, string deviceScope, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            ModuleId = moduleId;
+            ETag = eTag;
+            ImportMode = importMode;
+            Status = status;
+            StatusReason = statusReason;
+            Authentication = authentication;
+            TwinETag = twinETag;
+            Tags = tags;
+            Properties = properties;
+            Capabilities = capabilities;
+            DeviceScope = deviceScope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier of the device. </summary>

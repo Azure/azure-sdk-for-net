@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Kusto.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Kusto
     /// </summary>
     public partial class KustoAttachedDatabaseConfigurationData : ResourceData
     {
-        /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoAttachedDatabaseConfigurationData"/>. </summary>
         public KustoAttachedDatabaseConfigurationData()
         {
             AttachedDatabaseNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoAttachedDatabaseConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoAttachedDatabaseConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
         /// <param name="databaseNameOverride"> Overrides the original database name. Relevant only when attaching to a specific database. </param>
         /// <param name="databaseNamePrefix"> Adds a prefix to the attached databases name. When following an entire cluster, that prefix would be added to all of the databases original names from leader cluster. </param>
-        internal KustoAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoProvisioningState? provisioningState, string databaseName, ResourceIdentifier clusterResourceId, IReadOnlyList<string> attachedDatabaseNames, KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string databaseNameOverride, string databaseNamePrefix) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoProvisioningState? provisioningState, string databaseName, ResourceIdentifier clusterResourceId, IReadOnlyList<string> attachedDatabaseNames, KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, string databaseNameOverride, string databaseNamePrefix, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -49,6 +54,7 @@ namespace Azure.ResourceManager.Kusto
             TableLevelSharingProperties = tableLevelSharingProperties;
             DatabaseNameOverride = databaseNameOverride;
             DatabaseNamePrefix = databaseNamePrefix;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource location. </summary>

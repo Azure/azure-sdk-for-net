@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Full backup operation. </summary>
     internal partial class FullBackupDetailsInternal
     {
-        /// <summary> Initializes a new instance of FullBackupDetailsInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FullBackupDetailsInternal"/>. </summary>
         internal FullBackupDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of FullBackupDetailsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="FullBackupDetailsInternal"/>. </summary>
         /// <param name="status"> Status of the backup operation. </param>
         /// <param name="statusDetails"> The status details of backup operation. </param>
         /// <param name="error"> Error encountered, if any, during the full backup operation. </param>
@@ -25,7 +29,8 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="endTime"> The end time of the backup operation in UTC. </param>
         /// <param name="jobId"> Identifier for the full backup operation. </param>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the full backup. </param>
-        internal FullBackupDetailsInternal(string status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FullBackupDetailsInternal(string status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -34,6 +39,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             EndTime = endTime;
             JobId = jobId;
             AzureStorageBlobContainerUri = azureStorageBlobContainerUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Status of the backup operation. </summary>

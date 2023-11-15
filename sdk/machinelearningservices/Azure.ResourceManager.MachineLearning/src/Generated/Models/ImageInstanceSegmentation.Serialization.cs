@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageInstanceSegmentation : IUtf8JsonSerializable
+    public partial class ImageInstanceSegmentation : IUtf8JsonSerializable, IJsonModel<ImageInstanceSegmentation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageInstanceSegmentation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ImageInstanceSegmentation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ImageInstanceSegmentation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ImageInstanceSegmentation>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryMetric))
             {
@@ -109,11 +119,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
             writer.WriteObjectValue(TrainingData);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageInstanceSegmentation DeserializeImageInstanceSegmentation(JsonElement element)
+        ImageInstanceSegmentation IJsonModel<ImageInstanceSegmentation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageInstanceSegmentation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageInstanceSegmentation(document.RootElement, options);
+        }
+
+        internal static ImageInstanceSegmentation DeserializeImageInstanceSegmentation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,6 +168,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMetric"u8))
@@ -229,8 +270,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageInstanceSegmentation(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageInstanceSegmentation(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
         }
+
+        BinaryData IPersistableModel<ImageInstanceSegmentation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageInstanceSegmentation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ImageInstanceSegmentation IPersistableModel<ImageInstanceSegmentation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ImageInstanceSegmentation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeImageInstanceSegmentation(document.RootElement, options);
+        }
+
+        string IPersistableModel<ImageInstanceSegmentation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

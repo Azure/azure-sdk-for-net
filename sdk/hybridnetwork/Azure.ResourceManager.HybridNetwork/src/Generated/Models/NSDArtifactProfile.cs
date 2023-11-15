@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Artifact profile properties. </summary>
     public partial class NSDArtifactProfile
     {
-        /// <summary> Initializes a new instance of NSDArtifactProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NSDArtifactProfile"/>. </summary>
         public NSDArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of NSDArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="NSDArtifactProfile"/>. </summary>
         /// <param name="artifactStoreReference"> The artifact store resource id. </param>
         /// <param name="artifactName"> Artifact name. </param>
         /// <param name="artifactVersion"> Artifact version. </param>
-        internal NSDArtifactProfile(WritableSubResource artifactStoreReference, string artifactName, string artifactVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NSDArtifactProfile(WritableSubResource artifactStoreReference, string artifactName, string artifactVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ArtifactStoreReference = artifactStoreReference;
             ArtifactName = artifactName;
             ArtifactVersion = artifactVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The artifact store resource id. </summary>

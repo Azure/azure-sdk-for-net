@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UserAssignedIdentityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UserAssignedIdentityRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new UserAssignedIdentityResource(Client, UserAssignedIdentityData.DeserializeUserAssignedIdentityData(e)), UserAssignedIdentityClientDiagnostics, Pipeline, "MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities", "value", "nextLink", cancellationToken);
         }
     }
 }

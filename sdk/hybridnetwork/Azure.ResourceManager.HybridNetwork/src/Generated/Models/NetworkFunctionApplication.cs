@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Network function application definition. </summary>
     public partial class NetworkFunctionApplication
     {
-        /// <summary> Initializes a new instance of NetworkFunctionApplication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionApplication"/>. </summary>
         public NetworkFunctionApplication()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkFunctionApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
-        internal NetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DependsOnProfile = dependsOnProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the network function application. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MachineLearningDistributionConfiguration
     {
-        /// <summary> Initializes a new instance of MachineLearningDistributionConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDistributionConfiguration"/>. </summary>
         protected MachineLearningDistributionConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
-        internal MachineLearningDistributionConfiguration(DistributionType distributionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DistributionType = distributionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the type of distribution framework. </summary>

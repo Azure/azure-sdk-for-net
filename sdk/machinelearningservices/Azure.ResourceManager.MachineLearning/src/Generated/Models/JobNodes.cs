@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class JobNodes
     {
-        /// <summary> Initializes a new instance of JobNodes. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobNodes"/>. </summary>
         protected JobNodes()
         {
         }
 
-        /// <summary> Initializes a new instance of JobNodes. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobNodes"/>. </summary>
         /// <param name="nodesValueType"> [Required] Type of the Nodes value. </param>
-        internal JobNodes(NodesValueType nodesValueType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobNodes(NodesValueType nodesValueType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NodesValueType = nodesValueType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Type of the Nodes value. </summary>

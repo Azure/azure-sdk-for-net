@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Package response returned after async package operation completes successfully. </summary>
     public partial class ModelPackageResult
     {
-        /// <summary> Initializes a new instance of ModelPackageResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ModelPackageResult"/>. </summary>
         internal ModelPackageResult()
         {
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ModelPackageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelPackageResult"/>. </summary>
         /// <param name="baseEnvironmentSource">
         /// Base environment to start with.
         /// Please note <see cref="Models.BaseEnvironmentSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="modelConfiguration"> Model configuration including the mount mode. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="targetEnvironmentId"> Asset ID of the target environment created by package operation. </param>
-        internal ModelPackageResult(BaseEnvironmentSource baseEnvironmentSource, string buildId, PackageBuildState? buildState, IReadOnlyDictionary<string, string> environmentVariables, InferencingServer inferencingServer, IReadOnlyList<ModelPackageInput> inputs, Uri logUri, ModelConfiguration modelConfiguration, IReadOnlyDictionary<string, string> tags, string targetEnvironmentId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ModelPackageResult(BaseEnvironmentSource baseEnvironmentSource, string buildId, PackageBuildState? buildState, IReadOnlyDictionary<string, string> environmentVariables, InferencingServer inferencingServer, IReadOnlyList<ModelPackageInput> inputs, Uri logUri, ModelConfiguration modelConfiguration, IReadOnlyDictionary<string, string> tags, string targetEnvironmentId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaseEnvironmentSource = baseEnvironmentSource;
             BuildId = buildId;
@@ -53,6 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ModelConfiguration = modelConfiguration;
             Tags = tags;
             TargetEnvironmentId = targetEnvironmentId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

@@ -5,21 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUsageName
+    public partial class MachineLearningUsageName : IUtf8JsonSerializable, IJsonModel<MachineLearningUsageName>
     {
-        internal static MachineLearningUsageName DeserializeMachineLearningUsageName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningUsageName>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MachineLearningUsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MachineLearningUsageName>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MachineLearningUsageName>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Value))
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteStringValue(Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LocalizedValue))
+                {
+                    writer.WritePropertyName("localizedValue"u8);
+                    writer.WriteStringValue(LocalizedValue);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningUsageName IJsonModel<MachineLearningUsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningUsageName)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningUsageName(document.RootElement, options);
+        }
+
+        internal static MachineLearningUsageName DeserializeMachineLearningUsageName(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> value = default;
             Optional<string> localizedValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,8 +96,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     localizedValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningUsageName(value.Value, localizedValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningUsageName(value.Value, localizedValue.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningUsageName>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningUsageName)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MachineLearningUsageName IPersistableModel<MachineLearningUsageName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MachineLearningUsageName)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMachineLearningUsageName(document.RootElement, options);
+        }
+
+        string IPersistableModel<MachineLearningUsageName>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

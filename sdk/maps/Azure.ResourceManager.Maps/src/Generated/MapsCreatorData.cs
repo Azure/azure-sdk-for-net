@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.Maps
     /// </summary>
     public partial class MapsCreatorData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MapsCreatorData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The Creator resource properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.Maps
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of MapsCreatorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,9 +41,16 @@ namespace Azure.ResourceManager.Maps
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The Creator resource properties. </param>
-        internal MapsCreatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsCreatorProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapsCreatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsCreatorProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapsCreatorData"/> for deserialization. </summary>
+        internal MapsCreatorData()
+        {
         }
 
         /// <summary> The Creator resource properties. </summary>

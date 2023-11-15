@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Customer Key vault properties. </summary>
     public partial class MachineLearningEncryptionKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
         /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyIdentifier"/> or <paramref name="keyVaultArmId"/> is null. </exception>
@@ -26,18 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             KeyVaultArmId = keyVaultArmId;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
         /// <param name="identityClientId">
         /// Currently, we support only SystemAssigned MSI.
         /// We need this when we support UserAssignedIdentities
         /// </param>
         /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
         /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
-        internal MachineLearningEncryptionKeyVaultProperties(string identityClientId, string keyIdentifier, ResourceIdentifier keyVaultArmId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEncryptionKeyVaultProperties(string identityClientId, string keyIdentifier, ResourceIdentifier keyVaultArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityClientId = identityClientId;
             KeyIdentifier = keyIdentifier;
             KeyVaultArmId = keyVaultArmId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/> for deserialization. </summary>
+        internal MachineLearningEncryptionKeyVaultProperties()
+        {
         }
 
         /// <summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The ServiceStatistics. </summary>
     public partial class ServiceStatistics
     {
-        /// <summary> Initializes a new instance of ServiceStatistics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceStatistics"/>. </summary>
         internal ServiceStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceStatistics"/>. </summary>
         /// <param name="connectedDeviceCount"> The number of currently connected devices. </param>
-        internal ServiceStatistics(long? connectedDeviceCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceStatistics(long? connectedDeviceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectedDeviceCount = connectedDeviceCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of currently connected devices. </summary>

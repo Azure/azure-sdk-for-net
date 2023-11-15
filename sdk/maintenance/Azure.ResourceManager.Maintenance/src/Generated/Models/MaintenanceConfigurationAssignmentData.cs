@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,12 +15,15 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Configuration Assignment. </summary>
     public partial class MaintenanceConfigurationAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentData"/>. </summary>
         public MaintenanceConfigurationAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,12 +32,14 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
         /// <param name="resourceId"> The unique resourceId. </param>
         /// <param name="filter"> Properties of the configuration assignment. </param>
-        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId, MaintenanceConfigurationAssignmentFilter filter) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId, MaintenanceConfigurationAssignmentFilter filter, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             MaintenanceConfigurationId = maintenanceConfigurationId;
             ResourceId = resourceId;
             Filter = filter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the resource. </summary>

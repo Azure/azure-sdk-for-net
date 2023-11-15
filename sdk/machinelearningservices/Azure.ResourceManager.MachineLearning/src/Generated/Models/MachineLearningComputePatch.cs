@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> AmlCompute update parameters. </summary>
     public partial class MachineLearningComputePatch
     {
-        /// <summary> Initializes a new instance of MachineLearningComputePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputePatch"/>. </summary>
         public MachineLearningComputePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputePatch"/>. </summary>
+        /// <param name="properties"> Properties of ClusterUpdate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputePatch(ScaleSettingsInformation properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of ClusterUpdate. </summary>

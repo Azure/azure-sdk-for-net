@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> A collection of assembly definitions. </summary>
     internal partial class IntegrationAccountAssemblyList
     {
-        /// <summary> Initializes a new instance of IntegrationAccountAssemblyList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAssemblyList"/>. </summary>
         internal IntegrationAccountAssemblyList()
         {
             Value = new ChangeTrackingList<IntegrationAccountAssemblyDefinitionData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAssemblyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAssemblyList"/>. </summary>
         /// <param name="value"></param>
-        internal IntegrationAccountAssemblyList(IReadOnlyList<IntegrationAccountAssemblyDefinitionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountAssemblyList(IReadOnlyList<IntegrationAccountAssemblyDefinitionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value. </summary>

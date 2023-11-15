@@ -6,13 +6,17 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The AS2 agreement mdn settings. </summary>
     public partial class AS2MdnSettings
     {
-        /// <summary> Initializes a new instance of AS2MdnSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AS2MdnSettings"/>. </summary>
         /// <param name="needMdn"> The value indicating whether to send or request a MDN. </param>
         /// <param name="signMdn"> The value indicating whether the MDN needs to be signed or not. </param>
         /// <param name="sendMdnAsynchronously"> The value indicating whether to send the asynchronous MDN. </param>
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
             MicHashingAlgorithm = micHashingAlgorithm;
         }
 
-        /// <summary> Initializes a new instance of AS2MdnSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AS2MdnSettings"/>. </summary>
         /// <param name="needMdn"> The value indicating whether to send or request a MDN. </param>
         /// <param name="signMdn"> The value indicating whether the MDN needs to be signed or not. </param>
         /// <param name="sendMdnAsynchronously"> The value indicating whether to send the asynchronous MDN. </param>
@@ -39,7 +43,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="mdnText"> The MDN text. </param>
         /// <param name="sendInboundMdnToMessageBox"> The value indicating whether to send inbound MDN to message box. </param>
         /// <param name="micHashingAlgorithm"> The signing or hashing algorithm. </param>
-        internal AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, Uri receiptDeliveryUri, string dispositionNotificationTo, bool signOutboundMdnIfOptional, string mdnText, bool sendInboundMdnToMessageBox, AS2HashingAlgorithm micHashingAlgorithm)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AS2MdnSettings(bool needMdn, bool signMdn, bool sendMdnAsynchronously, Uri receiptDeliveryUri, string dispositionNotificationTo, bool signOutboundMdnIfOptional, string mdnText, bool sendInboundMdnToMessageBox, AS2HashingAlgorithm micHashingAlgorithm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NeedMdn = needMdn;
             SignMdn = signMdn;
@@ -50,6 +55,12 @@ namespace Azure.ResourceManager.Logic.Models
             MdnText = mdnText;
             SendInboundMdnToMessageBox = sendInboundMdnToMessageBox;
             MicHashingAlgorithm = micHashingAlgorithm;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2MdnSettings"/> for deserialization. </summary>
+        internal AS2MdnSettings()
+        {
         }
 
         /// <summary> The value indicating whether to send or request a MDN. </summary>

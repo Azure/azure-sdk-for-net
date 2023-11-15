@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteNetworkServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteNetworkServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), _siteNetworkServiceClientDiagnostics, Pipeline, "SiteNetworkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), _siteNetworkServiceClientDiagnostics, Pipeline, "SiteNetworkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteNetworkServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteNetworkServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), _siteNetworkServiceClientDiagnostics, Pipeline, "SiteNetworkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), _siteNetworkServiceClientDiagnostics, Pipeline, "SiteNetworkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

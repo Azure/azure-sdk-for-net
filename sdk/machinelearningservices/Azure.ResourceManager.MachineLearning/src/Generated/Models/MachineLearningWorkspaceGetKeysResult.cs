@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceGetKeysResult. </summary>
     public partial class MachineLearningWorkspaceGetKeysResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetKeysResult"/>. </summary>
         internal MachineLearningWorkspaceGetKeysResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceGetKeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceGetKeysResult"/>. </summary>
         /// <param name="appInsightsInstrumentationKey"> The access key of the workspace app insights. </param>
         /// <param name="containerRegistryCredentials"></param>
         /// <param name="notebookAccessKeys"></param>
         /// <param name="userStorageResourceId"> The arm Id key of the workspace storage. </param>
         /// <param name="userStorageKey"> The access key of the workspace storage. </param>
-        internal MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys, string userStorageResourceId, string userStorageKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys, string userStorageResourceId, string userStorageKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppInsightsInstrumentationKey = appInsightsInstrumentationKey;
             ContainerRegistryCredentials = containerRegistryCredentials;
             NotebookAccessKeys = notebookAccessKeys;
             UserStorageResourceId = userStorageResourceId;
             UserStorageKey = userStorageKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The access key of the workspace app insights. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account AS2 one-way agreement. </summary>
     public partial class AS2OneWayAgreement
     {
-        /// <summary> Initializes a new instance of AS2OneWayAgreement. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AS2OneWayAgreement"/>. </summary>
         /// <param name="senderBusinessIdentity"> The sender business identity. </param>
         /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
         /// <param name="protocolSettings"> The AS2 protocol settings. </param>
@@ -27,6 +31,24 @@ namespace Azure.ResourceManager.Logic.Models
             SenderBusinessIdentity = senderBusinessIdentity;
             ReceiverBusinessIdentity = receiverBusinessIdentity;
             ProtocolSettings = protocolSettings;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2OneWayAgreement"/>. </summary>
+        /// <param name="senderBusinessIdentity"> The sender business identity. </param>
+        /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
+        /// <param name="protocolSettings"> The AS2 protocol settings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AS2OneWayAgreement(IntegrationAccountBusinessIdentity senderBusinessIdentity, IntegrationAccountBusinessIdentity receiverBusinessIdentity, AS2ProtocolSettings protocolSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SenderBusinessIdentity = senderBusinessIdentity;
+            ReceiverBusinessIdentity = receiverBusinessIdentity;
+            ProtocolSettings = protocolSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AS2OneWayAgreement"/> for deserialization. </summary>
+        internal AS2OneWayAgreement()
+        {
         }
 
         /// <summary> The sender business identity. </summary>

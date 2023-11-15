@@ -5,14 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class PendingUploadCredentialDto
+    [PersistableModelProxy(typeof(UnknownPendingUploadCredentialDto))]
+    public partial class PendingUploadCredentialDto : IUtf8JsonSerializable, IJsonModel<PendingUploadCredentialDto>
     {
-        internal static PendingUploadCredentialDto DeserializePendingUploadCredentialDto(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PendingUploadCredentialDto>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PendingUploadCredentialDto>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PendingUploadCredentialDto>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PendingUploadCredentialDto>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("credentialType"u8);
+            writer.WriteStringValue(CredentialType.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PendingUploadCredentialDto IJsonModel<PendingUploadCredentialDto>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PendingUploadCredentialDto)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePendingUploadCredentialDto(document.RootElement, options);
+        }
+
+        internal static PendingUploadCredentialDto DeserializePendingUploadCredentialDto(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,5 +75,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return UnknownPendingUploadCredentialDto.DeserializeUnknownPendingUploadCredentialDto(element);
         }
+
+        BinaryData IPersistableModel<PendingUploadCredentialDto>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PendingUploadCredentialDto)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PendingUploadCredentialDto IPersistableModel<PendingUploadCredentialDto>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PendingUploadCredentialDto)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePendingUploadCredentialDto(document.RootElement, options);
+        }
+
+        string IPersistableModel<PendingUploadCredentialDto>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

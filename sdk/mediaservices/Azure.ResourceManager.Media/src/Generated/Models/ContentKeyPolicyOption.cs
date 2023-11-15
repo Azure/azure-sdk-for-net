@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents a policy option. </summary>
     public partial class ContentKeyPolicyOption
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyOption. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyOption"/>. </summary>
         /// <param name="configuration">
         /// The key delivery configuration.
         /// Please note <see cref="ContentKeyPolicyConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.Media.Models
             Restriction = restriction;
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyOption"/>. </summary>
         /// <param name="policyOptionId"> The legacy Policy Option ID. </param>
         /// <param name="name"> The Policy Option description. </param>
         /// <param name="configuration">
@@ -47,12 +51,19 @@ namespace Azure.ResourceManager.Media.Models
         /// Please note <see cref="ContentKeyPolicyRestriction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContentKeyPolicyOpenRestriction"/>, <see cref="ContentKeyPolicyTokenRestriction"/> and <see cref="ContentKeyPolicyUnknownRestriction"/>.
         /// </param>
-        internal ContentKeyPolicyOption(Guid? policyOptionId, string name, ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyOption(Guid? policyOptionId, string name, ContentKeyPolicyConfiguration configuration, ContentKeyPolicyRestriction restriction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyOptionId = policyOptionId;
             Name = name;
             Configuration = configuration;
             Restriction = restriction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyOption"/> for deserialization. </summary>
+        internal ContentKeyPolicyOption()
+        {
         }
 
         /// <summary> The legacy Policy Option ID. </summary>

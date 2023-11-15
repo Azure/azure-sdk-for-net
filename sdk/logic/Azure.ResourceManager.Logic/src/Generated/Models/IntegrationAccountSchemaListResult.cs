@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Logic;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The list of integration account schemas. </summary>
     internal partial class IntegrationAccountSchemaListResult
     {
-        /// <summary> Initializes a new instance of IntegrationAccountSchemaListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSchemaListResult"/>. </summary>
         internal IntegrationAccountSchemaListResult()
         {
             Value = new ChangeTrackingList<IntegrationAccountSchemaData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountSchemaListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSchemaListResult"/>. </summary>
         /// <param name="value"> The list of integration account schemas. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal IntegrationAccountSchemaListResult(IReadOnlyList<IntegrationAccountSchemaData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountSchemaListResult(IReadOnlyList<IntegrationAccountSchemaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of integration account schemas. </summary>

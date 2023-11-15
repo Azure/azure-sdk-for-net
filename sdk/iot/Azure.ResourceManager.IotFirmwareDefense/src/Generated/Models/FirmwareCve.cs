@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Known CVEs of a firmware. </summary>
     public partial class FirmwareCve
     {
-        /// <summary> Initializes a new instance of FirmwareCve. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareCve"/>. </summary>
         internal FirmwareCve()
         {
             Links = new ChangeTrackingList<CveLink>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareCve. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCve"/>. </summary>
         /// <param name="cveId"> ID of CVE. </param>
         /// <param name="component"> Component of CVE. </param>
         /// <param name="severity"> Severity of CVE. </param>
@@ -33,7 +36,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="updatedOn"> Updated date of CVE. </param>
         /// <param name="links"> The list of CVE links. </param>
         /// <param name="description"> Description of CVE. </param>
-        internal FirmwareCve(string cveId, BinaryData component, string severity, string name, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, DateTimeOffset? publishOn, DateTimeOffset? updatedOn, IReadOnlyList<CveLink> links, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareCve(string cveId, BinaryData component, string severity, string name, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, DateTimeOffset? publishOn, DateTimeOffset? updatedOn, IReadOnlyList<CveLink> links, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CveId = cveId;
             Component = component;
@@ -47,6 +51,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             UpdatedOn = updatedOn;
             Links = links;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of CVE. </summary>

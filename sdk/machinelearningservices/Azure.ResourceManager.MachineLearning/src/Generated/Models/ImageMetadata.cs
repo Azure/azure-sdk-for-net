@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Returns metadata about the operating system image for this compute instance. </summary>
     public partial class ImageMetadata
     {
-        /// <summary> Initializes a new instance of ImageMetadata. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageMetadata"/>. </summary>
         internal ImageMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageMetadata"/>. </summary>
         /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
         /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
         /// <param name="isLatestOSImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
-        internal ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOSImageVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOSImageVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentImageVersion = currentImageVersion;
             LatestImageVersion = latestImageVersion;
             IsLatestOSImageVersion = isLatestOSImageVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the current operating system image version this compute instance is running on. </summary>

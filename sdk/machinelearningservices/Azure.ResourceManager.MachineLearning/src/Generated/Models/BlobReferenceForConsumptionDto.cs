@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,12 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The BlobReferenceForConsumptionDto. </summary>
     public partial class BlobReferenceForConsumptionDto
     {
-        /// <summary> Initializes a new instance of BlobReferenceForConsumptionDto. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceForConsumptionDto"/>. </summary>
         internal BlobReferenceForConsumptionDto()
         {
         }
 
-        /// <summary> Initializes a new instance of BlobReferenceForConsumptionDto. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceForConsumptionDto"/>. </summary>
         /// <param name="blobUri">
         /// Blob URI path for client to upload data.
         /// Example: https://blob.windows.core.net/Container/Path
@@ -29,11 +33,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="SasCredentialDto"/>.
         /// </param>
         /// <param name="storageAccountArmId"> Arm ID of the storage account to use. </param>
-        internal BlobReferenceForConsumptionDto(Uri blobUri, PendingUploadCredentialDto credential, ResourceIdentifier storageAccountArmId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobReferenceForConsumptionDto(Uri blobUri, PendingUploadCredentialDto credential, ResourceIdentifier storageAccountArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlobUri = blobUri;
             Credential = credential;
             StorageAccountArmId = storageAccountArmId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

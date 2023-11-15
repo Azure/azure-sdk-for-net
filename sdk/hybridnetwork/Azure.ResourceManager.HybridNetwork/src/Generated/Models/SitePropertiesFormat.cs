@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,14 +15,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Site properties. </summary>
     public partial class SitePropertiesFormat
     {
-        /// <summary> Initializes a new instance of SitePropertiesFormat. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SitePropertiesFormat"/>. </summary>
         public SitePropertiesFormat()
         {
             Nfvis = new ChangeTrackingList<NFVIs>();
             SiteNetworkServiceReferences = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of SitePropertiesFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="SitePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </param>
         /// <param name="nfvis">
         /// List of NFVIs
@@ -29,11 +33,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
         /// </param>
         /// <param name="siteNetworkServiceReferences"> The list of site network services on the site. </param>
-        internal SitePropertiesFormat(ProvisioningState? provisioningState, IList<NFVIs> nfvis, IReadOnlyList<WritableSubResource> siteNetworkServiceReferences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SitePropertiesFormat(ProvisioningState? provisioningState, IList<NFVIs> nfvis, IReadOnlyList<WritableSubResource> siteNetworkServiceReferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Nfvis = nfvis;
             SiteNetworkServiceReferences = siteNetworkServiceReferences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </summary>

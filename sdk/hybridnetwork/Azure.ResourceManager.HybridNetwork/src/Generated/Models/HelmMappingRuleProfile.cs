@@ -5,29 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm mapping rule profile. </summary>
     public partial class HelmMappingRuleProfile
     {
-        /// <summary> Initializes a new instance of HelmMappingRuleProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfile"/>. </summary>
         public HelmMappingRuleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmMappingRuleProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfile"/>. </summary>
         /// <param name="releaseNamespace"> Helm release namespace. </param>
         /// <param name="releaseName"> Helm release name. </param>
         /// <param name="helmPackageVersion"> Helm package version. </param>
         /// <param name="values"> Helm release values. </param>
         /// <param name="options"> The helm deployment options. </param>
-        internal HelmMappingRuleProfile(string releaseNamespace, string releaseName, string helmPackageVersion, string values, HelmMappingRuleProfileConfig options)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HelmMappingRuleProfile(string releaseNamespace, string releaseName, string helmPackageVersion, string values, HelmMappingRuleProfileConfig options, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReleaseNamespace = releaseNamespace;
             ReleaseName = releaseName;
             HelmPackageVersion = helmPackageVersion;
             Values = values;
             Options = options;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Helm release namespace. </summary>

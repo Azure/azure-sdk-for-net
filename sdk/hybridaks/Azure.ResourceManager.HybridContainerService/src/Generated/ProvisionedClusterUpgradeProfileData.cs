@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class ProvisionedClusterUpgradeProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProvisionedClusterUpgradeProfileData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
         /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
         /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneProfile"/> or <paramref name="agentPoolProfiles"/> is null. </exception>
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.HybridContainerService
             AgentPoolProfiles = agentPoolProfiles.ToList();
         }
 
-        /// <summary> Initializes a new instance of ProvisionedClusterUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,11 +44,18 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="provisioningState"></param>
         /// <param name="controlPlaneProfile"> The list of available upgrade versions for the control plane. </param>
         /// <param name="agentPoolProfiles"> The list of available upgrade versions for agent pools. </param>
-        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, ProvisionedClusterPoolUpgradeProfile controlPlaneProfile, IList<ProvisionedClusterPoolUpgradeProfile> agentPoolProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ControlPlaneProfile = controlPlaneProfile;
             AgentPoolProfiles = agentPoolProfiles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterUpgradeProfileData"/> for deserialization. </summary>
+        internal ProvisionedClusterUpgradeProfileData()
+        {
         }
 
         /// <summary> Gets the provisioning state. </summary>

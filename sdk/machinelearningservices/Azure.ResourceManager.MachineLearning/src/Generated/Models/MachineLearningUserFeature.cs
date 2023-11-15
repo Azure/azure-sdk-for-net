@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Features enabled for a workspace. </summary>
     public partial class MachineLearningUserFeature
     {
-        /// <summary> Initializes a new instance of MachineLearningUserFeature. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUserFeature"/>. </summary>
         internal MachineLearningUserFeature()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUserFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUserFeature"/>. </summary>
         /// <param name="id"> Specifies the feature ID. </param>
         /// <param name="displayName"> Specifies the feature name. </param>
         /// <param name="description"> Describes the feature for user experience. </param>
-        internal MachineLearningUserFeature(string id, string displayName, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningUserFeature(string id, string displayName, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             DisplayName = displayName;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the feature ID. </summary>

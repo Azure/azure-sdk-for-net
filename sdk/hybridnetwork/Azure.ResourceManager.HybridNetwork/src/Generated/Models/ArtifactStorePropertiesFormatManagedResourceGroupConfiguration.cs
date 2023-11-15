@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -12,18 +14,23 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> The ArtifactStorePropertiesFormatManagedResourceGroupConfiguration. </summary>
     public partial class ArtifactStorePropertiesFormatManagedResourceGroupConfiguration
     {
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormatManagedResourceGroupConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormatManagedResourceGroupConfiguration"/>. </summary>
         public ArtifactStorePropertiesFormatManagedResourceGroupConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactStorePropertiesFormatManagedResourceGroupConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormatManagedResourceGroupConfiguration"/>. </summary>
         /// <param name="name"> The managed resource group name. </param>
         /// <param name="location"> The managed resource group location. </param>
-        internal ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(string name, AzureLocation? location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed resource group name. </summary>

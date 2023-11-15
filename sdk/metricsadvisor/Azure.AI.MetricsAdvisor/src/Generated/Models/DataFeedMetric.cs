@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -13,17 +14,27 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The Metric. </summary>
     public partial class DataFeedMetric
     {
-        /// <summary> Initializes a new instance of DataFeedMetric. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFeedMetric"/>. </summary>
         /// <param name="id"> metric id. </param>
         /// <param name="name"> metric name. </param>
         /// <param name="displayName"> metric display name. </param>
         /// <param name="description"> metric description. </param>
-        internal DataFeedMetric(string id, string name, string displayName, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFeedMetric(string id, string name, string displayName, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             DisplayName = displayName;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFeedMetric"/> for deserialization. </summary>
+        internal DataFeedMetric()
+        {
         }
     }
 }

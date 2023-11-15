@@ -6,15 +6,92 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class MigrationClusterProperties
+    public partial class MigrationClusterProperties : IUtf8JsonSerializable, IJsonModel<MigrationClusterProperties>
     {
-        internal static MigrationClusterProperties DeserializeMigrationClusterProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationClusterProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MigrationClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MigrationClusterProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MigrationClusterProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    writer.WritePropertyName("uri"u8);
+                    writer.WriteStringValue(Uri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataIngestionUri))
+                {
+                    writer.WritePropertyName("dataIngestionUri"u8);
+                    writer.WriteStringValue(DataIngestionUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Role))
+                {
+                    writer.WritePropertyName("role"u8);
+                    writer.WriteStringValue(Role.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrationClusterProperties IJsonModel<MigrationClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrationClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrationClusterProperties(document.RootElement, options);
+        }
+
+        internal static MigrationClusterProperties DeserializeMigrationClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +100,8 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<Uri> uri = default;
             Optional<Uri> dataIngestionUri = default;
             Optional<MigrationClusterRole> role = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -57,8 +136,38 @@ namespace Azure.ResourceManager.Kusto.Models
                     role = new MigrationClusterRole(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrationClusterProperties(id.Value, uri.Value, dataIngestionUri.Value, Optional.ToNullable(role));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrationClusterProperties(id.Value, uri.Value, dataIngestionUri.Value, Optional.ToNullable(role), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MigrationClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrationClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MigrationClusterProperties IPersistableModel<MigrationClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MigrationClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMigrationClusterProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<MigrationClusterProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

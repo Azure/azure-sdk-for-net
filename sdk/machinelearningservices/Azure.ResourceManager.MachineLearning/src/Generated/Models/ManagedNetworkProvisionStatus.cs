@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Status of the Provisioning for the managed network of a machine learning workspace. </summary>
     public partial class ManagedNetworkProvisionStatus
     {
-        /// <summary> Initializes a new instance of ManagedNetworkProvisionStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionStatus"/>. </summary>
         public ManagedNetworkProvisionStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkProvisionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionStatus"/>. </summary>
         /// <param name="sparkReady"></param>
         /// <param name="status"> Status for the managed network of a machine learning workspace. </param>
-        internal ManagedNetworkProvisionStatus(bool? sparkReady, ManagedNetworkStatus? status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedNetworkProvisionStatus(bool? sparkReady, ManagedNetworkStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SparkReady = sparkReady;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the spark ready. </summary>

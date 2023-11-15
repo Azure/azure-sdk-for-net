@@ -6,19 +6,39 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IngestionStatusQueryOptions. </summary>
     internal partial class IngestionStatusQueryOptions
     {
-        /// <summary> Initializes a new instance of IngestionStatusQueryOptions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IngestionStatusQueryOptions"/>. </summary>
         /// <param name="startTime"> the start point of time range to query data ingestion status. </param>
         /// <param name="endTime"> the end point of time range to query data ingestion status. </param>
         public IngestionStatusQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime)
         {
             StartTime = startTime;
             EndTime = endTime;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IngestionStatusQueryOptions"/>. </summary>
+        /// <param name="startTime"> the start point of time range to query data ingestion status. </param>
+        /// <param name="endTime"> the end point of time range to query data ingestion status. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IngestionStatusQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IngestionStatusQueryOptions"/> for deserialization. </summary>
+        internal IngestionStatusQueryOptions()
+        {
         }
 
         /// <summary> the start point of time range to query data ingestion status. </summary>

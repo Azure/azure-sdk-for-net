@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Akamai Signature Header authentication key. </summary>
     public partial class AkamaiSignatureHeaderAuthenticationKey
     {
-        /// <summary> Initializes a new instance of AkamaiSignatureHeaderAuthenticationKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AkamaiSignatureHeaderAuthenticationKey"/>. </summary>
         public AkamaiSignatureHeaderAuthenticationKey()
         {
         }
 
-        /// <summary> Initializes a new instance of AkamaiSignatureHeaderAuthenticationKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="AkamaiSignatureHeaderAuthenticationKey"/>. </summary>
         /// <param name="identifier"> identifier of the key. </param>
         /// <param name="base64Key"> authentication key. </param>
         /// <param name="expireOn"> The expiration time of the authentication key. </param>
-        internal AkamaiSignatureHeaderAuthenticationKey(string identifier, string base64Key, DateTimeOffset? expireOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AkamaiSignatureHeaderAuthenticationKey(string identifier, string base64Key, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identifier = identifier;
             Base64Key = base64Key;
             ExpireOn = expireOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> identifier of the key. </summary>

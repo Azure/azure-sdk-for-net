@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,29 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A set of rules governing the network accessibility of a managed hsm pool. </summary>
     public partial class ManagedHsmNetworkRuleSet
     {
-        /// <summary> Initializes a new instance of ManagedHsmNetworkRuleSet. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmNetworkRuleSet"/>. </summary>
         public ManagedHsmNetworkRuleSet()
         {
             IPRules = new ChangeTrackingList<ManagedHsmIPRule>();
             VirtualNetworkRules = new ChangeTrackingList<ManagedHsmVirtualNetworkRule>();
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmNetworkRuleSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmNetworkRuleSet"/>. </summary>
         /// <param name="bypass"> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </param>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
-        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHsmNetworkRuleSet(ManagedHsmNetworkRuleBypassOption? bypass, ManagedHsmNetworkRuleAction? defaultAction, IList<ManagedHsmIPRule> ipRules, IList<ManagedHsmVirtualNetworkRule> virtualNetworkRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
             IPRules = ipRules;
             VirtualNetworkRules = virtualNetworkRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </summary>

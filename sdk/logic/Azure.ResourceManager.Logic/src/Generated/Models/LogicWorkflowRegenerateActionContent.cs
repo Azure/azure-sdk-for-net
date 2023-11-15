@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The access key regenerate action content. </summary>
     public partial class LogicWorkflowRegenerateActionContent
     {
-        /// <summary> Initializes a new instance of LogicWorkflowRegenerateActionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRegenerateActionContent"/>. </summary>
         public LogicWorkflowRegenerateActionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowRegenerateActionContent"/>. </summary>
+        /// <param name="keyType"> The key type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowRegenerateActionContent(LogicKeyType? keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyType = keyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The key type. </summary>

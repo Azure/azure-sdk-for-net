@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class MonitoringAlertNotificationSettingsBase
     {
-        /// <summary> Initializes a new instance of MonitoringAlertNotificationSettingsBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MonitoringAlertNotificationSettingsBase"/>. </summary>
         protected MonitoringAlertNotificationSettingsBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitoringAlertNotificationSettingsBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitoringAlertNotificationSettingsBase"/>. </summary>
         /// <param name="alertNotificationType"> [Required] Specifies the type of signal to monitor. </param>
-        internal MonitoringAlertNotificationSettingsBase(MonitoringAlertNotificationType alertNotificationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitoringAlertNotificationSettingsBase(MonitoringAlertNotificationType alertNotificationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertNotificationType = alertNotificationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Specifies the type of signal to monitor. </summary>

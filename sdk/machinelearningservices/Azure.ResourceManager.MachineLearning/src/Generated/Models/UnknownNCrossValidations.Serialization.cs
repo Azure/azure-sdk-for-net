@@ -5,28 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownNCrossValidations : IUtf8JsonSerializable
+    internal partial class UnknownNCrossValidations : IUtf8JsonSerializable, IJsonModel<NCrossValidations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NCrossValidations>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NCrossValidations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NCrossValidations>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NCrossValidations>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownNCrossValidations DeserializeUnknownNCrossValidations(JsonElement element)
+        NCrossValidations IJsonModel<NCrossValidations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NCrossValidations)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownNCrossValidations(document.RootElement, options);
+        }
+
+        internal static UnknownNCrossValidations DeserializeUnknownNCrossValidations(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             NCrossValidationsMode mode = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -34,8 +76,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mode = new NCrossValidationsMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownNCrossValidations(mode);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownNCrossValidations(mode, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NCrossValidations>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NCrossValidations)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NCrossValidations IPersistableModel<NCrossValidations>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NCrossValidations)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownNCrossValidations(document.RootElement, options);
+        }
+
+        string IPersistableModel<NCrossValidations>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

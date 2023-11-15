@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.LabServices.Models;
@@ -14,17 +16,151 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    public partial class LabVirtualMachineImageData : IUtf8JsonSerializable
+    public partial class LabVirtualMachineImageData : IUtf8JsonSerializable, IJsonModel<LabVirtualMachineImageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineImageData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LabVirtualMachineImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LabVirtualMachineImageData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LabVirtualMachineImageData>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToSerialString());
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    writer.WritePropertyName("displayName"u8);
+                    writer.WriteStringValue(DisplayName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    writer.WritePropertyName("description"u8);
+                    writer.WriteStringValue(Description);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IconUri))
+                {
+                    writer.WritePropertyName("iconUrl"u8);
+                    writer.WriteStringValue(IconUri.AbsoluteUri);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Author))
+                {
+                    writer.WritePropertyName("author"u8);
+                    writer.WriteStringValue(Author);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSType))
+                {
+                    writer.WritePropertyName("osType"u8);
+                    writer.WriteStringValue(OSType.Value.ToSerialString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Plan))
+                {
+                    writer.WritePropertyName("plan"u8);
+                    writer.WriteStringValue(Plan);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TermsStatus))
+                {
+                    writer.WritePropertyName("termsStatus"u8);
+                    writer.WriteStringValue(TermsStatus.Value.ToSerialString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Offer))
+                {
+                    writer.WritePropertyName("offer"u8);
+                    writer.WriteStringValue(Offer);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Publisher))
+                {
+                    writer.WritePropertyName("publisher"u8);
+                    writer.WriteStringValue(Publisher);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Sku))
+                {
+                    writer.WritePropertyName("sku"u8);
+                    writer.WriteStringValue(Sku);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    writer.WritePropertyName("version"u8);
+                    writer.WriteStringValue(Version);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SharedGalleryId))
+                {
+                    writer.WritePropertyName("sharedGalleryId"u8);
+                    writer.WriteStringValue(SharedGalleryId);
+                }
             }
             if (Optional.IsCollectionDefined(AvailableRegions))
             {
@@ -36,12 +172,49 @@ namespace Azure.ResourceManager.LabServices
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSState))
+                {
+                    writer.WritePropertyName("osState"u8);
+                    writer.WriteStringValue(OSState.Value.ToSerialString());
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LabVirtualMachineImageData DeserializeLabVirtualMachineImageData(JsonElement element)
+        LabVirtualMachineImageData IJsonModel<LabVirtualMachineImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabVirtualMachineImageData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabVirtualMachineImageData(document.RootElement, options);
+        }
+
+        internal static LabVirtualMachineImageData DeserializeLabVirtualMachineImageData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +239,8 @@ namespace Azure.ResourceManager.LabServices
             Optional<ResourceIdentifier> sharedGalleryId = default;
             Optional<IList<AzureLocation>> availableRegions = default;
             Optional<LabVirtualMachineImageOSState> osState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -221,8 +396,38 @@ namespace Azure.ResourceManager.LabServices
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LabVirtualMachineImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, Optional.ToList(availableRegions), Optional.ToNullable(osState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LabVirtualMachineImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, Optional.ToList(availableRegions), Optional.ToNullable(osState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LabVirtualMachineImageData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabVirtualMachineImageData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LabVirtualMachineImageData IPersistableModel<LabVirtualMachineImageData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LabVirtualMachineImageData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLabVirtualMachineImageData(document.RootElement, options);
+        }
+
+        string IPersistableModel<LabVirtualMachineImageData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

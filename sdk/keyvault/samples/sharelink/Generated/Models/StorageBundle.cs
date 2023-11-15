@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> A Storage account bundle consists of key vault storage account details plus its attributes. </summary>
     public partial class StorageBundle
     {
-        /// <summary> Initializes a new instance of StorageBundle. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageBundle"/>. </summary>
         internal StorageBundle()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of StorageBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageBundle"/>. </summary>
         /// <param name="id"> The storage account id. </param>
         /// <param name="resourceId"> The storage account resource id. </param>
         /// <param name="activeKeyName"> The current active storage account key name. </param>
@@ -27,7 +31,8 @@ namespace Azure.Security.KeyVault.Storage.Models
         /// <param name="regenerationPeriod"> The key regeneration time duration specified in ISO-8601 format. </param>
         /// <param name="attributes"> The storage account attributes. </param>
         /// <param name="tags"> Application specific metadata in the form of key-value pairs. </param>
-        internal StorageBundle(string id, string resourceId, string activeKeyName, bool? autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes attributes, IReadOnlyDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageBundle(string id, string resourceId, string activeKeyName, bool? autoRegenerateKey, string regenerationPeriod, StorageAccountAttributes attributes, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResourceId = resourceId;
@@ -36,6 +41,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             RegenerationPeriod = regenerationPeriod;
             Attributes = attributes;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The storage account id. </summary>

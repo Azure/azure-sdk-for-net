@@ -5,18 +5,44 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class NetworkServiceDesignVersionPropertiesFormat : IUtf8JsonSerializable
+    public partial class NetworkServiceDesignVersionPropertiesFormat : IUtf8JsonSerializable, IJsonModel<NetworkServiceDesignVersionPropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkServiceDesignVersionPropertiesFormat>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<NetworkServiceDesignVersionPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<NetworkServiceDesignVersionPropertiesFormat>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(VersionState))
+                {
+                    writer.WritePropertyName("versionState"u8);
+                    writer.WriteStringValue(VersionState.Value.ToString());
+                }
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -54,11 +80,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkServiceDesignVersionPropertiesFormat DeserializeNetworkServiceDesignVersionPropertiesFormat(JsonElement element)
+        NetworkServiceDesignVersionPropertiesFormat IJsonModel<NetworkServiceDesignVersionPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkServiceDesignVersionPropertiesFormat(document.RootElement, options);
+        }
+
+        internal static NetworkServiceDesignVersionPropertiesFormat DeserializeNetworkServiceDesignVersionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -69,6 +124,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<IDictionary<string, WritableSubResource>> configurationGroupSchemaReferences = default;
             Optional<IDictionary<string, NfviDetails>> nfvisFromSite = default;
             Optional<IList<ResourceElementTemplate>> resourceElementTemplates = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -136,8 +193,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     resourceElementTemplates = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkServiceDesignVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, Optional.ToDictionary(configurationGroupSchemaReferences), Optional.ToDictionary(nfvisFromSite), Optional.ToList(resourceElementTemplates));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkServiceDesignVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, Optional.ToDictionary(configurationGroupSchemaReferences), Optional.ToDictionary(nfvisFromSite), Optional.ToList(resourceElementTemplates), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        NetworkServiceDesignVersionPropertiesFormat IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeNetworkServiceDesignVersionPropertiesFormat(document.RootElement, options);
+        }
+
+        string IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

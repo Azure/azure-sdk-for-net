@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Properties of Azure Container Registry. </summary>
     internal partial class ContainerRegistryProperties
     {
-        /// <summary> Initializes a new instance of ContainerRegistryProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryProperties"/>. </summary>
         public ContainerRegistryProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryProperties"/>. </summary>
         /// <param name="resourceId"> ARM resource ID of the Azure Container Registry used to store Docker images for web services in the cluster. If not provided one will be created. This cannot be changed once the cluster is created. </param>
-        internal ContainerRegistryProperties(string resourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryProperties(string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM resource ID of the Azure Container Registry used to store Docker images for web services in the cluster. If not provided one will be created. This cannot be changed once the cluster is created. </summary>

@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Reboot properties. </summary>
     public partial class NetworkDeviceRebootContent
     {
-        /// <summary> Initializes a new instance of NetworkDeviceRebootContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceRebootContent"/>. </summary>
         public NetworkDeviceRebootContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceRebootContent"/>. </summary>
+        /// <param name="rebootType"> Type of reboot to be performed. Example: GracefulRebootWithZTP. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDeviceRebootContent(NetworkDeviceRebootType? rebootType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            RebootType = rebootType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of reboot to be performed. Example: GracefulRebootWithZTP. </summary>

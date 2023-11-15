@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class VirtualNetworkFunctionTemplate
     {
-        /// <summary> Initializes a new instance of VirtualNetworkFunctionTemplate. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionTemplate"/>. </summary>
         protected VirtualNetworkFunctionTemplate()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkFunctionTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
-        internal VirtualNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NfviType = nfviType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The network function type. </summary>

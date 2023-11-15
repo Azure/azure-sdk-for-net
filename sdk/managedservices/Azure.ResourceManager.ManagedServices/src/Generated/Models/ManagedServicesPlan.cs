@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The details for the Managed Services offer’s plan in Azure Marketplace. </summary>
     public partial class ManagedServicesPlan
     {
-        /// <summary> Initializes a new instance of ManagedServicesPlan. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/>. </summary>
         /// <param name="name"> Azure Marketplace plan name. </param>
         /// <param name="publisher"> Azure Marketplace publisher ID. </param>
         /// <param name="product"> Azure Marketplace product code. </param>
@@ -30,6 +34,26 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Publisher = publisher;
             Product = product;
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/>. </summary>
+        /// <param name="name"> Azure Marketplace plan name. </param>
+        /// <param name="publisher"> Azure Marketplace publisher ID. </param>
+        /// <param name="product"> Azure Marketplace product code. </param>
+        /// <param name="version"> Azure Marketplace plan's version. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesPlan(string name, string publisher, string product, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Publisher = publisher;
+            Product = product;
+            Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesPlan"/> for deserialization. </summary>
+        internal ManagedServicesPlan()
+        {
         }
 
         /// <summary> Azure Marketplace plan name. </summary>

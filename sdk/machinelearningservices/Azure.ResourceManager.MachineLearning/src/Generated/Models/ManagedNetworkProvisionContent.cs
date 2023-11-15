@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Managed Network Provisioning options for managed network of a machine learning workspace. </summary>
     public partial class ManagedNetworkProvisionContent
     {
-        /// <summary> Initializes a new instance of ManagedNetworkProvisionContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionContent"/>. </summary>
         public ManagedNetworkProvisionContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkProvisionContent"/>. </summary>
+        /// <param name="includeSpark"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedNetworkProvisionContent(bool? includeSpark, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IncludeSpark = includeSpark;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the include spark. </summary>

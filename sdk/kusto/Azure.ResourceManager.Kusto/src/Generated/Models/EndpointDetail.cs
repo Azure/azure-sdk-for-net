@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Current TCP connectivity information from the Kusto cluster to a single endpoint. </summary>
     public partial class EndpointDetail
     {
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
         public EndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="ipAddress"> The ip address of the endpoint. </param>
-        internal EndpointDetail(int? port, string ipAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointDetail(int? port, string ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             IPAddress = ipAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The port an endpoint is connected to. </summary>

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmNetworkRuleSet : IUtf8JsonSerializable
+    public partial class ManagedHsmNetworkRuleSet : IUtf8JsonSerializable, IJsonModel<ManagedHsmNetworkRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmNetworkRuleSet>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedHsmNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedHsmNetworkRuleSet>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedHsmNetworkRuleSet>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Bypass))
             {
@@ -46,11 +56,40 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedHsmNetworkRuleSet DeserializeManagedHsmNetworkRuleSet(JsonElement element)
+        ManagedHsmNetworkRuleSet IJsonModel<ManagedHsmNetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedHsmNetworkRuleSet)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedHsmNetworkRuleSet(document.RootElement, options);
+        }
+
+        internal static ManagedHsmNetworkRuleSet DeserializeManagedHsmNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +98,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<ManagedHsmNetworkRuleAction> defaultAction = default;
             Optional<IList<ManagedHsmIPRule>> ipRules = default;
             Optional<IList<ManagedHsmVirtualNetworkRule>> virtualNetworkRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bypass"u8))
@@ -107,8 +148,38 @@ namespace Azure.ResourceManager.KeyVault.Models
                     virtualNetworkRules = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedHsmNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedHsmNetworkRuleSet(Optional.ToNullable(bypass), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), Optional.ToList(virtualNetworkRules), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedHsmNetworkRuleSet>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedHsmNetworkRuleSet)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedHsmNetworkRuleSet IPersistableModel<ManagedHsmNetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedHsmNetworkRuleSet)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedHsmNetworkRuleSet(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedHsmNetworkRuleSet>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

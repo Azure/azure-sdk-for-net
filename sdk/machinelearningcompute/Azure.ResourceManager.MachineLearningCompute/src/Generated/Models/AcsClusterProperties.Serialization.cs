@@ -5,17 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class AcsClusterProperties : IUtf8JsonSerializable
+    public partial class AcsClusterProperties : IUtf8JsonSerializable, IJsonModel<AcsClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsClusterProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AcsClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AcsClusterProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AcsClusterProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ClusterFqdn))
+                {
+                    writer.WritePropertyName("clusterFqdn"u8);
+                    writer.WriteStringValue(ClusterFqdn);
+                }
+            }
             writer.WritePropertyName("orchestratorType"u8);
             writer.WriteStringValue(OrchestratorType.ToString());
             if (Optional.IsDefined(OrchestratorProperties))
@@ -48,11 +66,40 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WritePropertyName("agentVmSize"u8);
                 writer.WriteStringValue(AgentVmSize.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AcsClusterProperties DeserializeAcsClusterProperties(JsonElement element)
+        AcsClusterProperties IJsonModel<AcsClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAcsClusterProperties(document.RootElement, options);
+        }
+
+        internal static AcsClusterProperties DeserializeAcsClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +111,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             Optional<int> masterCount = default;
             Optional<int> agentCount = default;
             Optional<AgentVmSizeType> agentVmSize = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterFqdn"u8))
@@ -126,8 +175,38 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     agentVmSize = new AgentVmSizeType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Optional.ToList(systemServices), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AcsClusterProperties(clusterFqdn.Value, orchestratorType, orchestratorProperties.Value, Optional.ToList(systemServices), Optional.ToNullable(masterCount), Optional.ToNullable(agentCount), Optional.ToNullable(agentVmSize), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AcsClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AcsClusterProperties IPersistableModel<AcsClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AcsClusterProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAcsClusterProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<AcsClusterProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

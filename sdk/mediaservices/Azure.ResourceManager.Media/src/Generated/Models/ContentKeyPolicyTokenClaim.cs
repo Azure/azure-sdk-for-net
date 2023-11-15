@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents a token claim. </summary>
     public partial class ContentKeyPolicyTokenClaim
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyTokenClaim. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenClaim"/>. </summary>
         public ContentKeyPolicyTokenClaim()
         {
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyTokenClaim. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyTokenClaim"/>. </summary>
         /// <param name="claimType"> Token claim type. </param>
         /// <param name="claimValue"> Token claim value. </param>
-        internal ContentKeyPolicyTokenClaim(string claimType, string claimValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentKeyPolicyTokenClaim(string claimType, string claimValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClaimType = claimType;
             ClaimValue = claimValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Token claim type. </summary>

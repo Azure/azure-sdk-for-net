@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> Compilation error when evaluating route. </summary>
     public partial class RouteCompilationError
     {
-        /// <summary> Initializes a new instance of RouteCompilationError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouteCompilationError"/>. </summary>
         internal RouteCompilationError()
         {
         }
 
-        /// <summary> Initializes a new instance of RouteCompilationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteCompilationError"/>. </summary>
         /// <param name="message"> Route error message. </param>
         /// <param name="severity"> Severity of the route error. </param>
         /// <param name="location"> Location where the route error happened. </param>
-        internal RouteCompilationError(string message, RouteErrorSeverity? severity, RouteErrorRange location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouteCompilationError(string message, RouteErrorSeverity? severity, RouteErrorRange location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             Severity = severity;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Route error message. </summary>

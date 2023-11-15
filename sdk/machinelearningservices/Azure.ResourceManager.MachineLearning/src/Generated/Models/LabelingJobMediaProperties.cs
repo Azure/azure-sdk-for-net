@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public abstract partial class LabelingJobMediaProperties
     {
-        /// <summary> Initializes a new instance of LabelingJobMediaProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabelingJobMediaProperties"/>. </summary>
         protected LabelingJobMediaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of LabelingJobMediaProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabelingJobMediaProperties"/>. </summary>
         /// <param name="mediaType"> [Required] Media type of the job. </param>
-        internal LabelingJobMediaProperties(MediaType mediaType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabelingJobMediaProperties(MediaType mediaType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MediaType = mediaType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> [Required] Media type of the job. </summary>
