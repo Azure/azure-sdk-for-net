@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Runtime.Serialization;
 using System.ClientModel.Primitives;
-using System.ClientModel.Internal;
+using System.Runtime.Serialization;
 
 namespace System.ClientModel
 {
@@ -35,7 +34,8 @@ namespace System.ClientModel
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>
-        protected ClientRequestException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected ClientRequestException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
             Status = info.GetInt32(nameof(Status));
         }
@@ -43,7 +43,7 @@ namespace System.ClientModel
         /// <inheritdoc />
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            ClientUtilities.AssertNotNull(info, nameof(info));
+            if (info is null) throw new ArgumentNullException(nameof(info));
 
             info.AddValue(nameof(Status), Status);
 
