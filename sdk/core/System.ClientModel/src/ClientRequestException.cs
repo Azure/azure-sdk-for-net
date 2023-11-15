@@ -10,21 +10,24 @@ namespace System.ClientModel
     [Serializable]
     public class ClientRequestException : Exception, ISerializable
     {
+        private readonly PipelineResponse? _response;
+
         /// <summary>
         /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
         /// </summary>
         public int Status { get; }
 
         public ClientRequestException(PipelineResponse response)
-            : base(GetMessageFromResponse(response))
+            : this(response, GetMessageFromResponse(response))
         {
-            Status = response.Status;
         }
 
-        public ClientRequestException(int? status, string? message, Exception? innerException = default)
+        public ClientRequestException(PipelineResponse? response, string? message, Exception? innerException = default)
             : base(message, innerException)
         {
-            Status = status ?? 0;
+            _response = response;
+
+            Status = response?.Status ?? 0;
         }
 
         /// <summary>
@@ -48,11 +51,7 @@ namespace System.ClientModel
         }
 
         public virtual PipelineResponse? GetRawResponse()
-        {
-            // Stubbed out for API review
-            // TODO: pull over implementation from Azure.Core
-            throw new NotImplementedException();
-        }
+            => _response;
 
         private static string GetMessageFromResponse(PipelineResponse response)
         {

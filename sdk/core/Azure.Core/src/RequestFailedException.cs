@@ -72,7 +72,7 @@ namespace Azure
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RequestFailedException(int status, string message, string? errorCode, Exception? innerException)
-            : base(status, message, innerException)
+            : base(new ErrorPipelineResponse(status), message, innerException)
         {
             ErrorCode = errorCode;
         }
@@ -275,6 +275,30 @@ namespace Azure
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }
+        }
+
+        private class ErrorPipelineResponse : PipelineResponse
+        {
+            private readonly int _status;
+
+            public ErrorPipelineResponse(int status)
+            {
+                _status = status;
+            }
+
+            public override int Status => _status;
+
+            public override Stream? ContentStream
+            {
+                get => throw new NotImplementedException();
+                protected set => throw new NotImplementedException();
+            }
+
+            public override string ReasonPhrase => throw new NotSupportedException();
+
+            public override MessageHeaders Headers => throw new NotSupportedException();
+
+            public override void Dispose() => throw new NotSupportedException();
         }
     }
 }
