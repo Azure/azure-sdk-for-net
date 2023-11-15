@@ -16,7 +16,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        internal static bool TryGetPipelineRequest(Request request, out MessageRequest? pipelineRequest)
+        internal static bool TryGetPipelineRequest(Request request, out PipelineRequest? pipelineRequest)
         {
             if (request is RequestAdapter requestAdapter)
             {
@@ -28,7 +28,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        private sealed class HttpClientTransportRequest : HttpMessageRequest
+        private sealed class HttpClientTransportRequest : HttpPipelineRequest
         {
             private RequestUriBuilder? _uriBuilder;
 
@@ -103,7 +103,7 @@ namespace Azure.Core.Pipeline
                 _request = request;
             }
 
-            internal MessageRequest PipelineRequest => _request;
+            internal PipelineRequest PipelineRequest => _request;
 
             public override RequestMethod Method
             {

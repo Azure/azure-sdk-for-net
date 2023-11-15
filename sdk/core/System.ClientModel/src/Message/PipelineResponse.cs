@@ -5,7 +5,7 @@ using System.IO;
 
 namespace System.ClientModel.Primitives;
 
-public abstract class MessageResponse : IDisposable
+public abstract class PipelineResponse : IDisposable
 {
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());

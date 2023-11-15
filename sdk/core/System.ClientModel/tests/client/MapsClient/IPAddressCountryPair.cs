@@ -59,7 +59,7 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
         return new IPAddressCountryPair(countryRegion, ipAddress);
     }
 
-    internal static IPAddressCountryPair FromResponse(MessageResponse response)
+    internal static IPAddressCountryPair FromResponse(PipelineResponse response)
     {
         using var document = JsonDocument.Parse(response.Content);
         return FromJson(document.RootElement);

@@ -40,19 +40,19 @@ public class OpenAIClient
         _pipeline = ClientPipeline.Create(options);
     }
 
-    public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
+    public virtual OutputMessage<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
     {
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
         RequestOptions context = FromCancellationToken(cancellationToken);
-        Result result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
-        MessageResponse response = result.GetRawResponse();
+        OutputMessage result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
+        PipelineResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
-        return Result.FromValue(completions, response);
+        return OutputMessage.FromValue(completions, response);
     }
 
-    public virtual Result GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
+    public virtual OutputMessage GetCompletions(string deploymentId, InputContent content, RequestOptions options = null)
     {
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
@@ -62,8 +62,8 @@ public class OpenAIClient
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.MessageClassifier = MessageClassifier200;
 
-        MessageResponse response = _pipeline.ProcessMessage(message, options);
-        Result result = Result.FromResponse(response);
+        PipelineResponse response = _pipeline.ProcessMessage(message, options);
+        OutputMessage result = OutputMessage.FromResponse(response);
         return result;
     }
 
@@ -72,7 +72,7 @@ public class OpenAIClient
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
-        MessageRequest request = message.Request;
+        PipelineRequest request = message.Request;
         request.Method = "POST";
 
         UriBuilder uriBuilder = new(_endpoint.ToString());

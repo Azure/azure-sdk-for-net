@@ -3,7 +3,7 @@
 
 namespace System.ClientModel.Primitives;
 
-public abstract class MessageRequest : IDisposable
+public abstract class PipelineRequest : IDisposable
 {
     public abstract string Method { get; set; }
 

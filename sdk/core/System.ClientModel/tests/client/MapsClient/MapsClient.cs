@@ -43,7 +43,7 @@ public class MapsClient
         _pipeline = ClientPipeline.Create(options);
     }
 
-    public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
+    public virtual OutputMessage<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
@@ -51,15 +51,15 @@ public class MapsClient
             new RequestOptions() { CancellationToken = cancellationToken } :
             new RequestOptions();
 
-        Result result = GetCountryCode(ipAddress.ToString(), options);
+        OutputMessage output = GetCountryCode(ipAddress.ToString(), options);
 
-        MessageResponse response = result.GetRawResponse();
+        PipelineResponse response = output.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
-        return Result.FromValue(value, response);
+        return OutputMessage.FromValue(value, response);
     }
 
-    public virtual Result GetCountryCode(string ipAddress, RequestOptions options = null)
+    public virtual OutputMessage GetCountryCode(string ipAddress, RequestOptions options = null)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
@@ -70,14 +70,14 @@ public class MapsClient
 
         _pipeline.Send(message);
 
-        MessageResponse response = message.Response;
+        PipelineResponse response = message.Response;
 
         if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
         {
             throw new ClientRequestException(response);
         }
 
-        return Result.FromResponse(response);
+        return OutputMessage.FromResponse(response);
     }
 
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
@@ -85,7 +85,7 @@ public class MapsClient
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
-        MessageRequest request = message.Request;
+        PipelineRequest request = message.Request;
         request.Method = "GET";
 
         UriBuilder uriBuilder = new(_endpoint.ToString());

@@ -26,7 +26,7 @@ The `System.ClientModel` preview package provides a `KeyCredential` type for aut
 The main shared concepts of `System.ClientModel` include:
 
 - Configuring service clients (`RequestOptions`).
-- Accessing HTTP response details (`Result`, `Result<T>`).
+- Accessing HTTP response details (`OutputMessage`, `OutputMessage<T>`).
 - Exceptions for reporting errors from service requests in a consistent fashion (`MessageFailedException`).
 - Providing APIs to read and write models in different formats.
 

@@ -179,7 +179,7 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// This method can be overriden to control whether a request should be retried. It will be called for any response where
-        /// <see cref="MessageResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
+        /// <see cref="PipelineResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
         /// This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
@@ -189,7 +189,7 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
-        /// <see cref="MessageResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
+        /// <see cref="PipelineResponse.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
         /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>

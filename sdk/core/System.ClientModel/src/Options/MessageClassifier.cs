@@ -16,7 +16,7 @@ namespace System.ClientModel.Primitives
         {
             if (message.Response is null)
             {
-                throw new InvalidOperationException("IsError must be called on a message where the Result is populated.");
+                throw new InvalidOperationException("IsError must be called on a message where the OutputMessage is populated.");
             }
 
             int statusKind = message.Response.Status / 100;

@@ -7,7 +7,7 @@ using System.Net.Http;
 
 namespace System.ClientModel.Internal.Primitives;
 
-public class HttpMessageResponse : MessageResponse, IDisposable
+public class HttpPipelineResponse : PipelineResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
 
@@ -22,7 +22,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
 
     private bool _disposed;
 
-    protected internal HttpMessageResponse(HttpResponseMessage httpResponse)
+    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _httpResponseContent = _httpResponse.Content;
@@ -34,7 +34,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
         => _httpResponse.ReasonPhrase ?? string.Empty;
 
     public override MessageHeaders Headers
-        => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
+        => new PipelineResponseHeaders(_httpResponse, _httpResponseContent);
 
     //public override MessageBody? Body
     //{
@@ -89,7 +89,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
             //
             // 1. If the content is buffered, we want it to remain available to the
             // client for model deserialization and in case the end user of the
-            // client calls Result.GetRawResponse. So, we don't dispose it.
+            // client calls OutputMessage.GetRawResponse. So, we don't dispose it.
             //
             // If the content is buffered, we assume that the entity that did the
             // buffering took responsibility for disposing the network stream.

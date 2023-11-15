@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 
 namespace Azure.Core
 {
-    internal class PipelineRequestAdapter : MessageRequest
+    internal class PipelineRequestAdapter : PipelineRequest
     {
         private readonly Request _request;
 

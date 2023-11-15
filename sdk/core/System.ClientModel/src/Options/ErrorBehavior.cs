@@ -4,7 +4,7 @@
 namespace System.ClientModel.Primitives
 {
     /// <summary>
-    /// ResultErrorOptions controls the behavior of an operation when an unexpected response status code is received.
+    /// ErrorBehavior controls the behavior of an operation when an unexpected response status code is received.
     /// </summary>
     [Flags]
     public enum ErrorBehavior

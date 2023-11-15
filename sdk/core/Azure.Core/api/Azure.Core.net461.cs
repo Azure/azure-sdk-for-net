@@ -222,18 +222,18 @@ namespace Azure
     }
     public partial class RequestFailedException : System.ClientModel.ClientRequestException, System.Runtime.Serialization.ISerializable
     {
-        public RequestFailedException(Azure.Response response) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
-        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        public RequestFailedException(Azure.Response response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public RequestFailedException(Azure.Response response, System.Exception? innerException, Azure.Core.RequestFailedDetailsParser? detailsParser) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        public RequestFailedException(int status, string message) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        public RequestFailedException(int status, string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
-        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
-        public RequestFailedException(string message) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
-        public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.MessageResponse)) { }
+        public RequestFailedException(int status, string message, string? errorCode, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected RequestFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public RequestFailedException(string message) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public string? ErrorCode { get { throw null; } }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public new Azure.Response? GetRawResponse() { throw null; }
@@ -484,7 +484,7 @@ namespace Azure.Core
     }
     public sealed partial class HttpMessage : System.ClientModel.Primitives.PipelineMessage
     {
-        public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.ClientModel.Primitives.MessageRequest)) { }
+        public HttpMessage(Azure.Core.Request request, Azure.Core.ResponseClassifier responseClassifier) : base (default(System.ClientModel.Primitives.PipelineRequest)) { }
         public bool BufferResponse { get { throw null; } set { } }
         public new bool HasResponse { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

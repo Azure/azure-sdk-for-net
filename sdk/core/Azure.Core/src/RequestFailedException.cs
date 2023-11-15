@@ -78,7 +78,7 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        private class ErrorPipelineResult : MessageResponse
+        private class ErrorPipelineResult : PipelineResponse
         {
             private readonly int _status;
 

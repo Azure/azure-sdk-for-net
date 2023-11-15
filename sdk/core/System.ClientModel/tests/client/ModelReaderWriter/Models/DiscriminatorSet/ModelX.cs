@@ -43,7 +43,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return InputContent.Create(modelX, ModelReaderWriterOptions.Wire);
         }
 
-        public static explicit operator ModelX(Result result)
+        public static explicit operator ModelX(OutputMessage result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 

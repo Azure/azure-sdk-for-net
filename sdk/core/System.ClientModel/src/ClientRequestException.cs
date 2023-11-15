@@ -13,12 +13,12 @@ namespace System.ClientModel
         /// </summary>
         public int Status { get; }
 
-        public ClientRequestException(MessageResponse response) : base(GetMessageFromResponse(response))
+        public ClientRequestException(PipelineResponse response) : base(GetMessageFromResponse(response))
         {
             Status = response.Status;
         }
 
-        protected ClientRequestException(MessageResponse response, string message, Exception? innerException)
+        protected ClientRequestException(PipelineResponse response, string message, Exception? innerException)
             // TODO: what is the actual behavior of the EBN RFE constructor that takes both erroCode and message?
             // Duplicate that here.
             : base(message, innerException)
@@ -31,14 +31,14 @@ namespace System.ClientModel
             // TODO: What is the experience if someone tries to access this.Response?
         }
 
-        public virtual MessageResponse? GetRawResponse()
+        public virtual PipelineResponse? GetRawResponse()
         {
             // Stubbed out for API review
             // TODO: pull over implementation from Azure.Core
             throw new NotImplementedException();
         }
 
-        private static string GetMessageFromResponse(MessageResponse response)
+        private static string GetMessageFromResponse(PipelineResponse response)
         {
             // TODO: implement for real
             return $"Service error: {response.Status}";
