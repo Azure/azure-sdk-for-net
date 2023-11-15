@@ -55,10 +55,10 @@ namespace Azure.Communication
     }
     public partial class MicrosoftTeamsAppIdentifier : Azure.Communication.CommunicationIdentifier
     {
-        public MicrosoftTeamsAppIdentifier(string teamsAppId, Azure.Communication.CommunicationCloudEnvironment? cloud = default(Azure.Communication.CommunicationCloudEnvironment?)) { }
+        public MicrosoftTeamsAppIdentifier(string appId, Azure.Communication.CommunicationCloudEnvironment? cloud = default(Azure.Communication.CommunicationCloudEnvironment?)) { }
+        public string AppId { get { throw null; } }
         public Azure.Communication.CommunicationCloudEnvironment Cloud { get { throw null; } }
         public override string RawId { get { throw null; } }
-        public string TeamsAppId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
         public override string ToString() { throw null; }
     }
