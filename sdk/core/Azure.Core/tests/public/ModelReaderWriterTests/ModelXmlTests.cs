@@ -27,7 +27,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
             Assert.Throws(Is.InstanceOf<JsonException>(), () => ModelReaderWriter.Read<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(WirePayload)), jsonOptions));
 
-            ModelReaderWriterOptions wireOptions = ModelReaderWriterOptions.Wire;
+            ModelReaderWriterOptions wireOptions = ModelReaderWriterHelper.WireOptions;
             Assert.Throws<XmlException>(() => ModelReaderWriter.Read<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), wireOptions));
         }
 

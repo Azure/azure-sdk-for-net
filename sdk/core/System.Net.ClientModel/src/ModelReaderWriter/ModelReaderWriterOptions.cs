@@ -10,12 +10,6 @@ namespace System.Net.ClientModel
     {
         private bool _isFrozen;
 
-        private static ModelReaderWriterOptions? _wireOptions;
-        /// <summary>
-        /// Default options for writing models into the format the serivce is expecting.
-        /// </summary>
-        public static ModelReaderWriterOptions Wire => _wireOptions ??= new ModelReaderWriterOptions("W", true);
-
         private static ModelReaderWriterOptions? _jsonOptions;
         /// <summary>
         /// Default options for writing models into JSON format.

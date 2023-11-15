@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DogListProperty>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DogListProperty>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<DogListProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static DogListProperty DeserializeDogListProperty(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             double weight = default;
             string name = "";
@@ -152,7 +152,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                return modelConverter is not null ? modelConverter.Options : ModelReaderWriterOptions.Wire;
+                return modelConverter is not null ? modelConverter.Options : ModelReaderWriterHelper.WireOptions;
             }
         }
         DogListProperty IPersistableModel<DogListProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -168,11 +168,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<DogListProperty>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<DogListProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DogListProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

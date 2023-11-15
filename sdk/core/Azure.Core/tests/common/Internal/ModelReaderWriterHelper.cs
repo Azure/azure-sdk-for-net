@@ -6,9 +6,9 @@ using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Runtime.CompilerServices;
 
-namespace Azure.Core.Tests.Public
+namespace Azure.Core.Tests.Common
 {
-    internal static class ModelSerializerHelper
+    internal static class ModelReaderWriterHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ValidateFormat<T>(IPersistableModel<T> model, string format)
@@ -23,5 +23,8 @@ namespace Azure.Core.Tests.Public
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ValidateFormat(IPersistableModel<object> model, string format) => ValidateFormat<object>(model, format);
+
+        private static ModelReaderWriterOptions _wireOptions;
+        public static ModelReaderWriterOptions WireOptions => _wireOptions ??= new ModelReaderWriterOptions("W");
     }
 }

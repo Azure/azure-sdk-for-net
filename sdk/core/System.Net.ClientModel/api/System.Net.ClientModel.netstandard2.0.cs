@@ -12,7 +12,6 @@ namespace System.Net.ClientModel
         public ModelReaderWriterOptions(string format) { }
         public string Format { get { throw null; } }
         public static System.Net.ClientModel.ModelReaderWriterOptions Json { get { throw null; } }
-        public static System.Net.ClientModel.ModelReaderWriterOptions Wire { get { throw null; } }
         public static System.Net.ClientModel.ModelReaderWriterOptions Xml { get { throw null; } }
     }
 }
@@ -26,7 +25,7 @@ namespace System.Net.ClientModel.Core
     public partial interface IPersistableModel<out T>
     {
         T Create(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options);
-        string GetWireFormat(System.Net.ClientModel.ModelReaderWriterOptions options);
+        string GetFormatFromOptions(System.Net.ClientModel.ModelReaderWriterOptions options);
         System.BinaryData Write(System.Net.ClientModel.ModelReaderWriterOptions options);
     }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<System.Net.ClientModel.Core.IJsonModel<object>>
