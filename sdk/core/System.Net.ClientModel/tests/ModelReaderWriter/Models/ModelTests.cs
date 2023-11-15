@@ -12,6 +12,8 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public abstract class ModelTests<T> where T : IPersistableModel<T>
     {
+        private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
+
         private T? _modelInstance;
         private T ModelInstance => _modelInstance ??= GetModelInstance();
 
@@ -171,12 +173,12 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             if (ModelInstance is IJsonModel<T> jsonModel && IsXmlWireFormat)
             {
-                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), ModelReaderWriterOptions.Wire));
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), _wireOptions));
                 Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });
                 bool exceptionCaught = false;
                 try
                 {
-                    jsonModel.Create(ref reader, ModelReaderWriterOptions.Wire);
+                    jsonModel.Create(ref reader, _wireOptions);
                 }
                 catch (InvalidOperationException)
                 {

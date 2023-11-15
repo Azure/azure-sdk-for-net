@@ -31,13 +31,13 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         /// <summary> Gets the id. </summary>
         public int Id { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<ModelAsStruct>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
@@ -59,14 +59,14 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<ModelAsStruct>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
         ModelAsStruct IPersistableModel<ModelAsStruct>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelAsStruct DeserializeInputAdditionalPropertiesModelStruct(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             int id = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -96,7 +96,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         ModelAsStruct IJsonModel<ModelAsStruct>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
@@ -106,7 +106,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
@@ -114,21 +114,21 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
         object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
 
-        string IPersistableModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelAsStruct>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        string IPersistableModel<object>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

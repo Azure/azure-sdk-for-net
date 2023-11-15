@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,11 +118,11 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         BinaryData IPersistableModel<ComputeSku>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -42,7 +42,7 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string id = default;
             foreach (var property in element.EnumerateObject())
@@ -98,17 +98,17 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterOptions.Wire);
+                return DeserializeWritableSubResource(document.RootElement, ModelReaderWriterHelper.WireOptions);
             }
         }
 
         BinaryData IPersistableModel<WritableSubResource>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WritableSubResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -43,9 +43,9 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         [XmlElement("RenamedChildModelXml")]
         public ChildModelXmlOnly RenamedChildModelXml { get; set; }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -68,7 +68,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         public static ModelXmlOnly DeserializeModelXmlOnly(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -95,7 +95,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<ModelXmlOnly>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream);
@@ -113,11 +113,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         ModelXmlOnly IPersistableModel<ModelXmlOnly>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeModelXmlOnly(XElement.Load(data.ToStream()), options);
         }
 
-        string IPersistableModel<ModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ModelXmlOnly>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

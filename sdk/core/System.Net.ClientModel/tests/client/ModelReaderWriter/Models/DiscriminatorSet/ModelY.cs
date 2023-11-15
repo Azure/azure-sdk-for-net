@@ -51,7 +51,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,11 +100,11 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<ModelY>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelY>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
