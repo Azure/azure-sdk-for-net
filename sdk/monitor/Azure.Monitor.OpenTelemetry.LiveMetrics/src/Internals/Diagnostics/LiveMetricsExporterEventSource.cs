@@ -104,5 +104,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(6, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
         public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(6, typeName, exceptionMessage);
+
+        [Event(7, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
+        public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(7, credentialTypeName, scope);
     }
 }

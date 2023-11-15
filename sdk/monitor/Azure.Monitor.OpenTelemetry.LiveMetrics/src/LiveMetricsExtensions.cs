@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     /// <summary>
     /// Extension methods to register Live Metrics.
     /// </summary>
-    internal static class LiveMetricsExtensions
+    public static class LiveMetricsExtensions
     {
         /// <summary>
         /// Adds Live Metrics to the TracerProvider.
