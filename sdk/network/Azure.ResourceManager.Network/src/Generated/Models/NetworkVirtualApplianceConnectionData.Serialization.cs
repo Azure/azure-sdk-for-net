@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
             Optional<long> tunnelIdentifier = default;
             Optional<IList<string>> bgpPeerAddress = default;
             Optional<bool> enableInternetSecurity = default;
-            Optional<RoutingConfigurationNfv> routingConfiguration = default;
+            Optional<RoutingConfiguration> routingConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(property0.Value);
+                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
                             continue;
                         }
                     }
