@@ -1,3 +1,22 @@
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics
+{
+    public partial class LiveMetricsExporterOptions : Azure.Core.ClientOptions
+    {
+        public LiveMetricsExporterOptions() { }
+        public string ConnectionString { get { throw null; } set { } }
+        public Azure.Core.TokenCredential Credential { get { throw null; } set { } }
+        public bool EnableLiveMetrics { get { throw null; } set { } }
+    }
+    public static partial class LiveMetricsExtensions
+    {
+        public static OpenTelemetry.Trace.TracerProviderBuilder AddLiveMetrics(this OpenTelemetry.Trace.TracerProviderBuilder builder, System.Action<Azure.Monitor.OpenTelemetry.LiveMetrics.LiveMetricsExporterOptions> configure = null, string name = null) { throw null; }
+    }
+    public partial class LiveMetricsTraceExporter : OpenTelemetry.BaseExporter<System.Diagnostics.Activity>
+    {
+        public LiveMetricsTraceExporter(Azure.Monitor.OpenTelemetry.LiveMetrics.LiveMetricsExporterOptions options) { }
+        public override OpenTelemetry.ExportResult Export(in OpenTelemetry.Batch<System.Diagnostics.Activity> batch) { throw null; }
+    }
+}
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
