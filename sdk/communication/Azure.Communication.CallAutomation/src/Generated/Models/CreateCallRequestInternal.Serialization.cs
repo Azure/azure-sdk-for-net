@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
+using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class CreateCallRequestInternal : IUtf8JsonSerializable
+    internal partial class CreateCallRequestInternal : IUtf8JsonSerializable, IJsonModel<CreateCallRequestInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateCallRequestInternal>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CreateCallRequestInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CreateCallRequestInternal>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CreateCallRequestInternal>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
@@ -64,7 +76,165 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("customContext"u8);
                 writer.WriteObjectValue(CustomContext);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CreateCallRequestInternal IJsonModel<CreateCallRequestInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreateCallRequestInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateCallRequestInternal(document.RootElement, options);
+        }
+
+        internal static CreateCallRequestInternal DeserializeCreateCallRequestInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<CommunicationIdentifierModel> targets = default;
+            Optional<PhoneNumberIdentifierModel> sourceCallerIdNumber = default;
+            Optional<string> sourceDisplayName = default;
+            Optional<CommunicationUserIdentifierModel> sourceIdentity = default;
+            Optional<string> operationContext = default;
+            string callbackUri = default;
+            Optional<MediaStreamingOptionsInternal> mediaStreamingConfiguration = default;
+            Optional<TranscriptionOptionsInternal> transcriptionConfiguration = default;
+            Optional<string> azureCognitiveServicesEndpointUrl = default;
+            Optional<CustomContextInternal> customContext = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targets"u8))
+                {
+                    List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                    }
+                    targets = array;
+                    continue;
+                }
+                if (property.NameEquals("sourceCallerIdNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceCallerIdNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sourceDisplayName"u8))
+                {
+                    sourceDisplayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceIdentity = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("callbackUri"u8))
+                {
+                    callbackUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("mediaStreamingConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mediaStreamingConfiguration = MediaStreamingOptionsInternal.DeserializeMediaStreamingOptionsInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("transcriptionConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transcriptionConfiguration = TranscriptionOptionsInternal.DeserializeTranscriptionOptionsInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("azureCognitiveServicesEndpointUrl"u8))
+                {
+                    azureCognitiveServicesEndpointUrl = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customContext"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customContext = CustomContextInternal.DeserializeCustomContextInternal(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CreateCallRequestInternal(targets, sourceCallerIdNumber.Value, sourceDisplayName.Value, sourceIdentity.Value, operationContext.Value, callbackUri, mediaStreamingConfiguration.Value, transcriptionConfiguration.Value, azureCognitiveServicesEndpointUrl.Value, customContext.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<CreateCallRequestInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreateCallRequestInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CreateCallRequestInternal IPersistableModel<CreateCallRequestInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CreateCallRequestInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCreateCallRequestInternal(document.RootElement, options);
+        }
+
+        string IPersistableModel<CreateCallRequestInternal>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

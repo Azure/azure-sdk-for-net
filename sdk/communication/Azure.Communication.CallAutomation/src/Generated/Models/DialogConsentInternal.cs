@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogConsent. </summary>
     internal partial class DialogConsentInternal
     {
-        /// <summary> Initializes a new instance of DialogConsentInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DialogConsentInternal"/>. </summary>
         internal DialogConsentInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogConsentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogConsentInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
@@ -24,7 +30,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="userConsent"> UserConsent data from the Conversation Conductor. </param>
         /// <param name="dialogId"> Dialog ID. </param>
-        internal DialogConsentInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, UserConsent userConsent, string dialogId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DialogConsentInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, DialogInputType? dialogInputType, UserConsent userConsent, string dialogId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -34,6 +41,7 @@ namespace Azure.Communication.CallAutomation
             DialogInputType = dialogInputType;
             UserConsent = userConsent;
             DialogId = dialogId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Call connection ID. </summary>

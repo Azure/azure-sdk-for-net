@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Tenant access information update parameters. </summary>
     public partial class TenantAccessInfoPatch
     {
-        /// <summary> Initializes a new instance of TenantAccessInfoPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
         public TenantAccessInfoPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TenantAccessInfoPatch"/>. </summary>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TenantAccessInfoPatch(bool? isDirectAccessEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IsDirectAccessEnabled = isDirectAccessEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Determines whether direct access is enabled. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Network access profile for Batch endpoint. </summary>
     public partial class BatchEndpointAccessProfile
     {
-        /// <summary> Initializes a new instance of BatchEndpointAccessProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointAccessProfile"/>. </summary>
         /// <param name="defaultAction"> Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled. </param>
         public BatchEndpointAccessProfile(BatchEndpointAccessDefaultAction defaultAction)
         {
@@ -21,13 +25,20 @@ namespace Azure.ResourceManager.Batch.Models
             IPRules = new ChangeTrackingList<BatchIPRule>();
         }
 
-        /// <summary> Initializes a new instance of BatchEndpointAccessProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointAccessProfile"/>. </summary>
         /// <param name="defaultAction"> Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled. </param>
         /// <param name="ipRules"> Array of IP ranges to filter client IP address. </param>
-        internal BatchEndpointAccessProfile(BatchEndpointAccessDefaultAction defaultAction, IList<BatchIPRule> ipRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchEndpointAccessProfile(BatchEndpointAccessDefaultAction defaultAction, IList<BatchIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
             IPRules = ipRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchEndpointAccessProfile"/> for deserialization. </summary>
+        internal BatchEndpointAccessProfile()
+        {
         }
 
         /// <summary> Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled. </summary>

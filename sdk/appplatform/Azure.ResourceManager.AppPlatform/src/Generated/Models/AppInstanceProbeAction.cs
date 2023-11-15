@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// </summary>
     public abstract partial class AppInstanceProbeAction
     {
-        /// <summary> Initializes a new instance of AppInstanceProbeAction. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbeAction"/>. </summary>
         protected AppInstanceProbeAction()
         {
         }
 
-        /// <summary> Initializes a new instance of AppInstanceProbeAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppInstanceProbeAction"/>. </summary>
         /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
-        internal AppInstanceProbeAction(ProbeActionType probeActionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppInstanceProbeAction(ProbeActionType probeActionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProbeActionType = probeActionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the action to take to perform the health check. </summary>

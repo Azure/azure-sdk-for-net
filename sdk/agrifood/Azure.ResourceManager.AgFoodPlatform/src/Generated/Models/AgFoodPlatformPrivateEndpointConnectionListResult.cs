@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AgFoodPlatform;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
     internal partial class AgFoodPlatformPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateEndpointConnectionListResult"/>. </summary>
         internal AgFoodPlatformPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal AgFoodPlatformPrivateEndpointConnectionListResult(IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgFoodPlatformPrivateEndpointConnectionListResult(IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

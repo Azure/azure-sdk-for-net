@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Save Tenant Configuration Contract details. </summary>
     public partial class ConfigurationSaveContent
     {
-        /// <summary> Initializes a new instance of ConfigurationSaveContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSaveContent"/>. </summary>
         public ConfigurationSaveContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSaveContent"/>. </summary>
+        /// <param name="branch"> The name of the Git branch in which to commit the current configuration snapshot. </param>
+        /// <param name="forceUpdate"> The value if true, the current configuration database is committed to the Git repository, even if the Git repository has newer changes that would be overwritten. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationSaveContent(string branch, bool? forceUpdate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Branch = branch;
+            ForceUpdate = forceUpdate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the Git branch in which to commit the current configuration snapshot. </summary>

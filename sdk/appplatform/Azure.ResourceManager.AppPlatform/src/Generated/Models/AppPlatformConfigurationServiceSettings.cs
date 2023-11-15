@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
@@ -12,16 +13,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The settings of Application Configuration Service. </summary>
     public partial class AppPlatformConfigurationServiceSettings
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceSettings"/>. </summary>
         public AppPlatformConfigurationServiceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceSettings"/>. </summary>
         /// <param name="gitProperty"> Property of git environment. </param>
-        internal AppPlatformConfigurationServiceSettings(ConfigurationServiceGitProperty gitProperty)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigurationServiceSettings(ConfigurationServiceGitProperty gitProperty, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GitProperty = gitProperty;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Property of git environment. </summary>

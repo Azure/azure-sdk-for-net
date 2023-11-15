@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CommitmentCost
+    public partial class CommitmentCost : IUtf8JsonSerializable, IJsonModel<CommitmentCost>
     {
-        internal static CommitmentCost DeserializeCommitmentCost(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentCost>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CommitmentCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CommitmentCost>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CommitmentCost>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CommitmentMeterId))
+            {
+                writer.WritePropertyName("commitmentMeterId"u8);
+                writer.WriteStringValue(CommitmentMeterId);
+            }
+            if (Optional.IsDefined(OverageMeterId))
+            {
+                writer.WritePropertyName("overageMeterId"u8);
+                writer.WriteStringValue(OverageMeterId);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CommitmentCost IJsonModel<CommitmentCost>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommitmentCost)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommitmentCost(document.RootElement, options);
+        }
+
+        internal static CommitmentCost DeserializeCommitmentCost(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> commitmentMeterId = default;
             Optional<string> overageMeterId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitmentMeterId"u8))
@@ -32,8 +90,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     overageMeterId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommitmentCost(commitmentMeterId.Value, overageMeterId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommitmentCost(commitmentMeterId.Value, overageMeterId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommitmentCost>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommitmentCost)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CommitmentCost IPersistableModel<CommitmentCost>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CommitmentCost)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCommitmentCost(document.RootElement, options);
+        }
+
+        string IPersistableModel<CommitmentCost>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

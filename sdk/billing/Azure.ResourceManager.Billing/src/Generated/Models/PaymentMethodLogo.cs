@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Logo of payment method. </summary>
     public partial class PaymentMethodLogo
     {
-        /// <summary> Initializes a new instance of PaymentMethodLogo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PaymentMethodLogo"/>. </summary>
         public PaymentMethodLogo()
         {
         }
 
-        /// <summary> Initializes a new instance of PaymentMethodLogo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentMethodLogo"/>. </summary>
         /// <param name="mimeType"> MIME type of the logo. </param>
         /// <param name="uri"> Public URL of image of the logo. </param>
-        internal PaymentMethodLogo(string mimeType, Uri uri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PaymentMethodLogo(string mimeType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MimeType = mimeType;
             Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> MIME type of the logo. </summary>

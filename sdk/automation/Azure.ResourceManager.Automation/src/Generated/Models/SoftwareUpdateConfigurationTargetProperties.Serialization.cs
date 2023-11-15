@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationTargetProperties : IUtf8JsonSerializable
+    public partial class SoftwareUpdateConfigurationTargetProperties : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationTargetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationTargetProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SoftwareUpdateConfigurationTargetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SoftwareUpdateConfigurationTargetProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SoftwareUpdateConfigurationTargetProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(AzureQueries))
             {
@@ -36,17 +46,48 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SoftwareUpdateConfigurationTargetProperties DeserializeSoftwareUpdateConfigurationTargetProperties(JsonElement element)
+        SoftwareUpdateConfigurationTargetProperties IJsonModel<SoftwareUpdateConfigurationTargetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationTargetProperties(document.RootElement, options);
+        }
+
+        internal static SoftwareUpdateConfigurationTargetProperties DeserializeSoftwareUpdateConfigurationTargetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<AzureQueryProperties>> azureQueries = default;
             Optional<IList<NonAzureQueryProperties>> nonAzureQueries = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureQueries"u8))
@@ -77,8 +118,38 @@ namespace Azure.ResourceManager.Automation.Models
                     nonAzureQueries = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SoftwareUpdateConfigurationTargetProperties(Optional.ToList(azureQueries), Optional.ToList(nonAzureQueries));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SoftwareUpdateConfigurationTargetProperties(Optional.ToList(azureQueries), Optional.ToList(nonAzureQueries), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SoftwareUpdateConfigurationTargetProperties IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationTargetProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSoftwareUpdateConfigurationTargetProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<SoftwareUpdateConfigurationTargetProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

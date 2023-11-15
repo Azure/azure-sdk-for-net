@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> A header to add to the WebTest. </summary>
     public partial class HeaderField
     {
-        /// <summary> Initializes a new instance of HeaderField. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HeaderField"/>. </summary>
         public HeaderField()
         {
         }
 
-        /// <summary> Initializes a new instance of HeaderField. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderField"/>. </summary>
         /// <param name="headerFieldName"> The name of the header. </param>
         /// <param name="headerFieldValue"> The value of the header. </param>
-        internal HeaderField(string headerFieldName, string headerFieldValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HeaderField(string headerFieldName, string headerFieldValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HeaderFieldName = headerFieldName;
             HeaderFieldValue = headerFieldValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the header. </summary>

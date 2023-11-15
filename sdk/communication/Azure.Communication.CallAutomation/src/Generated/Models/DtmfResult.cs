@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DtmfResult. </summary>
     public partial class DtmfResult
     {
-        /// <summary> Initializes a new instance of DtmfResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DtmfResult"/>. </summary>
         internal DtmfResult()
         {
             Tones = new ChangeTrackingList<DtmfTone>();
         }
 
-        /// <summary> Initializes a new instance of DtmfResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DtmfResult"/>. </summary>
         /// <param name="tones"></param>
-        internal DtmfResult(IReadOnlyList<DtmfTone> tones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DtmfResult(IReadOnlyList<DtmfTone> tones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tones = tones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

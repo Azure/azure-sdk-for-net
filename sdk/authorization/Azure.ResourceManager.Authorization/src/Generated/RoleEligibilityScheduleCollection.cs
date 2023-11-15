@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleResource(Client, RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(e)), _roleEligibilityScheduleClientDiagnostics, Pipeline, "RoleEligibilityScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleEligibilityScheduleResource(Client, RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(e)), _roleEligibilityScheduleClientDiagnostics, Pipeline, "RoleEligibilityScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleResource(Client, RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(e)), _roleEligibilityScheduleClientDiagnostics, Pipeline, "RoleEligibilityScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleEligibilityScheduleResource(Client, RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(e)), _roleEligibilityScheduleClientDiagnostics, Pipeline, "RoleEligibilityScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

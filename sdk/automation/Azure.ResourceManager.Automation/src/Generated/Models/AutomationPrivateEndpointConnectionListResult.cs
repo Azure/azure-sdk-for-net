@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> A list of private endpoint connections. </summary>
     internal partial class AutomationPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateEndpointConnectionListResult"/>. </summary>
         internal AutomationPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<AutomationPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> Array of private endpoint connections. </param>
-        internal AutomationPrivateEndpointConnectionListResult(IReadOnlyList<AutomationPrivateEndpointConnectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationPrivateEndpointConnectionListResult(IReadOnlyList<AutomationPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private endpoint connections. </summary>

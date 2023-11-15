@@ -5,16 +5,109 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ConnectivityIssue
+    public partial class ConnectivityIssue : IUtf8JsonSerializable, IJsonModel<ConnectivityIssue>
     {
-        internal static ConnectivityIssue DeserializeConnectivityIssue(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityIssue>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConnectivityIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectivityIssue>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectivityIssue>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Origin))
+                {
+                    writer.WritePropertyName("origin"u8);
+                    writer.WriteStringValue(Origin.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Severity))
+                {
+                    writer.WritePropertyName("severity"u8);
+                    writer.WriteStringValue(Severity.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IssueType))
+                {
+                    writer.WritePropertyName("type"u8);
+                    writer.WriteStringValue(IssueType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Context))
+                {
+                    writer.WritePropertyName("context"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Context)
+                    {
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStartObject();
+                        foreach (var item0 in item)
+                        {
+                            writer.WritePropertyName(item0.Key);
+                            writer.WriteStringValue(item0.Value);
+                        }
+                        writer.WriteEndObject();
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectivityIssue IJsonModel<ConnectivityIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityIssue)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityIssue(document.RootElement, options);
+        }
+
+        internal static ConnectivityIssue DeserializeConnectivityIssue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +116,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<IssueSeverity> severity = default;
             Optional<IssueType> type = default;
             Optional<IReadOnlyList<IDictionary<string, string>>> context = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"u8))
@@ -78,8 +173,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     context = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectivityIssue(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectivityIssue(Optional.ToNullable(origin), Optional.ToNullable(severity), Optional.ToNullable(type), Optional.ToList(context), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectivityIssue>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityIssue)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectivityIssue IPersistableModel<ConnectivityIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectivityIssue)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectivityIssue(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectivityIssue>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     public partial class CapabilityData : ResourceData
     {
-        /// <summary> Initializes a new instance of CapabilityData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CapabilityData"/>. </summary>
         public CapabilityData()
         {
         }
 
-        /// <summary> Initializes a new instance of CapabilityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,13 +36,15 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="description"> Localized string of the description. </param>
         /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
         /// <param name="urn"> String of the URN for this Capability Type. </param>
-        internal CapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Publisher = publisher;
             TargetType = targetType;
             Description = description;
             ParametersSchema = parametersSchema;
             Urn = urn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> String of the Publisher that this Capability extends. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     /// <summary> The list of detected changes. </summary>
     internal partial class ChangeList
     {
-        /// <summary> Initializes a new instance of ChangeList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChangeList"/>. </summary>
         internal ChangeList()
         {
             Value = new ChangeTrackingList<DetectedChangeData>();
         }
 
-        /// <summary> Initializes a new instance of ChangeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChangeList"/>. </summary>
         /// <param name="value"> The list of changes. </param>
         /// <param name="nextLink"> The URI that can be used to request the next page of changes. </param>
-        internal ChangeList(IReadOnlyList<DetectedChangeData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChangeList(IReadOnlyList<DetectedChangeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of changes. </summary>

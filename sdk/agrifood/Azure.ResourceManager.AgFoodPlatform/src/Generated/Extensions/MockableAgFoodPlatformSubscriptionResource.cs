@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "MockableAgFoodPlatformSubscriptionResource.GetFarmBeats", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "MockableAgFoodPlatformSubscriptionResource.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "MockableAgFoodPlatformSubscriptionResource.GetFarmBeats", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "MockableAgFoodPlatformSubscriptionResource.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,10 +16,17 @@ using Azure.Core;
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(PolicyCertificatesModificationResultConverter))]
-    public partial class PolicyCertificatesModificationResult : IUtf8JsonSerializable
+    public partial class PolicyCertificatesModificationResult : IUtf8JsonSerializable, IJsonModel<PolicyCertificatesModificationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyCertificatesModificationResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PolicyCertificatesModificationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PolicyCertificatesModificationResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PolicyCertificatesModificationResult>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CertificateThumbprint))
             {
@@ -28,17 +38,48 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("x-ms-policycertificates-result"u8);
                 writer.WriteStringValue(CertificateResolution.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PolicyCertificatesModificationResult DeserializePolicyCertificatesModificationResult(JsonElement element)
+        PolicyCertificatesModificationResult IJsonModel<PolicyCertificatesModificationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyCertificatesModificationResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyCertificatesModificationResult(document.RootElement, options);
+        }
+
+        internal static PolicyCertificatesModificationResult DeserializePolicyCertificatesModificationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> xMsCertificateThumbprint = default;
             Optional<PolicyCertificateResolution> xMsPolicycertificatesResult = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x-ms-certificate-thumbprint"u8))
@@ -55,9 +96,39 @@ namespace Azure.Security.Attestation
                     xMsPolicycertificatesResult = new PolicyCertificateResolution(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint.Value, Optional.ToNullable(xMsPolicycertificatesResult));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PolicyCertificatesModificationResult(xMsCertificateThumbprint.Value, Optional.ToNullable(xMsPolicycertificatesResult), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyCertificatesModificationResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyCertificatesModificationResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PolicyCertificatesModificationResult IPersistableModel<PolicyCertificatesModificationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PolicyCertificatesModificationResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePolicyCertificatesModificationResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<PolicyCertificatesModificationResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         internal partial class PolicyCertificatesModificationResultConverter : JsonConverter<PolicyCertificatesModificationResult>
         {

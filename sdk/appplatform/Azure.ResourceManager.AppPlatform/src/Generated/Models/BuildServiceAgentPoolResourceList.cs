@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
@@ -14,22 +15,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Object that includes an array of build service agent pool resources and a possible link for next set. </summary>
     internal partial class BuildServiceAgentPoolResourceList
     {
-        /// <summary> Initializes a new instance of BuildServiceAgentPoolResourceList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BuildServiceAgentPoolResourceList"/>. </summary>
         internal BuildServiceAgentPoolResourceList()
         {
             Value = new ChangeTrackingList<AppPlatformBuildServiceAgentPoolData>();
         }
 
-        /// <summary> Initializes a new instance of BuildServiceAgentPoolResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildServiceAgentPoolResourceList"/>. </summary>
         /// <param name="value"> Collection of build service agent pool resource. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.
         /// </param>
-        internal BuildServiceAgentPoolResourceList(IReadOnlyList<AppPlatformBuildServiceAgentPoolData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BuildServiceAgentPoolResourceList(IReadOnlyList<AppPlatformBuildServiceAgentPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Collection of build service agent pool resource. </summary>

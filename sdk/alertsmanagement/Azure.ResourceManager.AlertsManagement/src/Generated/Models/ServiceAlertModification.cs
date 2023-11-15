@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,20 +15,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alert Modification details. </summary>
     public partial class ServiceAlertModification : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModification"/>. </summary>
         public ServiceAlertModification()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModification. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModification"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the alert modification item. </param>
-        internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertModificationProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertModification(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceAlertModificationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of the alert modification item. </summary>

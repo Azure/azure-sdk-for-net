@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Defines the resource properties. </summary>
     public partial class OSProfile
     {
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         public OSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of OSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         /// <param name="adminPassword"> Admin password of the virtual machine. </param>
         /// <param name="computerName"> Gets or sets computer name. </param>
         /// <param name="osType"> Gets or sets the type of the os. </param>
         /// <param name="osName"> Gets or sets os name. </param>
-        internal OSProfile(string adminPassword, string computerName, OSType? osType, string osName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSProfile(string adminPassword, string computerName, OSType? osType, string osName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminPassword = adminPassword;
             ComputerName = computerName;
             OSType = osType;
             OSName = osName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Admin password of the virtual machine. </summary>

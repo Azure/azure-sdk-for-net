@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,11 +14,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Configuration for HTTP or HTTPS requests. </summary>
     public partial class ConnectivityCheckRequestHttpConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectivityCheckRequestHttpConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestHttpConfiguration"/>. </summary>
         public ConnectivityCheckRequestHttpConfiguration()
         {
             ValidStatusCodes = new ChangeTrackingList<long>();
             Headers = new ChangeTrackingList<HttpHeaderConfiguration>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckRequestHttpConfiguration"/>. </summary>
+        /// <param name="method"> The HTTP method to be used. </param>
+        /// <param name="validStatusCodes"> List of HTTP status codes considered valid for the request response. </param>
+        /// <param name="headers"> List of headers to be included in the request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityCheckRequestHttpConfiguration(HttpMethodConfiguration? method, IList<long> validStatusCodes, IList<HttpHeaderConfiguration> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Method = method;
+            ValidStatusCodes = validStatusCodes;
+            Headers = headers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The HTTP method to be used. </summary>

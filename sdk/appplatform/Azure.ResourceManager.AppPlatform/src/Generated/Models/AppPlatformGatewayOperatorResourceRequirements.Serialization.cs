@@ -5,15 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayOperatorResourceRequirements
+    public partial class AppPlatformGatewayOperatorResourceRequirements : IUtf8JsonSerializable, IJsonModel<AppPlatformGatewayOperatorResourceRequirements>
     {
-        internal static AppPlatformGatewayOperatorResourceRequirements DeserializeAppPlatformGatewayOperatorResourceRequirements(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformGatewayOperatorResourceRequirements>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppPlatformGatewayOperatorResourceRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppPlatformGatewayOperatorResourceRequirements>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppPlatformGatewayOperatorResourceRequirements>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Cpu))
+                {
+                    writer.WritePropertyName("cpu"u8);
+                    writer.WriteStringValue(Cpu);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Memory))
+                {
+                    writer.WritePropertyName("memory"u8);
+                    writer.WriteStringValue(Memory);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InstanceCount))
+                {
+                    writer.WritePropertyName("instanceCount"u8);
+                    writer.WriteNumberValue(InstanceCount.Value);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppPlatformGatewayOperatorResourceRequirements IJsonModel<AppPlatformGatewayOperatorResourceRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformGatewayOperatorResourceRequirements(document.RootElement, options);
+        }
+
+        internal static AppPlatformGatewayOperatorResourceRequirements DeserializeAppPlatformGatewayOperatorResourceRequirements(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +91,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> cpu = default;
             Optional<string> memory = default;
             Optional<int> instanceCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))
@@ -42,8 +114,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     instanceCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformGatewayOperatorResourceRequirements(cpu.Value, memory.Value, Optional.ToNullable(instanceCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformGatewayOperatorResourceRequirements(cpu.Value, memory.Value, Optional.ToNullable(instanceCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformGatewayOperatorResourceRequirements>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppPlatformGatewayOperatorResourceRequirements IPersistableModel<AppPlatformGatewayOperatorResourceRequirements>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppPlatformGatewayOperatorResourceRequirements(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppPlatformGatewayOperatorResourceRequirements>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

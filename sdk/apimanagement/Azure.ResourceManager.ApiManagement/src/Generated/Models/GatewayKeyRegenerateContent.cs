@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Gateway key regeneration request contract properties. </summary>
     public partial class GatewayKeyRegenerateContent
     {
-        /// <summary> Initializes a new instance of GatewayKeyRegenerateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerateContent"/>. </summary>
         /// <param name="keyType"> The Key being regenerated. </param>
         public GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType)
         {
             KeyType = keyType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerateContent"/>. </summary>
+        /// <param name="keyType"> The Key being regenerated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyType = keyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerateContent"/> for deserialization. </summary>
+        internal GatewayKeyRegenerateContent()
+        {
         }
 
         /// <summary> The Key being regenerated. </summary>

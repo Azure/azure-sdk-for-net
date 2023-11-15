@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> A collection of related endpoints from the same service for which the Batch service requires outbound access. </summary>
     public partial class BatchAccountOutboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of BatchAccountOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountOutboundEnvironmentEndpoint"/>. </summary>
         internal BatchAccountOutboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<BatchAccountEndpointDependency>();
         }
 
-        /// <summary> Initializes a new instance of BatchAccountOutboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountOutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service that the Batch service connects to. </param>
         /// <param name="endpoints"> The endpoints for this service to which the Batch service makes outbound calls. </param>
-        internal BatchAccountOutboundEnvironmentEndpoint(string category, IReadOnlyList<BatchAccountEndpointDependency> endpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountOutboundEnvironmentEndpoint(string category, IReadOnlyList<BatchAccountEndpointDependency> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Endpoints = endpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of service that the Batch service connects to. </summary>

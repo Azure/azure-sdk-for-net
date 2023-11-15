@@ -5,25 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The SKU of the cognitive services account. </summary>
     public partial class BotServiceSku
     {
-        /// <summary> Initializes a new instance of BotServiceSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         public BotServiceSku(BotServiceSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of BotServiceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> Gets the sku tier. This is based on the SKU name. </param>
-        internal BotServiceSku(BotServiceSkuName name, BotServiceSkuTier? tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotServiceSku(BotServiceSkuName name, BotServiceSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceSku"/> for deserialization. </summary>
+        internal BotServiceSku()
+        {
         }
 
         /// <summary> The sku name. </summary>

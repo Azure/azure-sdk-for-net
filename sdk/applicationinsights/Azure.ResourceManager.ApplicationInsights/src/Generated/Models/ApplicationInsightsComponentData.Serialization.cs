@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,10 +17,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    public partial class ApplicationInsightsComponentData : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentData : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ApplicationInsightsComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ApplicationInsightsComponentData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ApplicationInsightsComponentData>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -40,8 +49,55 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ApplicationId))
+                {
+                    writer.WritePropertyName("ApplicationId"u8);
+                    writer.WriteStringValue(ApplicationId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AppId))
+                {
+                    writer.WritePropertyName("AppId"u8);
+                    writer.WriteStringValue(AppId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(NamePropertiesName))
+                {
+                    writer.WritePropertyName("Name"u8);
+                    writer.WriteStringValue(NamePropertiesName);
+                }
+            }
             if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("Application_Type"u8);
@@ -57,15 +113,63 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("Request_Source"u8);
                 writer.WriteStringValue(RequestSource.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InstrumentationKey))
+                {
+                    writer.WritePropertyName("InstrumentationKey"u8);
+                    writer.WriteStringValue(InstrumentationKey);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("CreationDate"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    writer.WritePropertyName("TenantId"u8);
+                    writer.WriteStringValue(TenantId.Value);
+                }
+            }
             if (Optional.IsDefined(HockeyAppId))
             {
                 writer.WritePropertyName("HockeyAppId"u8);
                 writer.WriteStringValue(HockeyAppId);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(HockeyAppToken))
+                {
+                    writer.WritePropertyName("HockeyAppToken"u8);
+                    writer.WriteStringValue(HockeyAppToken);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
             if (Optional.IsDefined(SamplingPercentage))
             {
                 writer.WritePropertyName("SamplingPercentage"u8);
                 writer.WriteNumberValue(SamplingPercentage.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConnectionString))
+                {
+                    writer.WritePropertyName("ConnectionString"u8);
+                    writer.WriteStringValue(ConnectionString);
+                }
             }
             if (Optional.IsDefined(RetentionInDays))
             {
@@ -86,6 +190,27 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 writer.WritePropertyName("WorkspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LaMigrationOn))
+                {
+                    writer.WritePropertyName("LaMigrationDate"u8);
+                    writer.WriteStringValue(LaMigrationOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(PrivateLinkScopedResources))
+                {
+                    writer.WritePropertyName("PrivateLinkScopedResources"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateLinkScopedResources)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
@@ -113,11 +238,40 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationInsightsComponentData DeserializeApplicationInsightsComponentData(JsonElement element)
+        ApplicationInsightsComponentData IJsonModel<ApplicationInsightsComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentData(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentData DeserializeApplicationInsightsComponentData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -155,6 +309,8 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<IngestionMode> ingestionMode = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> forceCustomerStorageForProfiler = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -420,8 +576,38 @@ namespace Azure.ResourceManager.ApplicationInsights
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationInsightsComponentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind, Optional.ToNullable(etag), applicationId.Value, appId.Value, name0.Value, Optional.ToNullable(applicationType), Optional.ToNullable(flowType), Optional.ToNullable(requestSource), instrumentationKey.Value, Optional.ToNullable(creationDate), Optional.ToNullable(tenantId), hockeyAppId.Value, hockeyAppToken.Value, provisioningState.Value, Optional.ToNullable(samplingPercentage), connectionString.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(disableIPMasking), Optional.ToNullable(immediatePurgeDataOn30Days), workspaceResourceId.Value, Optional.ToNullable(laMigrationDate), Optional.ToList(privateLinkScopedResources), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(ingestionMode), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(forceCustomerStorageForProfiler));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationInsightsComponentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind, Optional.ToNullable(etag), applicationId.Value, appId.Value, name0.Value, Optional.ToNullable(applicationType), Optional.ToNullable(flowType), Optional.ToNullable(requestSource), instrumentationKey.Value, Optional.ToNullable(creationDate), Optional.ToNullable(tenantId), hockeyAppId.Value, hockeyAppToken.Value, provisioningState.Value, Optional.ToNullable(samplingPercentage), connectionString.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(disableIPMasking), Optional.ToNullable(immediatePurgeDataOn30Days), workspaceResourceId.Value, Optional.ToNullable(laMigrationDate), Optional.ToList(privateLinkScopedResources), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(ingestionMode), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(forceCustomerStorageForProfiler), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationInsightsComponentData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApplicationInsightsComponentData IPersistableModel<ApplicationInsightsComponentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApplicationInsightsComponentData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ApplicationInsightsComponentData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The WafMetricsResponseSeriesPropertiesItemsItem. </summary>
     public partial class WafMetricsResponseSeriesPropertiesItemsItem
     {
-        /// <summary> Initializes a new instance of WafMetricsResponseSeriesPropertiesItemsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesPropertiesItemsItem"/>. </summary>
         internal WafMetricsResponseSeriesPropertiesItemsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of WafMetricsResponseSeriesPropertiesItemsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesPropertiesItemsItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        internal WafMetricsResponseSeriesPropertiesItemsItem(string name, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WafMetricsResponseSeriesPropertiesItemsItem(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>

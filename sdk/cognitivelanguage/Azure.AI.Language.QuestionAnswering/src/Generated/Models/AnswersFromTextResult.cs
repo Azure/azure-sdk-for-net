@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Represents the answer results. </summary>
     public partial class AnswersFromTextResult
     {
-        /// <summary> Initializes a new instance of AnswersFromTextResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnswersFromTextResult"/>. </summary>
         internal AnswersFromTextResult()
         {
             Answers = new ChangeTrackingList<TextAnswer>();
         }
 
-        /// <summary> Initializes a new instance of AnswersFromTextResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswersFromTextResult"/>. </summary>
         /// <param name="answers"> Represents the answer results. </param>
-        internal AnswersFromTextResult(IReadOnlyList<TextAnswer> answers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnswersFromTextResult(IReadOnlyList<TextAnswer> answers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Answers = answers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Represents the answer results. </summary>

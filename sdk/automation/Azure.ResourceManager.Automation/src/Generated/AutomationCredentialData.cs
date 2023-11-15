@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class AutomationCredentialData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomationCredentialData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialData"/>. </summary>
         public AutomationCredentialData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationCredentialData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationCredentialData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +35,14 @@ namespace Azure.ResourceManager.Automation
         /// <param name="createdOn"> Gets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal AutomationCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string userName, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string userName, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             UserName = userName;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the user name of the credential. </summary>

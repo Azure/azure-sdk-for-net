@@ -15,7 +15,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The Choice. </summary>
     public partial class RecognizeChoice
     {
-        /// <summary> Initializes a new instance of RecognizeChoice. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeChoice"/>. </summary>
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="phrases"/> is null. </exception>
@@ -28,15 +31,22 @@ namespace Azure.Communication.CallAutomation
             Phrases = phrases.ToList();
         }
 
-        /// <summary> Initializes a new instance of RecognizeChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeChoice"/>. </summary>
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
         /// <param name="tone"></param>
-        internal RecognizeChoice(string label, IList<string> phrases, DtmfTone? tone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecognizeChoice(string label, IList<string> phrases, DtmfTone? tone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Label = label;
             Phrases = phrases;
             Tone = tone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeChoice"/> for deserialization. </summary>
+        internal RecognizeChoice()
+        {
         }
 
         /// <summary> Identifier for a given choice. </summary>

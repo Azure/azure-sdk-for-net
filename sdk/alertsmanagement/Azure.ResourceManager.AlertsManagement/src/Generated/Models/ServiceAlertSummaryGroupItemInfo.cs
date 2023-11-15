@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alerts summary group item. </summary>
     public partial class ServiceAlertSummaryGroupItemInfo
     {
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroupItemInfo"/>. </summary>
         public ServiceAlertSummaryGroupItemInfo()
         {
             Values = new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertSummaryGroupItemInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertSummaryGroupItemInfo"/>. </summary>
         /// <param name="name"> Value of the aggregated field. </param>
         /// <param name="count"> Count of the aggregated field. </param>
         /// <param name="groupedBy"> Name of the field aggregated. </param>
         /// <param name="values"> List of the items. </param>
-        internal ServiceAlertSummaryGroupItemInfo(string name, long? count, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertSummaryGroupItemInfo(string name, long? count, string groupedBy, IList<ServiceAlertSummaryGroupItemInfo> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Count = count;
             GroupedBy = groupedBy;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Value of the aggregated field. </summary>

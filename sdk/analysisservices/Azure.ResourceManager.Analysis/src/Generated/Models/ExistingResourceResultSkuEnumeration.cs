@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An object that represents enumerating SKUs for existing resources. </summary>
     internal partial class ExistingResourceResultSkuEnumeration
     {
-        /// <summary> Initializes a new instance of ExistingResourceResultSkuEnumeration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExistingResourceResultSkuEnumeration"/>. </summary>
         internal ExistingResourceResultSkuEnumeration()
         {
             Value = new ChangeTrackingList<AnalysisExistingSku>();
         }
 
-        /// <summary> Initializes a new instance of ExistingResourceResultSkuEnumeration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExistingResourceResultSkuEnumeration"/>. </summary>
         /// <param name="value"> The collection of available SKUs for existing resources. </param>
-        internal ExistingResourceResultSkuEnumeration(IReadOnlyList<AnalysisExistingSku> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExistingResourceResultSkuEnumeration(IReadOnlyList<AnalysisExistingSku> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of available SKUs for existing resources. </summary>

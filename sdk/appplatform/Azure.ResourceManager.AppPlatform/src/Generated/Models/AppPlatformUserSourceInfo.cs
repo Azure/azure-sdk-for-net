@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
@@ -14,18 +17,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// </summary>
     public abstract partial class AppPlatformUserSourceInfo
     {
-        /// <summary> Initializes a new instance of AppPlatformUserSourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformUserSourceInfo"/>. </summary>
         protected AppPlatformUserSourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
-        internal AppPlatformUserSourceInfo(string userSourceInfoType, string version)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformUserSourceInfo(string userSourceInfoType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserSourceInfoType = userSourceInfoType;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the source uploaded. </summary>

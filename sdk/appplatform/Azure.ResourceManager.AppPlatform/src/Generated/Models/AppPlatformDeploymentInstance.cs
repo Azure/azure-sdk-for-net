@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Deployment instance payload. </summary>
     public partial class AppPlatformDeploymentInstance
     {
-        /// <summary> Initializes a new instance of AppPlatformDeploymentInstance. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformDeploymentInstance"/>. </summary>
         internal AppPlatformDeploymentInstance()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformDeploymentInstance. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformDeploymentInstance"/>. </summary>
         /// <param name="name"> Name of the deployment instance. </param>
         /// <param name="status"> Status of the deployment instance. </param>
         /// <param name="reason"> Failed reason of the deployment instance. </param>
         /// <param name="discoveryStatus"> Discovery status of the deployment instance. </param>
         /// <param name="startedOn"> Start time of the deployment instance. </param>
         /// <param name="zone"> Availability zone information of the deployment instance. </param>
-        internal AppPlatformDeploymentInstance(string name, string status, string reason, string discoveryStatus, DateTimeOffset? startedOn, string zone)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformDeploymentInstance(string name, string status, string reason, string discoveryStatus, DateTimeOffset? startedOn, string zone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Status = status;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             DiscoveryStatus = discoveryStatus;
             StartedOn = startedOn;
             Zone = zone;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the deployment instance. </summary>

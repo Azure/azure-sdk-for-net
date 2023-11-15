@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
@@ -14,13 +15,16 @@ namespace Azure.Communication.CallingServer
     /// <summary> The CallConnectionProperties. </summary>
     internal partial class CallConnectionPropertiesInternal
     {
-        /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CallConnectionPropertiesInternal"/>. </summary>
         internal CallConnectionPropertiesInternal()
         {
             Targets = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnectionPropertiesInternal"/>. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="source"> The source of the call. </param>
@@ -29,7 +33,8 @@ namespace Azure.Communication.CallingServer
         /// <param name="subject"> The subject. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="mediaSubscriptionId"> SubscriptionId for media streaming. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, CallSourceInternal source, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, string mediaSubscriptionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, CallSourceInternal source, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string subject, string callbackUri, string mediaSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -39,6 +44,7 @@ namespace Azure.Communication.CallingServer
             Subject = subject;
             CallbackUri = callbackUri;
             MediaSubscriptionId = mediaSubscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The call connection id. </summary>

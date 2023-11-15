@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Describes an available ApiManagement SKU. </summary>
     public partial class ApiManagementSku
     {
-        /// <summary> Initializes a new instance of ApiManagementSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSku"/>. </summary>
         internal ApiManagementSku()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
@@ -24,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Restrictions = new ChangeTrackingList<ApiManagementSkuRestrictions>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="costs"> Metadata for retrieving price info. </param>
         /// <param name="capabilities"> A name value pair to describe the capability. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal ApiManagementSku(string resourceType, string name, string tier, string size, string family, string kind, ApiManagementSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ApiManagementSkuCosts> costs, IReadOnlyList<ApiManagementSkuCapabilities> capabilities, IReadOnlyList<ApiManagementSkuRestrictions> restrictions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementSku(string resourceType, string name, string tier, string size, string family, string kind, ApiManagementSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<ApiManagementSkuLocationInfo> locationInfo, IReadOnlyList<string> apiVersions, IReadOnlyList<ApiManagementSkuCosts> costs, IReadOnlyList<ApiManagementSkuCapabilities> capabilities, IReadOnlyList<ApiManagementSkuRestrictions> restrictions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Name = name;
@@ -53,6 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Costs = costs;
             Capabilities = capabilities;
             Restrictions = restrictions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>

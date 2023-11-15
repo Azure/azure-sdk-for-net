@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ApplicationDiagnosticContent : IUtf8JsonSerializable
+    public partial class ApplicationDiagnosticContent : IUtf8JsonSerializable, IJsonModel<ApplicationDiagnosticContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationDiagnosticContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ApplicationDiagnosticContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ApplicationDiagnosticContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ApplicationDiagnosticContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AppInstance))
             {
@@ -30,7 +41,98 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(DurationValue);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ApplicationDiagnosticContent IJsonModel<ApplicationDiagnosticContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationDiagnosticContent(document.RootElement, options);
+        }
+
+        internal static ApplicationDiagnosticContent DeserializeApplicationDiagnosticContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> appInstance = default;
+            Optional<string> filePath = default;
+            Optional<string> duration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("appInstance"u8))
+                {
+                    appInstance = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("filePath"u8))
+                {
+                    filePath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("duration"u8))
+                {
+                    duration = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationDiagnosticContent(appInstance.Value, filePath.Value, duration.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ApplicationDiagnosticContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApplicationDiagnosticContent IPersistableModel<ApplicationDiagnosticContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApplicationDiagnosticContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<ApplicationDiagnosticContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

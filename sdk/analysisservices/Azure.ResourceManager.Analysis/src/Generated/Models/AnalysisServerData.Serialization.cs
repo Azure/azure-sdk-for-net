@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Analysis.Models;
@@ -14,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Analysis
 {
-    public partial class AnalysisServerData : IUtf8JsonSerializable
+    public partial class AnalysisServerData : IUtf8JsonSerializable, IJsonModel<AnalysisServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisServerData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AnalysisServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AnalysisServerData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AnalysisServerData>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(AnalysisSku);
@@ -34,6 +43,29 @@ namespace Azure.ResourceManager.Analysis
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AsAdministrators))
@@ -71,17 +103,70 @@ namespace Azure.ResourceManager.Analysis
                 writer.WritePropertyName("serverMonitorMode"u8);
                 writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ServerFullName))
+                {
+                    writer.WritePropertyName("serverFullName"u8);
+                    writer.WriteStringValue(ServerFullName);
+                }
+            }
             if (Optional.IsDefined(AnalysisServerSku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(AnalysisServerSku);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AnalysisServerData DeserializeAnalysisServerData(JsonElement element)
+        AnalysisServerData IJsonModel<AnalysisServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalysisServerData(document.RootElement, options);
+        }
+
+        internal static AnalysisServerData DeserializeAnalysisServerData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,6 +189,8 @@ namespace Azure.ResourceManager.Analysis
             Optional<AnalysisProvisioningState> provisioningState = default;
             Optional<string> serverFullName = default;
             Optional<AnalysisResourceSku> sku0 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -261,8 +348,38 @@ namespace Azure.ResourceManager.Analysis
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalysisServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), Optional.ToNullable(state), Optional.ToNullable(provisioningState), serverFullName.Value, sku0.Value, sku);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AnalysisServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), Optional.ToNullable(state), Optional.ToNullable(provisioningState), serverFullName.Value, sku0.Value, sku, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalysisServerData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AnalysisServerData IPersistableModel<AnalysisServerData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAnalysisServerData(document.RootElement, options);
+        }
+
+        string IPersistableModel<AnalysisServerData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

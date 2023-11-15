@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list connection operation. </summary>
     internal partial class AutomationConnectionListResult
     {
-        /// <summary> Initializes a new instance of AutomationConnectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionListResult"/>. </summary>
         internal AutomationConnectionListResult()
         {
             Value = new ChangeTrackingList<AutomationConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of connection. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal AutomationConnectionListResult(IReadOnlyList<AutomationConnectionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationConnectionListResult(IReadOnlyList<AutomationConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of connection. </summary>

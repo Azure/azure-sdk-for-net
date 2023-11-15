@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Software update configuration run tasks model. </summary>
     public partial class SoftwareUpdateConfigurationRunTasks
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTasks. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunTasks"/>. </summary>
         internal SoftwareUpdateConfigurationRunTasks()
         {
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunTasks"/>. </summary>
         /// <param name="preTask"> Pre task properties. </param>
         /// <param name="postTask"> Post task properties. </param>
-        internal SoftwareUpdateConfigurationRunTasks(SoftwareUpdateConfigurationRunTaskProperties preTask, SoftwareUpdateConfigurationRunTaskProperties postTask)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationRunTasks(SoftwareUpdateConfigurationRunTaskProperties preTask, SoftwareUpdateConfigurationRunTaskProperties postTask, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreTask = preTask;
             PostTask = postTask;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Pre task properties. </summary>

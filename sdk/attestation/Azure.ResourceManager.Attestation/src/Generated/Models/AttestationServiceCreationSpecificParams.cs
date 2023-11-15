@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Attestation.Models
@@ -12,9 +13,23 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Client supplied parameters used to create a new attestation provider. </summary>
     public partial class AttestationServiceCreationSpecificParams
     {
-        /// <summary> Initializes a new instance of AttestationServiceCreationSpecificParams. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
         public AttestationServiceCreationSpecificParams()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AttestationServiceCreationSpecificParams"/>. </summary>
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        /// <param name="policySigningCertificates"> JSON Web Key Set defining a set of X.509 Certificates that will represent the parent certificate for the signing certificate used for policy operations. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationServiceCreationSpecificParams(PublicNetworkAccessType? publicNetworkAccess, JsonWebKeySet policySigningCertificates, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PublicNetworkAccess = publicNetworkAccess;
+            PolicySigningCertificates = policySigningCertificates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>

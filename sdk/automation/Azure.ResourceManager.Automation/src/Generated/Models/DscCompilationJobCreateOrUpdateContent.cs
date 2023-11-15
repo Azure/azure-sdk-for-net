@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create compilation job operation. </summary>
     public partial class DscCompilationJobCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of DscCompilationJobCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/>. </summary>
         /// <param name="configuration"> Gets or sets the configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public DscCompilationJobCreateOrUpdateContent(DscConfigurationAssociationProperty configuration)
@@ -24,6 +27,30 @@ namespace Azure.ResourceManager.Automation.Models
             Tags = new ChangeTrackingDictionary<string, string>();
             Configuration = configuration;
             Parameters = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="configuration"> Gets or sets the configuration. </param>
+        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
+        /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscCompilationJobCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, DscConfigurationAssociationProperty configuration, IDictionary<string, string> parameters, bool? isIncrementNodeConfigurationBuildRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Location = location;
+            Tags = tags;
+            Configuration = configuration;
+            Parameters = parameters;
+            IsIncrementNodeConfigurationBuildRequired = isIncrementNodeConfigurationBuildRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DscCompilationJobCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets name of the resource. </summary>

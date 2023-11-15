@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingAccountPaymentMethodPaymentMethodsRestClient.CreateListByBillingAccountRequest(_billingAccountName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingAccountPaymentMethodPaymentMethodsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingAccountPaymentMethodResource(Client, BillingPaymentMethodData.DeserializeBillingPaymentMethodData(e)), _billingAccountPaymentMethodPaymentMethodsClientDiagnostics, Pipeline, "BillingAccountPaymentMethodCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingAccountPaymentMethodResource(Client, BillingPaymentMethodData.DeserializeBillingPaymentMethodData(e)), _billingAccountPaymentMethodPaymentMethodsClientDiagnostics, Pipeline, "BillingAccountPaymentMethodCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingAccountPaymentMethodPaymentMethodsRestClient.CreateListByBillingAccountRequest(_billingAccountName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingAccountPaymentMethodPaymentMethodsRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingAccountPaymentMethodResource(Client, BillingPaymentMethodData.DeserializeBillingPaymentMethodData(e)), _billingAccountPaymentMethodPaymentMethodsClientDiagnostics, Pipeline, "BillingAccountPaymentMethodCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BillingAccountPaymentMethodResource(Client, BillingPaymentMethodData.DeserializeBillingPaymentMethodData(e)), _billingAccountPaymentMethodPaymentMethodsClientDiagnostics, Pipeline, "BillingAccountPaymentMethodCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> Properties specific to each reserved resource type. Not required if not applicable. </summary>
     internal partial class ReservationOrderAliasResponsePropertiesReservedResourceProperties
     {
-        /// <summary> Initializes a new instance of ReservationOrderAliasResponsePropertiesReservedResourceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderAliasResponsePropertiesReservedResourceProperties"/>. </summary>
         public ReservationOrderAliasResponsePropertiesReservedResourceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationOrderAliasResponsePropertiesReservedResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationOrderAliasResponsePropertiesReservedResourceProperties"/>. </summary>
         /// <param name="instanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. </param>
-        internal ReservationOrderAliasResponsePropertiesReservedResourceProperties(BillingBenefitsInstanceFlexibility? instanceFlexibility)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationOrderAliasResponsePropertiesReservedResourceProperties(BillingBenefitsInstanceFlexibility? instanceFlexibility, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceFlexibility = instanceFlexibility;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. </summary>

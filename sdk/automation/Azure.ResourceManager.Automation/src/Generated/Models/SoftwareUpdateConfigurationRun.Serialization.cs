@@ -6,15 +6,184 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationRun
+    public partial class SoftwareUpdateConfigurationRun : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationRun>
     {
-        internal static SoftwareUpdateConfigurationRun DeserializeSoftwareUpdateConfigurationRun(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationRun>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SoftwareUpdateConfigurationRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SoftwareUpdateConfigurationRun>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SoftwareUpdateConfigurationRun>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    writer.WritePropertyName("id"u8);
+                    writer.WriteStringValue(Id);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SoftwareUpdateConfiguration))
+            {
+                writer.WritePropertyName("softwareUpdateConfiguration"u8);
+                writer.WriteObjectValue(SoftwareUpdateConfiguration);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ConfiguredDuration))
+                {
+                    writer.WritePropertyName("configuredDuration"u8);
+                    writer.WriteStringValue(ConfiguredDuration.Value, "P");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OSType))
+                {
+                    writer.WritePropertyName("osType"u8);
+                    writer.WriteStringValue(OSType);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    if (EndOn != null)
+                    {
+                        writer.WritePropertyName("endTime"u8);
+                        writer.WriteStringValue(EndOn.Value, "O");
+                    }
+                    else
+                    {
+                        writer.WriteNull("endTime");
+                    }
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ComputerCount))
+                {
+                    writer.WritePropertyName("computerCount"u8);
+                    writer.WriteNumberValue(ComputerCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(FailedCount))
+                {
+                    writer.WritePropertyName("failedCount"u8);
+                    writer.WriteNumberValue(FailedCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("creationTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedBy))
+                {
+                    writer.WritePropertyName("createdBy"u8);
+                    writer.WriteStringValue(CreatedBy);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    writer.WritePropertyName("lastModifiedTime"u8);
+                    writer.WriteStringValue(LastModifiedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastModifiedBy))
+                {
+                    writer.WritePropertyName("lastModifiedBy"u8);
+                    writer.WriteStringValue(LastModifiedBy);
+                }
+            }
+            if (Optional.IsDefined(Tasks))
+            {
+                writer.WritePropertyName("tasks"u8);
+                writer.WriteObjectValue(Tasks);
+            }
+            writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SoftwareUpdateConfigurationRun IJsonModel<SoftwareUpdateConfigurationRun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRun)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationRun(document.RootElement, options);
+        }
+
+        internal static SoftwareUpdateConfigurationRun DeserializeSoftwareUpdateConfigurationRun(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +203,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> lastModifiedBy = default;
             Optional<SoftwareUpdateConfigurationRunTasks> tasks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -164,8 +335,38 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SoftwareUpdateConfigurationRun(name.Value, id.Value, softwareUpdateConfiguration.Value, status.Value, Optional.ToNullable(configuredDuration), osType.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(computerCount), Optional.ToNullable(failedCount), Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SoftwareUpdateConfigurationRun(name.Value, id.Value, softwareUpdateConfiguration.Value, status.Value, Optional.ToNullable(configuredDuration), osType.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(computerCount), Optional.ToNullable(failedCount), Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SoftwareUpdateConfigurationRun>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRun)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SoftwareUpdateConfigurationRun IPersistableModel<SoftwareUpdateConfigurationRun>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRun)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSoftwareUpdateConfigurationRun(document.RootElement, options);
+        }
+
+        string IPersistableModel<SoftwareUpdateConfigurationRun>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

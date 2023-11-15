@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> Attestation response for Trusted Platform Module (TPM) attestation. </summary>
     public partial class TpmAttestationResponse
     {
-        /// <summary> Initializes a new instance of TpmAttestationResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TpmAttestationResponse"/>. </summary>
         internal TpmAttestationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of TpmAttestationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="TpmAttestationResponse"/>. </summary>
         /// <param name="internalData"> Protocol data containing attestation service response. </param>
-        internal TpmAttestationResponse(string internalData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TpmAttestationResponse(string internalData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InternalData = internalData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

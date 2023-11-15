@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -17,20 +19,25 @@ namespace Azure.ResourceManager.AppPlatform
     /// </summary>
     public partial class AppPlatformBuildpackBindingData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppPlatformBuildpackBindingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildpackBindingData"/>. </summary>
         public AppPlatformBuildpackBindingData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformBuildpackBindingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformBuildpackBindingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a buildpack binding. </param>
-        internal AppPlatformBuildpackBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformBuildpackBindingProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformBuildpackBindingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformBuildpackBindingProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of a buildpack binding. </summary>

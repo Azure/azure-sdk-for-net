@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Cognitive Services account commitment cost. </summary>
     public partial class CommitmentCost
     {
-        /// <summary> Initializes a new instance of CommitmentCost. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommitmentCost"/>. </summary>
         internal CommitmentCost()
         {
         }
 
-        /// <summary> Initializes a new instance of CommitmentCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommitmentCost"/>. </summary>
         /// <param name="commitmentMeterId"> Commitment meter Id. </param>
         /// <param name="overageMeterId"> Overage meter Id. </param>
-        internal CommitmentCost(string commitmentMeterId, string overageMeterId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommitmentCost(string commitmentMeterId, string overageMeterId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommitmentMeterId = commitmentMeterId;
             OverageMeterId = overageMeterId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Commitment meter Id. </summary>

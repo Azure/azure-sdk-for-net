@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update connection type operation. </summary>
     public partial class AutomationConnectionTypeCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationConnectionTypeCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the connection type. </param>
         /// <param name="fieldDefinitions"> Gets or sets the field definitions of the connection type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="fieldDefinitions"/> is null. </exception>
@@ -25,6 +28,24 @@ namespace Azure.ResourceManager.Automation.Models
 
             Name = name;
             FieldDefinitions = fieldDefinitions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the connection type. </param>
+        /// <param name="isGlobal"> Gets or sets a Boolean value to indicate if the connection type is global. </param>
+        /// <param name="fieldDefinitions"> Gets or sets the field definitions of the connection type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationConnectionTypeCreateOrUpdateContent(string name, bool? isGlobal, IDictionary<string, AutomationConnectionFieldDefinition> fieldDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            IsGlobal = isGlobal;
+            FieldDefinitions = fieldDefinitions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionTypeCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationConnectionTypeCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets the name of the connection type. </summary>

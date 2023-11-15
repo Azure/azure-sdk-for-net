@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -14,26 +15,31 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Required inbound or outbound traffic for Azure Spring Apps resource. </summary>
     public partial class AppPlatformServiceRequiredTraffic
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceRequiredTraffic. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceRequiredTraffic"/>. </summary>
         internal AppPlatformServiceRequiredTraffic()
         {
             IPs = new ChangeTrackingList<IPAddress>();
             Fqdns = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformServiceRequiredTraffic. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformServiceRequiredTraffic"/>. </summary>
         /// <param name="protocol"> The protocol of required traffic. </param>
         /// <param name="port"> The port of required traffic. </param>
         /// <param name="ips"> The ip list of required traffic. </param>
         /// <param name="fqdns"> The FQDN list of required traffic. </param>
         /// <param name="direction"> The direction of required traffic. </param>
-        internal AppPlatformServiceRequiredTraffic(string protocol, int? port, IReadOnlyList<IPAddress> ips, IReadOnlyList<string> fqdns, AppPlatformServiceTrafficDirection? direction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformServiceRequiredTraffic(string protocol, int? port, IReadOnlyList<IPAddress> ips, IReadOnlyList<string> fqdns, AppPlatformServiceTrafficDirection? direction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Protocol = protocol;
             Port = port;
             IPs = ips;
             Fqdns = fqdns;
             Direction = direction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The protocol of required traffic. </summary>

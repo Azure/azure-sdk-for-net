@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The access keys for the cognitive services account. </summary>
     public partial class ServiceAccountApiKeys
     {
-        /// <summary> Initializes a new instance of ServiceAccountApiKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountApiKeys"/>. </summary>
         internal ServiceAccountApiKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountApiKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountApiKeys"/>. </summary>
         /// <param name="key1"> Gets the value of key 1. </param>
         /// <param name="key2"> Gets the value of key 2. </param>
-        internal ServiceAccountApiKeys(string key1, string key2)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountApiKeys(string key1, string key2, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key1 = key1;
             Key2 = key2;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the value of key 1. </summary>

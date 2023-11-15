@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Collection of Outbound Environment Endpoints. </summary>
     internal partial class OutboundEnvironmentEndpointList
     {
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OutboundEnvironmentEndpointList(IEnumerable<OutboundEnvironmentEndpoint> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OutboundEnvironmentEndpointList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointList"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal OutboundEnvironmentEndpointList(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OutboundEnvironmentEndpointList(IReadOnlyList<OutboundEnvironmentEndpoint> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpointList"/> for deserialization. </summary>
+        internal OutboundEnvironmentEndpointList()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.Chaos.Models
     /// </summary>
     public abstract partial class Filter
     {
-        /// <summary> Initializes a new instance of Filter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Filter"/>. </summary>
         protected Filter()
         {
         }
 
-        /// <summary> Initializes a new instance of Filter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Filter"/>. </summary>
         /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
-        internal Filter(FilterType filterType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Filter(FilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FilterType = filterType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enum that discriminates between filter types. Currently only `Simple` type is supported. </summary>

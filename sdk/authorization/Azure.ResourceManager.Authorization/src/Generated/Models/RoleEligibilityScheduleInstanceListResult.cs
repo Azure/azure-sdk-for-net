@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Role eligibility schedule instance list operation result. </summary>
     internal partial class RoleEligibilityScheduleInstanceListResult
     {
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleInstanceListResult"/>. </summary>
         internal RoleEligibilityScheduleInstanceListResult()
         {
             Value = new ChangeTrackingList<RoleEligibilityScheduleInstanceData>();
         }
 
-        /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleInstanceListResult"/>. </summary>
         /// <param name="value"> Role eligibility schedule instance list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        internal RoleEligibilityScheduleInstanceListResult(IReadOnlyList<RoleEligibilityScheduleInstanceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleEligibilityScheduleInstanceListResult(IReadOnlyList<RoleEligibilityScheduleInstanceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Role eligibility schedule instance list. </summary>

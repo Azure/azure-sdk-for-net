@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list watcher operation. </summary>
     internal partial class AutomationWatcherListResult
     {
-        /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherListResult"/>. </summary>
         internal AutomationWatcherListResult()
         {
             Value = new ChangeTrackingList<AutomationWatcherData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationWatcherListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationWatcherListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of watchers. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal AutomationWatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationWatcherListResult(IReadOnlyList<AutomationWatcherData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of watchers. </summary>

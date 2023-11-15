@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Information about an issue encountered in the process of checking for connectivity. </summary>
     public partial class ConnectivityIssue
     {
-        /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityIssue"/>. </summary>
         internal ConnectivityIssue()
         {
             Context = new ChangeTrackingList<IDictionary<string, string>>();
         }
 
-        /// <summary> Initializes a new instance of ConnectivityIssue. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectivityIssue"/>. </summary>
         /// <param name="origin"> The origin of the issue. </param>
         /// <param name="severity"> The severity of the issue. </param>
         /// <param name="issueType"> The type of issue. </param>
         /// <param name="context"> Provides additional context on the issue. </param>
-        internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? issueType, IReadOnlyList<IDictionary<string, string>> context)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityIssue(IssueOrigin? origin, IssueSeverity? severity, IssueType? issueType, IReadOnlyList<IDictionary<string, string>> context, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Origin = origin;
             Severity = severity;
             IssueType = issueType;
             Context = context;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The origin of the issue. </summary>

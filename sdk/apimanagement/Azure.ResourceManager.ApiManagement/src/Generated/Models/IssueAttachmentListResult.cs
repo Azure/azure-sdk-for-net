@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Issue Attachment list representation. </summary>
     internal partial class IssueAttachmentListResult
     {
-        /// <summary> Initializes a new instance of IssueAttachmentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IssueAttachmentListResult"/>. </summary>
         internal IssueAttachmentListResult()
         {
             Value = new ChangeTrackingList<ApiIssueAttachmentData>();
         }
 
-        /// <summary> Initializes a new instance of IssueAttachmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueAttachmentListResult"/>. </summary>
         /// <param name="value"> Issue Attachment values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal IssueAttachmentListResult(IReadOnlyList<ApiIssueAttachmentData> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IssueAttachmentListResult(IReadOnlyList<ApiIssueAttachmentData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Issue Attachment values. </summary>

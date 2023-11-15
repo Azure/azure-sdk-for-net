@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Paged Recipient User list representation. </summary>
     internal partial class RecipientUserListResult
     {
-        /// <summary> Initializes a new instance of RecipientUserListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecipientUserListResult"/>. </summary>
         internal RecipientUserListResult()
         {
             Value = new ChangeTrackingList<RecipientUserContract>();
         }
 
-        /// <summary> Initializes a new instance of RecipientUserListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecipientUserListResult"/>. </summary>
         /// <param name="value"> Page values. </param>
         /// <param name="count"> Total record count number across all pages. </param>
         /// <param name="nextLink"> Next page link if any. </param>
-        internal RecipientUserListResult(IReadOnlyList<RecipientUserContract> value, long? count, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecipientUserListResult(IReadOnlyList<RecipientUserContract> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page values. </summary>

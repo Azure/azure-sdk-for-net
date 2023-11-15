@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> This object contains consistent fields across different monitor services. </summary>
     public partial class ServiceAlertEssentials
     {
-        /// <summary> Initializes a new instance of ServiceAlertEssentials. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertEssentials"/>. </summary>
         public ServiceAlertEssentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertEssentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertEssentials"/>. </summary>
         /// <param name="severity"> Severity of alert Sev0 being highest and Sev4 being lowest. </param>
         /// <param name="signalType"> The type of signal the alert is based on, which could be metrics, logs or activity logs. </param>
         /// <param name="alertState"> Alert object state, which can be modified by the user. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="lastModifiedBy"> User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user. </param>
         /// <param name="actionStatus"> Action status. </param>
         /// <param name="description"> Alert description. </param>
-        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Severity = severity;
             SignalType = signalType;
@@ -58,6 +63,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             LastModifiedBy = lastModifiedBy;
             ActionStatus = actionStatus;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Severity of alert Sev0 being highest and Sev4 being lowest. </summary>

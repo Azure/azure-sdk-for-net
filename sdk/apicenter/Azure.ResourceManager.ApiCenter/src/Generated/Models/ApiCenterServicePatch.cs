@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> The service properties to be updated. </summary>
     public partial class ApiCenterServicePatch
     {
-        /// <summary> Initializes a new instance of ApiCenterServicePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenterServicePatch"/>. </summary>
         public ApiCenterServicePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenterServicePatch"/>. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiCenterServicePatch(ApiCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the last operation. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
     public partial class AppPlatformSkuZoneDetails
     {
-        /// <summary> Initializes a new instance of AppPlatformSkuZoneDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuZoneDetails"/>. </summary>
         internal AppPlatformSkuZoneDetails()
         {
             Name = new ChangeTrackingList<string>();
             Capabilities = new ChangeTrackingList<AppPlatformSkuCapabilities>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuZoneDetails"/>. </summary>
         /// <param name="name">
         /// Gets the set of zones that the SKU is available in with the
         /// specified capabilities.
@@ -29,10 +33,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// Gets a list of capabilities that are available for the SKU in the
         /// specified list of zones.
         /// </param>
-        internal AppPlatformSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<AppPlatformSkuCapabilities> capabilities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSkuZoneDetails(IReadOnlyList<string> name, IReadOnlyList<AppPlatformSkuCapabilities> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Capabilities = capabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

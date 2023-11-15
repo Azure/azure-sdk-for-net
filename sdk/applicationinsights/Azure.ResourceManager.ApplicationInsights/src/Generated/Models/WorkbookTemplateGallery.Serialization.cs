@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkbookTemplateGallery : IUtf8JsonSerializable
+    public partial class WorkbookTemplateGallery : IUtf8JsonSerializable, IJsonModel<WorkbookTemplateGallery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookTemplateGallery>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<WorkbookTemplateGallery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<WorkbookTemplateGallery>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<WorkbookTemplateGallery>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkbookTemplateGallery DeserializeWorkbookTemplateGallery(JsonElement element)
+        WorkbookTemplateGallery IJsonModel<WorkbookTemplateGallery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkbookTemplateGallery(document.RootElement, options);
+        }
+
+        internal static WorkbookTemplateGallery DeserializeWorkbookTemplateGallery(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> type = default;
             Optional<int> order = default;
             Optional<string> resourceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -85,8 +127,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     resourceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkbookTemplateGallery(name.Value, category.Value, type.Value, Optional.ToNullable(order), resourceType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WorkbookTemplateGallery(name.Value, category.Value, type.Value, Optional.ToNullable(order), resourceType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkbookTemplateGallery>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        WorkbookTemplateGallery IPersistableModel<WorkbookTemplateGallery>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeWorkbookTemplateGallery(document.RootElement, options);
+        }
+
+        string IPersistableModel<WorkbookTemplateGallery>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

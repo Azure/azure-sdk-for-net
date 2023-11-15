@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Bot. </summary>
     public partial class BotProperties
     {
-        /// <summary> Initializes a new instance of BotProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="endpoint"> The bot's endpoint. </param>
         /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.BotService.Models
             PrivateEndpointConnections = new ChangeTrackingList<BotServicePrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of BotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotProperties"/>. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="description"> The description of the bot. </param>
         /// <param name="iconUri"> The Icon Url of the bot. </param>
@@ -72,7 +75,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="appPasswordHint"> The hint (e.g. keyVault secret resourceId) on how to fetch the app secret. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="publishingCredentials"> Publishing credentials of the resource. </param>
-        internal BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IReadOnlyList<string> configuredChannels, IReadOnlyList<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IList<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IReadOnlyList<string> configuredChannels, IReadOnlyList<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IList<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections, string openWithHint, string appPasswordHint, string provisioningState, string publishingCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
@@ -109,6 +113,12 @@ namespace Azure.ResourceManager.BotService.Models
             AppPasswordHint = appPasswordHint;
             ProvisioningState = provisioningState;
             PublishingCredentials = publishingCredentials;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BotProperties"/> for deserialization. </summary>
+        internal BotProperties()
+        {
         }
 
         /// <summary> The Name of the bot. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,16 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> The Advisor configuration data structure. </summary>
     public partial class ConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConfigData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConfigData"/>. </summary>
         public ConfigData()
         {
             Digests = new ChangeTrackingList<DigestConfig>();
         }
 
-        /// <summary> Initializes a new instance of ConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,11 +32,13 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="exclude"> Exclude the resource from Advisor evaluations. Valid values: False (default) or True. </param>
         /// <param name="lowCpuThreshold"> Minimum percentage threshold for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 5 (default), 10, 15 or 20. </param>
         /// <param name="digests"> Advisor digest configuration. Valid only for subscriptions. </param>
-        internal ConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? exclude, CpuThreshold? lowCpuThreshold, IList<DigestConfig> digests) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? exclude, CpuThreshold? lowCpuThreshold, IList<DigestConfig> digests, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Exclude = exclude;
             LowCpuThreshold = lowCpuThreshold;
             Digests = digests;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Exclude the resource from Advisor evaluations. Valid values: False (default) or True. </summary>

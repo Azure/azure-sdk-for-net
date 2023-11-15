@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> An Encryption Key. </summary>
     public partial class AvsEncryptionKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of AvsEncryptionKeyVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsEncryptionKeyVaultProperties"/>. </summary>
         public AvsEncryptionKeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AvsEncryptionKeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvsEncryptionKeyVaultProperties"/>. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="keyVersion"> The version of the key. </param>
         /// <param name="autoDetectedKeyVersion"> The auto-detected version of the key if versionType is auto-detected. </param>
         /// <param name="keyVaultUri"> The URL of the vault. </param>
         /// <param name="keyState"> The state of key provided. </param>
         /// <param name="versionType"> Property of the key if user provided or auto detected. </param>
-        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, string autoDetectedKeyVersion, Uri keyVaultUri, AvsEncryptionKeyStatus? keyState, AvsEncryptionVersionType? versionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsEncryptionKeyVaultProperties(string keyName, string keyVersion, string autoDetectedKeyVersion, Uri keyVaultUri, AvsEncryptionKeyStatus? keyState, AvsEncryptionVersionType? versionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Avs.Models
             KeyVaultUri = keyVaultUri;
             KeyState = keyState;
             VersionType = versionType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the key. </summary>

@@ -20,13 +20,16 @@ namespace Azure.ResourceManager.Automanage
     /// </summary>
     public partial class AutomanageConfigurationProfileAssignmentReportData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentReportData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileAssignmentReportData"/>. </summary>
         public AutomanageConfigurationProfileAssignmentReportData()
         {
             Resources = new ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails>();
         }
 
-        /// <summary> Initializes a new instance of AutomanageConfigurationProfileAssignmentReportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfileAssignmentReportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +44,8 @@ namespace Azure.ResourceManager.Automanage
         /// <param name="resources"> List of resources processed by the configuration profile assignment. </param>
         /// <param name="error"> Error message, if any, returned by the configuration profile assignment processing. </param>
         /// <param name="reportFormatVersion"> Version of the report format. </param>
-        internal AutomanageConfigurationProfileAssignmentReportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, TimeSpan? duration, string configurationProfileAssignmentProcessingType, string status, string configurationProfile, IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails> resources, ResponseError error, string reportFormatVersion) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomanageConfigurationProfileAssignmentReportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? lastModifiedOn, TimeSpan? duration, string configurationProfileAssignmentProcessingType, string status, string configurationProfile, IReadOnlyList<ConfigurationProfileAssignmentReportResourceDetails> resources, ResponseError error, string reportFormatVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -53,6 +57,7 @@ namespace Azure.ResourceManager.Automanage
             Resources = resources;
             Error = error;
             ReportFormatVersion = reportFormatVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Start time of the configuration profile assignment processing. </summary>

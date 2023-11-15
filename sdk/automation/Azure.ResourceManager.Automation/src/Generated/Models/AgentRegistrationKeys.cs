@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the agent registration keys. </summary>
     public partial class AgentRegistrationKeys
     {
-        /// <summary> Initializes a new instance of AgentRegistrationKeys. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentRegistrationKeys"/>. </summary>
         internal AgentRegistrationKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentRegistrationKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentRegistrationKeys"/>. </summary>
         /// <param name="primary"> Gets or sets the primary key. </param>
         /// <param name="secondary"> Gets or sets the secondary key. </param>
-        internal AgentRegistrationKeys(string primary, string secondary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentRegistrationKeys(string primary, string secondary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Primary = primary;
             Secondary = secondary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the primary key. </summary>

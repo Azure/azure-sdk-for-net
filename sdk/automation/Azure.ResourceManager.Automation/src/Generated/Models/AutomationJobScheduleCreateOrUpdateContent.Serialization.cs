@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationJobScheduleCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class AutomationJobScheduleCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<AutomationJobScheduleCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobScheduleCreateOrUpdateContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AutomationJobScheduleCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AutomationJobScheduleCreateOrUpdateContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -38,7 +49,125 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AutomationJobScheduleCreateOrUpdateContent IJsonModel<AutomationJobScheduleCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationJobScheduleCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static AutomationJobScheduleCreateOrUpdateContent DeserializeAutomationJobScheduleCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ScheduleAssociationProperty schedule = default;
+            RunbookAssociationProperty runbook = default;
+            Optional<string> runOn = default;
+            Optional<IDictionary<string, string>> parameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("schedule"u8))
+                        {
+                            schedule = ScheduleAssociationProperty.DeserializeScheduleAssociationProperty(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("runbook"u8))
+                        {
+                            runbook = RunbookAssociationProperty.DeserializeRunbookAssociationProperty(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("runOn"u8))
+                        {
+                            runOn = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("parameters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            parameters = dictionary;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutomationJobScheduleCreateOrUpdateContent(schedule, runbook, runOn.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AutomationJobScheduleCreateOrUpdateContent IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AutomationJobScheduleCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAutomationJobScheduleCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<AutomationJobScheduleCreateOrUpdateContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

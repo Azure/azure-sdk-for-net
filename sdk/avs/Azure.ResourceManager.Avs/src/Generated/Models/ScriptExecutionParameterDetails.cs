@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -17,7 +18,10 @@ namespace Azure.ResourceManager.Avs.Models
     /// </summary>
     public abstract partial class ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of ScriptExecutionParameterDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected ScriptExecutionParameterDetails(string name)
@@ -27,13 +31,20 @@ namespace Azure.ResourceManager.Avs.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ScriptExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
-        internal ScriptExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ParameterType = parameterType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptExecutionParameterDetails"/> for deserialization. </summary>
+        internal ScriptExecutionParameterDetails()
+        {
         }
 
         /// <summary> The parameter name. </summary>

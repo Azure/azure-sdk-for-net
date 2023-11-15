@@ -6,24 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Resource upload definition payload. </summary>
     public partial class AppPlatformResourceUploadResult
     {
-        /// <summary> Initializes a new instance of AppPlatformResourceUploadResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformResourceUploadResult"/>. </summary>
         internal AppPlatformResourceUploadResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformResourceUploadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformResourceUploadResult"/>. </summary>
         /// <param name="relativePath"> Source relative path. </param>
         /// <param name="uploadUri"> Upload URL. </param>
-        internal AppPlatformResourceUploadResult(string relativePath, Uri uploadUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformResourceUploadResult(string relativePath, Uri uploadUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RelativePath = relativePath;
             UploadUri = uploadUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source relative path. </summary>

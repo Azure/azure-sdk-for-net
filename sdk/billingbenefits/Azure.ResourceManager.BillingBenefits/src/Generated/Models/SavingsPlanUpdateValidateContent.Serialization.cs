@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanUpdateValidateContent : IUtf8JsonSerializable
+    public partial class SavingsPlanUpdateValidateContent : IUtf8JsonSerializable, IJsonModel<SavingsPlanUpdateValidateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanUpdateValidateContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SavingsPlanUpdateValidateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SavingsPlanUpdateValidateContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SavingsPlanUpdateValidateContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Benefits))
             {
@@ -25,7 +36,95 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        SavingsPlanUpdateValidateContent IJsonModel<SavingsPlanUpdateValidateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanUpdateValidateContent(document.RootElement, options);
+        }
+
+        internal static SavingsPlanUpdateValidateContent DeserializeSavingsPlanUpdateValidateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<BillingBenefitsSavingsPlanPatchProperties>> benefits = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("benefits"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<BillingBenefitsSavingsPlanPatchProperties> array = new List<BillingBenefitsSavingsPlanPatchProperties>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(BillingBenefitsSavingsPlanPatchProperties.DeserializeBillingBenefitsSavingsPlanPatchProperties(item));
+                    }
+                    benefits = array;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SavingsPlanUpdateValidateContent(Optional.ToList(benefits), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<SavingsPlanUpdateValidateContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SavingsPlanUpdateValidateContent IPersistableModel<SavingsPlanUpdateValidateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSavingsPlanUpdateValidateContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<SavingsPlanUpdateValidateContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

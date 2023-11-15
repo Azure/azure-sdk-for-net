@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The main origin of CDN content which is added when creating a CDN endpoint. </summary>
     public partial class DeepCreatedOrigin
     {
-        /// <summary> Initializes a new instance of DeepCreatedOrigin. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeepCreatedOrigin"/>. </summary>
         /// <param name="name"> Origin name which must be unique within the endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DeepCreatedOrigin(string name)
@@ -23,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of DeepCreatedOrigin. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeepCreatedOrigin"/>. </summary>
         /// <param name="name"> Origin name which must be unique within the endpoint. </param>
         /// <param name="hostName"> The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
@@ -37,7 +41,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
         /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
         /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
-        internal DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, PrivateEndpointStatus? privateEndpointStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeepCreatedOrigin(string name, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, PrivateEndpointStatus? privateEndpointStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             HostName = hostName;
@@ -52,6 +57,12 @@ namespace Azure.ResourceManager.Cdn.Models
             PrivateLinkLocation = privateLinkLocation;
             PrivateLinkApprovalMessage = privateLinkApprovalMessage;
             PrivateEndpointStatus = privateEndpointStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeepCreatedOrigin"/> for deserialization. </summary>
+        internal DeepCreatedOrigin()
+        {
         }
 
         /// <summary> Origin name which must be unique within the endpoint. </summary>

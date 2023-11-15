@@ -5,15 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ProductEntityBaseProperties
+    public partial class ProductEntityBaseProperties : IUtf8JsonSerializable, IJsonModel<ProductEntityBaseProperties>
     {
-        internal static ProductEntityBaseProperties DeserializeProductEntityBaseProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductEntityBaseProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ProductEntityBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ProductEntityBaseProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ProductEntityBaseProperties>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Terms))
+            {
+                writer.WritePropertyName("terms"u8);
+                writer.WriteStringValue(Terms);
+            }
+            if (Optional.IsDefined(IsSubscriptionRequired))
+            {
+                writer.WritePropertyName("subscriptionRequired"u8);
+                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
+            }
+            if (Optional.IsDefined(IsApprovalRequired))
+            {
+                writer.WritePropertyName("approvalRequired"u8);
+                writer.WriteBooleanValue(IsApprovalRequired.Value);
+            }
+            if (Optional.IsDefined(SubscriptionsLimit))
+            {
+                writer.WritePropertyName("subscriptionsLimit"u8);
+                writer.WriteNumberValue(SubscriptionsLimit.Value);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToSerialString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProductEntityBaseProperties IJsonModel<ProductEntityBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProductEntityBaseProperties(document.RootElement, options);
+        }
+
+        internal static ProductEntityBaseProperties DeserializeProductEntityBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +100,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> approvalRequired = default;
             Optional<int> subscriptionsLimit = default;
             Optional<ApiManagementProductState> state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -72,8 +150,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     state = property.Value.GetString().ToApiManagementProductState();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProductEntityBaseProperties(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProductEntityBaseProperties(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProductEntityBaseProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ProductEntityBaseProperties IPersistableModel<ProductEntityBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeProductEntityBaseProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<ProductEntityBaseProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

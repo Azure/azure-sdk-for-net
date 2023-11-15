@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProviders", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         public virtual Pageable<AttestationProviderResource> GetAttestationProviders(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProviders", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         public virtual Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
         }
 
         /// <summary>

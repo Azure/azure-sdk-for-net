@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> A Facebook page for Facebook channel registration. </summary>
     public partial class FacebookPage
     {
-        /// <summary> Initializes a new instance of FacebookPage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FacebookPage"/>. </summary>
         /// <param name="id"> Page id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public FacebookPage(string id)
@@ -23,13 +27,20 @@ namespace Azure.ResourceManager.BotService.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of FacebookPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacebookPage"/>. </summary>
         /// <param name="id"> Page id. </param>
         /// <param name="accessToken"> Facebook application access token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        internal FacebookPage(string id, string accessToken)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FacebookPage(string id, string accessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             AccessToken = accessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FacebookPage"/> for deserialization. </summary>
+        internal FacebookPage()
+        {
         }
 
         /// <summary> Page id. </summary>

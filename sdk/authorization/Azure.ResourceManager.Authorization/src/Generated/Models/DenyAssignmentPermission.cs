@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Deny assignment permissions. </summary>
     public partial class DenyAssignmentPermission
     {
-        /// <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentPermission"/>. </summary>
         internal DenyAssignmentPermission()
         {
             Actions = new ChangeTrackingList<string>();
@@ -22,14 +26,15 @@ namespace Azure.ResourceManager.Authorization.Models
             NotDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DenyAssignmentPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentPermission"/>. </summary>
         /// <param name="actions"> Actions to which the deny assignment does not grant access. </param>
         /// <param name="notActions"> Actions to exclude from that the deny assignment does not grant access. </param>
         /// <param name="dataActions"> Data actions to which the deny assignment does not grant access. </param>
         /// <param name="notDataActions"> Data actions to exclude from that the deny assignment does not grant access. </param>
         /// <param name="condition"> The conditions on the Deny assignment permission. This limits the resources it applies to. </param>
         /// <param name="conditionVersion"> Version of the condition. </param>
-        internal DenyAssignmentPermission(IReadOnlyList<string> actions, IReadOnlyList<string> notActions, IReadOnlyList<string> dataActions, IReadOnlyList<string> notDataActions, string condition, string conditionVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DenyAssignmentPermission(IReadOnlyList<string> actions, IReadOnlyList<string> notActions, IReadOnlyList<string> dataActions, IReadOnlyList<string> notDataActions, string condition, string conditionVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Actions = actions;
             NotActions = notActions;
@@ -37,6 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
             NotDataActions = notDataActions;
             Condition = condition;
             ConditionVersion = conditionVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Actions to which the deny assignment does not grant access. </summary>

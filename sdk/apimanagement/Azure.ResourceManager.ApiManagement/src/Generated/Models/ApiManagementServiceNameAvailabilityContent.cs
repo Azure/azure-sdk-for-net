@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Parameters supplied to the CheckNameAvailability operation. </summary>
     public partial class ApiManagementServiceNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ApiManagementServiceNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ApiManagementServiceNameAvailabilityContent(string name)
@@ -21,6 +25,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name to check for availability. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementServiceNameAvailabilityContent(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementServiceNameAvailabilityContent"/> for deserialization. </summary>
+        internal ApiManagementServiceNameAvailabilityContent()
+        {
         }
 
         /// <summary> The name to check for availability. </summary>

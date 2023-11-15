@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> The ApiManagementSkuRestrictionInfo. </summary>
     public partial class ApiManagementSkuRestrictionInfo
     {
-        /// <summary> Initializes a new instance of ApiManagementSkuRestrictionInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictionInfo"/>. </summary>
         internal ApiManagementSkuRestrictionInfo()
         {
             Locations = new ChangeTrackingList<AzureLocation>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ApiManagementSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
-        internal ApiManagementSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementSkuRestrictionInfo(IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Locations = locations;
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Locations where the SKU is restricted. </summary>

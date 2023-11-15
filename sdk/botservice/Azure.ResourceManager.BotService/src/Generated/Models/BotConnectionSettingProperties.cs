@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Properties for a Connection Setting Item. </summary>
     public partial class BotConnectionSettingProperties
     {
-        /// <summary> Initializes a new instance of BotConnectionSettingProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingProperties"/>. </summary>
         public BotConnectionSettingProperties()
         {
             Parameters = new ChangeTrackingList<BotConnectionSettingParameter>();
         }
 
-        /// <summary> Initializes a new instance of BotConnectionSettingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingProperties"/>. </summary>
         /// <param name="clientId"> Client Id associated with the Connection Setting. </param>
         /// <param name="settingId"> Setting Id set by the service for the Connection Setting. </param>
         /// <param name="clientSecret"> Client Secret associated with the Connection Setting. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="serviceProviderDisplayName"> Service Provider Display Name associated with the Connection Setting. </param>
         /// <param name="parameters"> Service Provider Parameters associated with the Connection Setting. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal BotConnectionSettingProperties(string clientId, string settingId, string clientSecret, string scopes, string serviceProviderId, string serviceProviderDisplayName, IList<BotConnectionSettingParameter> parameters, string provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotConnectionSettingProperties(string clientId, string settingId, string clientSecret, string scopes, string serviceProviderId, string serviceProviderDisplayName, IList<BotConnectionSettingParameter> parameters, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             SettingId = settingId;
@@ -38,6 +43,7 @@ namespace Azure.ResourceManager.BotService.Models
             ServiceProviderDisplayName = serviceProviderDisplayName;
             Parameters = parameters;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Client Id associated with the Connection Setting. </summary>

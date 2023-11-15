@@ -15,11 +15,39 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> Cluster details to update. </summary>
     public partial class HciClusterPatch
     {
-        /// <summary> Initializes a new instance of HciClusterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterPatch"/>. </summary>
         public HciClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HciClusterPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="cloudManagementEndpoint"> Endpoint configured for management from the Azure portal. </param>
+        /// <param name="aadClientId"> App id of cluster AAD identity. </param>
+        /// <param name="aadTenantId"> Tenant id of cluster AAD identity. </param>
+        /// <param name="desiredProperties"> Desired properties of the cluster. </param>
+        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="managedServiceIdentityType"> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterPatch(IDictionary<string, string> tags, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, HciClusterDesiredProperties desiredProperties, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? managedServiceIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            CloudManagementEndpoint = cloudManagementEndpoint;
+            AadClientId = aadClientId;
+            AadTenantId = aadTenantId;
+            DesiredProperties = desiredProperties;
+            PrincipalId = principalId;
+            TenantId = tenantId;
+            ManagedServiceIdentityType = managedServiceIdentityType;
+            UserAssignedIdentities = userAssignedIdentities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

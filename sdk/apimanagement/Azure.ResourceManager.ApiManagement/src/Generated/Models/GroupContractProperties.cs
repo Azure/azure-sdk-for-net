@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Group contract Properties. </summary>
     public partial class GroupContractProperties
     {
-        /// <summary> Initializes a new instance of GroupContractProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/>. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> is null. </exception>
         internal GroupContractProperties(string displayName)
@@ -23,19 +27,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DisplayName = displayName;
         }
 
-        /// <summary> Initializes a new instance of GroupContractProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/>. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <param name="description"> Group description. Can contain HTML formatting tags. </param>
         /// <param name="isBuiltIn"> true if the group is one of the three system groups (Administrators, Developers, or Guests); otherwise false. </param>
         /// <param name="apiManagementGroupType"> Group type. </param>
         /// <param name="externalId"> For external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
-        internal GroupContractProperties(string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? apiManagementGroupType, string externalId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GroupContractProperties(string displayName, string description, bool? isBuiltIn, ApiManagementGroupType? apiManagementGroupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
             IsBuiltIn = isBuiltIn;
             ApiManagementGroupType = apiManagementGroupType;
             ExternalId = externalId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GroupContractProperties"/> for deserialization. </summary>
+        internal GroupContractProperties()
+        {
         }
 
         /// <summary> Group name. </summary>

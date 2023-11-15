@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for ClientPort match conditions. </summary>
     public partial class ClientPortMatchCondition
     {
-        /// <summary> Initializes a new instance of ClientPortMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ClientPortMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="clientPortOperator"> Describes operator to be matched. </param>
         public ClientPortMatchCondition(ClientPortMatchConditionType conditionType, ClientPortOperator clientPortOperator)
@@ -24,19 +28,26 @@ namespace Azure.ResourceManager.Cdn.Models
             Transforms = new ChangeTrackingList<PreTransformCategory>();
         }
 
-        /// <summary> Initializes a new instance of ClientPortMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClientPortMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="clientPortOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal ClientPortMatchCondition(ClientPortMatchConditionType conditionType, ClientPortOperator clientPortOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClientPortMatchCondition(ClientPortMatchConditionType conditionType, ClientPortOperator clientPortOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionType = conditionType;
             ClientPortOperator = clientPortOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClientPortMatchCondition"/> for deserialization. </summary>
+        internal ClientPortMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Communication;
 using Azure.Core;
@@ -14,13 +15,16 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Properties of a call connection. </summary>
     internal partial class CallConnectionPropertiesInternal
     {
-        /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CallConnectionPropertiesInternal"/>. </summary>
         internal CallConnectionPropertiesInternal()
         {
             Targets = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
-        /// <summary> Initializes a new instance of CallConnectionPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallConnectionPropertiesInternal"/>. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="targets"> The targets of the call. </param>
@@ -36,7 +40,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceIdentity"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
         /// <param name="answeredByIdentifier"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel sourceIdentity, string correlationId, CommunicationUserIdentifierModel answeredByIdentifier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string mediaSubscriptionId, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel sourceIdentity, string correlationId, CommunicationUserIdentifierModel answeredByIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -50,6 +55,7 @@ namespace Azure.Communication.CallAutomation
             SourceIdentity = sourceIdentity;
             CorrelationId = correlationId;
             AnsweredByIdentifier = answeredByIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The call connection id. </summary>

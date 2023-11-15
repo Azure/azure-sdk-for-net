@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlaySourceInternal : IUtf8JsonSerializable
+    internal partial class PlaySourceInternal : IUtf8JsonSerializable, IJsonModel<PlaySourceInternal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaySourceInternal>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PlaySourceInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PlaySourceInternal>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PlaySourceInternal>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType.ToString());
@@ -37,7 +48,122 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("ssmlSource"u8);
                 writer.WriteObjectValue(SsmlSource);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PlaySourceInternal IJsonModel<PlaySourceInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlaySourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePlaySourceInternal(document.RootElement, options);
+        }
+
+        internal static PlaySourceInternal DeserializePlaySourceInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            PlaySourceTypeInternal sourceType = default;
+            Optional<string> playSourceId = default;
+            Optional<FileSourceInternal> fileSource = default;
+            Optional<TextSourceInternal> textSource = default;
+            Optional<SsmlSourceInternal> ssmlSource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceType"u8))
+                {
+                    sourceType = new PlaySourceTypeInternal(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("playSourceId"u8))
+                {
+                    playSourceId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("fileSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileSource = FileSourceInternal.DeserializeFileSourceInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("textSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    textSource = TextSourceInternal.DeserializeTextSourceInternal(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("ssmlSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ssmlSource = SsmlSourceInternal.DeserializeSsmlSourceInternal(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PlaySourceInternal(sourceType, playSourceId.Value, fileSource.Value, textSource.Value, ssmlSource.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PlaySourceInternal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlaySourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PlaySourceInternal IPersistableModel<PlaySourceInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlaySourceInternal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePlaySourceInternal(document.RootElement, options);
+        }
+
+        string IPersistableModel<PlaySourceInternal>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

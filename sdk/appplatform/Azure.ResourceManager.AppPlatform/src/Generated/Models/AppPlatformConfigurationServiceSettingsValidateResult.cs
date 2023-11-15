@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Validation result for configuration service settings. </summary>
     public partial class AppPlatformConfigurationServiceSettingsValidateResult
     {
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettingsValidateResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceSettingsValidateResult"/>. </summary>
         internal AppPlatformConfigurationServiceSettingsValidateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformConfigurationServiceSettingsValidateResult"/>. </summary>
         /// <param name="gitPropertyValidationResult"> Validation result for configuration service settings. </param>
-        internal AppPlatformConfigurationServiceSettingsValidateResult(AppPlatformConfigurationServiceGitValidateResult gitPropertyValidationResult)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformConfigurationServiceSettingsValidateResult(AppPlatformConfigurationServiceGitValidateResult gitPropertyValidationResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GitPropertyValidationResult = gitPropertyValidationResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Validation result for configuration service settings. </summary>

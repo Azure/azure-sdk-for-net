@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Current TCP connectivity information from the Api Management Service to a single endpoint. </summary>
     public partial class EndpointDetail
     {
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
         internal EndpointDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of EndpointDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointDetail"/>. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="region"> The region of the dependency. </param>
-        internal EndpointDetail(int? port, string region)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EndpointDetail(int? port, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             Region = region;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The port an endpoint is connected to. </summary>

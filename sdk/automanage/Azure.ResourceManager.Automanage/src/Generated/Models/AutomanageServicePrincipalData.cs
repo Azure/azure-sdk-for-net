@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,22 +15,27 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> The Service Principal Id for the subscription. </summary>
     public partial class AutomanageServicePrincipalData : ResourceData
     {
-        /// <summary> Initializes a new instance of AutomanageServicePrincipalData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomanageServicePrincipalData"/>. </summary>
         public AutomanageServicePrincipalData()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomanageServicePrincipalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomanageServicePrincipalData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="servicePrincipalId"> The Service Principal Id for the subscription. </param>
         /// <param name="isAuthorizationSet"> Returns the contributor RBAC Role exist or not for the Service Principal Id. </param>
-        internal AutomanageServicePrincipalData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string servicePrincipalId, bool? isAuthorizationSet) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomanageServicePrincipalData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string servicePrincipalId, bool? isAuthorizationSet, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ServicePrincipalId = servicePrincipalId;
             IsAuthorizationSet = isAuthorizationSet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Service Principal Id for the subscription. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Key-value pairs that allow grouping/filtering individual tests. </summary>
     public partial class HciPrecheckResultTags
     {
-        /// <summary> Initializes a new instance of HciPrecheckResultTags. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HciPrecheckResultTags"/>. </summary>
         public HciPrecheckResultTags()
         {
         }
 
-        /// <summary> Initializes a new instance of HciPrecheckResultTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciPrecheckResultTags"/>. </summary>
         /// <param name="key"> Key that allow grouping/filtering individual tests. </param>
         /// <param name="value"> Value of the key that allow grouping/filtering individual tests. </param>
-        internal HciPrecheckResultTags(string key, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HciPrecheckResultTags(string key, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Key that allow grouping/filtering individual tests. </summary>

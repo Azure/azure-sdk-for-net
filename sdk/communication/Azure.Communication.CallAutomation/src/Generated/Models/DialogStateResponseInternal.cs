@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DialogStateResponse. </summary>
     internal partial class DialogStateResponseInternal
     {
-        /// <summary> Initializes a new instance of DialogStateResponseInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DialogStateResponseInternal"/>. </summary>
         internal DialogStateResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogStateResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogStateResponseInternal"/>. </summary>
         /// <param name="dialogId"> The dialog ID. </param>
         /// <param name="dialogOptions"> Defines options for dialog. </param>
         /// <param name="dialogInputType"> Determines the type of the dialog. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal DialogStateResponseInternal(string dialogId, DialogOptionsInternal dialogOptions, DialogInputType? dialogInputType, string operationContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DialogStateResponseInternal(string dialogId, DialogOptionsInternal dialogOptions, DialogInputType? dialogInputType, string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DialogId = dialogId;
             DialogOptions = dialogOptions;
             DialogInputType = dialogInputType;
             OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The dialog ID. </summary>

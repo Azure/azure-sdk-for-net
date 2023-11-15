@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AgFoodPlatform;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     /// <summary> Paged response contains list of requested objects and a URL link to get the next set of results. </summary>
     internal partial class FarmBeatsExtensionListResponse
     {
-        /// <summary> Initializes a new instance of FarmBeatsExtensionListResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FarmBeatsExtensionListResponse"/>. </summary>
         internal FarmBeatsExtensionListResponse()
         {
             Value = new ChangeTrackingList<FarmBeatsExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of FarmBeatsExtensionListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="FarmBeatsExtensionListResponse"/>. </summary>
         /// <param name="value"> List of requested objects. </param>
         /// <param name="nextLink"> Continuation link (absolute URI) to the next page of results in the list. </param>
-        internal FarmBeatsExtensionListResponse(IReadOnlyList<FarmBeatsExtensionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FarmBeatsExtensionListResponse(IReadOnlyList<FarmBeatsExtensionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of requested objects. </summary>
