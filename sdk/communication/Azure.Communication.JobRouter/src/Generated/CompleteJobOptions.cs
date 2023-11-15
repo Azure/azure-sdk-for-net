@@ -11,7 +11,7 @@ namespace Azure.Communication.JobRouter
     public partial class CompleteJobOptions
     {
         /// <summary> Initializes a new instance of CompleteJobOptions. </summary>
-        /// <param name="note"> A note that will be appended to the jobs' Notes collection with the current timestamp. </param>
+        /// <param name="note"> A note that will be appended to a job's Notes collection with the current timestamp. </param>
         internal CompleteJobOptions(string note)
         {
             Note = note;

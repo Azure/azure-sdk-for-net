@@ -13,10 +13,10 @@ namespace Azure.Communication.JobRouter
     public class CreateExceptionPolicyOptions
     {
         /// <summary>
-        /// Public constructor.
+        /// Initializes a new instance of CreateExceptionPolicyOptions.
         /// </summary>
-        /// <param name="exceptionPolicyId"> Id of the policy. </param>
-        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. Key is the Id of each exception rule. </param>
+        /// <param name="exceptionPolicyId"> Id of an exception policy. </param>
+        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> is null. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exceptionRules"/> is null. </exception>
         public CreateExceptionPolicyOptions(string exceptionPolicyId, IEnumerable<ExceptionRule> exceptionRules)
@@ -29,16 +29,16 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// The Id of this policy.
+        /// Id of an exception policy.
         /// </summary>
         public string ExceptionPolicyId { get; }
 
         /// <summary>
-        /// A collection of exception rules on the exception policy. Key is the Id of each exception rule.
+        ///  A collection of exception rules on the exception policy.
         /// </summary>
         public IList<ExceptionRule> ExceptionRules { get; } = new List<ExceptionRule>();
 
-        /// <summary> (Optional) The name of the exception policy. </summary>
+        /// <summary> Friendly name of this policy. </summary>
         public string Name { get; set; }
 
         /// <summary>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Supported distribution mode types. </summary>
+    /// <summary> Discriminators for supported distribution mode types. </summary>
     public readonly partial struct DistributionModeKind : IEquatable<DistributionModeKind>
     {
         private readonly string _value;

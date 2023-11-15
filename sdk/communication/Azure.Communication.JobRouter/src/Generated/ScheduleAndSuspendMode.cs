@@ -14,13 +14,13 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of ScheduleAndSuspendMode. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
-        /// <param name="scheduleAt"> Scheduled time. </param>
+        /// <param name="scheduleAt"> Requested schedule time. </param>
         internal ScheduleAndSuspendMode(JobMatchingModeKind kind, DateTimeOffset scheduleAt) : base(kind)
         {
             ScheduleAt = scheduleAt;
         }
 
-        /// <summary> Scheduled time. </summary>
+        /// <summary> Requested schedule time. </summary>
         public DateTimeOffset ScheduleAt { get; }
     }
 }

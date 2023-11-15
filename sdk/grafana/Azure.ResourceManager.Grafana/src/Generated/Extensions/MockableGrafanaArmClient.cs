@@ -71,5 +71,17 @@ namespace Azure.ResourceManager.Grafana.Mocking
             GrafanaPrivateLinkResource.ValidateResourceId(id);
             return new GrafanaPrivateLinkResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedPrivateEndpointModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedPrivateEndpointModelResource.CreateResourceIdentifier" /> to create a <see cref="ManagedPrivateEndpointModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedPrivateEndpointModelResource" /> object. </returns>
+        public virtual ManagedPrivateEndpointModelResource GetManagedPrivateEndpointModelResource(ResourceIdentifier id)
+        {
+            ManagedPrivateEndpointModelResource.ValidateResourceId(id);
+            return new ManagedPrivateEndpointModelResource(Client, id);
+        }
     }
 }
