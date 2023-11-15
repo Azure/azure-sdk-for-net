@@ -183,6 +183,6 @@ namespace Azure.Core.Tests.Models.ResourceManager
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

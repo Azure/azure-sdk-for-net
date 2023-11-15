@@ -95,6 +95,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
         }
 
-        string IPersistableModel<ChildModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ChildModelXmlOnly>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

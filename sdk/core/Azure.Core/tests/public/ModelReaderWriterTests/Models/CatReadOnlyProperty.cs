@@ -135,7 +135,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<CatReadOnlyProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CatReadOnlyProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         #endregion
     }

@@ -113,6 +113,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProviderExtendedLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

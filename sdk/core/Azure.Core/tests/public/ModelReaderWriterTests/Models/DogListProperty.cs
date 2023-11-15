@@ -185,6 +185,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<DogListProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DogListProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

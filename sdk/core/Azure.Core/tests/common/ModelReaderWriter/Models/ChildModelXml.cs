@@ -168,6 +168,6 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
             Serialize(writer, ModelReaderWriterOptions.Wire);
 
-        string IPersistableModel<ChildModelXml>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ChildModelXml>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

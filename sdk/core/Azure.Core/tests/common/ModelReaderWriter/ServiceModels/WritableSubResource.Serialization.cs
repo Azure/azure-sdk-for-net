@@ -114,6 +114,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WritableSubResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

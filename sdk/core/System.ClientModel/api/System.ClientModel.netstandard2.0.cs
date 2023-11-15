@@ -258,7 +258,7 @@ namespace System.ClientModel.Primitives
     public partial interface IPersistableModel<out T>
     {
         T Create(System.BinaryData data, System.ClientModel.ModelReaderWriterOptions options);
-        string GetWireFormat(System.ClientModel.ModelReaderWriterOptions options);
+        string GetFormatFromOptions(System.ClientModel.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.ModelReaderWriterOptions options);
     }
     public partial class KeyCredentialAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy

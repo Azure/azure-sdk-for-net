@@ -228,6 +228,6 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.Wire);
 
-        string IPersistableModel<ModelXml>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ModelXml>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

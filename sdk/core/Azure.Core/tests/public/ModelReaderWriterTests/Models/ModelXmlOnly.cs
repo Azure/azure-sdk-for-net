@@ -136,6 +136,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeModelXmlOnly(XElement.Load(data.ToStream()), options);
         }
 
-        string IPersistableModel<ModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ModelXmlOnly>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

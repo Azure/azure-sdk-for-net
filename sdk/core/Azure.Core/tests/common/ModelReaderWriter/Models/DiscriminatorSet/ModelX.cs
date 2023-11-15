@@ -210,6 +210,6 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelX>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

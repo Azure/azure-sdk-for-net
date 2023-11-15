@@ -124,6 +124,6 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

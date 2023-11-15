@@ -129,6 +129,6 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<JsonModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<JsonModelForCombinedInterface>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -32,6 +32,6 @@ namespace System.ClientModel.Primitives
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// </summary>
         /// <returns>The format that the model uses when communicating with the serivce.</returns>
-        string GetWireFormat(ModelReaderWriterOptions options);
+        string GetFormatFromOptions(ModelReaderWriterOptions options);
     }
 }

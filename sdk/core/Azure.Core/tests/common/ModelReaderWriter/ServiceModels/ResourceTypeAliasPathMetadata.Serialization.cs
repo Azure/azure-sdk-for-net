@@ -113,6 +113,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ResourceTypeAliasPathMetadata>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceTypeAliasPathMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

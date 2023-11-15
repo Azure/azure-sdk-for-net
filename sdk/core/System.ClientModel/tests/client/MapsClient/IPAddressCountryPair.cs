@@ -65,7 +65,7 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
         return FromJson(document.RootElement);
     }
 
-    public string GetWireFormat(ModelReaderWriterOptions options)
+    public string GetFormatFromOptions(ModelReaderWriterOptions options)
         => "J";
 
     public IPAddressCountryPair Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

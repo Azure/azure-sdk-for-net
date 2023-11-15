@@ -323,7 +323,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
         private class ExplodingModel : IJsonModel<ExplodingModel>
         {
-            string IPersistableModel<ExplodingModel>.GetWireFormat(ModelReaderWriterOptions options) => throw new NotImplementedException();
+            string IPersistableModel<ExplodingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw new NotImplementedException();
 
             ExplodingModel IJsonModel<ExplodingModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {

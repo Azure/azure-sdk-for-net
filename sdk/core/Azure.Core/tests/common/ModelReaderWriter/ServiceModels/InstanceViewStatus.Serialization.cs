@@ -171,6 +171,6 @@ namespace Azure.Core.Tests.Models.ResourceManager.Compute
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InstanceViewStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
