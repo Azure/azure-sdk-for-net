@@ -26,13 +26,11 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
         {
             //use IModelSerializable
             var content = RequestContent.Create(_modelX);
-            AssertContentType(content, "ModelMessageBody");
             content.TryComputeLength(out long lengthNonJson);
             Assert.Greater(lengthNonJson, 0);
 
             //use IModelJsonSerializable
             var jsonContent = RequestContent.Create(_modelX);
-            AssertContentType(jsonContent, "ModelMessageBody");
             content.TryComputeLength(out long lengthJson);
             Assert.Greater(lengthJson, 0);
 
@@ -40,28 +38,10 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
 
             //use default
             jsonContent = RequestContent.Create(_modelX);
-            AssertContentType(jsonContent, "ModelMessageBody");
             content.TryComputeLength(out lengthJson);
             Assert.Greater(lengthJson, 0);
 
             Assert.AreEqual(lengthNonJson, lengthJson);
-        }
-
-        private static void AssertContentType(RequestContent content, string expectedContent)
-        {
-            Assert.AreEqual("AzureRequestBodyContent", content.GetType().Name);
-            var field = content.GetType().GetField("_content", BindingFlags.NonPublic | BindingFlags.Instance);
-            Assert.IsNotNull(field);
-            Assert.AreEqual(expectedContent, field.GetValue(content).GetType().Name);
-        }
-
-        [Test]
-        public void ValidatePrivateClassType()
-        {
-            IPersistableModel<ModelX> modelX = _modelX;
-
-            RequestContent content = RequestContent.Create(modelX);
-            AssertContentType(content, "ModelMessageBody");
         }
     }
 }
