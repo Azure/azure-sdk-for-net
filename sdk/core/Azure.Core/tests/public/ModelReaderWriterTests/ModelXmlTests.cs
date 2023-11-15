@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel;
+using System.ClientModel;
 using System.Text;
 using System.Text.Json;
 using System.Xml;

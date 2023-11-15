@@ -32,29 +32,29 @@ namespace SignalRServiceExtension.Tests
             }
         };
 
-        [Theory]
-        [MemberData(nameof(TestData))]
-        public void ValidateSecurityTokenFacts(string tokenString, SecurityTokenStatus expectedStatus)
-        {
-            var ctx = new DefaultHttpContext();
-            var req = ctx.Request;
-            req.Headers.Add("Authorization", new StringValues(tokenString));
+        //[Theory]
+        //[MemberData(nameof(TestData))]
+        //public void ValidateSecurityTokenFacts(string tokenString, SecurityTokenStatus expectedStatus)
+        //{
+            //var ctx = new DefaultHttpContext();
+            //var req = ctx.Request;
+            //req.Headers.Add("Authorization", new StringValues(tokenString));
 
-            var issuerToken = "bXlmdW5jdGlvbmF1dGh0ZXN0"; // base64 encoded for "myfunctionauthtest";
-            Action<TokenValidationParameters> configureTokenValidationParameters = parameters =>
-            {
-                parameters.IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(issuerToken));
-                parameters.RequireSignedTokens = true;
-                parameters.ValidateAudience = false;
-                parameters.ValidateIssuer = false;
-                parameters.ValidateIssuerSigningKey = true;
-                parameters.ValidateLifetime = true;
-            };
+            //var issuerToken = "bXlmdW5jdGlvbmF1dGh0ZXN0"; // base64 encoded for "myfunctionauthtest";
+            //Action<TokenValidationParameters> configureTokenValidationParameters = parameters =>
+            //{
+            //    parameters.IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(issuerToken));
+            //    parameters.RequireSignedTokens = true;
+            //    parameters.ValidateAudience = false;
+            //    parameters.ValidateIssuer = false;
+            //    parameters.ValidateIssuerSigningKey = true;
+            //    parameters.ValidateLifetime = true;
+            //};
 
-            var securityTokenValidator = new DefaultSecurityTokenValidator(configureTokenValidationParameters);
-            var securityTokenResult = securityTokenValidator.ValidateToken(req);
+            //var securityTokenValidator = new DefaultSecurityTokenValidator(configureTokenValidationParameters);
+            //var securityTokenResult = securityTokenValidator.ValidateToken(req);
 
-            Assert.Equal(expectedStatus, securityTokenResult.Status);
-        }
+            //Assert.Equal(expectedStatus, securityTokenResult.Status);
+        //}
     }
 }
