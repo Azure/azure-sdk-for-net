@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.ClientModel.Primitives;
-using Azure.Core.Pipeline;
+using System.IO;
 
 namespace Azure.Core
 {
+    // TODO: Reconsider whether Response can inherit from PipelineResponse;
+    // Currently blocked because of header collection design.
+
     internal class PipelineResponseAdapter : PipelineResponse
     {
         private readonly Response _response;
