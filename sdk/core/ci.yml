@@ -54,7 +54,7 @@ extends:
       safeName: SystemMemoryData
     - name: Azure.Core.Amqp
       safeName: AzureCoreAmqp
-    - name: System.Net.ClientModel
+    - name: System.ClientModel
       safeName: SystemNetClientModel
 
     TestSetupSteps:
