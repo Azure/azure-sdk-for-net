@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Chaos;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a list of Experiment execution details and a link for pagination. </summary>
     internal partial class ExperimentExecutionDetailsListResult
     {
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsListResult"/>. </summary>
         internal ExperimentExecutionDetailsListResult()
         {
             Value = new ChangeTrackingList<ExperimentExecutionDetailData>();
         }
 
-        /// <summary> Initializes a new instance of ExperimentExecutionDetailsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetailsListResult"/>. </summary>
         /// <param name="value"> List of Experiment execution details. </param>
         /// <param name="nextLink"> URL to retrieve the next page of Experiment execution details. </param>
-        internal ExperimentExecutionDetailsListResult(IReadOnlyList<ExperimentExecutionDetailData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentExecutionDetailsListResult(IReadOnlyList<ExperimentExecutionDetailData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Experiment execution details. </summary>

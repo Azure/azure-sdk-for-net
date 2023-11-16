@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The DscNodeCountProperties. </summary>
     internal partial class DscNodeCountProperties
     {
-        /// <summary> Initializes a new instance of DscNodeCountProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeCountProperties"/>. </summary>
         internal DscNodeCountProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DscNodeCountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeCountProperties"/>. </summary>
         /// <param name="nameCount"> Gets the count for the name. </param>
-        internal DscNodeCountProperties(int? nameCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeCountProperties(int? nameCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameCount = nameCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the count for the name. </summary>

@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> App resource properties payload. </summary>
     public partial class AppPlatformAppProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformAppProperties"/>. </summary>
         public AppPlatformAppProperties()
         {
             AddonConfigs = new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             LoadedCertificates = new ChangeTrackingList<AppLoadedCertificate>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformAppProperties"/>. </summary>
         /// <param name="isPublic"> Indicates whether the App exposes public endpoint. </param>
         /// <param name="uriString"> URL of the App. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>
@@ -36,7 +39,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="loadedCertificates"> Collection of loaded certificates. </param>
         /// <param name="vnetAddons"> Additional App settings in vnet injection instance. </param>
         /// <param name="ingressSettings"> App ingress settings payload. </param>
-        internal AppPlatformAppProperties(bool? isPublic, string uriString, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppPlatformAppProvisioningState? provisioningState, string fqdn, bool? isHttpsOnly, AppTemporaryDisk temporaryDisk, AppPersistentDisk persistentDisk, IList<AppCustomPersistentDisk> customPersistentDisks, bool? isEndToEndTlsEnabled, IList<AppLoadedCertificate> loadedCertificates, AppVnetAddons vnetAddons, AppIngressSettings ingressSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformAppProperties(bool? isPublic, string uriString, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppPlatformAppProvisioningState? provisioningState, string fqdn, bool? isHttpsOnly, AppTemporaryDisk temporaryDisk, AppPersistentDisk persistentDisk, IList<AppCustomPersistentDisk> customPersistentDisks, bool? isEndToEndTlsEnabled, IList<AppLoadedCertificate> loadedCertificates, AppVnetAddons vnetAddons, AppIngressSettings ingressSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsPublic = isPublic;
             UriString = uriString;
@@ -51,6 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             LoadedCertificates = loadedCertificates;
             VnetAddons = vnetAddons;
             IngressSettings = ingressSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the App exposes public endpoint. </summary>

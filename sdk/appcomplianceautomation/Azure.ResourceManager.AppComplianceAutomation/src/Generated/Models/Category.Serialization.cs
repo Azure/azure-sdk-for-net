@@ -5,16 +5,98 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class Category
+    public partial class Category : IUtf8JsonSerializable, IJsonModel<Category>
     {
-        internal static Category DeserializeCategory(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Category>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<Category>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<Category>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<Category>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CategoryName))
+                {
+                    writer.WritePropertyName("categoryName"u8);
+                    writer.WriteStringValue(CategoryName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CategoryType))
+                {
+                    writer.WritePropertyName("categoryType"u8);
+                    writer.WriteStringValue(CategoryType.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CategoryStatus))
+                {
+                    writer.WritePropertyName("categoryStatus"u8);
+                    writer.WriteStringValue(CategoryStatus.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ControlFamilies))
+                {
+                    writer.WritePropertyName("controlFamilies"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ControlFamilies)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        Category IJsonModel<Category>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Category)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCategory(document.RootElement, options);
+        }
+
+        internal static Category DeserializeCategory(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +105,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<CategoryType> categoryType = default;
             Optional<CategoryStatus> categoryStatus = default;
             Optional<IReadOnlyList<ControlFamily>> controlFamilies = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("categoryName"u8))
@@ -62,8 +146,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     controlFamilies = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Category(categoryName.Value, Optional.ToNullable(categoryType), Optional.ToNullable(categoryStatus), Optional.ToList(controlFamilies));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new Category(categoryName.Value, Optional.ToNullable(categoryType), Optional.ToNullable(categoryStatus), Optional.ToList(controlFamilies), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Category>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Category)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        Category IPersistableModel<Category>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(Category)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCategory(document.RootElement, options);
+        }
+
+        string IPersistableModel<Category>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

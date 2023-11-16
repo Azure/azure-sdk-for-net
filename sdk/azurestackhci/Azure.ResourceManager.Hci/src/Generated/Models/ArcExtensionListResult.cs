@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Hci;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> List of Extensions in HCI cluster. </summary>
     internal partial class ArcExtensionListResult
     {
-        /// <summary> Initializes a new instance of ArcExtensionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArcExtensionListResult"/>. </summary>
         internal ArcExtensionListResult()
         {
             Value = new ChangeTrackingList<ArcExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of ArcExtensionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArcExtensionListResult"/>. </summary>
         /// <param name="value"> List of Extensions in HCI cluster. </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal ArcExtensionListResult(IReadOnlyList<ArcExtensionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArcExtensionListResult(IReadOnlyList<ArcExtensionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Extensions in HCI cluster. </summary>

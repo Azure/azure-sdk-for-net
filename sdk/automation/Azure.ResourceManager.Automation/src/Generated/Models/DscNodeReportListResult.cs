@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list dsc nodes operation. </summary>
     internal partial class DscNodeReportListResult
     {
-        /// <summary> Initializes a new instance of DscNodeReportListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeReportListResult"/>. </summary>
         internal DscNodeReportListResult()
         {
             Value = new ChangeTrackingList<DscNodeReport>();
         }
 
-        /// <summary> Initializes a new instance of DscNodeReportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeReportListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of dsc node reports. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal DscNodeReportListResult(IReadOnlyList<DscNodeReport> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeReportListResult(IReadOnlyList<DscNodeReport> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of dsc node reports. </summary>

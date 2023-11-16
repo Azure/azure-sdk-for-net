@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Operation request/response representation details. </summary>
     public partial class RepresentationContract
     {
-        /// <summary> Initializes a new instance of RepresentationContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RepresentationContract"/>. </summary>
         /// <param name="contentType"> Specifies a registered or custom content type for this representation, e.g. application/xml. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentType"/> is null. </exception>
         public RepresentationContract(string contentType)
@@ -26,19 +29,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Examples = new ChangeTrackingDictionary<string, ParameterExampleContract>();
         }
 
-        /// <summary> Initializes a new instance of RepresentationContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="RepresentationContract"/>. </summary>
         /// <param name="contentType"> Specifies a registered or custom content type for this representation, e.g. application/xml. </param>
         /// <param name="schemaId"> Schema identifier. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </param>
         /// <param name="typeName"> Type name defined by the schema. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </param>
         /// <param name="formParameters"> Collection of form parameters. Required if 'contentType' value is either 'application/x-www-form-urlencoded' or 'multipart/form-data'.. </param>
         /// <param name="examples"> Exampled defined for the representation. </param>
-        internal RepresentationContract(string contentType, string schemaId, string typeName, IList<ParameterContract> formParameters, IDictionary<string, ParameterExampleContract> examples)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RepresentationContract(string contentType, string schemaId, string typeName, IList<ParameterContract> formParameters, IDictionary<string, ParameterExampleContract> examples, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentType = contentType;
             SchemaId = schemaId;
             TypeName = typeName;
             FormParameters = formParameters;
             Examples = examples;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RepresentationContract"/> for deserialization. </summary>
+        internal RepresentationContract()
+        {
         }
 
         /// <summary> Specifies a registered or custom content type for this representation, e.g. application/xml. </summary>

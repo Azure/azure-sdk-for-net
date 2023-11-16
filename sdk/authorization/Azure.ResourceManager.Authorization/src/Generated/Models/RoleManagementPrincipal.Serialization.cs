@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPrincipal
+    public partial class RoleManagementPrincipal : IUtf8JsonSerializable, IJsonModel<RoleManagementPrincipal>
     {
-        internal static RoleManagementPrincipal DeserializeRoleManagementPrincipal(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPrincipal>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RoleManagementPrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RoleManagementPrincipal>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RoleManagementPrincipal>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
+            if (Optional.IsDefined(Email))
+            {
+                writer.WritePropertyName("email"u8);
+                writer.WriteStringValue(Email);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RoleManagementPrincipal IJsonModel<RoleManagementPrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoleManagementPrincipal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleManagementPrincipal(document.RootElement, options);
+        }
+
+        internal static RoleManagementPrincipal DeserializeRoleManagementPrincipal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<string> displayName = default;
             Optional<RoleManagementPrincipalType> type = default;
             Optional<string> email = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,8 +116,38 @@ namespace Azure.ResourceManager.Authorization.Models
                     email = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoleManagementPrincipal(id.Value, displayName.Value, Optional.ToNullable(type), email.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RoleManagementPrincipal(id.Value, displayName.Value, Optional.ToNullable(type), email.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoleManagementPrincipal>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoleManagementPrincipal)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RoleManagementPrincipal IPersistableModel<RoleManagementPrincipal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RoleManagementPrincipal)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRoleManagementPrincipal(document.RootElement, options);
+        }
+
+        string IPersistableModel<RoleManagementPrincipal>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

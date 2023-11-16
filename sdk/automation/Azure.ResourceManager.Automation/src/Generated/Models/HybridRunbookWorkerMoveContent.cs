@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Parameters supplied to move hybrid worker operation. </summary>
     public partial class HybridRunbookWorkerMoveContent
     {
-        /// <summary> Initializes a new instance of HybridRunbookWorkerMoveContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerMoveContent"/>. </summary>
         public HybridRunbookWorkerMoveContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerMoveContent"/>. </summary>
+        /// <param name="hybridRunbookWorkerGroupName"> Gets or sets the target hybrid runbook worker group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridRunbookWorkerMoveContent(string hybridRunbookWorkerGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HybridRunbookWorkerGroupName = hybridRunbookWorkerGroupName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the target hybrid runbook worker group. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Batch;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Values returned by the List operation. </summary>
     internal partial class BatchAccountListResult
     {
-        /// <summary> Initializes a new instance of BatchAccountListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountListResult"/>. </summary>
         internal BatchAccountListResult()
         {
             Value = new ChangeTrackingList<BatchAccountData>();
         }
 
-        /// <summary> Initializes a new instance of BatchAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchAccountListResult"/>. </summary>
         /// <param name="value"> The collection of Batch accounts returned by the listing operation. </param>
         /// <param name="nextLink"> The continuation token. </param>
-        internal BatchAccountListResult(IReadOnlyList<BatchAccountData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountListResult(IReadOnlyList<BatchAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of Batch accounts returned by the listing operation. </summary>

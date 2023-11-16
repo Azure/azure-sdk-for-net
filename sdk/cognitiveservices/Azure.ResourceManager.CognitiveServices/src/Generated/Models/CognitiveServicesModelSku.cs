@@ -14,25 +14,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Describes an available Cognitive Services Model SKU. </summary>
     public partial class CognitiveServicesModelSku
     {
-        /// <summary> Initializes a new instance of CognitiveServicesModelSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesModelSku"/>. </summary>
         public CognitiveServicesModelSku()
         {
             RateLimits = new ChangeTrackingList<ServiceAccountCallRateLimit>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesModelSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesModelSku"/>. </summary>
         /// <param name="name"> The name of the model SKU. </param>
         /// <param name="usageName"> The usage name of the model SKU. </param>
         /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
         /// <param name="capacity"> The capacity configuration. </param>
         /// <param name="rateLimits"> The list of rateLimit. </param>
-        internal CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IReadOnlyList<ServiceAccountCallRateLimit> rateLimits)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesModelSku(string name, string usageName, DateTimeOffset? deprecationOn, CognitiveServicesCapacityConfig capacity, IReadOnlyList<ServiceAccountCallRateLimit> rateLimits, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             UsageName = usageName;
             DeprecationOn = deprecationOn;
             Capacity = capacity;
             RateLimits = rateLimits;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the model SKU. </summary>

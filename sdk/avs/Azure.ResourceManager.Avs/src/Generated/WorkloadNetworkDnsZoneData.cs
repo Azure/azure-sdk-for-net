@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -19,14 +20,17 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkDnsZoneData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsZoneData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
         public WorkloadNetworkDnsZoneData()
         {
             Domain = new ChangeTrackingList<string>();
             DnsServerIPs = new ChangeTrackingList<IPAddress>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="dnsServices"> Number of DNS Services using the DNS zone. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> domain, IList<IPAddress> dnsServerIPs, IPAddress sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> domain, IList<IPAddress> dnsServerIPs, IPAddress sourceIP, long? dnsServices, WorkloadNetworkDnsZoneProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Domain = domain;
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.Avs
             DnsServices = dnsServices;
             ProvisioningState = provisioningState;
             Revision = revision;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name of the DNS Zone. </summary>

@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Terms of service contract properties. </summary>
     public partial class TermsOfServiceProperties
     {
-        /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TermsOfServiceProperties"/>. </summary>
         public TermsOfServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TermsOfServiceProperties"/>. </summary>
         /// <param name="text"> A terms of service text. </param>
         /// <param name="isDisplayEnabled"> Display terms of service during a sign-up process. </param>
         /// <param name="isConsentRequired"> Ask user for consent to the terms of service. </param>
-        internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             IsDisplayEnabled = isDisplayEnabled;
             IsConsentRequired = isConsentRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A terms of service text. </summary>

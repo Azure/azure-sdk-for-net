@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Descriptions of APIM policies. </summary>
     internal partial class PolicyDescriptionListResult
     {
-        /// <summary> Initializes a new instance of PolicyDescriptionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyDescriptionListResult"/>. </summary>
         internal PolicyDescriptionListResult()
         {
             Value = new ChangeTrackingList<PolicyDescriptionContractData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyDescriptionListResult"/>. </summary>
         /// <param name="value"> Descriptions of APIM policies. </param>
         /// <param name="count"> Total record count number. </param>
-        internal PolicyDescriptionListResult(IReadOnlyList<PolicyDescriptionContractData> value, long? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyDescriptionListResult(IReadOnlyList<PolicyDescriptionContractData> value, long? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Descriptions of APIM policies. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automanage;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.Automanage.Models
     /// <summary> The response of the list best practice operation. </summary>
     internal partial class BestPracticeList
     {
-        /// <summary> Initializes a new instance of BestPracticeList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BestPracticeList"/>. </summary>
         internal BestPracticeList()
         {
             Value = new ChangeTrackingList<AutomanageBestPracticeData>();
         }
 
-        /// <summary> Initializes a new instance of BestPracticeList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BestPracticeList"/>. </summary>
         /// <param name="value"> Result of the list best practice operation. </param>
-        internal BestPracticeList(IReadOnlyList<AutomanageBestPracticeData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BestPracticeList(IReadOnlyList<AutomanageBestPracticeData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result of the list best practice operation. </summary>

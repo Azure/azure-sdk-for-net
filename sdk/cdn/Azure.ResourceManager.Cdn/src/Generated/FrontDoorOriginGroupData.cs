@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorOriginGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorOriginGroupData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupData"/>. </summary>
         public FrontDoorOriginGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorOriginGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorOriginGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +39,8 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
-        internal FrontDoorOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProfileName = profileName;
             LoadBalancingSettings = loadBalancingSettings;
@@ -43,6 +49,7 @@ namespace Azure.ResourceManager.Cdn
             SessionAffinityState = sessionAffinityState;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the profile which holds the origin group. </summary>

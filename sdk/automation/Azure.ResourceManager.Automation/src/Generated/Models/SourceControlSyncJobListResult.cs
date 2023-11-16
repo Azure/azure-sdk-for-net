@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list source control sync jobs operation. </summary>
     internal partial class SourceControlSyncJobListResult
     {
-        /// <summary> Initializes a new instance of SourceControlSyncJobListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobListResult"/>. </summary>
         internal SourceControlSyncJobListResult()
         {
             Value = new ChangeTrackingList<SourceControlSyncJob>();
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceControlSyncJobListResult"/>. </summary>
         /// <param name="value"> The list of source control sync jobs. </param>
         /// <param name="nextLink"> The next link. </param>
-        internal SourceControlSyncJobListResult(IReadOnlyList<SourceControlSyncJob> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlSyncJobListResult(IReadOnlyList<SourceControlSyncJob> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of source control sync jobs. </summary>

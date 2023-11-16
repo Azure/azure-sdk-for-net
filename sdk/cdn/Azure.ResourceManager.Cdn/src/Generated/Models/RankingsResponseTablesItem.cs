@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The RankingsResponseTablesItem. </summary>
     public partial class RankingsResponseTablesItem
     {
-        /// <summary> Initializes a new instance of RankingsResponseTablesItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesItem"/>. </summary>
         internal RankingsResponseTablesItem()
         {
             Data = new ChangeTrackingList<RankingsResponseTablesPropertiesItemsItem>();
         }
 
-        /// <summary> Initializes a new instance of RankingsResponseTablesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="RankingsResponseTablesItem"/>. </summary>
         /// <param name="ranking"></param>
         /// <param name="data"></param>
-        internal RankingsResponseTablesItem(string ranking, IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> data)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RankingsResponseTablesItem(string ranking, IReadOnlyList<RankingsResponseTablesPropertiesItemsItem> data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Ranking = ranking;
             Data = data;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the ranking. </summary>

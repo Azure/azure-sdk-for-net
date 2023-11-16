@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -13,7 +14,10 @@ namespace Azure.Communication.CallingServer
     /// <summary> The FileSource. </summary>
     internal partial class FileSourceInternal
     {
-        /// <summary> Initializes a new instance of FileSourceInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FileSourceInternal"/>. </summary>
         /// <param name="uri"> Uri for the audio file to be played. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public FileSourceInternal(string uri)
@@ -21,6 +25,20 @@ namespace Azure.Communication.CallingServer
             Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileSourceInternal"/>. </summary>
+        /// <param name="uri"> Uri for the audio file to be played. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileSourceInternal(string uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileSourceInternal"/> for deserialization. </summary>
+        internal FileSourceInternal()
+        {
         }
 
         /// <summary> Uri for the audio file to be played. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
@@ -13,5 +14,23 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Represent input text record to be queried. </summary>
     public partial class TextDocument
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TextDocument"/>. </summary>
+        /// <param name="id"> Unique identifier for the text record. </param>
+        /// <param name="text"> Text contents of the record. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TextDocument(string id, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Text = text;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextDocument"/> for deserialization. </summary>
+        internal TextDocument()
+        {
+        }
     }
 }

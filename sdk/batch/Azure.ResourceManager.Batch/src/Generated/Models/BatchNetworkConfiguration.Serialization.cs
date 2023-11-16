@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchNetworkConfiguration : IUtf8JsonSerializable
+    public partial class BatchNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<BatchNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNetworkConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BatchNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BatchNetworkConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BatchNetworkConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SubnetId))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element)
+        BatchNetworkConfiguration IJsonModel<BatchNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchNetworkConfiguration(document.RootElement, options);
+        }
+
+        internal static BatchNetworkConfiguration DeserializeBatchNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<PoolEndpointConfiguration> endpointConfiguration = default;
             Optional<BatchPublicIPAddressConfiguration> publicIPAddressConfiguration = default;
             Optional<bool> enableAcceleratedNetworking = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -101,8 +143,38 @@ namespace Azure.ResourceManager.Batch.Models
                     enableAcceleratedNetworking = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchNetworkConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BatchNetworkConfiguration IPersistableModel<BatchNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBatchNetworkConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<BatchNetworkConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

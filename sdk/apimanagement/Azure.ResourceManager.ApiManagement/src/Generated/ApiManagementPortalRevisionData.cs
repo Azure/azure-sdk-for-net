@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementPortalRevisionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementPortalRevisionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalRevisionData"/>. </summary>
         public ApiManagementPortalRevisionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalRevisionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalRevisionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="isCurrent"> Indicates if the portal's revision is public. </param>
         /// <param name="createdOn"> Portal's revision creation date and time. </param>
         /// <param name="updatedOn"> Last updated date and time. </param>
-        internal ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             StatusDetails = statusDetails;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
             IsCurrent = isCurrent;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Portal revision description. </summary>

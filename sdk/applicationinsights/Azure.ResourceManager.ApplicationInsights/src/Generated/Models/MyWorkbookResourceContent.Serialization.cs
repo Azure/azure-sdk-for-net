@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class MyWorkbookResourceContent : IUtf8JsonSerializable
+    public partial class MyWorkbookResourceContent : IUtf8JsonSerializable, IJsonModel<MyWorkbookResourceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MyWorkbookResourceContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MyWorkbookResourceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MyWorkbookResourceContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MyWorkbookResourceContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -63,11 +73,40 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndObject();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MyWorkbookResourceContent DeserializeMyWorkbookResourceContent(JsonElement element)
+        MyWorkbookResourceContent IJsonModel<MyWorkbookResourceContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MyWorkbookResourceContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMyWorkbookResourceContent(document.RootElement, options);
+        }
+
+        internal static MyWorkbookResourceContent DeserializeMyWorkbookResourceContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +118,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<IDictionary<string, string>> etag = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -142,8 +183,38 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     etag = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MyWorkbookResourceContent(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MyWorkbookResourceContent(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MyWorkbookResourceContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MyWorkbookResourceContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MyWorkbookResourceContent IPersistableModel<MyWorkbookResourceContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MyWorkbookResourceContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMyWorkbookResourceContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<MyWorkbookResourceContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> KeyVault configuration when using an encryption KeySource of Microsoft.KeyVault. </summary>
     internal partial class KeyVaultProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         public KeyVaultProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         /// <param name="keyIdentifier">
         /// Full path to the secret with or without version. Example https://mykeyvault.vault.azure.net/keys/testkey/6e34a81fef704045975661e297a4c053. or https://mykeyvault.vault.azure.net/keys/testkey. To be usable the following prerequisites must be met:
         ///
@@ -25,9 +29,11 @@ namespace Azure.ResourceManager.Batch.Models
         ///  The account identity has been granted Key/Get, Key/Unwrap and Key/Wrap permissions
         ///  The KeyVault has soft-delete and purge protection enabled
         /// </param>
-        internal KeyVaultProperties(Uri keyIdentifier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultProperties(Uri keyIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyIdentifier = keyIdentifier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

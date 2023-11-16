@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list activity operation. </summary>
     internal partial class AutomationActivityListResult
     {
-        /// <summary> Initializes a new instance of AutomationActivityListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityListResult"/>. </summary>
         internal AutomationActivityListResult()
         {
             Value = new ChangeTrackingList<AutomationActivity>();
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of activities. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal AutomationActivityListResult(IReadOnlyList<AutomationActivity> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationActivityListResult(IReadOnlyList<AutomationActivity> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of activities. </summary>

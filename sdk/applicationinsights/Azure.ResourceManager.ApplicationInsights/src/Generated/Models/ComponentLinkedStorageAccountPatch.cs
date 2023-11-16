@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An Application Insights component linked storage accounts patch. </summary>
     public partial class ComponentLinkedStorageAccountPatch
     {
-        /// <summary> Initializes a new instance of ComponentLinkedStorageAccountPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComponentLinkedStorageAccountPatch"/>. </summary>
         public ComponentLinkedStorageAccountPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComponentLinkedStorageAccountPatch"/>. </summary>
+        /// <param name="linkedStorageAccount"> Linked storage account resource ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentLinkedStorageAccountPatch(string linkedStorageAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LinkedStorageAccount = linkedStorageAccount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Linked storage account resource ID. </summary>

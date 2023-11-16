@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> The AvailableRuntimeVersions. </summary>
     internal partial class AvailableRuntimeVersions
     {
-        /// <summary> Initializes a new instance of AvailableRuntimeVersions. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableRuntimeVersions"/>. </summary>
         internal AvailableRuntimeVersions()
         {
             Value = new ChangeTrackingList<AppPlatformSupportedRuntimeVersion>();
         }
 
-        /// <summary> Initializes a new instance of AvailableRuntimeVersions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableRuntimeVersions"/>. </summary>
         /// <param name="value"> A list of all supported runtime versions. </param>
-        internal AvailableRuntimeVersions(IReadOnlyList<AppPlatformSupportedRuntimeVersion> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableRuntimeVersions(IReadOnlyList<AppPlatformSupportedRuntimeVersion> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of all supported runtime versions. </summary>

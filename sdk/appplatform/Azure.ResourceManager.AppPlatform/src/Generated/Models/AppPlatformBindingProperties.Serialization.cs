@@ -7,16 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBindingProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBindingProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBindingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBindingProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AppPlatformBindingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AppPlatformBindingProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AppPlatformBindingProperties>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceName))
+                {
+                    writer.WritePropertyName("resourceName"u8);
+                    writer.WriteStringValue(ResourceName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    writer.WritePropertyName("resourceType"u8);
+                    writer.WriteStringValue(ResourceType);
+                }
+            }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
@@ -50,11 +75,64 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(GeneratedProperties))
+                {
+                    writer.WritePropertyName("generatedProperties"u8);
+                    writer.WriteStringValue(GeneratedProperties);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createdAt"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(UpdatedOn))
+                {
+                    writer.WritePropertyName("updatedAt"u8);
+                    writer.WriteStringValue(UpdatedOn.Value, "O");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformBindingProperties DeserializeAppPlatformBindingProperties(JsonElement element)
+        AppPlatformBindingProperties IJsonModel<AppPlatformBindingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformBindingProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformBindingProperties DeserializeAppPlatformBindingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +145,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> generatedProperties = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -137,8 +217,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     updatedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformBindingProperties(resourceName.Value, resourceType.Value, resourceId.Value, key.Value, Optional.ToDictionary(bindingParameters), generatedProperties.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformBindingProperties(resourceName.Value, resourceType.Value, resourceId.Value, key.Value, Optional.ToDictionary(bindingParameters), generatedProperties.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformBindingProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AppPlatformBindingProperties IPersistableModel<AppPlatformBindingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBindingProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAppPlatformBindingProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<AppPlatformBindingProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

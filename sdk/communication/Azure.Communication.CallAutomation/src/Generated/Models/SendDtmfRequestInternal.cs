@@ -16,7 +16,10 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SendDtmfRequest. </summary>
     internal partial class SendDtmfRequestInternal
     {
-        /// <summary> Initializes a new instance of SendDtmfRequestInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SendDtmfRequestInternal"/>. </summary>
         /// <param name="tones"> List of tones to be sent to target participant. </param>
         /// <param name="targetParticipant"> Target participant of send DTMF. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tones"/> or <paramref name="targetParticipant"/> is null. </exception>
@@ -27,6 +30,26 @@ namespace Azure.Communication.CallAutomation
 
             Tones = tones.ToList();
             TargetParticipant = targetParticipant;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendDtmfRequestInternal"/>. </summary>
+        /// <param name="tones"> List of tones to be sent to target participant. </param>
+        /// <param name="targetParticipant"> Target participant of send DTMF. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="callbackUri"> The callback URI to override the main callback URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SendDtmfRequestInternal(IList<DtmfTone> tones, CommunicationIdentifierModel targetParticipant, string operationContext, string callbackUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tones = tones;
+            TargetParticipant = targetParticipant;
+            OperationContext = operationContext;
+            CallbackUri = callbackUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendDtmfRequestInternal"/> for deserialization. </summary>
+        internal SendDtmfRequestInternal()
+        {
         }
 
         /// <summary> List of tones to be sent to target participant. </summary>

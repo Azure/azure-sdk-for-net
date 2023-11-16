@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> HTTP header and it's value. </summary>
     public partial class HttpHeaderConfiguration
     {
-        /// <summary> Initializes a new instance of HttpHeaderConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HttpHeaderConfiguration"/>. </summary>
         /// <param name="name"> Header name. </param>
         /// <param name="value"> Header value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HttpHeaderConfiguration"/>. </summary>
+        /// <param name="name"> Header name. </param>
+        /// <param name="value"> Header value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HttpHeaderConfiguration(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HttpHeaderConfiguration"/> for deserialization. </summary>
+        internal HttpHeaderConfiguration()
+        {
         }
 
         /// <summary> Header name. </summary>

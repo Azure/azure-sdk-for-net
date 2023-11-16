@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Describes the parameters for using a user's KeyVault certificate for securing custom domain. </summary>
     public partial class KeyVaultCertificateSource
     {
-        /// <summary> Initializes a new instance of KeyVaultCertificateSource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/>. </summary>
         /// <param name="sourceType"></param>
         /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the SSL certificate. </param>
         /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the SSL certificate. </param>
@@ -38,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
             DeleteRule = deleteRule;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultCertificateSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/>. </summary>
         /// <param name="sourceType"></param>
         /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the SSL certificate. </param>
         /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the SSL certificate. </param>
@@ -47,7 +51,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="secretVersion"> The version(GUID) of Key Vault Secret in Key Vault. </param>
         /// <param name="updateRule"> Describes the action that shall be taken when the certificate is updated in Key Vault. </param>
         /// <param name="deleteRule"> Describes the action that shall be taken when the certificate is removed from Key Vault. </param>
-        internal KeyVaultCertificateSource(KeyVaultCertificateSourceType sourceType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, CertificateUpdateAction updateRule, CertificateDeleteAction deleteRule)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultCertificateSource(KeyVaultCertificateSourceType sourceType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, CertificateUpdateAction updateRule, CertificateDeleteAction deleteRule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceType = sourceType;
             SubscriptionId = subscriptionId;
@@ -57,6 +62,12 @@ namespace Azure.ResourceManager.Cdn.Models
             SecretVersion = secretVersion;
             UpdateRule = updateRule;
             DeleteRule = deleteRule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateSource"/> for deserialization. </summary>
+        internal KeyVaultCertificateSource()
+        {
         }
 
         /// <summary> Gets or sets the source type. </summary>

@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Quota counter value details. </summary>
     public partial class QuotaCounterValueUpdateContent
     {
-        /// <summary> Initializes a new instance of QuotaCounterValueUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
         public QuotaCounterValueUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuotaCounterValueUpdateContent"/>. </summary>
+        /// <param name="callsCount"> Number of times Counter was called. </param>
+        /// <param name="kbTransferred"> Data Transferred in KiloBytes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaCounterValueUpdateContent(int? callsCount, double? kbTransferred, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            CallsCount = callsCount;
+            KbTransferred = kbTransferred;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Number of times Counter was called. </summary>

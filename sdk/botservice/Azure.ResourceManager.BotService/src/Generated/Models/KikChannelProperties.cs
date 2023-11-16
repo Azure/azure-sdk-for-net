@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> The parameters to provide for the Kik channel. </summary>
     public partial class KikChannelProperties
     {
-        /// <summary> Initializes a new instance of KikChannelProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KikChannelProperties"/>. </summary>
         /// <param name="userName"> The Kik user name. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
@@ -25,17 +29,24 @@ namespace Azure.ResourceManager.BotService.Models
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of KikChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KikChannelProperties"/>. </summary>
         /// <param name="userName"> The Kik user name. </param>
         /// <param name="apiKey"> Kik API key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        internal KikChannelProperties(string userName, string apiKey, bool? isValidated, bool isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KikChannelProperties(string userName, string apiKey, bool? isValidated, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserName = userName;
             ApiKey = apiKey;
             IsValidated = isValidated;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KikChannelProperties"/> for deserialization. </summary>
+        internal KikChannelProperties()
+        {
         }
 
         /// <summary> The Kik user name. </summary>

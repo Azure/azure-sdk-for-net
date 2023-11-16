@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> result of listing all software update configuration runs. </summary>
     internal partial class SoftwareUpdateConfigurationRunListResult
     {
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunListResult"/>. </summary>
         internal SoftwareUpdateConfigurationRunListResult()
         {
             Value = new ChangeTrackingList<SoftwareUpdateConfigurationRun>();
         }
 
-        /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationRunListResult"/>. </summary>
         /// <param name="value"> outer object returned when listing all software update configuration runs. </param>
         /// <param name="nextLink"> link to next page of results. </param>
-        internal SoftwareUpdateConfigurationRunListResult(IReadOnlyList<SoftwareUpdateConfigurationRun> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationRunListResult(IReadOnlyList<SoftwareUpdateConfigurationRun> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> outer object returned when listing all software update configuration runs. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The response payload for muting participants from the call. </summary>
     public partial class MuteParticipantsResult
     {
-        /// <summary> Initializes a new instance of MuteParticipantsResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MuteParticipantsResult"/>. </summary>
         internal MuteParticipantsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MuteParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MuteParticipantsResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal MuteParticipantsResult(string operationContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MuteParticipantsResult(string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation context provided by client. </summary>

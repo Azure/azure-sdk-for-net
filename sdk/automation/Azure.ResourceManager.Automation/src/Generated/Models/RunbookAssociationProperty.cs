@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The runbook property associated with the entity. </summary>
     public partial class RunbookAssociationProperty
     {
-        /// <summary> Initializes a new instance of RunbookAssociationProperty. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RunbookAssociationProperty"/>. </summary>
         public RunbookAssociationProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of RunbookAssociationProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunbookAssociationProperty"/>. </summary>
         /// <param name="name"> Gets or sets the name of the runbook. </param>
-        internal RunbookAssociationProperty(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunbookAssociationProperty(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the runbook. </summary>

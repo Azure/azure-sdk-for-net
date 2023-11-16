@@ -5,16 +5,38 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Context object with previous QnA's information. </summary>
     public partial class KnowledgeBaseAnswerContext
     {
-        /// <summary> Initializes a new instance of KnowledgeBaseAnswerContext. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerContext"/>. </summary>
         /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
         public KnowledgeBaseAnswerContext(int previousQnaId)
         {
             PreviousQnaId = previousQnaId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerContext"/>. </summary>
+        /// <param name="previousQnaId"> Previous turn top answer result QnA ID. </param>
+        /// <param name="previousQuestion"> Previous user query. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeBaseAnswerContext(int previousQnaId, string previousQuestion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PreviousQnaId = previousQnaId;
+            PreviousQuestion = previousQuestion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerContext"/> for deserialization. </summary>
+        internal KnowledgeBaseAnswerContext()
+        {
         }
 
         /// <summary> Previous turn top answer result QnA ID. </summary>

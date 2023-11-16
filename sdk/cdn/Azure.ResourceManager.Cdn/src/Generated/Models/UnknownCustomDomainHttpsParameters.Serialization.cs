@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class UnknownCustomDomainHttpsParameters : IUtf8JsonSerializable
+    internal partial class UnknownCustomDomainHttpsParameters : IUtf8JsonSerializable, IJsonModel<CustomDomainHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDomainHttpsContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CustomDomainHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CustomDomainHttpsContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CustomDomainHttpsContent>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
@@ -24,11 +35,40 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element)
+        CustomDomainHttpsContent IJsonModel<CustomDomainHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUnknownCustomDomainHttpsParameters(document.RootElement, options);
+        }
+
+        internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.Cdn.Models
             CertificateSource certificateSource = "Unknown";
             SecureDeliveryProtocolType protocolType = default;
             Optional<CdnMinimumTlsVersion> minimumTlsVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSource"u8))
@@ -57,8 +99,38 @@ namespace Azure.ResourceManager.Cdn.Models
                     minimumTlsVersion = property.Value.GetString().ToCdnMinimumTlsVersion();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownCustomDomainHttpsParameters(certificateSource, protocolType, Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomDomainHttpsContent IPersistableModel<CustomDomainHttpsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeUnknownCustomDomainHttpsParameters(document.RootElement, options);
+        }
+
+        string IPersistableModel<CustomDomainHttpsContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

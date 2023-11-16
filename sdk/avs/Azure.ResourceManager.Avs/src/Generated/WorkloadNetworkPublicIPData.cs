@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,15 @@ namespace Azure.ResourceManager.Avs
     /// </summary>
     public partial class WorkloadNetworkPublicIPData : ResourceData
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkPublicIPData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPublicIPData"/>. </summary>
         public WorkloadNetworkPublicIPData()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkPublicIPData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPublicIPData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,12 +36,14 @@ namespace Azure.ResourceManager.Avs
         /// <param name="numberOfPublicIPs"> Number of Public IPs requested. </param>
         /// <param name="publicIPBlock"> CIDR Block of the Public IP Block. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        internal WorkloadNetworkPublicIPData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? numberOfPublicIPs, string publicIPBlock, WorkloadNetworkPublicIPProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkPublicIPData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? numberOfPublicIPs, string publicIPBlock, WorkloadNetworkPublicIPProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             NumberOfPublicIPs = numberOfPublicIPs;
             PublicIPBlock = publicIPBlock;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Display name of the Public IP Block. </summary>

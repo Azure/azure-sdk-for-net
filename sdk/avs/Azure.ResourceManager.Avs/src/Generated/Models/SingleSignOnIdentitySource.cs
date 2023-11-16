@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> vCenter Single Sign On Identity Source. </summary>
     public partial class SingleSignOnIdentitySource
     {
-        /// <summary> Initializes a new instance of SingleSignOnIdentitySource. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SingleSignOnIdentitySource"/>. </summary>
         public SingleSignOnIdentitySource()
         {
         }
 
-        /// <summary> Initializes a new instance of SingleSignOnIdentitySource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SingleSignOnIdentitySource"/>. </summary>
         /// <param name="name"> The name of the identity source. </param>
         /// <param name="alias"> The domain's NetBIOS name. </param>
         /// <param name="domain"> The domain's dns name. </param>
@@ -28,7 +32,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="ssl"> Protect LDAP communication using SSL certificate (LDAPS). </param>
         /// <param name="username"> The ID of an Active Directory user with a minimum of read-only access to Base DN for users and group. </param>
         /// <param name="password"> The password of the Active Directory user with a minimum of read-only access to Base DN for users and groups. </param>
-        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, Uri primaryServer, Uri secondaryServer, SslCertificateStatus? ssl, string username, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SingleSignOnIdentitySource(string name, string @alias, string domain, string baseUserDN, string baseGroupDN, Uri primaryServer, Uri secondaryServer, SslCertificateStatus? ssl, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Alias = @alias;
@@ -40,6 +45,7 @@ namespace Azure.ResourceManager.Avs.Models
             Ssl = ssl;
             Username = username;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the identity source. </summary>

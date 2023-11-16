@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list account operation. </summary>
     internal partial class AutomationAccountListResult
     {
-        /// <summary> Initializes a new instance of AutomationAccountListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountListResult"/>. </summary>
         internal AutomationAccountListResult()
         {
             Value = new ChangeTrackingList<AutomationAccountData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationAccountListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountListResult"/>. </summary>
         /// <param name="value"> Gets or sets list of accounts. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal AutomationAccountListResult(IReadOnlyList<AutomationAccountData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountListResult(IReadOnlyList<AutomationAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets list of accounts. </summary>

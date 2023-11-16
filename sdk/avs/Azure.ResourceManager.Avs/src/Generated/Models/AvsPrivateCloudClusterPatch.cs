@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,24 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An update of a cluster resource. </summary>
     public partial class AvsPrivateCloudClusterPatch
     {
-        /// <summary> Initializes a new instance of AvsPrivateCloudClusterPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterPatch"/>. </summary>
         public AvsPrivateCloudClusterPatch()
         {
             Hosts = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudClusterPatch"/>. </summary>
+        /// <param name="clusterSize"> The cluster size. </param>
+        /// <param name="hosts"> The hosts. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudClusterPatch(int? clusterSize, IList<string> hosts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClusterSize = clusterSize;
+            Hosts = hosts;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cluster size. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The response payload for transferring the call. </summary>
     public partial class TransferCallToParticipantResult
     {
-        /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TransferCallToParticipantResult"/>. </summary>
         internal TransferCallToParticipantResult()
         {
         }
 
-        /// <summary> Initializes a new instance of TransferCallToParticipantResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferCallToParticipantResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
-        internal TransferCallToParticipantResult(string operationContext)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TransferCallToParticipantResult(string operationContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationContext = operationContext;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation context provided by client. </summary>

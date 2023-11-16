@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> A list of NSX DNS Services. </summary>
     internal partial class WorkloadNetworkDnsServicesList
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsServicesList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsServicesList"/>. </summary>
         internal WorkloadNetworkDnsServicesList()
         {
             Value = new ChangeTrackingList<WorkloadNetworkDnsServiceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDnsServicesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsServicesList"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal WorkloadNetworkDnsServicesList(IReadOnlyList<WorkloadNetworkDnsServiceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkDnsServicesList(IReadOnlyList<WorkloadNetworkDnsServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The items on the page. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of usage counter name. </summary>
     public partial class AutomationUsageCounterName
     {
-        /// <summary> Initializes a new instance of AutomationUsageCounterName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationUsageCounterName"/>. </summary>
         internal AutomationUsageCounterName()
         {
         }
 
-        /// <summary> Initializes a new instance of AutomationUsageCounterName. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationUsageCounterName"/>. </summary>
         /// <param name="value"> Gets or sets the usage counter name. </param>
         /// <param name="localizedValue"> Gets or sets the localized usage counter name. </param>
-        internal AutomationUsageCounterName(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationUsageCounterName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the usage counter name. </summary>

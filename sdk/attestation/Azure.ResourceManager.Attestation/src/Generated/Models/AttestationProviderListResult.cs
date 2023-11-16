@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Attestation;
@@ -15,19 +16,24 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> Attestation Providers List. </summary>
     internal partial class AttestationProviderListResult
     {
-        /// <summary> Initializes a new instance of AttestationProviderListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderListResult"/>. </summary>
         internal AttestationProviderListResult()
         {
             Value = new ChangeTrackingList<AttestationProviderData>();
         }
 
-        /// <summary> Initializes a new instance of AttestationProviderListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationProviderListResult"/>. </summary>
         /// <param name="systemData"> The system metadata relating to this resource. </param>
         /// <param name="value"> Attestation Provider array. </param>
-        internal AttestationProviderListResult(SystemData systemData, IReadOnlyList<AttestationProviderData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationProviderListResult(SystemData systemData, IReadOnlyList<AttestationProviderData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemData = systemData;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The system metadata relating to this resource. </summary>

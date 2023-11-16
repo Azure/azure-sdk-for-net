@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Identifies the Azure key vault associated with a Batch account. </summary>
     public partial class BatchKeyVaultReference
     {
-        /// <summary> Initializes a new instance of BatchKeyVaultReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchKeyVaultReference"/>. </summary>
         /// <param name="id"> The resource ID of the Azure key vault associated with the Batch account. </param>
         /// <param name="uri"> The URL of the Azure key vault associated with the Batch account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="uri"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Batch.Models
 
             Id = id;
             Uri = uri;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchKeyVaultReference"/>. </summary>
+        /// <param name="id"> The resource ID of the Azure key vault associated with the Batch account. </param>
+        /// <param name="uri"> The URL of the Azure key vault associated with the Batch account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchKeyVaultReference(ResourceIdentifier id, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Uri = uri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchKeyVaultReference"/> for deserialization. </summary>
+        internal BatchKeyVaultReference()
+        {
         }
 
         /// <summary> The resource ID of the Azure key vault associated with the Batch account. </summary>

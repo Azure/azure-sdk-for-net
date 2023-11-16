@@ -5,15 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementServiceNameAvailabilityResult
+    public partial class ApiManagementServiceNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<ApiManagementServiceNameAvailabilityResult>
     {
-        internal static ApiManagementServiceNameAvailabilityResult DeserializeApiManagementServiceNameAvailabilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementServiceNameAvailabilityResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ApiManagementServiceNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ApiManagementServiceNameAvailabilityResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ApiManagementServiceNameAvailabilityResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(IsNameAvailable))
+                {
+                    writer.WritePropertyName("nameAvailable"u8);
+                    writer.WriteBooleanValue(IsNameAvailable.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason.Value.ToSerialString());
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApiManagementServiceNameAvailabilityResult IJsonModel<ApiManagementServiceNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiManagementServiceNameAvailabilityResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementServiceNameAvailabilityResult(document.RootElement, options);
+        }
+
+        internal static ApiManagementServiceNameAvailabilityResult DeserializeApiManagementServiceNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +88,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<bool> nameAvailable = default;
             Optional<string> message = default;
             Optional<ApiManagementServiceNameUnavailableReason> reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -46,8 +115,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     reason = property.Value.GetString().ToApiManagementServiceNameUnavailableReason();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiManagementServiceNameAvailabilityResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiManagementServiceNameAvailabilityResult(Optional.ToNullable(nameAvailable), message.Value, Optional.ToNullable(reason), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApiManagementServiceNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiManagementServiceNameAvailabilityResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ApiManagementServiceNameAvailabilityResult IPersistableModel<ApiManagementServiceNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ApiManagementServiceNameAvailabilityResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeApiManagementServiceNameAvailabilityResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<ApiManagementServiceNameAvailabilityResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

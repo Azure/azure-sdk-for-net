@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,34 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update runbook operation. </summary>
     public partial class AutomationRunbookPatch
     {
-        /// <summary> Initializes a new instance of AutomationRunbookPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookPatch"/>. </summary>
         public AutomationRunbookPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationRunbookPatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the resource. </param>
+        /// <param name="location"> Gets or sets the location of the resource. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="description"> Gets or sets the description of the runbook. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
+        /// <param name="isLogProgressEnabled"> Gets or sets progress log option. </param>
+        /// <param name="logActivityTrace"> Gets or sets the activity-level tracing options of the runbook. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationRunbookPatch(string name, AzureLocation? location, IDictionary<string, string> tags, string description, bool? isLogVerboseEnabled, bool? isLogProgressEnabled, int? logActivityTrace, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Location = location;
+            Tags = tags;
+            Description = description;
+            IsLogVerboseEnabled = isLogVerboseEnabled;
+            IsLogProgressEnabled = isLogProgressEnabled;
+            LogActivityTrace = logActivityTrace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the resource. </summary>

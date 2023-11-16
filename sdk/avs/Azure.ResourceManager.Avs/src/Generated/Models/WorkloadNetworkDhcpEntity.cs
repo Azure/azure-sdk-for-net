@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,25 +18,30 @@ namespace Azure.ResourceManager.Avs.Models
     /// </summary>
     public abstract partial class WorkloadNetworkDhcpEntity
     {
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpEntity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpEntity"/>. </summary>
         protected WorkloadNetworkDhcpEntity()
         {
             Segments = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of WorkloadNetworkDhcpEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDhcpEntity"/>. </summary>
         /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="revision"> NSX revision number. </param>
-        internal WorkloadNetworkDhcpEntity(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadNetworkDhcpEntity(DhcpTypeEnum dhcpType, string displayName, IReadOnlyList<string> segments, WorkloadNetworkDhcpProvisioningState? provisioningState, long? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DhcpType = dhcpType;
             DisplayName = displayName;
             Segments = segments;
             ProvisioningState = provisioningState;
             Revision = revision;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of DHCP: SERVER or RELAY. </summary>

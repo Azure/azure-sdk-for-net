@@ -5,22 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> The result of a policy certificate modification. </summary>
     public partial class PolicyModificationResult
     {
-        /// <summary> Initializes a new instance of PolicyModificationResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PolicyModificationResult"/>. </summary>
         /// <param name="policyResolution"> The result of the operation. </param>
         /// <param name="basePolicyTokenHash"> The SHA256 hash of the policy object modified. </param>
         /// <param name="basePolicySigner"> The certificate used to sign the policy object, if specified. </param>
         /// <param name="basePolicy"> A JSON Web Token containing a StoredAttestationPolicy object with the attestation policy. </param>
-        internal PolicyModificationResult(PolicyModification policyResolution, string basePolicyTokenHash, JsonWebKey basePolicySigner, string basePolicy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyModificationResult(PolicyModification policyResolution, string basePolicyTokenHash, JsonWebKey basePolicySigner, string basePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyResolution = policyResolution;
             BasePolicyTokenHash = basePolicyTokenHash;
             BasePolicySigner = basePolicySigner;
             BasePolicy = basePolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

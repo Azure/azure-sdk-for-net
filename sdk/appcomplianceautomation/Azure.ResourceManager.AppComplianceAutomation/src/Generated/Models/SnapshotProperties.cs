@@ -15,13 +15,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> Snapshot's properties. </summary>
     public partial class SnapshotProperties
     {
-        /// <summary> Initializes a new instance of SnapshotProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
         internal SnapshotProperties()
         {
             ComplianceResults = new ChangeTrackingList<ComplianceResult>();
         }
 
-        /// <summary> Initializes a new instance of SnapshotProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotProperties"/>. </summary>
         /// <param name="id"> Snapshot id in the database. </param>
         /// <param name="snapshotName"> Snapshot name. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
@@ -29,7 +32,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="reportProperties"> The report essential info. </param>
         /// <param name="reportSystemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="complianceResults"> List of compliance results. </param>
-        internal SnapshotProperties(string id, string snapshotName, DateTimeOffset? createdOn, ProvisioningState? provisioningState, ReportProperties reportProperties, SystemData reportSystemData, IReadOnlyList<ComplianceResult> complianceResults)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotProperties(string id, string snapshotName, DateTimeOffset? createdOn, ProvisioningState? provisioningState, ReportProperties reportProperties, SystemData reportSystemData, IReadOnlyList<ComplianceResult> complianceResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SnapshotName = snapshotName;
@@ -38,6 +42,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             ReportProperties = reportProperties;
             ReportSystemData = reportSystemData;
             ComplianceResults = complianceResults;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Snapshot id in the database. </summary>

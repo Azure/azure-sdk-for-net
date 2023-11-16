@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Status of Arc agent for a particular node in HCI Cluster. </summary>
     public partial class PerNodeArcState
     {
-        /// <summary> Initializes a new instance of PerNodeArcState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PerNodeArcState"/>. </summary>
         internal PerNodeArcState()
         {
         }
 
-        /// <summary> Initializes a new instance of PerNodeArcState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PerNodeArcState"/>. </summary>
         /// <param name="name"> Name of the Node in HCI Cluster. </param>
         /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
         /// <param name="state"> State of Arc agent in this node. </param>
-        internal PerNodeArcState(string name, string arcInstance, NodeArcState? state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PerNodeArcState(string name, string arcInstance, NodeArcState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ArcInstance = arcInstance;
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Node in HCI Cluster. </summary>

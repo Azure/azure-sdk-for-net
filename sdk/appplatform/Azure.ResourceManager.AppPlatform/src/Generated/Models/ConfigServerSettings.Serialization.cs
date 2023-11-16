@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ConfigServerSettings : IUtf8JsonSerializable
+    public partial class ConfigServerSettings : IUtf8JsonSerializable, IJsonModel<ConfigServerSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigServerSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConfigServerSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConfigServerSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConfigServerSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GitProperty))
             {
                 writer.WritePropertyName("gitProperty"u8);
                 writer.WriteObjectValue(GitProperty);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfigServerSettings DeserializeConfigServerSettings(JsonElement element)
+        ConfigServerSettings IJsonModel<ConfigServerSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfigServerSettings(document.RootElement, options);
+        }
+
+        internal static ConfigServerSettings DeserializeConfigServerSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AppPlatformConfigServerGitProperty> gitProperty = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gitProperty"u8))
@@ -41,8 +83,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     gitProperty = AppPlatformConfigServerGitProperty.DeserializeAppPlatformConfigServerGitProperty(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfigServerSettings(gitProperty.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConfigServerSettings(gitProperty.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfigServerSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConfigServerSettings IPersistableModel<ConfigServerSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConfigServerSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConfigServerSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConfigServerSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

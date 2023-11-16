@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create job schedule operation. </summary>
     public partial class AutomationJobScheduleCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of AutomationJobScheduleCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/>. </summary>
         /// <param name="schedule"> Gets or sets the schedule. </param>
         /// <param name="runbook"> Gets or sets the runbook. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="runbook"/> is null. </exception>
@@ -26,6 +29,26 @@ namespace Azure.ResourceManager.Automation.Models
             Schedule = schedule;
             Runbook = runbook;
             Parameters = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/>. </summary>
+        /// <param name="schedule"> Gets or sets the schedule. </param>
+        /// <param name="runbook"> Gets or sets the runbook. </param>
+        /// <param name="runOn"> Gets or sets the hybrid worker group that the scheduled job should run on. </param>
+        /// <param name="parameters"> Gets or sets a list of job properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationJobScheduleCreateOrUpdateContent(ScheduleAssociationProperty schedule, RunbookAssociationProperty runbook, string runOn, IDictionary<string, string> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Schedule = schedule;
+            Runbook = runbook;
+            RunOn = runOn;
+            Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationJobScheduleCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets the schedule. </summary>

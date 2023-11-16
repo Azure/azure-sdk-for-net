@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list schedule operation. </summary>
     internal partial class AutomationScheduleListResult
     {
-        /// <summary> Initializes a new instance of AutomationScheduleListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationScheduleListResult"/>. </summary>
         internal AutomationScheduleListResult()
         {
             Value = new ChangeTrackingList<AutomationScheduleData>();
         }
 
-        /// <summary> Initializes a new instance of AutomationScheduleListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationScheduleListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of schedules. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
-        internal AutomationScheduleListResult(IReadOnlyList<AutomationScheduleData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationScheduleListResult(IReadOnlyList<AutomationScheduleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of schedules. </summary>

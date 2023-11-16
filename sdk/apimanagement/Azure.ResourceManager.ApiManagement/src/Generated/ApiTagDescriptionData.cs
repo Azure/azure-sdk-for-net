@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiTagDescriptionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiTagDescriptionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionData"/>. </summary>
         public ApiTagDescriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiTagDescriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiTagDescriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,13 +36,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="externalDocsDescription"> Description of the external resources describing the tag. </param>
         /// <param name="tagId"> Identifier of the tag in the form of /tags/{tagId}. </param>
         /// <param name="displayName"> Tag name. </param>
-        internal ApiTagDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, Uri externalDocsUri, string externalDocsDescription, string tagId, string displayName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiTagDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, Uri externalDocsUri, string externalDocsDescription, string tagId, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ExternalDocsUri = externalDocsUri;
             ExternalDocsDescription = externalDocsDescription;
             TagId = tagId;
             DisplayName = displayName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description of the Tag. </summary>

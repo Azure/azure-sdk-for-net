@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Properties of server X509Names. </summary>
     public partial class X509CertificateName
     {
-        /// <summary> Initializes a new instance of X509CertificateName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X509CertificateName"/>. </summary>
         public X509CertificateName()
         {
         }
 
-        /// <summary> Initializes a new instance of X509CertificateName. </summary>
+        /// <summary> Initializes a new instance of <see cref="X509CertificateName"/>. </summary>
         /// <param name="name"> Common Name of the Certificate. </param>
         /// <param name="issuerCertificateThumbprint"> Thumbprint for the Issuer of the Certificate. </param>
-        internal X509CertificateName(string name, string issuerCertificateThumbprint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X509CertificateName(string name, string issuerCertificateThumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IssuerCertificateThumbprint = issuerCertificateThumbprint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Common Name of the Certificate. </summary>

@@ -7,15 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleMonthlyRecurrence : IUtf8JsonSerializable
+    public partial class AlertProcessingRuleMonthlyRecurrence : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleMonthlyRecurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleMonthlyRecurrence>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AlertProcessingRuleMonthlyRecurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AlertProcessingRuleMonthlyRecurrence>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AlertProcessingRuleMonthlyRecurrence>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("daysOfMonth"u8);
             writer.WriteStartArray();
@@ -36,11 +45,40 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertProcessingRuleMonthlyRecurrence DeserializeAlertProcessingRuleMonthlyRecurrence(JsonElement element)
+        AlertProcessingRuleMonthlyRecurrence IJsonModel<AlertProcessingRuleMonthlyRecurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertProcessingRuleMonthlyRecurrence(document.RootElement, options);
+        }
+
+        internal static AlertProcessingRuleMonthlyRecurrence DeserializeAlertProcessingRuleMonthlyRecurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +87,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             RecurrenceType recurrenceType = default;
             Optional<TimeSpan> startTime = default;
             Optional<TimeSpan> endTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfMonth"u8))
@@ -84,8 +124,38 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     endTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AlertProcessingRuleMonthlyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), daysOfMonth);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AlertProcessingRuleMonthlyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData, daysOfMonth);
         }
+
+        BinaryData IPersistableModel<AlertProcessingRuleMonthlyRecurrence>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AlertProcessingRuleMonthlyRecurrence IPersistableModel<AlertProcessingRuleMonthlyRecurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAlertProcessingRuleMonthlyRecurrence(document.RootElement, options);
+        }
+
+        string IPersistableModel<AlertProcessingRuleMonthlyRecurrence>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

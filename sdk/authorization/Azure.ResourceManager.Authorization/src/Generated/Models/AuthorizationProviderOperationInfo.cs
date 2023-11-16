@@ -6,25 +6,30 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> Operation. </summary>
     public partial class AuthorizationProviderOperationInfo
     {
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationInfo"/>. </summary>
         internal AuthorizationProviderOperationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationProviderOperationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationProviderOperationInfo"/>. </summary>
         /// <param name="name"> The operation name. </param>
         /// <param name="displayName"> The operation display name. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="origin"> The operation origin. </param>
         /// <param name="properties"> The operation properties. </param>
         /// <param name="isDataAction"> The dataAction flag to specify the operation type. </param>
-        internal AuthorizationProviderOperationInfo(string name, string displayName, string description, string origin, BinaryData properties, bool? isDataAction)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationProviderOperationInfo(string name, string displayName, string description, string origin, BinaryData properties, bool? isDataAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.Authorization.Models
             Origin = origin;
             Properties = properties;
             IsDataAction = isDataAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The operation name. </summary>

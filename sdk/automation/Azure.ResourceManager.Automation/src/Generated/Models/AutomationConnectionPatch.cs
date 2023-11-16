@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,26 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the update connection operation. </summary>
     public partial class AutomationConnectionPatch
     {
-        /// <summary> Initializes a new instance of AutomationConnectionPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionPatch"/>. </summary>
         public AutomationConnectionPatch()
         {
             FieldDefinitionValues = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationConnectionPatch"/>. </summary>
+        /// <param name="name"> Gets or sets the name of the connection. </param>
+        /// <param name="description"> Gets or sets the description of the connection. </param>
+        /// <param name="fieldDefinitionValues"> Gets or sets the field definition values of the connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationConnectionPatch(string name, string description, IDictionary<string, string> fieldDefinitionValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Description = description;
+            FieldDefinitionValues = fieldDefinitionValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the connection. </summary>

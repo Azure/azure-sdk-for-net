@@ -14,7 +14,10 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses. </summary>
     internal partial class InnerErrorModel
     {
-        /// <summary> Initializes a new instance of InnerErrorModel. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
@@ -27,19 +30,26 @@ namespace Azure.AI.Language.QuestionAnswering
             Details = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of InnerErrorModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
-        internal InnerErrorModel(InnerErrorCode code, string message, IReadOnlyDictionary<string, string> details, string target, InnerErrorModel innererror)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InnerErrorModel(InnerErrorCode code, string message, IReadOnlyDictionary<string, string> details, string target, InnerErrorModel innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Details = details;
             Target = target;
             Innererror = innererror;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InnerErrorModel"/> for deserialization. </summary>
+        internal InnerErrorModel()
+        {
         }
 
         /// <summary> One of a server-defined set of error codes. </summary>

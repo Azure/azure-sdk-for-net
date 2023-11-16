@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class LinuxUpdateConfigurationProperties : IUtf8JsonSerializable
+    public partial class LinuxUpdateConfigurationProperties : IUtf8JsonSerializable, IJsonModel<LinuxUpdateConfigurationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxUpdateConfigurationProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<LinuxUpdateConfigurationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<LinuxUpdateConfigurationProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<LinuxUpdateConfigurationProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IncludedPackageClassifications))
             {
@@ -46,11 +56,40 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LinuxUpdateConfigurationProperties DeserializeLinuxUpdateConfigurationProperties(JsonElement element)
+        LinuxUpdateConfigurationProperties IJsonModel<LinuxUpdateConfigurationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinuxUpdateConfigurationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinuxUpdateConfigurationProperties(document.RootElement, options);
+        }
+
+        internal static LinuxUpdateConfigurationProperties DeserializeLinuxUpdateConfigurationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +98,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<IList<string>> excludedPackageNameMasks = default;
             Optional<IList<string>> includedPackageNameMasks = default;
             Optional<string> rebootSetting = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includedPackageClassifications"u8))
@@ -103,8 +144,38 @@ namespace Azure.ResourceManager.Automation.Models
                     rebootSetting = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinuxUpdateConfigurationProperties(Optional.ToNullable(includedPackageClassifications), Optional.ToList(excludedPackageNameMasks), Optional.ToList(includedPackageNameMasks), rebootSetting.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LinuxUpdateConfigurationProperties(Optional.ToNullable(includedPackageClassifications), Optional.ToList(excludedPackageNameMasks), Optional.ToList(includedPackageNameMasks), rebootSetting.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LinuxUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinuxUpdateConfigurationProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        LinuxUpdateConfigurationProperties IPersistableModel<LinuxUpdateConfigurationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(LinuxUpdateConfigurationProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeLinuxUpdateConfigurationProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<LinuxUpdateConfigurationProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

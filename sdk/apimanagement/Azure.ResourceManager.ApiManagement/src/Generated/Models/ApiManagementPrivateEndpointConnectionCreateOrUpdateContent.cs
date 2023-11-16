@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -12,9 +14,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> A request to approve or reject a private endpoint connection. </summary>
     public partial class ApiManagementPrivateEndpointConnectionCreateOrUpdateContent
     {
-        /// <summary> Initializes a new instance of ApiManagementPrivateEndpointConnectionCreateOrUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
         public ApiManagementPrivateEndpointConnectionCreateOrUpdateContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPrivateEndpointConnectionCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> Private Endpoint Connection Resource Id. </param>
+        /// <param name="properties"> The connection state of the private endpoint connection. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementPrivateEndpointConnectionCreateOrUpdateContent(ResourceIdentifier id, PrivateEndpointConnectionRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Private Endpoint Connection Resource Id. </summary>

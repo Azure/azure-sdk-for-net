@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class ScVmmCloudData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScVmmCloudData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmCloudData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.ArcScVmm
             StorageQoSPolicies = new ChangeTrackingList<StorageQoSPolicy>();
         }
 
-        /// <summary> Initializes a new instance of ScVmmCloudData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScVmmCloudData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cloudCapacity"> Capacity of the cloud. </param>
         /// <param name="storageQoSPolicies"> List of QoS policies available for the cloud. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, string cloudName, CloudCapacity cloudCapacity, IReadOnlyList<StorageQoSPolicy> storageQoSPolicies, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, string cloudName, CloudCapacity cloudCapacity, IReadOnlyList<StorageQoSPolicy> storageQoSPolicies, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             InventoryItemId = inventoryItemId;
@@ -57,6 +61,12 @@ namespace Azure.ResourceManager.ArcScVmm
             CloudCapacity = cloudCapacity;
             StorageQoSPolicies = storageQoSPolicies;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScVmmCloudData"/> for deserialization. </summary>
+        internal ScVmmCloudData()
+        {
         }
 
         /// <summary> The extended location. </summary>

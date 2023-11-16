@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> OAuth acquire token request body parameter (www-url-form-encoded). </summary>
     public partial class TokenBodyParameterContract
     {
-        /// <summary> Initializes a new instance of TokenBodyParameterContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TokenBodyParameterContract"/>. </summary>
         /// <param name="name"> body parameter name. </param>
         /// <param name="value"> body parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TokenBodyParameterContract"/>. </summary>
+        /// <param name="name"> body parameter name. </param>
+        /// <param name="value"> body parameter value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TokenBodyParameterContract(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TokenBodyParameterContract"/> for deserialization. </summary>
+        internal TokenBodyParameterContract()
+        {
         }
 
         /// <summary> body parameter name. </summary>

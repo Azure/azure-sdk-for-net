@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents a reference to a Target in the selector. </summary>
     public partial class TargetReference
     {
-        /// <summary> Initializes a new instance of TargetReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TargetReference"/>. </summary>
         /// <param name="referenceType"> Enum of the Target reference type. </param>
         /// <param name="id"> String of the resource ID of a Target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.Chaos.Models
 
             ReferenceType = referenceType;
             Id = id;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetReference"/>. </summary>
+        /// <param name="referenceType"> Enum of the Target reference type. </param>
+        /// <param name="id"> String of the resource ID of a Target resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TargetReference(TargetReferenceType referenceType, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ReferenceType = referenceType;
+            Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TargetReference"/> for deserialization. </summary>
+        internal TargetReference()
+        {
         }
 
         /// <summary> Enum of the Target reference type. </summary>

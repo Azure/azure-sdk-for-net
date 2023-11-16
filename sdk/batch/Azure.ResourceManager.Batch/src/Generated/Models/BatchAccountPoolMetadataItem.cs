@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The Batch service does not assign any meaning to this metadata; it is solely for the use of user code. </summary>
     public partial class BatchAccountPoolMetadataItem
     {
-        /// <summary> Initializes a new instance of BatchAccountPoolMetadataItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolMetadataItem"/>. </summary>
         /// <param name="name"> The name of the metadata item. </param>
         /// <param name="value"> The value of the metadata item. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.Batch.Models
 
             Name = name;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolMetadataItem"/>. </summary>
+        /// <param name="name"> The name of the metadata item. </param>
+        /// <param name="value"> The value of the metadata item. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountPoolMetadataItem(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolMetadataItem"/> for deserialization. </summary>
+        internal BatchAccountPoolMetadataItem()
+        {
         }
 
         /// <summary> The name of the metadata item. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The response model for the list job operation. </summary>
     internal partial class DscNodeConfigurationListResult
     {
-        /// <summary> Initializes a new instance of DscNodeConfigurationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationListResult"/>. </summary>
         internal DscNodeConfigurationListResult()
         {
             Value = new ChangeTrackingList<DscNodeConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of DscNodeConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscNodeConfigurationListResult"/>. </summary>
         /// <param name="value"> Gets or sets a list of Dsc node configurations. </param>
         /// <param name="nextLink"> Gets or sets the next link. </param>
         /// <param name="totalCount"> Gets or sets the total rows in query. </param>
-        internal DscNodeConfigurationListResult(IReadOnlyList<DscNodeConfigurationData> value, string nextLink, int? totalCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeConfigurationListResult(IReadOnlyList<DscNodeConfigurationData> value, string nextLink, int? totalCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             TotalCount = totalCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a list of Dsc node configurations. </summary>

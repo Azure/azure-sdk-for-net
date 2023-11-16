@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Resource location data properties. </summary>
     public partial class ResourceLocationDataContract
     {
-        /// <summary> Initializes a new instance of ResourceLocationDataContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceLocationDataContract"/>. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceLocationDataContract(string name)
@@ -23,17 +27,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ResourceLocationDataContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceLocationDataContract"/>. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <param name="city"> The city or locality where the resource is located. </param>
         /// <param name="district"> The district, state, or province where the resource is located. </param>
         /// <param name="countryOrRegion"> The country or region where the resource is located. </param>
-        internal ResourceLocationDataContract(string name, string city, string district, string countryOrRegion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceLocationDataContract(string name, string city, string district, string countryOrRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             City = city;
             District = district;
             CountryOrRegion = countryOrRegion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceLocationDataContract"/> for deserialization. </summary>
+        internal ResourceLocationDataContract()
+        {
         }
 
         /// <summary> A canonical name for the geographic or physical location. </summary>

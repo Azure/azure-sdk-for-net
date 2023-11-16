@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alert processing rule properties defining scopes, conditions and scheduling logic for alert processing rule. </summary>
     public partial class AlertProcessingRuleProperties
     {
-        /// <summary> Initializes a new instance of AlertProcessingRuleProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleProperties"/>. </summary>
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="actions">
         /// Actions to be applied.
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of AlertProcessingRuleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleProperties"/>. </summary>
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="conditions"> Conditions on which alerts will be filtered. </param>
         /// <param name="schedule"> Scheduling for alert processing rule. </param>
@@ -44,7 +47,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// </param>
         /// <param name="description"> Description of alert processing rule. </param>
         /// <param name="isEnabled"> Indicates if the given alert processing rule is enabled or disabled. </param>
-        internal AlertProcessingRuleProperties(IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingRuleAction> actions, string description, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AlertProcessingRuleProperties(IList<string> scopes, IList<AlertProcessingRuleCondition> conditions, AlertProcessingRuleSchedule schedule, IList<AlertProcessingRuleAction> actions, string description, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Scopes = scopes;
             Conditions = conditions;
@@ -52,6 +56,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             Actions = actions;
             Description = description;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AlertProcessingRuleProperties"/> for deserialization. </summary>
+        internal AlertProcessingRuleProperties()
+        {
         }
 
         /// <summary> Scopes on which alert processing rule will apply. </summary>

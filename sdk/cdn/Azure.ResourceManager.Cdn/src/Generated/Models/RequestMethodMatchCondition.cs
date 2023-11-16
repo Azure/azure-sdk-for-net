@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RequestMethod match conditions. </summary>
     public partial class RequestMethodMatchCondition
     {
-        /// <summary> Initializes a new instance of RequestMethodMatchCondition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
         public RequestMethodMatchCondition(RequestMethodMatchConditionType conditionType, RequestMethodOperator requestMethodOperator)
@@ -24,19 +28,26 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchValues = new ChangeTrackingList<RequestMethodMatchConditionMatchValue>();
         }
 
-        /// <summary> Initializes a new instance of RequestMethodMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestMethodOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestMethodMatchCondition(RequestMethodMatchConditionType conditionType, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequestMethodMatchCondition(RequestMethodMatchConditionType conditionType, RequestMethodOperator requestMethodOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestMethodMatchConditionMatchValue> matchValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionType = conditionType;
             RequestMethodOperator = requestMethodOperator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestMethodMatchCondition"/> for deserialization. </summary>
+        internal RequestMethodMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

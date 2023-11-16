@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> The collection of request properties. </summary>
     public partial class WebTestPropertiesRequest
     {
-        /// <summary> Initializes a new instance of WebTestPropertiesRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesRequest"/>. </summary>
         public WebTestPropertiesRequest()
         {
             Headers = new ChangeTrackingList<HeaderField>();
         }
 
-        /// <summary> Initializes a new instance of WebTestPropertiesRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesRequest"/>. </summary>
         /// <param name="requestUri"> Url location to test. </param>
         /// <param name="headers"> List of headers and their values to add to the WebTest call. </param>
         /// <param name="httpVerb"> Http verb to use for this web test. </param>
         /// <param name="requestBody"> Base64 encoded string body to send with this web test. </param>
         /// <param name="parseDependentRequests"> Parse Dependent request for this WebTest. </param>
         /// <param name="followRedirects"> Follow redirects for this web test. </param>
-        internal WebTestPropertiesRequest(Uri requestUri, IList<HeaderField> headers, string httpVerb, string requestBody, bool? parseDependentRequests, bool? followRedirects)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestPropertiesRequest(Uri requestUri, IList<HeaderField> headers, string httpVerb, string requestBody, bool? parseDependentRequests, bool? followRedirects, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RequestUri = requestUri;
             Headers = headers;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             RequestBody = requestBody;
             ParseDependentRequests = parseDependentRequests;
             FollowRedirects = followRedirects;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Url location to test. </summary>

@@ -14,7 +14,10 @@ namespace Azure.Communication.Chat
     /// <summary> The Communication Services error. </summary>
     public partial class ChatError
     {
-        /// <summary> Initializes a new instance of ChatError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,19 +31,26 @@ namespace Azure.Communication.Chat
             Details = new ChangeTrackingList<ChatError>();
         }
 
-        /// <summary> Initializes a new instance of ChatError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
         /// <param name="innerError"> The inner error if any. </param>
-        internal ChatError(string code, string message, string target, IReadOnlyList<ChatError> details, ChatError innerError)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatError(string code, string message, string target, IReadOnlyList<ChatError> details, ChatError innerError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
             InnerError = innerError;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatError"/> for deserialization. </summary>
+        internal ChatError()
+        {
         }
 
         /// <summary> The error code. </summary>

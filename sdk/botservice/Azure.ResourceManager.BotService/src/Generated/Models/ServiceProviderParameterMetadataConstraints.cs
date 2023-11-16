@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> the constraints of the bot meta data. </summary>
     internal partial class ServiceProviderParameterMetadataConstraints
     {
-        /// <summary> Initializes a new instance of ServiceProviderParameterMetadataConstraints. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceProviderParameterMetadataConstraints"/>. </summary>
         internal ServiceProviderParameterMetadataConstraints()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceProviderParameterMetadataConstraints. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceProviderParameterMetadataConstraints"/>. </summary>
         /// <param name="isRequired"> Whether required the constraints of the bot meta data. </param>
-        internal ServiceProviderParameterMetadataConstraints(bool? isRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceProviderParameterMetadataConstraints(bool? isRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsRequired = isRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether required the constraints of the bot meta data. </summary>

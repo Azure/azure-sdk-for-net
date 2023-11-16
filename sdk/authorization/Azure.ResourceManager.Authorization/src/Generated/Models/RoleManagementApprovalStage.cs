@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> The approval stage. </summary>
     public partial class RoleManagementApprovalStage
     {
-        /// <summary> Initializes a new instance of RoleManagementApprovalStage. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RoleManagementApprovalStage"/>. </summary>
         public RoleManagementApprovalStage()
         {
             PrimaryApprovers = new ChangeTrackingList<RoleManagementUserInfo>();
             EscalationApprovers = new ChangeTrackingList<RoleManagementUserInfo>();
         }
 
-        /// <summary> Initializes a new instance of RoleManagementApprovalStage. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementApprovalStage"/>. </summary>
         /// <param name="approvalStageTimeOutInDays"> The time in days when approval request would be timed out. </param>
         /// <param name="isApproverJustificationRequired"> Determines whether approver need to provide justification for his decision. </param>
         /// <param name="escalationTimeInMinutes"> The time in minutes when the approval request would be escalated if the primary approver does not approve. </param>
         /// <param name="primaryApprovers"> The primary approver of the request. </param>
         /// <param name="isEscalationEnabled"> The value determine whether escalation feature is enabled. </param>
         /// <param name="escalationApprovers"> The escalation approver of the request. </param>
-        internal RoleManagementApprovalStage(int? approvalStageTimeOutInDays, bool? isApproverJustificationRequired, int? escalationTimeInMinutes, IList<RoleManagementUserInfo> primaryApprovers, bool? isEscalationEnabled, IList<RoleManagementUserInfo> escalationApprovers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleManagementApprovalStage(int? approvalStageTimeOutInDays, bool? isApproverJustificationRequired, int? escalationTimeInMinutes, IList<RoleManagementUserInfo> primaryApprovers, bool? isEscalationEnabled, IList<RoleManagementUserInfo> escalationApprovers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApprovalStageTimeOutInDays = approvalStageTimeOutInDays;
             IsApproverJustificationRequired = isApproverJustificationRequired;
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.Authorization.Models
             PrimaryApprovers = primaryApprovers;
             IsEscalationEnabled = isEscalationEnabled;
             EscalationApprovers = escalationApprovers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The time in days when approval request would be timed out. </summary>

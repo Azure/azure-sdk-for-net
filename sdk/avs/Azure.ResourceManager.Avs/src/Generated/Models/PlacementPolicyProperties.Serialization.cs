@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PlacementPolicyProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownPlacementPolicyProperties))]
+    public partial class PlacementPolicyProperties : IUtf8JsonSerializable, IJsonModel<PlacementPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlacementPolicyProperties>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PlacementPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PlacementPolicyProperties>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PlacementPolicyProperties>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PolicyType.ToString());
@@ -27,11 +38,48 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PlacementPolicyProperties DeserializePlacementPolicyProperties(JsonElement element)
+        PlacementPolicyProperties IJsonModel<PlacementPolicyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePlacementPolicyProperties(document.RootElement, options);
+        }
+
+        internal static PlacementPolicyProperties DeserializePlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,5 +94,30 @@ namespace Azure.ResourceManager.Avs.Models
             }
             return UnknownPlacementPolicyProperties.DeserializeUnknownPlacementPolicyProperties(element);
         }
+
+        BinaryData IPersistableModel<PlacementPolicyProperties>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PlacementPolicyProperties IPersistableModel<PlacementPolicyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PlacementPolicyProperties)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePlacementPolicyProperties(document.RootElement, options);
+        }
+
+        string IPersistableModel<PlacementPolicyProperties>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> A list of deployments resource ids. </summary>
     internal partial class DeploymentList
     {
-        /// <summary> Initializes a new instance of DeploymentList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeploymentList"/>. </summary>
         internal DeploymentList()
         {
             Deployments = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of DeploymentList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentList"/>. </summary>
         /// <param name="deployments"> A list of deployment resource ids. </param>
-        internal DeploymentList(IReadOnlyList<ResourceIdentifier> deployments)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentList(IReadOnlyList<ResourceIdentifier> deployments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Deployments = deployments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of deployment resource ids. </summary>

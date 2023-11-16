@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Error Field contract. </summary>
     public partial class ErrorFieldContract
     {
-        /// <summary> Initializes a new instance of ErrorFieldContract. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ErrorFieldContract"/>. </summary>
         public ErrorFieldContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorFieldContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorFieldContract"/>. </summary>
         /// <param name="code"> Property level error code. </param>
         /// <param name="message"> Human-readable representation of property-level error. </param>
         /// <param name="target"> Property name. </param>
-        internal ErrorFieldContract(string code, string message, string target)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ErrorFieldContract(string code, string message, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Property level error code. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> Parameters for a check name availability request. </summary>
     public partial class BatchNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of BatchNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public BatchNameAvailabilityContent(string name)
@@ -22,6 +26,22 @@ namespace Azure.ResourceManager.Batch.Models
 
             Name = name;
             ResourceType = "Microsoft.Batch/batchAccounts";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name to check for availability. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNameAvailabilityContent(string name, ResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchNameAvailabilityContent"/> for deserialization. </summary>
+        internal BatchNameAvailabilityContent()
+        {
         }
 
         /// <summary> The name to check for availability. </summary>

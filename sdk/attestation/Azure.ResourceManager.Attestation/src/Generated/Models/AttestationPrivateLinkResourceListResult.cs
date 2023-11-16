@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class AttestationPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of AttestationPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AttestationPrivateLinkResourceListResult"/>. </summary>
         internal AttestationPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<AttestationPrivateLinkResource>();
         }
 
-        /// <summary> Initializes a new instance of AttestationPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal AttestationPrivateLinkResourceListResult(IReadOnlyList<AttestationPrivateLinkResource> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationPrivateLinkResourceListResult(IReadOnlyList<AttestationPrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>

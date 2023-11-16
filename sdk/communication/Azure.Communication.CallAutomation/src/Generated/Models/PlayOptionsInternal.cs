@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The PlayOptions. </summary>
     internal partial class PlayOptionsInternal
     {
-        /// <summary> Initializes a new instance of PlayOptionsInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PlayOptionsInternal"/>. </summary>
         /// <param name="loop"> The option to play the provided audio source in loop when set to true. </param>
         public PlayOptionsInternal(bool loop)
         {
             Loop = loop;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlayOptionsInternal"/>. </summary>
+        /// <param name="loop"> The option to play the provided audio source in loop when set to true. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PlayOptionsInternal(bool loop, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Loop = loop;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlayOptionsInternal"/> for deserialization. </summary>
+        internal PlayOptionsInternal()
+        {
         }
 
         /// <summary> The option to play the provided audio source in loop when set to true. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Properties specific to the Backend Type. </summary>
     internal partial class BackendProperties
     {
-        /// <summary> Initializes a new instance of BackendProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendProperties"/>. </summary>
         public BackendProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of BackendProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendProperties"/>. </summary>
         /// <param name="serviceFabricCluster"> Backend Service Fabric Cluster Properties. </param>
-        internal BackendProperties(BackendServiceFabricClusterProperties serviceFabricCluster)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendProperties(BackendServiceFabricClusterProperties serviceFabricCluster, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceFabricCluster = serviceFabricCluster;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Backend Service Fabric Cluster Properties. </summary>

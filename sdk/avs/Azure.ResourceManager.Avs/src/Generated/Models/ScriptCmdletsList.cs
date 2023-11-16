@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> Pageable list of scripts/cmdlets. </summary>
     internal partial class ScriptCmdletsList
     {
-        /// <summary> Initializes a new instance of ScriptCmdletsList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptCmdletsList"/>. </summary>
         internal ScriptCmdletsList()
         {
             Value = new ChangeTrackingList<ScriptCmdletData>();
         }
 
-        /// <summary> Initializes a new instance of ScriptCmdletsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptCmdletsList"/>. </summary>
         /// <param name="value"> List of scripts. </param>
         /// <param name="nextLink"> URL to get the next page if any. </param>
-        internal ScriptCmdletsList(IReadOnlyList<ScriptCmdletData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptCmdletsList(IReadOnlyList<ScriptCmdletData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of scripts. </summary>

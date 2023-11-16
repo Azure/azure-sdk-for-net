@@ -15,7 +15,10 @@ namespace Azure.Communication.Chat
     /// <summary> A paged collection of chat message read receipts. </summary>
     internal partial class ChatMessageReadReceiptsCollection
     {
-        /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessageReadReceiptsCollection"/>. </summary>
         /// <param name="value"> Collection of chat message read receipts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ChatMessageReadReceiptsCollection(IEnumerable<ChatMessageReadReceiptInternal> value)
@@ -25,13 +28,20 @@ namespace Azure.Communication.Chat
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageReadReceiptsCollection"/>. </summary>
         /// <param name="value"> Collection of chat message read receipts. </param>
         /// <param name="nextLink"> If there are more chat message read receipts that can be retrieved, the next link will be populated. </param>
-        internal ChatMessageReadReceiptsCollection(IReadOnlyList<ChatMessageReadReceiptInternal> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatMessageReadReceiptsCollection(IReadOnlyList<ChatMessageReadReceiptInternal> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatMessageReadReceiptsCollection"/> for deserialization. </summary>
+        internal ChatMessageReadReceiptsCollection()
+        {
         }
 
         /// <summary> Collection of chat message read receipts. </summary>

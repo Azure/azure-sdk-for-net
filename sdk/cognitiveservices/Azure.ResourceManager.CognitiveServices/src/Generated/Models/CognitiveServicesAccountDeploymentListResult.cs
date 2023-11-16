@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> The list of cognitive services accounts operation response. </summary>
     internal partial class CognitiveServicesAccountDeploymentListResult
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentListResult"/>. </summary>
         internal CognitiveServicesAccountDeploymentListResult()
         {
             Value = new ChangeTrackingList<CognitiveServicesAccountDeploymentData>();
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountDeploymentListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of Deployment. </param>
         /// <param name="value"> Gets the list of Cognitive Services accounts Deployment and their properties. </param>
-        internal CognitiveServicesAccountDeploymentListResult(string nextLink, IReadOnlyList<CognitiveServicesAccountDeploymentData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesAccountDeploymentListResult(string nextLink, IReadOnlyList<CognitiveServicesAccountDeploymentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The link used to get the next page of Deployment. </summary>

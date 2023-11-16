@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentRestClient.CreateListForScopeRequest(Id, filter, tenantId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter, tenantId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResource(Client, RoleAssignmentData.DeserializeRoleAssignmentData(e)), _roleAssignmentClientDiagnostics, Pipeline, "RoleAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleAssignmentResource(Client, RoleAssignmentData.DeserializeRoleAssignmentData(e)), _roleAssignmentClientDiagnostics, Pipeline, "RoleAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentRestClient.CreateListForScopeRequest(Id, filter, tenantId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter, tenantId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentResource(Client, RoleAssignmentData.DeserializeRoleAssignmentData(e)), _roleAssignmentClientDiagnostics, Pipeline, "RoleAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new RoleAssignmentResource(Client, RoleAssignmentData.DeserializeRoleAssignmentData(e)), _roleAssignmentClientDiagnostics, Pipeline, "RoleAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

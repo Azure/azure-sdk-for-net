@@ -6,15 +6,97 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class SubscriptionRenewalTermDetails
+    public partial class SubscriptionRenewalTermDetails : IUtf8JsonSerializable, IJsonModel<SubscriptionRenewalTermDetails>
     {
-        internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionRenewalTermDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SubscriptionRenewalTermDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SubscriptionRenewalTermDetails>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(BillingFrequency))
+                {
+                    writer.WritePropertyName("billingFrequency"u8);
+                    writer.WriteStringValue(BillingFrequency);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProductTypeId))
+                {
+                    writer.WritePropertyName("productTypeId"u8);
+                    writer.WriteStringValue(ProductTypeId);
+                }
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SkuId))
+                {
+                    writer.WritePropertyName("skuId"u8);
+                    writer.WriteStringValue(SkuId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(TermDuration))
+                {
+                    writer.WritePropertyName("termDuration"u8);
+                    writer.WriteStringValue(TermDuration.Value, "P");
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SubscriptionRenewalTermDetails IJsonModel<SubscriptionRenewalTermDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionRenewalTermDetails(document.RootElement, options);
+        }
+
+        internal static SubscriptionRenewalTermDetails DeserializeSubscriptionRenewalTermDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +106,8 @@ namespace Azure.ResourceManager.Billing.Models
             Optional<long> quantity = default;
             Optional<string> skuId = default;
             Optional<TimeSpan> termDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingFrequency"u8))
@@ -59,8 +143,38 @@ namespace Azure.ResourceManager.Billing.Models
                     termDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SubscriptionRenewalTermDetails(billingFrequency.Value, productTypeId.Value, Optional.ToNullable(quantity), skuId.Value, Optional.ToNullable(termDuration), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SubscriptionRenewalTermDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SubscriptionRenewalTermDetails IPersistableModel<SubscriptionRenewalTermDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSubscriptionRenewalTermDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<SubscriptionRenewalTermDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

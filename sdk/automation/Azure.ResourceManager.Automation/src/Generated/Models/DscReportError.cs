@@ -5,24 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the dsc node report error type. </summary>
     public partial class DscReportError
     {
-        /// <summary> Initializes a new instance of DscReportError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DscReportError"/>. </summary>
         internal DscReportError()
         {
         }
 
-        /// <summary> Initializes a new instance of DscReportError. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscReportError"/>. </summary>
         /// <param name="errorSource"> Gets or sets the source of the error. </param>
         /// <param name="resourceId"> Gets or sets the resource ID which generated the error. </param>
         /// <param name="errorCode"> Gets or sets the error code. </param>
         /// <param name="errorMessage"> Gets or sets the error message. </param>
         /// <param name="locale"> Gets or sets the locale of the error. </param>
         /// <param name="errorDetails"> Gets or sets the error details. </param>
-        internal DscReportError(string errorSource, string resourceId, string errorCode, string errorMessage, string locale, string errorDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscReportError(string errorSource, string resourceId, string errorCode, string errorMessage, string locale, string errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ErrorSource = errorSource;
             ResourceId = resourceId;
@@ -30,6 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
             ErrorMessage = errorMessage;
             Locale = locale;
             ErrorDetails = errorDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the source of the error. </summary>

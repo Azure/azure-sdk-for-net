@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +20,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// </summary>
     public partial class AgFoodPlatformPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateEndpointConnectionData"/>. </summary>
         public AgFoodPlatformPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgFoodPlatformPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +36,13 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <param name="privateEndpoint"> The resource of private end point. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        internal AgFoodPlatformPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, AgFoodPlatformPrivateLinkServiceConnectionState connectionState, AgFoodPlatformPrivateEndpointConnectionProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgFoodPlatformPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, AgFoodPlatformPrivateLinkServiceConnectionState connectionState, AgFoodPlatformPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource of private end point. </summary>

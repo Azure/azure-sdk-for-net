@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationPackageApplicationPackageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationPackageResource(Client, BatchApplicationPackageData.DeserializeBatchApplicationPackageData(e)), _batchApplicationPackageApplicationPackageClientDiagnostics, Pipeline, "BatchApplicationPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchApplicationPackageResource(Client, BatchApplicationPackageData.DeserializeBatchApplicationPackageData(e)), _batchApplicationPackageApplicationPackageClientDiagnostics, Pipeline, "BatchApplicationPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchApplicationPackageApplicationPackageRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchApplicationPackageApplicationPackageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, maxresults);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BatchApplicationPackageResource(Client, BatchApplicationPackageData.DeserializeBatchApplicationPackageData(e)), _batchApplicationPackageApplicationPackageClientDiagnostics, Pipeline, "BatchApplicationPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new BatchApplicationPackageResource(Client, BatchApplicationPackageData.DeserializeBatchApplicationPackageData(e)), _batchApplicationPackageApplicationPackageClientDiagnostics, Pipeline, "BatchApplicationPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
