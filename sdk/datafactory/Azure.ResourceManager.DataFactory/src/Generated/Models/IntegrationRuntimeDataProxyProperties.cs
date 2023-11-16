@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
     public partial class IntegrationRuntimeDataProxyProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataProxyProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataProxyProperties"/>. </summary>
         public IntegrationRuntimeDataProxyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataProxyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeDataProxyProperties"/>. </summary>
         /// <param name="connectVia"> The self-hosted integration runtime reference. </param>
         /// <param name="stagingLinkedService"> The staging linked service reference. </param>
         /// <param name="path"> The path to contain the staged data in the Blob storage. </param>
-        internal IntegrationRuntimeDataProxyProperties(EntityReference connectVia, EntityReference stagingLinkedService, string path)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeDataProxyProperties(EntityReference connectVia, EntityReference stagingLinkedService, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectVia = connectVia;
             StagingLinkedService = stagingLinkedService;
             Path = path;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The self-hosted integration runtime reference. </summary>

@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapOdpSource : IUtf8JsonSerializable
+    public partial class SapOdpSource : IUtf8JsonSerializable, IJsonModel<SapOdpSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOdpSource>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SapOdpSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SapOdpSource>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SapOdpSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtractionMode))
             {
@@ -106,8 +115,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SapOdpSource DeserializeSapOdpSource(JsonElement element)
+        SapOdpSource IJsonModel<SapOdpSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapOdpSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapOdpSource(document.RootElement, options);
+        }
+
+        internal static SapOdpSource DeserializeSapOdpSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -227,5 +250,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SapOdpSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, extractionMode.Value, subscriberProcess.Value, selection.Value, projection.Value);
         }
+
+        BinaryData IPersistableModel<SapOdpSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapOdpSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SapOdpSource IPersistableModel<SapOdpSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SapOdpSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSapOdpSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<SapOdpSource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

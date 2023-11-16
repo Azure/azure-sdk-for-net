@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -16,11 +18,32 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class ScheduleAvailabilityContent
     {
-        /// <summary> Initializes a new instance of ScheduleAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityContent"/>. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         protected ScheduleAvailabilityContent(AzureLocation storageLocation)
         {
             StorageLocation = storageLocation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityContent"/>. </summary>
+        /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
+        /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
+        /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StorageLocation = storageLocation;
+            SkuName = skuName;
+            Country = country;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAvailabilityContent"/> for deserialization. </summary>
+        internal ScheduleAvailabilityContent()
+        {
         }
 
         /// <summary> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </summary>

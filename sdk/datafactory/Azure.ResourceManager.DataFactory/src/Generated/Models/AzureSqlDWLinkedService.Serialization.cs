@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureSqlDWLinkedService : IUtf8JsonSerializable
+    public partial class AzureSqlDWLinkedService : IUtf8JsonSerializable, IJsonModel<AzureSqlDWLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlDWLinkedService>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureSqlDWLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureSqlDWLinkedService>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureSqlDWLinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
@@ -118,8 +127,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlDWLinkedService DeserializeAzureSqlDWLinkedService(JsonElement element)
+        AzureSqlDWLinkedService IJsonModel<AzureSqlDWLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlDWLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSqlDWLinkedService(document.RootElement, options);
+        }
+
+        internal static AzureSqlDWLinkedService DeserializeAzureSqlDWLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -276,5 +299,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSqlDWLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, azureCloudType.Value, encryptedCredential.Value, credential.Value);
         }
+
+        BinaryData IPersistableModel<AzureSqlDWLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlDWLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureSqlDWLinkedService IPersistableModel<AzureSqlDWLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlDWLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureSqlDWLinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureSqlDWLinkedService>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

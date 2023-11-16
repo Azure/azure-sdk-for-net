@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MongoDBAtlasLinkedService : IUtf8JsonSerializable
+    public partial class MongoDBAtlasLinkedService : IUtf8JsonSerializable, IJsonModel<MongoDBAtlasLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBAtlasLinkedService>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MongoDBAtlasLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MongoDBAtlasLinkedService>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MongoDBAtlasLinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
@@ -90,8 +99,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static MongoDBAtlasLinkedService DeserializeMongoDBAtlasLinkedService(JsonElement element)
+        MongoDBAtlasLinkedService IJsonModel<MongoDBAtlasLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBAtlasLinkedService(document.RootElement, options);
+        }
+
+        internal static MongoDBAtlasLinkedService DeserializeMongoDBAtlasLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -198,5 +221,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MongoDBAtlasLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, database, driverVersion.Value);
         }
+
+        BinaryData IPersistableModel<MongoDBAtlasLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MongoDBAtlasLinkedService IPersistableModel<MongoDBAtlasLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MongoDBAtlasLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMongoDBAtlasLinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<MongoDBAtlasLinkedService>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

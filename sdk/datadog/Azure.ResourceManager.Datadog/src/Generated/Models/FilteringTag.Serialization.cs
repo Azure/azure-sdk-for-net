@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class FilteringTag : IUtf8JsonSerializable
+    public partial class FilteringTag : IUtf8JsonSerializable, IJsonModel<FilteringTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilteringTag>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FilteringTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FilteringTag>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FilteringTag>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FilteringTag DeserializeFilteringTag(JsonElement element)
+        FilteringTag IJsonModel<FilteringTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FilteringTag)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFilteringTag(document.RootElement, options);
+        }
+
+        internal static FilteringTag DeserializeFilteringTag(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.Datadog.Models
             Optional<string> name = default;
             Optional<string> value = default;
             Optional<TagAction> action = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.Datadog.Models
                     action = new TagAction(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FilteringTag(name.Value, value.Value, Optional.ToNullable(action));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FilteringTag(name.Value, value.Value, Optional.ToNullable(action), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FilteringTag>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FilteringTag)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FilteringTag IPersistableModel<FilteringTag>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FilteringTag)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFilteringTag(document.RootElement, options);
+        }
+
+        string IPersistableModel<FilteringTag>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

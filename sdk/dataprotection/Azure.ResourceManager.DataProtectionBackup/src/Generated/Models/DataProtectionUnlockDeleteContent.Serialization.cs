@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionUnlockDeleteContent : IUtf8JsonSerializable
+    public partial class DataProtectionUnlockDeleteContent : IUtf8JsonSerializable, IJsonModel<DataProtectionUnlockDeleteContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionUnlockDeleteContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataProtectionUnlockDeleteContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataProtectionUnlockDeleteContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataProtectionUnlockDeleteContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
@@ -30,7 +41,101 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("resourceToBeDeleted"u8);
                 writer.WriteStringValue(ResourceToBeDeleted);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DataProtectionUnlockDeleteContent IJsonModel<DataProtectionUnlockDeleteContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionUnlockDeleteContent(document.RootElement, options);
+        }
+
+        internal static DataProtectionUnlockDeleteContent DeserializeDataProtectionUnlockDeleteContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> resourceGuardOperationRequests = default;
+            Optional<string> resourceToBeDeleted = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
+                if (property.NameEquals("resourceToBeDeleted"u8))
+                {
+                    resourceToBeDeleted = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataProtectionUnlockDeleteContent(Optional.ToList(resourceGuardOperationRequests), resourceToBeDeleted.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DataProtectionUnlockDeleteContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataProtectionUnlockDeleteContent IPersistableModel<DataProtectionUnlockDeleteContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataProtectionUnlockDeleteContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataProtectionUnlockDeleteContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

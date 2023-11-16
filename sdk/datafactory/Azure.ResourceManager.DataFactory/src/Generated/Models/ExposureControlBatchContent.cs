@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A list of exposure control features. </summary>
     public partial class ExposureControlBatchContent
     {
-        /// <summary> Initializes a new instance of ExposureControlBatchContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/>. </summary>
         /// <param name="exposureControlRequests"> List of exposure control features. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exposureControlRequests"/> is null. </exception>
         public ExposureControlBatchContent(IEnumerable<ExposureControlContent> exposureControlRequests)
@@ -23,6 +26,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(exposureControlRequests, nameof(exposureControlRequests));
 
             ExposureControlRequests = exposureControlRequests.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/>. </summary>
+        /// <param name="exposureControlRequests"> List of exposure control features. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExposureControlBatchContent(IList<ExposureControlContent> exposureControlRequests, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ExposureControlRequests = exposureControlRequests;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlBatchContent"/> for deserialization. </summary>
+        internal ExposureControlBatchContent()
+        {
         }
 
         /// <summary> List of exposure control features. </summary>

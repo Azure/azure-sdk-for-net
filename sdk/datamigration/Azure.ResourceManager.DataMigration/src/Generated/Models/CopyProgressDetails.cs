@@ -6,18 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Details on progress of ADF copy activity. </summary>
     public partial class CopyProgressDetails
     {
-        /// <summary> Initializes a new instance of CopyProgressDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyProgressDetails"/>. </summary>
         internal CopyProgressDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of CopyProgressDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProgressDetails"/>. </summary>
         /// <param name="tableName"> Table Name. </param>
         /// <param name="status"> Status of the Copy activity (InProgress, Succeeded, Failed, Canceled). </param>
         /// <param name="parallelCopyType"> Type of parallel copy (Dynamic range, Physical partition, none). </param>
@@ -29,7 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="copyStart"> Copy Start. </param>
         /// <param name="copyThroughput"> Copy throughput in KBps. </param>
         /// <param name="copyDuration"> Copy Duration in seconds. </param>
-        internal CopyProgressDetails(string tableName, string status, string parallelCopyType, int? usedParallelCopies, long? dataRead, long? dataWritten, long? rowsRead, long? rowsCopied, DateTimeOffset? copyStart, double? copyThroughput, int? copyDuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyProgressDetails(string tableName, string status, string parallelCopyType, int? usedParallelCopies, long? dataRead, long? dataWritten, long? rowsRead, long? rowsCopied, DateTimeOffset? copyStart, double? copyThroughput, int? copyDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TableName = tableName;
             Status = status;
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             CopyStart = copyStart;
             CopyThroughput = copyThroughput;
             CopyDuration = copyDuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Table Name. </summary>

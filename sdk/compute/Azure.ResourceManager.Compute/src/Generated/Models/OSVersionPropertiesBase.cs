@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Configuration view of an OS version. </summary>
     public partial class OSVersionPropertiesBase
     {
-        /// <summary> Initializes a new instance of OSVersionPropertiesBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OSVersionPropertiesBase"/>. </summary>
         internal OSVersionPropertiesBase()
         {
         }
 
-        /// <summary> Initializes a new instance of OSVersionPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSVersionPropertiesBase"/>. </summary>
         /// <param name="version"> The OS version. </param>
         /// <param name="label"> The OS version label. </param>
         /// <param name="isDefault"> Specifies whether this is the default OS version for its family. </param>
         /// <param name="isActive"> Specifies whether this OS version is active. </param>
-        internal OSVersionPropertiesBase(string version, string label, bool? isDefault, bool? isActive)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OSVersionPropertiesBase(string version, string label, bool? isDefault, bool? isActive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             Label = label;
             IsDefault = isDefault;
             IsActive = isActive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The OS version. </summary>

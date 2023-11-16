@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The read-only access keys for the given database account. </summary>
     public partial class CosmosDBAccountReadOnlyKeyList
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountReadOnlyKeyList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountReadOnlyKeyList"/>. </summary>
         internal CosmosDBAccountReadOnlyKeyList()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountReadOnlyKeyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountReadOnlyKeyList"/>. </summary>
         /// <param name="primaryReadonlyMasterKey"> Base 64 encoded value of the primary read-only key. </param>
         /// <param name="secondaryReadonlyMasterKey"> Base 64 encoded value of the secondary read-only key. </param>
-        internal CosmosDBAccountReadOnlyKeyList(string primaryReadonlyMasterKey, string secondaryReadonlyMasterKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountReadOnlyKeyList(string primaryReadonlyMasterKey, string secondaryReadonlyMasterKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryReadonlyMasterKey = primaryReadonlyMasterKey;
             SecondaryReadonlyMasterKey = secondaryReadonlyMasterKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Base 64 encoded value of the primary read-only key. </summary>

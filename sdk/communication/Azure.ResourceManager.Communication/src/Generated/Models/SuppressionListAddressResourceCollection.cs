@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Communication;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Collection of addresses in a suppression list. Response will include a nextLink if response contains more pages. </summary>
     internal partial class SuppressionListAddressResourceCollection
     {
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceCollection"/>. </summary>
         internal SuppressionListAddressResourceCollection()
         {
             Value = new ChangeTrackingList<SuppressionListAddressResourceData>();
         }
 
-        /// <summary> Initializes a new instance of SuppressionListAddressResourceCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuppressionListAddressResourceCollection"/>. </summary>
         /// <param name="value"> List of suppressed email addresses. </param>
         /// <param name="nextLink"> The URL the client should use to fetch the next page (per server side paging). </param>
-        internal SuppressionListAddressResourceCollection(IReadOnlyList<SuppressionListAddressResourceData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SuppressionListAddressResourceCollection(IReadOnlyList<SuppressionListAddressResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of suppressed email addresses. </summary>

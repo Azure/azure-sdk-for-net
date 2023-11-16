@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAddonProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterAddonProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAddonProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAddonProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedClusterAddonProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedClusterAddonProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedClusterAddonProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
@@ -29,11 +39,48 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Identity))
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterAddonProfile DeserializeManagedClusterAddonProfile(JsonElement element)
+        ManagedClusterAddonProfile IJsonModel<ManagedClusterAddonProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterAddonProfile(document.RootElement, options);
+        }
+
+        internal static ManagedClusterAddonProfile DeserializeManagedClusterAddonProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -41,6 +88,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             bool enabled = default;
             Optional<IDictionary<string, string>> config = default;
             Optional<ManagedClusterAddonProfileIdentity> identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,8 +120,38 @@ namespace Azure.ResourceManager.ContainerService.Models
                     identity = ManagedClusterAddonProfileIdentity.DeserializeManagedClusterAddonProfileIdentity(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterAddonProfile(enabled, Optional.ToDictionary(config), identity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterAddonProfile(enabled, Optional.ToDictionary(config), identity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterAddonProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedClusterAddonProfile IPersistableModel<ManagedClusterAddonProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedClusterAddonProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedClusterAddonProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

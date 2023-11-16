@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The response to a list usage request. </summary>
     internal partial class CosmosDBUsagesResult
     {
-        /// <summary> Initializes a new instance of CosmosDBUsagesResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBUsagesResult"/>. </summary>
         internal CosmosDBUsagesResult()
         {
             Value = new ChangeTrackingList<CosmosDBBaseUsage>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBUsagesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBUsagesResult"/>. </summary>
         /// <param name="value"> The list of usages for the database. A usage is a point in time metric. </param>
-        internal CosmosDBUsagesResult(IReadOnlyList<CosmosDBBaseUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBUsagesResult(IReadOnlyList<CosmosDBBaseUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of usages for the database. A usage is a point in time metric. </summary>

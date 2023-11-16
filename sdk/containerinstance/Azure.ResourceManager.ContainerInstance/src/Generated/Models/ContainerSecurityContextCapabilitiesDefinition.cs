@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The capabilities to add or drop from a container. </summary>
     public partial class ContainerSecurityContextCapabilitiesDefinition
     {
-        /// <summary> Initializes a new instance of ContainerSecurityContextCapabilitiesDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextCapabilitiesDefinition"/>. </summary>
         public ContainerSecurityContextCapabilitiesDefinition()
         {
             Add = new ChangeTrackingList<string>();
             Drop = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerSecurityContextCapabilitiesDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerSecurityContextCapabilitiesDefinition"/>. </summary>
         /// <param name="add"> The capabilities to add to the container. </param>
         /// <param name="drop"> The capabilities to drop from the container. </param>
-        internal ContainerSecurityContextCapabilitiesDefinition(IList<string> @add, IList<string> drop)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerSecurityContextCapabilitiesDefinition(IList<string> @add, IList<string> drop, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Add = @add;
             Drop = drop;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The capabilities to add to the container. </summary>

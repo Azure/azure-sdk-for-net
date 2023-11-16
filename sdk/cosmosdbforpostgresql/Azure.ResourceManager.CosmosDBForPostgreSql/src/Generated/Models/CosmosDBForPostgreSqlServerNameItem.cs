@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     /// <summary> The name object for a server. </summary>
     public partial class CosmosDBForPostgreSqlServerNameItem
     {
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerNameItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerNameItem"/>. </summary>
         internal CosmosDBForPostgreSqlServerNameItem()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBForPostgreSqlServerNameItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBForPostgreSqlServerNameItem"/>. </summary>
         /// <param name="name"> The name of a server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
-        internal CosmosDBForPostgreSqlServerNameItem(string name, string fullyQualifiedDomainName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBForPostgreSqlServerNameItem(string name, string fullyQualifiedDomainName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of a server. </summary>

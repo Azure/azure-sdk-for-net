@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class GoogleAdWordsObjectDataset : IUtf8JsonSerializable
+    public partial class GoogleAdWordsObjectDataset : IUtf8JsonSerializable, IJsonModel<GoogleAdWordsObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleAdWordsObjectDataset>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GoogleAdWordsObjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GoogleAdWordsObjectDataset>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GoogleAdWordsObjectDataset>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -98,8 +107,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static GoogleAdWordsObjectDataset DeserializeGoogleAdWordsObjectDataset(JsonElement element)
+        GoogleAdWordsObjectDataset IJsonModel<GoogleAdWordsObjectDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleAdWordsObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGoogleAdWordsObjectDataset(document.RootElement, options);
+        }
+
+        internal static GoogleAdWordsObjectDataset DeserializeGoogleAdWordsObjectDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -220,5 +243,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new GoogleAdWordsObjectDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value);
         }
+
+        BinaryData IPersistableModel<GoogleAdWordsObjectDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleAdWordsObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GoogleAdWordsObjectDataset IPersistableModel<GoogleAdWordsObjectDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GoogleAdWordsObjectDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGoogleAdWordsObjectDataset(document.RootElement, options);
+        }
+
+        string IPersistableModel<GoogleAdWordsObjectDataset>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

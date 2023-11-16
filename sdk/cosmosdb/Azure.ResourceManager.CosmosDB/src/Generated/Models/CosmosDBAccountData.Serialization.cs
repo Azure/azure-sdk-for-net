@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -14,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class CosmosDBAccountData : IUtf8JsonSerializable
+    public partial class CosmosDBAccountData : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CosmosDBAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CosmosDBAccountData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CosmosDBAccountData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
@@ -43,8 +52,55 @@ namespace Azure.ResourceManager.CosmosDB
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DocumentEndpoint))
+                {
+                    writer.WritePropertyName("documentEndpoint"u8);
+                    writer.WriteStringValue(DocumentEndpoint);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DatabaseAccountOfferType))
+                {
+                    writer.WritePropertyName("databaseAccountOfferType"u8);
+                    writer.WriteStringValue(DatabaseAccountOfferType.Value.ToString());
+                }
+            }
             if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
@@ -80,6 +136,58 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(WriteLocations))
+                {
+                    writer.WritePropertyName("writeLocations"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in WriteLocations)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(ReadLocations))
+                {
+                    writer.WritePropertyName("readLocations"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ReadLocations)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Locations))
+                {
+                    writer.WritePropertyName("locations"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Locations)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(FailoverPolicies))
+                {
+                    writer.WritePropertyName("failoverPolicies"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in FailoverPolicies)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
             if (Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
@@ -89,6 +197,19 @@ namespace Azure.ResourceManager.CosmosDB
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    writer.WritePropertyName("privateEndpointConnections"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
             }
             if (Optional.IsDefined(EnableMultipleWriteLocations))
             {
@@ -144,6 +265,14 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 writer.WritePropertyName("analyticalStorageConfiguration"u8);
                 writer.WriteObjectValue(AnalyticalStorageConfiguration);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(InstanceId))
+                {
+                    writer.WritePropertyName("instanceId"u8);
+                    writer.WriteStringValue(InstanceId.Value);
+                }
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -210,6 +339,14 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("enableMaterializedViews"u8);
                 writer.WriteBooleanValue(EnableMaterializedViews.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(KeysMetadata))
+                {
+                    writer.WritePropertyName("keysMetadata"u8);
+                    writer.WriteObjectValue(KeysMetadata);
+                }
+            }
             if (Optional.IsDefined(EnablePartitionMerge))
             {
                 writer.WritePropertyName("enablePartitionMerge"u8);
@@ -241,11 +378,40 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStringValue(DefaultPriorityLevel.Value.ToString());
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBAccountData DeserializeCosmosDBAccountData(JsonElement element)
+        CosmosDBAccountData IJsonModel<CosmosDBAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBAccountData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBAccountData(document.RootElement, options);
+        }
+
+        internal static CosmosDBAccountData DeserializeCosmosDBAccountData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -301,6 +467,8 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<CustomerManagedKeyStatus> customerManagedKeyStatus = default;
             Optional<bool> enablePriorityBasedExecution = default;
             Optional<DefaultPriorityLevel> defaultPriorityLevel = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -809,8 +977,38 @@ namespace Azure.ResourceManager.CosmosDB
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), provisioningState.Value, documentEndpoint.Value, Optional.ToNullable(databaseAccountOfferType), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, Optional.ToNullable(instanceId), Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), diagnosticLogSettings.Value, Optional.ToNullable(disableLocalAuth), capacity.Value, Optional.ToNullable(enableMaterializedViews), keysMetadata.Value, Optional.ToNullable(enablePartitionMerge), Optional.ToNullable(enableBurstCapacity), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(customerManagedKeyStatus), Optional.ToNullable(enablePriorityBasedExecution), Optional.ToNullable(defaultPriorityLevel), identity);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), provisioningState.Value, documentEndpoint.Value, Optional.ToNullable(databaseAccountOfferType), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, Optional.ToNullable(instanceId), Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), diagnosticLogSettings.Value, Optional.ToNullable(disableLocalAuth), capacity.Value, Optional.ToNullable(enableMaterializedViews), keysMetadata.Value, Optional.ToNullable(enablePartitionMerge), Optional.ToNullable(enableBurstCapacity), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(customerManagedKeyStatus), Optional.ToNullable(enablePriorityBasedExecution), Optional.ToNullable(defaultPriorityLevel), identity, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CosmosDBAccountData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBAccountData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CosmosDBAccountData IPersistableModel<CosmosDBAccountData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CosmosDBAccountData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCosmosDBAccountData(document.RootElement, options);
+        }
+
+        string IPersistableModel<CosmosDBAccountData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

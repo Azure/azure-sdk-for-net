@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> DataStoreInfo base. </summary>
     public partial class DataStoreInfoBase
     {
-        /// <summary> Initializes a new instance of DataStoreInfoBase. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataStoreInfoBase"/>. </summary>
         /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectType"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             DataStoreType = dataStoreType;
             ObjectType = objectType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataStoreInfoBase"/>. </summary>
+        /// <param name="dataStoreType"> type of datastore; Operational/Vault/Archive. </param>
+        /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataStoreInfoBase(DataStoreType dataStoreType, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            DataStoreType = dataStoreType;
+            ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataStoreInfoBase"/> for deserialization. </summary>
+        internal DataStoreInfoBase()
+        {
         }
 
         /// <summary> type of datastore; Operational/Vault/Archive. </summary>

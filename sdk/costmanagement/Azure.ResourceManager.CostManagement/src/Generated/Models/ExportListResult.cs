@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of listing exports. It contains a list of available exports in the scope provided. </summary>
     internal partial class ExportListResult
     {
-        /// <summary> Initializes a new instance of ExportListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportListResult"/>. </summary>
         internal ExportListResult()
         {
             Value = new ChangeTrackingList<CostManagementExportData>();
         }
 
-        /// <summary> Initializes a new instance of ExportListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportListResult"/>. </summary>
         /// <param name="value"> The list of exports. </param>
-        internal ExportListResult(IReadOnlyList<CostManagementExportData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportListResult(IReadOnlyList<CostManagementExportData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of exports. </summary>

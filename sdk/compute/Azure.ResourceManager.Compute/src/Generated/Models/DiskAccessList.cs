@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List disk access operation response. </summary>
     internal partial class DiskAccessList
     {
-        /// <summary> Initializes a new instance of DiskAccessList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskAccessList"/>. </summary>
         /// <param name="value"> A list of disk access resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DiskAccessList(IEnumerable<DiskAccessData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of DiskAccessList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskAccessList"/>. </summary>
         /// <param name="value"> A list of disk access resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of disk access resources. Call ListNext() with this to fetch the next page of disk access resources. </param>
-        internal DiskAccessList(IReadOnlyList<DiskAccessData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskAccessList(IReadOnlyList<DiskAccessData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskAccessList"/> for deserialization. </summary>
+        internal DiskAccessList()
+        {
         }
 
         /// <summary> A list of disk access resources. </summary>

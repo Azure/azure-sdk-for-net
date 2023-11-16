@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Day of the week. </summary>
     public partial class DataProtectionBackupDay
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupDay. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDay"/>. </summary>
         public DataProtectionBackupDay()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupDay. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDay"/>. </summary>
         /// <param name="date"> Date of the month. </param>
         /// <param name="isLast"> Whether Date is last date of month. </param>
-        internal DataProtectionBackupDay(int? date, bool? isLast)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupDay(int? date, bool? isLast, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Date = date;
             IsLast = isLast;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Date of the month. </summary>

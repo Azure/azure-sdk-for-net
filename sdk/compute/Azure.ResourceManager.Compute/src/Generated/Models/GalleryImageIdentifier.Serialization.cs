@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GalleryImageIdentifier : IUtf8JsonSerializable
+    public partial class GalleryImageIdentifier : IUtf8JsonSerializable, IJsonModel<GalleryImageIdentifier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageIdentifier>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<GalleryImageIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<GalleryImageIdentifier>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<GalleryImageIdentifier>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("publisher"u8);
             writer.WriteStringValue(Publisher);
@@ -21,11 +32,40 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Offer);
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GalleryImageIdentifier DeserializeGalleryImageIdentifier(JsonElement element)
+        GalleryImageIdentifier IJsonModel<GalleryImageIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryImageIdentifier)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryImageIdentifier(document.RootElement, options);
+        }
+
+        internal static GalleryImageIdentifier DeserializeGalleryImageIdentifier(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +73,8 @@ namespace Azure.ResourceManager.Compute.Models
             string publisher = default;
             string offer = default;
             string sku = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"u8))
@@ -50,8 +92,38 @@ namespace Azure.ResourceManager.Compute.Models
                     sku = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GalleryImageIdentifier(publisher, offer, sku);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GalleryImageIdentifier(publisher, offer, sku, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GalleryImageIdentifier>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryImageIdentifier)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        GalleryImageIdentifier IPersistableModel<GalleryImageIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(GalleryImageIdentifier)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeGalleryImageIdentifier(document.RootElement, options);
+        }
+
+        string IPersistableModel<GalleryImageIdentifier>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

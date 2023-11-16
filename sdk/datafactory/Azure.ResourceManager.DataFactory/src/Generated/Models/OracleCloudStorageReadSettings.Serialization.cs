@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class OracleCloudStorageReadSettings : IUtf8JsonSerializable
+    public partial class OracleCloudStorageReadSettings : IUtf8JsonSerializable, IJsonModel<OracleCloudStorageReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleCloudStorageReadSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<OracleCloudStorageReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<OracleCloudStorageReadSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<OracleCloudStorageReadSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
@@ -95,8 +104,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static OracleCloudStorageReadSettings DeserializeOracleCloudStorageReadSettings(JsonElement element)
+        OracleCloudStorageReadSettings IJsonModel<OracleCloudStorageReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleCloudStorageReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOracleCloudStorageReadSettings(document.RootElement, options);
+        }
+
+        internal static OracleCloudStorageReadSettings DeserializeOracleCloudStorageReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -236,5 +259,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new OracleCloudStorageReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, prefix.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
         }
+
+        BinaryData IPersistableModel<OracleCloudStorageReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleCloudStorageReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        OracleCloudStorageReadSettings IPersistableModel<OracleCloudStorageReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(OracleCloudStorageReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeOracleCloudStorageReadSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<OracleCloudStorageReadSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

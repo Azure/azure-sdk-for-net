@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VmInstanceGuestAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of VmInstanceGuestAgentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentData"/>. </summary>
         public VmInstanceGuestAgentData()
         {
             Statuses = new ChangeTrackingList<VMwareResourceStatus>();
         }
 
-        /// <summary> Initializes a new instance of VmInstanceGuestAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmInstanceGuestAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,7 +42,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="customResourceName"> Gets the name of the corresponding resource in Kubernetes. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal VmInstanceGuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, VmInstanceGuestCredential credentials, ResourceIdentifier privateLinkScopeResourceId, HttpProxyConfiguration httpProxyConfig, GuestAgentProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<VMwareResourceStatus> statuses, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmInstanceGuestAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string uuid, VmInstanceGuestCredential credentials, ResourceIdentifier privateLinkScopeResourceId, HttpProxyConfiguration httpProxyConfig, GuestAgentProvisioningAction? provisioningAction, string status, string customResourceName, IReadOnlyList<VMwareResourceStatus> statuses, VMwareResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Uuid = uuid;
             Credentials = credentials;
@@ -49,6 +54,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             CustomResourceName = customResourceName;
             Statuses = statuses;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a unique identifier for this resource. </summary>

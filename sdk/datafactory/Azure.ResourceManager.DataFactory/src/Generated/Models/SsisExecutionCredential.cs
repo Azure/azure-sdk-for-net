@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SSIS package execution credential. </summary>
     public partial class SsisExecutionCredential
     {
-        /// <summary> Initializes a new instance of SsisExecutionCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionCredential"/>. </summary>
         /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for windows authentication. </param>
@@ -28,6 +32,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             Domain = domain;
             UserName = userName;
             Password = password;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionCredential"/>. </summary>
+        /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for windows authentication. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisExecutionCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecretString password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Domain = domain;
+            UserName = userName;
+            Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionCredential"/> for deserialization. </summary>
+        internal SsisExecutionCredential()
+        {
         }
 
         /// <summary> Domain for windows authentication. Type: string (or Expression with resultType string). </summary>

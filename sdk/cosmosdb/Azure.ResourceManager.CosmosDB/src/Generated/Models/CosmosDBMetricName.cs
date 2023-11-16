@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A metric name. </summary>
     public partial class CosmosDBMetricName
     {
-        /// <summary> Initializes a new instance of CosmosDBMetricName. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricName"/>. </summary>
         internal CosmosDBMetricName()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMetricName"/>. </summary>
         /// <param name="value"> The name of the metric. </param>
         /// <param name="localizedValue"> The friendly name of the metric. </param>
-        internal CosmosDBMetricName(string value, string localizedValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBMetricName(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             LocalizedValue = localizedValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the metric. </summary>

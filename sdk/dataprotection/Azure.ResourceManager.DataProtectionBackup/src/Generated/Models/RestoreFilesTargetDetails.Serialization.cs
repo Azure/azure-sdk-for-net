@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class RestoreFilesTargetDetails : IUtf8JsonSerializable
+    public partial class RestoreFilesTargetDetails : IUtf8JsonSerializable, IJsonModel<RestoreFilesTargetDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreFilesTargetDetails>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RestoreFilesTargetDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RestoreFilesTargetDetails>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RestoreFilesTargetDetails>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("filePrefix"u8);
             writer.WriteStringValue(FilePrefix);
@@ -26,7 +37,108 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("targetResourceArmId"u8);
                 writer.WriteStringValue(TargetResourceArmId);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RestoreFilesTargetDetails IJsonModel<RestoreFilesTargetDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestoreFilesTargetDetails(document.RootElement, options);
+        }
+
+        internal static RestoreFilesTargetDetails DeserializeRestoreFilesTargetDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string filePrefix = default;
+            RestoreTargetLocationType restoreTargetLocationType = default;
+            Uri url = default;
+            Optional<ResourceIdentifier> targetResourceArmId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("filePrefix"u8))
+                {
+                    filePrefix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("restoreTargetLocationType"u8))
+                {
+                    restoreTargetLocationType = new RestoreTargetLocationType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("url"u8))
+                {
+                    url = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetResourceArmId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceArmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RestoreFilesTargetDetails(filePrefix, restoreTargetLocationType, url, targetResourceArmId.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RestoreFilesTargetDetails>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RestoreFilesTargetDetails IPersistableModel<RestoreFilesTargetDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RestoreFilesTargetDetails)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRestoreFilesTargetDetails(document.RootElement, options);
+        }
+
+        string IPersistableModel<RestoreFilesTargetDetails>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

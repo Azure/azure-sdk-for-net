@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
@@ -12,9 +13,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Defines the virtualMachineInstanceUpdate. </summary>
     public partial class VMwareVmInstancePatch
     {
-        /// <summary> Initializes a new instance of VMwareVmInstancePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVmInstancePatch"/>. </summary>
         public VMwareVmInstancePatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVmInstancePatch"/>. </summary>
+        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareVmInstancePatch(VmInstanceHardwareProfile hardwareProfile, StorageProfileUpdate storageProfile, VMwareNetworkProfileUpdate networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the hardware settings for the virtual machine. </summary>

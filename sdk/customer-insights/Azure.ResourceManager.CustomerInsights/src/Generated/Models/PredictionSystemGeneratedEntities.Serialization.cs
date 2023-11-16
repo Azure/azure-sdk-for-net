@@ -5,16 +5,92 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionSystemGeneratedEntities
+    public partial class PredictionSystemGeneratedEntities : IUtf8JsonSerializable, IJsonModel<PredictionSystemGeneratedEntities>
     {
-        internal static PredictionSystemGeneratedEntities DeserializePredictionSystemGeneratedEntities(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionSystemGeneratedEntities>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<PredictionSystemGeneratedEntities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<PredictionSystemGeneratedEntities>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<PredictionSystemGeneratedEntities>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(GeneratedInteractionTypes))
+            {
+                writer.WritePropertyName("generatedInteractionTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in GeneratedInteractionTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(GeneratedLinks))
+            {
+                writer.WritePropertyName("generatedLinks"u8);
+                writer.WriteStartArray();
+                foreach (var item in GeneratedLinks)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(GeneratedKpis))
+            {
+                writer.WritePropertyName("generatedKpis"u8);
+                writer.WriteStartObject();
+                foreach (var item in GeneratedKpis)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PredictionSystemGeneratedEntities IJsonModel<PredictionSystemGeneratedEntities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePredictionSystemGeneratedEntities(document.RootElement, options);
+        }
+
+        internal static PredictionSystemGeneratedEntities DeserializePredictionSystemGeneratedEntities(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +98,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<IReadOnlyList<string>> generatedInteractionTypes = default;
             Optional<IReadOnlyList<string>> generatedLinks = default;
             Optional<IReadOnlyDictionary<string, string>> generatedKpis = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("generatedInteractionTypes"u8))
@@ -66,8 +144,38 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     generatedKpis = dictionary;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PredictionSystemGeneratedEntities(Optional.ToList(generatedInteractionTypes), Optional.ToList(generatedLinks), Optional.ToDictionary(generatedKpis));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PredictionSystemGeneratedEntities(Optional.ToList(generatedInteractionTypes), Optional.ToList(generatedLinks), Optional.ToDictionary(generatedKpis), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PredictionSystemGeneratedEntities>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        PredictionSystemGeneratedEntities IPersistableModel<PredictionSystemGeneratedEntities>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(PredictionSystemGeneratedEntities)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializePredictionSystemGeneratedEntities(document.RootElement, options);
+        }
+
+        string IPersistableModel<PredictionSystemGeneratedEntities>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

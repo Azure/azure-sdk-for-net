@@ -6,32 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Assignment details of a job to a worker. </summary>
     public partial class RouterJobAssignment
     {
-        /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
         /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
         internal RouterJobAssignment(DateTimeOffset assignedAt)
         {
             AssignedAt = assignedAt;
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of RouterJobAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/>. </summary>
         /// <param name="assignmentId"> Id of a job assignment. </param>
         /// <param name="workerId"> Id of the Worker assigned to the job. </param>
         /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
         /// <param name="completedAt"> Timestamp when the job was marked as completed after being assigned in UTC. </param>
         /// <param name="closedAt"> Timestamp when the job was marked as closed after being completed in UTC. </param>
-        internal RouterJobAssignment(string assignmentId, string workerId, DateTimeOffset assignedAt, DateTimeOffset? completedAt, DateTimeOffset? closedAt)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterJobAssignment(string assignmentId, string workerId, DateTimeOffset assignedAt, DateTimeOffset? completedAt, DateTimeOffset? closedAt, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssignmentId = assignmentId;
             WorkerId = workerId;
             AssignedAt = assignedAt;
             CompletedAt = completedAt;
             ClosedAt = closedAt;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RouterJobAssignment"/> for deserialization. </summary>
+        internal RouterJobAssignment()
+        {
         }
 
         /// <summary> Id of a job assignment. </summary>

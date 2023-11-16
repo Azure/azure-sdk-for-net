@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SalesforceServiceCloudLinkedService : IUtf8JsonSerializable
+    public partial class SalesforceServiceCloudLinkedService : IUtf8JsonSerializable, IJsonModel<SalesforceServiceCloudLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceServiceCloudLinkedService>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SalesforceServiceCloudLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SalesforceServiceCloudLinkedService>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SalesforceServiceCloudLinkedService>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
@@ -116,8 +125,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SalesforceServiceCloudLinkedService DeserializeSalesforceServiceCloudLinkedService(JsonElement element)
+        SalesforceServiceCloudLinkedService IJsonModel<SalesforceServiceCloudLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSalesforceServiceCloudLinkedService(document.RootElement, options);
+        }
+
+        internal static SalesforceServiceCloudLinkedService DeserializeSalesforceServiceCloudLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -268,5 +291,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SalesforceServiceCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, environmentUrl.Value, username.Value, password, securityToken, apiVersion.Value, extendedProperties.Value, encryptedCredential.Value);
         }
+
+        BinaryData IPersistableModel<SalesforceServiceCloudLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SalesforceServiceCloudLinkedService IPersistableModel<SalesforceServiceCloudLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudLinkedService)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSalesforceServiceCloudLinkedService(document.RootElement, options);
+        }
+
+        string IPersistableModel<SalesforceServiceCloudLinkedService>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

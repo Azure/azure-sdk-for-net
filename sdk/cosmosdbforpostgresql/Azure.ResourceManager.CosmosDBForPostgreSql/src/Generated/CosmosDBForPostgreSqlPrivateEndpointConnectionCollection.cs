@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual AsyncPageable<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlPrivateEndpointConnectionResource(Client, CosmosDBForPostgreSqlPrivateEndpointConnectionData.DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionData(e)), _cosmosDBForPostgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, (e, o) => new CosmosDBForPostgreSqlPrivateEndpointConnectionResource(Client, CosmosDBForPostgreSqlPrivateEndpointConnectionData.DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionData(e)), _cosmosDBForPostgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public virtual Pageable<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBForPostgreSqlPrivateEndpointConnectionResource(Client, CosmosDBForPostgreSqlPrivateEndpointConnectionData.DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionData(e)), _cosmosDBForPostgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, (e, o) => new CosmosDBForPostgreSqlPrivateEndpointConnectionResource(Client, CosmosDBForPostgreSqlPrivateEndpointConnectionData.DeserializeCosmosDBForPostgreSqlPrivateEndpointConnectionData(e)), _cosmosDBForPostgreSqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "CosmosDBForPostgreSqlPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

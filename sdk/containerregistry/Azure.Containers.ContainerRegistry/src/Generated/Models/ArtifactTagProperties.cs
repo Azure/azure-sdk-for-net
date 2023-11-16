@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -13,7 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Tag attributes. </summary>
     public partial class ArtifactTagProperties
     {
-        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactTagProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
@@ -36,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactTagProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
@@ -47,7 +51,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="canWrite"> Write enabled. </param>
         /// <param name="canList"> List enabled. </param>
         /// <param name="canRead"> Read enabled. </param>
-        internal ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, bool? canDelete, bool? canWrite, bool? canList, bool? canRead, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistryLoginServer = registryLoginServer;
             RepositoryName = repositoryName;
@@ -59,6 +64,7 @@ namespace Azure.Containers.ContainerRegistry
             CanWrite = canWrite;
             CanList = canList;
             CanRead = canRead;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> CDC policy recurrence details. </summary>
     public partial class MapperPolicyRecurrence
     {
-        /// <summary> Initializes a new instance of MapperPolicyRecurrence. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapperPolicyRecurrence"/>. </summary>
         public MapperPolicyRecurrence()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperPolicyRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperPolicyRecurrence"/>. </summary>
         /// <param name="frequency"> Frequency of period in terms of 'Hour', 'Minute' or 'Second'. </param>
         /// <param name="interval"> Actual interval value as per chosen frequency. </param>
-        internal MapperPolicyRecurrence(MapperPolicyRecurrenceFrequencyType? frequency, int? interval)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapperPolicyRecurrence(MapperPolicyRecurrenceFrequencyType? frequency, int? interval, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             Interval = interval;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Frequency of period in terms of 'Hour', 'Minute' or 'Second'. </summary>

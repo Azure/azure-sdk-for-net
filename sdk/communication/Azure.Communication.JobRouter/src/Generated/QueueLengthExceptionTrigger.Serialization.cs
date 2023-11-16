@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class QueueLengthExceptionTrigger
+    public partial class QueueLengthExceptionTrigger : IUtf8JsonSerializable, IJsonModel<QueueLengthExceptionTrigger>
     {
-        internal static QueueLengthExceptionTrigger DeserializeQueueLengthExceptionTrigger(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueLengthExceptionTrigger>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<QueueLengthExceptionTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<QueueLengthExceptionTrigger>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<QueueLengthExceptionTrigger>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("threshold"u8);
+            writer.WriteNumberValue(Threshold);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        QueueLengthExceptionTrigger IJsonModel<QueueLengthExceptionTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueueLengthExceptionTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueueLengthExceptionTrigger(document.RootElement, options);
+        }
+
+        internal static QueueLengthExceptionTrigger DeserializeQueueLengthExceptionTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int threshold = default;
             ExceptionTriggerKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("threshold"u8))
@@ -32,16 +85,54 @@ namespace Azure.Communication.JobRouter
                     kind = new ExceptionTriggerKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueueLengthExceptionTrigger(kind, threshold);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueueLengthExceptionTrigger(kind, serializedAdditionalRawData, threshold);
         }
+
+        BinaryData IPersistableModel<QueueLengthExceptionTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueueLengthExceptionTrigger)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QueueLengthExceptionTrigger IPersistableModel<QueueLengthExceptionTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueueLengthExceptionTrigger)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQueueLengthExceptionTrigger(document.RootElement, options);
+        }
+
+        string IPersistableModel<QueueLengthExceptionTrigger>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new QueueLengthExceptionTrigger FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeQueueLengthExceptionTrigger(document.RootElement);
+            return DeserializeQueueLengthExceptionTrigger(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

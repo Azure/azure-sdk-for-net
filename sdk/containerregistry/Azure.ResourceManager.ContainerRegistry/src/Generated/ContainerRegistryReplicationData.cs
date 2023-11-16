@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryReplicationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryReplicationData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerRegistryReplicationData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryReplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +39,19 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="status"> The status of the replication at the time the operation was called. </param>
         /// <param name="isRegionEndpointEnabled"> Specifies whether the replication's regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </param>
         /// <param name="zoneRedundancy"> Whether or not zone redundancy is enabled for this container registry replication. </param>
-        internal ContainerRegistryReplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isRegionEndpointEnabled, ContainerRegistryZoneRedundancy? zoneRedundancy) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryReplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerRegistryProvisioningState? provisioningState, ContainerRegistryResourceStatus status, bool? isRegionEndpointEnabled, ContainerRegistryZoneRedundancy? zoneRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Status = status;
             IsRegionEndpointEnabled = isRegionEndpointEnabled;
             ZoneRedundancy = zoneRedundancy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryReplicationData"/> for deserialization. </summary>
+        internal ContainerRegistryReplicationData()
+        {
         }
 
         /// <summary> The provisioning state of the replication at the time the operation was called. </summary>

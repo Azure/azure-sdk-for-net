@@ -5,16 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes automatic OS upgrade properties on the image. </summary>
     internal partial class AutomaticOSUpgradeProperties
     {
-        /// <summary> Initializes a new instance of AutomaticOSUpgradeProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomaticOSUpgradeProperties"/>. </summary>
         /// <param name="automaticOSUpgradeSupported"> Specifies whether automatic OS upgrade is supported on the image. </param>
         public AutomaticOSUpgradeProperties(bool automaticOSUpgradeSupported)
         {
             AutomaticOSUpgradeSupported = automaticOSUpgradeSupported;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomaticOSUpgradeProperties"/>. </summary>
+        /// <param name="automaticOSUpgradeSupported"> Specifies whether automatic OS upgrade is supported on the image. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomaticOSUpgradeProperties(bool automaticOSUpgradeSupported, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AutomaticOSUpgradeSupported = automaticOSUpgradeSupported;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomaticOSUpgradeProperties"/> for deserialization. </summary>
+        internal AutomaticOSUpgradeProperties()
+        {
         }
 
         /// <summary> Specifies whether automatic OS upgrade is supported on the image. </summary>

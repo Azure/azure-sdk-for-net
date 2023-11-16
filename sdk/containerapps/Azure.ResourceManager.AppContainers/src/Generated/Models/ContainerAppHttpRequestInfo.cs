@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> HTTPGet specifies the http request to perform. </summary>
     public partial class ContainerAppHttpRequestInfo
     {
-        /// <summary> Initializes a new instance of ContainerAppHttpRequestInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRequestInfo"/>. </summary>
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         public ContainerAppHttpRequestInfo(int port)
         {
@@ -21,19 +25,26 @@ namespace Azure.ResourceManager.AppContainers.Models
             Port = port;
         }
 
-        /// <summary> Initializes a new instance of ContainerAppHttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRequestInfo"/>. </summary>
         /// <param name="host"> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </param>
         /// <param name="httpHeaders"> Custom headers to set in the request. HTTP allows repeated headers. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         /// <param name="scheme"> Scheme to use for connecting to the host. Defaults to HTTP. </param>
-        internal ContainerAppHttpRequestInfo(string host, IList<ContainerAppHttpHeaderInfo> httpHeaders, string path, int port, ContainerAppHttpScheme? scheme)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpRequestInfo(string host, IList<ContainerAppHttpHeaderInfo> httpHeaders, string path, int port, ContainerAppHttpScheme? scheme, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Host = host;
             HttpHeaders = httpHeaders;
             Path = path;
             Port = port;
             Scheme = scheme;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRequestInfo"/> for deserialization. </summary>
+        internal ContainerAppHttpRequestInfo()
+        {
         }
 
         /// <summary> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </summary>

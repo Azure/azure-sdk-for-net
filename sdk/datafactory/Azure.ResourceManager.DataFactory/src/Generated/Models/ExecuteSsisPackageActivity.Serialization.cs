@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecuteSsisPackageActivity : IUtf8JsonSerializable
+    public partial class ExecuteSsisPackageActivity : IUtf8JsonSerializable, IJsonModel<ExecuteSsisPackageActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteSsisPackageActivity>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ExecuteSsisPackageActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ExecuteSsisPackageActivity>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -191,8 +200,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecuteSsisPackageActivity DeserializeExecuteSsisPackageActivity(JsonElement element)
+        ExecuteSsisPackageActivity IJsonModel<ExecuteSsisPackageActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecuteSsisPackageActivity(document.RootElement, options);
+        }
+
+        internal static ExecuteSsisPackageActivity DeserializeExecuteSsisPackageActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -467,5 +490,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, Optional.ToDictionary(projectParameters), Optional.ToDictionary(packageParameters), Optional.ToDictionary(projectConnectionManagers), Optional.ToDictionary(packageConnectionManagers), Optional.ToDictionary(propertyOverrides), logLocation.Value);
         }
+
+        BinaryData IPersistableModel<ExecuteSsisPackageActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ExecuteSsisPackageActivity IPersistableModel<ExecuteSsisPackageActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeExecuteSsisPackageActivity(document.RootElement, options);
+        }
+
+        string IPersistableModel<ExecuteSsisPackageActivity>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

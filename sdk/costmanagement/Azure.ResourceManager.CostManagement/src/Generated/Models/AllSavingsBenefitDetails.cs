@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Benefit recommendation details. </summary>
     public partial class AllSavingsBenefitDetails
     {
-        /// <summary> Initializes a new instance of AllSavingsBenefitDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AllSavingsBenefitDetails"/>. </summary>
         public AllSavingsBenefitDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of AllSavingsBenefitDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="AllSavingsBenefitDetails"/>. </summary>
         /// <param name="overageCost"> The difference between total cost and benefit cost for the 'totalHours' in the look-back period. </param>
         /// <param name="benefitCost"> The estimated cost with benefit for the 'totalHours' in the look-back period. It's equal to (commitmentAmount * totalHours). </param>
         /// <param name="totalCost"> Total cost, which is sum of benefit cost and overage cost. </param>
@@ -25,7 +31,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="commitmentAmount"> The commitment amount at the commitmentGranularity. </param>
         /// <param name="averageUtilizationPercentage"> Estimated average utilization percentage for the 'totalHours' in the look-back period, with this commitment. </param>
         /// <param name="wastageCost"> Estimated unused portion of the 'benefitCost'. </param>
-        internal AllSavingsBenefitDetails(decimal? overageCost, decimal? benefitCost, decimal? totalCost, decimal? savingsAmount, decimal? savingsPercentage, decimal? coveragePercentage, decimal? commitmentAmount, decimal? averageUtilizationPercentage, decimal? wastageCost)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AllSavingsBenefitDetails(decimal? overageCost, decimal? benefitCost, decimal? totalCost, decimal? savingsAmount, decimal? savingsPercentage, decimal? coveragePercentage, decimal? commitmentAmount, decimal? averageUtilizationPercentage, decimal? wastageCost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OverageCost = overageCost;
             BenefitCost = benefitCost;
@@ -36,6 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             CommitmentAmount = commitmentAmount;
             AverageUtilizationPercentage = averageUtilizationPercentage;
             WastageCost = wastageCost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The difference between total cost and benefit cost for the 'totalHours' in the look-back period. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -12,20 +14,30 @@ namespace Azure.Communication.MediaComposition.Models
     /// <summary> Configure layer to control the z-position of input groups. </summary>
     public partial class LayoutLayer
     {
-        /// <summary> Initializes a new instance of LayoutLayer. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LayoutLayer"/>. </summary>
         /// <param name="zIndex"> The z position of the layer. </param>
         public LayoutLayer(int zIndex)
         {
             ZIndex = zIndex;
         }
 
-        /// <summary> Initializes a new instance of LayoutLayer. </summary>
+        /// <summary> Initializes a new instance of <see cref="LayoutLayer"/>. </summary>
         /// <param name="zIndex"> The z position of the layer. </param>
         /// <param name="visibility"> The visibility of the layer. </param>
-        internal LayoutLayer(int zIndex, LayerVisibility? visibility)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LayoutLayer(int zIndex, LayerVisibility? visibility, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ZIndex = zIndex;
             Visibility = visibility;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LayoutLayer"/> for deserialization. </summary>
+        internal LayoutLayer()
+        {
         }
 
         /// <summary> The z position of the layer. </summary>

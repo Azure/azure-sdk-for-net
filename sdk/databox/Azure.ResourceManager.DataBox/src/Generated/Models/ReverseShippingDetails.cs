@@ -5,28 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Reverse Shipping Address and contact details for a job. </summary>
     public partial class ReverseShippingDetails
     {
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReverseShippingDetails"/>. </summary>
         public ReverseShippingDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of ReverseShippingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReverseShippingDetails"/>. </summary>
         /// <param name="contactDetails"> Contact Info. </param>
         /// <param name="shippingAddress"> Shipping address where customer wishes to receive the device. </param>
         /// <param name="isUpdated">
         /// A flag to indicate whether Reverse Shipping details are updated or not after device has been prepared.
         /// Read only field
         /// </param>
-        internal ReverseShippingDetails(ContactInfo contactDetails, DataBoxShippingAddress shippingAddress, bool? isUpdated)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReverseShippingDetails(ContactInfo contactDetails, DataBoxShippingAddress shippingAddress, bool? isUpdated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactDetails = contactDetails;
             ShippingAddress = shippingAddress;
             IsUpdated = isUpdated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Contact Info. </summary>

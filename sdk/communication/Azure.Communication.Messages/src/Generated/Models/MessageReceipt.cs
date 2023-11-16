@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -13,7 +14,10 @@ namespace Azure.Communication.Messages
     /// <summary> Receipt of the sending one message. </summary>
     public partial class MessageReceipt
     {
-        /// <summary> Initializes a new instance of MessageReceipt. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageReceipt"/>. </summary>
         /// <param name="messageId"> The message id. </param>
         /// <param name="to"> The native external platform user identifier of the recipient. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> or <paramref name="to"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.Communication.Messages
 
             MessageId = messageId;
             To = to;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageReceipt"/>. </summary>
+        /// <param name="messageId"> The message id. </param>
+        /// <param name="to"> The native external platform user identifier of the recipient. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageReceipt(string messageId, string to, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageId = messageId;
+            To = to;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageReceipt"/> for deserialization. </summary>
+        internal MessageReceipt()
+        {
         }
 
         /// <summary> The message id. </summary>

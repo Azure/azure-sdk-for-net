@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -18,21 +19,26 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DiagnosticRemoteSupportSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticRemoteSupportSettingData"/>. </summary>
         public DiagnosticRemoteSupportSettingData()
         {
             RemoteSupportSettingsList = new ChangeTrackingList<EdgeRemoteSupportSettings>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticRemoteSupportSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticRemoteSupportSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="remoteSupportSettingsList"> Remote support settings list according to the RemoteApplicationType. </param>
-        internal DiagnosticRemoteSupportSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<EdgeRemoteSupportSettings> remoteSupportSettingsList) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticRemoteSupportSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<EdgeRemoteSupportSettings> remoteSupportSettingsList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RemoteSupportSettingsList = remoteSupportSettingsList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Remote support settings list according to the RemoteApplicationType. </summary>

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetOSProfile : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetOSProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetOSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetOSProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualMachineScaleSetOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualMachineScaleSetOSProfile>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualMachineScaleSetOSProfile>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputerNamePrefix))
             {
@@ -66,11 +76,40 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
                 writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineScaleSetOSProfile DeserializeVirtualMachineScaleSetOSProfile(JsonElement element)
+        VirtualMachineScaleSetOSProfile IJsonModel<VirtualMachineScaleSetOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineScaleSetOSProfile(document.RootElement, options);
+        }
+
+        internal static VirtualMachineScaleSetOSProfile DeserializeVirtualMachineScaleSetOSProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +123,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<VaultSecretGroup>> secrets = default;
             Optional<bool> allowExtensionOperations = default;
             Optional<bool> requireGuestProvisionSignal = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computerNamePrefix"u8))
@@ -156,8 +197,38 @@ namespace Azure.ResourceManager.Compute.Models
                     requireGuestProvisionSignal = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineScaleSetOSProfile>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSProfile)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualMachineScaleSetOSProfile IPersistableModel<VirtualMachineScaleSetOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSProfile)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineScaleSetOSProfile(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualMachineScaleSetOSProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

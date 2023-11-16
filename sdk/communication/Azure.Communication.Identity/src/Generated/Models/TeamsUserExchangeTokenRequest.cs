@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
@@ -13,7 +14,10 @@ namespace Azure.Communication.Identity.Models
     /// <summary> The TeamsUserExchangeTokenRequest. </summary>
     internal partial class TeamsUserExchangeTokenRequest
     {
-        /// <summary> Initializes a new instance of TeamsUserExchangeTokenRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TeamsUserExchangeTokenRequest"/>. </summary>
         /// <param name="token"> Azure AD access token of a Teams User to acquire a new Communication Identity access token. </param>
         /// <param name="appId"> Client ID of an Azure AD application to be verified against the appid claim in the Azure AD access token. </param>
         /// <param name="userId"> Object ID of an Azure AD user (Teams User) to be verified against the oid claim in the Azure AD access token. </param>
@@ -27,6 +31,24 @@ namespace Azure.Communication.Identity.Models
             Token = token;
             AppId = appId;
             UserId = userId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TeamsUserExchangeTokenRequest"/>. </summary>
+        /// <param name="token"> Azure AD access token of a Teams User to acquire a new Communication Identity access token. </param>
+        /// <param name="appId"> Client ID of an Azure AD application to be verified against the appid claim in the Azure AD access token. </param>
+        /// <param name="userId"> Object ID of an Azure AD user (Teams User) to be verified against the oid claim in the Azure AD access token. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TeamsUserExchangeTokenRequest(string token, string appId, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Token = token;
+            AppId = appId;
+            UserId = userId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TeamsUserExchangeTokenRequest"/> for deserialization. </summary>
+        internal TeamsUserExchangeTokenRequest()
+        {
         }
 
         /// <summary> Azure AD access token of a Teams User to acquire a new Communication Identity access token. </summary>

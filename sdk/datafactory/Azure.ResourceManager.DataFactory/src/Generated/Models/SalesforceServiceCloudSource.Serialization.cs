@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SalesforceServiceCloudSource : IUtf8JsonSerializable
+    public partial class SalesforceServiceCloudSource : IUtf8JsonSerializable, IJsonModel<SalesforceServiceCloudSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceServiceCloudSource>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<SalesforceServiceCloudSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<SalesforceServiceCloudSource>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<SalesforceServiceCloudSource>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
@@ -77,8 +86,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SalesforceServiceCloudSource DeserializeSalesforceServiceCloudSource(JsonElement element)
+        SalesforceServiceCloudSource IJsonModel<SalesforceServiceCloudSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSalesforceServiceCloudSource(document.RootElement, options);
+        }
+
+        internal static SalesforceServiceCloudSource DeserializeSalesforceServiceCloudSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -168,5 +191,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SalesforceServiceCloudSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, query.Value, readBehavior.Value, additionalColumns.Value);
         }
+
+        BinaryData IPersistableModel<SalesforceServiceCloudSource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudSource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        SalesforceServiceCloudSource IPersistableModel<SalesforceServiceCloudSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudSource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeSalesforceServiceCloudSource(document.RootElement, options);
+        }
+
+        string IPersistableModel<SalesforceServiceCloudSource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

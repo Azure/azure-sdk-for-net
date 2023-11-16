@@ -5,16 +5,95 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomDomainVerificationFailureInfo
+    public partial class ContainerAppCustomDomainVerificationFailureInfo : IUtf8JsonSerializable, IJsonModel<ContainerAppCustomDomainVerificationFailureInfo>
     {
-        internal static ContainerAppCustomDomainVerificationFailureInfo DeserializeContainerAppCustomDomainVerificationFailureInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomDomainVerificationFailureInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerAppCustomDomainVerificationFailureInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerAppCustomDomainVerificationFailureInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerAppCustomDomainVerificationFailureInfo>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Code))
+                {
+                    writer.WritePropertyName("code"u8);
+                    writer.WriteStringValue(Code);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Message))
+                {
+                    writer.WritePropertyName("message"u8);
+                    writer.WriteStringValue(Message);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Target))
+                {
+                    writer.WritePropertyName("target"u8);
+                    writer.WriteStringValue(Target);
+                }
+            }
+            if (Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerAppCustomDomainVerificationFailureInfo IJsonModel<ContainerAppCustomDomainVerificationFailureInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppCustomDomainVerificationFailureInfo(document.RootElement, options);
+        }
+
+        internal static ContainerAppCustomDomainVerificationFailureInfo DeserializeContainerAppCustomDomainVerificationFailureInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +102,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> message = default;
             Optional<string> target = default;
             Optional<IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>> details = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -54,8 +135,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     details = array;
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppCustomDomainVerificationFailureInfo(code.Value, message.Value, target.Value, Optional.ToList(details));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppCustomDomainVerificationFailureInfo(code.Value, message.Value, target.Value, Optional.ToList(details), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppCustomDomainVerificationFailureInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerAppCustomDomainVerificationFailureInfo IPersistableModel<ContainerAppCustomDomainVerificationFailureInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerAppCustomDomainVerificationFailureInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerAppCustomDomainVerificationFailureInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

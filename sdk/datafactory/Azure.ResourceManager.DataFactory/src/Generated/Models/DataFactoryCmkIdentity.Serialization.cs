@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class DataFactoryCmkIdentity : IUtf8JsonSerializable
+    internal partial class DataFactoryCmkIdentity : IUtf8JsonSerializable, IJsonModel<DataFactoryCmkIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryCmkIdentity>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataFactoryCmkIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataFactoryCmkIdentity>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataFactoryCmkIdentity>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryCmkIdentity DeserializeDataFactoryCmkIdentity(JsonElement element)
+        DataFactoryCmkIdentity IJsonModel<DataFactoryCmkIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryCmkIdentity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryCmkIdentity(document.RootElement, options);
+        }
+
+        internal static DataFactoryCmkIdentity DeserializeDataFactoryCmkIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> userAssignedIdentity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentity"u8))
@@ -37,8 +79,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userAssignedIdentity = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFactoryCmkIdentity(userAssignedIdentity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFactoryCmkIdentity(userAssignedIdentity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataFactoryCmkIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryCmkIdentity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFactoryCmkIdentity IPersistableModel<DataFactoryCmkIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryCmkIdentity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFactoryCmkIdentity(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataFactoryCmkIdentity>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class QueryDataset : IUtf8JsonSerializable
+    public partial class QueryDataset : IUtf8JsonSerializable, IJsonModel<QueryDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryDataset>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<QueryDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<QueryDataset>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<QueryDataset>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Granularity))
             {
@@ -51,7 +62,140 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        QueryDataset IJsonModel<QueryDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryDataset(document.RootElement, options);
+        }
+
+        internal static QueryDataset DeserializeQueryDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<GranularityType> granularity = default;
+            Optional<QueryDatasetConfiguration> configuration = default;
+            Optional<IDictionary<string, QueryAggregation>> aggregation = default;
+            Optional<IList<QueryGrouping>> grouping = default;
+            Optional<QueryFilter> filter = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("granularity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    granularity = new GranularityType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("configuration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configuration = QueryDatasetConfiguration.DeserializeQueryDatasetConfiguration(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("aggregation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, QueryAggregation> dictionary = new Dictionary<string, QueryAggregation>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value));
+                    }
+                    aggregation = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("grouping"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<QueryGrouping> array = new List<QueryGrouping>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(QueryGrouping.DeserializeQueryGrouping(item));
+                    }
+                    grouping = array;
+                    continue;
+                }
+                if (property.NameEquals("filter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    filter = QueryFilter.DeserializeQueryFilter(property.Value);
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueryDataset(Optional.ToNullable(granularity), configuration.Value, Optional.ToDictionary(aggregation), Optional.ToList(grouping), filter.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<QueryDataset>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryDataset)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        QueryDataset IPersistableModel<QueryDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(QueryDataset)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeQueryDataset(document.RootElement, options);
+        }
+
+        string IPersistableModel<QueryDataset>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

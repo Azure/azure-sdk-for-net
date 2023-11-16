@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Secret definition. </summary>
     public partial class ContainerAppWritableSecret
     {
-        /// <summary> Initializes a new instance of ContainerAppWritableSecret. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWritableSecret"/>. </summary>
         public ContainerAppWritableSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppWritableSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppWritableSecret"/>. </summary>
         /// <param name="name"> Secret Name. </param>
         /// <param name="value"> Secret Value. </param>
         /// <param name="identity"> Resource ID of a managed identity to authenticate with Azure Key Vault, or System to use a system-assigned identity. </param>
         /// <param name="keyVaultUri"> Azure Key Vault URL pointing to the secret referenced by the container app. </param>
-        internal ContainerAppWritableSecret(string name, string value, string identity, Uri keyVaultUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppWritableSecret(string name, string value, string identity, Uri keyVaultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             Identity = identity;
             KeyVaultUri = keyVaultUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Secret Name. </summary>

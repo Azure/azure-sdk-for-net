@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Object representing the report url and valid until date of the async report generated. </summary>
     public partial class AsyncOperationStatusProperties
     {
-        /// <summary> Initializes a new instance of AsyncOperationStatusProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AsyncOperationStatusProperties"/>. </summary>
         internal AsyncOperationStatusProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AsyncOperationStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AsyncOperationStatusProperties"/>. </summary>
         /// <param name="reportUri"> Sas url to the async benefit utilization summaries report. Will be empty if the report is in Running or Failed state. </param>
         /// <param name="secondaryReportUri"> Sas url to async benefit utilization summaries report in secondary storage in case of primary outage. Will be empty if the report is in Running or Failed state. </param>
         /// <param name="validUntil"> The date that the sas url provided in reportUrl expires. </param>
-        internal AsyncOperationStatusProperties(BenefitUtilizationSummaryReportSchema? reportUri, BenefitUtilizationSummaryReportSchema? secondaryReportUri, DateTimeOffset? validUntil)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AsyncOperationStatusProperties(BenefitUtilizationSummaryReportSchema? reportUri, BenefitUtilizationSummaryReportSchema? secondaryReportUri, DateTimeOffset? validUntil, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReportUri = reportUri;
             SecondaryReportUri = secondaryReportUri;
             ValidUntil = validUntil;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sas url to the async benefit utilization summaries report. Will be empty if the report is in Running or Failed state. </summary>

@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryIntegrationRuntimeStatusResult
+    public partial class DataFactoryIntegrationRuntimeStatusResult : IUtf8JsonSerializable, IJsonModel<DataFactoryIntegrationRuntimeStatusResult>
     {
-        internal static DataFactoryIntegrationRuntimeStatusResult DeserializeDataFactoryIntegrationRuntimeStatusResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryIntegrationRuntimeStatusResult>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DataFactoryIntegrationRuntimeStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DataFactoryIntegrationRuntimeStatusResult>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DataFactoryIntegrationRuntimeStatusResult>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    writer.WritePropertyName("name"u8);
+                    writer.WriteStringValue(Name);
+                }
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataFactoryIntegrationRuntimeStatusResult IJsonModel<DataFactoryIntegrationRuntimeStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeStatusResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement, options);
+        }
+
+        internal static DataFactoryIntegrationRuntimeStatusResult DeserializeDataFactoryIntegrationRuntimeStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> name = default;
             IntegrationRuntimeStatus properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -32,8 +90,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     properties = IntegrationRuntimeStatus.DeserializeIntegrationRuntimeStatus(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFactoryIntegrationRuntimeStatusResult(name.Value, properties);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataFactoryIntegrationRuntimeStatusResult(name.Value, properties, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataFactoryIntegrationRuntimeStatusResult>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeStatusResult)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DataFactoryIntegrationRuntimeStatusResult IPersistableModel<DataFactoryIntegrationRuntimeStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DataFactoryIntegrationRuntimeStatusResult)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement, options);
+        }
+
+        string IPersistableModel<DataFactoryIntegrationRuntimeStatusResult>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

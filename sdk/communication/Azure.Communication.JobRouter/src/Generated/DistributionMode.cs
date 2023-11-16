@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary>
@@ -14,22 +18,28 @@ namespace Azure.Communication.JobRouter
     /// </summary>
     public abstract partial class DistributionMode
     {
-        /// <summary> Initializes a new instance of DistributionMode. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DistributionMode"/>. </summary>
         protected DistributionMode()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DistributionMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DistributionMode"/>. </summary>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
         /// <param name="bypassSelectors"> If set to true, then router will match workers to jobs even if they don't match label selectors. Warning: You may get workers that are not qualified for a job they are matched with if you set this variable to true. This flag is intended more for temporary usage. By default, set to false. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of DistributionMode. </param>
-        internal DistributionMode(int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, DistributionModeKind kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DistributionMode(int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors, DistributionModeKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MinConcurrentOffers = minConcurrentOffers;
             MaxConcurrentOffers = maxConcurrentOffers;
             BypassSelectors = bypassSelectors;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

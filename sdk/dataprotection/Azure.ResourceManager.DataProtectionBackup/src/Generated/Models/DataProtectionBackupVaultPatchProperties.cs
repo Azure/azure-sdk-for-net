@@ -5,14 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Backup Vault Contract for Patch Backup Vault API. </summary>
     public partial class DataProtectionBackupVaultPatchProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupVaultPatchProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatchProperties"/>. </summary>
         public DataProtectionBackupVaultPatchProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultPatchProperties"/>. </summary>
+        /// <param name="monitoringSettings"> Monitoring Settings. </param>
+        /// <param name="securitySettings"> Security Settings. </param>
+        /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupVaultPatchProperties(MonitoringSettings monitoringSettings, BackupVaultSecuritySettings securitySettings, BackupVaultFeatureSettings featureSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MonitoringSettings = monitoringSettings;
+            SecuritySettings = securitySettings;
+            FeatureSettings = featureSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Monitoring Settings. </summary>

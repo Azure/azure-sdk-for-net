@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Result of listing dimensions. It contains a list of available dimensions. </summary>
     internal partial class CostManagementDimensionsListResult
     {
-        /// <summary> Initializes a new instance of CostManagementDimensionsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementDimensionsListResult"/>. </summary>
         internal CostManagementDimensionsListResult()
         {
             Value = new ChangeTrackingList<CostManagementDimension>();
         }
 
-        /// <summary> Initializes a new instance of CostManagementDimensionsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementDimensionsListResult"/>. </summary>
         /// <param name="value"> The list of dimensions. </param>
-        internal CostManagementDimensionsListResult(IReadOnlyList<CostManagementDimension> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementDimensionsListResult(IReadOnlyList<CostManagementDimension> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of dimensions. </summary>

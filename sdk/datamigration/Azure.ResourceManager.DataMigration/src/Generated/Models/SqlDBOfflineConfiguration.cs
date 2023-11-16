@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Offline configuration. </summary>
     internal partial class SqlDBOfflineConfiguration
     {
-        /// <summary> Initializes a new instance of SqlDBOfflineConfiguration. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlDBOfflineConfiguration"/>. </summary>
         internal SqlDBOfflineConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlDBOfflineConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDBOfflineConfiguration"/>. </summary>
         /// <param name="offline"> Offline migration. </param>
-        internal SqlDBOfflineConfiguration(bool? offline)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDBOfflineConfiguration(bool? offline, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Offline = offline;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Offline migration. </summary>

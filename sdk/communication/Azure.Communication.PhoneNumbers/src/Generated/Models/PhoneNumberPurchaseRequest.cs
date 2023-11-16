@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The phone number search purchase request. </summary>
     internal partial class PhoneNumberPurchaseRequest
     {
-        /// <summary> Initializes a new instance of PhoneNumberPurchaseRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberPurchaseRequest"/>. </summary>
         public PhoneNumberPurchaseRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberPurchaseRequest"/>. </summary>
+        /// <param name="searchId"> The search id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberPurchaseRequest(string searchId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SearchId = searchId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The search id. </summary>

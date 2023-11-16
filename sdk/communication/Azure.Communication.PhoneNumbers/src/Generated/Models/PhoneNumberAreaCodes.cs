@@ -15,5 +15,23 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> The list of available area codes. </summary>
     internal partial class PhoneNumberAreaCodes
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAreaCodes"/>. </summary>
+        /// <param name="areaCodes"> Represents a list of available toll-free area codes. </param>
+        /// <param name="nextLink"> Represents the URL link to the next page. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PhoneNumberAreaCodes(IReadOnlyList<PhoneNumberAreaCode> areaCodes, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AreaCodes = areaCodes;
+            NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAreaCodes"/> for deserialization. </summary>
+        internal PhoneNumberAreaCodes()
+        {
+        }
     }
 }

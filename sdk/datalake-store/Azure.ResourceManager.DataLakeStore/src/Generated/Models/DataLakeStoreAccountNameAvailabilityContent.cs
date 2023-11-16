@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Data Lake Store account name availability check parameters. </summary>
     public partial class DataLakeStoreAccountNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The Data Lake Store name to check availability for. </param>
         /// <param name="resourceType"> The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
             Name = name;
             ResourceType = resourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The Data Lake Store name to check availability for. </param>
+        /// <param name="resourceType"> The resource type. Note: This should not be set by the user, as the constant value is Microsoft.DataLakeStore/accounts. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreAccountNameAvailabilityContent(string name, DataLakeStoreResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountNameAvailabilityContent"/> for deserialization. </summary>
+        internal DataLakeStoreAccountNameAvailabilityContent()
+        {
         }
 
         /// <summary> The Data Lake Store name to check availability for. </summary>

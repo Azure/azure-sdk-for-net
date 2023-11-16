@@ -5,14 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Response payload from completing a job. </summary>
     internal partial class CompleteJobResult
     {
-        /// <summary> Initializes a new instance of CompleteJobResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompleteJobResult"/>. </summary>
         internal CompleteJobResult()
         {
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CompleteJobResult"/>. </summary>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompleteJobResult(IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

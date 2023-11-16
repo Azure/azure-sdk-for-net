@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperSourceConnectionsInfo : IUtf8JsonSerializable
+    public partial class MapperSourceConnectionsInfo : IUtf8JsonSerializable, IJsonModel<MapperSourceConnectionsInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperSourceConnectionsInfo>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<MapperSourceConnectionsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<MapperSourceConnectionsInfo>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<MapperSourceConnectionsInfo>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SourceEntities))
             {
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connection"u8);
                 writer.WriteObjectValue(Connection);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MapperSourceConnectionsInfo DeserializeMapperSourceConnectionsInfo(JsonElement element)
+        MapperSourceConnectionsInfo IJsonModel<MapperSourceConnectionsInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MapperSourceConnectionsInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapperSourceConnectionsInfo(document.RootElement, options);
+        }
+
+        internal static MapperSourceConnectionsInfo DeserializeMapperSourceConnectionsInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<MapperTable>> sourceEntities = default;
             Optional<MapperConnection> connection = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceEntities"u8))
@@ -67,8 +108,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     connection = MapperConnection.DeserializeMapperConnection(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MapperSourceConnectionsInfo(Optional.ToList(sourceEntities), connection.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MapperSourceConnectionsInfo(Optional.ToList(sourceEntities), connection.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MapperSourceConnectionsInfo>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MapperSourceConnectionsInfo)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        MapperSourceConnectionsInfo IPersistableModel<MapperSourceConnectionsInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(MapperSourceConnectionsInfo)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeMapperSourceConnectionsInfo(document.RootElement, options);
+        }
+
+        string IPersistableModel<MapperSourceConnectionsInfo>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

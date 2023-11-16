@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The mapping between a particular user and the access type on the SMB share. </summary>
     public partial class UserAccessRight
     {
-        /// <summary> Initializes a new instance of UserAccessRight. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UserAccessRight"/>. </summary>
         /// <param name="userId"> User ID (already existing in the device). </param>
         /// <param name="accessType"> Type of access to be allowed for the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
             UserId = userId;
             AccessType = accessType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserAccessRight"/>. </summary>
+        /// <param name="userId"> User ID (already existing in the device). </param>
+        /// <param name="accessType"> Type of access to be allowed for the user. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UserAccessRight(ResourceIdentifier userId, ShareAccessType accessType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            UserId = userId;
+            AccessType = accessType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserAccessRight"/> for deserialization. </summary>
+        internal UserAccessRight()
+        {
         }
 
         /// <summary> User ID (already existing in the device). </summary>

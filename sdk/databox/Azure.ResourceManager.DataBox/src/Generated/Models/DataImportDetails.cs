@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Details of the data to be used for importing data to azure. </summary>
     public partial class DataImportDetails
     {
-        /// <summary> Initializes a new instance of DataImportDetails. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataImportDetails"/>. </summary>
         /// <param name="accountDetails">
         /// Account details of the data to be transferred
         /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,17 +31,24 @@ namespace Azure.ResourceManager.DataBox.Models
             AccountDetails = accountDetails;
         }
 
-        /// <summary> Initializes a new instance of DataImportDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataImportDetails"/>. </summary>
         /// <param name="accountDetails">
         /// Account details of the data to be transferred
         /// Please note <see cref="DataAccountDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedDiskDetails"/> and <see cref="DataBoxStorageAccountDetails"/>.
         /// </param>
         /// <param name="logCollectionLevel"> Level of the logs to be collected. </param>
-        internal DataImportDetails(DataAccountDetails accountDetails, LogCollectionLevel? logCollectionLevel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataImportDetails(DataAccountDetails accountDetails, LogCollectionLevel? logCollectionLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountDetails = accountDetails;
             LogCollectionLevel = logCollectionLevel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataImportDetails"/> for deserialization. </summary>
+        internal DataImportDetails()
+        {
         }
 
         /// <summary>

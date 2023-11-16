@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> The response from the List maintenance configurations operation. </summary>
     internal partial class ContainerServiceMaintenanceConfigurationListResult
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationListResult"/>. </summary>
         internal ContainerServiceMaintenanceConfigurationListResult()
         {
             Value = new ChangeTrackingList<ContainerServiceMaintenanceConfigurationData>();
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceConfigurationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceConfigurationListResult"/>. </summary>
         /// <param name="value"> The list of maintenance configurations. </param>
         /// <param name="nextLink"> The URL to get the next set of maintenance configuration results. </param>
-        internal ContainerServiceMaintenanceConfigurationListResult(IReadOnlyList<ContainerServiceMaintenanceConfigurationData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceConfigurationListResult(IReadOnlyList<ContainerServiceMaintenanceConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of maintenance configurations. </summary>

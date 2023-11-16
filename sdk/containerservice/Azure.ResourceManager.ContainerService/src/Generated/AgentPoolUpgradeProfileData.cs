@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class AgentPoolUpgradeProfileData : ResourceData
     {
-        /// <summary> Initializes a new instance of AgentPoolUpgradeProfileData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.ContainerService
             Upgrades = new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolUpgradeProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,12 +44,19 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
         /// <param name="latestNodeImageVersion"> The latest AKS supported node image version. </param>
-        internal AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, string latestNodeImageVersion) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolUpgradeProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kubernetesVersion, ContainerServiceOSType osType, IReadOnlyList<AgentPoolUpgradeProfilePropertiesUpgradesItem> upgrades, string latestNodeImageVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             KubernetesVersion = kubernetesVersion;
             OSType = osType;
             Upgrades = upgrades;
             LatestNodeImageVersion = latestNodeImageVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeProfileData"/> for deserialization. </summary>
+        internal AgentPoolUpgradeProfileData()
+        {
         }
 
         /// <summary> The Kubernetes version (major.minor.patch). </summary>

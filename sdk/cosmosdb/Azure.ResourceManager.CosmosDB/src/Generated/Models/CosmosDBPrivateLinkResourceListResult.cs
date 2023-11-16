@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> A list of private link resources. </summary>
     internal partial class CosmosDBPrivateLinkResourceListResult
     {
-        /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateLinkResourceListResult"/>. </summary>
         internal CosmosDBPrivateLinkResourceListResult()
         {
             Value = new ChangeTrackingList<CosmosDBPrivateLinkResourceData>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBPrivateLinkResourceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateLinkResourceListResult"/>. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal CosmosDBPrivateLinkResourceListResult(IReadOnlyList<CosmosDBPrivateLinkResourceData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBPrivateLinkResourceListResult(IReadOnlyList<CosmosDBPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Array of private link resources. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Container group diagnostic information. </summary>
     internal partial class ContainerGroupDiagnostics
     {
-        /// <summary> Initializes a new instance of ContainerGroupDiagnostics. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupDiagnostics"/>. </summary>
         public ContainerGroupDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupDiagnostics. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupDiagnostics"/>. </summary>
         /// <param name="logAnalytics"> Container group log analytics information. </param>
-        internal ContainerGroupDiagnostics(ContainerGroupLogAnalytics logAnalytics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupDiagnostics(ContainerGroupLogAnalytics logAnalytics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LogAnalytics = logAnalytics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Container group log analytics information. </summary>

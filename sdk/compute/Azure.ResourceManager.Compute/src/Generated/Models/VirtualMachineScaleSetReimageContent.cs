@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,21 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a Virtual Machine Scale Set VM Reimage Parameters. </summary>
     public partial class VirtualMachineScaleSetReimageContent : VirtualMachineScaleSetVmReimageContent
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetReimageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetReimageContent"/>. </summary>
         public VirtualMachineScaleSetReimageContent()
         {
             InstanceIds = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetReimageContent"/>. </summary>
+        /// <param name="tempDisk"> Specifies whether to reimage temp disk. Default value: false. Note: This temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS disk. </param>
+        /// <param name="exactVersion"> Specifies in decimal number, the version the OS disk should be reimaged to. If exact version is not provided, the OS disk is reimaged to the existing version of OS Disk. </param>
+        /// <param name="osProfile"> Specifies information required for reimaging the non-ephemeral OS disk. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="instanceIds"> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </param>
+        internal VirtualMachineScaleSetReimageContent(bool? tempDisk, string exactVersion, OSProfileProvisioningData osProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> instanceIds) : base(tempDisk, exactVersion, osProfile, serializedAdditionalRawData)
+        {
+            InstanceIds = instanceIds;
         }
 
         /// <summary> The virtual machine scale set instance ids. Omitting the virtual machine scale set instance ids will result in the operation being performed on all virtual machines in the virtual machine scale set. </summary>

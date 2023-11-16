@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class PredictionResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of PredictionResourceFormatData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionResourceFormatData"/>. </summary>
         public PredictionResourceFormatData()
         {
             Description = new ChangeTrackingDictionary<string, string>();
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Grades = new ChangeTrackingList<PredictionGradesItem>();
         }
 
-        /// <summary> Initializes a new instance of PredictionResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +55,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="scoreLabel"> Score label. </param>
         /// <param name="grades"> The prediction grades. </param>
         /// <param name="systemGeneratedEntities"> System generated entities. </param>
-        internal PredictionResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> description, IDictionary<string, string> displayName, IList<string> involvedInteractionTypes, IList<string> involvedKpiTypes, IList<string> involvedRelationships, string negativeOutcomeExpression, string positiveOutcomeExpression, string primaryProfileType, ProvisioningState? provisioningState, string predictionName, string scopeExpression, Guid? tenantId, bool? autoAnalyze, PredictionMappings mappings, string scoreLabel, IList<PredictionGradesItem> grades, PredictionSystemGeneratedEntities systemGeneratedEntities) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> description, IDictionary<string, string> displayName, IList<string> involvedInteractionTypes, IList<string> involvedKpiTypes, IList<string> involvedRelationships, string negativeOutcomeExpression, string positiveOutcomeExpression, string primaryProfileType, ProvisioningState? provisioningState, string predictionName, string scopeExpression, Guid? tenantId, bool? autoAnalyze, PredictionMappings mappings, string scoreLabel, IList<PredictionGradesItem> grades, PredictionSystemGeneratedEntities systemGeneratedEntities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             DisplayName = displayName;
@@ -71,6 +75,7 @@ namespace Azure.ResourceManager.CustomerInsights
             ScoreLabel = scoreLabel;
             Grades = grades;
             SystemGeneratedEntities = systemGeneratedEntities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Description of the prediction. </summary>

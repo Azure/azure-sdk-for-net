@@ -6,30 +6,36 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Instance view status. </summary>
     public partial class InstanceViewStatus
     {
-        /// <summary> Initializes a new instance of InstanceViewStatus. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstanceViewStatus"/>. </summary>
         public InstanceViewStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of InstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceViewStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
-        internal InstanceViewStatus(string code, ComputeStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstanceViewStatus(string code, ComputeStatusLevelType? level, string displayStatus, string message, DateTimeOffset? time, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Level = level;
             DisplayStatus = displayStatus;
             Message = message;
             Time = time;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status code. </summary>

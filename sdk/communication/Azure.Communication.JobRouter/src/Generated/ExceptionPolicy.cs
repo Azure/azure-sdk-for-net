@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,29 @@ namespace Azure.Communication.JobRouter
     /// <summary> A policy that defines actions to execute when exception are triggered. </summary>
     public partial class ExceptionPolicy
     {
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicy"/>. </summary>
         internal ExceptionPolicy()
         {
             ExceptionRules = new ChangeTrackingList<ExceptionRule>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExceptionPolicy"/>. </summary>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of an exception policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
-        internal ExceptionPolicy(string etag, string id, string name, IList<ExceptionRule> exceptionRules)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExceptionPolicy(string etag, string id, string name, IList<ExceptionRule> exceptionRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             _etag = etag;
             Id = id;
             Name = name;
             ExceptionRules = exceptionRules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Id of an exception policy. </summary>
         public string Id { get; }

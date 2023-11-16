@@ -15,7 +15,10 @@ namespace Azure.Communication.Messages
     /// <summary> The ListTemplatesResponse. </summary>
     internal partial class ListTemplatesResponse
     {
-        /// <summary> Initializes a new instance of ListTemplatesResponse. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ListTemplatesResponse"/>. </summary>
         /// <param name="value"> The collection of elements. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ListTemplatesResponse(IEnumerable<TemplateResponseInternal> value)
@@ -25,13 +28,20 @@ namespace Azure.Communication.Messages
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListTemplatesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListTemplatesResponse"/>. </summary>
         /// <param name="value"> The collection of elements. </param>
         /// <param name="nextLink"></param>
-        internal ListTemplatesResponse(IReadOnlyList<TemplateResponseInternal> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ListTemplatesResponse(IReadOnlyList<TemplateResponseInternal> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListTemplatesResponse"/> for deserialization. </summary>
+        internal ListTemplatesResponse()
+        {
         }
 
         /// <summary> The collection of elements. </summary>

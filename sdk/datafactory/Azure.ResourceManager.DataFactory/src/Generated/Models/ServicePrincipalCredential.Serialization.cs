@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ServicePrincipalCredential : IUtf8JsonSerializable
+    public partial class ServicePrincipalCredential : IUtf8JsonSerializable, IJsonModel<ServicePrincipalCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePrincipalCredential>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ServicePrincipalCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ServicePrincipalCredential>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ServicePrincipalCredential>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CredentialType);
@@ -80,8 +89,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalCredential DeserializeServicePrincipalCredential(JsonElement element)
+        ServicePrincipalCredential IJsonModel<ServicePrincipalCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalCredential)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalCredential(document.RootElement, options);
+        }
+
+        internal static ServicePrincipalCredential DeserializeServicePrincipalCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -171,5 +194,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ServicePrincipalCredential(type, description.Value, Optional.ToList(annotations), additionalProperties, servicePrincipalId.Value, servicePrincipalKey, tenant.Value);
         }
+
+        BinaryData IPersistableModel<ServicePrincipalCredential>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalCredential)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ServicePrincipalCredential IPersistableModel<ServicePrincipalCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalCredential)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeServicePrincipalCredential(document.RootElement, options);
+        }
+
+        string IPersistableModel<ServicePrincipalCredential>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Immutability Settings at vault level. </summary>
     internal partial class ImmutabilitySettings
     {
-        /// <summary> Initializes a new instance of ImmutabilitySettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImmutabilitySettings"/>. </summary>
         public ImmutabilitySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ImmutabilitySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImmutabilitySettings"/>. </summary>
         /// <param name="state"> Immutability state. </param>
-        internal ImmutabilitySettings(BackupVaultImmutabilityState? state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImmutabilitySettings(BackupVaultImmutabilityState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Immutability state. </summary>

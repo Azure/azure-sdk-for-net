@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the OS profile for the cloud service. </summary>
     internal partial class CloudServiceOSProfile
     {
-        /// <summary> Initializes a new instance of CloudServiceOSProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSProfile"/>. </summary>
         public CloudServiceOSProfile()
         {
             Secrets = new ChangeTrackingList<CloudServiceVaultSecretGroup>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceOSProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSProfile"/>. </summary>
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the role instances. </param>
-        internal CloudServiceOSProfile(IList<CloudServiceVaultSecretGroup> secrets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceOSProfile(IList<CloudServiceVaultSecretGroup> secrets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Secrets = secrets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies set of certificates that should be installed onto the role instances. </summary>

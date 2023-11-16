@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Specifies the mapping between this particular user and the type of access he has on shares on this device. </summary>
     public partial class ShareAccessRight
     {
-        /// <summary> Initializes a new instance of ShareAccessRight. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ShareAccessRight"/>. </summary>
         /// <param name="shareId"> The share ID. </param>
         /// <param name="accessType"> Type of access to be allowed on the share for this user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
             ShareId = shareId;
             AccessType = accessType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShareAccessRight"/>. </summary>
+        /// <param name="shareId"> The share ID. </param>
+        /// <param name="accessType"> Type of access to be allowed on the share for this user. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ShareAccessRight(ResourceIdentifier shareId, ShareAccessType accessType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ShareId = shareId;
+            AccessType = accessType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShareAccessRight"/> for deserialization. </summary>
+        internal ShareAccessRight()
+        {
         }
 
         /// <summary> The share ID. </summary>

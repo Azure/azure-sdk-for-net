@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RunFilterContent : IUtf8JsonSerializable
+    public partial class RunFilterContent : IUtf8JsonSerializable, IJsonModel<RunFilterContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunFilterContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<RunFilterContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<RunFilterContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<RunFilterContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContinuationToken))
             {
@@ -44,7 +55,128 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RunFilterContent IJsonModel<RunFilterContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunFilterContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunFilterContent(document.RootElement, options);
+        }
+
+        internal static RunFilterContent DeserializeRunFilterContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> continuationToken = default;
+            DateTimeOffset lastUpdatedAfter = default;
+            DateTimeOffset lastUpdatedBefore = default;
+            Optional<IList<RunQueryFilter>> filters = default;
+            Optional<IList<RunQueryOrderBy>> orderBy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("continuationToken"u8))
+                {
+                    continuationToken = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastUpdatedAfter"u8))
+                {
+                    lastUpdatedAfter = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastUpdatedBefore"u8))
+                {
+                    lastUpdatedBefore = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("filters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RunQueryFilter> array = new List<RunQueryFilter>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RunQueryFilter.DeserializeRunQueryFilter(item));
+                    }
+                    filters = array;
+                    continue;
+                }
+                if (property.NameEquals("orderBy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RunQueryOrderBy> array = new List<RunQueryOrderBy>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(RunQueryOrderBy.DeserializeRunQueryOrderBy(item));
+                    }
+                    orderBy = array;
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RunFilterContent(continuationToken.Value, lastUpdatedAfter, lastUpdatedBefore, Optional.ToList(filters), Optional.ToList(orderBy), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RunFilterContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunFilterContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        RunFilterContent IPersistableModel<RunFilterContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(RunFilterContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeRunFilterContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<RunFilterContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

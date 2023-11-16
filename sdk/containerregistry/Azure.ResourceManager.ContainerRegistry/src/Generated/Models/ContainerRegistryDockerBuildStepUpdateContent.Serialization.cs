@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryDockerBuildStepUpdateContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryDockerBuildStepUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ImageNames))
             {
@@ -67,7 +78,160 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ContainerRegistryDockerBuildStepUpdateContent IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryDockerBuildStepUpdateContent(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryDockerBuildStepUpdateContent DeserializeContainerRegistryDockerBuildStepUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<string>> imageNames = default;
+            Optional<bool> isPushEnabled = default;
+            Optional<bool> noCache = default;
+            Optional<string> dockerFilePath = default;
+            Optional<IList<ContainerRegistryRunArgument>> arguments = default;
+            Optional<string> target = default;
+            ContainerRegistryTaskStepType type = default;
+            Optional<string> contextPath = default;
+            Optional<string> contextAccessToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("imageNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    imageNames = array;
+                    continue;
+                }
+                if (property.NameEquals("isPushEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isPushEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("noCache"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    noCache = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("dockerFilePath"u8))
+                {
+                    dockerFilePath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("arguments"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                    }
+                    arguments = array;
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ContainerRegistryTaskStepType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("contextPath"u8))
+                {
+                    contextPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contextAccessToken"u8))
+                {
+                    contextAccessToken = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryDockerBuildStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, Optional.ToList(imageNames), Optional.ToNullable(isPushEnabled), Optional.ToNullable(noCache), dockerFilePath.Value, Optional.ToList(arguments), target.Value);
+        }
+
+        BinaryData IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerRegistryDockerBuildStepUpdateContent IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryDockerBuildStepUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryDockerBuildStepUpdateContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerRegistryDockerBuildStepUpdateContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlMISyncTaskInput : IUtf8JsonSerializable
+    public partial class ConnectToTargetSqlMISyncTaskInput : IUtf8JsonSerializable, IJsonModel<ConnectToTargetSqlMISyncTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetSqlMISyncTaskInput>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConnectToTargetSqlMISyncTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConnectToTargetSqlMISyncTaskInput>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConnectToTargetSqlMISyncTaskInput>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo);
             writer.WritePropertyName("azureApp"u8);
             writer.WriteObjectValue(AzureApp);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectToTargetSqlMISyncTaskInput DeserializeConnectToTargetSqlMISyncTaskInput(JsonElement element)
+        ConnectToTargetSqlMISyncTaskInput IJsonModel<ConnectToTargetSqlMISyncTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToTargetSqlMISyncTaskInput(document.RootElement, options);
+        }
+
+        internal static ConnectToTargetSqlMISyncTaskInput DeserializeConnectToTargetSqlMISyncTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MISqlConnectionInfo targetConnectionInfo = default;
             AzureActiveDirectoryApp azureApp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
@@ -42,8 +84,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                     azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToTargetSqlMISyncTaskInput(targetConnectionInfo, azureApp);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectToTargetSqlMISyncTaskInput(targetConnectionInfo, azureApp, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectToTargetSqlMISyncTaskInput>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConnectToTargetSqlMISyncTaskInput IPersistableModel<ConnectToTargetSqlMISyncTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlMISyncTaskInput)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConnectToTargetSqlMISyncTaskInput(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConnectToTargetSqlMISyncTaskInput>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

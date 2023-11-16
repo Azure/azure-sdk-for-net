@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,9 +14,27 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The linked integration runtime information. </summary>
     public partial class CreateLinkedIntegrationRuntimeContent
     {
-        /// <summary> Initializes a new instance of CreateLinkedIntegrationRuntimeContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeContent"/>. </summary>
         public CreateLinkedIntegrationRuntimeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateLinkedIntegrationRuntimeContent"/>. </summary>
+        /// <param name="name"> The name of the linked integration runtime. </param>
+        /// <param name="subscriptionId"> The ID of the subscription that the linked integration runtime belongs to. </param>
+        /// <param name="dataFactoryName"> The name of the data factory that the linked integration runtime belongs to. </param>
+        /// <param name="dataFactoryLocation"> The location of the data factory that the linked integration runtime belongs to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateLinkedIntegrationRuntimeContent(string name, string subscriptionId, string dataFactoryName, AzureLocation? dataFactoryLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            SubscriptionId = subscriptionId;
+            DataFactoryName = dataFactoryName;
+            DataFactoryLocation = dataFactoryLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the linked integration runtime. </summary>

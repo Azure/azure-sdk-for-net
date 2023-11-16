@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class XmlReadSettings : IUtf8JsonSerializable
+    public partial class XmlReadSettings : IUtf8JsonSerializable, IJsonModel<XmlReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<XmlReadSettings>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<XmlReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<XmlReadSettings>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<XmlReadSettings>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CompressionProperties))
             {
@@ -60,8 +69,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element)
+        XmlReadSettings IJsonModel<XmlReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeXmlReadSettings(document.RootElement, options);
+        }
+
+        internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -131,5 +154,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);
         }
+
+        BinaryData IPersistableModel<XmlReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        XmlReadSettings IPersistableModel<XmlReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeXmlReadSettings(document.RootElement, options);
+        }
+
+        string IPersistableModel<XmlReadSettings>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

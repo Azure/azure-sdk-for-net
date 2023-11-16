@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Details about a user assigned identity. </summary>
     public partial class ContainerServiceUserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of ContainerServiceUserAssignedIdentity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceUserAssignedIdentity"/>. </summary>
         public ContainerServiceUserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceUserAssignedIdentity"/>. </summary>
         /// <param name="resourceId"> The resource ID of the user assigned identity. </param>
         /// <param name="clientId"> The client ID of the user assigned identity. </param>
         /// <param name="objectId"> The object ID of the user assigned identity. </param>
-        internal ContainerServiceUserAssignedIdentity(ResourceIdentifier resourceId, Guid? clientId, Guid? objectId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceUserAssignedIdentity(ResourceIdentifier resourceId, Guid? clientId, Guid? objectId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ClientId = clientId;
             ObjectId = objectId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource ID of the user assigned identity. </summary>

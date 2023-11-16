@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Community Gallery Image versions operation response. </summary>
     internal partial class CommunityGalleryImageVersionList
     {
-        /// <summary> Initializes a new instance of CommunityGalleryImageVersionList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionList"/>. </summary>
         /// <param name="value"> A list of community gallery image versions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal CommunityGalleryImageVersionList(IEnumerable<CommunityGalleryImageVersionData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.Compute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of CommunityGalleryImageVersionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionList"/>. </summary>
         /// <param name="value"> A list of community gallery image versions. </param>
         /// <param name="nextLink"> The uri to fetch the next page of community gallery image versions. Call ListNext() with this to fetch the next page of community gallery image versions. </param>
-        internal CommunityGalleryImageVersionList(IReadOnlyList<CommunityGalleryImageVersionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunityGalleryImageVersionList(IReadOnlyList<CommunityGalleryImageVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionList"/> for deserialization. </summary>
+        internal CommunityGalleryImageVersionList()
+        {
         }
 
         /// <summary> A list of community gallery image versions. </summary>

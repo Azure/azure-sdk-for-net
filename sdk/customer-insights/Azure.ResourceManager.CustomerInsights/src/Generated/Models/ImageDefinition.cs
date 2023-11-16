@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
     /// <summary> The image definition. </summary>
     public partial class ImageDefinition
     {
-        /// <summary> Initializes a new instance of ImageDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageDefinition"/>. </summary>
         internal ImageDefinition()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageDefinition"/>. </summary>
         /// <param name="imageExists"> Whether image exists already. </param>
         /// <param name="contentUri"> Content URL for the image blob. </param>
         /// <param name="relativePath"> Relative path of the image. </param>
-        internal ImageDefinition(bool? imageExists, Uri contentUri, string relativePath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageDefinition(bool? imageExists, Uri contentUri, string relativePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImageExists = imageExists;
             ContentUri = contentUri;
             RelativePath = relativePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether image exists already. </summary>

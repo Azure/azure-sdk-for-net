@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Authentication mechanism for IoT devices. </summary>
     internal partial class Authentication
     {
-        /// <summary> Initializes a new instance of Authentication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Authentication"/>. </summary>
         public Authentication()
         {
         }
 
-        /// <summary> Initializes a new instance of Authentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="Authentication"/>. </summary>
         /// <param name="symmetricKey"> Symmetric key for authentication. </param>
-        internal Authentication(DataBoxEdgeSymmetricKey symmetricKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Authentication(DataBoxEdgeSymmetricKey symmetricKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SymmetricKey = symmetricKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Symmetric key for authentication. </summary>

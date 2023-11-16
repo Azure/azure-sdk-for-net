@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
     public partial class ContainerAppOpenIdConnectLogin
     {
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectLogin. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectLogin"/>. </summary>
         public ContainerAppOpenIdConnectLogin()
         {
             Scopes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectLogin. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectLogin"/>. </summary>
         /// <param name="nameClaimType"> The name of the claim that contains the users name. </param>
         /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
-        internal ContainerAppOpenIdConnectLogin(string nameClaimType, IList<string> scopes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppOpenIdConnectLogin(string nameClaimType, IList<string> scopes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameClaimType = nameClaimType;
             Scopes = scopes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the claim that contains the users name. </summary>

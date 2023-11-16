@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Result of listing reservation recommendations. </summary>
     internal partial class ReservationRecommendationsListResult
     {
-        /// <summary> Initializes a new instance of ReservationRecommendationsListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationRecommendationsListResult"/>. </summary>
         internal ReservationRecommendationsListResult()
         {
             Value = new ChangeTrackingList<ConsumptionReservationRecommendation>();
         }
 
-        /// <summary> Initializes a new instance of ReservationRecommendationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationRecommendationsListResult"/>. </summary>
         /// <param name="value">
         /// The list of reservation recommendations.
         /// Please note <see cref="ConsumptionReservationRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -27,11 +31,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="previousLink"> The link (url) to the previous page of results. </param>
-        internal ReservationRecommendationsListResult(IReadOnlyList<ConsumptionReservationRecommendation> value, string nextLink, string previousLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationRecommendationsListResult(IReadOnlyList<ConsumptionReservationRecommendation> value, string nextLink, string previousLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             PreviousLink = previousLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

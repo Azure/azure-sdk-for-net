@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.Identity.Models;
 using Azure.Core;
 
@@ -14,5 +15,23 @@ namespace Azure.Communication.Identity
     /// <summary> A communication identity with access token. </summary>
     public partial class CommunicationUserIdentifierAndToken
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierAndToken"/>. </summary>
+        /// <param name="identity"> A communication identity. </param>
+        /// <param name="internalAccessToken"> An access token. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity, CommunicationIdentityAccessToken internalAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Identity = identity;
+            InternalAccessToken = internalAccessToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierAndToken"/> for deserialization. </summary>
+        internal CommunicationUserIdentifierAndToken()
+        {
+        }
     }
 }

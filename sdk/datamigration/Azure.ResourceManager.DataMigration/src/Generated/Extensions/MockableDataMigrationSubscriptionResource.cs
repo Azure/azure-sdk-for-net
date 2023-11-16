@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlMigrationServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlMigrationServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataMigrationServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, (e, o) => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataMigrationServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, (e, o) => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetDataMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

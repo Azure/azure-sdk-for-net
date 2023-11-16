@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryEncodedTaskStepUpdateContent : IUtf8JsonSerializable
+    public partial class ContainerRegistryEncodedTaskStepUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryEncodedTaskStepUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryEncodedTaskStepUpdateContent>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerRegistryEncodedTaskStepUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerRegistryEncodedTaskStepUpdateContent>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerRegistryEncodedTaskStepUpdateContent>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EncodedTaskContent))
             {
@@ -47,7 +58,125 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ContainerRegistryEncodedTaskStepUpdateContent IJsonModel<ContainerRegistryEncodedTaskStepUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryEncodedTaskStepUpdateContent(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryEncodedTaskStepUpdateContent DeserializeContainerRegistryEncodedTaskStepUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> encodedTaskContent = default;
+            Optional<string> encodedValuesContent = default;
+            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            ContainerRegistryTaskStepType type = default;
+            Optional<string> contextPath = default;
+            Optional<string> contextAccessToken = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("encodedTaskContent"u8))
+                {
+                    encodedTaskContent = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("encodedValuesContent"u8))
+                {
+                    encodedValuesContent = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("values"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                    }
+                    values = array;
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ContainerRegistryTaskStepType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("contextPath"u8))
+                {
+                    contextPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("contextAccessToken"u8))
+                {
+                    contextAccessToken = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryEncodedTaskStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, encodedTaskContent.Value, encodedValuesContent.Value, Optional.ToList(values));
+        }
+
+        BinaryData IPersistableModel<ContainerRegistryEncodedTaskStepUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerRegistryEncodedTaskStepUpdateContent IPersistableModel<ContainerRegistryEncodedTaskStepUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerRegistryEncodedTaskStepUpdateContent(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerRegistryEncodedTaskStepUpdateContent>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

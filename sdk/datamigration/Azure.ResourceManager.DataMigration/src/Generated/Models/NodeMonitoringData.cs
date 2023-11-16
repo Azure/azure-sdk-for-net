@@ -14,13 +14,16 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The NodeMonitoringData. </summary>
     public partial class NodeMonitoringData
     {
-        /// <summary> Initializes a new instance of NodeMonitoringData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NodeMonitoringData"/>. </summary>
         internal NodeMonitoringData()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of NodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeMonitoringData"/>. </summary>
         /// <param name="additionalProperties"> Unmatched properties from the message are deserialized in this collection. </param>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
@@ -30,7 +33,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
         /// <param name="sentBytes"> Sent bytes on the integration runtime node. </param>
         /// <param name="receivedBytes"> Received bytes on the integration runtime node. </param>
-        internal NodeMonitoringData(IReadOnlyDictionary<string, BinaryData> additionalProperties, string nodeName, int? availableMemoryInMB, int? cpuUtilization, int? concurrentJobsLimit, int? concurrentJobsRunning, int? maxConcurrentJobs, double? sentBytes, double? receivedBytes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NodeMonitoringData(IReadOnlyDictionary<string, BinaryData> additionalProperties, string nodeName, int? availableMemoryInMB, int? cpuUtilization, int? concurrentJobsLimit, int? concurrentJobsRunning, int? maxConcurrentJobs, double? sentBytes, double? receivedBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdditionalProperties = additionalProperties;
             NodeName = nodeName;
@@ -41,6 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             MaxConcurrentJobs = maxConcurrentJobs;
             SentBytes = sentBytes;
             ReceivedBytes = receivedBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

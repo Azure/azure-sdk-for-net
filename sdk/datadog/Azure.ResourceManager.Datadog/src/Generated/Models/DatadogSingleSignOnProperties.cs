@@ -6,28 +6,34 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The DatadogSingleSignOnProperties. </summary>
     public partial class DatadogSingleSignOnProperties
     {
-        /// <summary> Initializes a new instance of DatadogSingleSignOnProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnProperties"/>. </summary>
         public DatadogSingleSignOnProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogSingleSignOnProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSingleSignOnProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="singleSignOnState"> Various states of the SSO resource. </param>
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Datadog Organization. </param>
-        internal DatadogSingleSignOnProperties(ProvisioningState? provisioningState, SingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogSingleSignOnProperties(ProvisioningState? provisioningState, SingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
             SingleSignOnUri = singleSignOnUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the provisioning state. </summary>

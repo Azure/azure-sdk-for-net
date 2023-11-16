@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Notification preference for a job stage. </summary>
     public partial class NotificationPreference
     {
-        /// <summary> Initializes a new instance of NotificationPreference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationPreference"/>. </summary>
         /// <param name="stageName"> Name of the stage. </param>
         /// <param name="sendNotification"> Notification is required or not. </param>
         public NotificationPreference(NotificationStageName stageName, bool sendNotification)
         {
             StageName = stageName;
             SendNotification = sendNotification;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationPreference"/>. </summary>
+        /// <param name="stageName"> Name of the stage. </param>
+        /// <param name="sendNotification"> Notification is required or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationPreference(NotificationStageName stageName, bool sendNotification, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            StageName = stageName;
+            SendNotification = sendNotification;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationPreference"/> for deserialization. </summary>
+        internal NotificationPreference()
+        {
         }
 
         /// <summary> Name of the stage. </summary>

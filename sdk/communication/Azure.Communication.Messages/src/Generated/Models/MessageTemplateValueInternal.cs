@@ -5,16 +5,57 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Communication.Messages
 {
     /// <summary> The class describes a parameter of a template. </summary>
     internal partial class MessageTemplateValueInternal
     {
-        /// <summary> Initializes a new instance of MessageTemplateValueInternal. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueInternal"/>. </summary>
         /// <param name="kind"> The template value kind. </param>
         public MessageTemplateValueInternal(MessageTemplateValueKind kind)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueInternal"/>. </summary>
+        /// <param name="kind"> The template value kind. </param>
+        /// <param name="text"> The message template's text value information. </param>
+        /// <param name="image">
+        /// The message template's media value information.
+        /// Could be an image, document or video.
+        /// </param>
+        /// <param name="document">
+        /// The message template's media value information.
+        /// Could be an image, document or video.
+        /// </param>
+        /// <param name="video">
+        /// The message template's media value information.
+        /// Could be an image, document or video.
+        /// </param>
+        /// <param name="location"> The message template's location value information. </param>
+        /// <param name="quickAction"> The message template's quick action value information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateValueInternal(MessageTemplateValueKind kind, MessageTemplateValueText text, MessageTemplateValueMedia image, MessageTemplateValueMedia document, MessageTemplateValueMedia video, MessageTemplateParameterLocation location, MessageTemplateValueQuickAction quickAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Kind = kind;
+            Text = text;
+            Image = image;
+            Document = document;
+            Video = video;
+            Location = location;
+            QuickAction = quickAction;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueInternal"/> for deserialization. </summary>
+        internal MessageTemplateValueInternal()
+        {
         }
 
         /// <summary> The template value kind. </summary>

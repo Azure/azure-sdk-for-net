@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> Network Interface model. </summary>
     public partial class VMwareNetworkInterface
     {
-        /// <summary> Initializes a new instance of VMwareNetworkInterface. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareNetworkInterface"/>. </summary>
         public VMwareNetworkInterface()
         {
             IPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VMwareNetworkInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareNetworkInterface"/>. </summary>
         /// <param name="name"> Gets or sets the name of the network interface. </param>
         /// <param name="label"> Gets or sets the label of the virtual network in vCenter that the nic is connected to. </param>
         /// <param name="ipAddresses"> Gets or sets the nic ip addresses. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="networkMoName"> Gets or sets the name of the virtual network in vCenter that the nic is connected to. </param>
         /// <param name="deviceKey"> Gets or sets the device key value. </param>
         /// <param name="ipSettings"> Gets or sets the ipsettings. </param>
-        internal VMwareNetworkInterface(string name, string label, IReadOnlyList<string> ipAddresses, string macAddress, string networkId, VMwareNicType? nicType, PowerOnBootOption? powerOnBoot, string networkMoRefId, string networkMoName, int? deviceKey, NicIPSettings ipSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareNetworkInterface(string name, string label, IReadOnlyList<string> ipAddresses, string macAddress, string networkId, VMwareNicType? nicType, PowerOnBootOption? powerOnBoot, string networkMoRefId, string networkMoName, int? deviceKey, NicIPSettings ipSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Label = label;
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             NetworkMoName = networkMoName;
             DeviceKey = deviceKey;
             IPSettings = ipSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the network interface. </summary>

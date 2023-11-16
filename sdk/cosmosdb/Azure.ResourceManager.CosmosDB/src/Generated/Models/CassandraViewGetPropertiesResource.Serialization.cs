@@ -5,26 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraViewGetPropertiesResource : IUtf8JsonSerializable
+    public partial class CassandraViewGetPropertiesResource : IUtf8JsonSerializable, IJsonModel<CassandraViewGetPropertiesResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraViewGetPropertiesResource>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CassandraViewGetPropertiesResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CassandraViewGetPropertiesResource>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CassandraViewGetPropertiesResource>)} interface");
+            }
+
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Rid))
+                {
+                    writer.WritePropertyName("_rid"u8);
+                    writer.WriteStringValue(Rid);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    writer.WritePropertyName("_ts"u8);
+                    writer.WriteNumberValue(Timestamp.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    writer.WritePropertyName("_etag"u8);
+                    writer.WriteStringValue(ETag.Value.ToString());
+                }
+            }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("viewDefinition"u8);
             writer.WriteStringValue(ViewDefinition);
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CassandraViewGetPropertiesResource DeserializeCassandraViewGetPropertiesResource(JsonElement element)
+        CassandraViewGetPropertiesResource IJsonModel<CassandraViewGetPropertiesResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraViewGetPropertiesResource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraViewGetPropertiesResource(document.RootElement, options);
+        }
+
+        internal static CassandraViewGetPropertiesResource DeserializeCassandraViewGetPropertiesResource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +98,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<ETag> etag = default;
             string id = default;
             string viewDefinition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -69,8 +135,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     viewDefinition = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CassandraViewGetPropertiesResource(id, viewDefinition, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CassandraViewGetPropertiesResource(id, viewDefinition, serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
+
+        BinaryData IPersistableModel<CassandraViewGetPropertiesResource>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraViewGetPropertiesResource)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CassandraViewGetPropertiesResource IPersistableModel<CassandraViewGetPropertiesResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CassandraViewGetPropertiesResource)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCassandraViewGetPropertiesResource(document.RootElement, options);
+        }
+
+        string IPersistableModel<CassandraViewGetPropertiesResource>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

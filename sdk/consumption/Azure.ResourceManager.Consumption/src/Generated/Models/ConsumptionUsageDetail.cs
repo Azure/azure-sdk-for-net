@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,13 +20,16 @@ namespace Azure.ResourceManager.Consumption.Models
     /// </summary>
     public partial class ConsumptionUsageDetail : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionUsageDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionUsageDetail"/>. </summary>
         internal ConsumptionUsageDetail()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionUsageDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionUsageDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,11 +37,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of usage details. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal ConsumptionUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = etag;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the kind of usage details. </summary>

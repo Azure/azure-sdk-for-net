@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Microsoft Defender settings for the security profile threat detection. </summary>
     internal partial class ManagedClusterSecurityProfileDefenderSecurityMonitoring
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefenderSecurityMonitoring. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityMonitoring"/>. </summary>
         public ManagedClusterSecurityProfileDefenderSecurityMonitoring()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileDefenderSecurityMonitoring. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefenderSecurityMonitoring"/>. </summary>
         /// <param name="isSecurityMonitoringEnabled"> Whether to enable Defender threat detection. </param>
-        internal ManagedClusterSecurityProfileDefenderSecurityMonitoring(bool? isSecurityMonitoringEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfileDefenderSecurityMonitoring(bool? isSecurityMonitoringEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsSecurityMonitoringEnabled = isSecurityMonitoringEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to enable Defender threat detection. </summary>

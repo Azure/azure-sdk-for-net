@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class BudgetAssociatedNotification : IUtf8JsonSerializable
+    public partial class BudgetAssociatedNotification : IUtf8JsonSerializable, IJsonModel<BudgetAssociatedNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetAssociatedNotification>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<BudgetAssociatedNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<BudgetAssociatedNotification>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<BudgetAssociatedNotification>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
@@ -59,11 +69,40 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element)
+        BudgetAssociatedNotification IJsonModel<BudgetAssociatedNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBudgetAssociatedNotification(document.RootElement, options);
+        }
+
+        internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +115,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<IList<string>> contactGroups = default;
             Optional<NotificationThresholdType> thresholdType = default;
             Optional<RecipientNotificationLanguageCode> locale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -149,8 +190,38 @@ namespace Azure.ResourceManager.Consumption.Models
                     locale = new RecipientNotificationLanguageCode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BudgetAssociatedNotification(enabled, @operator, threshold, contactEmails, Optional.ToList(contactRoles), Optional.ToList(contactGroups), Optional.ToNullable(thresholdType), Optional.ToNullable(locale));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BudgetAssociatedNotification(enabled, @operator, threshold, contactEmails, Optional.ToList(contactRoles), Optional.ToList(contactGroups), Optional.ToNullable(thresholdType), Optional.ToNullable(locale), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BudgetAssociatedNotification>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        BudgetAssociatedNotification IPersistableModel<BudgetAssociatedNotification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(BudgetAssociatedNotification)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeBudgetAssociatedNotification(document.RootElement, options);
+        }
+
+        string IPersistableModel<BudgetAssociatedNotification>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

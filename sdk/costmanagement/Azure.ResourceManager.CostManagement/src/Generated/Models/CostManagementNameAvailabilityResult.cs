@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The check availability result. </summary>
     public partial class CostManagementNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of CostManagementNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementNameAvailabilityResult"/>. </summary>
         internal CostManagementNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of CostManagementNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        internal CostManagementNameAvailabilityResult(bool? nameAvailable, CostManagementUnavailabilityReason? reason, string message)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementNameAvailabilityResult(bool? nameAvailable, CostManagementUnavailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
             Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates if the resource name is available. </summary>

@@ -5,14 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The check availability request body. </summary>
     public partial class CostManagementNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of CostManagementNameAvailabilityContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementNameAvailabilityContent"/>. </summary>
         public CostManagementNameAvailabilityContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>

@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </summary>
     internal partial class DataFlowFolder
     {
-        /// <summary> Initializes a new instance of DataFlowFolder. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowFolder"/>. </summary>
         public DataFlowFolder()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFlowFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowFolder"/>. </summary>
         /// <param name="name"> The name of the folder that this data flow is in. </param>
-        internal DataFlowFolder(string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowFolder(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the folder that this data flow is in. </summary>

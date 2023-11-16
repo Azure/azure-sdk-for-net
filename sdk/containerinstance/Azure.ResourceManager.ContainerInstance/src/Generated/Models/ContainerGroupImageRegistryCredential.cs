@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Image registry credential. </summary>
     public partial class ContainerGroupImageRegistryCredential
     {
-        /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/>. </summary>
         /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="server"/> is null. </exception>
         public ContainerGroupImageRegistryCredential(string server)
@@ -23,19 +27,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Server = server;
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupImageRegistryCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/>. </summary>
         /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <param name="username"> The username for the private registry. </param>
         /// <param name="password"> The password for the private registry. </param>
         /// <param name="identity"> The identity for the private registry. </param>
         /// <param name="identityUri"> The identity URL for the private registry. </param>
-        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string identity, Uri identityUri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupImageRegistryCredential(string server, string username, string password, string identity, Uri identityUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Server = server;
             Username = username;
             Password = password;
             Identity = identity;
             IdentityUri = identityUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupImageRegistryCredential"/> for deserialization. </summary>
+        internal ContainerGroupImageRegistryCredential()
+        {
         }
 
         /// <summary> The Docker image registry server without a protocol such as "http" and "https". </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
@@ -14,16 +17,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupRecoveryPointProperties
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointProperties"/>. </summary>
         protected DataProtectionBackupRecoveryPointProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupRecoveryPointProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointProperties"/>. </summary>
         /// <param name="objectType"></param>
-        internal DataProtectionBackupRecoveryPointProperties(string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupRecoveryPointProperties(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the object type. </summary>

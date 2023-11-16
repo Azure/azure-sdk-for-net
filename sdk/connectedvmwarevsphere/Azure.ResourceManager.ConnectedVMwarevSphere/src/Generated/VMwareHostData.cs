@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -19,7 +20,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// </summary>
     public partial class VMwareHostData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VMwareHostData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareHostData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VMwareHostData(AzureLocation location) : base(location)
         {
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             NetworkIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VMwareHostData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareHostData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -51,7 +55,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="datastoreIds"> Gets the datastore ARM ids. </param>
         /// <param name="networkIds"> Gets the network ARM ids. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal VMwareHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<VMwareResourceStatus> statuses, string customResourceName, long? overallMemoryUsageGB, long? memorySizeGB, long? overallCpuUsageMHz, long? cpuMhz, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string kind, string uuid, string vCenterId, string moRefId, string inventoryItemId, string moName, IReadOnlyList<VMwareResourceStatus> statuses, string customResourceName, long? overallMemoryUsageGB, long? memorySizeGB, long? overallCpuUsageMHz, long? cpuMhz, IReadOnlyList<string> datastoreIds, IReadOnlyList<string> networkIds, VMwareResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Kind = kind;
@@ -69,6 +74,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             DatastoreIds = datastoreIds;
             NetworkIds = networkIds;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareHostData"/> for deserialization. </summary>
+        internal VMwareHostData()
+        {
         }
 
         /// <summary> Gets or sets the extended location. </summary>

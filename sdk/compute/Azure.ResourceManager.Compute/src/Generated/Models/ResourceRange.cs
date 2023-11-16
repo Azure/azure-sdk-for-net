@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the resource range. </summary>
     public partial class ResourceRange
     {
-        /// <summary> Initializes a new instance of ResourceRange. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceRange"/>. </summary>
         public ResourceRange()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceRange"/>. </summary>
         /// <param name="min"> The minimum number of the resource. </param>
         /// <param name="max"> The maximum number of the resource. </param>
-        internal ResourceRange(int? min, int? max)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceRange(int? min, int? max, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Min = min;
             Max = max;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minimum number of the resource. </summary>

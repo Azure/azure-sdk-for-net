@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Returns the requested OCI Manifest file. </summary>
     public partial class OciImageManifest
     {
-        /// <summary> Initializes a new instance of OciImageManifest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OciImageManifest"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         public OciImageManifest(int schemaVersion)
         {
@@ -21,17 +25,24 @@ namespace Azure.Containers.ContainerRegistry
             SchemaVersion = schemaVersion;
         }
 
-        /// <summary> Initializes a new instance of OciImageManifest. </summary>
+        /// <summary> Initializes a new instance of <see cref="OciImageManifest"/>. </summary>
         /// <param name="configuration"> V2 image config descriptor. </param>
         /// <param name="layers"> List of V2 image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
         /// <param name="schemaVersion"> Schema version. </param>
-        internal OciImageManifest(OciDescriptor configuration, IList<OciDescriptor> layers, OciAnnotations annotations, int schemaVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OciImageManifest(OciDescriptor configuration, IList<OciDescriptor> layers, OciAnnotations annotations, int schemaVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Configuration = configuration;
             Layers = layers;
             Annotations = annotations;
             SchemaVersion = schemaVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OciImageManifest"/> for deserialization. </summary>
+        internal OciImageManifest()
+        {
         }
 
         /// <summary> V2 image config descriptor. </summary>

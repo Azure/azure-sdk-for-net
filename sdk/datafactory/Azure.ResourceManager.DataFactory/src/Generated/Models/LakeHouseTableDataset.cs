@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Microsoft Fabric LakeHouse Table. </summary>
     public partial class LakeHouseTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of LakeHouseTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public LakeHouseTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "LakeHouseTable";
         }
 
-        /// <summary> Initializes a new instance of LakeHouseTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Table = table;
             DatasetType = datasetType ?? "LakeHouseTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LakeHouseTableDataset"/> for deserialization. </summary>
+        internal LakeHouseTableDataset()
+        {
         }
 
         /// <summary> The name of Microsoft Fabric LakeHouse Table. Type: string (or Expression with resultType string). </summary>

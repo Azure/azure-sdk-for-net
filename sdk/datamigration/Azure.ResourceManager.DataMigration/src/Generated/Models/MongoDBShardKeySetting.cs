@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Describes a MongoDB shard key. </summary>
     public partial class MongoDBShardKeySetting
     {
-        /// <summary> Initializes a new instance of MongoDBShardKeySetting. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeySetting"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fields"/> is null. </exception>
         public MongoDBShardKeySetting(IEnumerable<MongoDBShardKeyField> fields)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             Fields = fields.ToList();
         }
 
-        /// <summary> Initializes a new instance of MongoDBShardKeySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeySetting"/>. </summary>
         /// <param name="fields"> The fields within the shard key. </param>
         /// <param name="isUnique"> Whether the shard key is unique. </param>
-        internal MongoDBShardKeySetting(IList<MongoDBShardKeyField> fields, bool? isUnique)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBShardKeySetting(IList<MongoDBShardKeyField> fields, bool? isUnique, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fields = fields;
             IsUnique = isUnique;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeySetting"/> for deserialization. </summary>
+        internal MongoDBShardKeySetting()
+        {
         }
 
         /// <summary> The fields within the shard key. </summary>

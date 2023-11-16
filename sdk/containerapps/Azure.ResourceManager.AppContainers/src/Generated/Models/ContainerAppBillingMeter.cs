@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -13,22 +15,27 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Billing meter. </summary>
     public partial class ContainerAppBillingMeter : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppBillingMeter. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeter"/>. </summary>
         public ContainerAppBillingMeter()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppBillingMeter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppBillingMeter"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Region for the billing meter. </param>
         /// <param name="properties"> Revision resource specific properties. </param>
-        internal ContainerAppBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ContainerAppBillingMeterProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ContainerAppBillingMeterProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Region for the billing meter. </summary>

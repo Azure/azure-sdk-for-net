@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -13,7 +14,10 @@ namespace Azure.Communication.Messages
     /// <summary> The template bindings component button for WhatsApp. </summary>
     internal partial class MessageTemplateBindingsWhatsAppButton
     {
-        /// <summary> Initializes a new instance of MessageTemplateBindingsWhatsAppButton. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppButton"/>. </summary>
         /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
         public MessageTemplateBindingsWhatsAppButton(string refValue)
@@ -21,6 +25,22 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(refValue, nameof(refValue));
 
             RefValue = refValue;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppButton"/>. </summary>
+        /// <param name="subType"> The WhatsApp button sub type. </param>
+        /// <param name="refValue"> The reference to the value in the Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.Notifications.V1.Requests.MessageTemplate.Values dictionary. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateBindingsWhatsAppButton(MessageTemplateValueWhatsAppSubType? subType, string refValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SubType = subType;
+            RefValue = refValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindingsWhatsAppButton"/> for deserialization. </summary>
+        internal MessageTemplateBindingsWhatsAppButton()
+        {
         }
 
         /// <summary> The WhatsApp button sub type. </summary>

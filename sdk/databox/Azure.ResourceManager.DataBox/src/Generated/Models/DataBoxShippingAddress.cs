@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Shipping address where customer wishes to receive the device. </summary>
     public partial class DataBoxShippingAddress
     {
-        /// <summary> Initializes a new instance of DataBoxShippingAddress. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="country"> Name of the Country. </param>
         /// <param name="postalCode"> Postal code. </param>
@@ -29,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
             PostalCode = postalCode;
         }
 
-        /// <summary> Initializes a new instance of DataBoxShippingAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/>. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="streetAddress2"> Street Address line 2. </param>
         /// <param name="streetAddress3"> Street Address line 3. </param>
@@ -42,7 +46,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="addressType"> Type of address. </param>
         /// <param name="skipAddressValidation"> Flag to indicate if customer has chosen to skip default address validation. </param>
         /// <param name="taxIdentificationNumber"> Tax Identification Number. </param>
-        internal DataBoxShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, DataBoxShippingAddressType? addressType, bool? skipAddressValidation, string taxIdentificationNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxShippingAddress(string streetAddress1, string streetAddress2, string streetAddress3, string city, string stateOrProvince, string country, string postalCode, string zipExtendedCode, string companyName, DataBoxShippingAddressType? addressType, bool? skipAddressValidation, string taxIdentificationNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StreetAddress1 = streetAddress1;
             StreetAddress2 = streetAddress2;
@@ -56,6 +61,12 @@ namespace Azure.ResourceManager.DataBox.Models
             AddressType = addressType;
             SkipAddressValidation = skipAddressValidation;
             TaxIdentificationNumber = taxIdentificationNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxShippingAddress"/> for deserialization. </summary>
+        internal DataBoxShippingAddress()
+        {
         }
 
         /// <summary> Street Address line 1. </summary>

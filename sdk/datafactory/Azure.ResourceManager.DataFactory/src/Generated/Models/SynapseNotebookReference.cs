@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Synapse notebook reference type. </summary>
     public partial class SynapseNotebookReference
     {
-        /// <summary> Initializes a new instance of SynapseNotebookReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookReference"/>. </summary>
         /// <param name="notebookReferenceType"> Synapse notebook reference type. </param>
         /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -24,6 +28,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             NotebookReferenceType = notebookReferenceType;
             ReferenceName = referenceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookReference"/>. </summary>
+        /// <param name="notebookReferenceType"> Synapse notebook reference type. </param>
+        /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseNotebookReference(NotebookReferenceType notebookReferenceType, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NotebookReferenceType = notebookReferenceType;
+            ReferenceName = referenceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookReference"/> for deserialization. </summary>
+        internal SynapseNotebookReference()
+        {
         }
 
         /// <summary> Synapse notebook reference type. </summary>

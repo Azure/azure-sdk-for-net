@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
 {
@@ -15,9 +16,25 @@ namespace Azure.Communication.Messages
     /// </summary>
     internal partial class MessageTemplateValueMedia
     {
-        /// <summary> Initializes a new instance of MessageTemplateValueMedia. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueMedia"/>. </summary>
         public MessageTemplateValueMedia()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueMedia"/>. </summary>
+        /// <param name="url"> The (public) URL of the media. </param>
+        /// <param name="caption"> The [optional] caption of the media object. </param>
+        /// <param name="fileName"> The [optional] filename of the media file. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageTemplateValueMedia(Uri url, string caption, string fileName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Url = url;
+            Caption = caption;
+            FileName = fileName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The (public) URL of the media. </summary>

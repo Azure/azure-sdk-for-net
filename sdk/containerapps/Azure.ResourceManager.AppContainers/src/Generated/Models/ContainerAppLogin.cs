@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,16 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
     public partial class ContainerAppLogin
     {
-        /// <summary> Initializes a new instance of ContainerAppLogin. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogin"/>. </summary>
         public ContainerAppLogin()
         {
             AllowedExternalRedirectUrls = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppLogin. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppLogin"/>. </summary>
         /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
         /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="allowedExternalRedirectUrls">
@@ -29,13 +33,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="cookieExpiration"> The configuration settings of the session cookie's expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
-        internal ContainerAppLogin(LoginRoutes routes, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppLogin(LoginRoutes routes, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Routes = routes;
             PreserveUrlFragmentsForLogins = preserveUrlFragmentsForLogins;
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
             CookieExpiration = cookieExpiration;
             Nonce = nonce;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>

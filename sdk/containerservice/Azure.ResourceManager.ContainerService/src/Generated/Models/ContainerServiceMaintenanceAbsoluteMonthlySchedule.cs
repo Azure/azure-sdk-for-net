@@ -5,18 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </summary>
     public partial class ContainerServiceMaintenanceAbsoluteMonthlySchedule
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceAbsoluteMonthlySchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/>. </summary>
         /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
         /// <param name="dayOfMonth"> The date of the month. </param>
         public ContainerServiceMaintenanceAbsoluteMonthlySchedule(int intervalMonths, int dayOfMonth)
         {
             IntervalMonths = intervalMonths;
             DayOfMonth = dayOfMonth;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/>. </summary>
+        /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
+        /// <param name="dayOfMonth"> The date of the month. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceAbsoluteMonthlySchedule(int intervalMonths, int dayOfMonth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IntervalMonths = intervalMonths;
+            DayOfMonth = dayOfMonth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/> for deserialization. </summary>
+        internal ContainerServiceMaintenanceAbsoluteMonthlySchedule()
+        {
         }
 
         /// <summary> Specifies the number of months between each set of occurrences. </summary>

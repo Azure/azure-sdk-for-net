@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
     public partial class SharedGalleryImageVersionStorageProfile
     {
-        /// <summary> Initializes a new instance of SharedGalleryImageVersionStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionStorageProfile"/>. </summary>
         internal SharedGalleryImageVersionStorageProfile()
         {
             DataDiskImages = new ChangeTrackingList<SharedGalleryDataDiskImage>();
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryImageVersionStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageVersionStorageProfile"/>. </summary>
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
-        internal SharedGalleryImageVersionStorageProfile(SharedGalleryOSDiskImage osDiskImage, IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SharedGalleryImageVersionStorageProfile(SharedGalleryOSDiskImage osDiskImage, IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This is the OS disk image. </summary>

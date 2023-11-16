@@ -15,7 +15,10 @@ namespace Azure.Communication.Email
     /// <summary> Recipients of the email. </summary>
     public partial class EmailRecipients
     {
-        /// <summary> Initializes a new instance of EmailRecipients. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmailRecipients"/>. </summary>
         /// <param name="to"> Email To recipients. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
         public EmailRecipients(IEnumerable<EmailAddress> to)
@@ -25,6 +28,24 @@ namespace Azure.Communication.Email
             To = to.ToList();
             CC = new ChangeTrackingList<EmailAddress>();
             BCC = new ChangeTrackingList<EmailAddress>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmailRecipients"/>. </summary>
+        /// <param name="to"> Email To recipients. </param>
+        /// <param name="cc"> Email CC recipients. </param>
+        /// <param name="bcc"> Email BCC recipients. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailRecipients(IList<EmailAddress> to, IList<EmailAddress> cc, IList<EmailAddress> bcc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            To = to;
+            CC = cc;
+            BCC = bcc;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmailRecipients"/> for deserialization. </summary>
+        internal EmailRecipients()
+        {
         }
 
         /// <summary> Email To recipients. </summary>

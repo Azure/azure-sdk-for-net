@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,12 +18,15 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CloudServiceOSVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceOSVersionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSVersionData"/>. </summary>
         internal CloudServiceOSVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of CloudServiceOSVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +38,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="label"> The OS version label. </param>
         /// <param name="isDefault"> Specifies whether this is the default OS version for its family. </param>
         /// <param name="isActive"> Specifies whether this OS version is active. </param>
-        internal CloudServiceOSVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string family, string familyLabel, string version, string label, bool? isDefault, bool? isActive) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceOSVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string family, string familyLabel, string version, string label, bool? isDefault, bool? isActive, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Family = family;
@@ -42,6 +48,7 @@ namespace Azure.ResourceManager.Compute
             Label = label;
             IsDefault = isDefault;
             IsActive = isActive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource location. </summary>

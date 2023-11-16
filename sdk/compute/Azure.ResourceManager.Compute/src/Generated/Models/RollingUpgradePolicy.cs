@@ -5,17 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The configuration parameters used while performing a rolling upgrade. </summary>
     public partial class RollingUpgradePolicy
     {
-        /// <summary> Initializes a new instance of RollingUpgradePolicy. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RollingUpgradePolicy"/>. </summary>
         public RollingUpgradePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of RollingUpgradePolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RollingUpgradePolicy"/>. </summary>
         /// <param name="maxBatchInstancePercent"> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The default value for this parameter is 20%. </param>
         /// <param name="maxUnhealthyInstancePercent"> The maximum percentage of the total virtual machine instances in the scale set that can be simultaneously unhealthy, either as a result of being upgraded, or by being found in an unhealthy state by the virtual machine health checks before the rolling upgrade aborts. This constraint will be checked prior to starting any batch. The default value for this parameter is 20%. </param>
         /// <param name="maxUnhealthyUpgradedInstancePercent"> The maximum percentage of upgraded virtual machine instances that can be found to be in an unhealthy state. This check will happen after each batch is upgraded. If this percentage is ever exceeded, the rolling update aborts. The default value for this parameter is 20%. </param>
@@ -24,7 +30,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="prioritizeUnhealthyInstances"> Upgrade all unhealthy instances in a scale set before any healthy instances. </param>
         /// <param name="rollbackFailedInstancesOnPolicyBreach"> Rollback failed instances to previous model if the Rolling Upgrade policy is violated. </param>
         /// <param name="isMaxSurgeEnabled"> Create new virtual machines to upgrade the scale set, rather than updating the existing virtual machines. Existing virtual machines will be deleted once the new virtual machines are created for each batch. </param>
-        internal RollingUpgradePolicy(int? maxBatchInstancePercent, int? maxUnhealthyInstancePercent, int? maxUnhealthyUpgradedInstancePercent, string pauseTimeBetweenBatches, bool? enableCrossZoneUpgrade, bool? prioritizeUnhealthyInstances, bool? rollbackFailedInstancesOnPolicyBreach, bool? isMaxSurgeEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RollingUpgradePolicy(int? maxBatchInstancePercent, int? maxUnhealthyInstancePercent, int? maxUnhealthyUpgradedInstancePercent, string pauseTimeBetweenBatches, bool? enableCrossZoneUpgrade, bool? prioritizeUnhealthyInstances, bool? rollbackFailedInstancesOnPolicyBreach, bool? isMaxSurgeEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxBatchInstancePercent = maxBatchInstancePercent;
             MaxUnhealthyInstancePercent = maxUnhealthyInstancePercent;
@@ -34,6 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
             PrioritizeUnhealthyInstances = prioritizeUnhealthyInstances;
             RollbackFailedInstancesOnPolicyBreach = rollbackFailedInstancesOnPolicyBreach;
             IsMaxSurgeEnabled = isMaxSurgeEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The maximum percent of total virtual machine instances that will be upgraded simultaneously by the rolling upgrade in one batch. As this is a maximum, unhealthy instances in previous or future batches can cause the percentage of instances in a batch to decrease to ensure higher reliability. The default value for this parameter is 20%. </summary>

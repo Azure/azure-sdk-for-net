@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.Communication.MediaComposition
     /// <summary> Rtmp stream to be used as an output. </summary>
     public partial class RtmpOutput : MediaOutput
     {
-        /// <summary> Initializes a new instance of RtmpOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="RtmpOutput"/>. </summary>
         /// <param name="streamKey"> Stream key of the stream. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
@@ -31,19 +32,25 @@ namespace Azure.Communication.MediaComposition
             Kind = MediaOutputType.Rtmp;
         }
 
-        /// <summary> Initializes a new instance of RtmpOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="RtmpOutput"/>. </summary>
         /// <param name="kind"> Kind of media output. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="streamKey"> Stream key of the stream. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="streamUrl"> The url of the stream. </param>
         /// <param name="mode"> Rtmp mode. </param>
-        internal RtmpOutput(MediaOutputType kind, string streamKey, LayoutResolution resolution, string streamUrl, RtmpMode? mode) : base(kind)
+        internal RtmpOutput(MediaOutputType kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string streamKey, LayoutResolution resolution, string streamUrl, RtmpMode? mode) : base(kind, serializedAdditionalRawData)
         {
             StreamKey = streamKey;
             Resolution = resolution;
             StreamUrl = streamUrl;
             Mode = mode;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RtmpOutput"/> for deserialization. </summary>
+        internal RtmpOutput()
+        {
         }
 
         /// <summary> Stream key of the stream. </summary>

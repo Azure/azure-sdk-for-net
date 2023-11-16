@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Tagging criteria. </summary>
     public partial class DataProtectionBackupTaggingCriteria
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupTaggingCriteria. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTaggingCriteria"/>. </summary>
         /// <param name="isDefault"> Specifies if tag is default. </param>
         /// <param name="taggingPriority"> Retention Tag priority. </param>
         /// <param name="tagInfo"> Retention tag information. </param>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             TagInfo = tagInfo;
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupTaggingCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTaggingCriteria"/>. </summary>
         /// <param name="criteria">
         /// Criteria which decides whether the tag can be applied to a triggered backup.
         /// Please note <see cref="DataProtectionBackupCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -38,12 +41,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="isDefault"> Specifies if tag is default. </param>
         /// <param name="taggingPriority"> Retention Tag priority. </param>
         /// <param name="tagInfo"> Retention tag information. </param>
-        internal DataProtectionBackupTaggingCriteria(IList<DataProtectionBackupCriteria> criteria, bool isDefault, long taggingPriority, DataProtectionBackupRetentionTag tagInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupTaggingCriteria(IList<DataProtectionBackupCriteria> criteria, bool isDefault, long taggingPriority, DataProtectionBackupRetentionTag tagInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Criteria = criteria;
             IsDefault = isDefault;
             TaggingPriority = taggingPriority;
             TagInfo = tagInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTaggingCriteria"/> for deserialization. </summary>
+        internal DataProtectionBackupTaggingCriteria()
+        {
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,28 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The instance view of the init container. Only valid in response. </summary>
     public partial class InitContainerPropertiesDefinitionInstanceView
     {
-        /// <summary> Initializes a new instance of InitContainerPropertiesDefinitionInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         internal InitContainerPropertiesDefinitionInstanceView()
         {
             Events = new ChangeTrackingList<ContainerEvent>();
         }
 
-        /// <summary> Initializes a new instance of InitContainerPropertiesDefinitionInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitContainerPropertiesDefinitionInstanceView"/>. </summary>
         /// <param name="restartCount"> The number of times that the init container has been restarted. </param>
         /// <param name="currentState"> The current state of the init container. </param>
         /// <param name="previousState"> The previous state of the init container. </param>
         /// <param name="events"> The events of the init container. </param>
-        internal InitContainerPropertiesDefinitionInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<ContainerEvent> events)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InitContainerPropertiesDefinitionInstanceView(int? restartCount, ContainerState currentState, ContainerState previousState, IReadOnlyList<ContainerEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestartCount = restartCount;
             CurrentState = currentState;
             PreviousState = previousState;
             Events = events;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of times that the init container has been restarted. </summary>

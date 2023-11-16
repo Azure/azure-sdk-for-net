@@ -6,15 +6,124 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AvailablePatchSummary
+    public partial class AvailablePatchSummary : IUtf8JsonSerializable, IJsonModel<AvailablePatchSummary>
     {
-        internal static AvailablePatchSummary DeserializeAvailablePatchSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailablePatchSummary>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AvailablePatchSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AvailablePatchSummary>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AvailablePatchSummary>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    writer.WritePropertyName("status"u8);
+                    writer.WriteStringValue(Status.Value.ToString());
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AssessmentActivityId))
+                {
+                    writer.WritePropertyName("assessmentActivityId"u8);
+                    writer.WriteStringValue(AssessmentActivityId);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RebootPending))
+                {
+                    writer.WritePropertyName("rebootPending"u8);
+                    writer.WriteBooleanValue(RebootPending.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CriticalAndSecurityPatchCount))
+                {
+                    writer.WritePropertyName("criticalAndSecurityPatchCount"u8);
+                    writer.WriteNumberValue(CriticalAndSecurityPatchCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(OtherPatchCount))
+                {
+                    writer.WritePropertyName("otherPatchCount"u8);
+                    writer.WriteNumberValue(OtherPatchCount.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastModifiedOn))
+                {
+                    writer.WritePropertyName("lastModifiedTime"u8);
+                    writer.WriteStringValue(LastModifiedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AvailablePatchSummary IJsonModel<AvailablePatchSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailablePatchSummary(document.RootElement, options);
+        }
+
+        internal static AvailablePatchSummary DeserializeAvailablePatchSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +136,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<ComputeApiError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -97,8 +208,38 @@ namespace Azure.ResourceManager.Compute.Models
                     error = ComputeApiError.DeserializeComputeApiError(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvailablePatchSummary(Optional.ToNullable(status), assessmentActivityId.Value, Optional.ToNullable(rebootPending), Optional.ToNullable(criticalAndSecurityPatchCount), Optional.ToNullable(otherPatchCount), Optional.ToNullable(startTime), Optional.ToNullable(lastModifiedTime), error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AvailablePatchSummary(Optional.ToNullable(status), assessmentActivityId.Value, Optional.ToNullable(rebootPending), Optional.ToNullable(criticalAndSecurityPatchCount), Optional.ToNullable(otherPatchCount), Optional.ToNullable(startTime), Optional.ToNullable(lastModifiedTime), error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvailablePatchSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AvailablePatchSummary IPersistableModel<AvailablePatchSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAvailablePatchSummary(document.RootElement, options);
+        }
+
+        string IPersistableModel<AvailablePatchSummary>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

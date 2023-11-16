@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> CheckNameAvailability Result. </summary>
     public partial class DataProtectionBackupNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupNameAvailabilityResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupNameAvailabilityResult"/>. </summary>
         internal DataProtectionBackupNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Gets or sets the message. </param>
         /// <param name="isNameAvailable"> Gets or sets a value indicating whether [name available]. </param>
         /// <param name="reason"> Gets or sets the reason. </param>
-        internal DataProtectionBackupNameAvailabilityResult(string message, bool? isNameAvailable, string reason)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupNameAvailabilityResult(string message, bool? isNameAvailable, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             IsNameAvailable = isNameAvailable;
             Reason = reason;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the message. </summary>

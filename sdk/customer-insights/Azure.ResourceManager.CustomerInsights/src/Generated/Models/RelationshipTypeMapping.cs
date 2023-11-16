@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Maps fields in Profile to their corresponding StrongIds in Related Profile. </summary>
     public partial class RelationshipTypeMapping
     {
-        /// <summary> Initializes a new instance of RelationshipTypeMapping. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipTypeMapping"/>. </summary>
         /// <param name="fieldMappings"> Maps a profile property with the StrongId of related profile. This is an array to support StrongIds that are composite key as well. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fieldMappings"/> is null. </exception>
         public RelationshipTypeMapping(IEnumerable<RelationshipTypeFieldMapping> fieldMappings)
@@ -25,11 +28,18 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             FieldMappings = fieldMappings.ToList();
         }
 
-        /// <summary> Initializes a new instance of RelationshipTypeMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelationshipTypeMapping"/>. </summary>
         /// <param name="fieldMappings"> Maps a profile property with the StrongId of related profile. This is an array to support StrongIds that are composite key as well. </param>
-        internal RelationshipTypeMapping(IList<RelationshipTypeFieldMapping> fieldMappings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RelationshipTypeMapping(IList<RelationshipTypeFieldMapping> fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FieldMappings = fieldMappings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RelationshipTypeMapping"/> for deserialization. </summary>
+        internal RelationshipTypeMapping()
+        {
         }
 
         /// <summary> Maps a profile property with the StrongId of related profile. This is an array to support StrongIds that are composite key as well. </summary>

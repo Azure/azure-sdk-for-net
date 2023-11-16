@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB;
@@ -14,17 +15,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The List operation response, that contains the MongoDB collections and their properties. </summary>
     internal partial class MongoDBCollectionListResult
     {
-        /// <summary> Initializes a new instance of MongoDBCollectionListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionListResult"/>. </summary>
         internal MongoDBCollectionListResult()
         {
             Value = new ChangeTrackingList<MongoDBCollectionData>();
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionListResult"/>. </summary>
         /// <param name="value"> List of MongoDB collections and their properties. </param>
-        internal MongoDBCollectionListResult(IReadOnlyList<MongoDBCollectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBCollectionListResult(IReadOnlyList<MongoDBCollectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of MongoDB collections and their properties. </summary>

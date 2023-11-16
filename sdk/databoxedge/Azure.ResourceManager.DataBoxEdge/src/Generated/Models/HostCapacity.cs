@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,25 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Host Capacity Data. </summary>
     public partial class HostCapacity
     {
-        /// <summary> Initializes a new instance of HostCapacity. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HostCapacity"/>. </summary>
         public HostCapacity()
         {
             VmUsedMemory = new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>();
             NumaNodesData = new ChangeTrackingList<NumaNodeInfo>();
         }
 
-        /// <summary> Initializes a new instance of HostCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostCapacity"/>. </summary>
         /// <param name="hostName"> The name of the host. </param>
         /// <param name="effectiveAvailableMemoryInMBOnHost"> The available memory on the host accounting for VM placement size and any host VM reservations. </param>
         /// <param name="availableGpuCount"> The available amount of GPUs on the host to use after accounting for GPUS used by reservations on the host. </param>
         /// <param name="vmUsedMemory"> The VM used memory per VmId. </param>
         /// <param name="gpuType"> The GPU type of the VM. </param>
         /// <param name="numaNodesData"> The numa nodes information for Hpn VMs. </param>
-        internal HostCapacity(string hostName, long? effectiveAvailableMemoryInMBOnHost, int? availableGpuCount, IDictionary<string, DataBoxEdgeVmMemory> vmUsedMemory, string gpuType, IList<NumaNodeInfo> numaNodesData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HostCapacity(string hostName, long? effectiveAvailableMemoryInMBOnHost, int? availableGpuCount, IDictionary<string, DataBoxEdgeVmMemory> vmUsedMemory, string gpuType, IList<NumaNodeInfo> numaNodesData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HostName = hostName;
             EffectiveAvailableMemoryInMBOnHost = effectiveAvailableMemoryInMBOnHost;
@@ -35,6 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             VmUsedMemory = vmUsedMemory;
             GpuType = gpuType;
             NumaNodesData = numaNodesData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the host. </summary>

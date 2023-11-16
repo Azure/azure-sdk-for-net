@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,7 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an available Compute SKU Location Information. </summary>
     public partial class ComputeResourceSkuLocationInfo
     {
-        /// <summary> Initializes a new instance of ComputeResourceSkuLocationInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuLocationInfo"/>. </summary>
         internal ComputeResourceSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
@@ -22,19 +26,21 @@ namespace Azure.ResourceManager.Compute.Models
             ExtendedLocations = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ComputeResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeResourceSkuLocationInfo"/>. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Details of capabilities available to a SKU in specific zones. </param>
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
-        internal ComputeResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeResourceSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails, IReadOnlyList<string> extendedLocations, ExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
             ExtendedLocations = extendedLocations;
             ExtendedLocationType = extendedLocationType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Location of the SKU. </summary>

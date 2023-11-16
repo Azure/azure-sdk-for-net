@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,12 +18,15 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBSqlRoleAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentData"/>. </summary>
         public CosmosDBSqlRoleAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +34,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
         /// <param name="scope"> The data plane resource path for which access is being granted through this Role Assignment. </param>
         /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
-        internal CosmosDBSqlRoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier roleDefinitionId, string scope, Guid? principalId) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlRoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier roleDefinitionId, string scope, Guid? principalId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RoleDefinitionId = roleDefinitionId;
             Scope = scope;
             PrincipalId = principalId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>

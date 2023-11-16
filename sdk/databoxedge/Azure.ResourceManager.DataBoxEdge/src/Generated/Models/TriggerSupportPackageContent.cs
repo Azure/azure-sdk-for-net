@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The request object for trigger support package. </summary>
     public partial class TriggerSupportPackageContent : ResourceData
     {
-        /// <summary> Initializes a new instance of TriggerSupportPackageContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TriggerSupportPackageContent"/>. </summary>
         public TriggerSupportPackageContent()
         {
         }
 
-        /// <summary> Initializes a new instance of TriggerSupportPackageContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerSupportPackageContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -31,11 +35,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// This will contain the type of logs (Default/DefaultWithDumps/None/All/DefaultWithArchived)
         /// or a comma separated list of log types that are required
         /// </param>
-        internal TriggerSupportPackageContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? minimumTimeStamp, DateTimeOffset? maximumTimeStamp, string include) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TriggerSupportPackageContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? minimumTimeStamp, DateTimeOffset? maximumTimeStamp, string include, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MinimumTimeStamp = minimumTimeStamp;
             MaximumTimeStamp = maximumTimeStamp;
             Include = include;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> MinimumTimeStamp from where logs need to be collected. </summary>

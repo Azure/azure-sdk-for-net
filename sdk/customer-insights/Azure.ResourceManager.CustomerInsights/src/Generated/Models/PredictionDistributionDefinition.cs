@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,26 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> The definition of the prediction distribution. </summary>
     public partial class PredictionDistributionDefinition
     {
-        /// <summary> Initializes a new instance of PredictionDistributionDefinition. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PredictionDistributionDefinition"/>. </summary>
         internal PredictionDistributionDefinition()
         {
             Distributions = new ChangeTrackingList<PredictionDistributionDefinitionDistributionsItem>();
         }
 
-        /// <summary> Initializes a new instance of PredictionDistributionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="PredictionDistributionDefinition"/>. </summary>
         /// <param name="totalPositives"> Total positive in the distribution. </param>
         /// <param name="totalNegatives"> Total negatives in the distribution. </param>
         /// <param name="distributions"> Distributions of the prediction. </param>
-        internal PredictionDistributionDefinition(long? totalPositives, long? totalNegatives, IReadOnlyList<PredictionDistributionDefinitionDistributionsItem> distributions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PredictionDistributionDefinition(long? totalPositives, long? totalNegatives, IReadOnlyList<PredictionDistributionDefinitionDistributionsItem> distributions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalPositives = totalPositives;
             TotalNegatives = totalNegatives;
             Distributions = distributions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Total positive in the distribution. </summary>

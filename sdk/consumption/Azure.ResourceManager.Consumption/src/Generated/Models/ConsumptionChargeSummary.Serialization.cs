@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -12,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionChargeSummary : IUtf8JsonSerializable
+    public partial class ConsumptionChargeSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionChargeSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionChargeSummary>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ConsumptionChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ConsumptionChargeSummary>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ConsumptionChargeSummary>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -24,11 +35,63 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionChargeSummary DeserializeConsumptionChargeSummary(JsonElement element)
+        ConsumptionChargeSummary IJsonModel<ConsumptionChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionChargeSummary(document.RootElement, options);
+        }
+
+        internal static ConsumptionChargeSummary DeserializeConsumptionChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +110,8 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -87,8 +152,38 @@ namespace Azure.ResourceManager.Consumption.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionChargeSummary>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ConsumptionChargeSummary IPersistableModel<ConsumptionChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeConsumptionChargeSummary(document.RootElement, options);
+        }
+
+        string IPersistableModel<ConsumptionChargeSummary>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

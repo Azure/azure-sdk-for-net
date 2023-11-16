@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,25 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The instance view of a restore point. </summary>
     public partial class RestorePointInstanceView
     {
-        /// <summary> Initializes a new instance of RestorePointInstanceView. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointInstanceView"/>. </summary>
         internal RestorePointInstanceView()
         {
             DiskRestorePoints = new ChangeTrackingList<DiskRestorePointInstanceView>();
             Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointInstanceView. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointInstanceView"/>. </summary>
         /// <param name="diskRestorePoints"> The disk restore points information. </param>
         /// <param name="statuses"> The resource status information. </param>
-        internal RestorePointInstanceView(IReadOnlyList<DiskRestorePointInstanceView> diskRestorePoints, IReadOnlyList<InstanceViewStatus> statuses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointInstanceView(IReadOnlyList<DiskRestorePointInstanceView> diskRestorePoints, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskRestorePoints = diskRestorePoints;
             Statuses = statuses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The disk restore points information. </summary>

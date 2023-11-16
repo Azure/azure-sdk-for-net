@@ -14,7 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Integration runtime reference type. </summary>
     public partial class IntegrationRuntimeReference
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/>. </summary>
         /// <param name="referenceType"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -27,15 +30,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/>. </summary>
         /// <param name="referenceType"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <param name="parameters"> Arguments for integration runtime. </param>
-        internal IntegrationRuntimeReference(IntegrationRuntimeReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationRuntimeReference(IntegrationRuntimeReferenceType referenceType, string referenceName, IDictionary<string, BinaryData> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferenceType = referenceType;
             ReferenceName = referenceName;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeReference"/> for deserialization. </summary>
+        internal IntegrationRuntimeReference()
+        {
         }
 
         /// <summary> Type of integration runtime. </summary>

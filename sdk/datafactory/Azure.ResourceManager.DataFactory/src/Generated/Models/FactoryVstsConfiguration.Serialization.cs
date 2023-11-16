@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FactoryVstsConfiguration : IUtf8JsonSerializable
+    public partial class FactoryVstsConfiguration : IUtf8JsonSerializable, IJsonModel<FactoryVstsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FactoryVstsConfiguration>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<FactoryVstsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<FactoryVstsConfiguration>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<FactoryVstsConfiguration>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -43,11 +53,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FactoryVstsConfiguration DeserializeFactoryVstsConfiguration(JsonElement element)
+        FactoryVstsConfiguration IJsonModel<FactoryVstsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFactoryVstsConfiguration(document.RootElement, options);
+        }
+
+        internal static FactoryVstsConfiguration DeserializeFactoryVstsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +100,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string rootFolder = default;
             Optional<string> lastCommitId = default;
             Optional<bool> disablePublish = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectName"u8))
@@ -116,8 +157,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                     disablePublish = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FactoryVstsConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), projectName, Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FactoryVstsConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), serializedAdditionalRawData, projectName, Optional.ToNullable(tenantId));
         }
+
+        BinaryData IPersistableModel<FactoryVstsConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        FactoryVstsConfiguration IPersistableModel<FactoryVstsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeFactoryVstsConfiguration(document.RootElement, options);
+        }
+
+        string IPersistableModel<FactoryVstsConfiguration>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

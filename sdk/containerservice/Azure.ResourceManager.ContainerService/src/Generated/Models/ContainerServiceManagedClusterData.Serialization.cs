@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
@@ -14,10 +17,17 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceManagedClusterData : IUtf8JsonSerializable
+    public partial class ContainerServiceManagedClusterData : IUtf8JsonSerializable, IJsonModel<ContainerServiceManagedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceManagedClusterData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerServiceManagedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerServiceManagedClusterData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -47,17 +57,72 @@ namespace Azure.ResourceManager.ContainerService
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PowerState))
+                {
+                    writer.WritePropertyName("powerState"u8);
+                    writer.WriteObjectValue(PowerState);
+                }
+            }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
                 writer.WriteObjectValue(CreationData);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(MaxAgentPools))
+                {
+                    writer.WritePropertyName("maxAgentPools"u8);
+                    writer.WriteNumberValue(MaxAgentPools.Value);
+                }
+            }
             if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CurrentKubernetesVersion))
+                {
+                    writer.WritePropertyName("currentKubernetesVersion"u8);
+                    writer.WriteStringValue(CurrentKubernetesVersion);
+                }
             }
             if (Optional.IsDefined(DnsPrefix))
             {
@@ -68,6 +133,30 @@ namespace Azure.ResourceManager.ContainerService
             {
                 writer.WritePropertyName("fqdnSubdomain"u8);
                 writer.WriteStringValue(FqdnSubdomain);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Fqdn))
+                {
+                    writer.WritePropertyName("fqdn"u8);
+                    writer.WriteStringValue(Fqdn);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(PrivateFqdn))
+                {
+                    writer.WritePropertyName("privateFQDN"u8);
+                    writer.WriteStringValue(PrivateFqdn);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(AzurePortalFqdn))
+                {
+                    writer.WritePropertyName("azurePortalFQDN"u8);
+                    writer.WriteStringValue(AzurePortalFqdn);
+                }
             }
             if (Optional.IsCollectionDefined(AgentPoolProfiles))
             {
@@ -237,11 +326,40 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteObjectValue(GuardrailsProfile);
             }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerServiceManagedClusterData DeserializeContainerServiceManagedClusterData(JsonElement element)
+        ContainerServiceManagedClusterData IJsonModel<ContainerServiceManagedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
+        }
+
+        internal static ContainerServiceManagedClusterData DeserializeContainerServiceManagedClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -295,6 +413,8 @@ namespace Azure.ResourceManager.ContainerService
             Optional<ManagedClusterWorkloadAutoScalerProfile> workloadAutoScalerProfile = default;
             Optional<ManagedClusterAzureMonitorProfile> azureMonitorProfile = default;
             Optional<ManagedClusterGuardrailsProfile> guardrailsProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -723,8 +843,38 @@ namespace Azure.ResourceManager.ContainerService
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, identity, provisioningState.Value, powerState.Value, creationData.Value, Optional.ToNullable(maxAgentPools), kubernetesVersion.Value, currentKubernetesVersion.Value, dnsPrefix.Value, fqdnSubdomain.Value, fqdn.Value, privateFQDN.Value, azurePortalFQDN.Value, Optional.ToList(agentPoolProfiles), linuxProfile.Value, windowsProfile.Value, servicePrincipalProfile.Value, Optional.ToDictionary(addonProfiles), podIdentityProfile.Value, oidcIssuerProfile.Value, nodeResourceGroup.Value, nodeResourceGroupProfile.Value, Optional.ToNullable(enableRBAC), Optional.ToNullable(enablePodSecurityPolicy), Optional.ToNullable(enableNamespaceResources), networkProfile.Value, aadProfile.Value, autoUpgradeProfile.Value, autoScalerProfile.Value, apiServerAccessProfile.Value, diskEncryptionSetId.Value, Optional.ToDictionary(identityProfile), Optional.ToList(privateLinkResources), Optional.ToNullable(disableLocalAccounts), httpProxyConfig.Value, securityProfile.Value, storageProfile.Value, ingressProfile.Value, Optional.ToNullable(publicNetworkAccess), workloadAutoScalerProfile.Value, azureMonitorProfile.Value, guardrailsProfile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerServiceManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, identity, provisioningState.Value, powerState.Value, creationData.Value, Optional.ToNullable(maxAgentPools), kubernetesVersion.Value, currentKubernetesVersion.Value, dnsPrefix.Value, fqdnSubdomain.Value, fqdn.Value, privateFQDN.Value, azurePortalFQDN.Value, Optional.ToList(agentPoolProfiles), linuxProfile.Value, windowsProfile.Value, servicePrincipalProfile.Value, Optional.ToDictionary(addonProfiles), podIdentityProfile.Value, oidcIssuerProfile.Value, nodeResourceGroup.Value, nodeResourceGroupProfile.Value, Optional.ToNullable(enableRBAC), Optional.ToNullable(enablePodSecurityPolicy), Optional.ToNullable(enableNamespaceResources), networkProfile.Value, aadProfile.Value, autoUpgradeProfile.Value, autoScalerProfile.Value, apiServerAccessProfile.Value, diskEncryptionSetId.Value, Optional.ToDictionary(identityProfile), Optional.ToList(privateLinkResources), Optional.ToNullable(disableLocalAccounts), httpProxyConfig.Value, securityProfile.Value, storageProfile.Value, ingressProfile.Value, Optional.ToNullable(publicNetworkAccess), workloadAutoScalerProfile.Value, azureMonitorProfile.Value, guardrailsProfile.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerServiceManagedClusterData IPersistableModel<ContainerServiceManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerServiceManagedClusterData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

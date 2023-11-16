@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureSqlSink : IUtf8JsonSerializable
+    public partial class AzureSqlSink : IUtf8JsonSerializable, IJsonModel<AzureSqlSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlSink>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureSqlSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureSqlSink>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureSqlSink>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlWriterStoredProcedureName))
             {
@@ -124,8 +133,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlSink DeserializeAzureSqlSink(JsonElement element)
+        AzureSqlSink IJsonModel<AzureSqlSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlSink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSqlSink(document.RootElement, options);
+        }
+
+        internal static AzureSqlSink DeserializeAzureSqlSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -295,5 +318,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, storedProcedureParameters.Value, storedProcedureTableTypeParameterName.Value, tableOption.Value, sqlWriterUseTableLock.Value, writeBehavior.Value, upsertSettings.Value);
         }
+
+        BinaryData IPersistableModel<AzureSqlSink>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlSink)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureSqlSink IPersistableModel<AzureSqlSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureSqlSink)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureSqlSink(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureSqlSink>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

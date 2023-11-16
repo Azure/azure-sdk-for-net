@@ -14,62 +14,42 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Model factory for models. </summary>
     public static partial class PhoneNumbersModelFactory
     {
-        /// <summary> Initializes a new instance of PhoneNumberAreaCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberAreaCode"/>. </summary>
         /// <param name="areaCode"> An area code. </param>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAreaCode"/> instance for mocking. </returns>
         public static PhoneNumberAreaCode PhoneNumberAreaCode(string areaCode = null)
         {
-            return new PhoneNumberAreaCode(areaCode);
+            return new PhoneNumberAreaCode(areaCode, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberCountry. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberCountry"/>. </summary>
         /// <param name="localizedName"> Represents the name of the country. </param>
         /// <param name="countryCode"> Represents the abbreviated name of the country. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="countryCode"/> is null. </exception>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberCountry"/> instance for mocking. </returns>
         public static PhoneNumberCountry PhoneNumberCountry(string localizedName = null, string countryCode = null)
         {
-            if (localizedName == null)
-            {
-                throw new ArgumentNullException(nameof(localizedName));
-            }
-            if (countryCode == null)
-            {
-                throw new ArgumentNullException(nameof(countryCode));
-            }
-
-            return new PhoneNumberCountry(localizedName, countryCode);
+            return new PhoneNumberCountry(localizedName, countryCode, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberLocality"/>. </summary>
         /// <param name="localizedName"> Represents the localized name of the locality. </param>
         /// <param name="administrativeDivision"> Represents an administrative division. e.g. state or province. </param>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberLocality"/> instance for mocking. </returns>
         public static PhoneNumberLocality PhoneNumberLocality(string localizedName = null, PhoneNumberAdministrativeDivision administrativeDivision = null)
         {
-            return new PhoneNumberLocality(localizedName, administrativeDivision);
+            return new PhoneNumberLocality(localizedName, administrativeDivision, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberAdministrativeDivision. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberAdministrativeDivision"/>. </summary>
         /// <param name="localizedName"> Represents the localized name of the administrative division of the locality. e.g. state or province localized name. </param>
         /// <param name="abbreviatedName"> Represents the abbreviated name of the administrative division of the locality. e.g. state or province abbreviation such as WA (Washington). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> or <paramref name="abbreviatedName"/> is null. </exception>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberAdministrativeDivision"/> instance for mocking. </returns>
         public static PhoneNumberAdministrativeDivision PhoneNumberAdministrativeDivision(string localizedName = null, string abbreviatedName = null)
         {
-            if (localizedName == null)
-            {
-                throw new ArgumentNullException(nameof(localizedName));
-            }
-            if (abbreviatedName == null)
-            {
-                throw new ArgumentNullException(nameof(abbreviatedName));
-            }
-
-            return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName);
+            return new PhoneNumberAdministrativeDivision(localizedName, abbreviatedName, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberOffering. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberOffering"/>. </summary>
         /// <param name="phoneNumberType"> Represents the number type of the offering. </param>
         /// <param name="assignmentType"> Represents the assignment type of the offering. </param>
         /// <param name="availableCapabilities"> Capabilities of a phone number. </param>
@@ -77,26 +57,20 @@ namespace Azure.Communication.PhoneNumbers
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberOffering"/> instance for mocking. </returns>
         public static PhoneNumberOffering PhoneNumberOffering(PhoneNumberType? phoneNumberType = null, PhoneNumberAssignmentType? assignmentType = null, PhoneNumberCapabilities availableCapabilities = null, PhoneNumberCost cost = null)
         {
-            return new PhoneNumberOffering(phoneNumberType, assignmentType, availableCapabilities, cost);
+            return new PhoneNumberOffering(phoneNumberType, assignmentType, availableCapabilities, cost, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberCost"/>. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="isoCurrencySymbol"> The ISO 4217 currency code for the cost amount, e.g. USD. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="isoCurrencySymbol"/> is null. </exception>
         /// <returns> A new <see cref="PhoneNumbers.PhoneNumberCost"/> instance for mocking. </returns>
         public static PhoneNumberCost PhoneNumberCost(double amount = default, string isoCurrencySymbol = null, BillingFrequency billingFrequency = default)
         {
-            if (isoCurrencySymbol == null)
-            {
-                throw new ArgumentNullException(nameof(isoCurrencySymbol));
-            }
-
-            return new PhoneNumberCost(amount, isoCurrencySymbol, billingFrequency);
+            return new PhoneNumberCost(amount, isoCurrencySymbol, billingFrequency, new Dictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberSearchResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberSearchResult"/>. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
         /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
@@ -111,7 +85,7 @@ namespace Azure.Communication.PhoneNumbers
         {
             phoneNumbers ??= new List<string>();
 
-            return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error);
+            return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error, new Dictionary<string, BinaryData>());
         }
     }
 }

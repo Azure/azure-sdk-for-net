@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class DataTransferJobGetResultData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataTransferJobGetResultData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobGetResultData"/>. </summary>
         public DataTransferJobGetResultData()
         {
         }
 
-        /// <summary> Initializes a new instance of DataTransferJobGetResultData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataTransferJobGetResultData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,7 +49,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="lastUpdatedUtcOn"> Last Updated Time (ISO-8601 format). </param>
         /// <param name="workerCount"> Worker count. </param>
         /// <param name="error"> Error response for Faulted job. </param>
-        internal DataTransferJobGetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string jobName, DataTransferDataSourceSink source, DataTransferDataSourceSink destination, string status, long? processedCount, long? totalCount, DateTimeOffset? lastUpdatedUtcOn, int? workerCount, ErrorResponse error) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataTransferJobGetResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string jobName, DataTransferDataSourceSink source, DataTransferDataSourceSink destination, string status, long? processedCount, long? totalCount, DateTimeOffset? lastUpdatedUtcOn, int? workerCount, ErrorResponse error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             JobName = jobName;
             Source = source;
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB
             LastUpdatedUtcOn = lastUpdatedUtcOn;
             WorkerCount = workerCount;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Job Name. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The properties of the Azure File volume. Azure File shares are mounted as volumes. </summary>
     public partial class ContainerInstanceAzureFileVolume
     {
-        /// <summary> Initializes a new instance of ContainerInstanceAzureFileVolume. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceAzureFileVolume"/>. </summary>
         /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="storageAccountName"/> is null. </exception>
@@ -26,17 +30,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             StorageAccountName = storageAccountName;
         }
 
-        /// <summary> Initializes a new instance of ContainerInstanceAzureFileVolume. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceAzureFileVolume"/>. </summary>
         /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
         /// <param name="isReadOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
         /// <param name="storageAccountKey"> The storage account access key used to access the Azure File share. </param>
-        internal ContainerInstanceAzureFileVolume(string shareName, bool? isReadOnly, string storageAccountName, string storageAccountKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInstanceAzureFileVolume(string shareName, bool? isReadOnly, string storageAccountName, string storageAccountKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShareName = shareName;
             IsReadOnly = isReadOnly;
             StorageAccountName = storageAccountName;
             StorageAccountKey = storageAccountKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerInstanceAzureFileVolume"/> for deserialization. </summary>
+        internal ContainerInstanceAzureFileVolume()
+        {
         }
 
         /// <summary> The name of the Azure File share to be mounted as a volume. </summary>

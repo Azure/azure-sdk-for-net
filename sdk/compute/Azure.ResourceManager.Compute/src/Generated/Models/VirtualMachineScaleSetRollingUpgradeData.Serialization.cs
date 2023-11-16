@@ -5,7 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -13,10 +16,17 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetRollingUpgradeData : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetRollingUpgradeData : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetRollingUpgradeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetRollingUpgradeData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualMachineScaleSetRollingUpgradeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualMachineScaleSetRollingUpgradeData>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -31,14 +41,98 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format == "J")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    writer.WritePropertyName("systemData"u8);
+                    JsonSerializer.Serialize(writer, SystemData);
+                }
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Policy))
+                {
+                    writer.WritePropertyName("policy"u8);
+                    writer.WriteObjectValue(Policy);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(RunningStatus))
+                {
+                    writer.WritePropertyName("runningStatus"u8);
+                    writer.WriteObjectValue(RunningStatus);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Progress))
+                {
+                    writer.WritePropertyName("progress"u8);
+                    writer.WriteObjectValue(Progress);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(Error))
+                {
+                    writer.WritePropertyName("error"u8);
+                    writer.WriteObjectValue(Error);
+                }
+            }
             writer.WriteEndObject();
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineScaleSetRollingUpgradeData DeserializeVirtualMachineScaleSetRollingUpgradeData(JsonElement element)
+        VirtualMachineScaleSetRollingUpgradeData IJsonModel<VirtualMachineScaleSetRollingUpgradeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineScaleSetRollingUpgradeData(document.RootElement, options);
+        }
+
+        internal static VirtualMachineScaleSetRollingUpgradeData DeserializeVirtualMachineScaleSetRollingUpgradeData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +147,8 @@ namespace Azure.ResourceManager.Compute
             Optional<RollingUpgradeRunningStatus> runningStatus = default;
             Optional<RollingUpgradeProgressInfo> progress = default;
             Optional<ComputeApiError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -146,8 +242,38 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineScaleSetRollingUpgradeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, policy.Value, runningStatus.Value, progress.Value, error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineScaleSetRollingUpgradeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, policy.Value, runningStatus.Value, progress.Value, error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualMachineScaleSetRollingUpgradeData IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineScaleSetRollingUpgradeData(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

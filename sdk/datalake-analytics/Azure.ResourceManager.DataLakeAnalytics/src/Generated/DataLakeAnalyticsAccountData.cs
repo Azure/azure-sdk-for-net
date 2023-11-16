@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// </summary>
     public partial class DataLakeAnalyticsAccountData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountData"/>. </summary>
         internal DataLakeAnalyticsAccountData()
         {
             DataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreAccountInformationData>();
@@ -33,7 +36,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -162,7 +165,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// The resource tags.
         /// Serialized Name: Resource.tags
         /// </param>
-        internal DataLakeAnalyticsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultDataLakeStoreAccount, IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts, IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts, IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts, IReadOnlyList<DataLakeAnalyticsComputePolicyData> computePolicies, IReadOnlyList<DataLakeAnalyticsHiveMetastore> hiveMetastores, IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, DataLakeAnalyticsCommitmentTierType? currentTier, int? maxJobCount, int? maxActiveJobCountPerUser, int? maxQueuedJobCountPerUser, int? maxJobRunningTimeInMin, int? systemMaxJobCount, int? maxDegreeOfParallelism, int? systemMaxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, DebugDataAccessLevel? debugDataAccessLevel, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeAnalyticsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultDataLakeStoreAccount, IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts, IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts, IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts, IReadOnlyList<DataLakeAnalyticsComputePolicyData> computePolicies, IReadOnlyList<DataLakeAnalyticsHiveMetastore> hiveMetastores, IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, DataLakeAnalyticsCommitmentTierType? currentTier, int? maxJobCount, int? maxActiveJobCountPerUser, int? maxQueuedJobCountPerUser, int? maxJobRunningTimeInMin, int? systemMaxJobCount, int? maxDegreeOfParallelism, int? systemMaxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, DebugDataAccessLevel? debugDataAccessLevel, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AccountId = accountId;
             ProvisioningState = provisioningState;
@@ -195,6 +199,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             DebugDataAccessLevel = debugDataAccessLevel;
             Location = location;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

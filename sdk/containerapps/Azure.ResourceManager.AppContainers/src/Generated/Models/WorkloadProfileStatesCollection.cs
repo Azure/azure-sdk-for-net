@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Collection of workloadProfileStates. </summary>
     internal partial class WorkloadProfileStatesCollection
     {
-        /// <summary> Initializes a new instance of WorkloadProfileStatesCollection. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadProfileStatesCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkloadProfileStatesCollection(IEnumerable<ContainerAppWorkloadProfileState> value)
@@ -25,13 +28,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of WorkloadProfileStatesCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadProfileStatesCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal WorkloadProfileStatesCollection(IReadOnlyList<ContainerAppWorkloadProfileState> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkloadProfileStatesCollection(IReadOnlyList<ContainerAppWorkloadProfileState> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkloadProfileStatesCollection"/> for deserialization. </summary>
+        internal WorkloadProfileStatesCollection()
+        {
         }
 
         /// <summary> Collection of resources. </summary>

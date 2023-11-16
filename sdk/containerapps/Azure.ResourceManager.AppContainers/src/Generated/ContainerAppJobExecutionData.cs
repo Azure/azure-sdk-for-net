@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,15 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppJobExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionData"/>. </summary>
         internal ContainerAppJobExecutionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppJobExecutionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,12 +36,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="startOn"> Job execution start time. </param>
         /// <param name="endOn"> Job execution end time. </param>
         /// <param name="template"> Job's execution container. </param>
-        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             Template = template;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Current running State of the job. </summary>

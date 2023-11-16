@@ -14,20 +14,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for SQL to Azure SQL DB migration task inputs. </summary>
     public partial class MigrateSqlServerSqlDBDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBDatabaseInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBDatabaseInput"/>. </summary>
         public MigrateSqlServerSqlDBDatabaseInput()
         {
             TableMap = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
         /// <param name="makeSourceDBReadOnly"> Whether to set database read only before migration. </param>
         /// <param name="tableMap"> Mapping of source to target tables. </param>
         /// <param name="schemaSetting"> Settings selected for DB schema migration. </param>
         /// <param name="id"> id of the database. </param>
-        internal MigrateSqlServerSqlDBDatabaseInput(string name, string targetDatabaseName, bool? makeSourceDBReadOnly, IDictionary<string, string> tableMap, BinaryData schemaSetting, string id)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateSqlServerSqlDBDatabaseInput(string name, string targetDatabaseName, bool? makeSourceDBReadOnly, IDictionary<string, string> tableMap, BinaryData schemaSetting, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             TargetDatabaseName = targetDatabaseName;
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             TableMap = tableMap;
             SchemaSetting = schemaSetting;
             Id = id;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the database. </summary>

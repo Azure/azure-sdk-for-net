@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The properties for updating a timer trigger. </summary>
     public partial class ContainerRegistryTimerTriggerUpdateContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTimerTriggerUpdateContent. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerRegistryTimerTriggerUpdateContent(string name)
@@ -21,6 +25,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerUpdateContent"/>. </summary>
+        /// <param name="schedule"> The CRON expression for the task schedule. </param>
+        /// <param name="status"> The current status of trigger. </param>
+        /// <param name="name"> The name of the trigger. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTimerTriggerUpdateContent(string schedule, ContainerRegistryTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Schedule = schedule;
+            Status = status;
+            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTimerTriggerUpdateContent"/> for deserialization. </summary>
+        internal ContainerRegistryTimerTriggerUpdateContent()
+        {
         }
 
         /// <summary> The CRON expression for the task schedule. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class CloudServiceOSFamilyData : ResourceData
     {
-        /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSFamilyData"/>. </summary>
         internal CloudServiceOSFamilyData()
         {
             Versions = new ChangeTrackingList<OSVersionPropertiesBase>();
         }
 
-        /// <summary> Initializes a new instance of CloudServiceOSFamilyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServiceOSFamilyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,13 +38,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="osFamilyName"> The OS family name. </param>
         /// <param name="label"> The OS family label. </param>
         /// <param name="versions"> List of OS versions belonging to this family. </param>
-        internal CloudServiceOSFamilyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceName, AzureLocation? location, string osFamilyName, string label, IReadOnlyList<OSVersionPropertiesBase> versions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceOSFamilyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceName, AzureLocation? location, string osFamilyName, string label, IReadOnlyList<OSVersionPropertiesBase> versions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceName = resourceName;
             Location = location;
             OSFamilyName = osFamilyName;
             Label = label;
             Versions = versions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource name. </summary>

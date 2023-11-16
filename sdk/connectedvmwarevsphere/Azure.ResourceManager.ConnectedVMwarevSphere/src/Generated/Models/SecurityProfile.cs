@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Specifies the Security profile settings for the virtual machine. </summary>
     internal partial class SecurityProfile
     {
-        /// <summary> Initializes a new instance of SecurityProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
         public SecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot used while creating the virtual machine. </param>
-        internal SecurityProfile(UefiSettings uefiSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityProfile(UefiSettings uefiSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UefiSettings = uefiSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the security settings like secure boot used while creating the virtual machine. </summary>

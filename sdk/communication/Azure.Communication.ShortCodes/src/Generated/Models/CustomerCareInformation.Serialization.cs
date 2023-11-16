@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    public partial class CustomerCareInformation : IUtf8JsonSerializable
+    public partial class CustomerCareInformation : IUtf8JsonSerializable, IJsonModel<CustomerCareInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomerCareInformation>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<CustomerCareInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<CustomerCareInformation>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<CustomerCareInformation>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TollFreeNumber))
             {
@@ -25,17 +36,48 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomerCareInformation DeserializeCustomerCareInformation(JsonElement element)
+        CustomerCareInformation IJsonModel<CustomerCareInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomerCareInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomerCareInformation(document.RootElement, options);
+        }
+
+        internal static CustomerCareInformation DeserializeCustomerCareInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> tollFreeNumber = default;
             Optional<string> email = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tollFreeNumber"u8))
@@ -48,8 +90,38 @@ namespace Azure.Communication.ShortCodes.Models
                     email = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomerCareInformation(tollFreeNumber.Value, email.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomerCareInformation(tollFreeNumber.Value, email.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomerCareInformation>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomerCareInformation)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        CustomerCareInformation IPersistableModel<CustomerCareInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(CustomerCareInformation)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeCustomerCareInformation(document.RootElement, options);
+        }
+
+        string IPersistableModel<CustomerCareInformation>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

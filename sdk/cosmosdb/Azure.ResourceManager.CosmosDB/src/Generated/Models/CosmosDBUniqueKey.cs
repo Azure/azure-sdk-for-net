@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The unique key on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
     public partial class CosmosDBUniqueKey
     {
-        /// <summary> Initializes a new instance of CosmosDBUniqueKey. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBUniqueKey"/>. </summary>
         public CosmosDBUniqueKey()
         {
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CosmosDBUniqueKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBUniqueKey"/>. </summary>
         /// <param name="paths"> List of paths must be unique for each document in the Azure Cosmos DB service. </param>
-        internal CosmosDBUniqueKey(IList<string> paths)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBUniqueKey(IList<string> paths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Paths = paths;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of paths must be unique for each document in the Azure Cosmos DB service. </summary>

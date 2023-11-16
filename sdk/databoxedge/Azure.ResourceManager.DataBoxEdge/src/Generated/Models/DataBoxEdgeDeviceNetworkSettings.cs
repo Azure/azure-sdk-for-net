@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,21 +15,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The network settings of a device. </summary>
     public partial class DataBoxEdgeDeviceNetworkSettings : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceNetworkSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceNetworkSettings"/>. </summary>
         public DataBoxEdgeDeviceNetworkSettings()
         {
             NetworkAdapters = new ChangeTrackingList<DataBoxEdgeNetworkAdapter>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceNetworkSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceNetworkSettings"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="networkAdapters"> The network adapter list on the device. </param>
-        internal DataBoxEdgeDeviceNetworkSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<DataBoxEdgeNetworkAdapter> networkAdapters) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDeviceNetworkSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<DataBoxEdgeNetworkAdapter> networkAdapters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             NetworkAdapters = networkAdapters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The network adapter list on the device. </summary>

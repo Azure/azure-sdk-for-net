@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineDataDisk : IUtf8JsonSerializable
+    public partial class VirtualMachineDataDisk : IUtf8JsonSerializable, IJsonModel<VirtualMachineDataDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineDataDisk>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<VirtualMachineDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<VirtualMachineDataDisk>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<VirtualMachineDataDisk>)} interface");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
@@ -59,6 +70,22 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("toBeDetached"u8);
                 writer.WriteBooleanValue(ToBeDetached.Value);
             }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DiskIopsReadWrite))
+                {
+                    writer.WritePropertyName("diskIOPSReadWrite"u8);
+                    writer.WriteNumberValue(DiskIopsReadWrite.Value);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DiskMBpsReadWrite))
+                {
+                    writer.WritePropertyName("diskMBpsReadWrite"u8);
+                    writer.WriteNumberValue(DiskMBpsReadWrite.Value);
+                }
+            }
             if (Optional.IsDefined(DetachOption))
             {
                 writer.WritePropertyName("detachOption"u8);
@@ -69,11 +96,40 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineDataDisk DeserializeVirtualMachineDataDisk(JsonElement element)
+        VirtualMachineDataDisk IJsonModel<VirtualMachineDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineDataDisk(document.RootElement, options);
+        }
+
+        internal static VirtualMachineDataDisk DeserializeVirtualMachineDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,6 +148,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<long> diskMBpsReadWrite = default;
             Optional<DiskDetachOptionType> detachOption = default;
             Optional<DiskDeleteOptionType> deleteOption = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -208,8 +266,38 @@ namespace Azure.ResourceManager.Compute.Models
                     deleteOption = new DiskDeleteOptionType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineDataDisk(lun, name.Value, vhd.Value, image.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(toBeDetached), Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(detachOption), Optional.ToNullable(deleteOption));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachineDataDisk(lun, name.Value, vhd.Value, image.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(toBeDetached), Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(detachOption), Optional.ToNullable(deleteOption), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineDataDisk>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        VirtualMachineDataDisk IPersistableModel<VirtualMachineDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeVirtualMachineDataDisk(document.RootElement, options);
+        }
+
+        string IPersistableModel<VirtualMachineDataDisk>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

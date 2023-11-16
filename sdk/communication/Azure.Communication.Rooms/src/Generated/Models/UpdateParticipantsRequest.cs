@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.Communication.Rooms
     /// <summary> Participants to be updated in the room. </summary>
     internal partial class UpdateParticipantsRequest
     {
-        /// <summary> Initializes a new instance of UpdateParticipantsRequest. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsRequest"/>. </summary>
         public UpdateParticipantsRequest()
         {
             Participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsRequest"/>. </summary>
+        /// <param name="participants"> Participants to be updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateParticipantsRequest(IDictionary<string, ParticipantProperties> participants, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Participants = participants;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Participants to be updated. </summary>

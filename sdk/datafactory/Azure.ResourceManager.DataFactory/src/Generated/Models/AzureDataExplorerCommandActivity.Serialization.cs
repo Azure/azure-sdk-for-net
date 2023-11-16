@@ -7,16 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDataExplorerCommandActivity : IUtf8JsonSerializable
+    public partial class AzureDataExplorerCommandActivity : IUtf8JsonSerializable, IJsonModel<AzureDataExplorerCommandActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataExplorerCommandActivity>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<AzureDataExplorerCommandActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<AzureDataExplorerCommandActivity>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<AzureDataExplorerCommandActivity>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -92,8 +101,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureDataExplorerCommandActivity DeserializeAzureDataExplorerCommandActivity(JsonElement element)
+        AzureDataExplorerCommandActivity IJsonModel<AzureDataExplorerCommandActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDataExplorerCommandActivity(document.RootElement, options);
+        }
+
+        internal static AzureDataExplorerCommandActivity DeserializeAzureDataExplorerCommandActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -223,5 +246,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDataExplorerCommandActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, command, commandTimeout.Value);
         }
+
+        BinaryData IPersistableModel<AzureDataExplorerCommandActivity>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        AzureDataExplorerCommandActivity IPersistableModel<AzureDataExplorerCommandActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeAzureDataExplorerCommandActivity(document.RootElement, options);
+        }
+
+        string IPersistableModel<AzureDataExplorerCommandActivity>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,27 +5,35 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> One and only one of the schedule types should be specified. Choose either 'daily', 'weekly', 'absoluteMonthly' or 'relativeMonthly' for your maintenance schedule. </summary>
     public partial class ContainerServiceMaintenanceSchedule
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceSchedule. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceSchedule"/>. </summary>
         public ContainerServiceMaintenanceSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceSchedule"/>. </summary>
         /// <param name="daily"> For schedules like: 'recur every day' or 'recur every 3 days'. </param>
         /// <param name="weekly"> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </param>
         /// <param name="absoluteMonthly"> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </param>
         /// <param name="relativeMonthly"> For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'. </param>
-        internal ContainerServiceMaintenanceSchedule(DailySchedule daily, ContainerServiceMaintenanceWeeklySchedule weekly, ContainerServiceMaintenanceAbsoluteMonthlySchedule absoluteMonthly, ContainerServiceMaintenanceRelativeMonthlySchedule relativeMonthly)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceSchedule(DailySchedule daily, ContainerServiceMaintenanceWeeklySchedule weekly, ContainerServiceMaintenanceAbsoluteMonthlySchedule absoluteMonthly, ContainerServiceMaintenanceRelativeMonthlySchedule relativeMonthly, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Daily = daily;
             Weekly = weekly;
             AbsoluteMonthly = absoluteMonthly;
             RelativeMonthly = relativeMonthly;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> For schedules like: 'recur every day' or 'recur every 3 days'. </summary>

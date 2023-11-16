@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Indicates the error details if the background copy of a resource created via the CopyStart operation fails. </summary>
     public partial class CopyCompletionError
     {
-        /// <summary> Initializes a new instance of CopyCompletionError. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CopyCompletionError"/>. </summary>
         /// <param name="errorCode"> Indicates the error code if the background copy of a resource created via the CopyStart operation fails. </param>
         /// <param name="errorMessage"> Indicates the error message if the background copy of a resource created via the CopyStart operation fails. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errorMessage"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.Compute.Models
 
             ErrorCode = errorCode;
             ErrorMessage = errorMessage;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyCompletionError"/>. </summary>
+        /// <param name="errorCode"> Indicates the error code if the background copy of a resource created via the CopyStart operation fails. </param>
+        /// <param name="errorMessage"> Indicates the error message if the background copy of a resource created via the CopyStart operation fails. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyCompletionError(CopyCompletionErrorReason errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ErrorCode = errorCode;
+            ErrorMessage = errorMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CopyCompletionError"/> for deserialization. </summary>
+        internal CopyCompletionError()
+        {
         }
 
         /// <summary> Indicates the error code if the background copy of a resource created via the CopyStart operation fails. </summary>

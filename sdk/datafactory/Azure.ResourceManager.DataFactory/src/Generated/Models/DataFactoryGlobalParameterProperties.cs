@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Definition of a single parameter for an entity. </summary>
     public partial class DataFactoryGlobalParameterProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryGlobalParameterProperties. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterProperties"/>. </summary>
         /// <param name="globalParameterType"> Global Parameter type. </param>
         /// <param name="value"> Value of parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -23,6 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             GlobalParameterType = globalParameterType;
             Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterProperties"/>. </summary>
+        /// <param name="globalParameterType"> Global Parameter type. </param>
+        /// <param name="value"> Value of parameter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFactoryGlobalParameterProperties(DataFactoryGlobalParameterType globalParameterType, BinaryData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            GlobalParameterType = globalParameterType;
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterProperties"/> for deserialization. </summary>
+        internal DataFactoryGlobalParameterProperties()
+        {
         }
 
         /// <summary> Global Parameter type. </summary>

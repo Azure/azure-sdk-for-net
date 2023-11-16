@@ -16,7 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     /// <summary> List of VirtualNetworks. </summary>
     internal partial class VMwareVirtualNetworkListResult
     {
-        /// <summary> Initializes a new instance of VMwareVirtualNetworkListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/>. </summary>
         /// <param name="value"> Array of VirtualNetworks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal VMwareVirtualNetworkListResult(IEnumerable<VMwareVirtualNetworkData> value)
@@ -26,13 +29,20 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of VMwareVirtualNetworkListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/>. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of VirtualNetworks. </param>
         /// <param name="value"> Array of VirtualNetworks. </param>
-        internal VMwareVirtualNetworkListResult(string nextLink, IReadOnlyList<VMwareVirtualNetworkData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareVirtualNetworkListResult(string nextLink, IReadOnlyList<VMwareVirtualNetworkData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareVirtualNetworkListResult"/> for deserialization. </summary>
+        internal VMwareVirtualNetworkListResult()
+        {
         }
 
         /// <summary> Url to follow for getting next page of VirtualNetworks. </summary>

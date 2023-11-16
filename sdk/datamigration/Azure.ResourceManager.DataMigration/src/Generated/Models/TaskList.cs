@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration;
@@ -14,19 +15,24 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> OData page of tasks. </summary>
     internal partial class TaskList
     {
-        /// <summary> Initializes a new instance of TaskList. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TaskList"/>. </summary>
         internal TaskList()
         {
             Value = new ChangeTrackingList<ProjectTaskData>();
         }
 
-        /// <summary> Initializes a new instance of TaskList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TaskList"/>. </summary>
         /// <param name="value"> List of tasks. </param>
         /// <param name="nextLink"> URL to load the next page of tasks. </param>
-        internal TaskList(IReadOnlyList<ProjectTaskData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TaskList(IReadOnlyList<ProjectTaskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of tasks. </summary>

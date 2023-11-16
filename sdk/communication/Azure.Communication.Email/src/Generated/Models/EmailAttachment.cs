@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Communication.Email
@@ -13,6 +14,27 @@ namespace Azure.Communication.Email
     /// <summary> Attachment to the email. </summary>
     public partial class EmailAttachment
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmailAttachment"/>. </summary>
+        /// <param name="name"> Name of the attachment. </param>
+        /// <param name="contentType"> MIME type of the content being attached. </param>
+        /// <param name="content"> Base64 encoded contents of the attachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailAttachment(string name, string contentType, BinaryData content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            ContentType = contentType;
+            Content = content;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmailAttachment"/> for deserialization. </summary>
+        internal EmailAttachment()
+        {
+        }
+
         /// <summary> Name of the attachment. </summary>
         public string Name { get; }
         /// <summary> MIME type of the content being attached. </summary>

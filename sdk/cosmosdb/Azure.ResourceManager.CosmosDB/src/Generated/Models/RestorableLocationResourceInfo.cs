@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,22 +14,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of the regional restorable account. </summary>
     public partial class RestorableLocationResourceInfo
     {
-        /// <summary> Initializes a new instance of RestorableLocationResourceInfo. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableLocationResourceInfo"/>. </summary>
         internal RestorableLocationResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorableLocationResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableLocationResourceInfo"/>. </summary>
         /// <param name="locationName"> The location of the regional restorable account. </param>
         /// <param name="regionalDatabaseAccountInstanceId"> The instance id of the regional restorable account. </param>
         /// <param name="createdOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>
         /// <param name="deletedOn"> The time at which the regional restorable database account has been deleted (ISO-8601 format). </param>
-        internal RestorableLocationResourceInfo(AzureLocation? locationName, string regionalDatabaseAccountInstanceId, DateTimeOffset? createdOn, DateTimeOffset? deletedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableLocationResourceInfo(AzureLocation? locationName, string regionalDatabaseAccountInstanceId, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocationName = locationName;
             RegionalDatabaseAccountInstanceId = regionalDatabaseAccountInstanceId;
             CreatedOn = createdOn;
             DeletedOn = deletedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The location of the regional restorable account. </summary>

@@ -7,15 +7,119 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ManagedIntegrationRuntimeStatus
+    public partial class ManagedIntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<ManagedIntegrationRuntimeStatus>
     {
-        internal static ManagedIntegrationRuntimeStatus DeserializeManagedIntegrationRuntimeStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIntegrationRuntimeStatus>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ManagedIntegrationRuntimeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ManagedIntegrationRuntimeStatus>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ManagedIntegrationRuntimeStatus>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(RuntimeType.ToString());
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(DataFactoryName))
+                {
+                    writer.WritePropertyName("dataFactoryName"u8);
+                    writer.WriteStringValue(DataFactoryName);
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(State))
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State.Value.ToString());
+                }
+            }
+            writer.WritePropertyName("typeProperties"u8);
+            writer.WriteStartObject();
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(CreatedOn))
+                {
+                    writer.WritePropertyName("createTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(Nodes))
+                {
+                    writer.WritePropertyName("nodes"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Nodes)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsCollectionDefined(OtherErrors))
+                {
+                    writer.WritePropertyName("otherErrors"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in OtherErrors)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+            }
+            if (options.Format == "J")
+            {
+                if (Optional.IsDefined(LastOperation))
+                {
+                    writer.WritePropertyName("lastOperation"u8);
+                    writer.WriteObjectValue(LastOperation);
+                }
+            }
+            writer.WriteEndObject();
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedIntegrationRuntimeStatus IJsonModel<ManagedIntegrationRuntimeStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedIntegrationRuntimeStatus(document.RootElement, options);
+        }
+
+        internal static ManagedIntegrationRuntimeStatus DeserializeManagedIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,5 +217,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToList(nodes), Optional.ToList(otherErrors), lastOperation.Value);
         }
+
+        BinaryData IPersistableModel<ManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ManagedIntegrationRuntimeStatus IPersistableModel<ManagedIntegrationRuntimeStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeManagedIntegrationRuntimeStatus(document.RootElement, options);
+        }
+
+        string IPersistableModel<ManagedIntegrationRuntimeStatus>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

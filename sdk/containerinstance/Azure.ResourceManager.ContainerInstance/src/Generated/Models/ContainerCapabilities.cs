@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -12,19 +14,23 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The regional capabilities. </summary>
     public partial class ContainerCapabilities
     {
-        /// <summary> Initializes a new instance of ContainerCapabilities. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerCapabilities"/>. </summary>
         internal ContainerCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerCapabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerCapabilities"/>. </summary>
         /// <param name="resourceType"> The resource type that this capability describes. </param>
         /// <param name="osType"> The OS type that this capability describes. </param>
         /// <param name="location"> The resource location. </param>
         /// <param name="ipAddressType"> The ip address type that this capability describes. </param>
         /// <param name="gpu"> The GPU sku that this capability describes. </param>
         /// <param name="capabilities"> The supported capabilities. </param>
-        internal ContainerCapabilities(string resourceType, string osType, AzureLocation? location, string ipAddressType, string gpu, ContainerSupportedCapabilities capabilities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerCapabilities(string resourceType, string osType, AzureLocation? location, string ipAddressType, string gpu, ContainerSupportedCapabilities capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             OSType = osType;
@@ -32,6 +38,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             IPAddressType = ipAddressType;
             Gpu = gpu;
             Capabilities = capabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource type that this capability describes. </summary>

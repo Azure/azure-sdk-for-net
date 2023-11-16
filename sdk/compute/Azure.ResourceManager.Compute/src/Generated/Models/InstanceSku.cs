@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The role instance SKU. </summary>
     public partial class InstanceSku
     {
-        /// <summary> Initializes a new instance of InstanceSku. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstanceSku"/>. </summary>
         internal InstanceSku()
         {
         }
 
-        /// <summary> Initializes a new instance of InstanceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceSku"/>. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> The tier of the cloud service role instance. </param>
-        internal InstanceSku(string name, string tier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstanceSku(string name, string tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The sku name. </summary>

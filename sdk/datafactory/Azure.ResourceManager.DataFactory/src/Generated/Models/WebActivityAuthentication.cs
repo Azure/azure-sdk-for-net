@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -12,12 +14,15 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Web activity authentication properties. </summary>
     public partial class WebActivityAuthentication
     {
-        /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         public WebActivityAuthentication()
         {
         }
 
-        /// <summary> Initializes a new instance of WebActivityAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivityAuthentication"/>. </summary>
         /// <param name="webActivityAuthenticationType"> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </param>
         /// <param name="pfx"> Base64-encoded contents of a PFX file or Certificate when used for ServicePrincipal. </param>
         /// <param name="username"> Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string). </param>
@@ -25,7 +30,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resource"> Resource for which Azure Auth token will be requested when using MSI Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="userTenant"> TenantId for which Azure Auth token will be requested when using ServicePrincipal Authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal WebActivityAuthentication(string webActivityAuthenticationType, DataFactorySecretBaseDefinition pfx, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<string> resource, DataFactoryElement<string> userTenant, DataFactoryCredentialReference credential)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebActivityAuthentication(string webActivityAuthenticationType, DataFactorySecretBaseDefinition pfx, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, DataFactoryElement<string> resource, DataFactoryElement<string> userTenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebActivityAuthenticationType = webActivityAuthenticationType;
             Pfx = pfx;
@@ -34,6 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Resource = resource;
             UserTenant = userTenant;
             Credential = credential;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </summary>

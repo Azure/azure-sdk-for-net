@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,24 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes the storage profile. </summary>
     public partial class RestorePointSourceVmStorageProfile
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
         public RestorePointSourceVmStorageProfile()
         {
             DataDiskList = new ChangeTrackingList<RestorePointSourceVmDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
         /// <param name="osDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
         /// <param name="dataDiskList"> Gets the data disks of the VM captured at the time of the restore point creation. </param>
-        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk osDisk, IList<RestorePointSourceVmDataDisk> dataDiskList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk osDisk, IList<RestorePointSourceVmDataDisk> dataDiskList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSDisk = osDisk;
             DataDiskList = dataDiskList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the OS disk of the VM captured at the time of the restore point creation. </summary>

@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
     /// <summary> The ConsumptionBalanceAdjustmentDetail. </summary>
     public partial class ConsumptionBalanceAdjustmentDetail
     {
-        /// <summary> Initializes a new instance of ConsumptionBalanceAdjustmentDetail. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceAdjustmentDetail"/>. </summary>
         internal ConsumptionBalanceAdjustmentDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionBalanceAdjustmentDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionBalanceAdjustmentDetail"/>. </summary>
         /// <param name="name"> the name of new adjustment. </param>
         /// <param name="value"> the value of new adjustment. </param>
-        internal ConsumptionBalanceAdjustmentDetail(string name, decimal? value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionBalanceAdjustmentDetail(string name, decimal? value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> the name of new adjustment. </summary>

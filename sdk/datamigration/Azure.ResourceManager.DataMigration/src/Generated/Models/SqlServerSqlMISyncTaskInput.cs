@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that migrates SQL Server databases to Azure SQL Database Managed Instance online scenario. </summary>
     public partial class SqlServerSqlMISyncTaskInput
     {
-        /// <summary> Initializes a new instance of SqlServerSqlMISyncTaskInput. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        protected internal IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerSqlMISyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
@@ -37,14 +40,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             AzureApp = azureApp;
         }
 
-        /// <summary> Initializes a new instance of SqlServerSqlMISyncTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerSqlMISyncTaskInput"/>. </summary>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
         /// <param name="storageResourceId"> Fully qualified resourceId of storage. </param>
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for Azure SQL Database Managed Instance. </param>
         /// <param name="azureApp"> Azure Active Directory Application the DMS instance will use to connect to the target instance of Azure SQL Database Managed Instance and the Azure Storage Account. </param>
-        internal SqlServerSqlMISyncTaskInput(IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, FileShare backupFileShare, string storageResourceId, SqlConnectionInfo sourceConnectionInfo, MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerSqlMISyncTaskInput(IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, FileShare backupFileShare, string storageResourceId, SqlConnectionInfo sourceConnectionInfo, MISqlConnectionInfo targetConnectionInfo, AzureActiveDirectoryApp azureApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SelectedDatabases = selectedDatabases;
             BackupFileShare = backupFileShare;
@@ -52,6 +56,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             AzureApp = azureApp;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerSqlMISyncTaskInput"/> for deserialization. </summary>
+        internal SqlServerSqlMISyncTaskInput()
+        {
         }
 
         /// <summary> Databases to migrate. </summary>

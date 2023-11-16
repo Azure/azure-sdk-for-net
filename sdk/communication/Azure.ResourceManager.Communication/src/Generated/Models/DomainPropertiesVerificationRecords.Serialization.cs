@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class DomainPropertiesVerificationRecords
+    public partial class DomainPropertiesVerificationRecords : IUtf8JsonSerializable, IJsonModel<DomainPropertiesVerificationRecords>
     {
-        internal static DomainPropertiesVerificationRecords DeserializeDomainPropertiesVerificationRecords(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainPropertiesVerificationRecords>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<DomainPropertiesVerificationRecords>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<DomainPropertiesVerificationRecords>)} interface");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Domain))
+            {
+                writer.WritePropertyName("Domain"u8);
+                writer.WriteObjectValue(Domain);
+            }
+            if (Optional.IsDefined(Spf))
+            {
+                writer.WritePropertyName("SPF"u8);
+                writer.WriteObjectValue(Spf);
+            }
+            if (Optional.IsDefined(Dkim))
+            {
+                writer.WritePropertyName("DKIM"u8);
+                writer.WriteObjectValue(Dkim);
+            }
+            if (Optional.IsDefined(Dkim2))
+            {
+                writer.WritePropertyName("DKIM2"u8);
+                writer.WriteObjectValue(Dkim2);
+            }
+            if (Optional.IsDefined(Dmarc))
+            {
+                writer.WritePropertyName("DMARC"u8);
+                writer.WriteObjectValue(Dmarc);
+            }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DomainPropertiesVerificationRecords IJsonModel<DomainPropertiesVerificationRecords>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainPropertiesVerificationRecords(document.RootElement, options);
+        }
+
+        internal static DomainPropertiesVerificationRecords DeserializeDomainPropertiesVerificationRecords(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.ResourceManager.Communication.Models
             Optional<VerificationDnsRecord> dkim = default;
             Optional<VerificationDnsRecord> dkiM2 = default;
             Optional<VerificationDnsRecord> dmarc = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Domain"u8))
@@ -70,8 +143,38 @@ namespace Azure.ResourceManager.Communication.Models
                     dmarc = VerificationDnsRecord.DeserializeVerificationDnsRecord(property.Value);
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DomainPropertiesVerificationRecords(domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DomainPropertiesVerificationRecords(domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DomainPropertiesVerificationRecords>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        DomainPropertiesVerificationRecords IPersistableModel<DomainPropertiesVerificationRecords>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeDomainPropertiesVerificationRecords(document.RootElement, options);
+        }
+
+        string IPersistableModel<DomainPropertiesVerificationRecords>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

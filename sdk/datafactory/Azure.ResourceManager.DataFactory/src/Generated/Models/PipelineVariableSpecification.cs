@@ -6,26 +6,37 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Definition of a single variable for a Pipeline. </summary>
     public partial class PipelineVariableSpecification
     {
-        /// <summary> Initializes a new instance of PipelineVariableSpecification. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PipelineVariableSpecification"/>. </summary>
         /// <param name="variableType"> Variable type. </param>
         public PipelineVariableSpecification(PipelineVariableType variableType)
         {
             VariableType = variableType;
         }
 
-        /// <summary> Initializes a new instance of PipelineVariableSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineVariableSpecification"/>. </summary>
         /// <param name="variableType"> Variable type. </param>
         /// <param name="defaultValue"> Default value of variable. </param>
-        internal PipelineVariableSpecification(PipelineVariableType variableType, BinaryData defaultValue)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineVariableSpecification(PipelineVariableType variableType, BinaryData defaultValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VariableType = variableType;
             DefaultValue = defaultValue;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PipelineVariableSpecification"/> for deserialization. </summary>
+        internal PipelineVariableSpecification()
+        {
         }
 
         /// <summary> Variable type. </summary>

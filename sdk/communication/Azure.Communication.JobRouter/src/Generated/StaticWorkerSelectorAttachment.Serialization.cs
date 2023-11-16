@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class StaticWorkerSelectorAttachment
+    public partial class StaticWorkerSelectorAttachment : IUtf8JsonSerializable, IJsonModel<StaticWorkerSelectorAttachment>
     {
-        internal static StaticWorkerSelectorAttachment DeserializeStaticWorkerSelectorAttachment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticWorkerSelectorAttachment>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<StaticWorkerSelectorAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<StaticWorkerSelectorAttachment>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<StaticWorkerSelectorAttachment>)} interface");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("workerSelector"u8);
+            writer.WriteObjectValue(WorkerSelector);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StaticWorkerSelectorAttachment IJsonModel<StaticWorkerSelectorAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticWorkerSelectorAttachment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticWorkerSelectorAttachment(document.RootElement, options);
+        }
+
+        internal static StaticWorkerSelectorAttachment DeserializeStaticWorkerSelectorAttachment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RouterWorkerSelector workerSelector = default;
             WorkerSelectorAttachmentKind kind = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workerSelector"u8))
@@ -32,16 +85,54 @@ namespace Azure.Communication.JobRouter
                     kind = new WorkerSelectorAttachmentKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StaticWorkerSelectorAttachment(kind, workerSelector);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StaticWorkerSelectorAttachment(kind, serializedAdditionalRawData, workerSelector);
         }
+
+        BinaryData IPersistableModel<StaticWorkerSelectorAttachment>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticWorkerSelectorAttachment)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        StaticWorkerSelectorAttachment IPersistableModel<StaticWorkerSelectorAttachment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(StaticWorkerSelectorAttachment)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeStaticWorkerSelectorAttachment(document.RootElement, options);
+        }
+
+        string IPersistableModel<StaticWorkerSelectorAttachment>.GetWireFormat(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new StaticWorkerSelectorAttachment FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeStaticWorkerSelectorAttachment(document.RootElement);
+            return DeserializeStaticWorkerSelectorAttachment(document.RootElement, ModelReaderWriterOptions.Wire);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

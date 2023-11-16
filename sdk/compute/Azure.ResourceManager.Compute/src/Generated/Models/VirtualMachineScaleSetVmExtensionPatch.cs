@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,12 +15,15 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a VMSS VM Extension. </summary>
     public partial class VirtualMachineScaleSetVmExtensionPatch : ResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionPatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionPatch"/>. </summary>
         public VirtualMachineScaleSetVmExtensionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetVmExtensionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +38,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
-        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -46,6 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
             ProtectedSettings = protectedSettings;
             SuppressFailures = suppressFailures;
             KeyVaultProtectedSettings = keyVaultProtectedSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>

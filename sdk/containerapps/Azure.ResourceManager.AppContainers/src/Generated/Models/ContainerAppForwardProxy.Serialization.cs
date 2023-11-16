@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppForwardProxy : IUtf8JsonSerializable
+    public partial class ContainerAppForwardProxy : IUtf8JsonSerializable, IJsonModel<ContainerAppForwardProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppForwardProxy>)this).Write(writer, ModelReaderWriterOptions.Wire);
+
+        void IJsonModel<ContainerAppForwardProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            if ((options.Format != "W" || ((IPersistableModel<ContainerAppForwardProxy>)this).GetWireFormat(options) != "J") && options.Format != "J")
+            {
+                throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ContainerAppForwardProxy>)} interface");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Convention))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("customProtoHeaderName"u8);
                 writer.WriteStringValue(CustomProtoHeaderName);
             }
+            if (_serializedAdditionalRawData != null && options.Format == "J")
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppForwardProxy DeserializeContainerAppForwardProxy(JsonElement element)
+        ContainerAppForwardProxy IJsonModel<ContainerAppForwardProxy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppForwardProxy(document.RootElement, options);
+        }
+
+        internal static ContainerAppForwardProxy DeserializeContainerAppForwardProxy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelReaderWriterOptions.Wire;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppForwardProxyConvention> convention = default;
             Optional<string> customHostHeaderName = default;
             Optional<string> customProtoHeaderName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("convention"u8))
@@ -63,8 +105,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                     customProtoHeaderName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format == "J")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppForwardProxy(Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppForwardProxy(Optional.ToNullable(convention), customHostHeaderName.Value, customProtoHeaderName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppForwardProxy>.Write(ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support '{options.Format}' format.");
+            }
+
+            return ModelReaderWriter.Write(this, options);
+        }
+
+        ContainerAppForwardProxy IPersistableModel<ContainerAppForwardProxy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            bool isValid = options.Format == "J" || options.Format == "W";
+            if (!isValid)
+            {
+                throw new FormatException($"The model {nameof(ContainerAppForwardProxy)} does not support '{options.Format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.Parse(data);
+            return DeserializeContainerAppForwardProxy(document.RootElement, options);
+        }
+
+        string IPersistableModel<ContainerAppForwardProxy>.GetWireFormat(ModelReaderWriterOptions options) => "J";
     }
 }

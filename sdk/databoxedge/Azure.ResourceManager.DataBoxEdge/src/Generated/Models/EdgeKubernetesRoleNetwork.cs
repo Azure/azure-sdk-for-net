@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Kubernetes role network resource. </summary>
     public partial class EdgeKubernetesRoleNetwork
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleNetwork. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleNetwork"/>. </summary>
         internal EdgeKubernetesRoleNetwork()
         {
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleNetwork"/>. </summary>
         /// <param name="cniConfig"> Cni configuration. </param>
         /// <param name="loadBalancerConfig"> Load balancer configuration. </param>
-        internal EdgeKubernetesRoleNetwork(CniConfig cniConfig, DataBoxEdgeLoadBalancerConfig loadBalancerConfig)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesRoleNetwork(CniConfig cniConfig, DataBoxEdgeLoadBalancerConfig loadBalancerConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CniConfig = cniConfig;
             LoadBalancerConfig = loadBalancerConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Cni configuration. </summary>

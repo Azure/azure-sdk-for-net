@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The object representing the state of the migration between the backup policies. </summary>
     public partial class BackupPolicyMigrationState
     {
-        /// <summary> Initializes a new instance of BackupPolicyMigrationState. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupPolicyMigrationState"/>. </summary>
         public BackupPolicyMigrationState()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupPolicyMigrationState. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupPolicyMigrationState"/>. </summary>
         /// <param name="status"> Describes the status of migration between backup policy types. </param>
         /// <param name="targetType"> Describes the target backup policy type of the backup policy migration. </param>
         /// <param name="startOn"> Time at which the backup policy migration started (ISO-8601 format). </param>
-        internal BackupPolicyMigrationState(BackupPolicyMigrationStatus? status, BackupPolicyType? targetType, DateTimeOffset? startOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupPolicyMigrationState(BackupPolicyMigrationStatus? status, BackupPolicyType? targetType, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             TargetType = targetType;
             StartOn = startOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the status of migration between backup policy types. </summary>

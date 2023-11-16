@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,22 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> A certificate to update. </summary>
     public partial class ContainerAppCertificatePatch
     {
-        /// <summary> Initializes a new instance of ContainerAppCertificatePatch. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificatePatch"/>. </summary>
         public ContainerAppCertificatePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCertificatePatch"/>. </summary>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCertificatePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>

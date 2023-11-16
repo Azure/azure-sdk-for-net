@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -13,7 +14,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Custom Domain of a Container App. </summary>
     public partial class ContainerAppCustomDomain
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomDomain. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomain"/>. </summary>
         /// <param name="name"> Hostname. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ContainerAppCustomDomain(string name)
@@ -23,15 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomain. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomain"/>. </summary>
         /// <param name="name"> Hostname. </param>
         /// <param name="bindingType"> Custom Domain binding type. </param>
         /// <param name="certificateId"> Resource Id of the Certificate to be bound to this hostname. Must exist in the Managed Environment. </param>
-        internal ContainerAppCustomDomain(string name, ContainerAppCustomDomainBindingType? bindingType, ResourceIdentifier certificateId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCustomDomain(string name, ContainerAppCustomDomainBindingType? bindingType, ResourceIdentifier certificateId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             BindingType = bindingType;
             CertificateId = certificateId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomain"/> for deserialization. </summary>
+        internal ContainerAppCustomDomain()
+        {
         }
 
         /// <summary> Hostname. </summary>

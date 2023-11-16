@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,31 @@ namespace Azure.AI.ContentSafety
     /// <summary> The analysis response of the text. </summary>
     public partial class AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
         internal AnalyzeTextResult()
         {
             BlocklistsMatchResults = new ChangeTrackingList<TextBlocklistMatchResult>();
+            _serializedAdditionalRawData = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeTextResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextResult"/>. </summary>
         /// <param name="blocklistsMatchResults"> The details of blocklist match. </param>
         /// <param name="hateResult"> Analysis result for Hate category. </param>
         /// <param name="selfHarmResult"> Analysis result for SelfHarm category. </param>
         /// <param name="sexualResult"> Analysis result for Sexual category. </param>
         /// <param name="violenceResult"> Analysis result for Violence category. </param>
-        internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatchResult> blocklistsMatchResults, TextAnalyzeSeverityResult hateResult, TextAnalyzeSeverityResult selfHarmResult, TextAnalyzeSeverityResult sexualResult, TextAnalyzeSeverityResult violenceResult)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalyzeTextResult(IReadOnlyList<TextBlocklistMatchResult> blocklistsMatchResults, TextAnalyzeSeverityResult hateResult, TextAnalyzeSeverityResult selfHarmResult, TextAnalyzeSeverityResult sexualResult, TextAnalyzeSeverityResult violenceResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BlocklistsMatchResults = blocklistsMatchResults;
             HateResult = hateResult;
             SelfHarmResult = selfHarmResult;
             SexualResult = sexualResult;
             ViolenceResult = violenceResult;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The details of blocklist match. </summary>

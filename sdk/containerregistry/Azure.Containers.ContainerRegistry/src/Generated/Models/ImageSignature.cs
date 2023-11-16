@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Signature of a signed manifest. </summary>
     internal partial class ImageSignature
     {
-        /// <summary> Initializes a new instance of ImageSignature. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageSignature"/>. </summary>
         internal ImageSignature()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageSignature. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSignature"/>. </summary>
         /// <param name="header"> A JSON web signature. </param>
         /// <param name="signature"> A signature for the image manifest, signed by a libtrust private key. </param>
         /// <param name="protected"> The signed protected header. </param>
-        internal ImageSignature(JWK header, string signature, string @protected)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageSignature(JWK header, string signature, string @protected, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Header = header;
             Signature = signature;
             Protected = @protected;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A JSON web signature. </summary>

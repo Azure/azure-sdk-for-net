@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,22 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The List Dedicated Host sizes operation response. </summary>
     internal partial class DedicatedHostSizeListResult
     {
-        /// <summary> Initializes a new instance of DedicatedHostSizeListResult. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostSizeListResult"/>. </summary>
         internal DedicatedHostSizeListResult()
         {
             Value = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DedicatedHostSizeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostSizeListResult"/>. </summary>
         /// <param name="value"> The list of dedicated host sizes. </param>
-        internal DedicatedHostSizeListResult(IReadOnlyList<string> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DedicatedHostSizeListResult(IReadOnlyList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of dedicated host sizes. </summary>

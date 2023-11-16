@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Detailed errors. </summary>
     public partial class ContainerAppCustomDomainVerificationFailureInfoDetailsItem
     {
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainVerificationFailureInfoDetailsItem"/>. </summary>
         internal ContainerAppCustomDomainVerificationFailureInfoDetailsItem()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCustomDomainVerificationFailureInfoDetailsItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCustomDomainVerificationFailureInfoDetailsItem"/>. </summary>
         /// <param name="code"> Standardized string to programmatically identify the error. </param>
         /// <param name="message"> Detailed error description and debugging information. </param>
         /// <param name="target"> Detailed error description and debugging information. </param>
-        internal ContainerAppCustomDomainVerificationFailureInfoDetailsItem(string code, string message, string target)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCustomDomainVerificationFailureInfoDetailsItem(string code, string message, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             Target = target;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Standardized string to programmatically identify the error. </summary>

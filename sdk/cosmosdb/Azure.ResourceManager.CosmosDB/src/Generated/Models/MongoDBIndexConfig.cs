@@ -5,23 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB MongoDB collection index options. </summary>
     public partial class MongoDBIndexConfig
     {
-        /// <summary> Initializes a new instance of MongoDBIndexConfig. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBIndexConfig"/>. </summary>
         public MongoDBIndexConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBIndexConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBIndexConfig"/>. </summary>
         /// <param name="expireAfterSeconds"> Expire after seconds. </param>
         /// <param name="isUnique"> Is unique or not. </param>
-        internal MongoDBIndexConfig(int? expireAfterSeconds, bool? isUnique)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBIndexConfig(int? expireAfterSeconds, bool? isUnique, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExpireAfterSeconds = expireAfterSeconds;
             IsUnique = isUnique;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Expire after seconds. </summary>

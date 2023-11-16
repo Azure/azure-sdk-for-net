@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -18,13 +19,16 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class AuthorizationPolicyResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicyResourceFormatData"/>. </summary>
         public AuthorizationPolicyResourceFormatData()
         {
             Permissions = new ChangeTrackingList<PermissionType>();
         }
 
-        /// <summary> Initializes a new instance of AuthorizationPolicyResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationPolicyResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,12 +37,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="permissions"> The permissions associated with the policy. </param>
         /// <param name="primaryKey"> Primary key associated with the policy. </param>
         /// <param name="secondaryKey"> Secondary key associated with the policy. </param>
-        internal AuthorizationPolicyResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyName, IList<PermissionType> permissions, string primaryKey, string secondaryKey) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationPolicyResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyName, IList<PermissionType> permissions, string primaryKey, string secondaryKey, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PolicyName = policyName;
             Permissions = permissions;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the policy. </summary>

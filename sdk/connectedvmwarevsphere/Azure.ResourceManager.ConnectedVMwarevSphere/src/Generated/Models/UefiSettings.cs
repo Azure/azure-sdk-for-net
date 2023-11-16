@@ -5,21 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Specifies the security settings like secure boot used while creating the virtual machine. </summary>
     internal partial class UefiSettings
     {
-        /// <summary> Initializes a new instance of UefiSettings. </summary>
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
         public UefiSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of UefiSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
         /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. </param>
-        internal UefiSettings(bool? secureBootEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UefiSettings(bool? secureBootEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecureBootEnabled = secureBootEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies whether secure boot should be enabled on the virtual machine. </summary>
