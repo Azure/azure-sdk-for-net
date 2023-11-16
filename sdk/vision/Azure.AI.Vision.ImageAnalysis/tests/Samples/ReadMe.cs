@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Vision.ImageAnalysis.Tests
 {
-    public class ReadMe:SamplesBase<ImageAnalysisTestEnvironment>
+    public class ReadMe : SamplesBase<ImageAnalysisTestEnvironment>
     {
         public ImageAnalysisClient ImageAnalysisAuth()
         {
@@ -107,6 +107,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #endregion
         }
 
+        [TestCase]
         public void ImageAnalysisExtractTextFromUrl()
         {
             var client = ImageAnalysisAuth();
@@ -137,6 +138,33 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             {
                 string pointsString = "{" + string.Join(", ", word.BoundingBox.Select(point => point.ToString())) + "}";
                 Console.WriteLine($"     Word: '{word.Content}', Bounding box {pointsString}, Confidence {word.Confidence:F4}, Span offset {word.Span.Offset}, Span length {word.Span.Length}");
+            }
+            #endregion
+        }
+
+        [TestCase]
+        public void ImageAnalysisException()
+        {
+            var client = ImageAnalysisAuth();
+
+            #region Snippet:ImageAnalysisException
+            var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
+
+            try
+            {
+                var result = client.Analyze(imageUrl, VisualFeatures.Caption);
+            }
+            catch (RequestFailedException e)
+            {
+                if (e.Status == 400)
+                {
+                    Console.WriteLine("Error analyzing image.");
+                    Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
+                }
+                else
+                {
+                    throw;
+                }
             }
             #endregion
         }

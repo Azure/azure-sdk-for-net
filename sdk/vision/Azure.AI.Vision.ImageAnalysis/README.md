@@ -199,10 +199,34 @@ foreach (DocumentWord word in result.Read.Pages[0].Words)
     Console.WriteLine($"     Word: '{word.Content}', Bounding box {pointsString}, Confidence {word.Confidence:F4}, Span offset {word.Span.Offset}, Span length {word.Span.Length}");
 }
 ```
-
 ## Troubleshooting
 
-Please refer to the [Service Bus Troubleshooting Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md).
+### Common errors
+
+When you interact with Image Analysis using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests. For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` error is returned, indicating a bad request.
+
+### Handling exceptions
+
+In the following snippet, the error is handled gracefully by catching the exception and displaying additional information about the error.
+
+```csharp Snippet:ImageAnalysisException
+try
+{
+    var result = client.Analyze(imageUrl, visualFeatures);
+}
+catch (RequestFailedException e)
+{
+    if (e.Status == 400)
+    {
+        Console.WriteLine("Error analyzing image.");
+        Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
+    }
+    else
+    {
+        throw;
+    }
+}
+```
 
 ## Next steps
 
