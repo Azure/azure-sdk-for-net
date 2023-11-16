@@ -209,10 +209,12 @@ When you interact with Image Analysis using the .NET SDK, errors returned by the
 
 In the following snippet, the error is handled gracefully by catching the exception and displaying additional information about the error.
 
-```csharp Snippet:ImageAnalysisException
+```C# Snippet:ImageAnalysisException
+var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
+
 try
 {
-    var result = client.Analyze(imageUrl, visualFeatures);
+    var result = client.Analyze(imageUrl, VisualFeatures.Caption);
 }
 catch (RequestFailedException e)
 {
