@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.ClientModel.Core.Pipeline;
+using System.ClientModel.Primitives.Pipeline;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core

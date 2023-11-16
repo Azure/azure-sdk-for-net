@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 using System.Net.Http;
-using System.Net.ClientModel.Core.Pipeline;
+using System.ClientModel.Primitives.Pipeline;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline

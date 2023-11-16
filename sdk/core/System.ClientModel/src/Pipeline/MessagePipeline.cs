@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.ClientModel.Primitives.Pipeline;
 
 public class MessagePipeline : Pipeline<PipelineMessage>
 {

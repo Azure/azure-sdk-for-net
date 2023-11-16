@@ -9,7 +9,7 @@ using System.Threading;
 
 #nullable enable
 
-namespace System.Net.ClientModel.Core
+namespace System.ClientModel.Primitives
 {
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
     internal class DiagnosticScopeFactory

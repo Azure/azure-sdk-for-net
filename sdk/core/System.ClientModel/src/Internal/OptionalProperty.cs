@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Internal
+namespace System.ClientModel.Internal
 {
     public static class OptionalProperty
     {

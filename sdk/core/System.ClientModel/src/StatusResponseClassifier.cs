@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.ClientModel.Internal;
+using System.ClientModel.Internal;
 
-namespace System.Net.ClientModel.Core
+namespace System.ClientModel.Primitives
 {
     public class StatusResponseClassifier : ResponseErrorClassifier
     {

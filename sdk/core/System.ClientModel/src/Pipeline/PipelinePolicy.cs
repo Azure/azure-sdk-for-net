@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.ClientModel.Primitives.Pipeline;
 
 // TODO: can we make it a class? ... but it means all existing polices need to inherit from it.
 public interface IPipelinePolicy<TMessage>

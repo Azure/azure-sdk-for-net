@@ -3,9 +3,9 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Primitives;
 
-namespace System.Net.ClientModel;
+namespace System.ClientModel;
 
 public class Result<T> : NullableResult<T>
 {

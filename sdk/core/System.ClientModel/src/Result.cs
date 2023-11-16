@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.ClientModel.Core;
+using System.ClientModel.Primitives;
 
-namespace System.Net.ClientModel;
+namespace System.ClientModel;
 
 public abstract class Result
 {

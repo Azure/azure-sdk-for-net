@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace System.Net.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 public abstract class PipelineResponse : IDisposable
 {

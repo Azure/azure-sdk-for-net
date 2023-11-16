@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.ClientModel.Primitives.Pipeline;
 
 public abstract class PipelineTransport<TMessage> : IPipelinePolicy<TMessage>
 {

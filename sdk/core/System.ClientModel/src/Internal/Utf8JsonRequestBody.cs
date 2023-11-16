@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.IO;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Internal;
+namespace System.ClientModel.Internal;
 
 // TODO: it might be nice to make this type internal and have a method
 // on a different type that returns this as an implementation of RequestBody

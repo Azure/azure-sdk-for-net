@@ -3,7 +3,7 @@
 
 using System;
 
-namespace System.Net.ClientModel
+namespace System.ClientModel
 {
     /// <summary>
     /// ResultErrorOptions controls the behavior of an operation when an unexpected response status code is received.

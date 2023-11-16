@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Internal
+namespace System.ClientModel.Internal
 {
     public static class ModelSerializationExtensions
     {

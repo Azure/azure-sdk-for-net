@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Internal;
+namespace System.ClientModel.Internal;
 
 internal static class StreamExtensions
 {

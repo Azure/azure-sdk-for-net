@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
+using System.ClientModel.Primitives;
+using System.ClientModel.Primitives.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Internal;
+namespace System.ClientModel.Internal;
 
 public static class PipelineProtocolExtensions
 {

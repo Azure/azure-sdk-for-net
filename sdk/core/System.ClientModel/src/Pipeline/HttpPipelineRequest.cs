@@ -7,11 +7,11 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
-using System.Net.ClientModel.Internal;
+using System.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.ClientModel.Primitives.Pipeline;
 
 // This adds the Http dependency, and some implementation
 

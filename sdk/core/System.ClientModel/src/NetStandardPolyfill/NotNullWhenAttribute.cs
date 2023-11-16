@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.Net.ClientModel;
+namespace System.ClientModel;
 
 internal class NotNullWhenAttribute : Attribute
 {

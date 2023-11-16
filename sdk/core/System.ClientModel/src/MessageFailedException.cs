@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Runtime.Serialization;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Primitives;
 
-namespace System.Net.ClientModel
+namespace System.ClientModel
 {
     public class MessageFailedException : Exception
     {

@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace System.Net.ClientModel.Core
+namespace System.ClientModel.Primitives
 {
     // TODO: this is a copy of a shared source file.  We need to manage removing the copy and getting everyone
     // on the same version.

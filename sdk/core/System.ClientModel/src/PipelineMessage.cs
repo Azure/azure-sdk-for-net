@@ -3,7 +3,7 @@
 
 using System.Threading;
 
-namespace System.Net.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 public class PipelineMessage : IDisposable
 {

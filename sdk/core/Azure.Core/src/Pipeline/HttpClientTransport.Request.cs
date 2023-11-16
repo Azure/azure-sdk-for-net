@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.InteropServices;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Primitives;
+using System.ClientModel.Primitives.Pipeline;
 
 namespace Azure.Core.Pipeline
 {

@@ -3,11 +3,11 @@
 
 using System.Buffers;
 using System.IO;
-using System.Net.ClientModel.Internal;
+using System.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.ClientModel.Primitives.Pipeline;
 
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client

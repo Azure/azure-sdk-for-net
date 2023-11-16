@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
-using System.Net.ClientModel.Core;
+using System.ClientModel.Primitives;
 
-namespace System.Net.ClientModel;
+namespace System.ClientModel;
 
 public class NullableResult<T> : Result
 {

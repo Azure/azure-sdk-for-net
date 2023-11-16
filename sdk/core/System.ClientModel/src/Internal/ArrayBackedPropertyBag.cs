@@ -5,7 +5,7 @@ using System.Buffers;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace System.Net.ClientModel.Internal
+namespace System.ClientModel.Internal
 {
     // TODO: this is coped from Azure.Core - we should make sure the type is implemented
     // in only one place.

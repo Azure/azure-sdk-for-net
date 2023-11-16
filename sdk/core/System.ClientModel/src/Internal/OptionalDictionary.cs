@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace System.Net.ClientModel.Internal
+namespace System.ClientModel.Internal
 {
     public class OptionalDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey: notnull
     {

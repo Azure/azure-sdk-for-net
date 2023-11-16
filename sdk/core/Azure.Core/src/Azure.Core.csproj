@@ -79,7 +79,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\System.Net.ClientModel\src\System.Net.ClientModel.csproj" />
+    <ProjectReference Include="..\..\System.ClientModel\src\System.ClientModel.csproj" />
   </ItemGroup>
 
 </Project>

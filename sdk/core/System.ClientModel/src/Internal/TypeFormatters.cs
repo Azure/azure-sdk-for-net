@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace System.Net.ClientModel.Internal;
+namespace System.ClientModel.Internal;
 
 internal class TypeFormatters
 {

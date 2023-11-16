@@ -8,7 +8,7 @@ using System.Linq;
 
 #nullable enable
 
-namespace System.Net.ClientModel.Internal
+namespace System.ClientModel.Internal
 {
     public class OptionalList<T>: IList<T>, IReadOnlyList<T>
     {

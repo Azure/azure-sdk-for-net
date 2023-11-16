@@ -9,7 +9,7 @@ using System.Collections.Generic;
 // TODO: Linq is bad for performance
 using System.Linq;
 
-namespace System.Net.ClientModel.Internal;
+namespace System.ClientModel.Internal;
 
 public class RequestUri
 {

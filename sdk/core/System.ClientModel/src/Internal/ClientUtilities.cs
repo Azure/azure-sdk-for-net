@@ -4,7 +4,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Internal;
+namespace System.ClientModel.Internal;
 
 public class ClientUtilities
 {

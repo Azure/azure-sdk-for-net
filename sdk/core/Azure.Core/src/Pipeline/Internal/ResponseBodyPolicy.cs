@@ -3,8 +3,8 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
+using System.ClientModel.Primitives;
+using System.ClientModel.Primitives.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -5,9 +5,9 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
+using System.ClientModel;
+using System.ClientModel.Primitives;
+using System.ClientModel.Primitives.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -127,7 +127,7 @@ namespace Azure.Core.Pipeline
             {
                 // TODO: is it better to set once or hold an options in the message?
                 // holding an options in the message would let us set it on the base class
-                // if we need to call it in the System.Net.ClientModel pipeline.
+                // if we need to call it in the System.ClientModel pipeline.
                 // but, should message hold options?  That seems inside-out if options
                 // holds a pipeline.  Must think!
                 message.BufferResponse = options.BufferResponse;

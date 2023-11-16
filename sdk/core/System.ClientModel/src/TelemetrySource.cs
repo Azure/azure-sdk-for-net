@@ -4,7 +4,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace System.Net.ClientModel.Core
+namespace System.ClientModel.Primitives
 {
     public class TelemetrySource
     {

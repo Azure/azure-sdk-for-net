@@ -3,11 +3,11 @@
 
 using System.Buffers;
 using System.IO;
-using System.Net.ClientModel.Internal;
+using System.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core
+namespace System.ClientModel.Primitives
 {
     public abstract class RequestBody : IDisposable
     {

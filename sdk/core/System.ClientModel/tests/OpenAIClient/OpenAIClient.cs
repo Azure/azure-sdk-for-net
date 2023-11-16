@@ -4,7 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
-using System.Net.ClientModel;
+using System.ClientModel;
 using System.Threading;
 
 namespace OpenAI;

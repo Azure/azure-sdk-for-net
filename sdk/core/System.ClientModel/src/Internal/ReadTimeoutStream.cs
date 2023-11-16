@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 // TODO: this is a copy from Azure.Core.  Put it in one place
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.ClientModel.Primitives.Pipeline;
 
 /// <summary>
 /// Read-only Stream that will throw a <see cref="OperationCanceledException"/> if it has to wait longer than a configurable timeout to read more data

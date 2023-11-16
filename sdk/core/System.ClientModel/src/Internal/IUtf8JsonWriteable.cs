@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Internal;
+namespace System.ClientModel.Internal;
 
 public interface IUtf8JsonWriteable
 {

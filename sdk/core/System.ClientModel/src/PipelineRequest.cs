@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.Net.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 // TODO: Note WIP - starting to make this abstract and move implementation into RestPipelineTransport.Request
 // What are the implications of this being abstract for Azure.Core's Request?

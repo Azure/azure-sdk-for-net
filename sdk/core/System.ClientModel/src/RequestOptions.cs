@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
+using System.ClientModel.Primitives;
+using System.ClientModel.Primitives.Pipeline;
 using System.Threading;
 
-namespace System.Net.ClientModel;
+namespace System.ClientModel;
 
 // TODO: Make options freezable
 public class RequestOptions

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace System.Net.ClientModel.Core;
+namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Represents a position of the policy in the pipeline.
