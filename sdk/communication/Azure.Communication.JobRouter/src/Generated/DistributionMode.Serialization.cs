@@ -22,9 +22,9 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "best-worker": return BestWorkerMode.DeserializeBestWorkerMode(element);
-                    case "longest-idle": return LongestIdleMode.DeserializeLongestIdleMode(element);
-                    case "round-robin": return RoundRobinMode.DeserializeRoundRobinMode(element);
+                    case "bestWorker": return BestWorkerMode.DeserializeBestWorkerMode(element);
+                    case "longestIdle": return LongestIdleMode.DeserializeLongestIdleMode(element);
+                    case "roundRobin": return RoundRobinMode.DeserializeRoundRobinMode(element);
                 }
             }
             return UnknownDistributionMode.DeserializeUnknownDistributionMode(element);

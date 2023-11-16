@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of CapabilityTypeResources and their operations over a CapabilityTypeResource. </returns>
         public virtual CapabilityTypeCollection GetCapabilityTypes()
         {
-            return GetCachedClient(Client => new CapabilityTypeCollection(Client, Id));
+            return GetCachedClient(client => new CapabilityTypeCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="capabilityTypeName"> String that represents a Capability Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CapabilityTypeResource>> GetCapabilityTypeAsync(string capabilityTypeName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="capabilityTypeName"> String that represents a Capability Type resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CapabilityTypeResource> GetCapabilityType(string capabilityTypeName, CancellationToken cancellationToken = default)
         {

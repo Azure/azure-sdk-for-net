@@ -10,11 +10,23 @@
 
 ### Other Changes
 
+## 1.8.1 (2023-11-13)
+
+### Other Changes
+
+- Refined some customization code to make the library more maintainable.
+
 ## 1.8.0 (2023-11-02)
 
 ### Features Added
 
 - Add a new method `GetCachedClient` in `ArmClient` class to unify the mocking experience.
+
+## 1.8.0-beta.1 (2023-08-09)
+
+### Features Added
+
+- Add a method `GetCachedClient` in `ArmClient` to enable mocking for extension methods.
 
 ## 1.7.0 (2023-07-13)
 

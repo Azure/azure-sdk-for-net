@@ -82,9 +82,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> moRefId = default;
             Optional<string> inventoryItemId = default;
             Optional<string> moName = default;
-            Optional<IReadOnlyList<ResourceStatus>> statuses = default;
+            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
             Optional<string> customResourceName = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<long> capacityGB = default;
+            Optional<long> freeSpaceGB = default;
+            Optional<VMwareResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -184,10 +186,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            List<ResourceStatus> array = new List<ResourceStatus>();
+                            List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceStatus.DeserializeResourceStatus(item));
+                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
                             }
                             statuses = array;
                             continue;
@@ -197,20 +199,38 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             customResourceName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("capacityGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            capacityGB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("freeSpaceGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            freeSpaceGB = property0.Value.GetInt64();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new VMwareResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VMwareDatastoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(provisioningState));
+            return new VMwareDatastoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(capacityGB), Optional.ToNullable(freeSpaceGB), Optional.ToNullable(provisioningState));
         }
     }
 }

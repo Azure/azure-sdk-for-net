@@ -18,12 +18,12 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            string kind = "Unknown";
+            ExceptionTriggerKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new ExceptionTriggerKind(property.Value.GetString());
                     continue;
                 }
             }

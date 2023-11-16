@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
 
@@ -15,11 +15,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ApiProfile : IUtf8JsonSerializable, IJsonModel<ApiProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiProfile>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiProfile>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,11 +100,11 @@ namespace Azure.Core.Tests.Models.ResourceManager.Resources
 
         BinaryData IPersistableModel<ApiProfile>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<ApiProfile>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

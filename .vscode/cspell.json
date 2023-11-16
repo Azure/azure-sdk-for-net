@@ -638,7 +638,9 @@
         "Ocsp",
         "Afri",
         "Apac",
-        "Latam"
+        "Latam",
+        "Fips",
+        "Diffie"
       ]
     },
     {
@@ -1233,6 +1235,15 @@
       "filename": "**/sdk/monitor/**/*.cs",
       "words": [
         "resourceid"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridnetwork/**/*.cs",
+      "words": [
+        "Nfvi",
+        "nfvi",
+        "NFVIs",
+        "nfvis"
       ]
     }
   ],

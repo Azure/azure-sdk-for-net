@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An object representing collection of DataLakeAnalyticsStorageContainerResources and their operations over a DataLakeAnalyticsStorageContainerResource. </returns>
         public virtual DataLakeAnalyticsStorageContainerCollection GetDataLakeAnalyticsStorageContainers()
         {
-            return GetCachedClient(Client => new DataLakeAnalyticsStorageContainerCollection(Client, Id));
+            return GetCachedClient(client => new DataLakeAnalyticsStorageContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="containerName"> The name of the Azure storage container to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataLakeAnalyticsStorageContainerResource>> GetDataLakeAnalyticsStorageContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </summary>
         /// <param name="containerName"> The name of the Azure storage container to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataLakeAnalyticsStorageContainerResource> GetDataLakeAnalyticsStorageContainer(string containerName, CancellationToken cancellationToken = default)
         {

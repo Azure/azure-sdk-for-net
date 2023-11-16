@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 Attributes =
 {
 ["deviceTypes"] = BinaryData.FromObjectAsJson(new object[] { "Fan", "Light", "AC" }),
-["floor"] = BinaryData.FromString("3"),
-["room"] = BinaryData.FromString("345"),
+["floor"] = BinaryData.FromString("\"3\""),
+["room"] = BinaryData.FromString("\"345\""),
 },
             };
             ArmOperation<EventGridNamespaceClientResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clientName, data);

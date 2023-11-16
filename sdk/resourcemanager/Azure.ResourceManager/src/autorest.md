@@ -244,6 +244,10 @@ operations-to-skip-lro-api-version-override:
 - Tags_UpdateAtScope
 - Tags_DeleteAtScope
 
+generate-arm-resource-extensions:
+- /{scope}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}
+- /{scope}/providers/Microsoft.Authorization/locks/{lockName}
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'etag': 'etag'
@@ -287,6 +291,7 @@ rename-mapping:
   SelectorKind: ResourceSelectorKind
   Location: LocationExpanded
   ResourcesMoveContent.targetResourceGroup: targetResourceGroupId|arm-id
+  LocationMetadata.pairedRegion: PairedRegions
 
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.

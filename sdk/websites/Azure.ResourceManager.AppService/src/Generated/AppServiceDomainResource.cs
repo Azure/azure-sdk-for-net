@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of DomainOwnershipIdentifierResources and their operations over a DomainOwnershipIdentifierResource. </returns>
         public virtual DomainOwnershipIdentifierCollection GetDomainOwnershipIdentifiers()
         {
-            return GetCachedClient(Client => new DomainOwnershipIdentifierCollection(Client, Id));
+            return GetCachedClient(client => new DomainOwnershipIdentifierCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DomainOwnershipIdentifierResource>> GetDomainOwnershipIdentifierAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="name"> Name of identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DomainOwnershipIdentifierResource> GetDomainOwnershipIdentifier(string name, CancellationToken cancellationToken = default)
         {

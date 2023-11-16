@@ -44,6 +44,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly BackupAndExportRestOperations _backupAndExportRestClient;
         private readonly ClientDiagnostics _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics;
         private readonly ConfigurationsRestOperations _mySqlFlexibleServerConfigurationConfigurationsRestClient;
+        private readonly ClientDiagnostics _serversMigrationClientDiagnostics;
+        private readonly ServersMigrationRestOperations _serversMigrationRestClient;
         private readonly ClientDiagnostics _logFilesClientDiagnostics;
         private readonly LogFilesRestOperations _logFilesRestClient;
         private readonly MySqlFlexibleServerData _data;
@@ -75,6 +77,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerConfigurationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(MySqlFlexibleServerConfigurationResource.ResourceType, out string mySqlFlexibleServerConfigurationConfigurationsApiVersion);
             _mySqlFlexibleServerConfigurationConfigurationsRestClient = new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerConfigurationConfigurationsApiVersion);
+            _serversMigrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _serversMigrationRestClient = new ServersMigrationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _logFilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _logFilesRestClient = new LogFilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An object representing collection of MySqlFlexibleServerAadAdministratorResources and their operations over a MySqlFlexibleServerAadAdministratorResource. </returns>
         public virtual MySqlFlexibleServerAadAdministratorCollection GetMySqlFlexibleServerAadAdministrators()
         {
-            return GetCachedClient(Client => new MySqlFlexibleServerAadAdministratorCollection(Client, Id));
+            return GetCachedClient(client => new MySqlFlexibleServerAadAdministratorCollection(client, Id));
         }
 
         /// <summary>
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An object representing collection of MySqlFlexibleServerBackupResources and their operations over a MySqlFlexibleServerBackupResource. </returns>
         public virtual MySqlFlexibleServerBackupCollection GetMySqlFlexibleServerBackups()
         {
-            return GetCachedClient(Client => new MySqlFlexibleServerBackupCollection(Client, Id));
+            return GetCachedClient(client => new MySqlFlexibleServerBackupCollection(client, Id));
         }
 
         /// <summary>
@@ -177,8 +181,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlFlexibleServerBackupResource>> GetMySqlFlexibleServerBackupAsync(string backupName, CancellationToken cancellationToken = default)
         {
@@ -200,8 +204,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlFlexibleServerBackupResource> GetMySqlFlexibleServerBackup(string backupName, CancellationToken cancellationToken = default)
         {
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An object representing collection of MySqlFlexibleServerConfigurationResources and their operations over a MySqlFlexibleServerConfigurationResource. </returns>
         public virtual MySqlFlexibleServerConfigurationCollection GetMySqlFlexibleServerConfigurations()
         {
-            return GetCachedClient(Client => new MySqlFlexibleServerConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new MySqlFlexibleServerConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -230,8 +234,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlFlexibleServerConfigurationResource>> GetMySqlFlexibleServerConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -253,8 +257,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlFlexibleServerConfigurationResource> GetMySqlFlexibleServerConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -265,7 +269,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An object representing collection of MySqlFlexibleServerDatabaseResources and their operations over a MySqlFlexibleServerDatabaseResource. </returns>
         public virtual MySqlFlexibleServerDatabaseCollection GetMySqlFlexibleServerDatabases()
         {
-            return GetCachedClient(Client => new MySqlFlexibleServerDatabaseCollection(Client, Id));
+            return GetCachedClient(client => new MySqlFlexibleServerDatabaseCollection(client, Id));
         }
 
         /// <summary>
@@ -283,8 +287,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlFlexibleServerDatabaseResource>> GetMySqlFlexibleServerDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -306,8 +310,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlFlexibleServerDatabaseResource> GetMySqlFlexibleServerDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -318,7 +322,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An object representing collection of MySqlFlexibleServerFirewallRuleResources and their operations over a MySqlFlexibleServerFirewallRuleResource. </returns>
         public virtual MySqlFlexibleServerFirewallRuleCollection GetMySqlFlexibleServerFirewallRules()
         {
-            return GetCachedClient(Client => new MySqlFlexibleServerFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new MySqlFlexibleServerFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -336,8 +340,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlFlexibleServerFirewallRuleResource>> GetMySqlFlexibleServerFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -359,8 +363,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlFlexibleServerFirewallRuleResource> GetMySqlFlexibleServerFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -1134,6 +1138,74 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 var operation = new FlexibleServersArmOperation(_mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateResetGtidRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cutover migration for MySQL import, it will switch source elastic server DNS to flexible server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/cutoverMigration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServersMigration_CutoverMigration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<MySqlFlexibleServerResource>> CutoverMigrationServersMigrationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serversMigrationClientDiagnostics.CreateScope("MySqlFlexibleServerResource.CutoverMigrationServersMigration");
+            scope.Start();
+            try
+            {
+                var response = await _serversMigrationRestClient.CutoverMigrationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _serversMigrationClientDiagnostics, Pipeline, _serversMigrationRestClient.CreateCutoverMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cutover migration for MySQL import, it will switch source elastic server DNS to flexible server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/cutoverMigration</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServersMigration_CutoverMigration</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<MySqlFlexibleServerResource> CutoverMigrationServersMigration(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _serversMigrationClientDiagnostics.CreateScope("MySqlFlexibleServerResource.CutoverMigrationServersMigration");
+            scope.Start();
+            try
+            {
+                var response = _serversMigrationRestClient.CutoverMigration(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _serversMigrationClientDiagnostics, Pipeline, _serversMigrationRestClient.CreateCutoverMigrationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -79,6 +79,17 @@ namespace Azure.ResourceManager.TestFramework
             });
         }
 
+        protected void IgnoreAuthorizationDependencyVersions()
+        {
+            // Ignore the api-version of Authorization operations
+            UriRegexSanitizers.Add(new UriRegexSanitizer(
+                @"/providers\/Microsoft.Authorization\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
+            )
+            {
+                GroupForReplace = "group"
+            });
+        }
+
         protected void IgnoreKeyVaultDependencyVersions()
         {
             // Ignore the api-version of KeyVault operations

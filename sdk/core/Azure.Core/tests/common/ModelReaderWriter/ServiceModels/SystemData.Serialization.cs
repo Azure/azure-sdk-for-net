@@ -7,8 +7,8 @@
 
 using System;
 using System.Globalization;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Tests.Common;
@@ -18,7 +18,7 @@ namespace Azure.Core.Tests.Models.ResourceManager
     [JsonConverter(typeof(SystemDataConverter))]
     public partial class SystemData : IUtf8JsonSerializable, IJsonModel<SystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<SystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Models.ResourceManager
 
         internal static SystemData DeserializeSystemData(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,17 +172,17 @@ namespace Azure.Core.Tests.Models.ResourceManager
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSystemData(document.RootElement, ModelReaderWriterOptions.Wire);
+                return DeserializeSystemData(document.RootElement, ModelReaderWriterHelper.WireOptions);
             }
         }
 
         BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

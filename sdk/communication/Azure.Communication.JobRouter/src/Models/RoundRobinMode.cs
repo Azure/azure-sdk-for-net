@@ -14,14 +14,14 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of RoundRobinModePolicy. </summary>
         public RoundRobinMode()
         {
-            Kind = "round-robin";
+            Kind = DistributionModeKind.RoundRobin;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(MinConcurrentOffers))
             {
                 writer.WritePropertyName("minConcurrentOffers"u8);

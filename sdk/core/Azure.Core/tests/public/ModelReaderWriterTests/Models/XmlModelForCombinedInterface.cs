@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
@@ -43,11 +43,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public string ReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+            Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -102,7 +102,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<XmlModelForCombinedInterface>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == "J")
             {
@@ -110,7 +110,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.Wire;
+                options ??= ModelReaderWriterHelper.WireOptions;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -128,7 +128,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         XmlModelForCombinedInterface IPersistableModel<XmlModelForCombinedInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == "J")
             {
@@ -173,7 +173,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         void IJsonModel<XmlModelForCombinedInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != "J")
                 throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<XmlModelForCombinedInterface>)} interface");
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         XmlModelForCombinedInterface IJsonModel<XmlModelForCombinedInterface>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != "J")
                 throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<XmlModelForCombinedInterface>)} interface");
@@ -193,8 +193,8 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, ModelReaderWriterOptions.Wire);
+            Serialize(writer, ModelReaderWriterHelper.WireOptions);
 
-        string IPersistableModel<XmlModelForCombinedInterface>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<XmlModelForCombinedInterface>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

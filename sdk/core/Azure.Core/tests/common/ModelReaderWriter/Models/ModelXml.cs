@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
@@ -46,9 +46,9 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         [XmlElement("RenamedChildModelXml")]
         public ChildModelXml RenamedChildModelXml { get; set; }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterOptions.Wire, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelReaderWriterHelper.WireOptions, nameHint);
 
         private void Serialize(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
@@ -88,7 +88,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static ModelXml DeserializeModelXml(XElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -115,7 +115,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<ModelXml>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == "J")
             {
@@ -123,7 +123,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             }
             else
             {
-                options ??= ModelReaderWriterOptions.Wire;
+                options ??= ModelReaderWriterHelper.WireOptions;
                 using MemoryStream stream = new MemoryStream();
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         internal static ModelXml DeserializeModelXml(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             string key = default;
             string value = default;
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         ModelXml IPersistableModel<ModelXml>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == "J")
             {
@@ -192,7 +192,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         void IJsonModel<ModelXml>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != "J")
                 throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelXml>)} interface");
@@ -201,7 +201,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         ModelXml IJsonModel<ModelXml>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != "J")
                 throw new InvalidOperationException($"Must use 'J' format when calling the {nameof(IJsonModel<ModelXml>)} interface");
@@ -209,8 +209,8 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             return DeserializeModelXml(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterHelper.WireOptions);
 
-        string IPersistableModel<ModelXml>.GetWireFormat(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ModelXml>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
     }
 }

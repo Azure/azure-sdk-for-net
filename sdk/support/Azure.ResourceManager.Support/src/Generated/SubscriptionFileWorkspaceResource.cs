@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketFileResources and their operations over a SupportTicketFileResource. </returns>
         public virtual SupportTicketFileCollection GetSupportTicketFiles()
         {
-            return GetCachedClient(Client => new SupportTicketFileCollection(Client, Id));
+            return GetCachedClient(client => new SupportTicketFileCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="fileName"> File Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SupportTicketFileResource>> GetSupportTicketFileAsync(string fileName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="fileName"> File Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SupportTicketFileResource> GetSupportTicketFile(string fileName, CancellationToken cancellationToken = default)
         {

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <Description>Tests of System.ClientModel types and public contracts.</Description>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestProject>true</IsTestProject>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
+    <ProjectReference Include="client\System.Net.ClientModel.Tests.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="client/**" />
+    <Compile Remove="client/**" />
+    <Compile Remove="internal/**" />
+    <Compile Remove="internal.perf/**" />
+    <None Remove="internal.perf/**" />
+  </ItemGroup>
+
+</Project>

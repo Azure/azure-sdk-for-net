@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatReadOnlyProperty>)this).Write(writer, ModelReaderWriterOptions.Wire);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatReadOnlyProperty>)this).Write(writer, ModelReaderWriterHelper.WireOptions);
 
         void IJsonModel<CatReadOnlyProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -70,7 +70,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelReaderWriterOptions options = default)
         {
-            options ??= ModelReaderWriterOptions.Wire;
+            options ??= ModelReaderWriterHelper.WireOptions;
 
             double weight = default;
             string name = "";
@@ -129,12 +129,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<CatReadOnlyProperty>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<CatReadOnlyProperty>.GetWireFormat(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CatReadOnlyProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         #endregion
     }

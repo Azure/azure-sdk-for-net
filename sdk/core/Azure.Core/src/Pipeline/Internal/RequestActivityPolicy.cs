@@ -62,27 +62,25 @@ namespace Azure.Core.Pipeline
             using var scope = CreateDiagnosticScope(message);
 
             bool isActivitySourceEnabled = IsActivitySourceEnabled;
+            scope.SetDisplayName(message.Request.Method.Method);
 
-            scope.AddAttribute("http.method", message.Request.Method.Method);
-            scope.AddAttribute("http.url", _sanitizer.SanitizeUrl(message.Request.Uri.ToString()));
+            scope.AddAttribute(isActivitySourceEnabled ? "http.request.method" : "http.method", message.Request.Method.Method);
+            scope.AddAttribute(isActivitySourceEnabled ? "url.full" : "http.url", message.Request.Uri, u => _sanitizer.SanitizeUrl(u.ToString()));
             scope.AddAttribute(isActivitySourceEnabled ? "az.client_request_id": "requestId", message.Request.ClientRequestId);
+            if (message.RetryNumber > 0)
+            {
+                scope.AddIntegerAttribute("http.request.resend_count", message.RetryNumber);
+            }
 
             if (isActivitySourceEnabled && message.Request.Uri.Host is string host)
             {
-                scope.AddAttribute("net.peer.name", host);
-                int port = message.Request.Uri.Port;
-                if (port != 443)
-                {
-                    scope.AddIntegerAttribute("net.peer.port", port);
-                }
+                scope.AddAttribute("server.address", host);
+                scope.AddIntegerAttribute("server.port", message.Request.Uri.Port);
             }
 
-            if (_resourceProviderNamespace != null)
-            {
-                scope.AddAttribute("az.namespace", _resourceProviderNamespace);
-            }
+            scope.AddAttribute("az.namespace", _resourceProviderNamespace);
 
-            if (message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
+            if (!isActivitySourceEnabled && message.Request.Headers.TryGetValue("User-Agent", out string? userAgent))
             {
                 scope.AddAttribute("http.user_agent", userAgent);
             }
@@ -106,13 +104,14 @@ namespace Azure.Core.Pipeline
                 throw;
             }
 
+            string statusCodeStr = message.Response.Status.ToString(CultureInfo.InvariantCulture);
             if (isActivitySourceEnabled)
             {
-                scope.AddIntegerAttribute("http.status_code", message.Response.Status);
+                scope.AddIntegerAttribute("http.response.status_code", message.Response.Status);
             }
             else
             {
-                scope.AddAttribute("http.status_code", message.Response.Status, static i => i.ToString(CultureInfo.InvariantCulture));
+                scope.AddAttribute("http.status_code", statusCodeStr);
             }
 
             if (message.Response.Headers.RequestId is string serviceRequestId)
@@ -123,13 +122,13 @@ namespace Azure.Core.Pipeline
 
             if (message.Response.IsError)
             {
-                scope.AddAttribute("otel.status_code", "ERROR");
-                scope.Failed();
+                scope.Failed(statusCodeStr);
             }
-            else
+
+            if (!isActivitySourceEnabled)
             {
                 // Set the status to UNSET so the AppInsights doesn't try to infer it from the status code
-                scope.AddAttribute("otel.status_code",  "UNSET");
+                scope.AddAttribute("otel.status_code", message.Response.IsError ? "ERROR" : "UNSET");
             }
         }
 
@@ -200,7 +199,7 @@ namespace Azure.Core.Pipeline
 #if NETCOREAPP2_1
         private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
 #else
-        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners() && ActivityExtensions.SupportsActivitySource;
+        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
 #endif
     }
 }

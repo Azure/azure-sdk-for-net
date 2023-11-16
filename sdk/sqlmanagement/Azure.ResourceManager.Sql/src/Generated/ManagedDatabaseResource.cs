@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseSchemaResources and their operations over a ManagedDatabaseSchemaResource. </returns>
         public virtual ManagedDatabaseSchemaCollection GetManagedDatabaseSchemas()
         {
-            return GetCachedClient(Client => new ManagedDatabaseSchemaCollection(Client, Id));
+            return GetCachedClient(client => new ManagedDatabaseSchemaCollection(client, Id));
         }
 
         /// <summary>
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedDatabaseSchemaResource>> GetManagedDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
         {
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagedDatabaseSchemaResource> GetManagedDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
         {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseVulnerabilityAssessmentResources and their operations over a ManagedDatabaseVulnerabilityAssessmentResource. </returns>
         public virtual ManagedDatabaseVulnerabilityAssessmentCollection GetManagedDatabaseVulnerabilityAssessments()
         {
-            return GetCachedClient(Client => new ManagedDatabaseVulnerabilityAssessmentCollection(Client, Id));
+            return GetCachedClient(client => new ManagedDatabaseVulnerabilityAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedBackupShortTermRetentionPolicyResources and their operations over a ManagedBackupShortTermRetentionPolicyResource. </returns>
         public virtual ManagedBackupShortTermRetentionPolicyCollection GetManagedBackupShortTermRetentionPolicies()
         {
-            return GetCachedClient(Client => new ManagedBackupShortTermRetentionPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ManagedBackupShortTermRetentionPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseSecurityAlertPolicyResources and their operations over a ManagedDatabaseSecurityAlertPolicyResource. </returns>
         public virtual ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies()
         {
-            return GetCachedClient(Client => new ManagedDatabaseSecurityAlertPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ManagedDatabaseSecurityAlertPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedTransparentDataEncryptionResources and their operations over a ManagedTransparentDataEncryptionResource. </returns>
         public virtual ManagedTransparentDataEncryptionCollection GetManagedTransparentDataEncryptions()
         {
-            return GetCachedClient(Client => new ManagedTransparentDataEncryptionCollection(Client, Id));
+            return GetCachedClient(client => new ManagedTransparentDataEncryptionCollection(client, Id));
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceLongTermRetentionPolicyResources and their operations over a ManagedInstanceLongTermRetentionPolicyResource. </returns>
         public virtual ManagedInstanceLongTermRetentionPolicyCollection GetManagedInstanceLongTermRetentionPolicies()
         {
-            return GetCachedClient(Client => new ManagedInstanceLongTermRetentionPolicyCollection(Client, Id));
+            return GetCachedClient(client => new ManagedInstanceLongTermRetentionPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseAdvancedThreatProtectionResources and their operations over a ManagedDatabaseAdvancedThreatProtectionResource. </returns>
         public virtual ManagedDatabaseAdvancedThreatProtectionCollection GetManagedDatabaseAdvancedThreatProtections()
         {
-            return GetCachedClient(Client => new ManagedDatabaseAdvancedThreatProtectionCollection(Client, Id));
+            return GetCachedClient(client => new ManagedDatabaseAdvancedThreatProtectionCollection(client, Id));
         }
 
         /// <summary>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseRestoreDetailResources and their operations over a ManagedDatabaseRestoreDetailResource. </returns>
         public virtual ManagedDatabaseRestoreDetailCollection GetManagedDatabaseRestoreDetails()
         {
-            return GetCachedClient(Client => new ManagedDatabaseRestoreDetailCollection(Client, Id));
+            return GetCachedClient(client => new ManagedDatabaseRestoreDetailCollection(client, Id));
         }
 
         /// <summary>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedLedgerDigestUploadResources and their operations over a ManagedLedgerDigestUploadResource. </returns>
         public virtual ManagedLedgerDigestUploadCollection GetManagedLedgerDigestUploads()
         {
-            return GetCachedClient(Client => new ManagedLedgerDigestUploadCollection(Client, Id));
+            return GetCachedClient(client => new ManagedLedgerDigestUploadCollection(client, Id));
         }
 
         /// <summary>
