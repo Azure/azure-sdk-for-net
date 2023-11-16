@@ -7,7 +7,7 @@ This sample shows how to call AnalyzeDocumentAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>");
 AnalyzeResult responseData = operation.Value;
@@ -16,7 +16,7 @@ This sample shows how to call AnalyzeDocumentAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
 {
@@ -33,7 +33,7 @@ This sample shows how to call AnalyzeDocument.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>");
 AnalyzeResult responseData = operation.Value;
@@ -42,7 +42,7 @@ This sample shows how to call AnalyzeDocument with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
 {
@@ -59,7 +59,7 @@ This sample shows how to call AnalyzeDocumentAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 using RequestContent content = null;
 Operation<BinaryData> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", content);
@@ -78,7 +78,7 @@ This sample shows how to call AnalyzeDocumentAsync with all parameters and reque
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -297,7 +297,7 @@ This sample shows how to call AnalyzeDocument and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 using RequestContent content = null;
 Operation<BinaryData> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", content);
@@ -316,7 +316,7 @@ This sample shows how to call AnalyzeDocument with all parameters and request co
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -535,7 +535,7 @@ This sample shows how to call ClassifyDocumentAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
 Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", classifyRequest);
@@ -545,7 +545,7 @@ This sample shows how to call ClassifyDocumentAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
 {
@@ -562,7 +562,7 @@ This sample shows how to call ClassifyDocument.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
 Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", classifyRequest);
@@ -572,7 +572,7 @@ This sample shows how to call ClassifyDocument with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
 {
@@ -589,7 +589,7 @@ This sample shows how to call ClassifyDocumentAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Operation<BinaryData> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", content);
@@ -608,7 +608,7 @@ This sample shows how to call ClassifyDocumentAsync with all parameters and requ
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -827,7 +827,7 @@ This sample shows how to call ClassifyDocument and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Operation<BinaryData> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", content);
@@ -846,7 +846,7 @@ This sample shows how to call ClassifyDocument with all parameters and request c
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {

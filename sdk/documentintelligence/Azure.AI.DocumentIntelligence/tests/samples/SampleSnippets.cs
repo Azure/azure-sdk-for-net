@@ -21,7 +21,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 #endif
-            var client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
         }
 
@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #else
             string endpoint = TestEnvironment.Endpoint;
 #endif
-            var client = new DocumentAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
         }
 
@@ -49,7 +49,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 #endif
-            var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             #endregion
         }
 
@@ -58,7 +58,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:DocumentIntelligenceBadRequest
             var content = new AnalyzeDocumentContent()

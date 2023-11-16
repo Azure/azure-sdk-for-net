@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:DocumentIntelligenceAnalyzePrebuiltDocumentFromUriAsync
 #if SNIPPET

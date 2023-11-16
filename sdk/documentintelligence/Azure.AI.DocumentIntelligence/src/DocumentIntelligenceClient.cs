@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.DocumentIntelligence
 {
     [CodeGenSuppress("FetchAnalyzeResultFromAnalyzeResultOperation", typeof(Response))]
-    public partial class DocumentAnalysisClient
+    public partial class DocumentIntelligenceClient
     {
         // CUSTOM CODE NOTE: code generation is mistakenly creating two copies of the
         // FetchAnalyzeResultFromAnalyzeResultOperation method, breaking the build.

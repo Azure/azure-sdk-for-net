@@ -12,7 +12,7 @@ namespace Azure.AI.DocumentIntelligence
     [CodeGenSuppress("GetOperation", typeof(Guid), typeof(CancellationToken))]
     [CodeGenSuppress("GetOperationAsync", typeof(Guid), typeof(RequestContext))]
     [CodeGenSuppress("GetOperation", typeof(Guid), typeof(RequestContext))]
-    public partial class DocumentModelAdministrationClient
+    public partial class DocumentIntelligenceAdministrationClient
     {
         // CUSTOM CODE NOTE: the spec incorrectly defines the operationId parameter as a GUID
         // in the GetOperation APIs, but it should be a string. This makes it impossible to
@@ -23,7 +23,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Gets operation info. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(Guid,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(Guid,CancellationToken)']/*" />
         public virtual async Task<Response<OperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -34,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Gets operation info. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='GetOperation(Guid,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(Guid,CancellationToken)']/*" />
         public virtual Response<OperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -61,10 +61,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(Guid,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(Guid,RequestContext)']/*" />
         public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
             scope.Start();
             try
             {
@@ -97,10 +97,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='GetOperation(Guid,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(Guid,RequestContext)']/*" />
         public virtual Response GetOperation(string operationId, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
             scope.Start();
             try
             {
@@ -140,17 +140,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> BuildDocumentModelAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.BuildDocumentModel");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.BuildDocumentModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateBuildDocumentModelContent(content, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
                 return new TrainingOperation(internalOperation);
             }
             catch (Exception e)
@@ -181,17 +181,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> BuildDocumentModel(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.BuildDocumentModel");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.BuildDocumentModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateBuildDocumentModelContent(content, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
                 return new TrainingOperation(internalOperation);
             }
             catch (Exception e)
@@ -222,17 +222,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ComposeModelAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.ComposeModel");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.ComposeModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateComposeModelRequest(content, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.ComposeModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
                 return new TrainingOperation(internalOperation);
             }
             catch (Exception e)
@@ -263,17 +263,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> ComposeModel(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.ComposeModel");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.ComposeModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateComposeModelRequest(content, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.ComposeModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
                 return new TrainingOperation(internalOperation);
             }
             catch (Exception e)
@@ -306,18 +306,18 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='CopyModelToAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelToAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CopyModelToAsync(WaitUntil waitUntil, string modelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.CopyModelTo");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.CopyModelTo");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCopyModelToRequest(modelId, content, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.CopyModelTo", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
                 return new TrainingOperation(internalOperation);
             }
             catch (Exception e)
@@ -350,18 +350,18 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='CopyModelTo(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelTo(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CopyModelTo(WaitUntil waitUntil, string modelId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.CopyModelTo");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.CopyModelTo");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCopyModelToRequest(modelId, content, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.CopyModelTo", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo", OperationFinalStateVia.OperationLocation, context, waitUntil);
                 return new TrainingOperation(internalOperation);
             }
             catch (Exception e)
@@ -392,17 +392,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildClassifierAsync(WaitUntil,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildClassifierAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> BuildClassifierAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.BuildClassifier");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.BuildClassifier");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateBuildClassifierRequest(content, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildClassifier", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
                 return new TrainingOperation(internalOperation);
             }
             catch (Exception e)
@@ -433,17 +433,17 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildClassifier(WaitUntil,RequestContent,RequestContext)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildClassifier(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> BuildClassifier(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentModelAdministrationClient.BuildClassifier");
+            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.BuildClassifier");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateBuildClassifierRequest(content, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentModelAdministrationClient.BuildClassifier", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier", OperationFinalStateVia.OperationLocation, context, waitUntil);
                 return new TrainingOperation(internalOperation);
             }
             catch (Exception e)
@@ -464,7 +464,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentModelDetails>> BuildDocumentModelAsync(WaitUntil waitUntil, BuildDocumentModelContent buildRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
@@ -472,7 +472,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
             Operation<BinaryData> response = await BuildDocumentModelAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel");
+            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
         }
 
         /// <summary> Builds a custom document analysis model. </summary>
@@ -480,7 +480,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
         public virtual Operation<DocumentModelDetails> BuildDocumentModel(WaitUntil waitUntil, BuildDocumentModelContent buildRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(buildRequest, nameof(buildRequest));
@@ -488,7 +488,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = buildRequest.ToRequestContent();
             Operation<BinaryData> response = BuildDocumentModel(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.BuildDocumentModel");
+            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
         }
 
         /// <summary> Creates a new document model from document types of existing document models. </summary>
@@ -496,7 +496,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentModelDetails>> ComposeModelAsync(WaitUntil waitUntil, ComposeDocumentModelContent composeRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(composeRequest, nameof(composeRequest));
@@ -504,7 +504,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = composeRequest.ToRequestContent();
             Operation<BinaryData> response = await ComposeModelAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.ComposeModel");
+            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
         }
 
         /// <summary> Creates a new document model from document types of existing document models. </summary>
@@ -512,7 +512,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
         public virtual Operation<DocumentModelDetails> ComposeModel(WaitUntil waitUntil, ComposeDocumentModelContent composeRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(composeRequest, nameof(composeRequest));
@@ -520,7 +520,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = composeRequest.ToRequestContent();
             Operation<BinaryData> response = ComposeModel(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.ComposeModel");
+            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
         }
 
         /// <summary> Copies document model to the target resource, region, and modelId. </summary>
@@ -530,7 +530,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentModelDetails>> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -539,7 +539,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = copyToRequest.ToRequestContent();
             Operation<BinaryData> response = await CopyModelToAsync(waitUntil, modelId, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.CopyModelTo");
+            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
         }
 
         /// <summary> Copies document model to the target resource, region, and modelId. </summary>
@@ -549,7 +549,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/DocumentModelAdministrationClient.xml" path="doc/members/member[@name='CopyModelTo(WaitUntil,string,CopyAuthorization,CancellationToken)']/*" />
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelTo(WaitUntil,string,CopyAuthorization,CancellationToken)']/*" />
         public virtual Operation<DocumentModelDetails> CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -558,7 +558,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = copyToRequest.ToRequestContent();
             Operation<BinaryData> response = CopyModelTo(waitUntil, modelId, content, context);
-            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentModelAdministrationClient.CopyModelTo");
+            return ProtocolOperationHelpers.Convert(response, DocumentModelDetails.FromResponse, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
         }
 
         internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)

@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
-    public partial class Samples_DocumentAnalysisClient
+    public partial class Samples_DocumentIntelligenceClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -24,7 +24,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             using RequestContent content = null;
             Operation<BinaryData> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", content);
@@ -46,7 +46,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             using RequestContent content = null;
             Operation<BinaryData> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", content);
@@ -68,7 +68,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>");
             AnalyzeResult responseData = operation.Value;
@@ -80,7 +80,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>");
             AnalyzeResult responseData = operation.Value;
@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -311,7 +311,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -530,7 +530,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
             {
@@ -547,7 +547,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
             {
@@ -564,7 +564,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
             Operation<BinaryData> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", content);
@@ -586,7 +586,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new object());
             Operation<BinaryData> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", content);
@@ -608,7 +608,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
             Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", classifyRequest);
@@ -621,7 +621,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
             Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", classifyRequest);
@@ -634,7 +634,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -853,7 +853,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1072,7 +1072,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
             {
@@ -1089,7 +1089,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentAnalysisClient client = new DocumentAnalysisClient(endpoint, credential);
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
             ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
             {

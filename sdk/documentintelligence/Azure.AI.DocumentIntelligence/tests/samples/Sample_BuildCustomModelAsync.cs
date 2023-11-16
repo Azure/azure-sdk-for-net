@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:DocumentIntelligenceSampleBuildModel
             // For this sample, you can use the training documents found in the `trainingFiles` folder.

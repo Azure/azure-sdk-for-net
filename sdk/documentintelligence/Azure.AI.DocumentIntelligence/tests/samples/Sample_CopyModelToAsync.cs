@@ -20,7 +20,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string sourceEndpoint = TestEnvironment.Endpoint;
             string sourceApiKey = TestEnvironment.ApiKey;
 #endif
-            var sourceClient = new DocumentModelAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
+            var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
             #endregion
 
             // For the purpose of this sample, we are going to create a model to copy. Note that
@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string targetEndpoint = TestEnvironment.Endpoint;
             string targetApiKey = TestEnvironment.ApiKey;
 #endif
-            var targetClient = new DocumentModelAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
+            var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
             #endregion
 
             #region Snippet:DocumentIntelligenceSampleGetCopyAuthorization

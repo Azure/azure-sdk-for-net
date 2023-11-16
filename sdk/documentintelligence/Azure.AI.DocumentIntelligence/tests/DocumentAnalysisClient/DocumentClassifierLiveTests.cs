@@ -19,7 +19,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [RecordedTest]
         public async Task ClassifyDocumentWithUrlSource()
         {
-            var client = CreateDocumentAnalysisClient();
+            var client = CreateDocumentIntelligenceClient();
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [RecordedTest]
         public async Task ClassifyDocumentCanParseBlankPage()
         {
-            var client = CreateDocumentAnalysisClient();
+            var client = CreateDocumentIntelligenceClient();
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 

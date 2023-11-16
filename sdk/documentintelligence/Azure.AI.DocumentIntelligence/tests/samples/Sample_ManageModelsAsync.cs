@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             // Build a custom model to make sure that there is at least one custom model.
             string modelId = Guid.NewGuid().ToString();

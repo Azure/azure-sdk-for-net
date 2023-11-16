@@ -8,9 +8,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
 {
     public class DisposableDocumentClassifier : IAsyncDisposable
     {
-        private readonly DocumentModelAdministrationClient _client;
+        private readonly DocumentIntelligenceAdministrationClient _client;
 
-        private DisposableDocumentClassifier(DocumentModelAdministrationClient client, Operation<DocumentClassifierDetails> operation)
+        private DisposableDocumentClassifier(DocumentIntelligenceAdministrationClient client, Operation<DocumentClassifierDetails> operation)
         {
             _client = client;
             Operation = operation;
@@ -22,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         public string ClassifierId => Value.ClassifierId;
 
-        public static async Task<DisposableDocumentClassifier> BuildAsync(DocumentModelAdministrationClient client, BuildDocumentClassifierContent buildContent)
+        public static async Task<DisposableDocumentClassifier> BuildAsync(DocumentIntelligenceAdministrationClient client, BuildDocumentClassifierContent buildContent)
         {
             Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, buildContent);
 

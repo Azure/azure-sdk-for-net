@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [TestCase(WaitUntil.Completed)]
         public async Task BuildDocumentModelOperationCanParseOperationId(WaitUntil waitUntil)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
 
             var containerUrl = new Uri(TestEnvironment.BlobContainerSasUrl);
@@ -65,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [TestCase(WaitUntil.Completed)]
         public async Task CopyModelToOperationCanParseOperationId(WaitUntil waitUntil)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
 
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
@@ -103,7 +103,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [TestCase(WaitUntil.Completed)]
         public async Task ComposeModelOperationCanParseOperationId(WaitUntil waitUntil)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
 
             // Note: this will fail once we implement model caching. We'll need to set different containers to make it work.
@@ -147,7 +147,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         [TestCase(WaitUntil.Completed)]
         public async Task BuildClassifierOperationCanParseOperationId(WaitUntil waitUntil)
         {
-            var client = CreateDocumentModelAdministrationClient();
+            var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
 
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);

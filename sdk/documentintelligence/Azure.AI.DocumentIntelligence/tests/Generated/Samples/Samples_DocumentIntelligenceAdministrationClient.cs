@@ -17,7 +17,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
-    public partial class Samples_DocumentModelAdministrationClient
+    public partial class Samples_DocumentIntelligenceAdministrationClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -48,7 +48,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -71,7 +71,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>");
             Response<CopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRequest);
@@ -83,7 +83,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>");
             Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
@@ -95,7 +95,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -123,7 +123,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -151,7 +151,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>")
             {
@@ -170,7 +170,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("<modelId>")
             {
@@ -189,7 +189,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.GetModel("<modelId>", null);
 
@@ -204,7 +204,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.GetModelAsync("<modelId>", null);
 
@@ -219,7 +219,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<DocumentModelDetails> response = client.GetModel("<modelId>");
         }
@@ -230,7 +230,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<DocumentModelDetails> response = await client.GetModelAsync("<modelId>");
         }
@@ -241,7 +241,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.GetModel("<modelId>", null);
 
@@ -274,7 +274,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.GetModelAsync("<modelId>", null);
 
@@ -307,7 +307,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<DocumentModelDetails> response = client.GetModel("<modelId>");
         }
@@ -318,7 +318,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<DocumentModelDetails> response = await client.GetModelAsync("<modelId>");
         }
@@ -329,7 +329,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteModel("<modelId>");
 
@@ -342,7 +342,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteModelAsync("<modelId>");
 
@@ -355,7 +355,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteModel("<modelId>");
 
@@ -368,7 +368,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteModelAsync("<modelId>");
 
@@ -381,7 +381,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.GetResourceInfo(null);
 
@@ -399,7 +399,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.GetResourceInfoAsync(null);
 
@@ -417,7 +417,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<ResourceDetails> response = client.GetResourceInfo();
         }
@@ -428,7 +428,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<ResourceDetails> response = await client.GetResourceInfoAsync();
         }
@@ -439,7 +439,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.GetResourceInfo(null);
 
@@ -457,7 +457,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.GetResourceInfoAsync(null);
 
@@ -475,7 +475,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<ResourceDetails> response = client.GetResourceInfo();
         }
@@ -486,7 +486,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<ResourceDetails> response = await client.GetResourceInfoAsync();
         }
@@ -497,7 +497,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.GetClassifier("<classifierId>", null);
 
@@ -514,7 +514,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.GetClassifierAsync("<classifierId>", null);
 
@@ -531,7 +531,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<DocumentClassifierDetails> response = client.GetClassifier("<classifierId>");
         }
@@ -542,7 +542,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<DocumentClassifierDetails> response = await client.GetClassifierAsync("<classifierId>");
         }
@@ -553,7 +553,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.GetClassifier("<classifierId>", null);
 
@@ -576,7 +576,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.GetClassifierAsync("<classifierId>", null);
 
@@ -599,7 +599,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<DocumentClassifierDetails> response = client.GetClassifier("<classifierId>");
         }
@@ -610,7 +610,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response<DocumentClassifierDetails> response = await client.GetClassifierAsync("<classifierId>");
         }
@@ -621,7 +621,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteClassifier("<classifierId>");
 
@@ -634,7 +634,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteClassifierAsync("<classifierId>");
 
@@ -647,7 +647,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = client.DeleteClassifier("<classifierId>");
 
@@ -660,7 +660,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             Response response = await client.DeleteClassifierAsync("<classifierId>");
 
@@ -673,7 +673,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetModels(null))
             {
@@ -689,7 +689,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetModelsAsync(null))
             {
@@ -705,7 +705,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (DocumentModelDetails item in client.GetModels())
             {
@@ -718,7 +718,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (DocumentModelDetails item in client.GetModelsAsync())
             {
@@ -731,7 +731,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetModels(null))
             {
@@ -765,7 +765,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetModelsAsync(null))
             {
@@ -799,7 +799,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (DocumentModelDetails item in client.GetModels())
             {
@@ -812,7 +812,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (DocumentModelDetails item in client.GetModelsAsync())
             {
@@ -825,7 +825,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetOperations(null))
             {
@@ -845,7 +845,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetOperationsAsync(null))
             {
@@ -865,7 +865,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (OperationDetails item in client.GetOperations())
             {
@@ -878,7 +878,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (OperationDetails item in client.GetOperationsAsync())
             {
@@ -891,7 +891,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetOperations(null))
             {
@@ -919,7 +919,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetOperationsAsync(null))
             {
@@ -947,7 +947,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (OperationDetails item in client.GetOperations())
             {
@@ -960,7 +960,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (OperationDetails item in client.GetOperationsAsync())
             {
@@ -973,7 +973,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetClassifiers(null))
             {
@@ -991,7 +991,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetClassifiersAsync(null))
             {
@@ -1009,7 +1009,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (DocumentClassifierDetails item in client.GetClassifiers())
             {
@@ -1022,7 +1022,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (DocumentClassifierDetails item in client.GetClassifiersAsync())
             {
@@ -1035,7 +1035,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetClassifiers(null))
             {
@@ -1059,7 +1059,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetClassifiersAsync(null))
             {
@@ -1083,7 +1083,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             foreach (DocumentClassifierDetails item in client.GetClassifiers())
             {
@@ -1096,7 +1096,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             await foreach (DocumentClassifierDetails item in client.GetClassifiersAsync())
             {
@@ -1109,7 +1109,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1135,7 +1135,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1161,7 +1161,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
             {
@@ -1177,7 +1177,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
             {
@@ -1193,7 +1193,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1239,7 +1239,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1285,7 +1285,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
             {
@@ -1312,7 +1312,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentModelAdministrationClient client = new DocumentModelAdministrationClient(endpoint, credential);
+            DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("<classifierId>", new Dictionary<string, ClassifierDocumentTypeDetails>
             {
